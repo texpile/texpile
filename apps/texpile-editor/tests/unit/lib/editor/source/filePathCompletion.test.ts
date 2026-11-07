@@ -24,6 +24,7 @@ describe('file path completion', () => {
 		expect(offered('\\includeonly{main,|')).toMatchObject({ from: 18, apply: ['main', 'chap/one', 'sub/part'] });
 		expect(offered('\\includegraphics*[width=1cm]{|')?.apply).toEqual(['img/a.png']);
 		expect(offered('\\input{a,|')?.validFor).toEqual(/^[^{}]*$/);
+		expect(offered('\\addbibresource{|')?.apply).toEqual(['refs.bib']);
 		expect(offered('\\input a|')).toBeNull();
 		expect(offered('\\includegraphics[|')).toBeNull();
 	});

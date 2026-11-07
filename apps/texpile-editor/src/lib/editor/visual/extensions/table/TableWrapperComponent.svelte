@@ -133,10 +133,9 @@
 
 	:global(.table-wrapper) {
 		margin: calc(var(--spacing) * 4) 0;
-		border: var(--default-border-width) solid var(--color-surface-300);
+		border: var(--default-border-width) solid var(--color-surface-200-800);
 		border-radius: calc(var(--radius-base) * 2);
 		padding: calc(var(--spacing) * 4);
-		background: var(--color-surface-50);
 	}
 
 	/* the tableWrapper boundary breaks drag selection (posAtCoords fails there and the selection
@@ -221,9 +220,7 @@
 
 	:global(.table-caption) {
 		font-size: 0.875rem;
-		font-weight: 600;
 		margin-bottom: calc(var(--spacing) * 2);
-		color: var(--color-surface-900);
 		padding: calc(var(--spacing) * 1) calc(var(--spacing) * 2);
 		border-radius: var(--radius-base);
 		cursor: text;
@@ -247,22 +244,11 @@
 
 	:global(.table-wrapper-content table th) {
 		font-weight: 600;
-		background: var(--color-surface-100);
 	}
 
 	/* the surfaces above are hardcoded light, flip them under data-mode=dark */
-	:global([data-mode='dark'] .table-wrapper) {
-		background: var(--color-surface-950);
-		border-color: var(--color-surface-700);
-	}
-	:global([data-mode='dark'] .table-caption) {
-		color: var(--color-surface-100);
-	}
 	:global([data-mode='dark'] .table-notes) {
 		color: var(--faint-text);
-	}
-	:global([data-mode='dark'] .table-wrapper-content table th) {
-		background: var(--color-surface-800);
 	}
 	:global([data-mode='dark'] .table-settings-btn button:hover) {
 		background: var(--color-surface-700);

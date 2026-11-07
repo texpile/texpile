@@ -1,0 +1,1 @@
+{"version":1,"id":"@preview/pointless-size:0.1.2","names":{"zh":{"kind":"function","params":[{"name":"size","positional":true,"required":true},{"name":"overrides","named":true,"default":"()"}]},"zihao":{"kind":"function","params":[{"name":"size","positional":true,"required":true},{"name":"overrides","named":true,"default":"()"}],"block":false}}}

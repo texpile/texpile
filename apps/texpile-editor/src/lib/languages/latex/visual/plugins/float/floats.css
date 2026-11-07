@@ -1,0 +1,8 @@
+.ProseMirror .drawn-float {
+	display: block;
+	text-align: center;
+}
+.ProseMirror .drawn-float > .drawn-caption {
+	display: block;
+	margin-top: 0.5em;
+}

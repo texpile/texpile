@@ -21,7 +21,7 @@ import {
 	splitCell,
 	tableEditing
 } from 'prosemirror-tables';
-import { typstHeaderRows } from '$lib/languages/typst/visual/extensions/typstHeaderRows';
+import { typstHeaderRows } from '$lib/languages/typst/visual/plugins/table/typstHeaderRows';
 import { typstToProseMirror } from '$lib/languages/typst/visual/convert/converter';
 import { serializeToTypst } from '$lib/languages/typst/visual/serialize/serializer';
 import { typSchema } from '$lib/languages/typst/visual/schema';

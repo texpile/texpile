@@ -69,7 +69,7 @@
 		{"name":"chaptername","hidden":true},
 		{"name":"chapternumberformat","args":[{"kind":"m"}],"hidden":true},
 		{"name":"chaptertitleformat","args":[{"kind":"m"}],"hidden":true},
-		{"name":"editor","args":[{"kind":"m","placeholder":"name"}],"doc":"This specifies the editor’s name."},
+		{"name":"editor","args":[{"kind":"m","placeholder":"name","part":"note"}],"doc":"This specifies the editor’s name."},
 		{"name":"editorname","hidden":true},
 		{"name":"editors","args":[{"kind":"m","placeholder":"names"}]},
 		{"name":"editorsname","hidden":true},

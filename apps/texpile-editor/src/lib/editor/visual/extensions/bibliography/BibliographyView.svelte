@@ -1,59 +1,37 @@
 <script lang="ts">
-	// preview of \printbibliography: generic formatting only, the compiled PDF has the real styling
 	import { referenceStore } from '$lib/stores/editorStore';
+	import { m } from '$lib/paraglide/messages';
+	import { entryParts, sortedReferences } from './bibliographyEntries';
 
-	let { heading = 'Bibliography', selected = false }: { heading?: string; selected?: boolean } = $props();
+	type Props = { heading?: string; selected?: boolean };
+	const props: Props = $props();
+	const { heading, selected } = $derived({ heading: props.heading ?? 'Bibliography', selected: props.selected ?? false });
 
-	const LIMIT = 3;
-
-	type Ref = Record<string, string | undefined>;
-
-	const refs = $derived.by<Ref[]>(() => {
-		const list = ((referenceStore.current ?? []) as unknown as Ref[]).slice();
-		list.sort((a, b) => sortKey(a).localeCompare(sortKey(b)));
-		return list;
-	});
-
-	function sortKey(r: Ref) {
-		return (r.author || r.editor || r.title || r.key || '').toLowerCase();
-	}
-	function yearOf(r: Ref) {
-		return r.year || r.date?.slice(0, 4) || 'n.d.';
-	}
-	function container(r: Ref) {
-		return r.journaltitle || r.booktitle || '';
-	}
-	function meta(r: Ref) {
-		return [r.publisher, r.location].filter(Boolean).join(', ');
-	}
-
-	function authors(r: Ref): string {
-		const list = (r.author || r.editor || '')
-			.split(/\s+and\s+/i)
-			.map((s) => s.trim())
-			.filter(Boolean);
-		if (list.length <= 1) return list[0] ?? '';
-		if (list.length === 2) return `${list[0]} and ${list[1]}`;
-		return `${list.slice(0, -1).join(', ')}, and ${list[list.length - 1]}`;
-	}
+	const LIMIT = 6;
+	let expanded = $state(false);
+	const refs = $derived(sortedReferences(referenceStore.current ?? []));
+	const shown = $derived(expanded ? refs : refs.slice(0, LIMIT));
 </script>
 
-<div class="hover:bg-surface-tint rounded-base my-4 px-2 py-2 text-sm select-none {selected ? 'ring-primary-500 ring-2' : ''}">
-	<div class="mb-3 text-center font-semibold">{heading}</div>
+<div class="bibliography-preview rounded-base my-4 select-none {selected ? 'ring-primary-500 ring-2' : ''}">
+	<h2 class="mt-0 mb-2 text-2xl font-semibold">{heading}</h2>
 	{#if refs.length === 0}
-		<div class="text-muted text-center italic">No bibliography entries yet. Add references to a .bib file.</div>
+		<p class="text-muted italic">{m.bibliography_empty()}</p>
 	{:else}
-		<ul class="flex flex-col gap-2">
-			{#each refs.slice(0, LIMIT) as r (r.key)}
-				<li class="pl-6 -indent-6 leading-snug">
-					{#if authors(r)}<span>{authors(r)} </span>{/if}<span class="text-muted">({yearOf(r)}). </span>{#if r.title}<em
-							>{r.title}.
-						</em>{/if}{#if container(r)}<span>{container(r)}. </span>{/if}{#if meta(r)}<span class="text-muted">{meta(r)}.</span>{/if}
-				</li>
+		<div class="flex flex-col gap-1.5">
+			{#each shown as r (r.key)}
+				<p class="m-0 pl-8 -indent-8">
+					{#each entryParts(r) as part, i (i)}
+						{#if part.look === 'title'}<em>{part.text}</em>{:else}<span class={part.look === 'muted' ? 'text-muted' : ''}>{part.text}</span
+							>{/if}
+					{/each}
+				</p>
 			{/each}
-		</ul>
-		{#if refs.length > LIMIT}
-			<div class="text-faint mt-2 text-center text-xs">+{refs.length - LIMIT} more</div>
+		</div>
+		{#if refs.length > LIMIT && !expanded}
+			<button class="anchor mt-2 text-sm" onmousedown={(e) => e.stopPropagation()} onclick={() => (expanded = true)}
+				>{m.bibliography_show_all({ count: refs.length })}</button
+			>
 		{/if}
 	{/if}
 </div>

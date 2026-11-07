@@ -21,7 +21,7 @@ import { scanGlossary } from '$lib/languages/latex/intellisense/completion/gloss
 import { scanScripts } from '$lib/languages/latex/intellisense/completion/subsuperscript';
 import { scanMacroBodies } from '$lib/editor/source/extensions/math-preview/userMacros';
 import { parseOutlineRaw } from '$lib/editor/visual/extensions/tableofcontents/latexHeadings';
-import { definedIn, ownLiteralsIn, signatureOf } from '$lib/languages/latex/userDefinitions';
+import { definedIn, ownLiteralsIn, primitiveDefsIn, signatureOf } from '$lib/languages/latex/userDefinitions';
 import type { OwnLiterals } from '$lib/languages/latex/syntax/tokens/ownSyntax';
 import { keysIn } from '$lib/languages/latex/knowledge/calls/roleKeys';
 import { blankComments, codeOnly } from '$lib/languages/latex/texCode';
@@ -71,7 +71,8 @@ function scanDefinitions(
 	file: string,
 	draft: Pick<ProjectIntel, 'macros' | 'envs'>,
 	lineStarts: number[],
-	packageFile: boolean
+	packageFile: boolean,
+	text: string
 ) {
 	function lineOf(pos: number): number {
 		return lineIn(lineStarts, pos);
@@ -81,7 +82,7 @@ function scanDefinitions(
 		if (!packageFile || !d.name.includes('@'))
 			draft.macros.push({ name: d.name, signature: signatureOf(d.args), file, line: lineOf(d.at) });
 	// replacement bodies for this file's macros, so math previews can expand them cross-file
-	const bodies = scanMacroBodies(code);
+	const bodies = scanMacroBodies(code, text);
 	for (let i = firstMacro; i < draft.macros.length; i++) {
 		const body = bodies[draft.macros[i].name];
 		if (body) {
@@ -89,6 +90,20 @@ function scanDefinitions(
 			draft.macros[i].argCount = body.args;
 			draft.macros[i].optional = body.optional;
 		}
+	}
+	const named = new Set(draft.macros.slice(firstMacro).map((m) => m.name));
+	for (const d of primitiveDefsIn(code)) {
+		const body = bodies[d.name];
+		if (!body || named.has(d.name) || (packageFile && d.name.includes('@'))) continue;
+		named.add(d.name);
+		draft.macros.push({
+			name: d.name,
+			signature: Array.from({ length: body.args ?? 0 }, () => 'm').join(' '),
+			file,
+			line: lineOf(d.at),
+			definition: body.def,
+			argCount: body.args
+		});
 	}
 	for (const d of definedIn(code, 'environment'))
 		if (!packageFile || !d.name.includes('@'))
@@ -121,7 +136,7 @@ const texFacts = new FileIndex<TexFacts>((file, text) => {
 		context: contextAt(label.call.at)
 	}));
 	const definitions: Pick<ProjectIntel, 'macros' | 'envs'> = { macros: [], envs: [] };
-	scanDefinitions(code, file, definitions, lineStarts, false);
+	scanDefinitions(code, file, definitions, lineStarts, false, text);
 	const scripts = scanScripts(text);
 	return { labels, ...definitions, literals: ownLiteralsIn(code), sub: scripts.sub, sup: scripts.sup, outline: parseOutlineRaw(text) };
 });
@@ -143,7 +158,7 @@ const glossaryFacts = new FileIndex<ProjectIntel['glossary'], LoadedFile[]>(
 const shippedFacts = new FileIndex<Pick<ProjectIntel, 'macros' | 'envs' | 'literals'>>((file, text) => {
 	const definitions: Pick<ProjectIntel, 'macros' | 'envs'> = { macros: [], envs: [] };
 	const code = codeOnly(text);
-	scanDefinitions(code, file, definitions, lineStartsOf(text), true);
+	scanDefinitions(code, file, definitions, lineStartsOf(text), true, text);
 	return { ...definitions, literals: ownLiteralsIn(code) };
 });
 

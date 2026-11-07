@@ -449,3 +449,13 @@ describe('a word retyped in plain text keeps the rest of its paragraph as writte
 		expect(parseMarkdownFile(out).doc.toString()).toBe(doc.toString());
 	});
 });
+
+describe('escaped underscores beside each other', () => {
+	it('stay literal when their paragraph is edited', () => {
+		const parsed = parseMarkdownFile('\\_\\_init\\_\\_\n');
+		const at = posOf(parsed.doc, 't');
+		const doc = new Transform(parsed.doc).replaceWith(at, at + 1, parsed.doc.type.schema.text('T')).doc;
+		const out = serializeMarkdownFile(parsed, doc);
+		expect(parseMarkdownFile(out).doc.toString()).toBe(doc.toString());
+	});
+});

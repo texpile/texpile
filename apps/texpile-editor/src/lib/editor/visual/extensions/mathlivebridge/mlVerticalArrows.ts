@@ -72,6 +72,12 @@ export function verticalArrowKeyDown(view: EditorView, event: KeyboardEvent): bo
 	return true;
 }
 
+export function moveOneLine(view: EditorView, dir: -1 | 1): void {
+	const x = view.coordsAtPos(view.state.selection.head, 1).left;
+	const placed = placedSelection(view, dir, x, false);
+	if (placed) view.dispatch(view.state.tr.setSelection(placed).scrollIntoView());
+}
+
 export function verticalArrowsMouseDown(view: EditorView): boolean {
 	const moves = movesOf(view);
 	moves.goal = null;

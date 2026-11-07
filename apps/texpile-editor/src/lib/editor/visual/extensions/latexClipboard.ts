@@ -55,7 +55,7 @@ export function pasteLatexText(view: EditorView, text: string): boolean {
 	// a single paragraph pastes open (merges into the paragraph at the caret); anything
 	// heavier inserts as blocks
 	const open = frag.childCount === 1 && frag.firstChild!.type.name === 'paragraph' ? 1 : 0;
-	pasteReadingOfText(view, text, regenerateCopiedLabels(new Slice(frag, open, open)));
+	pasteReadingOfText(view, text, regenerateCopiedLabels(new Slice(frag, open, open), view));
 	return true;
 }
 

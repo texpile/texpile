@@ -8,15 +8,14 @@ import { bytesSpan, noteSpans, spansOf, standsFor } from '$lib/editor/visual/sou
 import type { Piece } from '../walk/pieceCursor';
 import { bodyOf, isUnclosed } from '../walk/stretch';
 import { readEnvironment, type TreeEnvironment } from '../walk/treeEnvironment';
-import { rawBlockOf, sliceOf, type TreeImport } from './treeImport';
+import { sliceOf, type TreeImport } from '../importCore/treeImport';
+import { rawBlockOf } from '../importCore/importChips';
 import type { ImportCall } from './treeCalls';
 import { hasUnclosedGroup } from '../walk/treeArgs';
-import { treeMacroHandlers } from './macroTree';
-import { environmentNameOf } from './tables/tableShapes';
+import { commandImports } from '$lib/languages/latex/visual/core/plugin/documentMap';
+import { environmentNameOf } from '../walk/units';
 import { environmentBlock } from './environments/environmentTree';
 import { blocksOf } from './blocksTree';
-
-const BLOCK_RESULTS = new Set(['heading', 'horizontal_rule', 'includedoc', 'abstract', 'image']);
 
 export function environmentOf(im: TreeImport, node: SyntaxNode): TreeEnvironment {
 	return readEnvironment(im.src, node, im.readings.environmentArgumentsOf(environmentNameOf(im, node)));
@@ -53,10 +52,10 @@ function callBlock(im: TreeImport, call: ImportCall, ctx: ConversionContext): Pm
 	if (call.raw != null) return [rawBlockOf(im, call, call.raw)];
 	if (hasUnclosedGroup(call)) return [rawBlockOf(im, call)];
 	if (ignoredMacros.has(call.name)) return null;
-	const handler = treeMacroHandlers.get(call.name);
+	const handler = commandImports.get(call.name);
 	if (handler) {
 		const result = handler(im, call, ctx);
-		if (result && result.length > 0 && BLOCK_RESULTS.has(result[0].type.name)) {
+		if (result && result.length > 0 && result[0].isBlock) {
 			// a block that is a chip of its own (\input, \hrule) stands for the call's bytes
 			for (const n of result) if (n.childCount === 0 && !spansOf(n)) noteSpans(n, standsFor(1, call.from, call.to));
 			return result;

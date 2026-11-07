@@ -65,7 +65,7 @@
 		{"name":"listtablename"},
 		{"name":"maketitle"},
 		{"name":"mit","hidden":true},
-		{"name":"newblock","hidden":true},
+		{"name":"newblock","hidden":true,"args":[],"prints":" "},
 		{"name":"openone"},
 		{"name":"orcid","args":[{"kind":"o","placeholder":"prefix"},{"kind":"m","placeholder":"ORCID"}]},
 		{"name":"paragraph","args":[{"kind":"s"},{"kind":"o","placeholder":"short title"},{"kind":"m","placeholder":"title"}]},

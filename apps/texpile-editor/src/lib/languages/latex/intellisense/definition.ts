@@ -4,6 +4,7 @@
 import { keymap, EditorView } from '@codemirror/view';
 import type { Extension } from '@codemirror/state';
 import { flashLineEffect } from '$lib/languages/latex/source/synctexFlash';
+import { jumpRevealEffect } from '$lib/editor/source/cmJumpReveal';
 import { projectIntelStore } from '$lib/stores/projectIntel';
 import { dirOf, namesTried } from '../knowledge/calls/fileCommands';
 import { callsNear, rolesOf } from '../knowledge/calls/commandCalls';
@@ -35,7 +36,7 @@ export function includeTargetAt(text: string, pos: number): string[] | null {
 }
 
 function jumpTo(view: EditorView, offset: number): void {
-	view.dispatch({ selection: { anchor: offset }, scrollIntoView: true, effects: flashLineEffect.of(offset) });
+	view.dispatch({ selection: { anchor: offset }, effects: [jumpRevealEffect(view, offset), flashLineEffect.of(offset)] });
 	view.focus();
 }
 

@@ -5,4 +5,4 @@
 	const { editor } = getFigureEditor();
 </script>
 
-<ObjectsPanel {editor} />
+{#if !editor.panes.compact || editor.panes.objectsShown}<ObjectsPanel {editor} />{/if}

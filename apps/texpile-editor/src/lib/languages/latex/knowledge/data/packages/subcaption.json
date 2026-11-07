@@ -8,10 +8,10 @@
 	"macros": [
 		{"name":"phantomsubcaption"},
 		{"name":"subcaption","args":[{"kind":"s"},{"kind":"o","placeholder":"list entry","role":"text","part":"short"},{"kind":"m","placeholder":"heading","role":"text","part":"caption"}]},
-		{"name":"subcaptionbox","args":[{"kind":"s"},{"kind":"o","placeholder":"list entry"},{"kind":"m","placeholder":"heading"},{"kind":"o","placeholder":"width"},{"kind":"o","placeholder":"inner-pos"},{"kind":"m","placeholder":"contents","role":"text"}],"doc":"The \\subcaptionbox command typesets given content and caption."},
+		{"name":"subcaptionbox","args":[{"kind":"s"},{"kind":"o","placeholder":"list entry","role":"text","part":"short"},{"kind":"m","placeholder":"heading","role":"text","part":"caption"},{"kind":"o","placeholder":"width"},{"kind":"o","placeholder":"inner-pos"},{"kind":"m","placeholder":"contents","role":"text"}],"doc":"The \\subcaptionbox command typesets given content and caption."},
 		{"name":"subcaptionlistentry","args":[{"kind":"s"},{"kind":"o","placeholder":"float type"},{"kind":"m","placeholder":"list entry"}]},
 		{"name":"subcaptiontext","args":[{"kind":"s"},{"kind":"o","placeholder":"number"},{"kind":"m","placeholder":"text"}]},
-		{"name":"subfloat","args":[{"kind":"o","placeholder":"list entry"},{"kind":"o","placeholder":"sub-caption"},{"kind":"m","placeholder":"body","role":"text"}]},
+		{"name":"subfloat","args":[{"kind":"o","placeholder":"list entry","role":"text","part":"short"},{"kind":"o","placeholder":"sub-caption","role":"text","part":"caption"},{"kind":"m","placeholder":"body","role":"text"}]},
 		{"name":"subref","args":[{"kind":"s"},{"kind":"m","placeholder":"key","role":"label"}]}
 	],
 	"envs": [

@@ -1,26 +1,21 @@
-<!-- editable \title/\author/\date fields for values that live in the preamble (the editor only
-  renders the body); edits are redirected straight back into the preamble -->
 <script lang="ts">
-	import { extractPreambleFrontmatter } from '$lib/editor/visual/extensions/raw-latex/frontmatterView';
-	import { m } from '$lib/paraglide/messages';
+	import type { PackageTable } from '$lib/languages/latex/parser/signatures/packageTable';
+	import { preambleFields, spanOf, type PreambleSpan } from '$lib/languages/latex/visual/core/title/preambleFields';
+	import { documentTable } from '$lib/languages/latex/visual/core/title/documentTable.svelte';
+	import PreambleTitleField from './PreambleTitleField.svelte';
 
-	let { preamble = '', onEdit }: { preamble?: string; onEdit?: (kind: string, inner: string) => void } = $props();
+	type Props = { preamble?: string; table?: PackageTable; onEdit?: (span: PreambleSpan, inner: string) => void };
+	const props: Props = $props();
 
-	const items = $derived(extractPreambleFrontmatter(preamble));
+	const preamble = $derived(props.preamble ?? '');
+	const fields = $derived(preambleFields(preamble, props.table ?? documentTable.current));
 </script>
 
-{#each items as item (item.kind)}
-	<div class="frontmatter-block frontmatter-{item.kind}" contenteditable="false">
-		{#if item.kind !== 'title'}
-			<span class="frontmatter-label">{item.kind}</span>
-		{/if}
-		<input
-			class="frontmatter-input"
-			value={item.inner}
-			placeholder={item.kind === 'title' ? m.preamble_title_placeholder() : item.kind}
-			spellcheck="false"
-			aria-label={item.kind}
-			oninput={(e) => onEdit?.(item.kind, (e.currentTarget as HTMLInputElement).value)}
-		/>
-	</div>
+{#each fields as field (field.bodyFrom)}
+	<PreambleTitleField
+		command={preamble.slice(field.from, field.to)}
+		text={preamble.slice(field.bodyFrom, field.bodyTo)}
+		span={spanOf(preamble, field)}
+		onEdit={(span, text) => props.onEdit?.(span, text)}
+	/>
 {/each}

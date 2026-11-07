@@ -32,7 +32,7 @@
 		{"name":"listtablename"},
 		{"name":"maketitle"},
 		{"name":"mit","hidden":true},
-		{"name":"newblock"},
+		{"name":"newblock","args":[],"prints":" "},
 		{"name":"paragraph","args":[{"kind":"s"},{"kind":"o","placeholder":"short title"},{"kind":"m","placeholder":"title"}]},
 		{"name":"part","args":[{"kind":"s"},{"kind":"o","placeholder":"short title"},{"kind":"m","placeholder":"title"}]},
 		{"name":"partname"},

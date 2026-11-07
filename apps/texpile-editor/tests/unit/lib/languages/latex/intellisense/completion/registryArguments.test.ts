@@ -28,6 +28,14 @@ describe('registryArgumentCompletionSource', () => {
 		expect(mixed?.from).toBe(preamble.length + '\\textcolor{red!50!'.length);
 	});
 
+	it('offers the loaded languages to \\selectlanguage', async () => {
+		expect((await offered('\\usepackage[english,ngerman]{babel}\n\\selectlanguage{ng'))?.labels).toContain('ngerman');
+	});
+
+	it('leaves the dvipsnames out until the option is given', async () => {
+		expect((await offered('\\usepackage{xcolor}\n\\textcolor{Apri'))?.labels ?? []).not.toContain('Apricot');
+	});
+
 	it("offers environments in a hook's environment argument, the document's own among them", async () => {
 		const labels = (await offered('\\documentclass{article}\n\\newenvironment{notebox}{}{}\n\\AtBeginEnvironment{'))?.labels;
 		expect(labels).toEqual(expect.arrayContaining(['itemize', 'notebox']));

@@ -8,17 +8,23 @@
  * Inert unless CORPUS_DIR points at a folder of .tex files:
  *
  *   CORPUS_DIR=/path/to/corpus pnpm --filter texpile-editor exec vitest run roundtrip.stress
+ *
+ * CORPUS_TABLE=1 parses each file with the package table its class and packages give, as the app does (beamer decks
+ * read their frames, blocks and overlays through it); without it every file reads the common table.
  */
 import { describe, it, beforeAll, expect } from 'vitest';
 import fs from 'node:fs';
 import path from 'node:path';
 import type { Node } from 'prosemirror-model';
 import { parseLatexFile, serializeLatexFile, type ParsedLatexFile } from '$lib/workspace/latexRoundtrip';
+import { parsedPackages } from '$lib/languages/latex/intellisense/packages/loadedPackages';
+import { packageTableOf } from '$lib/languages/latex/parser/signatures/packageTable';
 import { Fragment } from 'prosemirror-model';
 import { compareSuggestions } from '$lib/comments/suggestCompare';
 
 const CORPUS = process.env.CORPUS_DIR;
 const HOOK_TIMEOUT_MS = 30 * 60 * 1000;
+const WITH_TABLE = process.env.CORPUS_TABLE === '1';
 
 function listTex(dir: string): string[] {
 	const out: string[] = [];
@@ -251,7 +257,7 @@ describe('stress: real LaTeX round-trip', () => {
 	const reportDir = path.join(CORPUS, '..', 'report');
 	const debugDir = path.join(reportDir, 'pairs');
 
-	beforeAll(() => {
+	beforeAll(async () => {
 		fs.mkdirSync(debugDir, { recursive: true });
 		for (const file of files) {
 			const rel = path.relative(CORPUS, file).replace(/[\\/]/g, '__');
@@ -284,13 +290,15 @@ describe('stress: real LaTeX round-trip', () => {
 			try {
 				const src = fs.readFileSync(file, 'utf8');
 				r.bytes = src.length;
-				const p1 = parseLatexFile(src);
+				const table = WITH_TABLE ? packageTableOf(await parsedPackages(src)) : undefined;
+				const parse = (text: string) => parseLatexFile(text, '', undefined, table);
+				const p1 = parse(src);
 				const r1 = serializeLatexFile(p1, p1.doc);
-				const p2 = parseLatexFile(r1);
+				const p2 = parse(r1);
 				const r2 = serializeLatexFile(p2, p2.doc);
-				const p3 = parseLatexFile(r2);
+				const p3 = parse(r2);
 				const r3 = serializeLatexFile(p3, p3.doc);
-				const p4 = parseLatexFile(r3);
+				const p4 = parse(r3);
 				const r4 = serializeLatexFile(p4, p4.doc);
 
 				try {

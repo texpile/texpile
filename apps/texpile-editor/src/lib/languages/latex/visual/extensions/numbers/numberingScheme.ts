@@ -7,6 +7,7 @@ import { loadTimeOf } from './loadTimeText';
 import { HEADINGS } from './numberedNodes';
 import { parseForm } from './numberForms';
 import type { LoadedFile } from '$lib/languages/latex/knowledge/loadedFiles';
+import { wrappedEnvironmentsIn } from '../environment/environmentHeads';
 
 /** within: what each counter restarts at; forms: see numberForms; secnumdepth: the deepest numbered heading (part -1, chapter 0, section 1) */
 export type NumberingScheme = {
@@ -19,6 +20,7 @@ export type NumberingScheme = {
 	mathOpeners: MathOpeners;
 	/** footnotes take numbers only the compile knows: revtex's footinbib, or a \footnote of the folder's own */
 	uncountedFootnotes: boolean;
+	theorems: Readonly<Record<string, string>>;
 };
 
 export const PLAIN_NUMBERING: NumberingScheme = {
@@ -28,7 +30,8 @@ export const PLAIN_NUMBERING: NumberingScheme = {
 	appendixForms: {},
 	secnumdepth: null,
 	mathOpeners: { macros: [], environments: [] },
-	uncountedFootnotes: false
+	uncountedFootnotes: false,
+	theorems: {}
 };
 
 /** a change to a counter written in the document; value null when it is not a plain number */
@@ -38,6 +41,25 @@ export type CounterChange = { counter: string; op: 'set' | 'add'; value: number 
 const WITHIN = new Set(['numberwithin', 'counterwithin', '@addtoreset']);
 
 export type WithinChange = { counter: string; parent: string; form?: string };
+
+export type TheoremCounter = { env: string; counter: string; within: string | null };
+
+export function theoremCountersIn(text: string, keep: (at: number) => boolean = () => true): TheoremCounter[] {
+	if (!/theorem/.test(text)) return [];
+	return callsIn(blankComments(text), ['environment']).flatMap((call) => {
+		if (!keep(call.at) || call.args.some((a) => a.arg.kind === 's')) return [];
+		const title = call.args.findIndex((a) => rolesOf(a.arg).includes('text'));
+		const named = call.args.find((a) => rolesOf(a.arg).includes('environment'));
+		const env = named?.values[0]?.value.trim();
+		if (title < 0 || !named || !env || !rolesOf(named.arg).includes('counter')) return [];
+		// the counter named before the title is the one it shares, after it the one it restarts within
+		function counterAt(before: boolean): string | null {
+			const arg = call.args.find((a, i) => a !== named && (before ? i < title : i > title) && rolesOf(a.arg).includes('counter'));
+			return arg?.values[0]?.value.trim() || null;
+		}
+		return [{ env, counter: counterAt(true) ?? env, within: counterAt(false) }];
+	});
+}
 
 /** `keep`: which calls count, by where they start */
 export function withinChangesIn(text: string, keep: (at: number) => boolean = () => true): WithinChange[] {
@@ -79,6 +101,7 @@ export function numberingSchemeOf(
 	const wrapper = documentWrapperOf(main);
 	const preamble = wrapper ? main.slice(0, wrapper.begin.from) : main;
 	let depth = deepestNumbered(forms);
+	const theorems: Record<string, string> = {};
 	const sources = [...ownFiles.map(loadTimeOf), ...preambleFiles.map(loadTimeOf), { text: preamble, keep: undefined }];
 	for (const { text, keep } of sources) {
 		for (const { counter, form } of definedFormsIn(text, keep)) {
@@ -87,10 +110,18 @@ export function numberingSchemeOf(
 		}
 		for (const { counter, op, value } of counterChangesIn(text, keep))
 			if (counter === 'secnumdepth' && value !== null) depth = op === 'set' ? value : depth === null ? null : depth + value;
+		for (const { env, counter, within: parent } of theoremCountersIn(text, keep)) {
+			theorems[env] = counter;
+			if (counter !== env) continue;
+			if (parent) within[counter] = parent;
+			shown[counter] ??= parent ? `{${parent}}.[arabic]` : '[arabic]';
+		}
 		for (const change of withinChangesIn(text, keep)) {
 			within[change.counter] = change.parent;
 			if (change.form) shown[change.counter] = change.form;
 		}
+		for (const [env, inner] of wrappedEnvironmentsIn(blankComments(text)))
+			if (Object.hasOwn(theorems, inner)) theorems[env] = theorems[inner];
 	}
 	return {
 		chapters: counters.some((c) => c.name === 'chapter'),
@@ -99,7 +130,8 @@ export function numberingSchemeOf(
 		appendixForms: Object.fromEntries(forms.flatMap((f) => (f.appendix ? [[f.name, f.appendix]] : []))),
 		secnumdepth: depth,
 		mathOpeners: mergeOpeners([preamble, ...preambleFiles].map(mathOpenersIn)),
-		uncountedFootnotes: uncountedFootnotes || [preamble, ...preambleFiles].some(definesFootnoteIn)
+		uncountedFootnotes: uncountedFootnotes || [preamble, ...preambleFiles].some(definesFootnoteIn),
+		theorems
 	};
 }
 

@@ -16,6 +16,7 @@ import {
 import FindBar from '$lib/editor/find/FindBar.svelte';
 import { NO_FIND_OPTIONS, toggledFindOption, type FindOptions } from '$lib/editor/find/findOptions';
 import { trailingDebounce } from '$lib/trailingDebounce';
+import { jumpRevealEffect } from '$lib/editor/source/cmJumpReveal';
 
 type BarProps = {
 	query: string;
@@ -156,5 +157,9 @@ export function toggleSearchPanel(view: EditorView): boolean {
 }
 
 export function texpileSearch() {
-	return search({ top: true, createPanel: (view) => new TexpileSearchPanel(view) });
+	return search({
+		top: true,
+		createPanel: (view) => new TexpileSearchPanel(view),
+		scrollToMatch: (range, view) => jumpRevealEffect(view, range.from)
+	});
 }

@@ -54,7 +54,7 @@
 		{"name":"listtablename","hidden":true},
 		{"name":"makeintropages","doc":"Generate the introductory pages in the proper sequence."},
 		{"name":"mit","hidden":true},
-		{"name":"newblock","hidden":true},
+		{"name":"newblock","hidden":true,"args":[],"prints":" "},
 		{"name":"nocopyright","doc":"Don’t include a copyright notice at all."},
 		{"name":"officialmajor","args":[{"kind":"m","placeholder":"major's name"}],"doc":"Set the official major name (in the degree title). e.g., Electrical and Computer Engineering, Chemistry, Russian, or Entomology."},
 		{"name":"paragraph","args":[{"kind":"s"},{"kind":"o","placeholder":"short title"},{"kind":"m","placeholder":"title"}]},

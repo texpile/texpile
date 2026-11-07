@@ -122,7 +122,8 @@ export function createLeafSplice(options: BlockAssemblyOptions): Splice {
 					if (r.srcFrom < b && r.srcTo >= b) return b;
 					if (r.srcTo <= b && r.srcTo > end) end = r.srcTo;
 				}
-				return end < 0 ? b : end;
+				// a line-end comment the parse left out is no escape, and stays
+				return end < 0 || origin.text!.slice(end - base, b - base).includes('\n') ? b : end;
 			}
 			// at the leaf's own start there is no character before it, and the markup of the block and
 			// the escape of the first character cannot be told apart: the block is written afresh

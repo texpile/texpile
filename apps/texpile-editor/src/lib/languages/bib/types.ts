@@ -29,6 +29,8 @@ export type BiblatexReference = {
 
 	/** verbatim source from the .bib, written back untouched unless edited via the visual form. */
 	raw?: string;
+	printed?: string;
+	printedAuthor?: string;
 	/** best-effort short label for citation autocomplete. */
 	displayLabel?: string;
 	/** a % comment inside the entry body; the visual form can't round-trip it, so the entry demotes to raw. */

@@ -1,0 +1,10 @@
+.ProseMirror .drawn-panel {
+	display: inline-flex;
+	flex-direction: column;
+	align-items: center;
+	vertical-align: top;
+	margin: 0 0.5em;
+}
+.ProseMirror .drawn-panel-caption {
+	font-size: 0.9em;
+}

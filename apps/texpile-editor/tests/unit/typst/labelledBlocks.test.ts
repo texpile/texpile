@@ -74,7 +74,8 @@ describe('a trailing <label> keeps a block a block', () => {
 		it(`${name}: modelled iff the node can carry the label, else a raw island`, () => {
 			const plain = shape(`${body}\n`)[0];
 			const labelled = shape(`${body} <lbl>\n`)[0];
-			expect(labelled).toBe(canHoldLabel(plain) ? plain : 'raw_latex');
+			// a quote the blockquote cannot label is a call around its body, which can
+			expect(labelled).toBe(name === 'block_quote' ? 'typ_env' : canHoldLabel(plain) ? plain : 'raw_latex');
 		});
 
 		it(`${name}: both forms save byte-identically`, () => {

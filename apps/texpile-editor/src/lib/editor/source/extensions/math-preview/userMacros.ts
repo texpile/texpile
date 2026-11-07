@@ -4,7 +4,7 @@
 import { projectIntelStore } from '$lib/stores/projectIntel';
 import { callsIn, rolesOf, type CommandCall } from '$lib/languages/latex/knowledge/calls/commandCalls';
 import type { Argument, Role } from '$lib/languages/latex/knowledge/types';
-import { codeOnly } from '$lib/languages/latex/texCode';
+import { blankComments, codeOnly } from '$lib/languages/latex/texCode';
 import { definedIn, primitiveDefsIn } from '$lib/languages/latex/userDefinitions';
 
 export type MacroDef = {
@@ -45,9 +45,17 @@ function expansionOf(code: string, call: CommandCall | undefined): MacroDef | nu
 	);
 }
 
-/** scans comment-masked `code` for renderable macro definitions, a later one replacing an earlier */
-export function scanMacroBodies(code: string): Record<string, MacroDef> {
+/** `original` is the unmasked text, which gives back the verbatim body of a macro */
+export function scanMacroBodies(code: string, original?: string): Record<string, MacroDef> {
 	const found: FoundMacro[] = [];
+	let unmasked: string | undefined;
+	function bodyOf(at: number, body: string): string {
+		if (!original || !/^\s+|\s{2}/.test(body)) return body;
+		const from = code.indexOf(`{${body}}`, at) + 1;
+		if (from < 1) return body;
+		unmasked ??= blankComments(original);
+		return unmasked.slice(from, from + body.length);
+	}
 	let calls: Map<number, CommandCall> | null = null;
 	for (const d of definedIn(code, 'macro')) {
 		let def: MacroDef | null = null;
@@ -57,7 +65,7 @@ export function scanMacroBodies(code: string): Record<string, MacroDef> {
 		} else if (d.body !== undefined) {
 			const first = d.args[0];
 			if (d.body.length <= MAX_BODY && inlinable(d.args)) {
-				def = { def: d.body, args: d.args.length, ...(first?.kind === 'o' ? { optional: first.default } : {}) };
+				def = { def: bodyOf(d.at, d.body), args: d.args.length, ...(first?.kind === 'o' ? { optional: first.default } : {}) };
 			}
 		}
 		if (def) found.push({ at: d.at, name: d.name, def, provide: d.defines === 'provide' });
@@ -73,7 +81,11 @@ export function scanMacroBodies(code: string): Record<string, MacroDef> {
 
 /** scans text for renderable macro definitions. pure; cross-file merging happens in mathMacrosFor. */
 export function scanMacroDefinitions(text: string): Record<string, MacroDef> {
-	return scanMacroBodies(codeOnly(text));
+	return scanMacroBodies(codeOnly(text), text);
+}
+
+export function scanRegisterDefinitions(text: string): string[] {
+	return definedIn(codeOnly(text), 'macro').flatMap((d) => (d.register ? [d.name] : []));
 }
 
 let cache: { text: string; intel: unknown; macros: Record<string, MacroDef> } | null = null;

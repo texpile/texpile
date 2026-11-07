@@ -35,6 +35,12 @@ async function accept(typed: string, label: string): Promise<string> {
 	return text;
 }
 
+describe('accepting a command', () => {
+	it('puts braces after it when it takes an argument', async () => {
+		expect(await accept('\\textb', '\\textbf')).toBe('\\textbf{}');
+	});
+});
+
 describe('reopening the list after a completion', () => {
 	it('stays closed when the caret is still right after the name, so Enter makes a new line', async () => {
 		expect(await accept('\\[', '\\[')).toBe('\\[\\]');

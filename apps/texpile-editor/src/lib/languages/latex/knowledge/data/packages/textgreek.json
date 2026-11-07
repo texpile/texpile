@@ -20,7 +20,7 @@
 		{"name":"textEta"},
 		{"name":"textgamma"},
 		{"name":"textGamma"},
-		{"name":"textgreekfont","hidden":true},
+		{"name":"textgreekfont","hidden":true,"encoding":"LGR"},
 		{"name":"textgreekfontmap","doc":"If you need to customize the font substitutions, you can redefine \\textgreekfontmap."},
 		{"name":"textiota"},
 		{"name":"textIota"},

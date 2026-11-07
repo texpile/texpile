@@ -3,6 +3,9 @@ import { treeToProseMirror } from '$lib/languages/latex/parser/tree/importTree';
 import { sliceToLatex, looksLikeLatex, parseLatexFragment } from '$lib/editor/visual/extensions/latexClipboard';
 import { regenerateCopiedLabels } from '$lib/editor/visual/extensions/paste-uuid-fix';
 import { Slice } from 'prosemirror-model';
+import { EditorState } from 'prosemirror-state';
+import type { EditorView } from 'prosemirror-view';
+import { schema } from '$lib/languages/latex/schema/latexPMSchema';
 
 describe('latex clipboard bridge', () => {
 	it('copy: a block slice serializes to working LaTeX, an inline slice to its markup', () => {
@@ -41,7 +44,8 @@ describe('latex clipboard bridge', () => {
 		const eq = frag!.child(2);
 		expect(eq.type.name).toBe('block_math');
 		expect(eq.attrs.label).toBe('eq:x');
-		const relabeled = regenerateCopiedLabels(new Slice(frag!, 0, 0)).content.child(2);
+		const state = EditorState.create({ doc: schema.topNodeType.create(null, [schema.nodes.paragraph.create(), eq]) });
+		const relabeled = regenerateCopiedLabels(new Slice(frag!, 0, 0), { state } as EditorView).content.child(2);
 		expect(relabeled.attrs.label).toMatch(/^eq:x-copy-/);
 	});
 

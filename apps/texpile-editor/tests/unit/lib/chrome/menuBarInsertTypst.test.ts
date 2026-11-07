@@ -10,9 +10,15 @@ import { typstToProseMirror } from '$lib/languages/typst/visual/convert/converte
 import { editorViewStore } from '$lib/stores/editorStore';
 import { projectIntelStore } from '$lib/stores/projectIntel';
 import { activeFilePath } from '$lib/workspace/workspaceStore';
-import { makeTypstInserts } from '$lib/chrome/menubar/menuBarInsertTypst';
-import { makeInsertHandlers } from '$lib/chrome/menubar/menuBarInsert';
+import { makeTypstInserts } from '$lib/chrome/menubar/insert/menuBarInsertTypst';
+import { makeInsertHandlers } from '$lib/chrome/menubar/insert/menuBarInsert';
 import { symbolPicker } from '$lib/editor/symbols/symbolPicker.svelte';
+
+// jsdom has no layout; coordsAtPos only needs rects that exist
+if (!Range.prototype.getClientRects) {
+	Range.prototype.getClientRects = () => [] as unknown as DOMRectList;
+	Range.prototype.getBoundingClientRect = () => new DOMRect();
+}
 
 const para = (text: string) => typSchema.nodes.paragraph.create(null, typSchema.text(text));
 
@@ -88,6 +94,12 @@ describe('the Typst insert items', () => {
 		expect(view.state.doc.textContent).toBe('See @.');
 	});
 
+	it('opens the same picker for a citation and invents no key', async () => {
+		const view = editorWith('See .', '.');
+		await insert('citation');
+		expect(view.state.doc.textContent).toBe('See @.');
+	});
+
 	it('puts a label in as its chip', async () => {
 		const view = editorWith('Some words', ' words');
 		await insert('label');
@@ -107,7 +119,6 @@ describe('the Typst insert items', () => {
 
 	it('leaves every other item to the menu’s other handlers', async () => {
 		editorWith('Text.', 'Text');
-		expect(await insert('citation')).toBe(false);
 		expect(await insert('include')).toBe(false);
 	});
 });

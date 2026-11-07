@@ -200,7 +200,8 @@ describe('the menus a document narrows from its packages', () => {
 		const preamble = '\\documentclass{article}\n\\usepackage{natbib,cleveref}\n\\title{A}\n\\begin{document}\n';
 		buffer.openTex('C:/ws/main.tex', 'SOURCE', '\n');
 		buffer.adoptParsed({ ...parsedWith('text'), preamble }, 'SOURCE');
-		buffer.editFrontmatter('title', 'B');
+		const at = preamble.indexOf('{A}') + 1;
+		buffer.editFrontmatter({ before: at, after: preamble.length - at - 1 }, 'B');
 		await filePackageNames(preamble);
 		await new Promise((r) => setTimeout(r, 0));
 		expect(templateFeaturesStore.current.citationVariants).toContain('citep');

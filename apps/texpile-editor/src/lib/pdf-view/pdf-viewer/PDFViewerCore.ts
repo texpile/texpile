@@ -21,6 +21,7 @@ import { PDFPageView, RenderingStates } from './PDFPageView';
 import { SimpleLinkService } from './SimpleLinkService';
 import { wheelZoomFactor } from '$lib/preview/zoom/wheelZoom';
 import { keepPointUnder } from '$lib/preview/zoom/zoomAnchor';
+import { jumpScrollShift } from '$lib/editor/jumpPlacement';
 
 export type PDFViewerOptions = {
 	container: HTMLElement;
@@ -156,8 +157,9 @@ export class PDFViewerCore {
 		const boxH = Math.abs(b.y - a.y);
 		const pageRect = pageView.div.getBoundingClientRect();
 		const contRect = this.container.getBoundingClientRect();
-		const top = this.container.scrollTop + (pageRect.top - contRect.top) + topPx - this.container.clientHeight / 3;
-		this.container.scrollTo({ top: Math.max(0, top), behavior: 'smooth' });
+		const boxTop = pageRect.top + topPx;
+		const shift = jumpScrollShift({ top: boxTop, bottom: boxTop + boxH }, contRect);
+		if (shift != null) this.container.scrollTo({ top: Math.max(0, this.container.scrollTop + shift), behavior: 'smooth' });
 		pageView.highlight(left, topPx, boxW, boxH);
 	}
 

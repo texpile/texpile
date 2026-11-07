@@ -19,6 +19,7 @@
 	import { padTablesInState } from '$lib/editor/visual/padTables';
 	import { tableViewOnly } from '$lib/editor/visual/extensions/table/tableViewOnly';
 	import { wholeTableEdits } from '$lib/editor/visual/extensions/table/wholeTableEdits';
+	import { tableArrowEntry } from '$lib/editor/visual/extensions/table/tableArrowEntry';
 	import { crossBlockEdits } from '$lib/editor/visual/extensions/crossBlockEdits';
 	import { firstRowHeader } from './firstRowHeader';
 	import { tableAlignment } from './tableAlignment';
@@ -36,9 +37,16 @@
 	import { groupView } from '$lib/editor/visual/groupView.svelte';
 	import { revealBuiltEditor, BUILDING_CLASS } from '$lib/editor/visual/revealBuiltEditor';
 	import { preferences } from '$lib/stores/preferencesStore.svelte';
-	import { toggleHeading, toggleBlockQuote } from '$lib/editor/visual/helperCommands';
+	import { toggleHeading, toggleBlockQuote, insertHardBreak } from '$lib/editor/visual/helperCommands';
 	import { selectAllScoped } from '$lib/editor/visual/selectAllScoped';
-	import { extendToDocEnd, extendToDocStart, selectDocEnd, selectDocStart } from '$lib/editor/visual/selectDocBoundary';
+	import {
+		extendToDocEnd,
+		extendToDocStart,
+		holdAtDocEnd,
+		holdAtDocStart,
+		selectDocEnd,
+		selectDocStart
+	} from '$lib/editor/visual/selectDocBoundary';
 	import { createMathField } from '$lib/editor/visual/extensions/mathlivebridge/mlcommands';
 	import { createCodeBlock } from '$lib/editor/visual/extensions/codemirrorbridge/cmcommands';
 	import { cmarrowHandlers } from '$lib/editor/visual/extensions/codemirrorbridge/cmarrowhandler';
@@ -55,6 +63,7 @@
 	import { tablePlaceholderPlugin } from '$lib/editor/visual/extensions/table/tablePlaceholderPlugin';
 	import { createWordCountPlugin } from '$lib/editor/visual/extensions/wordcount/wordCountPlugin';
 	import { createTocPlugin } from '$lib/editor/visual/extensions/tableofcontents/tocPlugin';
+	import { listNumbersPlugin } from '$lib/editor/visual/extensions/listNumbers/listNumbers';
 	import { createPersistentSelectionPlugin } from '$lib/editor/visual/extensions/persistentSelection/persistentSelectionPlugin';
 	import { proofreadPlugin, spellClickBoundaryPlugin, spellProblemKeymap } from '$lib/editor/spellcheck/spellcheckplugin';
 	import type { SpellLanguage } from '$lib/editor/spellcheck/languages/spellLanguages';
@@ -66,7 +75,7 @@
 	import { dropPastNodeViewsPlugin } from '$lib/editor/visual/extensions/dropPastNodeViews';
 	import { createNodeFlashPlugin } from '$lib/editor/visual/extensions/flash-plugin';
 	import { remoteCursorsPlugin } from '$lib/editor/visual/extensions/remoteCursors';
-	import { MD_BLOCK_INSERT_ITEMS } from './blockInsertItems';
+	import { markdownInsertItems } from './blockInsertItems';
 	import { CodeBlockView } from '$lib/editor/visual/extensions/codemirrorbridge/cmview.svelte';
 	import { RawLatexView } from '$lib/editor/visual/extensions/raw-latex/rawLatexView';
 	import { InlineLatexView } from '$lib/editor/visual/extensions/raw-latex/inlineLatexView';
@@ -86,6 +95,7 @@
 	import '$lib/editor/visual/extensions/image/styles/withResize.css';
 	import '$lib/editor/visual/extensions/image/styles/sideResize.css';
 	import '$lib/editor/visual/styles/cursor.css';
+	import '$lib/editor/visual/styles/document.css';
 
 	type Props = {
 		/** false in a parked editor group: no typing, and it follows the focused editor on the same file */
@@ -187,6 +197,7 @@
 			tableViewOnly,
 			tableEditing(),
 			wholeTableEdits,
+			tableArrowEntry,
 			crossBlockEdits,
 			visualSmartPaste('markdown', mdSchema, pasteMarkdownSource),
 			firstRowHeader,
@@ -207,6 +218,10 @@
 				Backspace: undoInputRule,
 				'Mod-a': selectAllScoped,
 				'Mod-Home': selectDocStart,
+				ArrowUp: holdAtDocStart,
+				ArrowLeft: holdAtDocStart,
+				ArrowDown: holdAtDocEnd,
+				ArrowRight: holdAtDocEnd,
 				'Mod-End': selectDocEnd,
 				'Shift-Mod-Home': extendToDocStart,
 				'Shift-Mod-End': extendToDocEnd,
@@ -214,6 +229,7 @@
 				'Mod-i': toggleMark(mdSchema.marks.em),
 				'Mod-`': toggleMark(mdSchema.marks.code),
 				'Mod-Shift-x': toggleMark(mdSchema.marks.s),
+				'Shift-Enter': insertHardBreak,
 				'Mod-Shift-b': toggleBlockQuote(),
 				'Mod-Shift-`': createCodeBlock(),
 				// Word/Docs convention, same as the tex editor; markdown gets all six levels
@@ -241,6 +257,7 @@
 			tablePlaceholderPlugin(),
 			createWordCountPlugin(),
 			createTocPlugin(),
+			listNumbersPlugin(),
 			createPersistentSelectionPlugin(),
 			spellClickBoundaryPlugin, // must precede proofreadPlugin; see its comment
 			proofreadPlugin(() => spellLanguage),
@@ -249,7 +266,7 @@
 			wordSelectionTrim(),
 			dragSelectionPlugin(),
 			// the Notion-style + / drag / delete gutter, with the markdown insert set
-			createBlockHandlePlugin({ items: MD_BLOCK_INSERT_ITEMS }),
+			createBlockHandlePlugin({ items: markdownInsertItems }),
 			wholeBlockDragPlugin(),
 			dropPastNodeViewsPlugin(),
 			createNodeFlashPlugin(),

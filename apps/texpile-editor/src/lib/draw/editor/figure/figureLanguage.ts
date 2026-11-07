@@ -74,9 +74,10 @@ export type ShapeStyle = {
 	/** percent, or `custom` */
 	opacity: string | null;
 	corners: 'sharp' | 'rounded' | null;
+	pattern: string | null;
 };
 
-export type StyleFieldSet = Record<'stroke' | 'fill' | 'width' | 'dash' | 'arrows' | 'text' | 'corners' | 'opacity', boolean>;
+export type StyleFieldSet = Record<'stroke' | 'fill' | 'width' | 'dash' | 'arrows' | 'text' | 'corners' | 'opacity' | 'pattern', boolean>;
 
 export type StatementInfo = {
 	/** what it is, by an id the editor keys its icons and counts by; a command it does not know is its own */
@@ -339,6 +340,7 @@ export type FigureLanguage = {
 
 	readStyle(source: string, st: FigureStatement): ShapeStyle | null;
 	writeStyle(source: string, st: FigureStatement, change: Partial<ShapeStyle>): string | null;
+	withStyleNeeds?(source: string, change: Partial<ShapeStyle>): string;
 	styleChoices: {
 		colors: FigureColors;
 		widths: readonly string[];
@@ -346,5 +348,6 @@ export type FigureLanguage = {
 		arrows: readonly { value: string; label: string }[];
 		textSizes: readonly { value: string; label: string }[];
 		opacities: readonly string[];
+		patterns: readonly { value: string; label: string }[];
 	};
 };

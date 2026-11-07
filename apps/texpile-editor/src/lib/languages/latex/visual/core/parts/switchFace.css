@@ -1,0 +1,11 @@
+.ProseMirror .drawn-switch {
+	margin-inline: 0.15em;
+	font-family: var(--font-mono, monospace);
+	font-size: 0.7rem;
+	color: var(--faint-text);
+	border-radius: calc(var(--radius-base) * 0.5);
+}
+.ProseMirror .drawn-switch:hover {
+	color: var(--muted-text);
+	background: color-mix(in srgb, var(--color-primary-500) 12%, transparent);
+}

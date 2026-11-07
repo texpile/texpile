@@ -154,7 +154,17 @@ async function drawOne(d: Daemon, picture: string): Promise<unknown> {
 	});
 	const resultPath = path.join(d.dir, 'work', 'result.json');
 	const written = fs.existsSync(resultPath) ? fs.readFileSync(resultPath, 'utf8') : null;
-	const empty = { w: 0, h: 0, d: 0, marks: [] as unknown[], recs: [] as unknown[], fonts: [] as ReportedFont[], shadings: {}, open: false };
+	const empty = {
+		w: 0,
+		h: 0,
+		d: 0,
+		marks: [] as unknown[],
+		recs: [] as unknown[],
+		fonts: [] as ReportedFont[],
+		shadings: {},
+		patterns: {},
+		open: false
+	};
 	const { open, ...drawn } = written ? (JSON.parse(written) as typeof empty) : empty;
 	noteFontFiles(drawn.fonts);
 	// a brace the picture left open keeps TeX inside it: the next picture needs a fresh process

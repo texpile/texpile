@@ -4,7 +4,7 @@
 // left setting nothing goes with it
 import type { Node } from 'prosemirror-model';
 import type { EditorState, Transaction } from 'prosemirror-state';
-import { namedArg, readTypstCall, rewrittenCall, typstSyntax, type TypstCall } from './extensions/drawn/typstCall';
+import { namedArg, readTypstCall, rewrittenCall, typstSyntax, type TypstCall } from './core/reading/typstCall';
 
 const NUMBERING = '"(1)"';
 const RULE = `#set math.equation(numbering: ${NUMBERING})`;

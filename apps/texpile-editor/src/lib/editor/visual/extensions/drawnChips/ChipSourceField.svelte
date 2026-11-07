@@ -1,10 +1,11 @@
 <script lang="ts">
 	import { untrack } from 'svelte';
 	import { chipSourceEditor, type ChipSourceEditor, type ChipSourceEditorOptions } from './chipSourceEditor';
+	import type { ChipPanelAction } from './chipPanel.svelte';
 	import * as Panel from './panel';
 
 	// heading: the LaTeX or Typst title over the field
-	type Props = Omit<ChipSourceEditorOptions, 'text'> & { source: string; heading?: boolean };
+	type Props = Omit<ChipSourceEditorOptions, 'text'> & { source: string; heading?: boolean; action?: ChipPanelAction | null };
 
 	const props: Props = $props();
 
@@ -24,7 +25,12 @@
 
 <div class="flex flex-col gap-2">
 	{#if props.heading !== false}
-		<Panel.Header title={props.language === 'typst' ? 'Typst' : 'LaTeX'} />
+		<Panel.Header title={props.language === 'typst' ? 'Typst' : 'LaTeX'}>
+			{#if props.action}
+				{@const action = props.action}
+				<Panel.Button onclick={() => action.run()}><span class="cap-center">{action.label}</span></Panel.Button>
+			{/if}
+		</Panel.Header>
 	{/if}
 	<div class="border-surface-300-700 rounded-base focus-within:border-primary-500 overflow-hidden border" {@attach attachEditor}></div>
 </div>

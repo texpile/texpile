@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { readCommandOptions, writeCommandOptions } from '$lib/draw/tikz/source/options/optionList';
-import { readStyle, withArrows, withFill, withStroke, withWidth } from '$lib/draw/tikz/source/options/styleOptions';
+import { readStyle, withArrows, withFill, withPattern, withStroke, withWidth } from '$lib/draw/tikz/source/options/styleOptions';
 import { readPicture } from '$lib/draw/tikz/source/picture';
 
 const SRC = String.raw`\begin{tikzpicture}[scale=2]
@@ -32,5 +32,13 @@ describe('styling', () => {
 
 		const inner = readCommandOptions(SRC, pic.statements[3])!;
 		expect(writeCommandOptions(SRC, inner, withArrows(inner.items, '->'))).toContain('\\draw[->] (0,0)');
+	});
+
+	it('moves the fill color onto a pattern and back', () => {
+		const patterned = withPattern(['red'], 'fill', 'dots');
+		expect(patterned).toEqual(['pattern=dots', 'pattern color=red']);
+		expect(readStyle(patterned, 'fill')).toMatchObject({ pattern: 'dots', fill: 'red' });
+		expect(withFill(patterned, 'fill', 'blue')).toEqual(['pattern=dots', 'pattern color=blue']);
+		expect(withPattern(patterned, 'fill', '')).toEqual(['red']);
 	});
 });

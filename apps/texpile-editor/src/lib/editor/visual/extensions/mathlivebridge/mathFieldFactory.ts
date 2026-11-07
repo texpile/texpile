@@ -25,6 +25,7 @@ export type FieldListeners = {
 	focus: () => void;
 	blur: () => void;
 	keydown: (e: KeyboardEvent) => void;
+	edgeKeydown: (e: KeyboardEvent) => void;
 	/** every way of asking for the field's menu: right-click, its menu button, a long press */
 	menu: (e: MouseEvent) => void;
 };
@@ -53,6 +54,7 @@ export function buildMathField(
 	field.addEventListener('focus', listeners.focus);
 	field.addEventListener('blur', listeners.blur);
 	field.addEventListener('keydown', listeners.keydown);
+	field.addEventListener('keydown', listeners.edgeKeydown, { capture: true });
 	// capture: ahead of mathlive, which shows its own menu unless this one cancels the event
 	field.addEventListener('contextmenu', listeners.menu, { capture: true });
 	// capture: mathlive stops the Space that completes a \command
@@ -140,6 +142,7 @@ export function releaseMathField(
 	field.removeEventListener('focus', listeners.focus);
 	field.removeEventListener('blur', listeners.blur);
 	field.removeEventListener('keydown', listeners.keydown);
+	field.removeEventListener('keydown', listeners.edgeKeydown, { capture: true });
 	field.removeEventListener('contextmenu', listeners.menu, { capture: true });
 	field.removeEventListener('keydown', completeWithPlaceholder, { capture: true });
 	field.removeEventListener('keydown', mathSearchKeydown, { capture: true });

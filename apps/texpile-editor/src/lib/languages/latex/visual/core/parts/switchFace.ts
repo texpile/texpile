@@ -1,0 +1,7 @@
+import { faceElement, tippedFace, type ChipFace } from '$lib/editor/visual/extensions/drawnChips/chipFace';
+import './switchFace.css';
+
+export function switchFace(name: string, source: string): ChipFace {
+	const dom = faceElement('span', 'drawn-switch', name);
+	return tippedFace(dom, source);
+}

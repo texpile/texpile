@@ -19,6 +19,7 @@
 		/** the document's own undo and redo, so the figure has no second history */
 		history?: HostHistory;
 		picture?: number;
+		onshowcode?: (at: number) => void;
 		children: Snippet;
 	};
 	const props: Props = $props();
@@ -36,7 +37,13 @@
 			)
 	);
 	const gesture = new CanvasGesture(editor);
-	const context = setFigureEditor(new FigureEditorContext(editor, gesture));
+	const context = setFigureEditor(
+		new FigureEditorContext(
+			editor,
+			gesture,
+			untrack(() => props.onshowcode ?? null)
+		)
+	);
 	untrack(() => props.onready?.(editor));
 	onDestroy(() => editor.destroy());
 </script>

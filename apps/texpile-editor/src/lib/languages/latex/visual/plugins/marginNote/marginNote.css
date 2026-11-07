@@ -1,0 +1,7 @@
+.ProseMirror .drawn-margin-note {
+	padding: 0 0.35em;
+	border-radius: var(--radius-base);
+	background: color-mix(in srgb, var(--faint-text) 14%, transparent);
+	color: var(--muted-text);
+	font-size: 0.85em;
+}

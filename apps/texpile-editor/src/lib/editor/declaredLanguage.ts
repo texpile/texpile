@@ -41,9 +41,20 @@ function typstTextLanguage(head: string): DeclaredLanguage | undefined {
 	return undefined;
 }
 
+let last: { preamble: string; language: DeclaredLanguage | undefined } | null = null;
+const BEGIN_DOCUMENT = /^\\begin\s*\{document\}/;
+
 /** undefined when the source names no language */
 export function declaredLanguage(source: string): DeclaredLanguage | undefined {
-	const head = source.slice(0, documentWrapperOf(source)?.begin.from ?? HEAD);
+	if (last && source.startsWith(last.preamble) && BEGIN_DOCUMENT.test(source.slice(last.preamble.length, last.preamble.length + 40)))
+		return last.language;
+	const begin = documentWrapperOf(source)?.begin.from;
+	const language = languageIn(source.slice(0, begin ?? HEAD));
+	last = begin === undefined ? null : { preamble: source.slice(0, begin), language };
+	return language;
+}
+
+function languageIn(head: string): DeclaredLanguage | undefined {
 	const code = codeOnly(head);
 	const babel = callsIn(code, ['package']).find((call) =>
 		call.args.some((a) => rolesOf(a.arg).includes('package') && a.values.some((v) => isBabelPackage(v.value)))

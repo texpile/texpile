@@ -2,7 +2,7 @@ import { describe, it, expect } from 'vitest';
 import { gen, regen, docOf, para } from './mdTestUtils';
 import { mdSchema } from '$lib/languages/markdown/visual/schema';
 import { markdownToProseMirror } from '$lib/languages/markdown/visual/converter';
-import { serializeToMarkdown } from '$lib/languages/markdown/visual/serializer';
+import { serializeToMarkdown } from '$lib/languages/markdown/visual/serialize/serializer';
 
 describe('inline constructs', () => {
 	// M12
@@ -61,5 +61,25 @@ describe('inline constructs', () => {
 			.doc.child(0)
 			.forEach((c) => c.marks.forEach((m) => (href = String(m.attrs.href))));
 		expect(href).toBe('a\nb');
+	});
+
+	it('a link keeps its text when the text holds a bare pair of brackets', () => {
+		expect(gen('[parse(source[, options])](docs/p.md)\n')).toBe('[parse(source\\[, options\\])](docs/p.md)');
+	});
+});
+
+describe('emphasis straight after other emphasis', () => {
+	it('keeps both when bold ends where italic starts, and the other way round', () => {
+		const { strong, em } = mdSchema.marks;
+		for (const [first, second] of [
+			[strong, em],
+			[em, strong]
+		]) {
+			const out = serializeToMarkdown(docOf(para(mdSchema.text('a', [first.create()]), mdSchema.text('b', [second.create()]))));
+			const back = markdownToProseMirror(out).doc.firstChild!;
+			expect(back.childCount, out).toBe(2);
+			expect(back.child(0).marks.map((m) => m.type.name)).toEqual([first.name]);
+			expect(back.child(1).marks.map((m) => m.type.name)).toEqual([second.name]);
+		}
 	});
 });

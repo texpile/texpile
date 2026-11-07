@@ -239,9 +239,7 @@ describe('saves that read back as the document', () => {
 		const table = '\\begin{tabular}{ll}\n{Fully connected }     &  x \\\\\n\\end{tabular}\n';
 		const afterCellChip = (state: EditorState) => {
 			let at = -1;
-			state.doc.descendants(
-				(n, pos) => void (n.type.name === 'inline_latex' && n.textContent.startsWith('{Fully') && (at = pos + n.nodeSize))
-			);
+			state.doc.descendants((n, pos) => void (n.isText && n.text?.startsWith('Fully') && (at = pos + n.nodeSize)));
 			return state.apply(state.tr.insertText('X', at));
 		};
 		expect(await savedDifference(table, afterCellChip)).toBeNull();

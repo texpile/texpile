@@ -25,7 +25,8 @@ describe('block conversion reads environment facts from the package table', () =
 	it('keeps a display holding a diagram as a chip, and one holding a matrix as a formula', () => {
 		for (const src of [
 			'\\[\n\\begin{tikzcd}\nA \\arrow[r] & B\n\\end{tikzcd}\n\\]',
-			'\\begin{equation}\n\\begin{tikzcd}\nA\n\\end{tikzcd}\n\\end{equation}'
+			'\\begin{equation}\n\\begin{tikzcd}\nA\n\\end{tikzcd}\n\\end{equation}',
+			'\\[ \\begin{tikzcd} A \\arrow[r] & B \\end{tikzcd} \\]'
 		]) {
 			const [block] = blocks(src);
 			expect(block.type.name).toBe('raw_latex');

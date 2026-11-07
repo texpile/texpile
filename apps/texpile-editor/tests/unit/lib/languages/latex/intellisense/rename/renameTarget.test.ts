@@ -14,6 +14,7 @@ describe('renameTargetAt', () => {
 		expect(await targetIn(text, 'sec:a')).toMatchObject({ kind: 'label', name: 'sec:a' });
 		expect(await targetIn(text, 'knuth84')).toMatchObject({ kind: 'cite', name: 'knuth84' });
 		expect(await targetIn(text, 'cpu')).toMatchObject({ kind: 'glossary', name: 'cpu' });
+		expect(await targetIn('See \\ref{sec:a}.', 'sec:a')).toMatchObject({ kind: 'label', name: 'sec:a' });
 	});
 
 	it('finds a key where it is defined, which hover leaves out', async () => {
@@ -28,5 +29,6 @@ describe('renameTargetAt', () => {
 		expect(await targetIn(text, 'section')).toBeNull();
 		expect(await targetIn(text, 'Intro')).toBeNull();
 		expect(await targetIn(text, '*')).toBeNull();
+		expect(await targetIn('\\begin{itemize}\\end{itemize}', 'itemize')).toBeNull();
 	});
 });

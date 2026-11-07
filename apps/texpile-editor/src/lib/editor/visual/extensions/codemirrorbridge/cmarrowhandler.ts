@@ -1,6 +1,7 @@
 import { keymap } from 'prosemirror-keymap';
 import { Selection, TextSelection, type EditorState, type Transaction } from 'prosemirror-state';
 import type { EditorView } from 'prosemirror-view';
+import { drawnChipOf } from '$lib/editor/visual/extensions/drawnChips/DrawnChipView';
 
 // the inline nodes a CodeMirror is built into, which the caret should land inside rather than skip
 const INLINE_CM = new Set(['inline_latex']);
@@ -25,7 +26,7 @@ export function enterInlineCm(dir: 1 | -1) {
 	};
 }
 
-// at a textblock edge, arrow the cursor into an adjacent code block
+// at a textblock edge, arrow the cursor into an adjacent code or raw block, which the browser cannot walk into; a drawn one holds no caret
 function cmarrowHandler(dir: 'left' | 'right' | 'up' | 'down') {
 	const inline = dir === 'left' ? enterInlineCm(-1) : dir === 'right' ? enterInlineCm(1) : null;
 	return (state: EditorState, dispatch?: (tr: Transaction) => void, view?: EditorView) => {
@@ -34,7 +35,8 @@ function cmarrowHandler(dir: 'left' | 'right' | 'up' | 'down') {
 			const side = dir == 'left' || dir == 'up' ? -1 : 1;
 			const $head = state.selection.$head;
 			const nextPos = Selection.near(state.doc.resolve(side > 0 ? $head.after() : $head.before()), side);
-			if (nextPos.$head && nextPos.$head.parent.type.name == 'code_block') {
+			const block = nextPos.$head?.parent;
+			if (block?.type.spec.code && !drawnChipOf(block)) {
 				dispatch?.(state.tr.setSelection(nextPos));
 				return true;
 			}

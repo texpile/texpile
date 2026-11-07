@@ -6,9 +6,11 @@
 // Schema objects, and a MarkType from one must never be dispatched into another.
 import { toggleSearchPanel } from '$lib/editor/source/extensions/search-panel/searchPanel.svelte';
 import { EditorView as CMView } from '@codemirror/view';
-import { yUndoManagerKeymap, ySyncFacet } from 'y-codemirror.next';
+import { ySyncFacet } from 'y-codemirror.next';
+import { fileHistoryKeymap } from '$lib/editor/source/cmUndoKeys';
 import { undoVisual, redoVisual } from '$lib/editor/visual/visualUndo';
 import { toggleMark } from 'prosemirror-commands';
+import { replaceSelectionWithBlock } from '$lib/editor/visual/insert/insertRun';
 import { toggleHeading, toggleBlockQuote } from '$lib/editor/visual/helperCommands';
 import { editorViewStore, displaySearchBarStore, pdfFindToggle, viewMode, sourceCmView } from '$lib/stores/editorStore';
 import { pdfFindFor } from '$lib/preview/pdfViewFind';
@@ -54,7 +56,7 @@ export function insertNode(make: (state: EditorState) => PMNode | null) {
 	if (!v) return;
 	const node = make(v.state);
 	if (node) {
-		v.dispatch(v.state.tr.replaceSelectionWith(node));
+		v.dispatch(replaceSelectionWithBlock(v.state.tr, node));
 		v.focus();
 	}
 }
@@ -97,7 +99,7 @@ export function editSelect(value: string) {
 	// source mode: the search UI is CodeMirror's, and the history the file's text binding keeps
 	const cm = activeCm();
 	if (cm) {
-		const step = value === 'undo' ? yUndoManagerKeymap[0] : value === 'redo' ? yUndoManagerKeymap[2] : null;
+		const step = value === 'undo' ? fileHistoryKeymap[0] : value === 'redo' ? fileHistoryKeymap[2] : null;
 		if (step && cm.state.facet(ySyncFacet)) step.run?.(cm);
 		else if (value === 'find') {
 			toggleSearchPanel(cm); // opens focused, or closes, like the visual editor's bar

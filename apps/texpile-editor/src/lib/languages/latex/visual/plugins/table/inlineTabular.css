@@ -1,0 +1,7 @@
+.ProseMirror .drawn-tabular {
+	display: inline-grid;
+	vertical-align: middle;
+}
+.ProseMirror .drawn-tabular-cell {
+	padding: 0 0.25em;
+}

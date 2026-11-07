@@ -1,6 +1,6 @@
 // the package files a document loads: the kernel, each use and what it loads in turn
 import { packageUsesIn, type PackageUse } from './packageUses';
-import { BASE_ID } from '../../knowledge/fileIds';
+import { BASE_ID, KERNEL_ID, fileIdOf } from '../../knowledge/fileIds';
 import { documentWrapperOf } from '../../syntax/documentWrapper';
 import { loadFiles, type LoadedFile } from '../../knowledge/loadedFiles';
 import { userFilesVersion } from '../../knowledge/userFiles';
@@ -78,6 +78,12 @@ function documentUses(text: string): PackageUse[] {
 /** what the open file and the rest of the project load */
 export function documentPackages(text: string): Promise<LoadedFile[]> {
 	return loadedPackages(documentUses(text));
+}
+
+export function documentFileIds(text: string): Set<string> {
+	const uses = documentUses(text);
+	const named = uses.some((u) => u.name.startsWith('class-')) ? [] : [DEFAULT_CLASS];
+	return new Set([KERNEL_ID, ...[...named, ...uses.map((u) => u.name)].map(fileIdOf)]);
 }
 
 function namesOf(loaded: LoadedFile[]): Set<string> {

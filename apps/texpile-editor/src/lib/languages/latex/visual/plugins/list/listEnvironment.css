@@ -1,0 +1,19 @@
+.ProseMirror .drawn-list {
+	margin: calc(var(--spacing) * 1.5) 0;
+	padding-left: 1.5em;
+}
+.ProseMirror .drawn-list-ol {
+	list-style: decimal;
+}
+.ProseMirror .drawn-list-ul {
+	list-style: disc;
+}
+.ProseMirror .drawn-list-dl {
+	padding-left: 0;
+}
+.ProseMirror .drawn-list-dl dt {
+	font-weight: 700;
+}
+.ProseMirror .drawn-list-dl dd {
+	margin-left: 1.5em;
+}

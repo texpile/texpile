@@ -6,14 +6,16 @@ import { CHARACTER_WORDS } from './plainTextCommands';
 import { applyLigaturesToNodes } from './inlineRuns';
 import { bindTextToChips } from './chipText';
 import { noteSpans, spansOf, standsFor, bytesSpan } from '$lib/editor/visual/sourceSpans';
-import { PieceCursor, type Piece } from '../walk/pieceCursor';
+import { isNamed, PieceCursor, type Piece } from '../walk/pieceCursor';
 import { bodyOf, type Stretch } from '../walk/stretch';
 import { mandatoryArgs, argText, hasUnclosedGroup } from '../walk/treeArgs';
-import { chipOf, sliceOf, sourceText, type TreeImport, type Span } from './treeImport';
+import { sliceOf, type TreeImport, type Span } from '../importCore/treeImport';
+import { chipOf, sourceText } from '../importCore/importChips';
 import { commandName, isSamelineComment, readImportCall, type ImportCall } from './treeCalls';
-import { treeMacroHandlers } from './macroTree';
-import { containsTabularIn } from './tables/tableShapes';
+import { commandImports } from '$lib/languages/latex/visual/core/plugin/documentMap';
+import { containsTabularIn } from './bodyUnits';
 import { drawnCommand } from '$lib/languages/latex/drawnCommands';
+import { bareSwitch, switchGroup } from './textStyleRuns';
 
 /** what came just before, for the chips that take the group or space after them */
 export type InlinePrev = { command: string | null; to: number };
@@ -25,13 +27,9 @@ function isCommand(p: Piece): boolean {
 	return p.kind === 'node' && (p.node.name === 'ControlWord' || p.node.name === 'ControlSymbol');
 }
 
-export function isNamed(p: Piece | null, name: string): boolean {
-	return !!p && p.kind === 'node' && p.node.name === name;
-}
-
 /** the converter reads these commands itself, so their calls say nothing of an unknown command's arguments */
 export function convertsItself(name: string): boolean {
-	return treeMacroHandlers.has(name) || name === 'indent' || name === 'noindent';
+	return commandImports.has(name) || name === 'indent' || name === 'noindent';
 }
 
 export function readCallAt(im: TreeImport, cursor: PieceCursor, piece: Piece): ImportCall {
@@ -82,8 +80,9 @@ export function scopesSwitch(im: TreeImport, group: SyntaxNode): boolean {
 	return false;
 }
 
-export function inlineOf(im: TreeImport, s: Stretch, ctx: ConversionContext): PmNode[] {
+export function inlineOf(im: TreeImport, s: Stretch, outer: ConversionContext): PmNode[] {
 	const result: PmNode[] = [];
+	let ctx = outer;
 	const cursor = new PieceCursor(im.src, s);
 	let prev: InlinePrev | null = null;
 	for (let piece = cursor.next(); piece; piece = cursor.next()) {
@@ -100,6 +99,12 @@ export function inlineOf(im: TreeImport, s: Stretch, ctx: ConversionContext): Pm
 			continue;
 		}
 		const call = isCommand(piece) ? readCallAt(im, cursor, piece) : null;
+		const styled = call && bareSwitch(im, cursor, call, ctx);
+		if (styled) {
+			ctx = styled;
+			prev = null;
+			continue;
+		}
 		const converted = call ? callInline(im, call, ctx) : pieceInline(im, piece, ctx);
 		if (converted) result.push(...converted);
 		prev = call ? { command: call.raw == null ? call.name : null, to: call.to } : null;
@@ -127,7 +132,7 @@ export function callInline(im: TreeImport, call: ImportCall, ctx: ConversionCont
 	if (call.raw != null) return [chipOf(im, call, ctx, call.raw)];
 	if (hasUnclosedGroup(call)) return [chipOf(im, call, ctx)];
 	if (ignoredMacros.has(call.name)) return null;
-	const handler = treeMacroHandlers.get(call.name);
+	const handler = commandImports.get(call.name);
 	if (handler) {
 		const result = handler(im, call, ctx);
 		// a block made here (\includegraphics to an image) has no place in inline content, so the call stays a chip
@@ -173,6 +178,9 @@ export function pieceInline(im: TreeImport, piece: Piece, ctx: ConversionContext
 
 function groupInline(im: TreeImport, group: SyntaxNode, ctx: ConversionContext): PmNode[] | null {
 	const body = bodyOf(group);
+	const styled = switchGroup(im, group, ctx);
+	const run = styled && inlineOf(im, styled.rest, styled.ctx);
+	if (run?.length) return run;
 	// exactly the pair the serializer writes for a highlight with its own color
 	const pair = highlightPair(im, body);
 	if (pair) return inlineOf(im, pair.text, { ...ctx, marks: [...ctx.marks, { type: 'highlight', attrs: { color: pair.color } }] });

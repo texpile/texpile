@@ -18,6 +18,12 @@ describe('glossary/acronym completion', () => {
 		expect(await labels(completeAt(doc))).toContain('gpu');
 	});
 
+	it('describes a glossary entry by its description', async () => {
+		const doc = '\\newglossaryentry{gpu}{name={GPU},description={graphics processing unit}}\n\\gls{gp';
+		const r = await completeAt(doc);
+		expect(r?.options.find((o) => o.label === 'gpu')?.detail).toContain('graphics processing unit');
+	});
+
 	it('completes \\acs{...} from \\newacronym', async () => {
 		const doc = '\\newacronym{cpu}{CPU}{Central Processing Unit}\n\\acs{cp';
 		expect(await labels(completeAt(doc))).toContain('cpu');

@@ -1,5 +1,6 @@
 <script lang="ts">
 	import type { Drawing } from '../../drawing/drawing.types';
+	import { TILE_COPIES, tileMatrix } from '../../drawing/patternTile';
 
 	type Props = { drawing: Drawing; uid: string };
 	const props: Props = $props();
@@ -11,10 +12,33 @@
 
 <defs>
 	{#each props.drawing.gradients as g (g.id)}
-		{#if g.kind === 'hatch'}
-			<pattern id="{props.uid}-{g.id}" patternUnits="userSpaceOnUse" width="4" height="4" patternTransform="rotate(-45)">
-				<rect width="0.8" height="4" fill={g.stops[0].color} />
-			</pattern>
+		{#if g.kind === 'pattern'}
+			{#if g.tile}
+				{@const tile = g.tile}
+				<pattern
+					id="{props.uid}-{g.id}"
+					patternUnits="userSpaceOnUse"
+					width={tile.width}
+					height={tile.height}
+					patternTransform={tileMatrix(tile)}
+				>
+					{#each TILE_COPIES as [i, j] (`${i} ${j}`)}
+						<g transform="translate({i * tile.width} {j * tile.height})">
+							{#each tile.paths as p, n (n)}
+								<path
+									d={p.d}
+									fill={p.fill ?? 'none'}
+									fill-rule={p.evenOdd ? 'evenodd' : 'nonzero'}
+									stroke={p.stroke ?? undefined}
+									stroke-width={p.stroke ? p.strokeWidth : undefined}
+									stroke-linecap={p.stroke ? p.cap : undefined}
+									stroke-linejoin={p.stroke ? p.join : undefined}
+								/>
+							{/each}
+						</g>
+					{/each}
+				</pattern>
+			{/if}
 		{:else if g.kind === 'linear'}
 			<linearGradient
 				id="{props.uid}-{g.id}"

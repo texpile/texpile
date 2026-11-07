@@ -3,7 +3,8 @@
 // language hands the node, as printed; without them the view counts.
 import type { EditorView } from 'prosemirror-view';
 import type { Node } from 'prosemirror-model';
-import { isSingleLabelEnvironment, numberedLineCount } from './mathEnvironments';
+import type { MathSyntax } from './mathFieldFactory';
+import { environmentNumbering, isSingleLabelEnvironment, numberedLineCount } from './mathEnvironments';
 
 /** equation numbers are sequential across the whole doc, count everything numbered before this node. */
 function equationStartNumber(view: EditorView, myPos: number): number {
@@ -72,4 +73,16 @@ export function renderEquationNumbers(
 		numEl.setAttribute('data-line-label', lineLabels[i] || '');
 		container.appendChild(numEl);
 	}
+}
+
+export function syncBlockMathData(dom: HTMLElement, node: Node, syntax: MathSyntax): void {
+	dom.setAttribute('data-label', node.attrs.label || '');
+	dom.setAttribute('data-numbered', node.attrs.numbered ? 'true' : 'false');
+	dom.setAttribute('data-environment', node.attrs.environment || '');
+	dom.setAttribute('data-numbering', environmentNumbering(node.attrs.environment || ''));
+	dom.setAttribute('data-line-count', String((node.attrs.lineLabels as string[])?.length || 1));
+	// typst has no live "(1)", so a labeled equation shows its <label> where LaTeX shows the number (CSS in TypstEditorView)
+	if (syntax === 'typst') dom.setAttribute('data-typst-label', node.attrs.label || '');
+	// Typst and Markdown start a new paragraph after every display
+	else if (!node.type.spec.plainDisplay) dom.setAttribute('data-continues', String(node.attrs.continuesAfter !== false));
 }

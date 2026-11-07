@@ -6,6 +6,9 @@ import { withPinnedScroll } from '$lib/editor/visual/scrollPin';
 import type { EditorView } from 'prosemirror-view';
 import type { Node } from 'prosemirror-model';
 import type { MathfieldElement } from 'mathlive';
+import { TextSelection } from 'prosemirror-state';
+import { isMac } from '$lib/platform';
+import { moveOneLine } from './mlVerticalArrows';
 
 type ExitHost = {
 	view: EditorView;
@@ -81,6 +84,26 @@ export class MathFieldExit {
 		}
 	}
 
+	edgeKeydown(event: KeyboardEvent, field: MathfieldElement): void {
+		const dir = event.key === 'ArrowRight' ? 1 : event.key === 'ArrowLeft' ? -1 : 0;
+		const word = isMac ? event.altKey : event.ctrlKey;
+		if (!dir || event.metaKey || (!word && !event.shiftKey) || field.position !== (dir > 0 ? field.lastOffset : 0)) return;
+		if (event.shiftKey && !this.h.node().isInline) return;
+		event.preventDefault();
+		event.stopPropagation();
+		if (event.shiftKey) this.selectOut(dir);
+		else this.maybeEscape(dir > 0 ? 'forward' : 'backward');
+	}
+
+	private selectOut(dir: -1 | 1): void {
+		const view = this.h.view;
+		const from = this.h.getPos();
+		const to = from + this.h.node().nodeSize;
+		this.h.deselect();
+		view.focus();
+		view.dispatch(view.state.tr.setSelection(TextSelection.create(view.state.doc, dir > 0 ? from : to, dir > 0 ? to : from)));
+	}
+
 	maybeEscape(dir: string): void {
 		if (dir == 'backward') {
 			this.maybedelete(-1);
@@ -88,11 +111,11 @@ export class MathFieldExit {
 		} else if (dir == 'forward') {
 			this.maybedelete(1);
 			this.land(this.h.getPos() + this.h.node().nodeSize, 1);
-		} else if (dir == 'upward') {
+		} else if (dir == 'upward' || dir == 'downward') {
 			// arrow keys walked into the field; walking on must get out again, an empty field kept
-			this.land(this.h.getPos(), -1);
-		} else if (dir == 'downward') {
-			this.land(this.h.getPos() + this.h.node().nodeSize, 1);
+			const up = dir == 'upward';
+			this.land(this.h.getPos() + (up ? 0 : this.h.node().nodeSize), up ? -1 : 1);
+			if (this.h.node().isInline) moveOneLine(this.h.view, up ? -1 : 1);
 		}
 	}
 

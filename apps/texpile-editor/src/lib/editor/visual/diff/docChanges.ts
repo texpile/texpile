@@ -9,6 +9,7 @@ import { Decoration, DecorationSet } from 'prosemirror-view';
 import type { Node as PMNode } from 'prosemirror-model';
 import { changeTokens } from './changeTokens';
 import { isSelfRendered } from './selfRendered';
+import { sharedWordsGivenBack, type DiffRange } from './sharedWords';
 
 /** keeping the SET, not its changes, is what makes editing in a comparison cheap: addSteps from here */
 export function initialChangeSet(oldDoc: PMNode, newDoc: PMNode): ChangeSet {
@@ -16,10 +17,13 @@ export function initialChangeSet(oldDoc: PMNode, newDoc: PMNode): ChangeSet {
 	return ChangeSet.create(oldDoc, undefined, changeTokens).addSteps(newDoc, [whole], null);
 }
 
-export function docChanges(oldDoc: PMNode, newDoc: PMNode): readonly Change[] {
+export function docChanges(oldDoc: PMNode, newDoc: PMNode): readonly DiffRange[] {
 	if (oldDoc.eq(newDoc)) return [];
-	// edits inside one word read as confetti; this expands them to whole words
-	return simplifyChanges(initialChangeSet(oldDoc, newDoc).changes, newDoc);
+	return wholeWordChanges(initialChangeSet(oldDoc, newDoc).changes, oldDoc, newDoc);
+}
+
+function wholeWordChanges(changes: readonly Change[], oldDoc: PMNode, newDoc: PMNode): DiffRange[] {
+	return sharedWordsGivenBack(simplifyChanges(changes, newDoc), oldDoc, newDoc);
 }
 
 // ProseMirror's decoration types are internal, so the tests need these to tell the marks apart
@@ -33,7 +37,7 @@ const ADDED_NODE = 'texpile-diff-added-node';
 const CHANGED_NODE = 'texpile-diff-changed-node';
 
 /** content on both sides is a replacement; on the new side only, it arrived */
-function nodeClass(change: Change): string {
+function nodeClass(change: DiffRange): string {
 	return change.toA > change.fromA ? CHANGED_NODE : ADDED_NODE;
 }
 
@@ -60,7 +64,7 @@ function survivesNear(newDoc: PMNode, pos: number, word: string): boolean {
 /** same problem as the marker's position: "wo.\nT" is a faithful range and not a sentence. Widen
  *  to words, then give back any end word still on screen - claiming text that is still there went
  *  is the worse mistake. */
-function removedText(oldDoc: PMNode, newDoc: PMNode, change: Change): string {
+function removedText(oldDoc: PMNode, newDoc: PMNode, change: DiffRange): string {
 	let from = change.fromA;
 	let to = change.toA;
 	while (from > 0 && WORD.test(charAt(oldDoc, from - 1))) from--;
@@ -91,10 +95,10 @@ export function changeDecorations(oldDoc: PMNode, newDoc: PMNode): DecorationSet
 
 /** from a set extended by editing; `startDoc` is the version the deleted text is read from */
 export function decorationsForSet(set: ChangeSet, newDoc: PMNode): DecorationSet {
-	return decorationsFor(simplifyChanges(set.changes, newDoc), set.startDoc, newDoc);
+	return decorationsFor(wholeWordChanges(set.changes, set.startDoc, newDoc), set.startDoc, newDoc);
 }
 
-function decorationsFor(changes: readonly Change[], oldDoc: PMNode, newDoc: PMNode): DecorationSet {
+function decorationsFor(changes: readonly DiffRange[], oldDoc: PMNode, newDoc: PMNode): DecorationSet {
 	const decos: Decoration[] = [];
 	const marked = new Set<number>();
 

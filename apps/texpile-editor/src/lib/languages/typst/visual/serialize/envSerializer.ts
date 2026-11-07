@@ -3,6 +3,7 @@
 // as its bytes, so renaming a theorem or changing its arguments does not rewrite the proof inside
 import type { Node } from 'prosemirror-model';
 import { blockOriginOf } from '$lib/editor/visual/parseOrigins';
+import { codeHolderBody } from './elements/codeBodySource';
 
 // an editor-made container opens its body on a line of its own, indented like a quote's
 const DEFAULT_LEAD = '\n  ';
@@ -22,7 +23,7 @@ export function ownsLineEnd(text: string): boolean {
 	return /(^|[^:\\])\/\/[^\n]*$/.test(text) || /(^|[^\\])(\\\\)*\\$/.test(text);
 }
 
-function indentAfterFirstLine(text: string, indent: string): string {
+export function indentAfterFirstLine(text: string, indent: string): string {
 	if (!indent) return text;
 	return text
 		.split('\n')
@@ -30,7 +31,7 @@ function indentAfterFirstLine(text: string, indent: string): string {
 		.join('\n');
 }
 
-function dedentAfterFirstLine(text: string, indent: string): string {
+export function dedentAfterFirstLine(text: string, indent: string): string {
 	if (!indent) return text;
 	return text
 		.split('\n')
@@ -78,29 +79,48 @@ function renderedBody(node: Node, render: EnvBodyRender, indent: string): string
 }
 
 /** the whitespace the file set the label off with, a space for a label it did not have */
-function envLabel(node: Node, fileIndent: string): string {
+export function envLabel(node: Node, fileIndent: string): string {
 	if (!node.attrs.label) return '';
 	const gap = typeof node.attrs.labelGap === 'string' && /^\s*$/.test(node.attrs.labelGap) ? node.attrs.labelGap : ' ';
 	return `${dedentAfterFirstLine(gap, fileIndent)}<${String(node.attrs.label)}>`;
 }
 
 /**
- * The environment's source. `nested` says a container holds it, which indents every line after the
- * first by its own measure: the body is then written relative to the call's line, the indentation
- * the file put before the call (typIndent) taken off.
  */
-export function envSource(node: Node, render: EnvBodyRender, nested: boolean): string {
-	const fileIndent = nested && typeof node.attrs.typIndent === 'string' ? node.attrs.typIndent : '';
+export function bracketBody(node: Node, render: EnvBodyRender, fileIndent: string, compact = false): string {
 	const fileLead = typeof node.attrs.bodyLead === 'string' ? node.attrs.bodyLead : null;
 	const fileTrail = typeof node.attrs.bodyTrail === 'string' ? node.attrs.bodyTrail : null;
-	const lead = dedentAfterFirstLine(fileLead ?? DEFAULT_LEAD, fileIndent);
-	const trail = dedentAfterFirstLine(fileTrail ?? DEFAULT_TRAIL, fileIndent);
+	const lead = dedentAfterFirstLine(fileLead ?? (compact ? '' : DEFAULT_LEAD), fileIndent);
+	const trail = dedentAfterFirstLine(fileTrail ?? (compact ? '' : DEFAULT_TRAIL), fileIndent);
 	const indent = lead.includes('\n') ? lead.slice(lead.lastIndexOf('\n') + 1) : '';
-	const label = envLabel(node, fileIndent);
 	const kept = fileBody(node);
 	const body = kept != null ? dedentAfterFirstLine(kept, fileIndent) : renderedBody(node, render, indent);
 	// an empty body keeps the whitespace the file had in it; an editor-made one has none
-	if (!body) return `${envHead(node)}[${fileLead == null ? '' : lead + trail}]${label}`;
+	if (!body) return `[${fileLead == null ? '' : lead + trail}]`;
 	const close = !trail.includes('\n') && ownsLineEnd(body) ? '\n' : trail;
-	return `${envHead(node)}[${lead}${body}${close}]${label}`;
+	return `[${lead}${body}${close}]`;
+}
+
+export function envSource(node: Node, render: EnvBodyRender, nested: boolean): string {
+	const fileIndent = nested && typeof node.attrs.typIndent === 'string' ? node.attrs.typIndent : '';
+	const bodyArg = bodyArgOf(node);
+	const call = bodyArg ? bodyArgCall(node, bodyArg, render, fileIndent) : `${envHead(node)}${bracketBody(node, render, fileIndent)}`;
+	return `${call}${envLabel(node, fileIndent)}`;
+}
+
+type BodyArgAttr = { sep: string; tail: string };
+
+function bodyArgOf(node: Node): BodyArgAttr | null {
+	const value = node.attrs.typBodyArg as BodyArgAttr | null;
+	return value && typeof value.sep === 'string' && typeof value.tail === 'string' ? value : null;
+}
+
+function bodyArgCall(node: Node, bodyArg: BodyArgAttr, render: EnvBodyRender, fileIndent: string): string {
+	const args = typeof node.attrs.args === 'string' ? node.attrs.args : '';
+	const comma = bodyArg.sep.indexOf(',');
+	let sep = bodyArg.sep;
+	if (!args && comma >= 0) sep = sep.slice(comma + 1).trimStart();
+	else if (args && comma < 0) sep = `, ${sep.trimStart()}`;
+	const tail = dedentAfterFirstLine(bodyArg.tail, fileIndent);
+	return `#${String(node.attrs.name ?? 'block')}(${dedentAfterFirstLine(args + sep, fileIndent)}${codeHolderBody(node, render, fileIndent, true)}${tail})`;
 }

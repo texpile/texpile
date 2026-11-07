@@ -90,7 +90,7 @@ export function esc(value: string, mode: EscMode = 'text'): string {
  * A mark's color as xcolor reads it: whatever the file wrote, or a CSS color (one copied from a
  * Typst file) in the model that takes it; null for a CSS color no model takes.
  */
-function xcolorOf(color: unknown, model: unknown): { model: string; value: string } | null {
+export function xcolorOf(color: unknown, model: unknown): { model: string; value: string } | null {
 	const value = String(color ?? '').trim();
 	if (typeof model === 'string' && model) return { model, value };
 	const hex = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(value)?.[1];
@@ -99,39 +99,6 @@ function xcolorOf(color: unknown, model: unknown): { model: string; value: strin
 	if (rgb) return { model: 'RGB', value: rgb.slice(1, 4).join(',') };
 	return /^#|^[a-z]+\(/i.test(value) ? null : { model: '', value };
 }
-
-// a color xcolor cannot read drops its wrapper and keeps the text, as the Typst serializer does
-function textcolorMark(a: Record<string, unknown>): { open: string; close: string } {
-	const c = xcolorOf(a.color ?? 'black', a.model);
-	return c ? { open: `\\textcolor${c.model ? `[${c.model}]` : ''}{${esc(c.value)}}{`, close: '}' } : { open: '', close: '' };
-}
-
-// \sethlcolor takes a color name, never a model, so a color only a model can say highlights in the default one
-function highlightMark(a: Record<string, unknown>): { open: string; close: string } {
-	if (a.cmd === 'colorbox') {
-		const box = xcolorOf(a.color ?? 'yellow', a.model);
-		if (box) return { open: `\\colorbox${box.model ? `[${box.model}]` : ''}{${esc(box.value)}}{`, close: '}' };
-	}
-	const c = a.color == null ? null : xcolorOf(a.color, null);
-	return c && !c.model ? { open: `{\\sethlcolor{${esc(c.value)}}\\hl{`, close: '}}' } : { open: '\\hl{', close: '}' };
-}
-
-// em is \textit unless the file said \emph; highlight is soul's \hl. href escapes only % and #, which
-// break it inside another command's argument and which hyperref reads back as themselves
-const MARKS: Record<string, (attrs: Record<string, unknown>) => { open: string; close: string }> = {
-	strong: () => ({ open: '\\textbf{', close: '}' }),
-	em: (a) => (a.cmd === 'emph' ? { open: '\\emph{', close: '}' } : { open: '\\textit{', close: '}' }),
-	u: () => ({ open: '\\underline{', close: '}' }),
-	sup: () => ({ open: '\\textsuperscript{', close: '}' }),
-	sub: () => ({ open: '\\textsubscript{', close: '}' }),
-	code: () => ({ open: '\\texttt{', close: '}' }),
-	link: (a) => ({
-		open: `\\href${a.options != null ? `[${a.options}]` : ''}{${String(a.href ?? '').replace(/(?<!\\)[%#]/g, '\\$&')}}{`,
-		close: '}'
-	}),
-	textcolor: textcolorMark,
-	highlight: highlightMark
-};
 
 /**
  * a bare \url{href} parses to a link whose text IS the href; if unedited, round-trip \url back
@@ -152,24 +119,8 @@ export function setBareUrl(fn: BareUrl | null): void {
 	bareUrl = fn ?? plainBareUrl;
 }
 
-/** Wrap `result` in each mark's open/close pair, inner to outer. shared with non-text leaves
- * that carry marks (an unknown macro chip under \textbf has no text node to carry the bold). */
-export function applyMarks(text: string, marks: readonly Mark[]): string {
-	let result = text;
-	for (const mark of marks) {
-		if (mark.type.name === 'link' && mark.attrs?.bare) {
-			const url = bareUrl(result, String(mark.attrs.href ?? ''));
-			if (url !== null) {
-				result = url;
-				continue;
-			}
-		}
-		const make = MARKS[mark.type.name];
-		if (!make) continue;
-		const { open, close } = make(mark.attrs ?? {});
-		result = open + result + close;
-	}
-	return result;
+export function bareUrlOf(text: string, href: string): string | null {
+	return bareUrl(text, href);
 }
 
 /** The marks a node's own handler wraps around it (text, and leaf atoms borrowing a mark);

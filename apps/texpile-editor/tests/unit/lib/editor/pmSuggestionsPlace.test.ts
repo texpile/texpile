@@ -232,16 +232,14 @@ it('tints only the chip a change sits in, and draws a removed accent as its lett
 });
 
 // the parser reads an old font group as a chip, so what the reader sees change is a chip becoming words
-it('draws an old font group made ordinary bold as the chip it was and the words it is', () => {
+it('marks an old font group made ordinary bold as a format change of its words', () => {
 	const source = '\\begin{document}\nThe method is \\textbf{fast and small} on every input we tried.\n\\end{document}\n';
 	const from = source.indexOf('\\textbf');
 	const to = source.indexOf('} on') + 1;
 	const { doc, ranges } = placed(source, [mark(source, 'bold', source.slice(from, to), '{\\bf fast and small}', from)]);
 	const [range] = ranges;
-	expect(range.format).toBeUndefined();
-	expect(range.partial).toBe(false);
+	expect(range.format).toBe(true);
 	expect(doc.textBetween(range.from, range.to)).toBe('fast and small');
-	expect(range.old.map((run) => run.node?.textContent)).toEqual(['{\\bf fast and small}']);
 });
 
 it('stands a paragraph taken out where it stood, as a block of its own', () => {

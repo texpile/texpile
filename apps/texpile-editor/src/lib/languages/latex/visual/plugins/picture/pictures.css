@@ -1,0 +1,5 @@
+.ProseMirror .drawn-picture {
+	display: flex;
+	justify-content: center;
+	margin: 0.25em 0;
+}

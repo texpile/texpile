@@ -45,7 +45,7 @@ describe('the Markdown parser source map', () => {
 		expect(nodes).toBeGreaterThan(0.9);
 	});
 
-	// markdown-it pushes a run that opens nothing as one piece per delimiter, and each claimed the whole run
+	// a run of delimiters that opens nothing is text, each star its own byte
 	it('gives each star of a run that opens nothing its own byte, so its paragraph writes back as it was', () => {
 		const src = 'Words in th**e panel and snake__case here.\n\nNext.\n';
 		const parsed = parseMarkdownFile(src);

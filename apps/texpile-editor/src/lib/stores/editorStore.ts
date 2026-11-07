@@ -1,6 +1,8 @@
 import type { DocumentHyphenation } from '$lib/editor/visual/linebreak/documentHyphenationLanguage';
-import type { CrossRefNames } from '$lib/languages/latex/visual/extensions/drawn/crossRefNames';
+import type { CrossRefNames } from '$lib/languages/latex/visual/core/references/crossRefNames';
+import type { EnvironmentHeads } from '$lib/languages/latex/visual/extensions/environment/environmentHeads';
 import type { MacroDef } from '$lib/editor/source/extensions/math-preview/userMacros';
+import type { GlossEntry } from '$lib/languages/latex/intellisense/completion/glossary';
 import { box } from '$lib/runes/box.svelte';
 import type { EditorView } from 'prosemirror-view';
 import type { EditorView as CodeMirrorView } from '@codemirror/view';
@@ -25,6 +27,7 @@ export const sourceCmView = box<CodeMirrorView | null>(null);
 export const renameEverywhere = box<((kind: UseKind, from: string, to: string) => Promise<void>) | null>(null);
 // adds a \usepackage line to a file of the document, the main file for a chapter; set while the workspace is mounted
 export const addPackageElsewhere = box<((path: string, name: string) => Promise<void>) | null>(null);
+export const editPreambleHere = box<((edit: (preamble: string) => string) => void) | null>(null);
 // true when the PM selection is inside a CodeMirror-backed block; the menu bar disables
 // Insert/Format there (they would split/convert the block). maintained by createCursorPlugin.
 export const cursorInCm = box<boolean>(false);
@@ -50,6 +53,10 @@ export type TemplateFeatures = {
 	hyphenationLanguage?: DocumentHyphenation;
 	// the words \cref and \autoref print, the packages' defaults as renamed in the preamble. undefined = the defaults
 	crossRefNames?: CrossRefNames;
+	// what each environment prints before its body (Theorem, Proof). undefined = no preamble seen
+	environmentHeads?: EnvironmentHeads;
+	// the name printed above thebibliography (\refname or \bibname). undefined = no preamble seen
+	bibliographyName?: string;
 	// the reference commands the preamble's packages define (refCommandsFor). undefined = no preamble seen, nothing narrowed
 	refCommands?: string[];
 	// the reference commands the loaded files give a star (starredRefCommands). undefined = no preamble seen
@@ -60,6 +67,9 @@ export type TemplateFeatures = {
 	bibStyles?: string[];
 	// the macros the document defines itself, by name without the backslash; the project's others are in projectIntel
 	macros?: Record<string, MacroDef>;
+	registers?: string[];
+	citeAliases?: Record<string, string>;
+	glossary?: GlossEntry[];
 	highlight?: boolean; // false: highlight won't appear in the final document (user sees warning)
 	textColor?: boolean; // false: text color won't appear in the final document (user sees warning)
 };

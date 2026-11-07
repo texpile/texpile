@@ -1,6 +1,9 @@
 // source <-> PDF sync via the synctex binary over Electron IPC; needs a -synctex=1 compile
 import { nativeBridge } from './fileSystem';
 
+/** one box SyncTeX records for a line, in PDF points from the page's top left: bl and bv are its left and baseline */
+export type SyncBox = { page: number; x: number; y: number; W: number; H: number; bl?: number; bv?: number };
+
 // flat shapes (not discriminated unions) so callers can read fields without narrowing;
 // on failure ok is false and the position fields are absent
 export type ForwardResult = {
@@ -13,6 +16,7 @@ export type ForwardResult = {
 	v: number;
 	width: number;
 	height: number;
+	boxes?: SyncBox[];
 };
 
 export type InverseResult = {

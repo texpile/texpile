@@ -11,6 +11,7 @@
 	import { padTablesInState } from '$lib/editor/visual/padTables';
 	import { typSchema } from './schema';
 	import { typstEditorPlugins, typstNodeViews } from './typstEditorSetup';
+	import { typstNamesNow } from './core/scope/fileScopeNow.svelte';
 	import { loadTypstParser } from '../syntax/typstTrees';
 	import { swapParsedDoc, swapDocForNewFile, docSwapKind } from '$lib/editor/visual/docSwap';
 	import { referenceStore } from '$lib/stores/editorStore';
@@ -32,6 +33,7 @@
 	import 'prosemirror-flat-list/dist/style.css';
 	import '$lib/editor/visual/extensions/image/styles/common.css';
 	import '$lib/editor/visual/styles/cursor.css';
+	import '$lib/editor/visual/styles/document.css';
 
 	type Props = {
 		/** false in a parked editor group: no typing, and it follows the focused editor on the same file */
@@ -218,6 +220,14 @@
 		pendingActive: () => commentPendingActive
 	});
 
+	let drawnNames = typstNamesNow.current;
+	$effect(() => {
+		const names = typstNamesNow.current;
+		if (names === drawnNames) return;
+		drawnNames = names;
+		untrack(() => editorView?.setProps({ nodeViews: typstNodeViews(() => docDir) }));
+	});
+
 	$effect(() => {
 		if (editorView?.dom) {
 			(editorView.dom as HTMLElement).style.setProperty('zoom', `${preferences.zoom}`, 'important');
@@ -285,14 +295,19 @@
 	   the "Table N" header and caption layout; numbering stays approximate (raw-island tables
 	   aren't counted, the preview is the authority) */
 
-	/* term lists: bold term line, hanging description */
 	:global(.TypstEditor .term-item) {
 		margin: calc(var(--spacing) * 1) 0;
+		padding-left: calc(var(--spacing) * 8);
+		display: flow-root;
 	}
+	/* a float keeps the browser from typing a description's first letter into the name beside it */
 	:global(.TypstEditor .term-title) {
+		float: left;
+		margin-left: calc(var(--spacing) * -8);
+		margin-right: 0.6em;
 		font-weight: 600;
 	}
-	:global(.TypstEditor .term-item > :not(.term-title)) {
-		margin-left: calc(var(--spacing) * 5);
+	:global(.TypstEditor .term-title + p) {
+		display: inline;
 	}
 </style>

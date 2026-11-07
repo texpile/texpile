@@ -25,12 +25,12 @@ export class DocRegistries {
 
 	/** the folder's .bib entries plus any \bibitem ones not already covered, so citations resolve
 	 * in BOTH modes. The editor re-syncs this same merged list, so both writers must agree. */
-	get merged(): BiblatexReference[] {
+	readonly merged: BiblatexReference[] = $derived.by(() => {
 		const bib = references.current;
 		if (!this.bibitemRefs.length) return bib;
 		const seen = new Set(bib.map((r) => r.key));
 		return [...bib, ...this.bibitemRefs.filter((r) => !seen.has(r.key))];
-	}
+	});
 
 	/** publish the merged list for the editors */
 	publish(merged: BiblatexReference[]): void {

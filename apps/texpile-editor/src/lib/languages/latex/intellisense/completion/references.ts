@@ -61,7 +61,7 @@ export async function referenceCompletionSource(ctx: CompletionContext): Promise
 		const num = Object.hasOwn(intel.auxNumbers, name) ? intel.auxNumbers[name] : undefined;
 		const page = Object.hasOwn(intel.auxPages, name) ? intel.auxPages[name] : undefined;
 		const resolved = num ? `${num}${page ? `, p.${page}` : ''}` : '';
-		return [resolved, from].filter(Boolean).join(' · ') || undefined;
+		return [resolved, from].filter(Boolean).join(' - ') || undefined;
 	}
 	const text = ctx.state.doc.toString();
 	const loaded = await documentPackages(text);

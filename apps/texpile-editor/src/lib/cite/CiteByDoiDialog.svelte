@@ -153,11 +153,10 @@
 		}
 	}
 
-	/** "He et al. · 2016 IEEE Conference on ... · 2016" */
 	function byline(hit: Hit): string {
 		const a = hit.authors;
 		const who = a.length > 2 ? `${a[0]} et al.` : a.join(' and ');
-		return [who, hit.venue, hit.year].filter(Boolean).join(' · ');
+		return [who, hit.venue, hit.year].filter(Boolean).join(' - ');
 	}
 
 	// capture phase, as the other dialogs: Escape must close before anything under the overlay sees it
@@ -238,7 +237,7 @@
 							<FileText class="text-muted size-4 shrink-0" />
 							<span class="min-w-0">
 								<span class="block truncate">{r.title || r.key}</span>
-								<span class="text-muted block truncate text-xs">{[r.authors, r.venue, r.year].filter(Boolean).join(' · ')}</span>
+								<span class="text-muted block truncate text-xs">{[r.authors, r.venue, r.year].filter(Boolean).join(' - ')}</span>
 							</span>
 							<span class="text-muted text-xs whitespace-nowrap">
 								{result.state === 'found' ? m.cite_doi_adds_to({ name: result.bibName }) : m.cite_doi_already()}

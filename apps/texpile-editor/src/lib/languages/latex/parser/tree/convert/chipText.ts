@@ -4,7 +4,7 @@
 // Å instead of an accent beside its own letter, and the line after a drawn space or page break start without a stray
 // space, or without an empty line when another such command follows
 import { Mark } from 'prosemirror-model';
-import { ACCENT_COMMANDS, SYMBOLS } from '../../../knowledge/commands/texCharacters';
+import { ACCENT_COMMANDS, SYMBOLS, printedCharacter } from '../../../knowledge/commands/texCharacters';
 import { HEAD, LINE_COMMANDS, drawnCommand } from '../../../drawnCommands';
 import { buildNode, textNode, type PmNode } from '../../builders';
 import { schema } from '../../../schema/latexPMSchema';
@@ -29,16 +29,14 @@ function joined(chip: string, text: string): string | null {
 		const m = (/^[a-zA-Z]$/.test(name) ? /^ \p{L}/u : /^ ?\p{L}/u).exec(text);
 		return m ? m[0] : null;
 	}
-	return name in SYMBOLS && /^[a-zA-Z]+$/.test(name) && /^ \S/.test(text) ? ' ' : null;
+	return (name in SYMBOLS || printedCharacter(name) !== null) && /^[a-zA-Z]+$/.test(name) && /^ \S/.test(text) ? ' ' : null;
 }
 
-/** a drawn command the parser left apart from the group right after it (\"{\i}), which is its argument */
 function takesGroup(chip: PmNode, next: PmNode | undefined): next is PmNode {
 	return (
 		COMMAND.test(chip.textContent) &&
-		drawnCommand(chip.textContent) &&
 		isChip(next) &&
-		next.textContent.startsWith('{') &&
+		(drawnCommand(chip.textContent) ? next.textContent.startsWith('{') : next.textContent === '{}') &&
 		Mark.sameSet(chip.marks, next.marks)
 	);
 }

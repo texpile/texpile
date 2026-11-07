@@ -31,20 +31,20 @@ function firstFields(out: string): Record<string, string> {
 // all result records ('Page:' starts a new one). Draft mode's instant patch needs every
 // line box of the paragraph, not just the best match. Lowercase h/v are the BOX's own
 // left/baseline (x/y are the sync point, which can sit mid-line); bl = box left, the
-// column-exact anchor for the instant patch.
-function allBoxes(out: string): { page: number; x: number; y: number; W: number; H: number; bl?: number }[] {
-	const boxes: { page: number; x: number; y: number; W: number; H: number; bl?: number }[] = [];
+// column-exact anchor for the instant patch; bv = box baseline.
+function allBoxes(out: string): { page: number; x: number; y: number; W: number; H: number; bl?: number; bv?: number }[] {
+	const boxes: { page: number; x: number; y: number; W: number; H: number; bl?: number; bv?: number }[] = [];
 	let cur: Record<string, number> | null = null;
 	for (const line of out.split(/\r?\n/)) {
-		const m = line.match(/^(Page|x|y|W|H|h):(.+)$/);
+		const m = line.match(/^(Page|x|y|W|H|h|v):(.+)$/);
 		if (!m) continue;
 		if (m[1] === 'Page') {
-			if (cur) boxes.push({ page: cur.Page, x: cur.x, y: cur.y, W: cur.W, H: cur.H, bl: cur.bl });
+			if (cur) boxes.push({ page: cur.Page, x: cur.x, y: cur.y, W: cur.W, H: cur.H, bl: cur.bl, bv: cur.bv });
 			cur = {};
 		}
-		if (cur) cur[m[1] === 'h' ? 'bl' : m[1]] = parseFloat(m[2]);
+		if (cur) cur[m[1] === 'h' ? 'bl' : m[1] === 'v' ? 'bv' : m[1]] = parseFloat(m[2]);
 	}
-	if (cur && cur.Page !== undefined) boxes.push({ page: cur.Page, x: cur.x, y: cur.y, W: cur.W, H: cur.H, bl: cur.bl });
+	if (cur && cur.Page !== undefined) boxes.push({ page: cur.Page, x: cur.x, y: cur.y, W: cur.W, H: cur.H, bl: cur.bl, bv: cur.bv });
 	return boxes.filter((b) => Number.isFinite(b.page) && Number.isFinite(b.y));
 }
 

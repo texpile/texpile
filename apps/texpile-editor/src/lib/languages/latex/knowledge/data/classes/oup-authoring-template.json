@@ -144,7 +144,7 @@
 		{"name":"maketitle","doc":"\\maketitle—this tag is mandatory to print the front matter elements in the output."},
 		{"name":"medline","args":[{"kind":"m"}],"hidden":true},
 		{"name":"midrule"},
-		{"name":"newblock","hidden":true},
+		{"name":"newblock","hidden":true,"args":[],"prints":" "},
 		{"name":"noappendicestocpagenum","hidden":true},
 		{"name":"opensquare","hidden":true},
 		{"name":"ORCID","args":[{"kind":"m","placeholder":"ORCID iD"}],"doc":"provide ORCID link with logo inside this tag."},

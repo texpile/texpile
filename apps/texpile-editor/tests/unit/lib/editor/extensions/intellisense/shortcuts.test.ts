@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { EditorState } from '@codemirror/state';
+import { EditorSelection, EditorState } from '@codemirror/state';
 import { computeToggleWrap, computeWrapBlock, computeLink } from '../../../../../../src/lib/languages/latex/intellisense/shortcuts';
 
 function apply(doc: string, anchor: number, head: number, fn: (state: EditorState) => ReturnType<typeof computeToggleWrap>) {
@@ -28,6 +28,15 @@ describe('toggle-wrap keyboard shortcuts', () => {
 		const next = state.update(spec).state;
 		expect(next.doc.toString()).toBe('hello \\textbf{}');
 		expect(next.selection.main.head).toBe('hello \\textbf{'.length);
+	});
+
+	it('wraps each of several selections', () => {
+		const state = EditorState.create({
+			doc: 'Speed is and now',
+			extensions: EditorState.allowMultipleSelections.of(true),
+			selection: EditorSelection.create([EditorSelection.range(0, 5), EditorSelection.range(9, 12)])
+		});
+		expect(state.update(computeToggleWrap(state, 'textbf')).state.doc.toString()).toBe('\\textbf{Speed} is \\textbf{and} now');
 	});
 
 	it('with an empty selection already inside \\textbf{...}, unwraps in place', () => {

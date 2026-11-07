@@ -146,12 +146,12 @@
 			<button
 				class="flex h-full min-w-0 flex-1 items-center gap-1.5 text-left"
 				onclick={() => toggle(entry.hash)}
-				use:tip={`${entry.subject}\n${entry.author} · ${exact(entry.date)}${entry.parentCount > 1 ? `\n${m.vcs_merged_version()}` : ''}`}
+				use:tip={`${entry.subject}\n${entry.author} - ${exact(entry.date)}${entry.parentCount > 1 ? `\n${m.vcs_merged_version()}` : ''}`}
 			>
 				<span class="truncate text-sm {i === 0 ? 'font-semibold' : ''}">{entry.subject}</span>
 				<!-- the message keeps its room, as a VS Code row's label does: who and when start from no width
 				     and take only what the message leaves, so a short message is never cut for them -->
-				<span class="text-muted min-w-0 flex-1 truncate text-xs">{entry.author} · {ago(entry.date)}</span>
+				<span class="text-muted min-w-0 flex-1 truncate text-xs">{entry.author} - {ago(entry.date)}</span>
 				{#if i === 0 && branch}
 					<!-- VS Code marks the checked-out branch against the newest item; here it also answers
 					     "is the version I am looking at the one the editor is showing". Capped, so a long branch

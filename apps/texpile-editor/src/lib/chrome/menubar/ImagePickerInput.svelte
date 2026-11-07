@@ -6,7 +6,7 @@
 	import { createLocalImageSettings } from '$lib/editor/visual/extensions/image/imageplugin.svelte';
 	import { m } from '$lib/paraglide/messages';
 
-	let { imageDir }: { imageDir?: string } = $props();
+	let { imageDir, onInserted }: { imageDir?: string; onInserted?: () => void } = $props();
 
 	let input: HTMLInputElement;
 
@@ -27,6 +27,7 @@
 			createLocalImageSettings(() => imageDir ?? ''),
 			v.state.schema
 		);
+		onInserted?.();
 		v.focus();
 	}
 </script>

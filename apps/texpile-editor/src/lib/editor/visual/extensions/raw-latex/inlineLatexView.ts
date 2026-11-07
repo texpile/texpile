@@ -1,4 +1,5 @@
 import { EditorView as CodeMirrorView, keymap as cmKeymap, drawSelection, type ViewUpdate, type KeyBinding } from '@codemirror/view';
+import { selectAllThenDocument } from '$lib/editor/visual/extensions/codemirrorbridge/cmSelectAll';
 import { Compartment as CodeMirrorCompartment, EditorState } from '@codemirror/state';
 import { cmSyntaxHighlight } from '$lib/editor/source/cmHighlight';
 import { cursorLineDown, cursorLineUp } from '@codemirror/commands';
@@ -117,7 +118,7 @@ export class InlineLatexView {
 			// typst isn't in @codemirror/language-data; the app ships its own wasm-backed language
 			// (island flavour: no fold gutter on a chip)
 			void import('$lib/languages/typst/source/typstLanguage').then(({ typstIslandLanguage }) =>
-				cm.dispatch({ effects: this.languageConf.reconfigure(typstIslandLanguage()) })
+				cm.dispatch({ effects: this.languageConf.reconfigure(typstIslandLanguage(this.node.textContent)) })
 			);
 		} else if (String(this.node.attrs.lang ?? 'latex') === 'latex') {
 			// the app's own LaTeX mode, same tags and colours as the source editor
@@ -201,6 +202,7 @@ export class InlineLatexView {
 			return true;
 		};
 		return [
+			selectAllThenDocument(view),
 			{ key: 'ArrowLeft', run: () => this.maybeEscape('char', -1) },
 			{ key: 'ArrowRight', run: () => this.maybeEscape('char', 1) },
 			// a soft-wrapped chip moves within itself first; from its top or bottom line the caret

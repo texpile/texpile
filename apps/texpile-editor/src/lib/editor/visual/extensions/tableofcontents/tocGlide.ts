@@ -3,9 +3,7 @@
 import { EditorView as CMView } from '@codemirror/view';
 import type { EditorView as PMView } from 'prosemirror-view';
 import { scrollParent } from '$lib/editor/visual/scrollParent';
-
-/** room left above the heading, as the source editor's own scrollIntoView margin */
-const MARGIN = 20;
+import { jumpScrollShift } from '$lib/editor/jumpPlacement';
 
 /** smooth to where `to` says, then exact: lines not drawn yet were only estimated when the glide set off */
 function glide(scroller: HTMLElement, to: () => number): void {
@@ -38,14 +36,15 @@ export function glideVisualTo(view: PMView, pos: number): void {
 	glide(scroller, () => {
 		const dom = view.nodeDOM(pos);
 		if (!(dom instanceof HTMLElement)) return scroller.scrollTop;
-		return dom.getBoundingClientRect().top - scroller.getBoundingClientRect().top + scroller.scrollTop - MARGIN;
+		return scroller.scrollTop + (jumpScrollShift(dom.getBoundingClientRect(), scroller.getBoundingClientRect()) ?? 0);
 	});
 }
 
 export function glideSourceTo(view: CMView, pos: number): void {
 	const scroller = view.scrollDOM;
 	glide(scroller, () => {
-		const docTop = view.documentTop - scroller.getBoundingClientRect().top + scroller.scrollTop;
-		return docTop + view.lineBlockAt(pos).top - MARGIN;
+		const block = view.lineBlockAt(pos);
+		const top = view.documentTop + block.top;
+		return scroller.scrollTop + (jumpScrollShift({ top, bottom: top + block.height }, scroller.getBoundingClientRect()) ?? 0);
 	});
 }

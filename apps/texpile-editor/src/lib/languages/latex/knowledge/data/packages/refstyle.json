@@ -38,7 +38,7 @@
 		{"name":"ifRSnameon","hidden":true,"conditional":true},
 		{"name":"ifRSplural","hidden":true,"conditional":true},
 		{"name":"ifRSstar","hidden":true,"conditional":true},
-		{"name":"newref","args":[{"kind":"m","placeholder":"type"},{"kind":"m","placeholder":"key list"}]},
+		{"name":"newref","args":[{"kind":"m","placeholder":"type"},{"kind":"m","placeholder":"key list"}],"prints":""},
 		{"name":"partkey"},
 		{"name":"partlabel","args":[{"kind":"m","placeholder":"label","role":"label","defines":"new"}]},
 		{"name":"partpageref","args":[{"kind":"o","placeholder":"key list","keys":["packages/refstyle#RS@part"]},{"kind":"m","placeholder":"label","role":"label"}]},

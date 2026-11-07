@@ -85,7 +85,7 @@
 		{"name":"listtablename"},
 		{"name":"maketitle"},
 		{"name":"mit","hidden":true},
-		{"name":"newblock"},
+		{"name":"newblock","args":[],"prints":" "},
 		{"name":"openrightorany","doc":"\\openrightorany produces the \\clearpage or \\cleardoublepage command depending on open mode selected in the class options."},
 		{"name":"partname"},
 		{"name":"prefacename"},

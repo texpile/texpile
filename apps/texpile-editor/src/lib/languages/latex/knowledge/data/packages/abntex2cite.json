@@ -51,7 +51,7 @@
 		{"name":"yearstyle"},
 		{"name":"citen","args":[{"kind":"o"},{"kind":"m"}],"if":"alf","hidden":true},
 		{"name":"citenum","args":[{"kind":"o"},{"kind":"m"}],"if":"alf","hidden":true},
-		{"name":"newblock"}
+		{"name":"newblock","args":[],"prints":" "}
 	],
 	"envs": [
 		{"name":"thebibliography","args":[{"kind":"m","placeholder":"widest label"}],"item":["bibitem"]}

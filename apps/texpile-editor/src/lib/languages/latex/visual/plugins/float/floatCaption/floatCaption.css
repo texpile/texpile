@@ -1,0 +1,13 @@
+.tex-environment-body:has(> .float-caption) {
+	display: flex;
+	flex-direction: column;
+}
+.tex-environment-body > .float-caption {
+	order: -1;
+	margin-bottom: calc(var(--spacing) * 2);
+}
+.float-caption-head {
+	font-weight: 600;
+	color: var(--muted-text);
+	user-select: none;
+}

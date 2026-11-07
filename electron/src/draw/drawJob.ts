@@ -30,6 +30,11 @@ function capture(luaDir: string): string {
 		'\\def\\pgfsys@radialshading#1#2#3{\\tc@shadingspec{r}{#3}' +
 		'{\\pgf@process{#2}\\directlua{tikzcap_focus("\\pgf@sys@tonumber\\pgf@x","\\pgf@sys@tonumber\\pgf@y")}}' +
 		'\\tc@radial{#1}{#2}{#3}\\directlua{tikzcap_shading(\\the\\lastsavedboxresourceindex)}}\n' +
+		'\\ifdefined\\pgfsys@@declarepattern\\let\\tc@pattern\\pgfsys@@declarepattern\n' +
+		'\\def\\pgfsys@@declarepattern#1#2#3#4#5#6#7#8#9{\\directlua{tikzcap_pattern(#1,{#2,#3,#4,#5},"#6","#7",' +
+		'{\\pgf@sys@tonumber\\pgf@xa,\\pgf@sys@tonumber\\pgf@ya,\\pgf@sys@tonumber\\pgf@xb,\\pgf@sys@tonumber\\pgf@yb},' +
+		'{\\pgf@sys@tonumber\\pgf@xc,\\pgf@sys@tonumber\\pgf@yc},#9,"\\luaescapestring{\\detokenize{#8}}")}' +
+		'\\tc@pattern{#1}{#2}{#3}{#4}{#5}{#6}{#7}{#8}{#9}}\\fi\n' +
 		'\\def\\pgfsys@transparencygroupfrombox#1{\\setbox#1=\\hbox{\\directlua{tikzcap_group(1)}\\box#1\\directlua{tikzcap_group(0)}}}\n' +
 		['png', 'jpg', 'pdf']
 			.map(

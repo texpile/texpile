@@ -1,6 +1,7 @@
 // Ctrl+Home / Ctrl+End, and with Shift, bound rather than left to the browser.
 import { Selection, TextSelection, type EditorState, type Transaction } from 'prosemirror-state';
 import type { EditorView } from 'prosemirror-view';
+import { GapCursor } from 'prosemirror-gapcursor';
 import { gapCursorAt } from './gapSelection';
 import { docEdgeCaret, takesCaret } from './extensions/shiftArrows/caretBlocks';
 
@@ -34,3 +35,13 @@ export const selectDocStart = docEdge(-1);
 export const selectDocEnd = docEdge(1);
 export const extendToDocStart = extendToEdge(-1);
 export const extendToDocEnd = extendToEdge(1);
+
+function holdAtEdge(dir: -1 | 1) {
+	return (state: EditorState): boolean => {
+		const { selection, doc } = state;
+		return selection instanceof GapCursor && selection.head === (dir > 0 ? doc.content.size : 0);
+	};
+}
+
+export const holdAtDocStart = holdAtEdge(-1);
+export const holdAtDocEnd = holdAtEdge(1);

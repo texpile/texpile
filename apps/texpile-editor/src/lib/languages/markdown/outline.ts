@@ -2,10 +2,10 @@
 // highlights with, so a # inside a fenced block or an HTML comment never becomes one. Visual
 // mode's outline comes from the ProseMirror headings instead; this is its source twin, as
 // languages/typst/outline is for .typ.
-import { markdownLanguage } from '@codemirror/lang-markdown';
 import type { SyntaxNode } from '@lezer/common';
 import type { TocItem } from '$lib/editor/visual/extensions/tableofcontents/tocStore';
 import { frontmatterLength } from './frontmatter';
+import { markdownParser } from './syntax/markdownSyntax';
 
 const HEADING = /^(?:ATXHeading(\d)|SetextHeading(\d))$/;
 /** syntax around the words, and the parts of a link a reader never sees */
@@ -19,7 +19,7 @@ export function markdownOutline(src: string): TocItem[] {
 	const start = bom + frontmatterLength(src.slice(bom));
 	const body = src.slice(start);
 	const items: TocItem[] = [];
-	markdownLanguage.parser.parse(body).iterate({
+	markdownParser.parse(body).iterate({
 		enter(n) {
 			const heading = HEADING.exec(n.name);
 			if (!heading) return;

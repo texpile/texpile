@@ -8,7 +8,7 @@ import { schema } from '$lib/languages/latex/schema/latexPMSchema';
 import { editorViewStore, sourceCmView, viewMode } from '$lib/stores/editorStore';
 import { projectIntelStore } from '$lib/stores/projectIntel';
 import { activeFilePath, mainFile } from '$lib/workspace/workspaceStore';
-import { makeDrawnInserts } from '$lib/chrome/menubar/menuBarInsertDrawn';
+import { makeDrawnInserts } from '$lib/chrome/menubar/insert/menuBarInsertDrawn';
 
 const para = (text: string) => schema.nodes.paragraph.create(null, schema.text(text));
 

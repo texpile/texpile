@@ -165,7 +165,7 @@
 		</div>
 		<p class="text-muted mb-2 text-sm">
 			{m.share_guests_count({ count: guestCount, max: MAX_GUESTS })}
-			{#if collabHost.status === 'reconnecting'}<span class="text-warning-ink"> · {m.session_status_reconnecting()}</span>{/if}
+			{#if collabHost.status === 'reconnecting'}<span class="text-warning-ink"> - {m.session_status_reconnecting()}</span>{/if}
 		</p>
 		{#if collabHost.oversizedText.length}
 			<p class="text-warning-ink mb-2 flex items-start gap-1.5 text-xs">

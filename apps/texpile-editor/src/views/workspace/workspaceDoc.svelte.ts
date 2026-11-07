@@ -14,7 +14,8 @@ import { followParseContext } from '$lib/collab/parse/followParseContext.svelte'
 import { compileEngine } from '$lib/languages/latex/intellisense/packages/loadedPackages';
 import { gatherProjectMacros } from '$lib/workspace/project';
 import { activeCompare, activeFilePath, mainFile, workspaceRoot } from '$lib/workspace/workspaceStore';
-import { editorViewStore, sourceCmView } from '$lib/stores/editorStore';
+import { editPreambleHere, editorViewStore, sourceCmView } from '$lib/stores/editorStore';
+import { offerFileInserts } from '$lib/workspace/document/menuOffers/fileInserts';
 import { countOpenFile } from '$lib/stores/countStore.svelte';
 import { visualDocCache } from '$lib/workspace/visualDocCache';
 import type { WorkspaceProvider } from '$lib/workspace/workspaceProvider';
@@ -28,6 +29,7 @@ import { toaster } from '$lib/modals/toaster-svelte';
 import { m } from '$lib/paraglide/messages';
 import { snippetStatus } from '$lib/editor/snippets/file/snippetStatus.svelte';
 import { addLocalHistory } from '$lib/workspace/localHistory/localHistory.svelte';
+import { rereadTypstProject, typstNamesNow } from '$lib/languages/typst/visual/core/scope/fileScopeNow.svelte';
 
 type DocDeps = {
 	provider: WorkspaceProvider;
@@ -69,6 +71,7 @@ export class WorkspaceDoc {
 			beforeLocalEdit: () => d.visualCollab()?.beforeLocalEdit(),
 			clearPendingAnchor: () => (this.modes.pendingVisualAnchor = null),
 			projectMacros: () => this.projectMacros,
+			offerInserts: offerFileInserts,
 			reparse: (text, format) => this.parser.reparse(text, format),
 			// once per file: a file too slow to parse twice is slow on every save
 			noteSaveUnchecked: (path) => {
@@ -85,6 +88,7 @@ export class WorkspaceDoc {
 			}
 		});
 		// view mode, scroll anchors and cross-mode history live in lib/workspace/viewModeSwitch.svelte.ts
+		editPreambleHere.current = (edit) => this.doc.editPreamble(edit);
 		this.modes = new ViewModeSwitch({
 			getKind: () => this.doc.kind,
 			getLoadedPath: () => this.doc.path,
@@ -208,10 +212,25 @@ export class WorkspaceDoc {
 			mainSeen = main;
 			untrack(() => this.regatherProjectMacros());
 		});
+		let namesSeen = typstNamesNow.current;
+		$effect(() => {
+			const names = typstNamesNow.current;
+			if (names === namesSeen) return;
+			namesSeen = names;
+			untrack(() => this.adoptTypstScope());
+		});
+	}
+
+	private adoptTypstScope(): void {
+		if (this.doc.kind !== 'typ') return;
+		visualDocCache.clear();
+		this.parser.lastParsedSource = '';
+		if (this.doc.path && this.modes.mode === 'visual') this.rebuildVisualFromSource(true);
 	}
 
 	/** also after every save and outside write, since one can define a command in the main file's chain */
 	regatherProjectMacros(): void {
+		rereadTypstProject();
 		const root = workspaceRoot.current;
 		const main = mainFile.current;
 		if (this.d.guest() || !root) return;

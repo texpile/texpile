@@ -1,0 +1,213 @@
+.beamer-frame {
+	position: relative;
+	aspect-ratio: 16 / 9;
+	margin: calc(var(--spacing) * 5) 0;
+	padding: calc(var(--spacing) * 5) calc(var(--spacing) * 7) calc(var(--spacing) * 8);
+	border: var(--default-border-width) solid var(--color-surface-300-700);
+	border-radius: calc(var(--radius-base) * 2);
+}
+.beamer-frame-content > :last-child {
+	margin-bottom: 0;
+}
+.beamer-frame[data-slide]:not(.is-unnumbered)::after {
+	content: attr(data-slide);
+	position: absolute;
+	right: calc(var(--spacing) * 3);
+	bottom: calc(var(--spacing) * 2);
+	font-size: 0.7rem;
+	font-variant-numeric: tabular-nums;
+	color: var(--faint-text);
+	user-select: none;
+	pointer-events: none;
+}
+.beamer-frame-chrome {
+	position: absolute;
+	top: calc(var(--spacing) * 2);
+	right: calc(var(--spacing) * 2);
+	z-index: 1;
+}
+
+.beamer-frame .slide-title,
+.beamer-frame .slide-subtitle {
+	margin: 0;
+}
+.beamer-frame .slide-title {
+	font-size: 1.45rem;
+	font-weight: 650;
+	line-height: 1.25;
+	color: var(--primary-ink);
+}
+.beamer-frame .slide-subtitle {
+	margin-top: calc(var(--spacing) * 0.5);
+	font-size: 1.05rem;
+	color: var(--muted-text);
+}
+.beamer-frame .slide-title:not(:has(+ .slide-subtitle)),
+.beamer-frame .slide-subtitle {
+	margin-bottom: calc(var(--spacing) * 4);
+}
+.beamer-frame :is(.slide-title, .slide-subtitle, .beamer-block-title).is-empty::before {
+	content: attr(data-hint);
+	float: left;
+	height: 0;
+	color: var(--faint-text);
+	font-weight: 400;
+	pointer-events: none;
+}
+
+.beamer-frame.is-title-slide {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	text-align: center;
+}
+.beamer-frame.is-title-slide .beamer-frame-content {
+	width: 100%;
+}
+
+.beamer-block {
+	--block: var(--color-primary-500);
+	--block-ink: var(--primary-ink);
+	margin: calc(var(--spacing) * 3) 0;
+	border-radius: var(--radius-base);
+	overflow: hidden;
+	background: color-mix(in oklab, var(--block) 9%, transparent);
+}
+.beamer-block[data-kind='alertblock'] {
+	--block: var(--color-error-500);
+	--block-ink: var(--error-ink);
+}
+.beamer-block[data-kind='exampleblock'] {
+	--block: var(--color-success-500);
+	--block-ink: var(--success-ink);
+}
+.beamer-block-title {
+	padding: calc(var(--spacing) * 1) calc(var(--spacing) * 3);
+	font-weight: 600;
+	color: var(--block-ink);
+	background: color-mix(in oklab, var(--block) 22%, transparent);
+}
+.beamer-block > :not(.beamer-block-title) {
+	margin-inline: calc(var(--spacing) * 3);
+}
+.beamer-block > :nth-child(2) {
+	margin-top: calc(var(--spacing) * 2);
+}
+.beamer-block > :last-child {
+	margin-bottom: calc(var(--spacing) * 2);
+}
+
+.beamer-columns {
+	display: flex;
+	gap: calc(var(--spacing) * 4);
+	align-items: flex-start;
+	margin: calc(var(--spacing) * 3) 0;
+}
+.beamer-column {
+	min-width: 0;
+}
+.beamer-column-width {
+	height: calc(var(--spacing) * 5);
+	opacity: 0;
+	transition: opacity 0.12s;
+}
+.beamer-column:hover .beamer-column-width,
+.beamer-column:focus-within .beamer-column-width {
+	opacity: 1;
+}
+.beamer-column-chip {
+	display: block;
+	max-width: 100%;
+	margin: 0 auto;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	padding: 0 calc(var(--spacing) * 1.5);
+	font-family: var(--font-mono, monospace);
+	font-size: 0.7rem;
+	line-height: calc(var(--spacing) * 5);
+	color: var(--faint-text);
+	border-radius: var(--radius-base);
+	cursor: pointer;
+}
+.beamer-column-chip:hover:not(:disabled) {
+	background: color-mix(in srgb, var(--color-surface-500) 12%, transparent);
+	color: var(--muted-text);
+}
+.beamer-column-content > :first-child {
+	margin-top: 0;
+}
+.beamer-column-content > :last-child {
+	margin-bottom: 0;
+}
+
+.beamer-overlay::before,
+.ProseMirror p.beamer-item-overlay::after {
+	content: attr(data-overlay);
+	display: inline-block;
+	margin-inline: 0.15em 0.3em;
+	padding: 0 0.4em;
+	border-radius: 999px;
+	font-family: var(--font-mono, monospace);
+	font-size: 0.65rem;
+	line-height: 1.5;
+	color: var(--faint-text);
+	background: color-mix(in srgb, var(--color-surface-500) 14%, transparent);
+	user-select: none;
+	vertical-align: 0.1em;
+}
+.beamer-overlay[data-command]:not([data-command='only'])::before {
+	content: attr(data-command) ' ' attr(data-overlay);
+}
+.ProseMirror p.beamer-item-overlay::after {
+	margin-inline: 0.5em 0;
+}
+
+.drawn-pause {
+	display: inline-block;
+	padding: 0 0.5em;
+	border-radius: 999px;
+	font-size: 0.65rem;
+	line-height: 1.6;
+	letter-spacing: 0.04em;
+	text-transform: uppercase;
+	color: var(--faint-text);
+	background: color-mix(in srgb, var(--color-surface-500) 14%, transparent);
+	user-select: none;
+	vertical-align: 0.1em;
+}
+
+.drawn-titlepage > * {
+	white-space: pre-line;
+}
+.drawn-titlepage {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: calc(var(--spacing) * 2);
+	padding: calc(var(--spacing) * 4) 0;
+	user-select: none;
+}
+.drawn-titlepage-title {
+	font-size: 1.8rem;
+	font-weight: 700;
+	line-height: 1.2;
+	color: var(--primary-ink);
+}
+.drawn-titlepage-subtitle {
+	font-size: 1.2rem;
+	color: var(--muted-text);
+}
+.drawn-titlepage-author {
+	margin-top: calc(var(--spacing) * 3);
+	font-size: 1.1rem;
+}
+.drawn-titlepage-institute,
+.drawn-titlepage-date {
+	font-size: 0.9rem;
+	color: var(--muted-text);
+}
+.drawn-titlepage-empty {
+	font-size: 0.8rem;
+	color: var(--faint-text);
+}

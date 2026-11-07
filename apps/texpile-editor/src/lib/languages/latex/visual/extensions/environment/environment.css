@@ -1,0 +1,71 @@
+.tex-environment {
+	position: relative;
+	margin: calc(var(--spacing) * 3) 0;
+}
+.tex-environment > .env-header {
+	float: left;
+	margin-right: 0.35em;
+}
+.tex-environment-body::after {
+	content: '';
+	display: block;
+	clear: both;
+}
+.tex-environment-body > :last-child {
+	margin-bottom: 0;
+}
+
+.env-head[data-look='theorem'][data-style='remark'] .env-head-name {
+	font-weight: 400;
+	font-style: italic;
+}
+.env-head[data-look='proof'] {
+	font-style: italic;
+}
+.tex-environment:has(> .env-header [data-style='plain']) > .tex-environment-body {
+	font-style: italic;
+}
+.tex-environment:has(> .env-header [data-look='proof']) > .tex-environment-body > p:last-child::after {
+	content: '\220E';
+	float: right;
+	margin-left: 1em;
+}
+
+.tex-environment:has(> .env-header [data-look='align']) > .env-header {
+	position: absolute;
+	right: 100%;
+	top: 0;
+	float: none;
+	margin-right: calc(var(--spacing) * 1);
+	opacity: 0;
+}
+.tex-environment:has(> .env-header [data-look='align']):hover > .env-header {
+	opacity: 1;
+}
+.tex-environment:has(> .env-header [data-align='center']) > .tex-environment-body {
+	text-align: center;
+}
+.tex-environment:has(> .env-header [data-align='right']) > .tex-environment-body {
+	text-align: right;
+}
+.env-gear {
+	display: flex;
+	padding: calc(var(--spacing) * 0.5);
+	border-radius: var(--radius-base);
+	color: var(--faint-text);
+	cursor: pointer;
+}
+.env-gear:hover {
+	color: var(--muted-text);
+	background: color-mix(in srgb, var(--color-surface-500) 15%, transparent);
+}
+
+.tex-environment:has(> .env-header [data-look='box']) {
+	padding: calc(var(--spacing) * 2) calc(var(--spacing) * 3);
+	border-radius: var(--radius-base);
+	border: var(--default-border-width) solid var(--color-surface-200-800);
+}
+.tex-environment:has(> .env-header [data-look='box']) > .env-header {
+	float: none;
+	margin-bottom: calc(var(--spacing) * 1);
+}

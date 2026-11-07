@@ -31,13 +31,12 @@ export const ENVIRONMENTS: Record<string, string> = {
 const NOT_ENVIRONMENTS: Record<string, string> = {
 	twoBodies: '#grid(columns: 2)[a][b]\n',
 	inlineMark: '#underline(stroke: red)[fancy]\n',
-	inlineQuote: '#quote[inline stays raw]\n',
 	figure: '#figure(rect(), caption: [not an image])\n',
 	footnote: 'Text.#footnote[a note]\n\n#footnote[alone]\n',
 	codeBody: '#block({ [a]; [b] })\n',
 	showRule: '#show: rest => block(rest)\n',
 	noBody: '#lorem(5)\n',
-	proseAfter: '#rect[x] and prose after it.\n'
+	proseAfter: '#theorem[x] and prose after it.\n'
 };
 
 function roundtrip(src: string): string {

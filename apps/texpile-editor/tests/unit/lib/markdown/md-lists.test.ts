@@ -1,9 +1,11 @@
 import { describe, it, expect } from 'vitest';
 import { EditorState } from 'prosemirror-state';
+import { Fragment, Slice } from 'prosemirror-model';
+import { parseMarkdownFile, serializeMarkdownFile } from '$lib/languages/markdown/visual/roundtrip';
 import { gen, editBlock, docOf, para } from './mdTestUtils';
 import { mdSchema } from '$lib/languages/markdown/visual/schema';
 import { markdownToProseMirror } from '$lib/languages/markdown/visual/converter';
-import { serializeToMarkdown } from '$lib/languages/markdown/visual/serializer';
+import { serializeToMarkdown } from '$lib/languages/markdown/visual/serialize/serializer';
 import { listAttrInheritance } from '$lib/languages/markdown/visual/listAttrInheritance';
 
 function item(attrs: Record<string, unknown>, text: string) {
@@ -80,5 +82,19 @@ describe('markdown lists', () => {
 		state = state.apply(state.tr.insert(doc.content.size, item({ kind: 'bullet' }, 'c')));
 		expect(state.doc.child(2).attrs.marker).toBe('*');
 		expect(serializeToMarkdown(state.doc)).toBe('* a\n* b\n* c');
+	});
+});
+
+describe('indented code in an item, edited', () => {
+	it('is written as a fence where the item continues its lines', () => {
+		const src = '- a\n\n      code\n\n- b\n';
+		const parsed = parseMarkdownFile(src);
+		let at = -1;
+		parsed.doc.descendants((n, pos) => {
+			if (n.isText && n.text === 'code') at = pos;
+		});
+		const edited = parsed.doc.replace(at + 4, at + 4, new Slice(Fragment.from(mdSchema.text('2')), 0, 0));
+		const out = serializeMarkdownFile(parsed, edited);
+		expect(out).toBe('- a\n\n  ```\n  code2\n  ```\n\n- b\n');
 	});
 });

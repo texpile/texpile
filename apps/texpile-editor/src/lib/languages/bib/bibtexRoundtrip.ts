@@ -154,7 +154,7 @@ function computeDisplayLabel(entry: BiblatexReference): string {
 	const bits: string[] = [];
 	if (firstAuthor) bits.push(firstAuthor);
 	if (year) bits.push(`(${year})`);
-	if (title) bits.push(`· ${title}`);
+	if (title) bits.push(`- ${title}`);
 	return bits.length ? bits.join(' ') : entry.key;
 }
 

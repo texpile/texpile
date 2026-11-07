@@ -260,3 +260,12 @@ describe('docChanges', () => {
 		expect(docChanges(before.doc, after.doc)).toEqual([]);
 	});
 });
+
+describe('a word put in before a word that stayed', () => {
+	it('marks only the new word, the old one neither struck nor added again', () => {
+		const before = 'The threshold is\n$$x$$\nwhere it denotes the entropy.\n\nEvery bounded sequence converges.';
+		const after = 'The threshold is\n$$x$$\n\nwhere it denotes the measured entropy.\n\nEach bounded sequence converges.';
+		expect(added(before, after)).toEqual(['measured', 'Each']);
+		expect(removed(before, after)).toEqual(['Every']);
+	});
+});

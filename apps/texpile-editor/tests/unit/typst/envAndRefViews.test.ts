@@ -7,21 +7,23 @@ import { EditorState } from 'prosemirror-state';
 import { EditorView } from 'prosemirror-view';
 import { parseTypstFile, serializeTypstFile } from '$lib/languages/typst/visual/roundtrip';
 import { typstEnvView } from '$lib/languages/typst/visual/extensions/env/typstEnvView.svelte';
-import { TypstRefView } from '$lib/languages/typst/visual/extensions/ref/typstRefView.svelte';
+import { TypstRefView } from '$lib/languages/typst/visual/plugins/ref/node/typstRefView.svelte';
 import { referenceStore } from '$lib/stores/editorStore';
+import { chipPanel } from '$lib/editor/visual/extensions/drawnChips/chipPanel.svelte';
 
 const SRC = '#lemma(title: "Zorn")[\n  Every chain has a bound, see @knuth84[p. 7].\n] <lem:zorn>\n\nBy @lem:zorn.\n';
 
 let view: EditorView | null = null;
 beforeEach(() => {
-	// the popover places itself on open; jsdom lays nothing out, and nothing here needs a place
-	if (!globalThis.ResizeObserver) {
-		globalThis.ResizeObserver = class {
-			observe() {}
-			unobserve() {}
-			disconnect() {}
-		} as unknown as typeof ResizeObserver;
-	}
+	// the panel closes a chip that lies outside its pane, and jsdom lays everything out at zero
+	Element.prototype.getBoundingClientRect = () => new DOMRect(10, 10, 40, 20);
+	const observer = class {
+		observe() {}
+		unobserve() {}
+		disconnect() {}
+	};
+	globalThis.ResizeObserver ??= observer as unknown as typeof ResizeObserver;
+	globalThis.IntersectionObserver ??= observer as unknown as typeof IntersectionObserver;
 });
 afterEach(() => {
 	view?.destroy();
@@ -36,40 +38,47 @@ function open(src: string) {
 		state: EditorState.create({ doc: parsed.doc }),
 		nodeViews: {
 			typ_env: (node, v, getPos) => typstEnvView(node, v, getPos),
-			typ_ref: (node, v, getPos) => new TypstRefView(node, v, getPos)
+			typ_ref: (node, v, getPos) => new TypstRefView(node, v, getPos, (source) => parseTypstFile(source).doc)
 		}
 	});
 	flushSync();
 	return { parsed, view };
 }
 
-function leave(el: HTMLInputElement | HTMLTextAreaElement, value: string) {
-	el.value = value;
-	el.dispatchEvent(new Event('input', { bubbles: true }));
-	el.dispatchEvent(new FocusEvent('blur'));
+// the call's name opens its head in the chip panel
+function openHead() {
+	(document.querySelector('.typ-environment .env-label') as HTMLElement).click();
 	flushSync();
 }
 
 describe('an environment in the editor', () => {
-	it('shows its call above a body ProseMirror edits', () => {
+	it('names its call and label above a body ProseMirror edits, and opens the head on its name', () => {
 		open(SRC);
 		const env = document.querySelector('.typ-environment')!;
 		expect(env.getAttribute('data-typ-env')).toBe('lemma');
-		const [name, label] = env.querySelectorAll('input');
-		expect(name.value).toBe('lemma');
-		expect(label.value).toBe('lem:zorn');
-		expect(env.querySelector('textarea')!.value).toBe('title: "Zorn"');
+		expect(env.querySelector('.env-label')!.textContent).toBe('lemma');
+		expect(env.querySelector('.typ-env-label')!.textContent).toBe('<lem:zorn>');
 		expect(env.querySelector('.typ-environment-body')!.textContent).toContain('Every chain has a bound');
+		openHead();
+		expect(chipPanel.request!.source).toBe('#lemma(title: "Zorn") <lem:zorn>');
 	});
 
-	it('writes a header edit into the call alone, and a label rename into its references', () => {
+	it('writes a head edit into the call alone, and a label rename into its references', () => {
 		const { parsed, view } = open(SRC);
-		const env = document.querySelector('.typ-environment')!;
-		leave(env.querySelector('textarea')!, 'title: "Kuratowski"');
-		leave(env.querySelectorAll('input')[1], 'lem:max');
+		openHead();
+		chipPanel.request!.write('#lemma(title: "Kuratowski") <lem:max>');
+		flushSync();
 		expect(serializeTypstFile(parsed, view.state.doc)).toBe(
 			SRC.replace('"Zorn"', '"Kuratowski"').replace('<lem:zorn>', '<lem:max>').replace('@lem:zorn', '@lem:max')
 		);
+	});
+
+	it('writes nothing while the head being typed is not a call yet', () => {
+		const { parsed, view } = open(SRC);
+		openHead();
+		chipPanel.request!.write('#lemma(title: "Zor');
+		flushSync();
+		expect(serializeTypstFile(parsed, view.state.doc)).toBe(SRC);
 	});
 });
 

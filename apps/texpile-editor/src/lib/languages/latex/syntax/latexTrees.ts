@@ -39,6 +39,10 @@ export function latexParserFor(packageFile: boolean, own?: OwnSyntax): LRParser 
 	return found;
 }
 
+export function latexTreeAtLetter(text: string): Tree {
+	return latexParserFor(true).parse(text);
+}
+
 /** the tree of `text`, read with the verbatim environments and commands it defines itself */
 export function latexTreeOf(text: string): Tree {
 	const found = trees.get(text);

@@ -125,7 +125,8 @@ describe('headings (T18, T20)', () => {
 			expect(shape(src)).toEqual(['heading']);
 			expect(regen(src)).toBe(src);
 		}
-		expect(regen('#heading(depth: 2)[Plain]\n')).toBe('== Plain');
+		// a call the file wrote stays the call it was
+		expect(regen('#heading(depth: 2)[Plain]\n')).toBe('#heading(depth: 2)[Plain]');
 	});
 });
 

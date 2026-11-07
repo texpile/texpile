@@ -5,6 +5,7 @@ import { editorGroups } from '$lib/workspace/groups/editorGroups.svelte';
 import { moveToWindow } from '$lib/workspace/groups/tabMoves';
 import { groupHostOf } from './groups/workspaceGroups';
 import type { ReplaceSpec } from '$lib/search/replaceInFiles';
+import type { PreambleSpan } from '$lib/languages/latex/visual/core/title/preambleFields';
 import { startClone } from '$lib/workspace/scm/remote/cloneFlow';
 import { canClone } from '$lib/workspace/scm/remote/gitClone';
 import { forgetSignIns } from '$lib/workspace/forgetSignIns';
@@ -221,7 +222,7 @@ export function makeMainActions(d: ActionSurfaceDeps) {
 			// visual-mode preview follow; gated here too so no timer churn outside typ+follow
 			if (d.wsdoc.doc.kind === 'typ') d.typstPreview.onVisualCaretMove();
 		},
-		onEditFrontmatter: (kind: string, inner: string) => d.wsdoc.doc.editFrontmatter(kind, inner),
+		onEditFrontmatter: (span: PreambleSpan, inner: string) => d.wsdoc.doc.editFrontmatter(span, inner),
 		syncToPdf: (line: number) => d.nav.syncToLine(line),
 		jumpToFile: (names: string[]) => d.nav.jumpToInclude(names),
 		openFileAt: (file: string, line: number, selectText?: string) => d.nav.openFileAtLine(file, line, selectText),

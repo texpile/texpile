@@ -1,12 +1,22 @@
 // what a command means where it stands, for code that reads a file before its packages are known: a heading's level,
-// a switch, a row rule, a conditional, what it prints, its math class, a register and its value; the reading most files
-// that define the name give
 import commandsIndex from '../data/commands.json';
 import type { CommandFields } from '../types';
 
 export type CommandFacts = Pick<
 	CommandFields,
-	'section' | 'declares' | 'betweenRows' | 'conditional' | 'prints' | 'mathClass' | 'register' | 'value'
+	| 'section'
+	| 'declares'
+	| 'betweenRows'
+	| 'endsRow'
+	| 'conditional'
+	| 'prints'
+	| 'reads'
+	| 'mathClass'
+	| 'register'
+	| 'value'
+	| 'expands'
+	| 'encoding'
+	| 'change'
 >;
 
 export type Ligature = { input: string; prints: string };

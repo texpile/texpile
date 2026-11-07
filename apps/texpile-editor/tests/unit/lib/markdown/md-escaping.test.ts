@@ -2,7 +2,7 @@ import { describe, it, expect } from 'vitest';
 import { gen, regen, docOf, para, marked } from './mdTestUtils';
 import { mdSchema } from '$lib/languages/markdown/visual/schema';
 import { markdownToProseMirror } from '$lib/languages/markdown/visual/converter';
-import { serializeToMarkdown } from '$lib/languages/markdown/visual/serializer';
+import { serializeToMarkdown } from '$lib/languages/markdown/visual/serialize/serializer';
 
 /** what typed text is written as, and what it reads back as */
 function typed(text: string): { out: string; back: string; blocks: number } {

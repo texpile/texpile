@@ -79,10 +79,6 @@ export function buildNode(
 	return nodeType.create(attrs ?? null, kids.length > 0 ? kids : undefined);
 }
 
-export function createDefaultContext(): ConversionContext {
-	return { marks: [], inMathMode: false, inlineBuffer: [] };
-}
-
 /** Merge adjacent same-mark text nodes into single runs (and drop empty text, which PM forbids). */
 export function collapseTextNodes(nodes: PmNode[]): PmNode[] {
 	if (nodes.length === 0) return nodes;

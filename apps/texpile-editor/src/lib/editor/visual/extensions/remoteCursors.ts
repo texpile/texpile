@@ -111,6 +111,7 @@ function shadeOldWords(view: EditorView, shadedBefore: boolean): boolean {
 
 /** replace the rendered peer set (empty array clears). */
 export function setRemoteCursors(view: EditorView, peers: RemotePeerSel[]): void {
+	if (peers.length === 0 && !remoteCursorsKey.getState(view.state)?.decos.find().length) return;
 	view.dispatch(view.state.tr.setMeta(remoteCursorsKey, peers).setMeta('addToHistory', false));
 }
 

@@ -1805,8 +1805,12 @@ html.pm-drop-refused .pm-drop-cursor {
 	counter-increment: figure;
 }
 
+/* the number sits on the image's root, and attr() reads only the element itself, so it comes down to the caption */
+.ProseMirror[data-compiled-numbers] .imagePluginRoot[data-number] {
+	--figure-number: attr(data-number);
+}
 .ProseMirror[data-compiled-numbers] .imagePluginRoot[data-number]:not([imageplugin-numbered='false']) .text::before {
-	content: 'Figure ' attr(data-number) ': ';
+	content: 'Figure ' var(--figure-number) ': ';
 	font-weight: 600;
 	color: var(--muted-text);
 	margin-right: 0.25em;
@@ -1939,10 +1943,21 @@ html.pm-drop-refused .pm-drop-cursor {
 .ProseMirror .drawn-chip-line {
 	display: block;
 }
-/* ProseMirror's caret hack after a chip ending its paragraph would be an empty line under one on a line of its own;
-   the keys leave the caret on the next line instead. important: prosemirror-view's own sheet forces the image inline */
-.ProseMirror .drawn-chip-line + .ProseMirror-separator,
-.ProseMirror .drawn-chip-line + .ProseMirror-separator + .ProseMirror-trailingBreak {
+/* a chip alone in its paragraph (chip, caret image, break) is a full-width inline box, so the caret hacks share its line
+   and the browser draws a caret beside it; after a block it has no line to sit in */
+.ProseMirror .drawn-chip-line:first-child:nth-last-child(3) {
+	display: inline-block;
+	width: 100%;
+	vertical-align: top;
+}
+.ProseMirror .drawn-chip-line:first-child:nth-last-child(3) + .ProseMirror-separator {
+	width: 0;
+	height: 0;
+}
+/* the hack after a chip ending its paragraph would be an empty line under one on a line of its own; the keys leave the
+   caret on the next line instead. important: prosemirror-view's own sheet forces the image inline */
+.ProseMirror .drawn-chip-line:not(:first-child:nth-last-child(3)) + .ProseMirror-separator,
+.ProseMirror .drawn-chip-line:not(:first-child:nth-last-child(3)) + .ProseMirror-separator + .ProseMirror-trailingBreak {
 	display: none !important;
 }
 .ProseMirror .drawn-chip-face.drawn-chip-selected {
@@ -2126,19 +2141,47 @@ math-field[data-macro-selected] {
 	pointer-events: none;
 }
 
-/* generic editable LaTeX environment block, and typst's call around content; the name lives in the
-   node-view header, so no ::before badge */
-.tex-environment,
 .typ-environment {
 	position: relative;
-	border: var(--default-border-width) solid var(--color-surface-300-700);
+	border: var(--default-border-width) solid var(--color-surface-200-800);
 	border-radius: var(--radius-base);
 	padding: calc(var(--spacing) * 2) calc(var(--spacing) * 3);
 	margin: calc(var(--spacing) * 3) 0;
 }
-.tex-environment-body > :last-child,
 .typ-environment-body > :last-child {
 	margin-bottom: 0;
+}
+.typ-env-heading {
+	display: flex;
+	align-items: baseline;
+	gap: calc(var(--spacing) * 2);
+}
+.typ-env-header {
+	display: flex;
+	align-items: baseline;
+	justify-content: space-between;
+	margin-bottom: calc(var(--spacing) * 1);
+	user-select: none;
+}
+.typ-environment:has(> :first-child .env-head[data-look='theorem']) {
+	background: none;
+	border: none;
+	padding: 0;
+}
+.typ-environment:has(> :first-child .env-head[data-look='theorem']) > :first-child {
+	float: left;
+	margin-right: 0.35em;
+}
+.typ-environment:has(> :first-child .env-head[data-look='theorem']) > .typ-environment-body > :first-child:not(p) {
+	clear: left;
+}
+.typ-environment:has(> :first-child .env-head[data-look='theorem']) .typ-env-header {
+	margin-bottom: 0;
+}
+.typ-environment:has(> :first-child .env-head[data-look='theorem']) > .typ-environment-body::after {
+	content: '';
+	display: block;
+	clear: both;
 }
 
 /* persistent caret/selection while the editor is blurred (persistentSelectionPlugin). the anchor
@@ -2169,43 +2212,6 @@ math-field[data-macro-selected] {
 		opacity: 0;
 	}
 }
-/* \title/\author/\date rendered as in-place editable fields (frontmatterView.ts) */
-.frontmatter-block {
-	margin: calc(var(--spacing) * 3) 0;
-}
-.frontmatter-input {
-	width: 100%;
-	border: none;
-	background: transparent;
-	outline: none;
-	font: inherit;
-	color: inherit;
-	padding: 0.1rem 0.25rem;
-	border-radius: var(--radius-base);
-}
-.frontmatter-input:hover,
-.frontmatter-input:focus {
-	background: color-mix(in srgb, var(--color-surface-500) 8%, transparent);
-}
-.frontmatter-title .frontmatter-input {
-	text-align: center;
-	font-size: 1.6rem;
-	font-weight: 700;
-	line-height: 1.25;
-}
-.frontmatter-author .frontmatter-input,
-.frontmatter-date .frontmatter-input {
-	text-align: center;
-}
-.frontmatter-label {
-	display: block;
-	text-align: center;
-	font-size: 0.7rem;
-	text-transform: uppercase;
-	letter-spacing: 0.04em;
-	color: var(--muted-text);
-	margin-bottom: calc(var(--spacing) * 0.5);
-}
 
 /* structural placeholder commands (\maketitle, \tableofcontents, ...) rendered as a subtle selectable marker */
 .latex-placeholder {
@@ -2225,7 +2231,6 @@ math-field[data-macro-selected] {
 }
 .latex-placeholder-selected {
 	outline: 2px solid var(--color-primary-500);
-	color: var(--primary-ink);
 }
 
 /* inline placeholder (e.g. \today): the dotted underline hints it's a resolved command, not typed text */
@@ -2453,4 +2458,19 @@ math-field[data-macro-selected] {
 /* the source editor's own lines only: a raw LaTeX block or chip in the visual editor is a CodeMirror too */
 .floating-bar-room .source-editor > .cm-editor > .cm-scroller > .cm-content {
 	padding-top: 2.875rem !important;
+}
+html.pm-handle-drag .pm-drop-cursor:not(.pm-handle-drop-line) {
+	display: none;
+}
+.pm-handle-drop-line {
+	position: relative;
+	height: 0;
+	pointer-events: none;
+}
+.pm-handle-drop-line::before {
+	content: '';
+	position: absolute;
+	inset: -1px 0 auto;
+	height: 2px;
+	background-color: var(--color-primary-500);
 }

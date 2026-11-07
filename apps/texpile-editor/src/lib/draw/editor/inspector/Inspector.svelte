@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { m } from '$lib/paraglide/messages';
-	import { Trash2 } from '@lucide/svelte';
+	import { Code, Trash2 } from '@lucide/svelte';
 	import { PANEL_NOTE } from '../ui/panelStyles';
 	import type { FigureEditorState } from '../state/editorState.svelte';
 	import { deleteSelection } from '../state/selection/selectionCommands';
@@ -13,8 +13,9 @@
 	import { nextShapeStyle } from '../state/selection/selectionStyle';
 	import { ALL_TOOLS } from '../tools/tools';
 	import { inSentence } from '../figure/inSentence';
+	import InspectorTitle from './InspectorTitle.svelte';
 
-	type Props = { editor: FigureEditorState };
+	type Props = { editor: FigureEditorState; showCode?: ((at: number) => void) | null };
 	const props: Props = $props();
 	const st = $derived(props.editor.selectedStatement);
 	const count = $derived(props.editor.selection.length);
@@ -27,6 +28,7 @@
 		if (count > 1) return m.figure_inspector_shapes({ count });
 		return props.editor.language.readLabel(props.editor.source, st) ?? props.editor.selectedInfo.title;
 	});
+	const named = $derived(st && count === 1 && !next && !placing && props.editor.selectedInfo ? st : null);
 </script>
 
 <!-- only while there is something to set, as Excalidraw's style panel -->
@@ -35,9 +37,21 @@
 		class="bg-surface-50-950 border-surface-200-800 rounded-container pointer-events-auto flex min-h-0 flex-col overflow-hidden border shadow-lg"
 		data-own-scroll
 	>
-		<div class="border-surface-200-800 flex h-9 shrink-0 items-center justify-between gap-2 border-b pr-1.5 pl-3">
-			<span class="min-w-0 truncate text-sm font-semibold">{heading}</span>
+		<div class="border-surface-200-800 flex h-9 shrink-0 items-center gap-1 border-b pr-1.5 pl-3">
+			{#if named}
+				<InspectorTitle editor={props.editor} st={named} title={props.editor.selectedInfo!.title} />
+			{:else}
+				<span class="min-w-0 flex-1 truncate text-sm font-semibold">{heading}</span>
+			{/if}
 			{#if st}
+				{#if props.showCode}
+					<button
+						class="btn-icon btn-icon-xs hover:preset-tonal"
+						onclick={() => props.showCode?.(st.from)}
+						aria-label={m.figure_show_code()}
+						use:tip={m.figure_show_code()}><Code class="size-3.5 shrink-0" /></button
+					>
+				{/if}
 				<button
 					class="btn-icon btn-icon-xs hover:preset-tonal"
 					onclick={() => deleteSelection(props.editor)}

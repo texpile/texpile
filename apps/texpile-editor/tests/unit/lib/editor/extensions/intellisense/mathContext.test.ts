@@ -16,6 +16,11 @@ describe('math context detection', () => {
 		expect(at('\\begin{equation*}\n')).toBe(true);
 	});
 
+	it('opens at $$, and a blank line ends inline math', () => {
+		expect(at('$$ x + ')).toBe(true);
+		expect(at('open $x\n\nnew paragraph ')).toBe(false);
+	});
+
 	it('recognizes prose, closed math, and escaped dollars as non-math', () => {
 		expect(at('plain prose ')).toBe(false);
 		expect(at('closed $x$ back to prose ')).toBe(false);

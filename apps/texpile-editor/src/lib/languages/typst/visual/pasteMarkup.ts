@@ -1,4 +1,4 @@
-import { typstSyntax } from './extensions/drawn/typstCall';
+import { typstSyntax } from './core/reading/typstCall';
 
 // what makes pasted text Typst rather than plain words: "issue #12", "1. one" and "a * b * c" stay words
 function marksTypst(name: string, from: number, to: number, text: string): boolean {

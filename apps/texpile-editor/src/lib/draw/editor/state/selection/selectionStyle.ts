@@ -16,7 +16,8 @@ const FIELD_OF: Record<StyleKey, keyof StyleFieldSet> = {
 	textColor: 'text',
 	textSize: 'text',
 	opacity: 'opacity',
-	corners: 'corners'
+	corners: 'corners',
+	pattern: 'pattern'
 };
 const DEFAULT_STYLE: ShapeStyle = {
 	stroke: 'black',
@@ -27,7 +28,8 @@ const DEFAULT_STYLE: ShapeStyle = {
 	textColor: 'black',
 	textSize: 'normalsize',
 	opacity: '100',
-	corners: 'sharp'
+	corners: 'sharp',
+	pattern: ''
 };
 
 function shapeOf(tool: ToolId): { target: StyleTarget; open: boolean } | null {
@@ -45,7 +47,7 @@ export function nextShapeStyle(ed: FigureEditorState): SelectionStyle | null {
 	return {
 		style: { ...DEFAULT_STYLE, ...ed.nextStyle },
 		mixed: new Set(),
-		fields: { ...fields, stroke: lined, width: lined, dash: lined, arrows: false },
+		fields: { ...fields, stroke: lined, width: lined, dash: lined, arrows: false, pattern: false },
 		targets: new Set([shape.target])
 	};
 }
@@ -85,7 +87,7 @@ export function styleSelection(ed: FigureEditorState, change: Partial<ShapeStyle
 		return Object.keys(own).length ? ed.language.writeStyle(text, st, own) : null;
 	});
 	ed.pickNextStyle(change);
-	ed.applyIfChanged(next);
+	ed.applyIfChanged(next === ed.source ? next : (ed.language.withStyleNeeds?.(next, change) ?? next));
 }
 
 export function inNextStyle(ed: FigureEditorState, text: string, i: number, tool: string) {
@@ -95,7 +97,8 @@ export function inNextStyle(ed: FigureEditorState, text: string, i: number, tool
 	const lined = tool !== 'text';
 	const fields = { ...described.fields, arrows: false, stroke: lined, width: lined, dash: lined };
 	const own = applicableChange(ed.nextStyle, fields);
-	return Object.keys(own).length ? (ed.language.writeStyle(text, st, own) ?? text) : text;
+	const written = Object.keys(own).length ? ed.language.writeStyle(text, st, own) : null;
+	return written ? (ed.language.withStyleNeeds?.(written, own) ?? written) : text;
 }
 
 let copiedStyle: Partial<ShapeStyle> | null = null;

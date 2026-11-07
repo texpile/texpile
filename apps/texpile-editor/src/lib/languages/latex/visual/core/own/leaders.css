@@ -1,0 +1,5 @@
+.ProseMirror .drawn-leaders {
+	margin-inline: 0.25em;
+	letter-spacing: 0.1em;
+	white-space: nowrap;
+}

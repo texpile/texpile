@@ -1,0 +1,4 @@
+.ProseMirror .drawn-quiet {
+	color: var(--faint-text);
+	font-size: 0.85em;
+}

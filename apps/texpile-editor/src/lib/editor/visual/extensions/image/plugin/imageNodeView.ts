@@ -2,7 +2,7 @@
 import { TextSelection } from 'prosemirror-state';
 import type { Node } from 'prosemirror-model';
 import type { EditorView, NodeView } from 'prosemirror-view';
-import { missingImageSvg } from '../missingImagePlaceholder';
+import { missingImageNote } from '../missingImagePlaceholder';
 import { fileUrlExists, pathOfFileUrl } from '$lib/editor/visual/fileAccess';
 import { fileUriOf } from '$lib/files/identity/fileUris';
 import { extUri } from '$lib/files/identity/extUri';
@@ -86,19 +86,26 @@ export function imageNodeView(pluginSettings: ImagePluginSettings) {
 		}
 		root.appendChild(image);
 
-		// failed loads show the bundled placeholder, re-checked on folder changes so a stale
+		// a failed load says the file is not found, re-checked on folder changes so a stale
 		// cached image doesn't linger
 		let notFound = false;
+		let missingNote: HTMLElement | null = null;
 		function showNotFound() {
 			if (notFound) return; // already showing the placeholder
 			notFound = true;
-			image.src = missingImageSvg(node.attrs.src);
-			image.classList.add('image-not-found');
-			image.title = `File not found: ${node.attrs.src}`;
+			image.hidden = true;
+			missingNote = missingImageNote(node.attrs.src);
+			image.after(missingNote);
 			// the controls were sized from the missing image's synthetic dimensions while the
 			// placeholder sizes itself (auto !important) - a large orphan outline over the text
 			resizeControls?.remove();
 			resizeControls = undefined;
+		}
+		function showFound() {
+			notFound = false;
+			image.hidden = false;
+			missingNote?.remove();
+			missingNote = null;
 		}
 		image.addEventListener('error', showNotFound);
 		async function revalidate() {
@@ -107,9 +114,7 @@ export function imageNodeView(pluginSettings: ImagePluginSettings) {
 				if (!(await fileUrlExists(finalSrc))) return showNotFound();
 				if (notFound) {
 					// file came back: bust the cache and show it again
-					notFound = false;
-					image.classList.remove('image-not-found');
-					image.title = node.attrs.alt ?? '';
+					showFound();
 					const freshSrc = `${finalSrc}${finalSrc.includes('?') ? '&' : '?'}_=${Date.now()}`;
 					await show(freshSrc);
 				}
@@ -150,9 +155,7 @@ export function imageNodeView(pluginSettings: ImagePluginSettings) {
 			const shown = await shownImageUrl(src, currentNode, pluginSettings.cropFormat);
 			const size = pluginSettings.enableResize ? await getImageDimensions(shown) : undefined;
 			if (size && !size.completed) return;
-			notFound = false;
-			image.classList.remove('image-not-found');
-			image.title = node.attrs.alt ?? '';
+			showFound();
 			finalSrc = src;
 			dimensions = size;
 			image.src = shown;
@@ -304,7 +307,10 @@ export function imageNodeView(pluginSettings: ImagePluginSettings) {
 						content: 'text*'
 					}
 				: {}),
-			stopEvent: (e: Event) => e.target === contentEl || (e.target instanceof Element && !!e.target.closest('.paper-cropper')),
+			// the clipboard events stay ProseMirror's: the browser's own paste into the caption flattened math to text
+			stopEvent: (e: Event) =>
+				!['paste', 'copy', 'cut'].includes(e.type) &&
+				(e.target === contentEl || (e.target instanceof Element && !!e.target.closest('.paper-cropper'))),
 			dom: root,
 			update: (updateNode: Node) => {
 				if (updateNode.type.name !== 'image' || !finalSrc) {

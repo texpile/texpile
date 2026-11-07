@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { insertHorizontalRule } from '$lib/editor/visual/insert/insertRun';
 	// The markdown editor's own toolbar, over mdSchema only — no LaTeX vocabulary, no tex schema
 	// imports. The SHELL deliberately mirrors the tex Toolbar (same search + undo/redo groups,
 	// same ToolbarOverflow gaps, same button metrics), so switching file kinds doesn't feel like
@@ -93,11 +94,6 @@
 		editorViewStore.current.focus();
 	}
 
-	function insertHr(state: EditorState, dispatch?: (tr: Transaction) => void): boolean {
-		dispatch?.(state.tr.replaceSelectionWith(mdSchema.nodes.horizontal_rule.create()).scrollIntoView());
-		return true;
-	}
-
 	const bulletList = createWrapInListCommand({ kind: 'bullet' });
 	const orderedList = createWrapInListCommand({ kind: 'ordered' });
 	const taskList = createWrapInListCommand({ kind: 'task', checked: false });
@@ -165,7 +161,7 @@
 					{@render iconButton(m.blockmenu_code_block(), false, createCodeBlock(), Code)}
 				{/snippet}
 				{#snippet tb_hr()}
-					{@render iconButton(m.mdtoolbar_hr(), false, insertHr, Minus)}
+					{@render iconButton(m.mdtoolbar_hr(), false, insertHorizontalRule, Minus)}
 				{/snippet}
 				{#snippet tb_selectblock()}
 					{@render iconButton(m.toolbar_select_block_aria(), false, selectParentNode, BoxSelect)}

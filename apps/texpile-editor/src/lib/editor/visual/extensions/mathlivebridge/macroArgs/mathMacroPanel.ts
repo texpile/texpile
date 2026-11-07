@@ -4,9 +4,9 @@ import type { Node } from 'prosemirror-model';
 import type { EditorView } from 'prosemirror-view';
 import { chipPanelOpenFor, openChipPanel, syncChipPanel } from '$lib/editor/visual/extensions/drawnChips/chipPanel.svelte';
 import { undoVisual, redoVisual } from '$lib/editor/visual/visualUndo';
-import { ownMacroDefinition } from '$lib/languages/latex/visual/extensions/drawn/ownMacro/ownMacroFace.svelte';
-import { ownMacroCallsIn } from '$lib/languages/latex/visual/extensions/drawn/ownMacro/ownMacroCall';
-import { macroCaret, macroFooter } from '$lib/languages/latex/visual/extensions/drawn/ownMacro/macroFooter';
+import { ownMacroDefinition } from '$lib/languages/latex/visual/core/own/ownMacroFace.svelte';
+import { ownMacroCallsIn } from '$lib/languages/latex/visual/core/own/ownMacroCall';
+import { macroCaret, macroFooter } from '$lib/languages/latex/visual/core/own/macroFooter';
 import { macroCallAgain, macroCommand, macroOrdinal, macroRange, selectInField } from './macroCallElements';
 import { macroJumpOf } from './macroJump';
 

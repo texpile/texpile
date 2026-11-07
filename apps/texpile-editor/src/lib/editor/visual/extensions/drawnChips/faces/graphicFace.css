@@ -1,0 +1,6 @@
+.ProseMirror .drawn-graphic {
+	display: inline-block;
+	max-width: 100%;
+	max-height: 10em;
+	vertical-align: middle;
+}

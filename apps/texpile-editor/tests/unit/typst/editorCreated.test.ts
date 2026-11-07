@@ -76,7 +76,7 @@ describe('emphasis delimiters beside a reference, a url or a code chip', () => {
 	it('a space ending the emphasis stays inside it where the delimiter would go on as more of what the space follows', () => {
 		const atoms: [Node, string][] = [
 			[n.typ_ref.create({ target: 'knuth' }).mark([m.em.create()]), '@knuth'],
-			[chip('https://x.org/a', ['em']), 'https://x.org/a'],
+			[typSchema.text('https://x.org/a', [m.em.create(), m.link.create({ href: 'https://x.org/a', bare: true })]), 'https://x.org/a'],
 			[chip('#sym.alpha', ['em']), '#sym.alpha']
 		];
 		for (const [atom, written] of atoms) {

@@ -10,7 +10,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { treeToProseMirror } from '$lib/languages/latex/parser/tree/importTree';
-import { refState } from '$lib/languages/latex/visual/extensions/ref/refState';
+import { refState } from '$lib/languages/latex/visual/plugins/crossReference/node/refState';
 import { parseAuxLabels } from '$lib/workspace/auxLabels';
 
 const fixtures = path.join(path.dirname(fileURLToPath(import.meta.url)), '../../../live/fixtures');

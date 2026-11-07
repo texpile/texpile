@@ -6,9 +6,10 @@ import { Plugin } from 'prosemirror-state';
 import { Fragment, Slice, type Node as PMNode, type Schema } from 'prosemirror-model';
 import type { EditorView } from 'prosemirror-view';
 import { keydownHandler } from 'prosemirror-keymap';
+import { unwrapListSlice } from 'prosemirror-flat-list';
 import { settings } from '$lib/settings';
 import { cleanPastedHtml, isCodeEditorCopy } from './pastedHtmlCleanup';
-import { isTexpileCopy, texpileClipboardSerializer } from './texpileCopy';
+import { isTexpileCopy, texpileClipboardParser, texpileClipboardSerializer } from './texpileCopy';
 import { toLf } from '$lib/workspace/edits/lineEndings';
 import { keepSavableImages, leavesOutImages, pastedImageSaving, warnImagesLeftOut, type PasteDialect } from './pastedImages';
 import { looksLikeMarkdown, markdownSlice } from './markdownPaste';
@@ -16,6 +17,8 @@ import { pasteWithoutFormatting } from './visualClipboardPaste';
 import { pasteReadingOfText } from './pasteReadingOfText';
 import { convertDollarMathHtml, convertPastedMathHtml, schemaMathSyntax } from './pastedMath';
 import { convertPastedRawBlocksHtml } from './pastedRawBlocks';
+import { selectionAfterBlockCut } from './block/blockCutSelection';
+import { blockMathClipboard } from './block/blockMathClipboard';
 
 // LaTeX has no header cell its file can hold, so a pasted table's header row comes in as ordinary cells
 export function withoutHeaderCells(slice: Slice, schema: Schema): Slice {
@@ -54,10 +57,25 @@ export function visualSmartPaste(dialect: PasteDialect, schema: Schema, pasteSou
 	let fromTexpile = false;
 	// set by the latest paste's transform, told only once that paste is the one going in
 	let leftOut = false;
+	const imageSaving = pastedImageSaving();
 	return new Plugin({
-		...pastedImageSaving(),
+		...imageSaving,
+		view(view) {
+			const saving = imageSaving.view!(view);
+			const clipboard = blockMathClipboard(view);
+			return {
+				update: saving.update,
+				destroy() {
+					saving.destroy?.();
+					clipboard.destroy();
+				}
+			};
+		},
+		appendTransaction: selectionAfterBlockCut,
 		props: {
 			clipboardSerializer: texpileClipboardSerializer(schema),
+			clipboardParser: texpileClipboardParser(schema),
+			transformCopied: unwrapListSlice,
 			handleKeyDown: keydownHandler({
 				'Mod-Shift-v': (_state, _dispatch, view) => {
 					if (view) void pasteWithoutFormatting(view);

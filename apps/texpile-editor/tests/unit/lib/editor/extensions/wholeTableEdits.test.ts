@@ -99,3 +99,16 @@ describe('an edit across a table edge', () => {
 		around.destroy();
 	});
 });
+
+describe('an edit that reaches a caption and no cell', () => {
+	it('types over the end of the paragraph and the start of the caption, keeping every row', () => {
+		const doc = parseLatexFile(
+			'\\documentclass{article}\n\\begin{document}\n\nParagraph before.\n\n\\begin{table}\n\\caption{Cap table}\n\\begin{tabular}{ll}\none & 1\n\\end{tabular}\n\\end{table}\n\n\\end{document}\n'
+		).doc;
+		const view = mount(doc, textAt(doc, 'before.', 6), textAt(doc, 'Cap', 2));
+		const { from, to } = view.state.selection;
+		expect(view.someProp('handleTextInput', (f) => f(view, from, to, 'Q', () => view.state.tr)) ?? false).toBe(false);
+		expect(press(view, 'Backspace')).toBe(false);
+		view.destroy();
+	});
+});

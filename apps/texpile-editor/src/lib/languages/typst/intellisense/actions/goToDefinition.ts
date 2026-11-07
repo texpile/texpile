@@ -5,6 +5,7 @@ import { syntaxTree } from '@codemirror/language';
 import { EditorView, keymap } from '@codemirror/view';
 import type { Extension, StateEffect } from '@codemirror/state';
 import { m } from '$lib/paraglide/messages';
+import { jumpRevealEffect } from '$lib/editor/source/cmJumpReveal';
 import { toaster } from '$lib/modals/toaster-svelte';
 import { underRoot } from '$lib/workspace/fileSystem';
 import { workspaceRoot } from '$lib/workspace/workspaceStore';
@@ -54,8 +55,7 @@ async function goTo(view: EditorView, plugin: LSPPlugin, pos: number, hooks: GoT
 		const offset = plugin.fromPosition(at, view.state.doc);
 		view.dispatch({
 			selection: { anchor: offset },
-			scrollIntoView: true,
-			effects: hooks.flash?.(offset),
+			effects: [jumpRevealEffect(view, offset), ...(hooks.flash ? [hooks.flash(offset)] : [])],
 			userEvent: 'select.definition'
 		});
 		view.focus();

@@ -97,7 +97,7 @@
 		{"name":"pageautorefname","value":"page"},
 		{"name":"paragraphautorefname","value":"paragraph"},
 		{"name":"partautorefname","value":"Part"},
-		{"name":"pdfbookmark","args":[{"kind":"o"},{"kind":"m"},{"kind":"m"}],"doc":"creates a bookmark with the specified text and at the given level (default is 0)."},
+		{"name":"pdfbookmark","args":[{"kind":"o"},{"kind":"m"},{"kind":"m"}],"doc":"creates a bookmark with the specified text and at the given level (default is 0).","prints":""},
 		{"name":"pdfstringdef","args":[{"kind":"m","role":"macro","defines":"replace"},{"kind":"m"}],"doc":"\\pdfstringdef returns a macro containing the PDF string."},
 		{"name":"pdfstringdefDisableCommands","args":[{"kind":"m","placeholder":"code"}]},
 		{"name":"pdfstringdefPostHook","args":[{"kind":"m"}],"doc":"The hook \\pdfstringdefPostHook can be used for the purpose to postprocess the string further."},

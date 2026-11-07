@@ -7,6 +7,7 @@ import type { ArgumentHint } from '../../../../../../../src/lib/languages/latex/
 import { renderArgumentHint } from '../../../../../../../src/lib/languages/latex/intellisense/signature/argumentHintDom';
 import { documentPackages } from '../../../../../../../src/lib/languages/latex/intellisense/packages/loadedPackages';
 import { openRenameCard, renameCard } from '../../../../../../../src/lib/editor/source/rename/renameCardTooltip';
+import { parsePackageFile, setUserFiles } from '../../../../../../../src/lib/languages/latex/knowledge/userFiles';
 import { updateSettings } from '../../../../../../../src/lib/settings';
 import { latex } from '../../../../../../../src/lib/languages/latex/source/latexLanguage';
 
@@ -24,7 +25,10 @@ function shown(state: EditorState): string | null {
 	return tip ? tip.create({} as EditorView).dom.textContent : null;
 }
 
-afterEach(() => updateSettings({ argumentHints: true }));
+afterEach(() => {
+	updateSettings({ argumentHints: true });
+	setUserFiles(new Map());
+});
 
 describe('argument hints', () => {
 	it('opens as an argument is typed or asked for, never when the cursor lands in one', async () => {
@@ -70,6 +74,24 @@ describe('argument hints', () => {
 		const dom = renderArgumentHint(hint);
 		expect(dom.textContent).toBe('\\includegraphics[options]{file}');
 		expect(dom.querySelector('.cm-argument-hint-active')?.textContent).toBe('[options]');
+	});
+
+	it('shows the arguments of a command from a package file', async () => {
+		const file = {
+			version: 1,
+			macros: [
+				{
+					name: 'inhousecite',
+					args: [
+						{ kind: 'o', placeholder: 'page' },
+						{ kind: 'm', placeholder: 'key' }
+					]
+				}
+			]
+		};
+		setUserFiles(new Map([['inhouse', [parsePackageFile(JSON.stringify(file)).contents!]]]));
+		const hint = argumentHintAt(await stateAt('\\usepackage{inhouse}\n\\inhousecite[|'))!;
+		expect(renderArgumentHint(hint).textContent).toBe('\\inhousecite[page]{key}');
 	});
 
 	it('follows the cursor to the next argument and into a nested group', async () => {
@@ -128,6 +150,37 @@ describe('argument hints', () => {
 	it('shows the starred form of a starred command', async () => {
 		expect(argumentHintAt(await stateAt('\\section*{|'))?.command).toBe('section*');
 		expect(argumentHintAt(await stateAt('\\section{|'))?.command).toBe('section');
+	});
+
+	it('shows math, citation and own optional-argument slots, and nothing for a command without brackets', async () => {
+		const form = (hint: ArgumentHint | null) =>
+			hint && `\\${hint.command}${hint.slots.map((s) => s.open + s.label + s.close).join('')}@${hint.active}`;
+		expect(form(argumentHintAt(await stateAt('$\\frac{|')))).toBe('\\frac{}{}@0');
+		expect(form(argumentHintAt(await stateAt('\\usepackage{biblatex}\n\\cite[|')))).toBe('\\cite[prenote][postnote]{key}@0');
+		const own = '\\newcommand{\\note}[2][]{#2}\n';
+		expect(form(argumentHintAt(await stateAt(`${own}\\note[blue]{|`)))).toBe('\\note[]{}@1');
+		expect(form(argumentHintAt(await stateAt(`${own}\\note{|`)))).toBe('\\note[]{}@1');
+		expect(argumentHintAt(await stateAt('$\\alpha|'))).toBeNull();
+	});
+
+	it('stays hidden after Escape while the caret moves inside the call, and with text selected', async () => {
+		const doc = '\\textcolor{red}{abc}';
+		await documentPackages(doc);
+		const view = new EditorView({ state: EditorState.create({ doc, extensions: argumentHints() }), parent: document.body });
+		const ask = () =>
+			view.contentDOM.dispatchEvent(
+				new KeyboardEvent('keydown', { key: ' ', code: 'Space', ctrlKey: true, shiftKey: true, bubbles: true })
+			);
+		view.dispatch({ selection: { anchor: 11 } });
+		ask();
+		expect(shown(view.state)).not.toBeNull();
+		view.dispatch({ selection: { anchor: 11, head: 12 }, userEvent: 'select' });
+		expect(shown(view.state)).toBeNull();
+		view.dispatch({ selection: { anchor: 11 }, userEvent: 'select' });
+		view.contentDOM.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', bubbles: true }));
+		view.dispatch({ selection: { anchor: 18 }, userEvent: 'select' });
+		expect(shown(view.state)).toBeNull();
+		view.destroy();
 	});
 
 	it('shows the parameters of a \\def macro', async () => {
