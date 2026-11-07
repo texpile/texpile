@@ -224,7 +224,9 @@ return function(T)
 			local k = k0
 			if o[k] == nil and FIELD_ALIAS[k] then k = FIELD_ALIAS[k] end
 			local v = o[k]
-			if v == nil and k == "data" and n.id == WHATSIT and n.subtype == WRITE then v = "" end
+			-- LuaTeX expands a write's data to read it, and a new write's empty list reads whatever TeX's memory holds
+			local write_data = k == "data" and n.id == WHATSIT and n.subtype == WRITE
+			if v == nil and write_data then v = "" end
 			if v ~= nil and k ~= "id" and k ~= "subtype" and k ~= "attr" then
 				local val = v
 				if k == "font" and o.id == "glyph" then val = T.fontmap[v] or 0
@@ -232,7 +234,8 @@ return function(T)
 				elseif type(v) == "table" and v.toks then val = des_tokens(v.toks) end
 				if not (o.id == "glyph" and (READONLY[k] or ((k == "left" or k == "right") and v == 0))) then
 					-- writing lang turns a hyphen minimum of 0 into 255, so equal values are left alone
-					local ok = type(val) ~= "table" and type(val) ~= "userdata" and n[k] == val or pcall(function() n[k] = val end)
+					local same = not write_data and type(val) ~= "table" and type(val) ~= "userdata" and n[k] == val
+					local ok = same or pcall(function() n[k] = val end)
 					if not ok then T.setfail[o.id .. "." .. k] = true end
 				end
 			end
