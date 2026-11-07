@@ -1,6 +1,6 @@
 // One lualatex in its own folder under _draft. It reads the preamble and waits at the base, then either compiles
 // the whole document (GO) or teleports to a plan's point and typesets on from there (TELE), after which it goes back
-// to the base for the next teleport.
+// to the base for the next teleport. Staged (PRE), it applies a plan's chain ahead of the edit and waits there.
 import { spawn, type ChildProcess } from 'node:child_process';
 import * as fs from 'node:fs';
 import * as path from 'node:path';
@@ -56,6 +56,11 @@ export class DraftEngine {
 	parked: Promise<boolean> = Promise.resolve(false);
 	#child: ChildProcess;
 	#listener: ((kind: string, rest: string) => void) | null = null;
+	// each command that ends at the base (TELE, DROP) waits for its PARKED in turn: a stage can be sent while the
+	// process still winds down from its last run
+	#parkWaiters: ((ok: boolean) => void)[] = [];
+	// the serve a stage opened, whose files the edit's run goes on with
+	#stagedServe: number | null = null;
 
 	constructor(
 		readonly root: string,
@@ -116,7 +121,11 @@ export class DraftEngine {
 					/* names it could not quote: the folder's mtimes still cover the preamble */
 				}
 				settle.ready?.(files);
-			} else this.#listener?.(m[1], m[2]);
+			} else if (m[1] === 'PARKED') this.#parkWaiters.shift()?.(true);
+			else this.#listener?.(m[1], m[2]);
+		});
+		void this.exited.then(() => {
+			for (const w of this.#parkWaiters.splice(0)) w(false);
 		});
 		this.#child.stdout!.resume();
 	}
@@ -136,9 +145,7 @@ export class DraftEngine {
 	 * run is over; the process then goes back to its base on its own (`parked`) */
 	teleport(planRel: string, onPage: (p: EnginePage) => void): Promise<TeleportOutcome> {
 		const out: TeleportOutcome = { pages: [], code: null };
-		const settle: { atBase?: (ok: boolean) => void } = {};
-		this.parked = new Promise((resolve) => (settle.atBase = resolve));
-		void this.exited.then(() => settle.atBase?.(false));
+		this.parked = this.#waitForPark();
 		return new Promise((resolve) => {
 			this.#listener = (kind, rest) => {
 				if (kind === 'APPLIED') {
@@ -158,11 +165,36 @@ export class DraftEngine {
 					if (kind === 'CUT') out.cut = true;
 					resolve(out);
 				} else if (kind === 'REFUSED') out.refused = rest;
-				else if (kind === 'PARKED') settle.atBase?.(true);
 			};
 			this.#child.stdin?.write(`TELE ${planRel}\n`);
 			void this.exited.then((code) => resolve({ ...out, code }));
 		});
+	}
+
+	#waitForPark(): Promise<boolean> {
+		if (this.dead) return Promise.resolve(false);
+		return new Promise((resolve) => this.#parkWaiters.push(resolve));
+	}
+
+	/** applies the chain of the plan at `planRel`, for serve `serve`, and waits at its last point: the next teleport
+	 * goes on from there */
+	stage(planRel: string, serve: number): void {
+		this.#stagedServe = serve;
+		this.#child.stdin?.write(`PRE ${planRel}\n`);
+	}
+
+	/** the serve a stage opened, once: the run that goes on from it writes its files there */
+	takeStagedServe(): number | null {
+		const n = this.#stagedServe;
+		this.#stagedServe = null;
+		return n;
+	}
+
+	/** a staged process goes back to its base unused */
+	drop(): void {
+		this.#stagedServe = null;
+		this.parked = this.#waitForPark();
+		this.#child.stdin?.write('DROP\n');
 	}
 
 	/** the number of the serve about to start */

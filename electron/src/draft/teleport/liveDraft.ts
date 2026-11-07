@@ -8,7 +8,17 @@ import { linesOf, lineEdit, type LineEdit } from './lineEdit';
 import { readIndexFile, type PointIndex, type TeleportPlan } from './pointIndex';
 import { planLua } from './planLua';
 import { paragraphOpen, paragraphStart } from './heldEdit';
-import { takeEngine, giveBack, warmPool, diskPreamble, preambleOfText, stampOf, type PoolConfig } from './enginePool';
+import {
+	takeEngine,
+	takeStaged,
+	stageEngine,
+	giveBack,
+	warmPool,
+	diskPreamble,
+	preambleOfText,
+	stampOf,
+	type PoolConfig
+} from './enginePool';
 import { engineFolders, type DraftEngine } from './draftEngine';
 
 export type TeleportRequest = { file: string; text: string };
@@ -33,6 +43,11 @@ type Queued = { req: TeleportRequest; onPage: (p: DraftPage) => void; done: (r: 
 
 function norm(p: string): string {
 	return p.replace(/\\/g, '/');
+}
+
+// what a staged engine went through to its point: the chain, and every file but the edited one as it read them
+function stageKey(plan: TeleportPlan, basis: Map<string, string>, file: string): string {
+	return JSON.stringify([plan.chain, [...basis].filter(([rel]) => rel !== file).sort()]);
 }
 let overrideSeq = 0;
 // a run that ships no page this long is in a loop: the compile shows the text instead
@@ -147,7 +162,9 @@ export class LiveDraft {
 		const plan = this.index.planFor(file, edit);
 		if (!plan) return { ok: false, reason: 'outside', ms: ms() };
 
-		const engine = await takeEngine(pool);
+		// typing goes on in one paragraph, so the edit before this one staged a spare at the same chain
+		const key = plan.chain.length ? stageKey(plan, this.index.basis, file) : null;
+		const engine = (key && takeStaged(pool, key)) || (await takeEngine(pool));
 		if (this.#closed) {
 			engine.remove();
 			return { ok: false, reason: 'superseded', ms: ms() };
@@ -157,7 +174,7 @@ export class LiveDraft {
 			engine.remove();
 			return { ok: false, reason: 'failed', detail: 'the engine stopped in the preamble', ms: ms() };
 		}
-		const result = await this.#serve(engine, req, onPage, { file, lines, edit, plan }, ms);
+		const result = await this.#serve(engine, req, onPage, { file, lines, edit, plan, pool, key }, ms);
 		if (this.#closed) engine.remove();
 		else giveBack(engine);
 		return result;
@@ -167,10 +184,10 @@ export class LiveDraft {
 		engine: DraftEngine,
 		req: TeleportRequest,
 		onPage: (p: DraftPage) => void,
-		at: { file: string; lines: string[]; edit: LineEdit; plan: TeleportPlan },
+		at: { file: string; lines: string[]; edit: LineEdit; plan: TeleportPlan; pool: PoolConfig; key: string | null },
 		ms: () => number
 	): Promise<TeleportResult> {
-		const { file, lines, edit, plan } = at;
+		const { file, lines, edit, plan, pool, key } = at;
 		// every file reads as the index holds it, whatever disk has by now; the edited one as the edit left it
 		const overDir = path.join(engine.abs, 'over');
 		fs.mkdirSync(overDir, { recursive: true });
@@ -179,14 +196,20 @@ export class LiveDraft {
 		const overrides = new Map<string, string>();
 		for (const [rel, snap] of this.index.basis) overrides.set(rel, norm(path.relative(this.root, snap)));
 		overrides.set(file, norm(path.relative(this.root, edited)));
-		// each serve of an engine has its own files: the index reads the snapshots of earlier ones
-		const n = engine.nextServe();
+		// each serve of an engine has its own files: the index reads the snapshots of earlier ones; a staged engine goes
+		// on with the serve its stage opened
+		const writePlan = (to: DraftEngine, n: number): string => {
+			const planRel = `${to.rel}/tele/plan-${n}.lua`;
+			const serve = { src: `${to.rel}/tele/s${n}`, cut: `${to.rel}/tele/cut-${n}` };
+			fs.writeFileSync(
+				path.join(this.root, planRel),
+				planLua(plan, overrides, file, edit, paragraphStart(lines, edit), this.srcFiles, serve)
+			);
+			return planRel;
+		};
+		const n = engine.takeStagedServe() ?? engine.nextServe();
+		const planRel = writePlan(engine, n);
 		const serve = { src: `${engine.rel}/tele/s${n}`, cut: `${engine.rel}/tele/cut-${n}` };
-		const planRel = `${engine.rel}/tele/plan-${n}.lua`;
-		fs.writeFileSync(
-			path.join(this.root, planRel),
-			planLua(plan, overrides, file, edit, paragraphStart(lines, edit), this.srcFiles, serve)
-		);
 
 		let killed: 'stalled' | 'cut' | null = null;
 		let watch: ReturnType<typeof setTimeout> | undefined;
@@ -212,7 +235,7 @@ export class LiveDraft {
 		if (this.#queued.has(file)) this.#cut.now();
 		// pages read in order, each as soon as the engine reports it
 		let pages = Promise.resolve();
-		const outcome = await engine.teleport(planRel, (p) => {
+		const running = engine.teleport(planRel, (p) => {
 			pages = pages.then(async () => {
 				const page = await readPage(engine.abs, this.root, p.n, p.w, p.h, p.unc);
 				if (!this.#closed) onPage(page);
@@ -221,6 +244,12 @@ export class LiveDraft {
 			else if (!cutAsked) killAfter('stalled', STALL_MS);
 			paged = true;
 		});
+		if (key)
+			stageEngine(pool, key, (other) => {
+				const m = other.nextServe();
+				return { planRel: writePlan(other, m), serve: m };
+			});
+		const outcome = await running;
 		clearTimeout(watch);
 		this.#cut = null;
 		await pages;

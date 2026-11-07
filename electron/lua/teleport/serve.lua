@@ -36,6 +36,7 @@ return function(T)
 		T.overrides, T.entries = {}, {}
 		T.stops, T.stage, T.chain, T.files, T.selfcheck, T.report_from = nil, nil, nil, nil, nil, nil
 		T.stop_after_page, T.stop_dumped, T.cutting, T.silent, T.ended, T.no_park, T.cut_path = nil, nil, nil, nil, nil, nil, nil
+		T.staging = nil
 		T.at_base = true
 		T.want_point = TEXPILE_TELE_DENSE or false
 		T.snapshot_dir = T.OUT .. "src/"
@@ -74,6 +75,72 @@ return function(T)
 		T.park()
 	end
 
+	-- the old points after the edit, at their new lines: where the run may find it already matches
+	local function stops_of(plan)
+		local stops = {}
+		local e = plan.edit
+		for _, s in ipairs(plan.stops or {}) do
+			local ok, st = true, {}
+			for i, x in ipairs(s.stack) do
+				local l = x.l
+				if e and x.f == e.f then
+					if l > e.oldTo then l = l + e.newTo - e.oldTo
+					elseif l >= e.from then ok = false end
+				end
+				st[i] = { f = x.f, l = l }
+			end
+			if ok then stops[T.key_of(st)] = s end
+		end
+		return stops
+	end
+
+	local function selfcheck(c)
+		local rec, grabs = T.diff(T.reading.open_keys)
+		T.capture(grabs, function()
+			local a, b = T.canon(c.rec), T.canon(rec)
+			if a ~= b then
+				local f = io.open(T.OUT .. "self-ref.lua", "w"); f:write(a); f:close()
+				f = io.open(T.OUT .. "self-got.lua", "w"); f:write(b); f:close()
+			end
+			local i = 1
+			while i <= #a and a:sub(i, i) == b:sub(i, i) do i = i + 1 end
+			T.say(a == b and "SELF same" or ("SELF differs at " .. i .. ": " .. a:sub(math.max(1, i - 200), i + 100):gsub("\n", " ") .. " | " .. b:sub(math.max(1, i - 200), i + 100):gsub("\n", " ")))
+		end)
+	end
+
+	-- staged at the chain's last point, ahead of the edit: TELE goes on from here with its own plan, DROP goes back to
+	-- the base. The chain is the next edit's only when the main process says so
+	function T.await_edit(c)
+		T.staging = nil
+		local l
+		repeat
+			l = io.stdin:read("*l")
+			if l then l = l:gsub("\r$", "") end
+		until not (l and l:match("^FONTS "))
+		local plan = l and l:match("^TELE (.+)$")
+		if l == "DROP" then
+			T.wind_down()
+			T.settle()
+			return
+		end
+		if not plan then os.exit(101) end
+		plan = dofile(plan)
+		T.cut_path = plan.cut
+		for rel, path in pairs(plan.overrides or {}) do
+			if T.overrides[rel] ~= path then
+				T.overrides[rel] = path
+				T.reload(rel)
+			end
+		end
+		T.stops = stops_of(plan)
+		T.selfcheck = plan.selfcheck
+		T.stage = plan.stage
+		T.files = plan.files
+		T.adopt_files()
+		T.say("APPLIED 0 staged")
+		if T.selfcheck then selfcheck(c) end
+	end
+
 	-- serving: apply the plan's chain of records, outer file to inner, then typeset on from the edit
 	function T.serve(plan)
 		T.serving = true
@@ -89,22 +156,7 @@ return function(T)
 			T.overrides[rel] = path
 			T.reload(rel)
 		end
-		-- the old points after the edit, at their new lines: where the run may find it already matches
-		local stops = {}
-		local e = plan.edit
-		for _, s in ipairs(plan.stops or {}) do
-			local ok, st = true, {}
-			for i, x in ipairs(s.stack) do
-				local l = x.l
-				if e and x.f == e.f then
-					if l > e.oldTo then l = l + e.newTo - e.oldTo
-					elseif l >= e.from then ok = false end
-				end
-				st[i] = { f = x.f, l = l }
-			end
-			if ok then stops[T.key_of(st)] = s end
-		end
-		T.stops = stops
+		T.stops = stops_of(plan)
 		T.selfcheck = plan.selfcheck
 		T.stage = plan.stage
 		T.open_index()
@@ -148,20 +200,9 @@ return function(T)
 			else
 				T.adopt_files()
 				T.applying = false
+				if T.staging then return T.await_edit(c) end
 				T.say(string.format("APPLIED %.1f %s", ms, table.concat(T.apply_stages or {}, " ")))
-				if T.selfcheck then
-					local rec, grabs = T.diff(T.reading.open_keys)
-					T.capture(grabs, function()
-						local a, b = T.canon(c.rec), T.canon(rec)
-						if a ~= b then
-							local f = io.open(T.OUT .. "self-ref.lua", "w"); f:write(a); f:close()
-							f = io.open(T.OUT .. "self-got.lua", "w"); f:write(b); f:close()
-						end
-						local i = 1
-						while i <= #a and a:sub(i, i) == b:sub(i, i) do i = i + 1 end
-						T.say(a == b and "SELF same" or ("SELF differs at " .. i .. ": " .. a:sub(math.max(1, i - 200), i + 100):gsub("\n", " ") .. " | " .. b:sub(math.max(1, i - 200), i + 100):gsub("\n", " ")))
-					end)
-				end
+				if T.selfcheck then selfcheck(c) end
 			end
 		end, c.moves)
 	end

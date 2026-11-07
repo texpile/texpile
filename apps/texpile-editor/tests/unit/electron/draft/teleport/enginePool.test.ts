@@ -15,12 +15,22 @@ vi.mock('../../../../../../../electron/src/draft/teleport/draftEngine', () => ({
 		ready = Promise.resolve([]);
 		exited = new Promise(() => undefined);
 		parked = Promise.resolve(false);
+		stagedWith: string | null = null;
+		dropped = false;
+		stage(planRel: string): void {
+			this.stagedWith = planRel;
+		}
+		drop(): void {
+			this.dropped = true;
+			this.parked = Promise.resolve(true);
+		}
 		kill(): void {}
 		remove(): void {}
 	}
 }));
 
-const { warmPool, takeEngine, giveBack, stopPool } = await import('../../../../../../../electron/src/draft/teleport/enginePool');
+const { warmPool, takeEngine, takeStaged, stageEngine, giveBack, stopPool } =
+	await import('../../../../../../../electron/src/draft/teleport/enginePool');
 
 // a compile on an engine that served ships its pages after the empty ones of its teleports
 it('hands a compile only an engine that never served', async () => {
@@ -66,4 +76,31 @@ it('keeps the spares of a folder while another folder warms its own', async () =
 	expect(await takeEngine(a)).toBe(fromA);
 	stopPool();
 	fs.rmSync(other, { recursive: true, force: true });
+});
+
+// typing goes on in one paragraph, so the next edit teleports from the chain a spare already applied
+it('hands a staged engine to its own chain, and sends it back to the base for any other', async () => {
+	const c = {
+		root,
+		mainRel: 'main.tex',
+		engineDir: '/e',
+		engine: 'lualatex',
+		seedDir: '/s',
+		preamble: 'pre\n\\begin{document}',
+		preStamp: null
+	};
+	warmPool(c);
+	const running = await takeEngine(c);
+	stageEngine(c, 'chain-1', () => ({ planRel: 'plan-1', serve: 1 }));
+	expect(takeStaged(c, 'chain-2')).toBeNull();
+	const staged = takeStaged(c, 'chain-1');
+	expect(staged).not.toBe(running);
+	expect(staged?.stagedWith).toBe('plan-1');
+	running.parked = Promise.resolve(true);
+	giveBack(running);
+	stageEngine(c, 'chain-3', () => ({ planRel: 'plan-3', serve: 3 }));
+	expect(running.stagedWith).toBe('plan-3');
+	expect(await takeEngine(c)).toBe(running);
+	expect(running.dropped).toBe(true);
+	stopPool();
 });

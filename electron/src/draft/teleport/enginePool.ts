@@ -14,8 +14,15 @@ const IDLE_STOP_MS = 10 * 60 * 1000;
 // a served run that reaches no clean point in this long is in a loop
 const PARK_MS = 10000;
 
-// at: resolves once the engine waits at the base, false when it exited first
-type Spare = { engine: DraftEngine; key: string; stamp: Promise<string | null>; at: Promise<boolean>; fonts?: string };
+// at: resolves once the engine waits at the base, false when it exited first; staged: the chain it waits at instead
+type Spare = {
+	engine: DraftEngine;
+	key: string;
+	stamp: Promise<string | null>;
+	at: Promise<boolean>;
+	fonts?: string;
+	staged?: string;
+};
 export type PoolConfig = {
 	root: string;
 	mainRel: string;
@@ -137,7 +144,7 @@ class EnginePool {
 			this.spares = this.spares.filter((x) => x !== s);
 			s.engine.remove();
 		}
-		for (const s of this.spares) preload(s, c);
+		for (const s of this.spares) if (!s.staged) preload(s, c);
 		// disk moved on from what the configuration expects: a spare would hold the wrong base
 		if (diskPreamble(c.root, c.mainRel) === c.preamble) while (this.spares.length + this.out.size < ENGINES) this.spawnSpare(c);
 		this.armIdleStop();
@@ -146,7 +153,11 @@ class EnginePool {
 	async take(c: PoolConfig, unserved: boolean): Promise<DraftEngine> {
 		const key = keyOf(c, c.preamble);
 		for (;;) {
-			const s = await firstAtBase(this.spares.filter((x) => x.key === key && !x.engine.dead && !(unserved && x.engine.serves)));
+			const fit = this.spares.filter((x) => x.key === key && !x.engine.dead && !(unserved && x.engine.serves));
+			// a staged engine waits at a chain: it goes back to the base when no other one will do
+			const free = fit.filter((x) => !x.staged);
+			if (!free.length && fit.length) this.unstage(fit[0]);
+			const s = await firstAtBase(fit.filter((x) => !x.staged));
 			if (!s) break;
 			if (!this.spares.includes(s)) continue;
 			this.spares = this.spares.filter((x) => x !== s);
@@ -169,6 +180,36 @@ class EnginePool {
 		this.watchExit(s);
 		this.warm(c);
 		return engine;
+	}
+
+	unstage(s: Spare): void {
+		s.engine.drop();
+		// eslint-disable-next-line no-param-reassign -- the spare records where it waits
+		s.staged = undefined;
+		// eslint-disable-next-line no-param-reassign
+		s.at = s.engine.parked;
+	}
+
+	/** one spare applies the chain `key` names ahead of the next edit; `write` puts its plan down for a serve */
+	stage(c: PoolConfig, key: string, write: (engine: DraftEngine) => { planRel: string; serve: number }): void {
+		const fit = this.spares.filter((x) => x.key === keyOf(c, c.preamble) && !x.engine.dead);
+		if (fit.some((x) => x.staged === key)) return;
+		const s = fit.find((x) => !x.staged) ?? fit[0];
+		if (!s) return;
+		if (s.staged) this.unstage(s);
+		const { planRel, serve } = write(s.engine);
+		s.engine.stage(planRel, serve);
+		s.staged = key;
+	}
+
+	takeStaged(c: PoolConfig, key: string): DraftEngine | null {
+		const s = this.spares.find((x) => x.staged === key && x.key === keyOf(c, c.preamble) && !x.engine.dead);
+		if (!s) return null;
+		this.spares = this.spares.filter((x) => x !== s);
+		s.staged = undefined;
+		this.out.set(s.engine, s);
+		this.warm(c);
+		return s.engine;
 	}
 
 	giveBack(engine: DraftEngine): void {
@@ -229,6 +270,16 @@ export function warmPool(c: PoolConfig): void {
  */
 export function takeEngine(c: PoolConfig, unserved = false): Promise<DraftEngine> {
 	return poolFor(c.root).take(c, unserved);
+}
+
+/** a spare applies the chain `key` names, ahead of an edit that teleports from it */
+export function stageEngine(c: PoolConfig, key: string, write: (engine: DraftEngine) => { planRel: string; serve: number }): void {
+	poolFor(c.root).stage(c, key, write);
+}
+
+/** the spare staged at `key`, taken; null when none is */
+export function takeStaged(c: PoolConfig, key: string): DraftEngine | null {
+	return poolFor(c.root).takeStaged(c, key);
 }
 
 /** a teleport is done with its engine: it serves again once it parks, if its pool still wants its base */

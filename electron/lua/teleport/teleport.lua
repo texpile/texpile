@@ -290,7 +290,8 @@ local function write_fonts()
 	f:close()
 end
 
--- at the base: GO compiles on, TELE <plan> teleports, FONTS <list> loads fonts and waits again
+-- at the base: GO compiles on, TELE <plan> teleports, PRE <plan> applies the plan's chain and waits there for the edit,
+-- FONTS <list> loads fonts and waits again
 function texpile_tele_next()
 	local l = io.stdin:read("*l")
 	if l then l = l:gsub("\r$", "") end
@@ -320,9 +321,11 @@ function texpile_tele_next()
 		tex.sprint("\\directlua{texpile_tele_next()}")
 		return
 	end
-	local plan = l and l:match("^TELE (.+)$")
-	if not plan then os.exit(101) end
+	local pre, plan
+	if l then pre, plan = l:match("^(%u+) (.+)$") end
+	if pre ~= "TELE" and pre ~= "PRE" then os.exit(101) end
 	T.serves = (T.serves or 0) + 1
+	T.staging = pre == "PRE"
 	T.serve(dofile(plan))
 end
 

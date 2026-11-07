@@ -25,6 +25,7 @@ function fakeEngine() {
 		dead: false,
 		serves: 0,
 		nextServe: () => 1,
+		takeStagedServe: () => null,
 		parked: Promise.resolve(false),
 		ready: Promise.resolve([]),
 		teleport: async () => {
