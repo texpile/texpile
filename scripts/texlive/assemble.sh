@@ -2,9 +2,10 @@
 # What goes up beside the platform archives already in <out>: the year's source checked against its checksum, TeX
 # Live's licenses, SOURCE and SHA256SUMS. Then the hashes the app pins, to $GITHUB_STEP_SUMMARY on CI.
 #   scripts/texlive/assemble.sh <out> <version>
-# <version>: <year>-r<revision>, as pick-mirror.sh prints it. <out> holds texlive-x86_64-linux.tar.xz.
+# <version>: <year>-r<revision>-<lists>, as pick-mirror.sh prints it. <out> holds texlive-x86_64-linux.tar.xz.
 set -euo pipefail
 out="$(cd "$1" && pwd)" version="$2"
+revision="${version#*-r}" revision="${revision%%-*}"
 root="$(cd "$(dirname "$0")/../.." && pwd)"
 work="$(mktemp -d)"
 trap 'rm -rf "$work"' EXIT
@@ -24,7 +25,7 @@ done
 tar -xJf "$out/texlive-x86_64-linux.tar.xz" -C "$work" texlive/LICENSE.TL texlive/LICENSE.CTAN
 cp "$work/texlive/LICENSE.TL" "$work/texlive/LICENSE.CTAN" "$out/"
 printf 'TeX Live %s, revision %s of its repository, installed with its own install-tl and tlmgr.\nThe Windows programs TeX Live leaves unsigned are signed by Texpile LLC. Nothing else is changed.\nThe source of the programs is %s. The Subversion repository of TeX Live holds every revision.\n' \
-	"${version%%-r*}" "${version##*-r}" "$name" > "$out/SOURCE"
+	"${version%%-r*}" "$revision" "$name" > "$out/SOURCE"
 (cd "$out" && sha 256 texlive-* > SHA256SUMS && cat SHA256SUMS)
 
 {

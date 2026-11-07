@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 # The mirror every platform's TeX Live build installs from, the package database it serves, and the version that
-# makes: <year>-r<revision>. Prints mirror=, tlpdb= and version= lines, to $GITHUB_OUTPUT on CI.
+# makes: <year>-r<revision>-<lists>, the last part the start of the package lists' SHA-256. Prints mirror=, tlpdb= and
+# version= lines, to $GITHUB_OUTPUT on CI.
 #   scripts/texlive/pick-mirror.sh
 set -euo pipefail
 root="$(cd "$(dirname "$0")/../.." && pwd)"
@@ -28,11 +29,13 @@ config="$(awk '/^name 00texlive.config$/,/^$/' "$work/texlive.tlpdb")"
 release="$(echo "$config" | sed -n 's|^depend release/||p')"
 revision="$(echo "$config" | sed -n 's|^depend revision/||p')"
 [ "$release" = "$year" ] || { echo "$repository serves TeX Live $release and the pin asks for $year" >&2; exit 1; }
+# a list changed at the same revision is a new build, and a published version is never replaced
+lists="$(cat "$root/vendor/texlive-packages.txt" "$root/vendor/texlive-packages-windows.txt" | sha 256 | cut -c1-6)"
 
 out="${GITHUB_OUTPUT:-/dev/stdout}"
 {
 	echo "mirror=$mirror"
 	echo "tlpdb=$tlpdb"
-	echo "version=$year-r$revision"
+	echo "version=$year-r$revision-$lists"
 } >> "$out"
 if [ -n "${GITHUB_STEP_SUMMARY:-}" ]; then echo "Installing TeX Live $year, revision $revision, from $mirror" >> "$GITHUB_STEP_SUMMARY"; fi

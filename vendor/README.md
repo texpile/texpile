@@ -32,7 +32,7 @@ of its own. Elsewhere TeX Live's latexindent is a Perl script that needs two mod
 run. It signs the Windows programs TeX Live leaves unsigned (Trusted Signing), checks that the macOS programs carry
 TeX Live's own signatures, and keeps the Linux files as built. Each build then runs live mode's gate on the fixtures.
 The upload holds one archive per platform, the year's source, TeX Live's licenses and `SHA256SUMS`, under
-`<year>-r<revision>`. Its summary prints the hashes the app pins in `electron/src/texlive/texliveRelease.ts`.
+`<year>-r<revision>-<lists>`, the last part the start of the package lists' SHA-256. Its summary prints the hashes the app pins in `electron/src/texlive/texliveRelease.ts`.
 
 The bundle holds the formats. The font cache lists the system's fonts, so it is built on the writer's machine.
 
