@@ -206,7 +206,12 @@ local function infoFor(id)
 	if i == nil then
 		-- a font a teleport loaded has no Lua table to get, only a copy
 		local f = font.getfont(id) or (font.getcopy and font.getcopy(id))
-		i = { chars = f and f.characters, harf = f ~= nil and f.hb ~= nil, key = f and ((f.name or "") .. "@" .. tostring(f.size)) or tostring(id) }
+		i = {
+			chars = f and f.characters,
+			harf = f ~= nil and f.hb ~= nil,
+			key = f and ((f.name or "") .. "@" .. tostring(f.size)) or tostring(id),
+			face = f and { name = f.name, size = f.size, filename = f.filename },
+		}
 		fontInfo[id] = i
 	end
 	return i
@@ -264,6 +269,18 @@ local function containsLiteral(head, depthLeft)
 end
 
 local M = {}
+
+local virtualFont = dofile((TEXPILE_ENGINE_DIR or ".") .. "/virtualFont.lua")()
+local GLYPH_RECORD = '{"t":"g","c":%d,"f":%d,"x":%.4f,"y":%.4f,"w":%.4f,"ef":%d,"xo":%.4f,"yo":%.4f%s%s}'
+-- what the glyph being expanded shares with each glyph its virtual font draws
+local vfOut = {}
+function vfOut.glyph(fid, c, x, y, w)
+	vfOut.fonts[fid] = true
+	vfOut.emit(string.format(GLYPH_RECORD, c, fid, x / pt, y / pt, w / pt, vfOut.ef, vfOut.xo / pt, vfOut.yo / pt, vfOut.col, ""))
+end
+function vfOut.rule(x, y, w, h)
+	vfOut.emit(string.format('{"t":"rule","x":%.4f,"y":%.4f,"w":%.4f,"h":%.4f,"d":0%s}', x / pt, y / pt, w / pt, h / pt, vfOut.col))
+end
 
 local drawingKey = dofile((TEXPILE_ENGINE_DIR or ".") .. "/drawingKey.lua")(function(id) return infoFor(id).key end,
 	function(ix) return M.imageFile and M.imageFile(ix) end)
@@ -474,12 +491,14 @@ local function walk(head, parent, x, y, emit, fonts, last_ef, colorStack, rtl, s
 			local ef = n.expansion_factor or 0
 			last_ef = ef
 			local w = n.width * (1 + ef / 1000000.0)
-			fonts[n.font] = true
 			if rtl then x = x - w end
-			emit(string.format(
-				'{"t":"g","c":%d,"f":%d,"x":%.4f,"y":%.4f,"w":%.4f,"ef":%d,"xo":%.4f,"yo":%.4f%s%s}',
-				n.char, n.font, x / pt, y / pt, w / pt, ef, (n.xoffset or 0) / pt, (n.yoffset or 0) / pt,
-				colSuffix(colorStack), glyphIndexSuffix(n)))
+			vfOut.emit, vfOut.fonts, vfOut.ef, vfOut.col = emit, fonts, ef, colSuffix(colorStack)
+			vfOut.xo, vfOut.yo = n.xoffset or 0, n.yoffset or 0
+			if not virtualFont.expand(infoFor(n.font).face, n, x, y, 1 + ef / 1000000.0, vfOut) then
+				fonts[n.font] = true
+				emit(string.format(GLYPH_RECORD, n.char, n.font, x / pt, y / pt, w / pt, ef, vfOut.xo / pt, vfOut.yo / pt,
+					vfOut.col, glyphIndexSuffix(n)))
+			end
 			if not rtl then x = x + w end
 		elseif id == KERN then
 			local k = n.kern
@@ -840,8 +859,11 @@ function M.lines(head, y0, colorSeed)
 		-- getfont only knows Lua-defined fonts; format/TeX-loaded ones (classic math:
 		-- cmex10 and friends -- where \int lives) need getcopy, which reads them all.
 		-- Without this their glyph records had no font record and silently drew nothing.
-		local f = font.getfont(id) or (font.getcopy and font.getcopy(id))
-		if f then
+		local face = id < 0 and virtualFont.face(id)
+		local f = not face and (font.getfont(id) or (font.getcopy and font.getcopy(id)))
+		if face then
+			records[#records + 1] = string.format('{"t":"font","id":%d,"size":%.4f,"name":"%s","file":""}', id, face.size / pt, jstr(face.name))
+		elseif f then
 			-- "harfloaded:" prefixes filename whenever luaotfload shaped through HarfBuzz. It is a
 			-- loader tag, not part of the path: passing it through made the renderer fetch a file
 			-- that cannot exist, so every glyph of a Hebrew/Arabic/Indic page silently drew nothing.

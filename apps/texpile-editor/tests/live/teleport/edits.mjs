@@ -52,7 +52,7 @@ function norm(records, root) {
 		.split('\n')
 		.filter(Boolean)
 		.map((l) => JSON.parse(l));
-	const fonts = new Map(lines.filter((r) => r.t === 'font').map((r) => [r.id, `${path.basename(r.file || '')}@${r.size}`]));
+	const fonts = new Map(lines.filter((r) => r.t === 'font').map((r) => [r.id, `${path.basename(r.file || '') || r.name}@${r.size}`]));
 	return lines
 		.filter((r) => r.t !== 'font')
 		.map((r) => {
@@ -159,6 +159,27 @@ async function settleSeeds() {
 }
 await settleSeeds();
 
+// glyphs of a teleported page in a font the preview cannot draw, by font: they show as gray boxes
+const noInk = new Map();
+function countNoInk(records) {
+	const lines = records
+		.split('\n')
+		.filter(Boolean)
+		.map((l) => JSON.parse(l));
+	const fonts = new Map(lines.filter((r) => r.t === 'font').map((r) => [r.id, r]));
+	for (const r of lines) {
+		if (r.t !== 'g' && r.t !== 'ng') continue;
+		const f = fonts.get(r.f);
+		if (f && (f.t1 || /\.(otf|ttf|ttc)$/i.test(f.file || ''))) continue;
+		const name = f?.name || `font ${r.f}`;
+		noInk.set(name, (noInk.get(name) ?? 0) + 1);
+	}
+}
+function noInkTotal() {
+	if (noInk.size) console.error(`glyphs the preview cannot draw: ${JSON.stringify(Object.fromEntries(noInk))}`);
+	return [...noInk.values()].reduce((a, b) => a + b, 0);
+}
+
 // one edit sent as the app sends it: pages land on screen as they come, whichever edit they are for
 function send(file, text) {
 	const out = { got: [], firstAt: null };
@@ -166,6 +187,7 @@ function send(file, text) {
 		if (out.firstAt === null) out.firstAt = Date.now();
 		out.got.push(p);
 		shown[p.n] = norm(p.records, root);
+		countNoInk(p.records);
 	});
 	// as the app does when a result lands: the pages past the stop move their source lines, or the count is new
 	out.landed = sent.then((res) => {
@@ -269,13 +291,14 @@ if (keys) {
 		p90: pick(0.9),
 		max: sorted.at(-1) ?? null,
 		last: lat.at(-1),
-		never: lat.filter((v) => v === null).length
+		never: lat.filter((v) => v === null).length,
+		noInk: noInkTotal()
 	};
 	if (jsonOut) fs.writeFileSync(jsonOut, JSON.stringify({ ...summary, lat, reasons }, null, 1));
 	console.log(JSON.stringify(summary));
 	setTimeout(() => {
 		fs.rmSync(tmp, { recursive: true, force: true });
-		process.exit(wrong || rest ? 1 : 0);
+		process.exit(wrong || rest || summary.noInk ? 1 : 0);
 	}, 500);
 	await new Promise(() => undefined);
 }
@@ -345,11 +368,12 @@ const summary = {
 	compiles: results.filter((r) => r.reason && !['held', 'outside'].includes(r.reason)).length,
 	held: results.filter((r) => r.reason === 'held').length,
 	firstPageMedian: firsts[Math.floor(firsts.length / 2)] ?? null,
+	noInk: noInkTotal(),
 	results
 };
 if (jsonOut) fs.writeFileSync(jsonOut, JSON.stringify(summary, null, 1));
 console.log(JSON.stringify({ ...summary, results: undefined }));
 setTimeout(() => {
 	fs.rmSync(tmp, { recursive: true, force: true });
-	process.exit(summary.wrong ? 1 : 0);
+	process.exit(summary.wrong || summary.noInk ? 1 : 0);
 }, 500);
