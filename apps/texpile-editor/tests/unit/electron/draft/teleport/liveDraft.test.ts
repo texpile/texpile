@@ -92,3 +92,14 @@ it('kills a run that ships no page and serves the next edit', async () => {
 	expect(await next).toMatchObject({ ok: true });
 	vi.useRealTimers();
 });
+
+// edits in other files each run to the end of their own pages: the one on screen came last and must not wait for them
+it('runs the newest waiting edit first', async () => {
+	const live = liveDraft();
+	const order: string[] = [];
+	const first = live.teleport({ file: 'main.tex', text: main.replace('\nc\n', '\nc first\n') }, () => undefined);
+	const older = live.teleport({ file: 'b.tex', text: 'x' }, () => undefined).then(() => order.push('older'));
+	const newer = live.teleport({ file: 'c.tex', text: 'y' }, () => undefined).then(() => order.push('newer'));
+	await Promise.all([first, older, newer]);
+	expect(order).toEqual(['newer', 'older']);
+});

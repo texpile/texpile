@@ -99,7 +99,8 @@ export class LiveDraft {
 		this.#running = null;
 		this.#busy = false;
 		if (!this.#closed) this.#collectGarbage();
-		const [file, next] = this.#queued.entries().next().value ?? [];
+		// the newest first: it is the one on screen, and the others wait for one run instead of it waiting for theirs
+		const [file, next] = [...this.#queued.entries()].at(-1) ?? [];
 		if (file !== undefined) this.#queued.delete(file);
 		if (next && !this.#closed) void this.#run(next.req, next.onPage).then(next.done);
 		return result;
