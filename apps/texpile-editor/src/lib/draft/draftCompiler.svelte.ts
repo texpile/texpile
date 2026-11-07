@@ -1,7 +1,7 @@
 // The full-compile lifecycle: cancel-on-supersede compiles.
 import { nativeBridge, type DraftResult } from '$lib/workspace/fileSystem';
 import { readBackExtensions } from '$lib/languages/latex/knowledge/registries/sidecarExtensions';
-import { installMissingFile } from './missingPackage';
+import { installMissingFile } from '$lib/modals/window/toolchain/texLivePackages';
 import { m } from '$lib/paraglide/messages';
 
 // a first compile still running after this long gets a note: typing waits on it
@@ -90,9 +90,12 @@ export class DraftCompiler {
 				this.quiet = false;
 				this.status = m.draft_status_installing({ file });
 				this.installing = file;
-				missing = await installMissingFile(file, body.root);
+				const outcome = await installMissingFile(file, body.root);
 				this.installing = null;
-				if (missing) break;
+				if (!outcome.installed) {
+					missing = outcome.message;
+					break;
+				}
 				r = await n.draftCompile(body);
 			}
 			if (slowTimer) clearTimeout(slowTimer);
