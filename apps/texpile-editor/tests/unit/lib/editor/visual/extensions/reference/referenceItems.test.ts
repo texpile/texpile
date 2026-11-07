@@ -48,4 +48,16 @@ describe('labels inside raw chips', () => {
 		expect(extractTableReferences(view).map((t) => t.id)).toEqual(['tab:one']);
 		expect(extractFigureReferences(view).map((f) => f.id)).toEqual(['fig:cross-section']);
 	});
+
+	it('numbers subfigures with their figure, so the next figure is still Figure 2', () => {
+		const subfigures =
+			'\\begin{figure}\\begin{subfigure}{.5\\linewidth}\\label{fig:a}\\end{subfigure}\\begin{subfigure}{.5\\linewidth}\\label{fig:b}\\end{subfigure}\\label{fig:both}\\end{figure}';
+		const figures = extractFigureReferences(viewOf(subfigures, FIGURE));
+		expect(figures.map((f) => [f.id, f.displayText])).toEqual([
+			['fig:a', 'Figure 1'],
+			['fig:b', 'Figure 1'],
+			['fig:both', 'Figure 1'],
+			['fig:cross-section', 'Figure 2']
+		]);
+	});
 });

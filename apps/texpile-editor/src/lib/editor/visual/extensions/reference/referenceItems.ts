@@ -36,10 +36,13 @@ function shownNumber(label: string, counted: number): string {
 const FIGURE_ENV = /^(?:sub|wrap|sideways)?figure\*?$/;
 const TABLE_ENV = /^(?:sub|wrap|sideways)?table\*?$/;
 
-function chipLabelKind(env: string | null): 'figure' | 'table' | 'equation' | 'section' {
+// a label inside a list is the item's, as for one the editor draws
+function chipLabelKind(env: string | null): 'figure' | 'table' | 'equation' | 'section' | null {
 	if (env && FIGURE_ENV.test(env)) return 'figure';
 	if (env && TABLE_ENV.test(env)) return 'table';
-	return env && holdsMath(commonEnvFacts(env)) ? 'equation' : 'section';
+	const facts = env ? commonEnvFacts(env) : null;
+	if (facts?.item?.length) return null;
+	return facts && holdsMath(facts) ? 'equation' : 'section';
 }
 
 function chipLabelsOf(node: Node): ChipLabel[] {
@@ -135,8 +138,10 @@ export function extractTableReferences(view: EditorView): ReferenceItem[] {
 				}
 			});
 		}
-		for (const label of chipLabelsOfKind(view, node, 'table')) {
-			tableCount++;
+		// one float to a chip: its subtables share its number
+		const chipTables = chipLabelsOfKind(view, node, 'table');
+		if (chipTables.length) tableCount++;
+		for (const label of chipTables) {
 			tables.push({
 				type: 'table',
 				id: label,
@@ -191,8 +196,9 @@ export function extractFigureReferences(view: EditorView): ReferenceItem[] {
 				}
 			});
 		}
-		for (const label of chipLabelsOfKind(view, node, 'figure')) {
-			figureCount++;
+		const chipFigures = chipLabelsOfKind(view, node, 'figure');
+		if (chipFigures.length) figureCount++;
+		for (const label of chipFigures) {
 			figures.push({
 				type: 'figure',
 				id: label,
