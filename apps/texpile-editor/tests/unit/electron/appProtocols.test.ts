@@ -13,7 +13,7 @@ vi.mock('electron', () => ({
 	app: { isPackaged: false, getName: () => 'Texpile', getPath: () => os.tmpdir() },
 	protocol: { handle: (scheme: string, fn: Handle) => h.handlers.set(scheme, fn), registerSchemesAsPrivileged: () => {} }
 }));
-vi.mock('../../../../../electron/src/fontT1Map', () => ({ isAllowedFontPath: () => false }));
+vi.mock('../../../../../electron/src/draft/previewFiles', () => ({ isPreviewFile: () => false }));
 
 const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'texpile-texfile-'));
 const project = path.join(dir, 'project');

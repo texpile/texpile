@@ -22,7 +22,8 @@ end)
 -- teleport compares states without these: they only label the source, and every line an edit adds shifts them
 TEXPILE_TELE_IGNORE_ATTRS = { src_line_attr, src_file_attr }
 
--- graphics keeps each included file in a macro named for it ("<file> image...") holding \useimageresource <index>
+-- graphics keeps each included file in a macro named for it ("<file> image...") holding \useimageresource <index>;
+-- the name is as written, and kpse finds it where TeX did (an mwe example image lives in the TeX tree)
 local image_files = {}
 walker.imageFile = function(ix)
 	if image_files[ix] == nil then
@@ -31,7 +32,7 @@ walker.imageFile = function(ix)
 			local file = type(nm) == "string" and nm:match("^(.-) image")
 			if file then
 				local idx = tonumber((token.get_macro(nm) or ""):match("useimageresource%s*(%d+)"))
-				if idx and image_files[idx] == nil then image_files[idx] = file end
+				if idx and image_files[idx] == nil then image_files[idx] = kpse.find_file(file, "tex") or file end
 			end
 		end
 		if image_files[ix] == nil then image_files[ix] = false end

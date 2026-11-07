@@ -6,29 +6,11 @@
 // Everything here is ASYNC: kpsewhich spawns take 50-200ms each and a synchronous call
 // in the main process froze the whole UI during compile-result processing.
 import * as fs from 'node:fs';
-import * as path from 'node:path';
 import { kpsewhich } from './shell/kpsewhich';
 import { onToolPathChange } from './shell/toolDirs';
+import { allowPreviewFile } from './draft/previewFiles';
 
 /* eslint-disable @typescript-eslint/no-explicit-any -- font records are schemaless engine JSON */
-
-// Font files live OUTSIDE every workspace root (TeX trees, system fonts), so the
-// texfile:// claimed-root confinement would 403 the renderer's fetches and every
-// records-drawn page would paint no glyphs at all. Admit exactly the paths this module
-// attaches to font records -- an exact-match set, so the workspace confinement stays the
-// only path-prefix rule.
-const FONT_EXT = /\.(pfb|enc|otf|ttf|ttc)$/i;
-const allowedFonts = new Set<string>();
-function fontKey(p: string): string {
-	const n = path.normalize(p);
-	return process.platform === 'win32' ? n.toLowerCase() : n;
-}
-function registerFontPath(p: string | null | undefined): void {
-	if (p && FONT_EXT.test(p)) allowedFonts.add(fontKey(p));
-}
-export function isAllowedFontPath(p: string): boolean {
-	return allowedFonts.has(fontKey(p));
-}
 
 type MapEntry = { pfb: string; enc?: string };
 let mapIndex: Promise<Map<string, MapEntry> | null> | undefined;
@@ -68,7 +50,7 @@ const DRAWABLE = /\.(otf|ttf|ttc)$/i;
 export async function resolveType1(rec: any): Promise<void> {
 	if (!rec || rec.t !== 'font') return;
 	if (rec.file && DRAWABLE.test(rec.file)) {
-		registerFontPath(rec.file);
+		allowPreviewFile(rec.file);
 		return;
 	}
 	const name = String(rec.name || '');
@@ -78,8 +60,8 @@ export async function resolveType1(rec: any): Promise<void> {
 	const pfb = await kpsewhich(e.pfb);
 	if (!pfb) return;
 	rec.t1 = { pfb, enc: e.enc ? await kpsewhich(e.enc) : null };
-	registerFontPath(rec.t1.pfb);
-	registerFontPath(rec.t1.enc);
+	allowPreviewFile(rec.t1.pfb);
+	allowPreviewFile(rec.t1.enc);
 }
 /* eslint-enable no-param-reassign */
 

@@ -58,7 +58,8 @@ function norm(records, root) {
 		.map((r) => {
 			const o = { ...r };
 			if (o.f !== undefined) o.f = fonts.get(o.f);
-			if (o.file) o.file = o.file.replace(root.replace(/\\/g, '/'), '');
+			// a page as the app reads it names its images by absolute path, the engine's own file relative to the folder
+			if (o.file) o.file = path.resolve(root, o.file).replace(/\\/g, '/').replace(root.replace(/\\/g, '/'), '');
 			return JSON.stringify(o);
 		});
 }
@@ -159,7 +160,7 @@ async function settleSeeds() {
 }
 await settleSeeds();
 
-// glyphs of a teleported page in a font the preview cannot draw, by font: they show as gray boxes
+// what a teleported page holds that the preview cannot draw: glyphs by font, images by file. They show as gray boxes
 const noInk = new Map();
 function countNoInk(records) {
 	const lines = records
@@ -168,6 +169,7 @@ function countNoInk(records) {
 		.map((l) => JSON.parse(l));
 	const fonts = new Map(lines.filter((r) => r.t === 'font').map((r) => [r.id, r]));
 	for (const r of lines) {
+		if (r.t === 'image' && !(r.file && fs.existsSync(r.file))) noInk.set(`image ${r.file}`, (noInk.get(`image ${r.file}`) ?? 0) + 1);
 		if (r.t !== 'g' && r.t !== 'ng') continue;
 		const f = fonts.get(r.f);
 		if (f && (f.t1 || /\.(otf|ttf|ttc)$/i.test(f.file || ''))) continue;
@@ -176,7 +178,7 @@ function countNoInk(records) {
 	}
 }
 function noInkTotal() {
-	if (noInk.size) console.error(`glyphs the preview cannot draw: ${JSON.stringify(Object.fromEntries(noInk))}`);
+	if (noInk.size) console.error(`what the preview cannot draw: ${JSON.stringify(Object.fromEntries(noInk))}`);
 	return [...noInk.values()].reduce((a, b) => a + b, 0);
 }
 

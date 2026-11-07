@@ -4,6 +4,7 @@ import * as fs from 'node:fs';
 import * as path from 'node:path';
 import * as crypto from 'node:crypto';
 import { resolveType1Line } from '../fontT1Map';
+import { allowPreviewFile } from './previewFiles';
 
 // the products the engine READS by \jobname, from the renderer's package data: byTex are written by the engine itself
 // (aux, toc, the float lists), byTools by another program (bbl, ind), which draftBib keeps in _draft
@@ -92,6 +93,7 @@ export async function readPage(dirAbs: string, root: string, n: number, w: numbe
 				else if (ln.startsWith('{"t":"image"') && ln.includes('"file"')) {
 					const r = JSON.parse(ln);
 					r.file = (path.isAbsolute(r.file) ? r.file : path.join(root, r.file)).replace(/\\/g, '/');
+					allowPreviewFile(r.file);
 					lines[i] = JSON.stringify(r);
 				}
 			})

@@ -5,7 +5,7 @@ import * as fs from 'node:fs';
 import * as path from 'node:path';
 import { Readable } from 'node:stream';
 import { MIME } from './fs/fsService';
-import { isAllowedFontPath } from './fontT1Map';
+import { isPreviewFile } from './draft/previewFiles';
 import { bundleDir } from './appIdentity';
 import { windowRoots } from './windows/windowRegistry';
 import { normRoot } from './windows/normRoot';
@@ -161,10 +161,8 @@ export function registerProtocolHandlers(): void {
 		const cors = { 'Access-Control-Allow-Origin': '*' };
 		// every request must land inside a claimed workspace root (VS Code's localResourceRoots):
 		// nothing renderer-reachable may turn texfile:// into an arbitrary-file read primitive.
-		// Exception: the exact font paths the compile pipeline attached to draft font records
-		// (TeX trees, system fonts) -- outside every root, and the live preview draws nothing
-		// without them.
-		if (!(await insideClaimedRoot(p)) && !isAllowedFontPath(p)) return new Response('Forbidden', { status: 403, headers: cors });
+		// Exception: the exact font and image paths the draft engine read (see previewFiles)
+		if (!(await insideClaimedRoot(p)) && !isPreviewFile(p)) return new Response('Forbidden', { status: 403, headers: cors });
 		try {
 			const st = await fs.promises.stat(p);
 			if (!st.isFile()) return new Response('Not found', { status: 404, headers: cors });
