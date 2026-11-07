@@ -29,8 +29,8 @@
 		"electron:build:prod": "tsc -p electron --noEmit && node scripts/build-electron.mjs"
 	},
 	"devDependencies": {
-		"@agentclientprotocol/claude-agent-acp": "^0.95.0",
-		"@agentclientprotocol/codex-acp": "^2.2.2",
+		"@agentclientprotocol/claude-agent-acp": "^0.97.0",
+		"@agentclientprotocol/codex-acp": "^2.3.0",
 		"@agentclientprotocol/sdk": "^1.9.0",
 		"@eslint/js": "^10.0.1",
 		"@modelcontextprotocol/sdk": "^1.32.2",
