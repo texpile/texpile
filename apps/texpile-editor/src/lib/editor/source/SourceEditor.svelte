@@ -13,6 +13,7 @@
 	import { setChangeBaseline } from '$lib/editor/source/cmChangeMarkers';
 	import { activeSuggestions } from '$lib/comments/activeSuggestions.svelte';
 	import { flashLineEffect } from '$lib/languages/latex/source/synctexFlash';
+	import { jumpRevealEffect } from './cmJumpReveal';
 	import { bindModalKeymap, modalKeymapCompartment } from '$lib/editor/source/extensions/keybindings/modalKeymap';
 	import { typstServerGen } from '$lib/languages/typst/intellisense/lspClient';
 	import { addPackageElsewhere, sourceCmView } from '$lib/stores/editorStore';
@@ -335,7 +336,7 @@
 		if (req.path && docPath && !samePath(req.path, docPath)) return;
 		lastGotoToken = req.token;
 		const { from, to } = resolveGotoTarget(view.state.doc, req);
-		view.dispatch({ selection: { anchor: from, head: to }, scrollIntoView: true, effects: flashLineEffect.of(from) });
+		view.dispatch({ selection: { anchor: from, head: to }, effects: [jumpRevealEffect(view, from), flashLineEffect.of(from)] });
 		view.focus();
 	});
 

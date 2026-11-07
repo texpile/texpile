@@ -37,7 +37,7 @@
 		{"name":"maketitle"},
 		{"name":"mathindent","if":"fleqn"},
 		{"name":"mit","hidden":true},
-		{"name":"newblock"},
+		{"name":"newblock","args":[],"prints":" "},
 		{"name":"paragraph","args":[{"kind":"s"},{"kind":"o","placeholder":"short title","role":"text","part":"short"},{"kind":"m","placeholder":"title","role":"text","part":"heading"}],"section":4},
 		{"name":"part","args":[{"kind":"s"},{"kind":"o","placeholder":"short title","role":"text","part":"short"},{"kind":"m","placeholder":"title","role":"text","part":"heading"}],"section":-1},
 		{"name":"partname","value":"Part"},

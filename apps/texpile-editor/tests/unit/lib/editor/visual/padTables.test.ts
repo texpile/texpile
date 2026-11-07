@@ -41,7 +41,7 @@ describe('padTables', () => {
 		const parsed = parseLatexFile(src);
 		const out = serializeLatexFile(parsed, withoutOrigins(parsed.doc));
 		const header = out.split('\n').find((l) => l.endsWith('\\\\'))!;
-		expect(header.replace(/\s+/g, '')).toMatch(/^&b&\\\\$/);
+		expect(header.replace(/\s+/g, '')).toMatch(/^\\multicolumn\{1\}\{c\}\{\}&b&\\\\$/);
 	});
 
 	it('pads a short first row of a state at its end', () => {

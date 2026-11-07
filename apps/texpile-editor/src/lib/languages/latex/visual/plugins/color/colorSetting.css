@@ -1,0 +1,11 @@
+.ProseMirror .drawn-color-setting {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.25em;
+}
+.ProseMirror .drawn-color-swatch {
+	width: 0.7em;
+	height: 0.7em;
+	border-radius: 2px;
+	border: 1px solid var(--faint-text);
+}

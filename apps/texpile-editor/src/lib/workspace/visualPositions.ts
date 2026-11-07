@@ -13,6 +13,7 @@ import type { SourceMap } from '$lib/editor/visual/sourceSpans';
 import { offsetAtPm, pmAtOffset } from '$lib/editor/visual/sourceMap';
 import { docPositions, offsetToRowCol, rowColToOffset } from './docPositions';
 import { flashNodeAt } from '$lib/editor/visual/extensions/flash-plugin';
+import { revealPosInCenter } from '$lib/editor/visual/jumpReveal';
 
 /** Leaving the visual editor: the caret's place in the file, through the map of the text it shows. */
 export function saveVisualPosition(v: EditorView, path: string, source: string, map: SourceMap): void {
@@ -58,7 +59,8 @@ export function restoreVisualPosition(v: EditorView, path: string, source: strin
 		v.focus();
 		// scrolled only once focused: PM skips the scroll while the DOM selection is not its own, and a jump
 		// arrives with the focus elsewhere (the PDF pane, the file tree)
-		v.dispatch(v.state.tr.scrollIntoView().setMeta('addToHistory', false));
+		if (jumped) revealPosInCenter(v);
+		else v.dispatch(v.state.tr.scrollIntoView().setMeta('addToHistory', false));
 		// a jump's landing gets the amber the SyncTeX and mode-switch flashes use: the reader sees
 		// that the view moved, instead of wondering whether the click did anything
 		// the block the jump named, not the one the caret had to settle in beside it (a formula holds no caret)

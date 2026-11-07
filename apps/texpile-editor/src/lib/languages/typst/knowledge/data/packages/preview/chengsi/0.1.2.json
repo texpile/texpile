@@ -1,0 +1,1 @@
+{"version":1,"id":"@preview/chengsi:0.1.2","names":{"notes":{"kind":"function","params":[{"name":"config","named":true,"default":"(:)"},{"name":"body","positional":true,"required":true}],"block":true},"environments":{"kind":"function","params":[{"name":"config","named":true,"default":"(:)"}],"block":true},"defaults":{"kind":"value"},"themes":{"kind":"value"}}}

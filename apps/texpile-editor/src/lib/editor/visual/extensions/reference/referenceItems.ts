@@ -1,7 +1,10 @@
 // what the @-reference picker can offer: the bibliography plus every labeled table, figure
 // and equation in the open document, and the text search across them
+import type { Node } from 'prosemirror-model';
 import type { EditorView } from 'prosemirror-view';
 import type { BiblatexReference } from '$lib/languages/bib/biblatex';
+import { extractChipLabels, type ChipLabel } from '$lib/languages/latex/parser/labels';
+import { commonEnvFacts, holdsMath } from '$lib/languages/latex/knowledge/environments/envFacts';
 import { projectIntelStore } from '$lib/stores/projectIntel';
 
 // table/figure/equation shapes share these; the filter reads the per-kind text field (caption/alt/content)
@@ -30,6 +33,29 @@ function shownNumber(label: string, counted: number): string {
 	return Object.hasOwn(auxNumbers, label) ? auxNumbers[label] : String(counted);
 }
 
+const FIGURE_ENV = /^(?:sub|wrap|sideways)?figure\*?$/;
+const TABLE_ENV = /^(?:sub|wrap|sideways)?table\*?$/;
+
+// a label inside a list is the item's, as for one the editor draws
+function chipLabelKind(env: string | null): 'figure' | 'table' | 'equation' | 'section' | null {
+	if (env && FIGURE_ENV.test(env)) return 'figure';
+	if (env && TABLE_ENV.test(env)) return 'table';
+	const facts = env ? commonEnvFacts(env) : null;
+	if (facts?.item?.length) return null;
+	return facts && holdsMath(facts) ? 'equation' : 'section';
+}
+
+function chipLabelsOf(node: Node): ChipLabel[] {
+	return node.type.name === 'raw_latex' || node.type.name === 'inline_latex' ? extractChipLabels(node.textContent) : [];
+}
+
+function chipLabelsOfKind(view: EditorView, node: Node, kind: ReferenceItem['type']): string[] {
+	if (view.state.schema.nodes.typ_ref) return [];
+	return chipLabelsOf(node)
+		.filter((c) => chipLabelKind(c.env) === kind)
+		.map((c) => c.label);
+}
+
 /** labels inside a list belong to the item, so they are not offered */
 export function extractSectionReferences(view: EditorView): ReferenceItem[] {
 	const numbers = projectIntelStore.current.auxNumbers;
@@ -39,6 +65,17 @@ export function extractSectionReferences(view: EditorView): ReferenceItem[] {
 		if (node.type.name === 'heading') {
 			if (node.attrs.numbered !== false) heading = node.textContent;
 			return false;
+		}
+		if (heading !== null) {
+			for (const label of chipLabelsOfKind(view, node, 'section')) {
+				sections.push({
+					type: 'section',
+					id: label,
+					displayText: `${numbers[label] ?? ''} ${heading}`.trim(),
+					subtitle: label,
+					payload: { label, number: 0, position: pos, section: heading }
+				});
+			}
 		}
 		if (node.type.name !== 'label' || heading === null) return;
 		const $pos = view.state.doc.resolve(pos);
@@ -101,6 +138,18 @@ export function extractTableReferences(view: EditorView): ReferenceItem[] {
 				}
 			});
 		}
+		// one float to a chip: its subtables share its number
+		const chipTables = chipLabelsOfKind(view, node, 'table');
+		if (chipTables.length) tableCount++;
+		for (const label of chipTables) {
+			tables.push({
+				type: 'table',
+				id: label,
+				displayText: `Table ${shownNumber(label, tableCount)}`,
+				subtitle: currentSection || label,
+				payload: { label, number: tableCount, position: pos, section: currentSection, caption: '' }
+			});
+		}
 	});
 
 	return tables;
@@ -147,6 +196,17 @@ export function extractFigureReferences(view: EditorView): ReferenceItem[] {
 				}
 			});
 		}
+		const chipFigures = chipLabelsOfKind(view, node, 'figure');
+		if (chipFigures.length) figureCount++;
+		for (const label of chipFigures) {
+			figures.push({
+				type: 'figure',
+				id: label,
+				displayText: `Figure ${shownNumber(label, figureCount)}`,
+				subtitle: currentSection || label,
+				payload: { label, number: figureCount, position: pos, section: currentSection, caption: '', alt: '' }
+			});
+		}
 	});
 
 	return figures;
@@ -183,6 +243,17 @@ export function extractEquationReferences(view: EditorView): ReferenceItem[] {
 				});
 			}
 			return;
+		}
+
+		for (const label of chipLabelsOfKind(view, node, 'equation')) {
+			equationCount++;
+			equations.push({
+				type: 'equation',
+				id: label,
+				displayText: `Equation ${shownNumber(label, equationCount)}`,
+				subtitle: currentSection || label,
+				payload: { label, number: equationCount, position: pos, section: currentSection, content: '' }
+			});
 		}
 
 		if (node.type.name === 'block_math' && node.attrs.numbered) {

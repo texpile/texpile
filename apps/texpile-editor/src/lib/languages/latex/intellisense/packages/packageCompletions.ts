@@ -13,7 +13,7 @@ export type EnvironmentName = { name: string; detail?: string };
 // inserts the form without [] arguments and shows the fullest one
 function macroOf(label: string, e: StackedCommand): MacroCompletion {
 	const inserted = insertedArgs(e.args ?? undefined);
-	const detail = e.prints ?? (formatOf(e.args ?? undefined) || undefined);
+	const detail = e.prints || formatOf(e.args ?? undefined) || undefined;
 	const info = e.doc ?? undefined;
 	const base: Completion = inserted.length
 		? snippetCompletion(label + fieldsOf(inserted), { label, type: 'function', detail, info })

@@ -6,6 +6,10 @@ const tableNodeSpecs = tableNodes({
 	tableGroup: 'block',
 	cellContent: 'paragraph+',
 	cellAttributes: {
+		// the cell was one brace group, which siunitx's S column reads as text
+		braced: { default: false },
+		// the switches the cell opens with, as written (`\centering `): they apply to all of it
+		lead: { default: null },
 		// the alignment spec of a source \multicolumn{n}{spec}{...}, re-emitted as written
 		mcAlign: {
 			default: null,
@@ -35,8 +39,14 @@ tableNodeSpecs.table.attrs = {
 tableNodeSpecs.table_row.attrs = {
 	...(tableNodeSpecs.table_row.attrs ?? {}),
 	topRules: { default: '' },
+	// the command that ended the row in the source (LyX writes \tabularnewline)
+	rowBreak: { default: '\\\\' },
 	// what followed the row's \\ in the source ('[2ex]', '*'), re-emitted as written
-	rowBreakSuffix: { default: '' }
+	rowBreakSuffix: { default: '' },
+	// a longtable row that a marker ends has no row break of its own
+	unbroken: { default: false },
+	// what a longtable writes after the row: rules and the markers (endfirsthead, endhead, endfoot, endlastfoot), a line each
+	rowEnd: { default: '' }
 };
 
 export const imageNodes = {
@@ -134,7 +144,10 @@ export const tableFamilyNodes = {
 			captionBelow: { default: false },
 			// the space the source put after the caption ('' for none); null is a new table's \vspace{2mm}
 			captionGap: { default: null },
-			notesSize: { default: null }
+			notesSize: { default: null },
+			// the boxes around the tabular as written: `\resizebox{\linewidth}{!}{` and its `}`
+			tabularBefore: { default: null },
+			tabularAfter: { default: null }
 		},
 		parseDOM: [
 			{
@@ -173,7 +186,15 @@ export const tableFamilyNodes = {
 		content: 'inline*',
 		// starred: the source wrote \caption*, an unnumbered caption. captionOpt: the verbatim
 		// short caption of \caption[short]{long}, brackets excluded
-		attrs: { starred: { default: false }, captionOpt: { default: null } },
+		attrs: {
+			starred: { default: false },
+			captionOpt: { default: null },
+			// a longtable's caption is a row of the table: the grid rows before it, null for a float's caption
+			rowAt: { default: null },
+			rowTop: { default: '' },
+			rowSuffix: { default: '' },
+			rowEnd: { default: '' }
+		},
 		parseDOM: [
 			{ tag: 'div[data-table-caption]', getAttrs: (dom) => ({ starred: (dom as HTMLElement).getAttribute('data-starred') === 'true' }) }
 		],

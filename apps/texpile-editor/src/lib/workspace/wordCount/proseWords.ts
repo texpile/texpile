@@ -88,14 +88,20 @@ function closing(src: string, open: number): number {
 	return -1;
 }
 
-const PART_OF_ARGUMENT = { heading: 'headings', caption: 'captions', footnote: 'footnotes' } as const;
+const PART_OF_ARGUMENT: Partial<Record<string, Part>> = {
+	title: 'headings',
+	heading: 'headings',
+	caption: 'captions',
+	footnote: 'footnotes'
+};
 
 /** the arguments of `code` that data names as a heading, caption or footnote, those inside another call's included */
 function partRegions(code: string, offset = 0): Region[] {
 	const out: Region[] = [];
 	for (const call of callsIn(code, ['text'])) {
 		for (const a of call.args) {
-			if (a.arg.part && a.arg.part !== 'short') out.push({ from: offset + a.from, to: offset + a.to, part: PART_OF_ARGUMENT[a.arg.part] });
+			const part = a.arg.part && PART_OF_ARGUMENT[a.arg.part];
+			if (part) out.push({ from: offset + a.from, to: offset + a.to, part });
 			out.push(...partRegions(code.slice(a.from, a.to), offset + a.from));
 		}
 	}

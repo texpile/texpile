@@ -1,0 +1,20 @@
+.ProseMirror .drawn-heading {
+	margin: calc(var(--spacing) * 2) 0 calc(var(--spacing) * 1);
+	font-weight: 700;
+	line-height: 1.25;
+}
+.ProseMirror .drawn-heading-0 {
+	font-size: 1.8em;
+}
+.ProseMirror .drawn-heading-1 {
+	font-size: 1.4em;
+}
+.ProseMirror .drawn-heading-2 {
+	font-size: 1.2em;
+}
+.ProseMirror .drawn-heading-3 {
+	font-size: 1.05em;
+}
+.ProseMirror .drawn-heading-4 {
+	font-size: 1em;
+}

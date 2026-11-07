@@ -1,0 +1,52 @@
+.figure-group {
+	position: relative;
+	margin: calc(var(--spacing) * 3) 0;
+	counter-reset: subfigure;
+}
+.figure-group-body {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: flex-start;
+	justify-content: center;
+	gap: calc(var(--spacing) * 3);
+}
+.figure-group-body > .imagePluginRoot {
+	flex: 1 1 0;
+	min-width: 0;
+}
+.figure-group-body > .imagePluginRoot > img {
+	width: 100% !important;
+	height: auto !important;
+}
+.figure-group-body > .imagePluginRoot .imageResizeBoxWrapper {
+	display: none;
+}
+.figure-group-body > .imagePluginRoot:not([imageplugin-showCaption='false']) {
+	counter-increment: subfigure;
+}
+.figure-group-body > .imagePluginRoot:not([imageplugin-showCaption='false']) .text::before {
+	content: '(' counter(subfigure, lower-alpha) ') ';
+	color: var(--muted-text);
+}
+.figure-group-caption {
+	flex-basis: 100%;
+	text-align: center;
+}
+.figure-group[data-numbered] .figure-group-caption::before {
+	content: 'Figure ' var(--figure-number) ': ';
+	font-weight: 600;
+	color: var(--muted-text);
+	margin-right: 0.25em;
+}
+.figure-group-settings {
+	position: absolute;
+	bottom: 0;
+	right: 0;
+	z-index: 3;
+	opacity: 0;
+	transition: opacity 0.2s ease;
+}
+.figure-group:hover > .figure-group-settings,
+.figure-group-settings:focus-within {
+	opacity: 1;
+}

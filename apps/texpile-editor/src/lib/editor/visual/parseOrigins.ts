@@ -289,6 +289,14 @@ export function containerOriginsOf(parsed: PMNode): ParseOrigins | undefined {
 	return docParses.get(parsed);
 }
 
+export function containerRecordAround(node: PMNode): ParseOrigins | undefined {
+	for (let i = 0; i < node.childCount; i++) {
+		const o = blockOrigins.get(node.child(i));
+		if (o && containerParses.has(o.parse)) return o.parse;
+	}
+	return undefined;
+}
+
 /** a later document is the parse's own: its blocks answer to the parse from here on */
 export function adoptParse(doc: PMNode, parse: ParseOrigins): void {
 	docParses.set(doc, parse);
@@ -342,6 +350,15 @@ export function blockOriginOf(node: PMNode): BlockOrigin | undefined {
  *  child i most likely replaced, for a block that changed */
 export type DocOrigins = { parse: ParseOrigins | null; origins: (BlockOrigin | null)[]; was: (BlockOrigin | null)[] };
 
+// a node's gapAttrs say how it sits among its neighbours, which the gap around it writes, not its own bytes
+function sameBytes(parsed: PMNode, node: PMNode): boolean {
+	const gapAttrs: readonly string[] | undefined = parsed.type.spec.gapAttrs;
+	if (!gapAttrs || parsed.type !== node.type) return parsed.eq(node);
+	const attrs = { ...parsed.attrs };
+	for (const name of gapAttrs) attrs[name] = node.attrs[name];
+	return node.hasMarkup(parsed.type, attrs, parsed.marks) && parsed.content.eq(node.content);
+}
+
 export function originsOf(doc: PMNode, parse: ParseOrigins | null = parseOf(doc) ?? null): DocOrigins {
 	const n = doc.childCount;
 	const origins: (BlockOrigin | null)[] = new Array(n).fill(null);
@@ -373,7 +390,7 @@ export function originsOf(doc: PMNode, parse: ParseOrigins | null = parseOf(doc)
 		const child = doc.child(i);
 		for (let k = next; k < limit; k++) {
 			const c = parse.origins[k];
-			if (!c.node.eq(child)) continue;
+			if (!sameBytes(c.node, child)) continue;
 			blockOrigins.set(child, c);
 			origins[i] = c;
 			next = k + 1;

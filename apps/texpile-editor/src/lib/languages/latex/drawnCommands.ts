@@ -2,6 +2,10 @@
 // command is a chip of its own, never merged with the raw code beside it
 import { commonSize } from './knowledge/commands/naturalSize';
 import { ACCENT_COMMANDS, SYMBOLS } from './knowledge/commands/texCharacters';
+import { definesGlossaryEntries, glossaryUse } from './knowledge/commands/glossaryUse';
+import { commonEnvFacts } from './knowledge/environments/envFacts';
+import { verbatimCommandNames } from './knowledge/calls/verbatimCalls';
+import { citationFaceCommands, citeFormOf, referencesLabel } from './knowledge/calls/citeCommands';
 
 function sizesOf(names: string[], unit: string): Record<string, number> {
 	return Object.fromEntries(
@@ -41,6 +45,10 @@ export const STYLED: Record<string, Look> = {
 	underline: { textDecoration: 'underline' },
 	uline: { textDecoration: 'underline' },
 	mbox: { whiteSpace: 'nowrap' },
+	hbox: { whiteSpace: 'nowrap' },
+	// classicthesis; the data has no field for how a command looks
+	spacedallcaps: { textTransform: 'uppercase', letterSpacing: '0.1em' },
+	spacedlowsmallcaps: { textTransform: 'lowercase', fontVariant: 'small-caps', letterSpacing: '0.1em' },
 	text: {},
 	fbox: { border: 'var(--default-border-width) solid currentColor', padding: '0 0.2em' },
 	textsuperscript: { verticalAlign: 'super', fontSize: '0.75em' },
@@ -78,8 +86,12 @@ export const SWITCHES: Record<string, Look> = {
 	Huge: { fontSize: '2.488em' }
 };
 
+// a note in the margin; the data has no field for it
+export const MARGIN_NOTES = new Set(['marginpar', 'marginnote', 'graffito', 'todo']);
+
 // the commands a chip may start with and still be drawn
 export const DRAWN = new Set([
+	...MARGIN_NOTES,
 	...Object.keys(VERTICAL_SKIPS),
 	...Object.keys(HORIZONTAL_SPACES),
 	...PAGE_BREAKS,
@@ -101,8 +113,24 @@ export const DRAWN = new Set([
 	'footnote',
 	'footnotemark',
 	'footnotetext',
-	'texorpdfstring'
+	'texorpdfstring',
+	'pause',
+	'titlepage'
 ]);
+
+let verbatim: Set<string> | null = null;
+
+export function drawnName(name: string): boolean {
+	verbatim ??= new Set(verbatimCommandNames());
+	return (
+		DRAWN.has(name) ||
+		verbatim.has(name) ||
+		glossaryUse(name) !== null ||
+		citationFaceCommands().has(name) ||
+		citeFormOf(name) === 'nocite' ||
+		referencesLabel(name)
+	);
+}
 
 // drawn on a line of their own
 export const LINE_COMMANDS = new Set([
@@ -123,5 +151,9 @@ export const HEAD = /^\s*(?:(%)|\{\s*\\([a-zA-Z@]+)|\\([a-zA-Z@]+|[^a-zA-Z@]))/;
 export function drawnCommand(source: string): boolean {
 	const head = HEAD.exec(source);
 	if (!head || head[1]) return false;
-	return head[2] ? head[2] in SWITCHES : DRAWN.has(head[3]);
+	if (head[3] === 'begin') {
+		const environment = /^\s*\\begin\{([^{}]+)\}/.exec(source)?.[1] ?? '';
+		return commonEnvFacts(environment).body === 'comment' || definesGlossaryEntries(environment);
+	}
+	return head[2] ? head[2] in SWITCHES : drawnName(head[3]);
 }

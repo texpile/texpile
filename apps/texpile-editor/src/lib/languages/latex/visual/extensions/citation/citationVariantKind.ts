@@ -1,9 +1,9 @@
-import { commonCommand } from '$lib/languages/latex/knowledge/calls/commandCalls';
+import { citeFormOf } from '$lib/languages/latex/knowledge/calls/citeCommands';
 
 export type CitationVariantKind = 'parenthetical' | 'intext' | 'automatic' | 'basic';
 
 export function citationVariantKind(command: string): CitationVariantKind {
-	switch (commonCommand(command)?.cite) {
+	switch (citeFormOf(command)) {
 		case 'paren':
 		case 'paren-bare':
 			return 'parenthetical';

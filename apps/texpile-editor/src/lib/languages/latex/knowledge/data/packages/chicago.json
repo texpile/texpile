@@ -2,17 +2,17 @@
 	"version": 1,
 	"macros": [
 		{"name":"bibhang"},
-		{"name":"citeA","args":[{"kind":"o","placeholder":"prenote"},{"kind":"m","placeholder":"keys"}]},
-		{"name":"citeANP","args":[{"kind":"o","placeholder":"prenote"},{"kind":"m","placeholder":"keys"}]},
-		{"name":"citeN","args":[{"kind":"o","placeholder":"prenote"},{"kind":"m","placeholder":"keys"}]},
-		{"name":"citeNP","args":[{"kind":"o","placeholder":"prenote"},{"kind":"m","placeholder":"keys"}]},
-		{"name":"citeyear","args":[{"kind":"o","placeholder":"prenote"},{"kind":"m","placeholder":"keys"}]},
-		{"name":"citeyearNP","args":[{"kind":"o","placeholder":"prenote"},{"kind":"m","placeholder":"keys"}]},
-		{"name":"shortcite","args":[{"kind":"o","placeholder":"prenote"},{"kind":"m","placeholder":"keys"}]},
-		{"name":"shortciteA","args":[{"kind":"o","placeholder":"prenote"},{"kind":"m","placeholder":"keys"}]},
-		{"name":"shortciteANP","args":[{"kind":"o","placeholder":"prenote"},{"kind":"m","placeholder":"keys"}]},
-		{"name":"shortciteN","args":[{"kind":"o","placeholder":"prenote"},{"kind":"m","placeholder":"keys"}]},
-		{"name":"shortciteNP","args":[{"kind":"o","placeholder":"prenote"},{"kind":"m","placeholder":"keys"}]}
+		{"name":"citeA","args":[{"kind":"o","placeholder":"prenote"},{"kind":"m","placeholder":"keys","role":"citekey","list":true}],"cite":"author"},
+		{"name":"citeANP","args":[{"kind":"o","placeholder":"prenote"},{"kind":"m","placeholder":"keys","role":"citekey","list":true}],"cite":"author"},
+		{"name":"citeN","args":[{"kind":"o","placeholder":"prenote"},{"kind":"m","placeholder":"keys","role":"citekey","list":true}],"cite":"text"},
+		{"name":"citeNP","args":[{"kind":"o","placeholder":"prenote"},{"kind":"m","placeholder":"keys","role":"citekey","list":true}],"cite":"paren-bare"},
+		{"name":"citeyear","args":[{"kind":"o","placeholder":"prenote"},{"kind":"m","placeholder":"keys","role":"citekey","list":true}],"cite":"year-paren"},
+		{"name":"citeyearNP","args":[{"kind":"o","placeholder":"prenote"},{"kind":"m","placeholder":"keys","role":"citekey","list":true}],"cite":"year"},
+		{"name":"shortcite","args":[{"kind":"o","placeholder":"prenote"},{"kind":"m","placeholder":"keys","role":"citekey","list":true}],"cite":"paren"},
+		{"name":"shortciteA","args":[{"kind":"o","placeholder":"prenote"},{"kind":"m","placeholder":"keys","role":"citekey","list":true}],"cite":"author"},
+		{"name":"shortciteANP","args":[{"kind":"o","placeholder":"prenote"},{"kind":"m","placeholder":"keys","role":"citekey","list":true}],"cite":"author"},
+		{"name":"shortciteN","args":[{"kind":"o","placeholder":"prenote"},{"kind":"m","placeholder":"keys","role":"citekey","list":true}],"cite":"text"},
+		{"name":"shortciteNP","args":[{"kind":"o","placeholder":"prenote"},{"kind":"m","placeholder":"keys","role":"citekey","list":true}],"cite":"paren-bare"}
 	],
 	"provides": {
 		"bibStyles": [

@@ -21,7 +21,7 @@
 		{"name":"insertsubenumlabel"},
 		{"name":"insertsubsubenumlabel"},
 		{"name":"structure","args":[{"kind":"d<>","placeholder":"overlay specification"},{"kind":"m","placeholder":"text"}],"doc":"The given text is marked as part of the structure, that is, it is supposed to help the audience see the structure of your presentation."},
-		{"name":"newblock"}
+		{"name":"newblock","args":[],"prints":""}
 	],
 	"envs": [
 		{"name":"abstract","args":[{"kind":"d<>","placeholder":"action specification"}],"doc":"You can use this environment to typeset an abstract."},

@@ -1,5 +1,5 @@
 import { applyMatrix, compose, scaleOf, type Matrix } from '$lib/draw/editor/drawing/matrix';
-import type { ClipRegion, DrawnPart, Gradient } from '$lib/draw/editor/drawing/drawing.types';
+import type { ClipRegion, DrawnPart, Gradient, PatternTile } from '$lib/draw/editor/drawing/drawing.types';
 import { cssColor, rgbOf, roundCoordinate } from './pdfColors';
 
 const CAPS = ['butt', 'round', 'square'] as const;
@@ -19,7 +19,7 @@ type GraphicsState = {
 	fillAlpha: number;
 	strokeAlpha: number;
 	clip: string | null;
-	fillPattern: boolean;
+	fillPattern: string | null;
 	blend?: string;
 };
 
@@ -41,8 +41,12 @@ export class PdfGraphics {
 	#origin: [number, number] = [0, 0];
 	#pendingClip: boolean | null = null;
 	#path = '';
+	#patterns = new Map<string, string>();
 
-	constructor(origin: [number, number]) {
+	constructor(
+		origin: [number, number],
+		private readonly tileOf: (pattern: string, color: string) => PatternTile | null = () => null
+	) {
 		this.state = {
 			ctm: [1, 0, 0, 1, -origin[0], -origin[1]],
 			stroke: [0, 0, 0],
@@ -55,7 +59,7 @@ export class PdfGraphics {
 			fillAlpha: 1,
 			strokeAlpha: 1,
 			clip: null,
-			fillPattern: false
+			fillPattern: null
 		};
 	}
 
@@ -94,19 +98,7 @@ export class PdfGraphics {
 	#paintPath(stroke: boolean, fill: boolean, evenOdd = false, shading: string | null = null) {
 		const gs = this.state;
 		let gradient = shading;
-		if (fill && !gradient && gs.fillPattern) {
-			gradient = `hatch${this.gradients.length + 1}`;
-			this.gradients.push({
-				id: gradient,
-				kind: 'hatch',
-				from: [0, 0],
-				to: [0, 0],
-				radius: 0,
-				focus: [0, 0],
-				transform: [],
-				stops: [{ offset: 0, color: cssColor(gs.fill) }]
-			});
-		}
+		if (fill && !gradient && gs.fillPattern) gradient = this.#patternFill(gs.fillPattern, cssColor(gs.fill));
 		if ((stroke || fill) && this.#path) {
 			const s = scaleOf(gs.ctm);
 			this.parts.push({
@@ -136,6 +128,21 @@ export class PdfGraphics {
 			this.#pendingClip = null;
 		}
 		this.#path = '';
+	}
+
+	#patternFill(pattern: string, color: string): string | null {
+		const key = `${pattern} ${color}`;
+		const known = this.#patterns.get(key);
+		if (known) return known;
+		const tile = this.tileOf(pattern, color);
+		if (!tile) {
+			this.unsupported.add('pattern');
+			return null;
+		}
+		const id = `pattern${this.gradients.length + 1}`;
+		this.gradients.push({ id, kind: 'pattern', tile, from: [0, 0], to: [0, 0], radius: 0, focus: [0, 0], transform: [], stops: [] });
+		this.#patterns.set(key, id);
+		return id;
 	}
 
 	fillRectangle(x1: number, y1: number, x2: number, y2: number, shading: string | null = null) {
@@ -187,7 +194,7 @@ export class PdfGraphics {
 			case 'sc':
 			case 'scn':
 				if (n.length) this.state.fill = rgbOf(n);
-				this.state.fillPattern = op === 'scn' && !!name?.startsWith('/pgfpat');
+				this.state.fillPattern = (op === 'scn' && name?.match(/^\/pgfpat(\d+)$/)?.[1]) || null;
 				break;
 			case 'G':
 			case 'RG':

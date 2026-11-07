@@ -111,6 +111,18 @@ describe.skipIf(!hasLualatex)('drawing what lualatex typeset', () => {
 		expect(line?.kind === 'path' && [line.dash, line.dashOffset]).toEqual(['1.993 1.993', 1.993]);
 	});
 
+	it("fills with a pattern's own tile, in the pattern color", async () => {
+		const src =
+			'\\begin{tikzpicture}\n  \\fill[pattern=dots, pattern color=red] (0,0) rectangle (1,1);\n  \\fill[pattern=north east lines] (2,0) rectangle (3,1);\n\\end{tikzpicture}';
+		const drawing = buildDrawing(await render(src, `${PREAMBLE}\\usetikzlibrary{patterns}`));
+		const tiles = drawing.gradients.map((g) => g.tile && [g.tile.width, g.tile.paths.map((p) => [p.fill, p.stroke])]);
+		expect(tiles).toEqual([
+			[2.98883, [['rgb(255 0 0)', null]]],
+			[2.98883, [[null, 'rgb(0 0 0)']]]
+		]);
+		expect(drawing.unsupported).toEqual([]);
+	});
+
 	it('draws a transparency group at the opacity it was placed with', async () => {
 		const src =
 			'\\begin{tikzpicture}\n  \\begin{scope}[transparency group, opacity=0.5]\n    \\fill[red] (0,0) circle (1);\n    \\fill[blue, opacity=0.5] (1,0) circle (1);\n  \\end{scope}\n\\end{tikzpicture}';

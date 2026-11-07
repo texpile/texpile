@@ -1,6 +1,6 @@
 // helpers shared by the markdown regression tests
 import { parseMarkdownFile, serializeMarkdownFile } from '$lib/languages/markdown/visual/roundtrip';
-import { serializeToMarkdown } from '$lib/languages/markdown/visual/serializer';
+import { serializeToMarkdown } from '$lib/languages/markdown/visual/serialize/serializer';
 import { markdownToProseMirror } from '$lib/languages/markdown/visual/converter';
 import { mdSchema } from '$lib/languages/markdown/visual/schema';
 import type { Node } from 'prosemirror-model';

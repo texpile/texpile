@@ -1,0 +1,1 @@
+{"version":1,"id":"@preview/transl:0.2.0","names":{"transl":{"kind":"function","params":[{"name":"from","named":true,"default":"auto"},{"name":"to","named":true,"default":"auto"},{"name":"data","named":true,"default":"(:)"},{"name":"mode","named":true,"default":"context()"},{"name":"expr","variadic":true}],"block":false,"prints":""}}}

@@ -62,7 +62,7 @@
 		{"name":"makecommittee","doc":"The \\makecommittee command builds up the committee membership page."},
 		{"name":"maketitle"},
 		{"name":"mit","hidden":true},
-		{"name":"newblock","hidden":true},
+		{"name":"newblock","hidden":true,"args":[],"prints":" "},
 		{"name":"patch","args":[{"kind":"m","placeholder":"patch name"}]},
 		{"name":"pdfstringdefPreHook","hidden":true},
 		{"name":"preface"},

@@ -206,7 +206,7 @@
 		{"name":"section","args":[{"kind":"s"},{"kind":"o","placeholder":"short title"},{"kind":"m","placeholder":"title","role":"text"}],"section":1},
 		{"name":"sevensize","declares":"size"},
 		{"name":"sf","hidden":true,"declares":"font"},
-		{"name":"shortcite","args":[{"kind":"o","placeholder":"note"},{"kind":"m","placeholder":"keys","role":"citekey","list":true}],"hidden":true},
+		{"name":"shortcite","args":[{"kind":"o","placeholder":"note"},{"kind":"m","placeholder":"keys","role":"citekey","list":true}],"hidden":true,"cite":"year-paren"},
 		{"name":"skytel"},
 		{"name":"sl","hidden":true,"declares":"font"},
 		{"name":"small","declares":"size"},

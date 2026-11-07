@@ -69,6 +69,17 @@ describe('SourceDiagnosticsFeed cards', () => {
 		expect(view.state.doc.toString()).toBe('\\documentclass[11pt]{article}');
 	});
 
+	it('moves a package above the one it must precede', () => {
+		const doc = '\\documentclass{article}\n\\usepackage{cleveref}\n\\usepackage{hyperref}\n\\begin{document}';
+		const { view, card } = shownCard(doc, {
+			rule: 'package-clash',
+			fix: { kind: 'move-package', first: 'hyperref', second: 'cleveref' }
+		});
+		card.querySelector<HTMLButtonElement>('button:not([aria-label])')!.click();
+		const text = view.state.doc.toString();
+		expect(text.indexOf('\\usepackage{hyperref}')).toBeLessThan(text.indexOf('\\usepackage{cleveref}'));
+	});
+
 	it('dispatches nothing when a recount finds the same problems, so an open card stays', () => {
 		const view = new EditorView({ doc: '\\toprule' });
 		const feed = new SourceDiagnosticsFeed({ turnOffRule: () => {}, addPackageTo: () => null });

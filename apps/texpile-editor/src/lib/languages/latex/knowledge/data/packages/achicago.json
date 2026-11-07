@@ -13,7 +13,7 @@
 		{"name":"Annotatefalse","hidden":true},
 		{"name":"Annotatetrue","hidden":true},
 		{"name":"citeA","args":[{"kind":"o","placeholder":"spec"},{"kind":"m","placeholder":"keys"}]},
-		{"name":"citeANP","args":[{"kind":"o","placeholder":"spec"},{"kind":"m","placeholder":"keys"}]},
+		{"name":"citeANP","args":[{"kind":"o","placeholder":"spec"},{"kind":"m","placeholder":"keys","role":"citekey","list":true}],"cite":"author"},
 		{"name":"citeN","args":[{"kind":"o","placeholder":"spec"},{"kind":"m","placeholder":"key"}]},
 		{"name":"citeNP","args":[{"kind":"o","placeholder":"spec"},{"kind":"m","placeholder":"keys"}]},
 		{"name":"citework","args":[{"kind":"m","placeholder":"spec"},{"kind":"m","placeholder":"work"}]},

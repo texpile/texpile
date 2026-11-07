@@ -9,10 +9,15 @@ import { loadedEnvFacts, type EnvFacts } from '../../knowledge/environments/envF
  * unknown); math: the commands valid only in math; bodies: what each environment's body is */
 export type PackageTable = {
 	macros: Record<string, Argument[]>;
+	repeats?: Record<string, Argument[]>;
 	envs: Record<string, Argument[]>;
 	math: string[];
 	bodies: Record<string, EnvFacts>;
 };
+
+export function repeatsOf(table: PackageTable, name: string): Argument[] | undefined {
+	return table.repeats && Object.hasOwn(table.repeats, name) ? table.repeats[name] : undefined;
+}
 
 const tables = new WeakMap<LoadedFile[], PackageTable>();
 
@@ -56,6 +61,7 @@ export function packageTableOf(loaded: LoadedFile[]): PackageTable {
 		if (!e.args || !/^[a-zA-Z]+$/.test(name)) continue;
 		const wide = widest.get(name);
 		table.macros[name] = wide && widens(wide, e.args) ? wide : e.args;
+		if (e.repeat?.length) (table.repeats ??= {})[name] = e.repeat;
 		if (e.in === 'math') table.math.push(name);
 	}
 	for (const [name, e] of stackedEnvironments(loaded)) if (e.args) table.envs[name] = e.args;

@@ -7,11 +7,10 @@
 //
 //   1. mount        cheap box, size estimated from the latex. Costs almost nothing.
 //   2. idle         real typeset, in document order, in slices that yield to the browser.
-//   3. near viewport  the actual MathfieldElement takes over (see mathViewport.ts).
+//   3. hovered or reached by the caret  the actual MathfieldElement takes over (mlview.svelte.ts).
 //
 // So opening a document is never blocked on typesetting, sizes converge within a second or so, and
-// anything the reader can reach is the real thing. Stage 2 also means a fast scroll finds properly
-// rendered math rather than empty boxes.
+// a fast scroll finds properly rendered math rather than empty boxes.
 //
 // The typeset is mathlive's own renderer, the same one the live field paints itself with, so the
 // swap at stage 3 is visually a no-op. That is the reason not to reach for KaTeX: a second engine
@@ -38,9 +37,8 @@ const pending = new Set<HTMLElement>();
 let draining = false;
 
 /** Rendered width of a math fragment in `ch`, roughly: commands and names collapse to about one
- * glyph, and braces and sub/superscript markers vanish. It only has to be close. Anything within
- * about 1.5 screens is upgraded before it is seen, and browser scroll anchoring absorbs the
- * corrections made to content above the viewport. */
+ * glyph, and braces and sub/superscript markers vanish. It only has to be close: the idle typeset
+ * corrects it, and browser scroll anchoring absorbs the corrections made above the viewport. */
 function estimateWidthCh(source: string, syntax: MathSyntax): number {
 	const collapsed = (syntax === 'typst' ? source.replace(/\p{L}{2,}(\.\p{L}+)*/gu, 'x') : source.replace(/\\[a-zA-Z]+/g, 'x'))
 		.replace(/[{}$&]/g, '')

@@ -17,7 +17,7 @@
 			isDesktop() ? m.prefs_packages_in_every_folder({ count: snippetStatus.files.packages.global.length }) : ''
 		]
 			.filter(Boolean)
-			.join(' · ')
+			.join(' - ')
 	);
 </script>
 

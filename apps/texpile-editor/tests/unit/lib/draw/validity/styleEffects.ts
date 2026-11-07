@@ -98,6 +98,8 @@ export function probeFor(field: Field | 'textSize', shown: ShapeStyle, choices: 
 			return { opacity: otherChoice(choices.opacities.slice(1), shown.opacity) };
 		case 'corners':
 			return { corners: shown.corners === 'rounded' ? 'sharp' : 'rounded' };
+		case 'pattern':
+			return { pattern: otherChoice(choices.patterns.map((p) => p.value).slice(1), shown.pattern) };
 		case 'arrows':
 			return { arrows: otherChoice(choices.arrows.map((a) => a.value).reverse(), shown.arrows) };
 		case 'text':
@@ -120,6 +122,10 @@ export function missedChange(change: Partial<ShapeStyle>, before: DrawnPart[], a
 		case 'fill': {
 			const main = outline(after);
 			return main && sameColor(main.fill, wanted) ? null : `fills ${main ? 'its outline with ' + main.fill : 'nothing'}`;
+		}
+		case 'pattern': {
+			const main = outline(after);
+			return main?.gradient?.startsWith('pattern') ? null : 'fills its outline without a pattern';
 		}
 		case 'width': {
 			const was = stroked(before).map((p) => p.strokeWidth);
@@ -164,6 +170,7 @@ const PROBES: [Field, Field | 'textSize'][] = [
 	['dash', 'dash'],
 	['opacity', 'opacity'],
 	['corners', 'corners'],
+	['pattern', 'pattern'],
 	['arrows', 'arrows'],
 	['text', 'text'],
 	['text', 'textSize']
@@ -222,6 +229,8 @@ export async function styleFindings(
 			text = next;
 			probes.set(st.i, probe);
 		}
+		const needed = [...probes.values()][0];
+		if (needed) text = language.withStyleNeeds?.(text, needed) ?? text;
 		const after = await draw(text);
 		for (const { st, described } of tried) {
 			const probe = probes.get(st.i);

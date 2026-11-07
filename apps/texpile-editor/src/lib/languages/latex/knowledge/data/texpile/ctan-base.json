@@ -35,9 +35,9 @@
 		{"id":"packages/amssymb"}
 	],
 	"macros": [
-		{"name":"title","args":[{"kind":"o"},{"kind":"m"}]},
-		{"name":"author","args":[{"kind":"o"},{"kind":"m"}]},
-		{"name":"date","args":[{"kind":"o"},{"kind":"m"}]},
+		{"name":"title","args":[{"kind":"o"},{"kind":"m","part":"title"}]},
+		{"name":"author","args":[{"kind":"o"},{"kind":"m","part":"author"}]},
+		{"name":"date","args":[{"kind":"o"},{"kind":"m","part":"date"}]},
 		{"name":"abstract","args":[{"kind":"m"}]},
 		{"name":"parencite","args":[{"kind":"s"},{"kind":"o"},{"kind":"o"},{"kind":"m"}]},
 		{"name":"textcite","args":[{"kind":"o"},{"kind":"o"},{"kind":"m"}]},
@@ -46,6 +46,13 @@
 		{"name":"printbibliography","args":[{"kind":"o"}]},
 		{"name":"addbibresource","args":[{"kind":"o"},{"kind":"m"}]},
 		{"name":"defbibheading","args":[{"kind":"m"},{"kind":"o"},{"kind":"m"}]},
-		{"name":"Autoref","args":[{"kind":"s"},{"kind":"m"}]}
+		{"name":"Autoref","args":[{"kind":"s"},{"kind":"m"}]},
+		{"name":"cites","args":[{"kind":"d()"},{"kind":"d()"},{"kind":"o"},{"kind":"o"},{"kind":"m"}],"repeat":[{"kind":"o"},{"kind":"o"},{"kind":"m"}]},
+		{"name":"parencites","args":[{"kind":"d()"},{"kind":"d()"},{"kind":"o"},{"kind":"o"},{"kind":"m"}],"repeat":[{"kind":"o"},{"kind":"o"},{"kind":"m"}]},
+		{"name":"textcites","args":[{"kind":"d()"},{"kind":"d()"},{"kind":"o"},{"kind":"o"},{"kind":"m"}],"repeat":[{"kind":"o"},{"kind":"o"},{"kind":"m"}]},
+		{"name":"autocites","args":[{"kind":"d()"},{"kind":"d()"},{"kind":"o"},{"kind":"o"},{"kind":"m"}],"repeat":[{"kind":"o"},{"kind":"o"},{"kind":"m"}]},
+		{"name":"footcites","args":[{"kind":"d()"},{"kind":"d()"},{"kind":"o"},{"kind":"o"},{"kind":"m"}],"repeat":[{"kind":"o"},{"kind":"o"},{"kind":"m"}]},
+		{"name":"lyxadded","args":[{"kind":"o"},{"kind":"m","placeholder":"author"},{"kind":"m","placeholder":"date"},{"kind":"m","placeholder":"text"}],"change":"added"},
+		{"name":"lyxdeleted","args":[{"kind":"o"},{"kind":"m","placeholder":"author"},{"kind":"m","placeholder":"date"},{"kind":"m","placeholder":"text"}],"change":"deleted"}
 	]
 }

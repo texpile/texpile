@@ -43,7 +43,7 @@
 		{"name":"maketitle"},
 		{"name":"MarkFont"},
 		{"name":"mit","hidden":true},
-		{"name":"newblock","doc":"The default definition for \\newblock is to produce a small space."},
+		{"name":"newblock","doc":"The default definition for \\newblock is to produce a small space.","args":[],"prints":" "},
 		{"name":"othermargin"},
 		{"name":"PageFont"},
 		{"name":"ParaFont","doc":"The font used to typeset the paragraphs is stored in this maro."},

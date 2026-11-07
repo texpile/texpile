@@ -57,7 +57,7 @@
 		{"name":"maketitle"},
 		{"name":"marginlabel","args":[{"kind":"m"}]},
 		{"name":"mit","hidden":true},
-		{"name":"newblock"},
+		{"name":"newblock","args":[],"prints":" "},
 		{"name":"now"},
 		{"name":"oddrunhead","args":[{"kind":"m","placeholder":"text"}],"if":"journal"},
 		{"name":"pagenumberfont","args":[{"kind":"m"}]},

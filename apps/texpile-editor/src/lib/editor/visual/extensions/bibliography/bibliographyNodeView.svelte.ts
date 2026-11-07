@@ -3,12 +3,12 @@ import type { Node } from 'prosemirror-model';
 import type { EditorView, NodeView } from 'prosemirror-view';
 import { NodeSelection } from 'prosemirror-state';
 import BibliographyView from './BibliographyView.svelte';
-import { placeholderCommand } from '../raw-latex/frontmatterView';
+import { placeholderCommand } from '../raw-latex/placeholderView';
+import { printedName } from '$lib/languages/latex/visual/extensions/environment/environmentHeads';
 
-/** The heading from \printbibliography[title={...}] (e.g. MLA's "Works Cited"), or a default. */
 export function bibHeading(text: string): string {
 	const m = text.match(/title\s*=\s*\{([^}]*)\}/) ?? text.match(/title\s*=\s*([^,\]]+)/);
-	return m ? m[1].trim() : 'Bibliography';
+	return m ? m[1].trim() : (printedName('ref', undefined) ?? 'References');
 }
 
 /** NodeView for \printbibliography: read-only preview of live reference entries. Node text stays verbatim, so the .tex round-trips unchanged. */

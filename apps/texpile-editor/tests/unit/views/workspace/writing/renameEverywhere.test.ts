@@ -12,9 +12,16 @@ import { FileHistory } from '$lib/workspace/fileHistory.svelte';
 import { createFileUndo } from '$lib/buffers/fileUndo';
 
 const toasts: { kind: string; title: string }[] = [];
+const toastActions: { onClick: () => void }[] = [];
 vi.mock('$lib/modals/toaster-svelte', () => ({
 	toaster: Object.fromEntries(
-		['success', 'info', 'warning', 'error'].map((kind) => [kind, (t: { title: string }) => toasts.push({ kind, title: t.title })])
+		['success', 'info', 'warning', 'error'].map((kind) => [
+			kind,
+			(t: { title: string; action?: { onClick: () => void } }) => {
+				toasts.push({ kind, title: t.title });
+				if (t.action) toastActions.push(t.action);
+			}
+		])
 	)
 }));
 
@@ -79,6 +86,7 @@ function project(
 
 beforeEach(() => {
 	toasts.length = 0;
+	toastActions.length = 0;
 });
 
 afterEach(() => {
@@ -290,6 +298,73 @@ describe('makeRenameEverywhere', () => {
 			{ kind: 'error', title: 'Remove spaces and these characters from the name: \\ # % { } ,' }
 		]);
 		expect(view.state.doc.toString()).toBe(before);
+	});
+
+	describe('undoing', () => {
+		const MAIN = `${PREAMBLE}\\label{sec:a}\\cite{k} \\input{ch1}\\end{document}`;
+		const CH1 = 'See \\ref{sec:a}.';
+		const BIB = '@book{k,\n}';
+		const files = { '/p/main.tex': MAIN, '/p/ch1.tex': CH1, '/p/refs.bib': BIB };
+		const MAIN_BIB = MAIN.replace('\\input{ch1}', '\\bibliography{refs}\\input{ch1}');
+		const type = (view: EditorView, at: number, insert: string) => view.dispatch({ changes: { from: at, insert } });
+
+		async function renamed() {
+			fileHistory = new FileHistory();
+			const p = project(files, '/p/main.tex', true, () => '/p/main.tex', true);
+			await p.rename('label', 'sec:a', 'sec:b');
+			return p;
+		}
+
+		it('takes the rename back in every file from the Undo button of its toast', async () => {
+			const { disk } = await renamed();
+			toastActions[0].onClick();
+			await vi.waitFor(() => expect(disk.get('/p/ch1.tex')).toBe(CH1));
+		});
+
+		it('steps typing and the rename apart', async () => {
+			const { disk, view, um } = await renamed();
+			type(view, 0, 'x');
+			um!.stopCapturing();
+			um!.undo();
+			expect(view.state.doc.toString()).toBe(MAIN.replace('sec:a', 'sec:b'));
+			um!.undo();
+			await vi.waitFor(() => expect(disk.get('/p/ch1.tex')).toBe(CH1));
+			expect(view.state.doc.toString()).toBe(MAIN);
+		});
+
+		it('takes a citation key back in the .bib, and two renames back in the order they were made', async () => {
+			fileHistory = new FileHistory();
+			const { disk, view, um, rename } = project(
+				{ '/p/main.tex': MAIN_BIB, '/p/ch1.tex': CH1, '/p/refs.bib': BIB },
+				'/p/main.tex',
+				true,
+				() => '/p/main.tex',
+				true
+			);
+			await rename('cite', 'k', 'knuth');
+			expect(disk.get('/p/refs.bib')).toBe('@book{knuth,\n}');
+			await rename('label', 'sec:a', 'sec:b');
+			um!.undo();
+			await vi.waitFor(() => expect(disk.get('/p/ch1.tex')).toBe(CH1));
+			expect(disk.get('/p/refs.bib')).toBe('@book{knuth,\n}');
+			um!.undo();
+			await vi.waitFor(() => expect(disk.get('/p/refs.bib')).toBe(BIB));
+			expect(view.state.doc.toString()).toBe(MAIN_BIB);
+		});
+	});
+
+	it('renames inside the files of its own document when the chosen main file does not include it', async () => {
+		const { disk, rename } = project(
+			{
+				'/p/main.tex': `${PREAMBLE}\\label{a}\\end{document}`,
+				'/p/other.tex': `${PREAMBLE}\\label{a}\\input{part}\\end{document}`,
+				'/p/part.tex': 'See \\ref{a}.'
+			},
+			'/p/other.tex'
+		);
+		await rename('label', 'a', 'z');
+		expect(disk.get('/p/part.tex')).toBe('See \\ref{z}.');
+		expect(disk.get('/p/main.tex')).toBe(`${PREAMBLE}\\label{a}\\end{document}`);
 	});
 
 	describe('as a guest', () => {

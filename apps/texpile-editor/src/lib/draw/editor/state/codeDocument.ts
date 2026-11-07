@@ -1,5 +1,6 @@
 import type { CodeFold, TextSpan } from '../figure/figureLanguage';
 import { cmFolding } from '../code/cmFolding';
+import { jumpRevealEffect } from '$lib/editor/source/cmJumpReveal';
 import { defaultKeymap, history, historyKeymap, indentWithTab, isolateHistory, redo, undo } from '@codemirror/commands';
 import { Annotation, EditorState, RangeSet, StateEffect, StateField, Transaction, type Extension, type Text } from '@codemirror/state';
 import {
@@ -129,12 +130,12 @@ export function createCodeDocument(
 		},
 		showStatements(ranges: TextSpan[], primary: TextSpan | null) {
 			const effects: StateEffect<unknown>[] = [SET_STATEMENT_RANGES.of(ranges)];
-			if (primary) effects.push(EditorView.scrollIntoView(primary.from, { y: 'nearest' }));
+			if (primary) effects.push(jumpRevealEffect(view, primary.from));
 			view.dispatch({ effects });
 		},
 		revealLine(line: number) {
 			const at = view.state.doc.line(Math.min(Math.max(1, line), view.state.doc.lines)).from;
-			view.dispatch({ selection: { anchor: at }, effects: EditorView.scrollIntoView(at, { y: 'center' }) });
+			view.dispatch({ selection: { anchor: at }, effects: jumpRevealEffect(view, at) });
 			view.focus();
 		},
 		reset(text: string) {

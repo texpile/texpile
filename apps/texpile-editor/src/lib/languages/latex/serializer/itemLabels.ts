@@ -1,4 +1,5 @@
 // an item's label, and the body written after it
+import type { Node } from 'prosemirror-model';
 import type { Ctx } from '$lib/serializer/types';
 import type { Ligature } from '../knowledge/commands/commandFacts';
 import { TEXT_LIGATURES, TIE } from '../textLigatures';
@@ -24,6 +25,10 @@ export function labelKey(s: string): string {
 	return out.replace(/\s+/g, ' ').trim();
 }
 
+export function itemCommand(overlay: unknown, label: string | null): string {
+	return `\\item${typeof overlay === 'string' ? overlay : ''}${label == null ? '' : `[${label}]`}`;
+}
+
 /** an item body beginning with `[` reads as the item's label, and one beginning with `<` as a
  *  beamer overlay: an empty group in front keeps the bytes text */
 export function guardItemBody(body: string): string {
@@ -33,4 +38,10 @@ export function guardItemBody(body: string): string {
 /** whether `ctx` is the first block of a list item, whose bytes follow \item directly */
 export function headsItem(ctx: Ctx | undefined): boolean {
 	return !!ctx && ctx.parent?.type.name === 'list' && ctx.index === 0;
+}
+
+export function keyedItemCommand(command: string, node: Node): string {
+	const label = typeof node.attrs.itemLabel === 'string' ? `[${node.attrs.itemLabel}]` : '';
+	const key = typeof node.attrs.itemKey === 'string' ? node.attrs.itemKey : '';
+	return `\\${command}${label}{${key}}`;
 }

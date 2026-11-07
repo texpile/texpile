@@ -1,0 +1,1 @@
+{"version":1,"id":"@preview/chemicoms-paper:0.1.0","names":{"z":{"kind":"module","from":"@preview/valkyrie:0.2.0"},"elements":{"kind":"module"},"abstracts":{"kind":"value"},"template-schema":{"kind":"value"},"template":{"kind":"function","params":[{"name":"body","positional":true,"required":true},{"name":"args","variadic":true}],"block":true}}}

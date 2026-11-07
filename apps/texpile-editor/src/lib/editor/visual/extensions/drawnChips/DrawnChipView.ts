@@ -12,6 +12,7 @@ import {
 	dismissChipPanel,
 	openChipPanel,
 	syncChipPanel,
+	type ChipPanelAction,
 	type ChipPanelClose,
 	type ChipPanelFooter,
 	type ChipSettings
@@ -26,6 +27,7 @@ export type SourceViewMaker = (node: Node, view: EditorView, getPos: () => numbe
 export type DrawnChipKind = {
 	block: boolean;
 	language: 'latex' | 'typst';
+	takes(source: string): boolean;
 	makeFace: ChipFaceMaker;
 	makeSource: SourceViewMaker;
 	reparse: ChipReparse;
@@ -35,6 +37,7 @@ export type DrawnChipKind = {
 	jumpToDefinition(name: string): void;
 	footerFor?(source: string): ChipPanelFooter | null;
 	caretFor?(source: string): number | undefined;
+	actionFor?(source: string, pos: number): ChipPanelAction | null;
 };
 
 // by node, for the keys: a chip drawn now, as ProseMirror holds it
@@ -125,7 +128,8 @@ export class DrawnChipView implements NodeView {
 			redo: () => redoVisual(),
 			onClose: (how) => this.panelClosed(how),
 			footer: this.kind.footerFor?.(this.opened) ?? null,
-			caret: this.kind.caretFor?.(this.opened)
+			caret: this.kind.caretFor?.(this.opened),
+			action: this.kind.actionFor?.(this.opened, this.getPos()) ?? null
 		});
 	}
 
@@ -227,7 +231,7 @@ export class DrawnChipView implements NodeView {
 	}
 
 	private onMouseDown = (event: MouseEvent): void => {
-		if (this.source || event.button !== 0) return;
+		if (this.source || event.button !== 0 || (event.target instanceof Element && event.target.closest('button'))) return;
 		event.preventDefault();
 		this.openPanel();
 	};
@@ -252,7 +256,7 @@ export class DrawnChipView implements NodeView {
 	}
 
 	update(node: Node, decorations: readonly Decoration[], inner: DecorationSource): boolean {
-		if (node.type !== this.node.type) return false;
+		if (node.type !== this.node.type || (!this.source && !this.kind.takes(node.textContent))) return false;
 		const changed = node.textContent !== this.node.textContent;
 		if (drawnChips.get(this.node) === this) drawnChips.delete(this.node);
 		this.node = node;

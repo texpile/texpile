@@ -61,16 +61,16 @@
 		<span class="cap-center shrink-0 font-medium whitespace-nowrap">{m.wsview_diff_since()}</span>
 		<!-- naming the version matters more than the word "diff" once this can point at any of them -->
 		{#if compareRef}
-			<span class="cap-center text-muted min-w-0 truncate" use:tip={compareRef.hash}>· {versionLabel}</span>
+			<span class="cap-center text-muted min-w-0 truncate" use:tip={compareRef.hash}>- {versionLabel}</span>
 		{:else}
-			<span class="cap-center text-muted min-w-0 truncate">· {versionLabel}</span>
+			<span class="cap-center text-muted min-w-0 truncate">- {versionLabel}</span>
 		{/if}
-		{#if fileDeleted}<span class="cap-center text-muted">· {m.wsview_diff_file_deleted()}</span>
+		{#if fileDeleted}<span class="cap-center text-muted">- {m.wsview_diff_file_deleted()}</span>
 			<!-- a git read of a local file is usually well under the threshold, and announcing it only
 		     to take it away again is the flash the rule exists to prevent -->
-		{:else if loading}<span class="cap-center text-muted reveal-late">· {m.wsview_diff_loading()}</span>
-		{:else if error}<span class="cap-center text-error-ink truncate">· {error}</span>
-		{:else if !hasHead}<span class="cap-center text-muted">· {m.wsview_diff_new_file()}</span>{/if}
+		{:else if loading}<span class="cap-center text-muted reveal-late">- {m.wsview_diff_loading()}</span>
+		{:else if error}<span class="cap-center text-error-ink truncate">- {error}</span>
+		{:else if !hasHead}<span class="cap-center text-muted">- {m.wsview_diff_new_file()}</span>{/if}
 		<div class="ml-auto flex shrink-0 items-center gap-1">
 			<!-- through the changes, as Alt+F5 and Shift+Alt+F5 do from inside the comparison -->
 			<button

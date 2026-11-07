@@ -1,6 +1,7 @@
 // what WorkspaceMain hands EditorPane; a types file so the surface component stays legible
 import type { ProjectWords } from '$lib/workspace/wordCount/projectWords';
 import type { Node as PMNode } from 'prosemirror-model';
+import type { PreambleSpan } from '$lib/languages/latex/visual/core/title/preambleFields';
 import type { ComponentProps } from 'svelte';
 import type SourceEditor from '$lib/editor/source/SourceEditor.svelte';
 import type { EditSession } from '$lib/collab/editSession';
@@ -77,7 +78,7 @@ export type EditorPaneProps = {
 	parseProgress?: ParsePhase | null;
 	/** escape hatch offered once the parse looks slow */
 	onUseSource?: () => void;
-	docMeta: Pick<ParsedLatexFile, 'preamble' | 'postamble' | 'hadDocumentEnv'> | null;
+	docMeta: Pick<ParsedLatexFile, 'preamble' | 'postamble' | 'hadDocumentEnv' | 'table'> | null;
 	allReferences: BiblatexReference[];
 	sourceGotoLine: { line: number; token: number; selectText?: string; column?: number; path?: string } | undefined;
 	sourceScrollAnchor: { scroll: number | null; cursor: number | null } | null;
@@ -110,7 +111,7 @@ export type EditorPaneProps = {
 	onVisualChange: (doc: PMNode) => void;
 	/** visual-editor caret movement (shared-session presence). */
 	onVisualSelection?: () => void;
-	onEditFrontmatter: (kind: string, inner: string) => void;
+	onEditFrontmatter: (span: PreambleSpan, inner: string) => void;
 	/** absent when no preview target can resolve the jump (WorkspaceMain's canSync gate) */
 	onSyncToPdf?: (line: number) => void;
 	onJumpToFile: (names: string[]) => void;

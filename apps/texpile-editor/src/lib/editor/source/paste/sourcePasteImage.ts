@@ -3,7 +3,7 @@
 import type { EditorView as CMView } from '@codemirror/view';
 import { uploadLocalImage } from '$lib/editor/visual/extensions/image/imageplugin.svelte';
 import { DEFAULT_FIGURE_FRACTION } from '$lib/editor/visual/extensions/image/figureDefaults';
-import { typStr } from '$lib/languages/typst/visual/serialize/typstInline';
+import { typStr } from '$lib/languages/typst/visual/serialize/typstEscapes';
 import type { PasteDialect } from '$lib/editor/paste/pastedImages';
 
 /** the picture a paste holds on its own; a spreadsheet or word processor puts one of the selection beside its rich text */

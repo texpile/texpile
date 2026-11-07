@@ -27,8 +27,8 @@ describe('extractDocRefs bibitems', () => {
 		const tex =
 			'\\begin{thebibliography}{9}\n\\bibitem[Kn84]{knuth} Knuth. Book.\n\\bibitem{lamport} Lamport.\n\\end{thebibliography}\nafter';
 		expect(extractDocRefs(tex).bibitems).toEqual([
-			{ key: 'knuth', body: ' Knuth. Book.\n' },
-			{ key: 'lamport', body: ' Lamport.\n' }
+			{ key: 'knuth', body: ' Knuth. Book.\n', command: 'bibitem', head: ['Kn84'], number: 1 },
+			{ key: 'lamport', body: ' Lamport.\n', command: 'bibitem', head: [null], number: 2 }
 		]);
 	});
 });

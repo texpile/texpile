@@ -3,7 +3,8 @@
 	import { inEditorPane } from '$lib/editor/visual/editorPanePositioning';
 	import { Popover, Portal } from '@skeletonlabs/skeleton-svelte';
 	import { Plus, GripVertical, Trash2 } from '@lucide/svelte';
-	import { BLOCK_INSERT_ITEMS, type BlockInsertItem } from './blockInsertItems';
+	import BlockInsertMenu from '$lib/editor/visual/insert/BlockInsertMenu.svelte';
+	import type { BlockInsertItem } from '$lib/editor/visual/insert/insertItem';
 	import { m } from '$lib/paraglide/messages';
 
 	type State = {
@@ -20,14 +21,15 @@
 		onInsert,
 		onDragStart,
 		onDelete,
-		items = BLOCK_INSERT_ITEMS
+		focusEditor,
+		items
 	}: {
 		state: State;
 		onInsert: (item: BlockInsertItem) => void;
 		onDragStart: (event: DragEvent) => void;
 		onDelete: () => void;
-		/** insert-menu entries; defaults to the LaTeX set, the markdown editor passes its own */
-		items?: BlockInsertItem[];
+		focusEditor: () => void;
+		items: () => readonly BlockInsertItem[];
 	} = $props();
 </script>
 
@@ -41,7 +43,11 @@
 >
 	<Popover
 		open={state.popoverOpen}
-		onOpenChange={(e) => (state.popoverOpen = e.open)}
+		onOpenChange={(e) => {
+			state.popoverOpen = e.open;
+			if (!e.open) focusEditor();
+		}}
+		restoreFocus={false}
 		positioning={inEditorPane({ placement: 'bottom-start', offset: { mainAxis: 4 } })}
 	>
 		<Popover.Trigger class="block-handle-btn" aria-label={m.blockhandle_insert_below()}>
@@ -51,23 +57,10 @@
 		</Popover.Trigger>
 		<Portal>
 			<Popover.Positioner class="z-floating-ui">
-				<Popover.Content class="card bg-surface-50-950 border-surface-300-700 max-w-64 min-w-48 border p-1 shadow-lg">
-					<div class="text-muted px-2 py-1 text-[10px] font-semibold tracking-wider uppercase">
-						{m.blockhandle_insert_header()}
-					</div>
-					{#each items as item (item.label)}
-						<button
-							type="button"
-							class="hover:preset-tonal rounded-base flex w-full items-center gap-2 px-2 py-1.5 text-left text-sm"
-							onmousedown={(e) => {
-								e.preventDefault();
-								onInsert(item);
-							}}
-						>
-							<item.icon class="text-muted size-4 shrink-0" />
-							<span>{item.label()}</span>
-						</button>
-					{/each}
+				<Popover.Content class="card bg-surface-50-950 border-surface-300-700 w-72 border shadow-lg">
+					{#if state.popoverOpen}
+						<BlockInsertMenu items={items()} {onInsert} />
+					{/if}
 				</Popover.Content>
 			</Popover.Positioner>
 		</Portal>

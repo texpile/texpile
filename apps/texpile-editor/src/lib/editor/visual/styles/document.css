@@ -1,0 +1,242 @@
+@reference "../../../../app.css";
+
+.TexpileEditor {
+	@apply m-1 max-w-full leading-relaxed outline-none;
+}
+
+/* off-screen blocks of a large document skip style, layout and hit-testing (see largeDocument.ts) */
+.TexpileEditor-large > * {
+	content-visibility: auto;
+	contain-intrinsic-size: auto 60px;
+}
+
+.TexpileEditor.page-view {
+	@apply bg-page-sheet rounded-base mx-auto my-8 w-[85%] max-w-[1400px] px-[8%] py-12 shadow-lg;
+	min-height: 70vh;
+}
+
+.TexpileEditor[data-readonly='true'] {
+	cursor: default;
+}
+
+.TexpileEditor[data-readonly='true'] .ProseMirror-selectednode {
+	outline: none;
+}
+
+.TexpileEditor[data-readonly='true'] .column-resize-handle {
+	display: none !important;
+}
+
+/* first-child div is the image alignment buttons */
+.TexpileEditor[data-readonly='true'] .image-overlay-wrapper > div:first-child {
+	display: none !important;
+}
+
+.TexpileEditor[data-readonly='true'] .imageResizeBoxWrapper {
+	display: none !important;
+}
+
+math-field::part(virtual-keyboard-toggle) {
+	display: none;
+}
+
+math-field::part(menu-toggle) {
+	display: none;
+}
+
+.TexpileEditor h1 {
+	@apply text-3xl font-semibold md:text-4xl;
+}
+.TexpileEditor h2 {
+	@apply text-2xl font-semibold md:text-3xl;
+}
+.TexpileEditor h3 {
+	@apply text-xl font-semibold md:text-2xl;
+}
+.TexpileEditor h4 {
+	@apply text-lg font-semibold md:text-xl;
+}
+.TexpileEditor h5 {
+	@apply text-base font-medium md:text-lg;
+}
+.TexpileEditor h6 {
+	@apply text-sm font-medium md:text-base;
+}
+
+.TexpileEditor h1,
+.TexpileEditor h2,
+.TexpileEditor h3,
+.TexpileEditor h4,
+.TexpileEditor h5,
+.TexpileEditor h6 {
+	@apply mb-2 leading-snug;
+}
+
+.TexpileEditor p {
+	@apply mb-3 text-base;
+}
+
+.TexpileEditor :is(li, .prosemirror-flat-list) p {
+	@apply m-0;
+}
+.TexpileEditor .prosemirror-flat-list {
+	@apply my-1 leading-relaxed;
+}
+.TexpileEditor .prosemirror-flat-list[data-list-env='description'] {
+	@apply ml-0 list-none pl-8;
+}
+.TexpileEditor .prosemirror-flat-list[data-list-env='description'] > .list-content > p:first-child {
+	@apply -indent-8;
+}
+
+.TexpileEditor ul,
+.TexpileEditor ol {
+	@apply my-3 pl-6;
+}
+.TexpileEditor li {
+	@apply leading-relaxed;
+}
+.TexpileEditor li + li {
+	@apply mt-1;
+}
+
+/* as LaTeX's quote and Typst's block quote print: inset on both sides, upright (Skeleton's .blockquote draws a bar) */
+.TexpileEditor :is(blockquote, .blockquote) {
+	@apply mx-8 my-4 block border-0 p-0 not-italic;
+}
+
+.TexpileEditor div.abstract {
+	@apply relative mx-8 my-6 pt-7;
+}
+.TexpileEditor div.abstract::before {
+	content: 'Abstract';
+	@apply absolute top-0 right-0 left-0 text-center text-sm font-semibold;
+}
+.TexpileEditor div.abstract p {
+	@apply my-2 leading-relaxed;
+}
+
+.TexpileEditor code {
+	@apply bg-surface-200-800 rounded-base px-1 py-0.5 text-[0.95em];
+}
+.TexpileEditor pre {
+	@apply bg-surface-200-800 rounded-base my-3 overflow-x-auto p-3 text-[0.95em];
+}
+.TexpileEditor table {
+	@apply my-4 w-full border-collapse;
+}
+.TexpileEditor th,
+.TexpileEditor td {
+	@apply border-surface-200-800 border px-2 py-1 align-top;
+}
+.TexpileEditor th {
+	@apply font-semibold;
+}
+.TexpileEditor :is(td, th) p {
+	@apply m-0;
+}
+
+.TexpileEditor .env-label {
+	font-size: 0.7rem;
+	letter-spacing: 0.06em;
+	text-transform: uppercase;
+	color: var(--faint-text);
+	cursor: pointer;
+	border-radius: calc(var(--radius-base) * 0.5);
+}
+.TexpileEditor .env-label:hover {
+	color: var(--muted-text);
+}
+.env-head {
+	font: inherit;
+	cursor: pointer;
+	border-radius: calc(var(--radius-base) * 0.5);
+}
+.env-head:hover {
+	background: color-mix(in srgb, var(--color-surface-500) 12%, transparent);
+}
+.env-head[data-look='theorem'] .env-head-name {
+	font-weight: 700;
+}
+
+/* inline math is a word of its line: mathlive's room around a field read as spaces beside it and grew the line */
+.TexpileEditor .inline-math math-field::part(container),
+.TexpileEditor .inline-math math-field::part(content) {
+	padding: 0;
+	overflow: visible;
+}
+
+.TexpileEditor .block-math-container > :is(math-field, .math-static-placeholder) {
+	max-width: 100%;
+	overflow-x: auto;
+	overflow-y: hidden;
+}
+/* a glyph's few pixels past the formula's own box, which the live field clips, opened a scrollbar */
+.TexpileEditor .block-math-container > .math-static-placeholder > .ML__latex {
+	overflow-x: clip;
+}
+
+@property --text-size {
+	syntax: '<length>';
+	inherits: true;
+	initial-value: 16px;
+}
+.TexpileEditor * {
+	--text-size: 1em;
+}
+.TexpileEditor :is(.chip-host, .chip-host *) {
+	--text-size: inherit;
+}
+/* sized 0 so the template's whitespace takes no room, its chip at the text's size */
+.TexpileEditor .chip-host {
+	font-size: 0;
+}
+.TexpileEditor .chip-host > :is([data-part='trigger'], .text-chip) {
+	font-size: var(--text-size);
+}
+.TexpileEditor .chip-host[data-glued~='before'] {
+	margin-inline-start: calc(var(--text-size) * 0.25);
+}
+.TexpileEditor .chip-host[data-glued~='after'] {
+	margin-inline-end: calc(var(--text-size) * 0.25);
+}
+.TexpileEditor .text-chip {
+	display: inline-flex;
+	align-items: baseline;
+	gap: 0.25em;
+	padding: 0 0.3em;
+	border-radius: calc(var(--radius-base) * 0.5);
+	color: inherit;
+	background: color-mix(in oklab, currentColor 8%, transparent);
+	cursor: pointer;
+}
+.TexpileEditor .text-chip:hover {
+	background: color-mix(in oklab, currentColor 14%, transparent);
+}
+.TexpileEditor :is(h1, h2, h3, h4, h5, h6) .chip-host > .text-chip {
+	font-size: 1rem;
+	font-weight: 400;
+}
+.TexpileEditor .text-chip > svg {
+	flex: none;
+	align-self: center;
+	width: 0.75em;
+	height: 0.75em;
+	color: var(--muted-text);
+}
+.TexpileEditor .text-chip-name {
+	font-family: var(--font-mono, monospace);
+	font-size: 0.85em;
+}
+
+.TexpileEditor .prosemirror-flat-list[data-list-kind='ordered']::before {
+	content: attr(data-item-label) ' ';
+}
+
+.TexpileEditor .image-missing {
+	color: var(--muted-text);
+}
+.TexpileEditor .imagePluginRoot > .image-missing {
+	display: block;
+	text-align: center;
+}

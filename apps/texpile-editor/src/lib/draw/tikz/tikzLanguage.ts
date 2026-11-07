@@ -37,11 +37,13 @@ import { LIBRARY_ELEMENTS } from './library/libraryElements';
 import { STARTER_PICTURES } from './starters/starterPictures';
 import { appendPastedStatements, appendShape } from './source/inserts/newStatements';
 import { readNodeBox, readNodeLines, writeNodeLines, writeNodeBox, textProblem, nodeName } from './source/nodes';
+import { withLibrary } from './source/options/libraries';
 import { readCommandOptions, writeCommandOptions } from './source/options/optionList';
 import {
 	ARROWS,
 	DASHES,
 	OPACITIES,
+	PATTERNS,
 	WIDTHS,
 	readStyle,
 	targetOf,
@@ -50,6 +52,7 @@ import {
 	withDash,
 	withFill,
 	withOpacity,
+	withPattern,
 	withStroke,
 	withWidth
 } from './source/options/styleOptions';
@@ -58,6 +61,19 @@ import { listPictures, readPicture, statementAt, unclosedPicture, type Picture, 
 import { addPlot, readAxis, readPlot, writeAxis, writePlot } from './source/plots/plotOptions';
 
 const ARROW_LABELS: Record<string, () => string> = { '': () => m.figure_arrow_none(), '->': () => '→', '<-': () => '←', '<->': () => '↔' };
+const PATTERN_LABELS: Record<(typeof PATTERNS)[number], () => string> = {
+	'': () => m.figure_pattern_none(),
+	'north east lines': () => m.figure_pattern_north_east_lines(),
+	'north west lines': () => m.figure_pattern_north_west_lines(),
+	'horizontal lines': () => m.figure_pattern_horizontal_lines(),
+	'vertical lines': () => m.figure_pattern_vertical_lines(),
+	grid: () => m.figure_pattern_grid(),
+	crosshatch: () => m.figure_pattern_crosshatch(),
+	dots: () => m.figure_pattern_dots(),
+	'crosshatch dots': () => m.figure_pattern_crosshatch_dots(),
+	bricks: () => m.figure_pattern_bricks(),
+	checkerboard: () => m.figure_pattern_checkerboard()
+};
 
 function isDiagram(picture: unknown) {
 	return !!(picture as Picture | null)?.layout;
@@ -189,6 +205,7 @@ export const tikzLanguage: FigureLanguage = {
 		if (!options || !target) return null;
 		let items = options.items;
 		if ('stroke' in change) items = withStroke(items, target, change.stroke ?? null);
+		if (typeof change.pattern === 'string') items = withPattern(items, target, change.pattern);
 		if ('fill' in change) items = withFill(items, target, change.fill ?? null);
 		if (change.width) items = withWidth(items, change.width);
 		if (change.dash) items = withDash(items, change.dash);
@@ -199,6 +216,7 @@ export const tikzLanguage: FigureLanguage = {
 		if (target === 'node' && change.textSize) items = withTextSize(items, change.textSize);
 		return writeCommandOptions(source, options, items);
 	},
+	withStyleNeeds: (source, change) => (change.pattern ? withLibrary(source, 'patterns').source : source),
 	get styleChoices() {
 		return {
 			colors: TIKZ_COLORS,
@@ -206,7 +224,8 @@ export const tikzLanguage: FigureLanguage = {
 			dashes: DASHES,
 			arrows: ARROWS.map((a) => ({ value: a, label: ARROW_LABELS[a]() })),
 			textSizes: TEXT_SIZES,
-			opacities: OPACITIES
+			opacities: OPACITIES,
+			patterns: PATTERNS.map((p) => ({ value: p, label: PATTERN_LABELS[p]() }))
 		};
 	}
 };

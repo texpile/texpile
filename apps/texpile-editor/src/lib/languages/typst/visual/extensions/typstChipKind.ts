@@ -5,8 +5,12 @@ import { chipReplacement } from '$lib/editor/visual/extensions/drawnChips/chipRe
 import { InlineLatexView } from '$lib/editor/visual/extensions/raw-latex/inlineLatexView';
 import { RawLatexView } from '$lib/editor/visual/extensions/raw-latex/rawLatexView';
 import { typstToProseMirror } from '../convert/converter';
-import { typstFace } from './drawn/typstFace';
-import { typstChipSettings } from './drawn/settings/typstChipSettings';
+import { typstFace } from '../core/walk/typstFace';
+import { typstChipSettings } from '../core/plugin/typstChipSettings';
+import { hashedCode } from '../core/code/codeSource';
+import { isFigureBlock } from '$lib/draw/host/card/FigureCardView.svelte';
+import { cetzLanguage } from '$lib/draw/cetz/cetzLanguage';
+import { isTypstBibliography } from './typstBibliographyView.svelte';
 
 function parsed(source: string) {
 	try {
@@ -20,9 +24,10 @@ export function typstChipKind(block: boolean): DrawnChipKind {
 	return {
 		block,
 		language: 'typst',
+		takes: (source) => !block || !(isTypstBibliography(source) || isFigureBlock(cetzLanguage, source)),
 		makeFace: typstFace,
 		makeSource: (node, view, getPos) => (block ? new RawLatexView(node, view, getPos) : new InlineLatexView(node, view, getPos)),
-		reparse: (source, chip) => chipReplacement(parsed(source), chip, block),
+		reparse: (source, chip) => (hashedCode(source) !== source ? null : chipReplacement(parsed(source), chip, block)),
 		settingsFor: typstChipSettings,
 		jump: () => {},
 		jumpToDefinition: () => {}

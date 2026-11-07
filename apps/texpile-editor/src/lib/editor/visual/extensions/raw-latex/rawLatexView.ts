@@ -1,4 +1,5 @@
 import { EditorView as CodeMirrorView, keymap as cmKeymap, drawSelection, type ViewUpdate, type KeyBinding } from '@codemirror/view';
+import { selectAllThenDocument } from '$lib/editor/visual/extensions/codemirrorbridge/cmSelectAll';
 import { Compartment as CodeMirrorCompartment } from '@codemirror/state';
 import { defaultKeymap } from '@codemirror/commands';
 import { tabIndentBinding } from '$lib/editor/source/extensions/keybindings/cmTabKey';
@@ -83,7 +84,7 @@ export class RawLatexView {
 			// typst isn't in @codemirror/language-data; the app ships its own wasm-backed language
 			// (island flavour: no fold gutter on a chip)
 			void import('$lib/languages/typst/source/typstLanguage').then(({ typstIslandLanguage }) => {
-				this.cm.dispatch({ effects: this.languageConf.reconfigure(typstIslandLanguage()) });
+				this.cm.dispatch({ effects: this.languageConf.reconfigure(typstIslandLanguage(node.textContent)) });
 			});
 		} else if (String(node.attrs.lang ?? 'latex') === 'latex') {
 			// the app's own LaTeX mode, same tags and colours as the source editor
@@ -154,6 +155,7 @@ export class RawLatexView {
 	codeMirrorKeymap(): KeyBinding[] {
 		const view = this.view;
 		return [
+			selectAllThenDocument(view),
 			{
 				key: 'ArrowUp',
 				run: () => this.maybeEscape('line', -1)

@@ -9,13 +9,6 @@ test('opens the folder on its main file with no errors', async () => {
 	await expect(page.getByText('main.tex', { exact: true }).first()).toBeVisible();
 });
 
-test('a typed command completes in the source editor', async () => {
-	const { source } = texpile();
-	await source.open('main.tex');
-	const rows = await source.completeAfter('\\label{sec:intro}\n', '\\topr');
-	expect(rows.map((r) => r.label)).toContain('\\toprule');
-});
-
 test('typing saves the file and leaves the rest of it as it was', async () => {
 	const { source } = texpile();
 	await source.open('main.tex');

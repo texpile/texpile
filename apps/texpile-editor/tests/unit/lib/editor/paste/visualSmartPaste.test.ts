@@ -120,3 +120,41 @@ describe('dollar math pasted into LaTeX', () => {
 		expect(view.state.doc.textContent).toContain('It costs $5 and $10');
 	});
 });
+
+describe('a copy of one block pasted into another', () => {
+	const latexDoc = (body: string) =>
+		`\\documentclass{article}\n\\usepackage{amsthm}\n\\newtheorem{theorem}{Theorem}\n\\begin{document}\n\n${body}\n\n\\end{document}\n`;
+	const figure = '\\begin{figure}[h]\n\\centering\n\\includegraphics[width=3cm]{plot.png}\n\\caption{Caption words}\n\\end{figure}';
+
+	async function openLatex(body: string): Promise<EditorView> {
+		const { schema } = await import('$lib/languages/latex/schema/latexPMSchema');
+		const { parseLatexFile } = await import('$lib/workspace/latexRoundtrip');
+		const { doc } = parseLatexFile(latexDoc(body));
+		return new EditorView(document.createElement('div'), {
+			state: EditorState.create({ doc, plugins: [visualSmartPaste('latex', schema, () => false)] })
+		});
+	}
+
+	function copyAndPasteAt(view: EditorView, copied: (name: string) => boolean, caretAfter: string): void {
+		let from = -1;
+		let to = -1;
+		view.state.doc.descendants((n, pos) => {
+			if (from < 0 && copied(n.type.name)) [from, to] = [pos, pos + n.nodeSize];
+			return from < 0;
+		});
+		const html = view.serializeForClipboard(view.state.doc.slice(from, to)).dom.innerHTML;
+		let at = -1;
+		view.state.doc.descendants((n, pos) => {
+			if (at < 0 && n.isText && n.text!.includes(caretAfter)) at = pos + n.text!.indexOf(caretAfter) + caretAfter.length;
+		});
+		view.dispatch(view.state.tr.setSelection(TextSelection.create(view.state.doc, at)));
+		paste(view, html, '');
+	}
+
+	it('keeps inline math pasted in a figure caption as math', async () => {
+		const inCaption = await openLatex(`Math $x^2$ here.\n\n${figure}`);
+		copyAndPasteAt(inCaption, (name) => name === 'inline_math', 'Caption words');
+		const { serializeToLatex } = await import('$lib/languages/latex/serializer/latexSerializer');
+		expect(serializeToLatex(inCaption.state.doc)).toContain('\\caption{Caption words$x^2$}');
+	});
+});

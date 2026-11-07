@@ -100,6 +100,20 @@ describe('TypstParser', () => {
 		expect(p.parse(shorter).length).toBe(shorter.length);
 	});
 
+	it('reads code as code with forCode, its tree the code alone', () => {
+		const doc = 'rect(width: 0.9 * 3.25in, stroke: 0.4pt)';
+		const tree = parser().forCode().parse(doc);
+		expect(tree.length).toBe(doc.length);
+		const names = leaves(tree, doc).map((l) => l.name);
+		expect(names).toContain('Star');
+		expect(names).not.toContain('Strong');
+		expect(
+			leaves(tree, doc)
+				.map((l) => l.text)
+				.join('')
+		).toBe(doc);
+	});
+
 	it('handles an empty document', () => {
 		expect(parser().parse('').length).toBe(0);
 	});

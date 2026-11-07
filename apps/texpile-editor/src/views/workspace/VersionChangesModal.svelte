@@ -73,8 +73,8 @@
 	onClose={closeVersionChanges}
 >
 	<p class="text-muted -mt-2 mb-3 truncate text-xs">
-		{entry.author} · {when(entry.date)} · <span class="font-mono">{entry.short}</span>
-		{#if entry.parentCount > 1}· {m.vcs_version_changes_merge()}{/if}
+		{entry.author} - {when(entry.date)} - <span class="font-mono">{entry.short}</span>
+		{#if entry.parentCount > 1}- {m.vcs_version_changes_merge()}{/if}
 	</p>
 
 	{#if listing}

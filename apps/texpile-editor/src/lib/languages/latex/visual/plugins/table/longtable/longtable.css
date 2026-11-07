@@ -1,0 +1,23 @@
+.ProseMirror tr.longtable-head > td {
+	font-weight: 600;
+}
+
+.ProseMirror tr.longtable-foot > td {
+	color: var(--muted-text);
+}
+
+.ProseMirror tr.longtable-marker > td {
+	padding: 0 calc(var(--spacing) * 2);
+	border: none;
+	border-top: 1px dashed var(--color-surface-300);
+	background: transparent;
+	color: var(--faint-text);
+	font-size: 0.6875rem;
+	line-height: 1rem;
+	text-align: right;
+	user-select: none;
+}
+
+[data-mode='dark'] .ProseMirror tr.longtable-marker > td {
+	border-top-color: var(--color-surface-700);
+}

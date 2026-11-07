@@ -33,7 +33,7 @@
 			<span class="cap-center shrink-0"
 				>{done.length === 1 ? m.agent_panel_step_done() : m.agent_panel_steps_done({ count: done.length })}</span
 			>
-			<span class="text-muted cap-center min-w-0 truncate">· {done.map((t) => t.title).join(', ')}</span>
+			<span class="text-muted cap-center min-w-0 truncate">- {done.map((t) => t.title).join(', ')}</span>
 		</button>
 		{#if expanded}
 			{#each done as tool (tool.id)}<AgentStepRow {tool} labels={props.labels} />{/each}

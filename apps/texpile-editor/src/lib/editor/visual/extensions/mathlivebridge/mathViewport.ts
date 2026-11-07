@@ -1,5 +1,6 @@
-// One shared IntersectionObserver that turns math placeholders into live MathfieldElements as they
-// approach the viewport.
+// One shared IntersectionObserver that turns the plain-text stand-ins of code blocks and inline LaTeX
+// chips into live CodeMirror views as they approach the viewport. Math goes live on hover instead,
+// because its stand-in is already mathlive's own render.
 //
 // Why visibility and not focus: an earlier attempt at this upgraded inline latex chips on focus,
 // which meant anything you could actually see was still in its cheap unupgraded form. Keying off

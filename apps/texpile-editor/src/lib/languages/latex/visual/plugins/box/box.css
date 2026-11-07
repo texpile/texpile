@@ -1,0 +1,7 @@
+.ProseMirror .drawn-rotated {
+	display: inline-block;
+	writing-mode: vertical-rl;
+}
+.ProseMirror .drawn-rotated[data-turn='ccw'] {
+	transform: rotate(180deg);
+}

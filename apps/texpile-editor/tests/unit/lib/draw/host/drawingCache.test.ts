@@ -5,6 +5,7 @@ const disk = new Map<string, string>();
 vi.mock('$lib/files/service/fileService', () => ({
 	fileService: {
 		exists: async (p: string) => disk.has(p),
+		stat: async (p: string) => ({ exists: disk.has(p), mtimeMs: 1 }),
 		readText: async (p: string) => disk.get(p) ?? '',
 		writeText: async (p: string, t: string) => void disk.set(p, t),
 		remove: async (p: string) => void disk.delete(p)

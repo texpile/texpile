@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { insertHorizontalRule } from '$lib/editor/visual/insert/insertRun';
 	// The typst editor's own toolbar, over typSchema only — no LaTeX vocabulary, no tex schema
 	// imports. The SHELL deliberately mirrors the tex and md toolbars (same search + undo/redo
 	// groups, same ToolbarOverflow gaps, same button metrics); the item set is what typSchema can
@@ -10,7 +11,7 @@
 	import { createWrapInListCommand } from 'prosemirror-flat-list';
 	import type { EditorState, Transaction } from 'prosemirror-state';
 	import { typSchema } from '../schema';
-	import TypstHeadingDropdown from './TypstHeadingDropdown.svelte';
+	import StyleList from '$lib/editor/visual/insert/StyleList.svelte';
 	import TypstToolbarTable from './TypstToolbarTable.svelte';
 	import SupSubDropdown from '$lib/editor/visual/toolbar/SupSubDropdown.svelte';
 	import TextColorDropdown from '$lib/editor/visual/toolbar/TextColorDropdown.svelte';
@@ -20,7 +21,7 @@
 	import MathToolbar, { mathToolbarState } from '$lib/editor/visual/toolbar/MathToolbar.svelte';
 	import MathDropdown from '$lib/editor/visual/toolbar/MathDropdown.svelte';
 	import ToolbarOverflow from '$lib/editor/visual/toolbar/ToolbarOverflow.svelte';
-	import { setHeadingLevel, toggleBlockQuote } from '$lib/editor/visual/helperCommands';
+	import { toggleBlockQuote } from '$lib/editor/visual/helperCommands';
 	import { createCodeBlock } from '$lib/editor/visual/extensions/codemirrorbridge/cmcommands';
 	import { onMount } from 'svelte';
 	import { m } from '$lib/paraglide/messages';
@@ -66,7 +67,6 @@
 	let active = $state<{ strong?: boolean; em?: boolean; code?: boolean; link?: boolean; u?: boolean; sup?: boolean; sub?: boolean }>({});
 	let activeTextColor = $state<string | null>(null);
 	let activeHighlightColor = $state<string | null>(null);
-	let headingLevel = $state(0);
 	$effect(() => {
 		if (!editorViewStore.current) return;
 		const st = editorViewStore.current.state;
@@ -81,23 +81,10 @@
 		};
 		activeTextColor = activeMarkColor(st, typSchema.marks.textcolor);
 		activeHighlightColor = activeMarkColor(st, typSchema.marks.highlight);
-		const node = st.selection.$from.node(st.selection.$from.depth);
-		headingLevel = node?.type?.name === 'heading' ? Number(node.attrs.level) : 0;
 	});
-
-	function applyHeading(level: number) {
-		if (!editorViewStore.current) return;
-		setHeadingLevel(level)(editorViewStore.current.state, editorViewStore.current.dispatch);
-		editorViewStore.current.focus();
-	}
 
 	const bulletList = createWrapInListCommand({ kind: 'bullet' });
 	const orderedList = createWrapInListCommand({ kind: 'ordered' });
-
-	function insertHr(state: EditorState, dispatch?: (tr: Transaction) => void): boolean {
-		dispatch?.(state.tr.replaceSelectionWith(typSchema.nodes.horizontal_rule.create()).scrollIntoView());
-		return true;
-	}
 </script>
 
 {#snippet iconButton(label: string, isActive: boolean, cmd: Cmd, IconComp: typeof Bold, iconClass = 'h-5 w-5')}
@@ -117,7 +104,7 @@
 			{:else}
 				{#snippet tb_heading()}
 					<div class="flex">
-						<TypstHeadingDropdown level={headingLevel} onSelect={applyHeading} />
+						<StyleList />
 					</div>
 				{/snippet}
 				{#snippet tb_bold()}
@@ -187,7 +174,7 @@
 					{@render iconButton(m.blockmenu_code_block(), false, createCodeBlock(), Code)}
 				{/snippet}
 				{#snippet tb_hr()}
-					{@render iconButton(m.mdtoolbar_hr(), false, insertHr, Minus)}
+					{@render iconButton(m.mdtoolbar_hr(), false, insertHorizontalRule, Minus)}
 				{/snippet}
 				{#snippet tb_selectblock()}
 					{@render iconButton(m.toolbar_select_block_aria(), false, selectParentNode, BoxSelect)}

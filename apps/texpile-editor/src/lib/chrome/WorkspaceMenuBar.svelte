@@ -18,12 +18,15 @@
 	import { titleBarLayout } from '$lib/chrome/titleBarLayout.svelte';
 	import { whatsNewOpen } from '$lib/whatsNew';
 	import { triggerClass, menuContentClass } from '$lib/menus/menuStyles';
-	import { makeInsertHandlers } from './menubar/menuBarInsert';
+	import { makeInsertHandlers } from './menubar/insert/menuBarInsert';
 	import { checkUpdates } from './menubar/menuBarUpdates';
 	import FileMenu from './menubar/FileMenu.svelte';
 	import EditMenu from './menubar/EditMenu.svelte';
 	import ViewMenu from './menubar/ViewMenu.svelte';
-	import InsertMenu from './menubar/InsertMenu.svelte';
+	import InsertMenu from './menubar/insert/InsertMenu.svelte';
+	import { nativeInsertParts } from './menubar/insert/insertListSelect';
+	import { GRAPHICX, ensurePackage } from './menubar/insert/packageOnInsert';
+	import { insertItems } from '$lib/editor/visual/insert/insertItems.svelte';
 	import FormatMenu from './menubar/FormatMenu.svelte';
 	import SpellingMenu from './menubar/SpellingMenu.svelte';
 	import { folderLanguageItems } from '$lib/editor/spellcheck/languages/folderLanguageMenu';
@@ -256,6 +259,7 @@
 			typstProject,
 			canExportTypst: typstExport.available,
 			canInsertImage: !!imageDir,
+			insertParts: nativeInsertParts(insertItems.current),
 			canOpenFolder: !!onOpenFolder,
 			canSaveTemplate: !!onSaveAsTemplate,
 			canClone: !!onCloneRepository,
@@ -364,7 +368,7 @@
 {/snippet}
 
 <!-- outside the nav so it survives on macOS, where the nav is not rendered at all -->
-<ImagePickerInput bind:this={imagePicker} {imageDir} />
+<ImagePickerInput bind:this={imagePicker} {imageDir} onInserted={() => dialect === 'tex' && ensurePackage(GRAPHICX)} />
 
 <!-- Preferences, the dictionary and the shortcut sheet are mounted by WindowDialogs, not here:
      a guest session renders no menu bar, and they are window features rather than menu features.

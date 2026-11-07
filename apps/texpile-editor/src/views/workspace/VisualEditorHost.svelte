@@ -2,6 +2,7 @@
 	// One of three ProseMirrors, by dialect - each an entirely separate editor over its own
 	// schema (see lib/languages/*) - plus the preamble frontmatter and the mounting shimmer.
 	import type { Node as PMNode } from 'prosemirror-model';
+	import type { PreambleSpan } from '$lib/languages/latex/visual/core/title/preambleFields';
 	import PreambleFrontmatter from '$lib/editor/visual/PreambleFrontmatter.svelte';
 	import VisualLoading from '$lib/editor/visual/VisualLoading.svelte';
 	import LatexEditorView from '$lib/languages/latex/visual/LatexEditorView.svelte';
@@ -17,6 +18,10 @@
 	import { dirname } from '$lib/workspace/fileSystem';
 	import { caretFromMargin } from '$lib/editor/visual/marginClick';
 	import { showInOutputAt } from '$lib/editor/visual/contextMenu/showInOutput';
+	import { documentTable } from '$lib/languages/latex/visual/core/title/documentTable.svelte';
+	import { followTypstImports } from '$lib/languages/typst/visual/core/scope/fileScopeNow.svelte';
+	import { typstPackageCache, typstProjectOf } from '$lib/languages/typst/visual/core/scope/typstProject';
+	import { mainFile, workspaceRoot } from '$lib/workspace/workspaceStore';
 	import { editorViewStore } from '$lib/stores/editorStore';
 	import { m } from '$lib/paraglide/messages';
 	import { spellingFor } from '$lib/editor/spellcheck/languages/spellingLanguage.svelte';
@@ -52,7 +57,7 @@
 		kind: FileKind;
 		loadedPath: string;
 		visualDoc: PMNode;
-		docMeta: Pick<ParsedLatexFile, 'preamble' | 'postamble' | 'hadDocumentEnv'> | null;
+		docMeta: Pick<ParsedLatexFile, 'preamble' | 'postamble' | 'hadDocumentEnv' | 'table'> | null;
 		texSource: string;
 		allReferences: BiblatexReference[];
 		showRenderBar: boolean;
@@ -60,7 +65,7 @@
 		onVisualSelection?: () => void;
 		onVisualReady: () => void;
 		onMdLink: (href: string) => boolean;
-		onEditFrontmatter: (kind: string, inner: string) => void;
+		onEditFrontmatter: (span: PreambleSpan, inner: string) => void;
 		/** the open file's threads as ranges of texSource, placed here through the map */
 		commentRanges: CommentRange[];
 		sourceMap: SourceMap;
@@ -80,6 +85,13 @@
 		/** false in a parked editor group */
 		live?: boolean;
 	} = $props();
+
+	$effect.pre(() => {
+		const table = docMeta?.table;
+		if (live !== false && kind === 'tex' && table && documentTable.current !== table) documentTable.current = table;
+		if (live !== false && kind === 'typ')
+			followTypstImports(texSource, typstPackageCache, typstProjectOf(workspaceRoot.current, loadedPath, mainFile.current));
+	});
 
 	// the stretch of texSource the document is
 	const bodyRange = $derived(
@@ -115,7 +127,7 @@
 	<div class="texpile-main-editor mx-auto w-full max-w-3xl min-w-0">
 		{#if docMeta?.hadDocumentEnv && kind === 'tex'}
 			<!-- \title/\author fields are LaTeX; md frontmatter is YAML, edited in source mode -->
-			<PreambleFrontmatter preamble={docMeta.preamble} onEdit={onEditFrontmatter} />
+			<PreambleFrontmatter preamble={docMeta.preamble} table={docMeta.table} onEdit={onEditFrontmatter} />
 		{/if}
 		{#if showRenderBar}
 			<!-- no height of its own, so it hangs over the top of the editor root rather than moving it: that

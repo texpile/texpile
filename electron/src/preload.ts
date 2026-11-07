@@ -417,6 +417,7 @@ contextBridge.exposeInMainWorld('texpileTypst', {
 	distros: () => ipcRenderer.invoke('toolchain:distros'),
 	/** a .bib from the TeX installation by bare name, as text; null when it has none */
 	texBib: (name: string) => ipcRenderer.invoke('toolchain:texBib', name),
+	packageFiles: (spec: string) => ipcRenderer.invoke('typst:packageFiles', spec),
 	/** a tool folder as absolute, relative (portable app, same drive) and real path, plus whether it exists */
 	dirForms: (entry: string) => ipcRenderer.invoke('toolchain:dirForms', entry),
 	/** Texpile's own copy of tinymist: the pinned release, whether this machine has a build, what is installed */

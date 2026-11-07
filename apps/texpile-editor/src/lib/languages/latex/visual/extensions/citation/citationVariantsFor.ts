@@ -1,6 +1,7 @@
 import { loadsClass } from '$lib/languages/latex/intellisense/packages/loaderCommands';
 import type { LoadedFile } from '$lib/languages/latex/knowledge/loadedFiles';
 import { stackedCommands } from '$lib/languages/latex/knowledge/stackedEntries';
+import { citationCommands } from '$lib/languages/latex/knowledge/calls/citeCommands';
 
 const SHAPES = ['plain', 'paren', 'text'];
 
@@ -21,7 +22,7 @@ const SHAPES = ['plain', 'paren', 'text'];
 export function citationVariantsFor(preamble: string, loaded: LoadedFile[]): string[] | undefined {
 	if (!loadsClass(preamble)) return undefined;
 	const order = new Map(loaded.map((file, i) => [file.id, i]));
-	const cites = [...stackedCommands(loaded).values()].filter((c) => c.cite && c.offered);
+	const cites = [...stackedCommands(loaded).values()].filter((c) => c.cite && c.offered && citationCommands().has(c.name));
 	return SHAPES.flatMap((shape) => {
 		const ofShape = cites.filter((c) => c.cite === shape);
 		// the file loaded last decides, as its definition is the one in force

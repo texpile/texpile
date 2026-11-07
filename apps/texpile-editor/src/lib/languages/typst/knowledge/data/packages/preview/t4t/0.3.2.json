@@ -1,0 +1,1 @@
+{"version":1,"id":"@preview/t4t:0.3.2","names":{"is":{"kind":"module"},"def":{"kind":"module"},"assert":{"kind":"module"},"alias":{"kind":"module"},"get":{"kind":"module"},"math":{"kind":"module"},"is-none":{"kind":"function","params":[{"name":"values","variadic":true}],"block":false},"is-auto":{"kind":"function","params":[{"name":"values","variadic":true}],"block":false}}}

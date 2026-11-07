@@ -9,38 +9,48 @@ import { parseCarryPlugin } from '$lib/editor/visual/parseCarry';
 import { labelRenameUndo } from '$lib/editor/visual/repointRefs';
 import { createSuggestPlugin } from '$lib/editor/visual/extensions/suggest/suggestPlugin';
 import { selectAllScoped } from '$lib/editor/visual/selectAllScoped';
-import { extendToDocEnd, extendToDocStart, selectDocEnd, selectDocStart } from '$lib/editor/visual/selectDocBoundary';
+import {
+	extendToDocEnd,
+	extendToDocStart,
+	holdAtDocEnd,
+	holdAtDocStart,
+	selectDocEnd,
+	selectDocStart
+} from '$lib/editor/visual/selectDocBoundary';
 import { TypstBibliographyView, isTypstBibliography } from './extensions/typstBibliographyView.svelte';
 import { keymap } from 'prosemirror-keymap';
 import { baseKeymap, toggleMark } from 'prosemirror-commands';
 import { history } from 'prosemirror-history';
 import { undoVisual, redoVisual } from '$lib/editor/visual/visualUndo';
-import { gapCursor } from 'prosemirror-gapcursor';
+import { gapCursorWithArrows } from '$lib/editor/visual/gapArrows';
 import { dropCursor } from 'prosemirror-dropcursor';
 import { tableEditing, goToNextCell } from 'prosemirror-tables';
 import { wholeTableEdits } from '$lib/editor/visual/extensions/table/wholeTableEdits';
-import { typstHeaderRows } from './extensions/typstHeaderRows';
+import { tableArrowEntry } from '$lib/editor/visual/extensions/table/tableArrowEntry';
 import { crossBlockEdits } from '$lib/editor/visual/extensions/crossBlockEdits';
 import { columnResizing } from '$lib/editor/visual/extensions/table/columnResizing';
 import { snapWidthToFr } from '$lib/editor/visual/extensions/table/snapWidth';
 import { captureColumnWidths } from '$lib/editor/visual/extensions/table/captureColumnWidths';
 import {
-	createListPlugins,
+	createListEventPlugin,
+	createListRenderingPlugin,
+	createSafariInputMethodWorkaroundPlugin,
 	listKeymap,
-	createIndentListCommand,
 	createDedentListCommand,
 	wrappingListInputRule,
 	type ListAttributes
 } from 'prosemirror-flat-list';
+import { indentListItem } from '$lib/editor/visual/extensions/listIndent/listIndent';
 import { inputRules, textblockTypeInputRule, InputRule, undoInputRule, smartQuotes, ellipsis } from 'prosemirror-inputrules';
 import { selectFigureBackward, selectFigureForward } from '$lib/editor/visual/figureDeleteGuard';
 import { deleteEmptyBlockForward, deleteEmptyFirstBlock } from '$lib/editor/visual/emptyBlockDelete';
+import { liftFromStyleEnvironment } from '$lib/editor/visual/liftFromStyleEnvironment';
 import { emDashRule, enDashRule, emDashUpgradeRule } from '$lib/editor/visual/extensions/inputrules/dashRules';
 import { visualFindPlugin } from '$lib/editor/visual/find/visualFindPlugin';
 import { typSchema } from './schema';
-import { TypstRefView } from './extensions/ref/typstRefView.svelte';
-import { typstEnvView } from './extensions/env/typstEnvView.svelte';
-import { TYP_BLOCK_INSERT_ITEMS } from './blockInsertItems';
+import { typstDrawnEnvView } from './extensions/layout/typstEnvViews';
+import { TypstLayoutView } from './extensions/layout/typstLayoutView.svelte';
+import { pluginEditorPlugins, pluginNodeViews } from './core/plugin/editorPieces';
 import { hasTypstMarkup } from './pasteMarkup';
 import { isMac } from '$lib/platform';
 import { splitBlockWithoutDuplicates, toggleHeading } from '$lib/editor/visual/helperCommands';
@@ -61,6 +71,7 @@ import { tablePlaceholderPlugin } from '$lib/editor/visual/extensions/table/tabl
 import { createWordCountPlugin } from '$lib/editor/visual/extensions/wordcount/wordCountPlugin';
 import { typstProse } from '$lib/workspace/wordCount/proseWords';
 import { createTocPlugin } from '$lib/editor/visual/extensions/tableofcontents/tocPlugin';
+import { listNumbersPlugin } from '$lib/editor/visual/extensions/listNumbers/listNumbers';
 import { createPersistentSelectionPlugin } from '$lib/editor/visual/extensions/persistentSelection/persistentSelectionPlugin';
 import { proofreadPlugin, spellClickBoundaryPlugin, spellProblemKeymap } from '$lib/editor/spellcheck/spellcheckplugin';
 import type { SpellLanguage } from '$lib/editor/spellcheck/languages/spellLanguages';
@@ -72,8 +83,6 @@ import { wholeBlockDragPlugin } from '$lib/editor/visual/extensions/wholeBlockDr
 import { dropPastNodeViewsPlugin } from '$lib/editor/visual/extensions/dropPastNodeViews';
 import { createNodeFlashPlugin } from '$lib/editor/visual/extensions/flash-plugin';
 import { remoteCursorsPlugin } from '$lib/editor/visual/extensions/remoteCursors';
-import { CodeBlockView } from '$lib/editor/visual/extensions/codemirrorbridge/cmview.svelte';
-import { typstTableWrapperView } from '$lib/editor/visual/extensions/table/tableWrapperView.svelte';
 import { drawnOrSource } from '$lib/editor/visual/extensions/drawnChips/DrawnChipView';
 import { FigureCardView, isFigureBlock } from '$lib/draw/host/card/FigureCardView.svelte';
 import { cetzLanguage } from '$lib/draw/cetz/cetzLanguage';
@@ -81,7 +90,7 @@ import { drawnChipAtomsPlugin } from '$lib/editor/visual/extensions/drawnChips/d
 import { shiftArrowsPlugin } from '$lib/editor/visual/extensions/shiftArrows/shiftArrowsPlugin';
 import { typstChipKind } from './extensions/typstChipKind';
 import { footnoteNumbersPlugin } from '$lib/editor/visual/extensions/drawnChips/footnoteNumbers';
-import { typstFootnoteMarks } from './extensions/drawn/footnoteCall';
+import { typstChipCounts } from './core/plugin/chipCounts';
 import { IncludeDocView } from '$lib/editor/visual/extensions/includedoc/includeDocView.svelte';
 import { pmComments } from '$lib/editor/visual/extensions/pmComments';
 import type { CommentAnchor } from '$lib/comments/anchor';
@@ -175,8 +184,9 @@ export function typstEditorPlugins(setup: TypstEditorSetup): Plugin[] {
 	return [
 		parseCarryPlugin,
 		labelRenameUndo,
+		...pluginEditorPlugins('atStart'),
 		typstCopyPlugin,
-		gapCursor(),
+		gapCursorWithArrows(),
 		dropCursor({ color: 'var(--color-primary-500)', width: 2, class: 'pm-drop-cursor' }),
 		// Typst is the one dialect where a drag can be saved: `columns:` takes real lengths and
 		// fr. The drag snaps to that same grid (vendored columnResizing + snapWidthToFr);
@@ -185,12 +195,16 @@ export function typstEditorPlugins(setup: TypstEditorSetup): Plugin[] {
 		columnResizing({ snap: snapWidthToFr, redistribute: true }),
 		captureColumnWidths,
 		tableEditing(),
-		typstHeaderRows,
+		...pluginEditorPlugins('afterTableEditing'),
 		wholeTableEdits,
+		tableArrowEntry,
 		crossBlockEdits,
 		visualSmartPaste('typst', typSchema, pasteTypstSource),
 		pasteTypstPlugin,
-		...createListPlugins({ schema: typSchema }),
+		// flat-list's clipboard plugin is left out: Texpile's own copy (visualSmartPaste) writes lists as it did
+		createListEventPlugin(),
+		createListRenderingPlugin(),
+		createSafariInputMethodWorkaroundPlugin(),
 		history(),
 		// the @ reference/citation popup; its arrow/enter keymap must precede the others.
 		// The picker inserts typ_ref atoms (it keys off the mounted schema)
@@ -198,6 +212,7 @@ export function typstEditorPlugins(setup: TypstEditorSetup): Plugin[] {
 		drawnChipAtomsPlugin(),
 		shiftArrowsPlugin(),
 		// before the list keymap, whose Backspace and Delete act at a block edge: they would join the block after an empty one into it, and a block into a figure
+		keymap({ Backspace: liftFromStyleEnvironment }),
 		keymap({ Backspace: deleteEmptyFirstBlock, Delete: deleteEmptyBlockForward }),
 		keymap({ Backspace: selectFigureBackward, Delete: selectFigureForward }),
 		keymap(listKeymap),
@@ -209,6 +224,10 @@ export function typstEditorPlugins(setup: TypstEditorSetup): Plugin[] {
 			Backspace: undoInputRule,
 			'Mod-a': selectAllScoped,
 			'Mod-Home': selectDocStart,
+			ArrowUp: holdAtDocStart,
+			ArrowLeft: holdAtDocStart,
+			ArrowDown: holdAtDocEnd,
+			ArrowRight: holdAtDocEnd,
 			'Mod-End': selectDocEnd,
 			'Shift-Mod-Home': extendToDocStart,
 			'Shift-Mod-End': extendToDocEnd,
@@ -227,7 +246,7 @@ export function typstEditorPlugins(setup: TypstEditorSetup): Plugin[] {
 			...Object.fromEntries([1, 2, 3, 4, 5, 6].map((n) => [`Mod-Alt-${n}`, toggleHeading(n)])),
 			...(isMac ? {} : { 'Mod-Shift-1': toggleHeading(1), 'Mod-Shift-2': toggleHeading(2), 'Mod-Shift-3': toggleHeading(3) }),
 			// table cell first, then list indent; always consume so focus stays in the editor
-			Tab: (state, dispatch) => goToNextCell(1)(state, dispatch) || createIndentListCommand()(state, dispatch) || true,
+			Tab: (state, dispatch) => goToNextCell(1)(state, dispatch) || indentListItem()(state, dispatch) || true,
 			'Shift-Tab': (state, dispatch) => goToNextCell(-1)(state, dispatch) || createDedentListCommand()(state, dispatch) || true
 		}),
 		cmarrowHandlers,
@@ -245,6 +264,7 @@ export function typstEditorPlugins(setup: TypstEditorSetup): Plugin[] {
 		tablePlaceholderPlugin(),
 		createWordCountPlugin(typstProse),
 		createTocPlugin(),
+		listNumbersPlugin(),
 		createPersistentSelectionPlugin(),
 		spellClickBoundaryPlugin, // must precede proofreadPlugin; see its comment
 		proofreadPlugin(spellLanguage),
@@ -253,10 +273,10 @@ export function typstEditorPlugins(setup: TypstEditorSetup): Plugin[] {
 		wordSelectionTrim(),
 		dragSelectionPlugin(),
 		// the Notion-style + / drag / delete gutter, with the typst insert set
-		createBlockHandlePlugin({ items: TYP_BLOCK_INSERT_ITEMS }),
+		createBlockHandlePlugin(),
 		wholeBlockDragPlugin(),
 		dropPastNodeViewsPlugin(),
-		footnoteNumbersPlugin(typstFootnoteMarks),
+		footnoteNumbersPlugin(typstChipCounts),
 		createNodeFlashPlugin(),
 		// collaborators' carets; VisualCollab feeds it, and is inert outside a shared session
 		remoteCursorsPlugin,
@@ -271,7 +291,6 @@ export function typstEditorPlugins(setup: TypstEditorSetup): Plugin[] {
 
 export function typstNodeViews(docDir: () => string): NonNullable<EditorProps['nodeViews']> {
 	return {
-		code_block: (node, view, getPos) => new CodeBlockView(node, view, getPos as () => number),
 		// typst raw islands are the safety valve for everything unmodeled: plain CM views
 		// (highlighting picked by attrs.lang), never a latex-specialized node view. The dressed-up
 		// ones keep their text verbatim: #bibliography as a card, a comment folded to a line
@@ -283,10 +302,11 @@ export function typstNodeViews(docDir: () => string): NonNullable<EditorProps['n
 					: drawnOrSource(node, view, getPos as () => number, decorations, typstChipKind(true)),
 		inline_latex: (node, view, getPos, decorations) => drawnOrSource(node, view, getPos as () => number, decorations, typstChipKind(false)),
 		includedoc: (node, view, getPos) => new IncludeDocView(node, view, getPos as () => number, docDir),
-		// the shared table wrapper chrome (Table N header, gear with label + verbatim columns)
-		// in typst mode: every LaTeX-only control is gated off inside
-		table_wrapper: (node, view, getPos) => typstTableWrapperView(node, view, getPos as () => number),
-		typ_ref: (node, view, getPos) => new TypstRefView(node, view, getPos),
-		typ_env: (node, view, getPos) => typstEnvView(node, view, getPos)
+		typ_env: (node, view, getPos) => typstDrawnEnvView(node, view, getPos),
+		...pluginNodeViews({
+			docDir,
+			parse: (source) => typstToProseMirror(source).doc,
+			layout: (node, view, getPos) => new TypstLayoutView(node, view, getPos)
+		})
 	};
 }

@@ -2,7 +2,7 @@
 // clear converts on its own: a spreadsheet range becomes a table, and a URL pasted over selected
 // words becomes a link. Formatting from a web page or a document is offered, never applied, and so is
 // a table for tab-separated text with no HTML, which is as often a data file's columns as a spreadsheet.
-import { typStr } from '$lib/languages/typst/visual/serialize/typstInline';
+import { typStr } from '$lib/languages/typst/visual/serialize/typstEscapes';
 import type { PasteDialect } from '$lib/editor/paste/pastedImages';
 
 export type SourceClipboard = { html: string; text: string };

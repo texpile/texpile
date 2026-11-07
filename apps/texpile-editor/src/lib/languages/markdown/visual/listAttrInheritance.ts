@@ -3,7 +3,7 @@
 // write it as a new list under the default marker
 import { Plugin } from 'prosemirror-state';
 import type { Node } from 'prosemirror-model';
-import { listFamily } from './listAttrs';
+import { listFamily } from './serialize/listAttrs';
 
 function donorFor(parent: Node, index: number, node: Node): Node | null {
 	const kind = String(node.attrs.kind ?? 'bullet');

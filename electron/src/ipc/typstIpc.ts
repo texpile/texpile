@@ -3,6 +3,7 @@
 // rooted at one workspace. Keyed by webContents id so closing one window can't kill another's.
 import { app, ipcMain, webContents } from 'electron';
 import * as typstService from '../typstService';
+import { readTypstPackage } from '../typstPackages';
 
 /** each window's server, and the tinymist it was started from */
 const typstLsps = new Map<number, { handle: typstService.LspHandle; command: string }>();
@@ -34,6 +35,7 @@ export async function whileTypstLspsStopped<T>(command: string, change: () => Pr
 
 export function registerTypstIpc(): void {
 	ipcMain.handle('typst:resolve', () => typstService.resolveTinymist(app.getPath('userData')));
+	ipcMain.handle('typst:packageFiles', (_e, spec: unknown) => (typeof spec === 'string' ? readTypstPackage(spec) : null));
 
 	ipcMain.handle('typst:lsp:start', async (e, root: string | null) => {
 		const wcId = e.sender.id;

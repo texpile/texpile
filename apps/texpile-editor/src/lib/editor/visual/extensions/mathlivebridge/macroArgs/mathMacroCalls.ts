@@ -1,7 +1,7 @@
 // a document's own macros in a formula open like text chips do
 import { tip } from '$lib/components/tooltip.svelte';
-import { ownMacroDefinition } from '$lib/languages/latex/visual/extensions/drawn/ownMacro/ownMacroFace.svelte';
-import { readOwnMacroCall } from '$lib/languages/latex/visual/extensions/drawn/ownMacro/ownMacroCall';
+import { ownMacroDefinition } from '$lib/languages/latex/visual/core/own/ownMacroFace.svelte';
+import { readOwnMacroCall } from '$lib/languages/latex/visual/core/own/ownMacroCall';
 import { macroCallIn, macroCalls, macroCommand, macroRange, markSelectedCall, selectInField, selectedCall } from './macroCallElements';
 import type { MathfieldElement } from 'mathlive';
 import { openMathMacroPanel, type MathMacroHost } from './mathMacroPanel';

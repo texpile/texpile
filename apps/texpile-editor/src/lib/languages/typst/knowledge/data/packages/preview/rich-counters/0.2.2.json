@@ -1,0 +1,1 @@
+{"version":1,"id":"@preview/rich-counters:0.2.2","names":{"rich-counter":{"kind":"function","params":[{"name":"identifier","named":true,"default":"none"},{"name":"inherited_levels","named":true,"default":"0"},{"name":"inherited_from","named":true,"default":"heading"}],"block":true}}}

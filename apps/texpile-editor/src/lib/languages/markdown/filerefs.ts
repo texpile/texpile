@@ -5,7 +5,7 @@
 //
 // Covers inline links and images ([x](p), ![x](p)) and reference definitions ([id]: p). An
 // <img src> written as raw HTML is left alone: the tree hands it over as one opaque HTMLBlock.
-import { markdownLanguage } from '@codemirror/lang-markdown';
+import { markdownParser } from './syntax/markdownSyntax';
 import type { FileRef } from '$lib/workspace/fileRefs';
 
 /** `<dest>` is the escape hatch for destinations with spaces; the brackets are syntax, not path */
@@ -18,7 +18,7 @@ function unangle(raw: string): { text: string; angled: boolean } {
 /** Every link/image destination in `src`, with the span that holds the path itself. */
 export function collectMarkdownFileRefs(src: string): FileRef[] {
 	const out: FileRef[] = [];
-	markdownLanguage.parser
+	markdownParser
 		.parse(src)
 		.cursor()
 		.iterate((n) => {

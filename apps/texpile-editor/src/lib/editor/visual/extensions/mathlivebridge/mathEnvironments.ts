@@ -2,7 +2,7 @@
 // block_math node's attrs follow the latex source as it is edited.
 import type { Node, Attrs } from 'prosemirror-model';
 import { generateLabel } from '$lib/editor/visual/label';
-import { splitRows } from '$lib/languages/latex/serializer/mathBlocks';
+import { splitRows } from '$lib/languages/latex/serializer/mathRows';
 import { commonEnvFacts, commonEnvNames, envNameAlternation } from '$lib/languages/latex/knowledge/environments/envFacts';
 
 const MULTILINE_ENVIRONMENTS = commonEnvNames((f) => f.body === 'math-display' && f.rows === true).filter(
@@ -132,6 +132,10 @@ export function computeMathAttrs(latex: string): { environment: string | null; n
 		numbered: isNumbered,
 		lineLabels
 	};
+}
+
+export function numberedEquationAttrs(): { numbered: true; label: string } {
+	return { numbered: true, label: generateLabel('equation') };
 }
 
 /** re-detects the multiline env after an edit and syncs environment/numbered/lineLabels attrs. */

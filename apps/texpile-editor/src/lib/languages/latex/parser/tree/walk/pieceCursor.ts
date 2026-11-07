@@ -87,3 +87,7 @@ export class PieceCursor {
 		return { ...piece, to: piece.from + 1 };
 	}
 }
+
+export function isNamed(p: Piece | null, name: string): boolean {
+	return !!p && p.kind === 'node' && p.node.name === name;
+}

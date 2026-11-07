@@ -1,5 +1,6 @@
 // plugin stack and node-view wiring for the LaTeX visual editor; LatexEditorView.svelte mounts it
-import { FigureCardView, isFigureBlock } from '$lib/draw/host/card/FigureCardView.svelte';
+import { FigureCardView } from '$lib/draw/host/card/FigureCardView.svelte';
+import { blockChipView, inlineChipView } from '$lib/languages/latex/visual/extensions/chipViewKind';
 import { tikzLanguage } from '$lib/draw/tikz/tikzLanguage';
 import type { Plugin } from 'prosemirror-state';
 import { EditorState, type Transaction } from 'prosemirror-state';
@@ -12,8 +13,15 @@ import { history } from 'prosemirror-history';
 import { undoVisual, redoVisual } from '$lib/editor/visual/visualUndo';
 import { toggleBlockQuote, toggleHeading, cycleParagraphIndent, splitBlockWithoutDuplicates } from '$lib/editor/visual/helperCommands';
 import { selectAllScoped } from '$lib/editor/visual/selectAllScoped';
-import { extendToDocEnd, extendToDocStart, selectDocEnd, selectDocStart } from '$lib/editor/visual/selectDocBoundary';
-import { gapCursor } from 'prosemirror-gapcursor';
+import {
+	extendToDocEnd,
+	extendToDocStart,
+	holdAtDocEnd,
+	holdAtDocStart,
+	selectDocEnd,
+	selectDocStart
+} from '$lib/editor/visual/selectDocBoundary';
+import { gapCursorWithArrows } from '$lib/editor/visual/gapArrows';
 import { createMathField } from '$lib/editor/visual/extensions/mathlivebridge/mlcommands';
 import { createCodeBlock } from '$lib/editor/visual/extensions/codemirrorbridge/cmcommands';
 import { cmarrowHandlers } from '$lib/editor/visual/extensions/codemirrorbridge/cmarrowhandler';
@@ -22,6 +30,7 @@ import { dropCursor } from 'prosemirror-dropcursor';
 import { tableEditing, goToNextCell } from 'prosemirror-tables';
 import { tableViewOnly } from '$lib/editor/visual/extensions/table/tableViewOnly';
 import { wholeTableEdits } from '$lib/editor/visual/extensions/table/wholeTableEdits';
+import { tableArrowEntry } from '$lib/editor/visual/extensions/table/tableArrowEntry';
 import { crossBlockEdits } from '$lib/editor/visual/extensions/crossBlockEdits';
 import { imagePlugin } from '$lib/editor/visual/extensions/image';
 import { createCursorPlugin } from '$lib/editor/visual/extensions/cursor-plugin';
@@ -30,16 +39,22 @@ import { remoteCursorsPlugin } from '$lib/editor/visual/extensions/remoteCursors
 import { pasteUuidFixPlugin } from '$lib/editor/visual/extensions/paste-uuid-fix';
 import { latexClipboardPlugin, pasteLatexText } from '$lib/editor/visual/extensions/latexClipboard';
 import { visualSmartPaste } from '$lib/editor/paste/visualSmartPaste';
-import { createListPlugins, listInputRules, listKeymap, createIndentListCommand, createDedentListCommand } from 'prosemirror-flat-list';
+import {
+	createListEventPlugin,
+	createListRenderingPlugin,
+	createSafariInputMethodWorkaroundPlugin,
+	listInputRules,
+	listKeymap,
+	createDedentListCommand
+} from 'prosemirror-flat-list';
+import { indentListItem } from '$lib/editor/visual/extensions/listIndent/listIndent';
 import { inputRules, InputRule, smartQuotes, ellipsis, undoInputRule } from 'prosemirror-inputrules';
 import { selectFigureBackward, selectFigureForward } from '$lib/editor/visual/figureDeleteGuard';
 import { deleteEmptyBlockForward, deleteEmptyFirstBlock } from '$lib/editor/visual/emptyBlockDelete';
+import { liftFromStyleEnvironment } from '$lib/editor/visual/liftFromStyleEnvironment';
 import { placeholderPlugin } from '$lib/editor/visual/extensions/placeholderplugin';
 import { tablePlaceholderPlugin } from '$lib/editor/visual/extensions/table/tablePlaceholderPlugin';
 import { visualFindPlugin } from '$lib/editor/visual/find/visualFindPlugin';
-import { CitationView } from '$lib/languages/latex/visual/extensions/citation/citationView.svelte';
-import { RefView } from '$lib/languages/latex/visual/extensions/ref/refView.svelte';
-import { LabelView } from '$lib/languages/latex/visual/extensions/label/labelView.svelte';
 import { createTocPlugin } from '$lib/editor/visual/extensions/tableofcontents/tocPlugin';
 import { createPersistentSelectionPlugin } from '$lib/editor/visual/extensions/persistentSelection/persistentSelectionPlugin';
 import { createSuggestPlugin } from '$lib/editor/visual/extensions/suggest/suggestPlugin';
@@ -50,20 +65,13 @@ import { latexCropFormat } from '$lib/editor/visual/extensions/image/crop/latexC
 import { createWordCountPlugin } from '$lib/editor/visual/extensions/wordcount/wordCountPlugin';
 import { latexProse } from '$lib/workspace/wordCount/proseWords';
 import { emDashRule, enDashRule, emDashUpgradeRule } from '$lib/editor/visual/extensions/inputrules/dashRules';
-import { tableWrapperView } from '$lib/editor/visual/extensions/table/tableWrapperView.svelte';
-import { CodeBlockView } from '$lib/editor/visual/extensions/codemirrorbridge/cmview.svelte';
-import { RawFigureView, isRawFigure } from '$lib/editor/visual/extensions/raw-latex/rawFigureView';
-import { IeeeAuthorView, isIeeeAuthorBlock } from '$lib/languages/latex/visual/extensions/template-specific/ieeeAuthorView';
-import { inlinePlaceholder, InlinePlaceholderView } from '$lib/editor/visual/extensions/raw-latex/inlinePlaceholderView';
-import {
-	FrontmatterRawView,
-	simpleFrontmatter,
-	PlaceholderRawView,
-	placeholderCommand
-} from '$lib/editor/visual/extensions/raw-latex/frontmatterView';
+import { RawFigureView } from '$lib/editor/visual/extensions/raw-latex/rawFigureView';
+import { IeeeAuthorView } from '$lib/languages/latex/visual/extensions/template-specific/ieeeAuthorView';
+import { InlinePlaceholderView } from '$lib/editor/visual/extensions/raw-latex/inlinePlaceholderView';
+import { PlaceholderRawView } from '$lib/editor/visual/extensions/raw-latex/placeholderView';
+import { placeholderCaret } from '$lib/editor/visual/extensions/raw-latex/placeholderCaret';
 import { BibliographyNodeView } from '$lib/editor/visual/extensions/bibliography/bibliographyNodeView.svelte';
 import { environmentView } from '$lib/languages/latex/visual/extensions/environment/environmentView.svelte';
-import { IncludeDocView } from '$lib/editor/visual/extensions/includedoc/includeDocView.svelte';
 import { createBoundaryClickPlugin } from '$lib/editor/visual/extensions/boundary-click-plugin';
 import { wordSelectionTrim } from '$lib/editor/visual/extensions/wordSelectionTrim';
 import { dragSelectionPlugin } from '$lib/editor/visual/extensions/dragSelection/dragSelectionPlugin';
@@ -74,15 +82,17 @@ import { createNodeFlashPlugin } from '$lib/editor/visual/extensions/flash-plugi
 import { drawnOrSource } from '$lib/editor/visual/extensions/drawnChips/DrawnChipView';
 import { drawnChipAtomsPlugin } from '$lib/editor/visual/extensions/drawnChips/drawnChipAtoms';
 import { shiftArrowsPlugin } from '$lib/editor/visual/extensions/shiftArrows/shiftArrowsPlugin';
-import { latexChipKind } from '$lib/languages/latex/visual/extensions/drawn/latexChipKind';
+import { latexChipKind } from '$lib/languages/latex/visual/extensions/latexChipKind';
 import { numbersPlugin } from './extensions/numbers/numbersPlugin';
-import { onDrawnInputs } from './extensions/drawn/drawnInputs.svelte';
+import { onDrawnInputs } from './core/drawnInputs.svelte';
+import { chipCounts } from './core/plugin/chipCounts';
+import { pluginEditorPlugins, pluginNodeViews } from './core/plugin/editorPieces';
 import { projectIntelStore } from '$lib/stores/projectIntel';
 import { numberedFilesOf } from '$lib/workspace/document/numberedFiles';
-import { latexFootnoteMarks } from '$lib/languages/latex/visual/extensions/drawn/latexFootnoteMarks';
 import { createLinkPlugin } from '$lib/editor/visual/extensions/link';
 import { pmComments } from '$lib/editor/visual/extensions/pmComments';
 import { listRuleWithoutIndent } from './listItemIndent';
+import { enterKeepingListEnvironment } from './listEnterKeepsEnvironment';
 import type { CommentAnchor } from '$lib/comments/anchor';
 import type { SourceAnchorFn } from '$lib/editor/visual/extensions/pmComments';
 import { parseCarryPlugin } from '$lib/editor/visual/parseCarry';
@@ -126,9 +136,10 @@ export function latexEditorPlugins(setup: LatexEditorSetup): Plugin[] {
 	} = setup;
 	return [
 		parseCarryPlugin,
+		...pluginEditorPlugins('atStart'),
 		macroJumpPlugin(jumpToDefinition),
 		labelRenameUndo,
-		gapCursor(),
+		gapCursorWithArrows(),
 		// drop cursor is inline-styled (not CSS-targetable) and its default black vanishes on dark
 		dropCursor({ color: 'var(--color-primary-500)', width: 2, class: 'pm-drop-cursor' }),
 		// TableView without the drag: a LaTeX column width lives in the colspec and only exists
@@ -137,15 +148,22 @@ export function latexEditorPlugins(setup: LatexEditorSetup): Plugin[] {
 		tableViewOnly,
 		tableEditing(),
 		wholeTableEdits,
+		tableArrowEntry,
 		crossBlockEdits,
-		...createListPlugins({ schema }),
+		// flat-list's clipboard plugin is left out: Texpile's own copy (visualSmartPaste) writes lists as it did
+		createListEventPlugin(),
+		createListRenderingPlugin(),
+		createSafariInputMethodWorkaroundPlugin(),
 		history(),
 		...createSuggestPlugin(),
 		drawnChipAtomsPlugin(),
+		placeholderCaret,
 		shiftArrowsPlugin(),
 		// before the list keymap, whose Backspace and Delete act at a block edge: they would join the block after an empty one into it, and a block into a figure
+		keymap({ Backspace: liftFromStyleEnvironment }),
 		keymap({ Backspace: deleteEmptyFirstBlock, Delete: deleteEmptyBlockForward }),
 		keymap({ Backspace: selectFigureBackward, Delete: selectFigureForward }),
+		keymap({ Enter: enterKeepingListEnvironment }),
 		keymap(listKeymap),
 		inputRules({
 			rules: [
@@ -164,6 +182,10 @@ export function latexEditorPlugins(setup: LatexEditorSetup): Plugin[] {
 			Backspace: undoInputRule,
 			'Mod-a': selectAllScoped,
 			'Mod-Home': selectDocStart,
+			ArrowUp: holdAtDocStart,
+			ArrowLeft: holdAtDocStart,
+			ArrowDown: holdAtDocEnd,
+			ArrowRight: holdAtDocEnd,
 			'Mod-End': selectDocEnd,
 			'Shift-Mod-Home': extendToDocStart,
 			'Shift-Mod-End': extendToDocEnd,
@@ -192,7 +214,7 @@ export function latexEditorPlugins(setup: LatexEditorSetup): Plugin[] {
 			// instead of sinking it. always consume Tab so focus stays in the editor
 			Tab: (state: EditorState, dispatch?: (tr: Transaction) => void) => {
 				if (goToNextCell(1)(state, dispatch)) return true;
-				if (createIndentListCommand()(state, dispatch)) return true;
+				if (indentListItem()(state, dispatch)) return true;
 				cycleParagraphIndent(1)(state, dispatch);
 				return true;
 			},
@@ -219,8 +241,10 @@ export function latexEditorPlugins(setup: LatexEditorSetup): Plugin[] {
 		visualFindPlugin(),
 		placeholderPlugin(placeholder),
 		tablePlaceholderPlugin(),
+		...pluginEditorPlugins('beforeWordCount'),
 		createWordCountPlugin((raw) => latexProse(raw, false)),
 		createTocPlugin(),
+		...pluginEditorPlugins('afterContents'),
 		createPersistentSelectionPlugin(),
 		spellClickBoundaryPlugin, // must precede proofreadPlugin; see its comment
 		proofreadPlugin(spellLanguage),
@@ -240,10 +264,10 @@ export function latexEditorPlugins(setup: LatexEditorSetup): Plugin[] {
 					scheme: intel.numbering,
 					standalone: isMainFile(),
 					path: filePath(),
-					files: numberedFilesOf(intel.documentFiles, intel.numbering.mathOpeners)
+					files: numberedFilesOf(intel.documentFiles, intel.numbering)
 				};
 			},
-			footnoteMarks: latexFootnoteMarks,
+			counts: chipCounts,
 			onInputs: onDrawnInputs
 		}),
 		createNodeFlashPlugin(),
@@ -264,36 +288,28 @@ export function latexNodeViews(
 	onJumpToDefinition?: (name: string) => boolean
 ): NonNullable<EditorProps['nodeViews']> {
 	return {
-		code_block: (node, view, getPos) => new CodeBlockView(node, view, getPos as () => number),
-		raw_latex: (node, view, getPos, decorations) =>
-			simpleFrontmatter(node.textContent)
-				? new FrontmatterRawView(node, view, getPos as () => number)
-				: placeholderCommand(node.textContent)?.command === 'printbibliography'
-					? new BibliographyNodeView(node, view, getPos as () => number)
-					: placeholderCommand(node.textContent)
-						? new PlaceholderRawView(node, view, getPos as () => number)
-						: isIeeeAuthorBlock(node.textContent)
-							? new IeeeAuthorView(node, view, getPos as () => number)
-							: isFigureBlock(tikzLanguage, node.textContent)
-								? new FigureCardView(node, view, getPos as () => number, tikzLanguage, m.figure_card_tikz())
-								: isRawFigure(node.textContent)
-									? new RawFigureView(node, view, getPos as () => number, imageDir)
-									: drawnOrSource(
-											node,
-											view,
-											getPos as () => number,
-											decorations,
-											latexChipKind(view, true, onJumpToLabel, onJumpToDefinition)
-										),
+		raw_latex: (node, view, getPos, decorations) => {
+			const at = getPos as () => number;
+			switch (blockChipView(node.textContent)) {
+				case 'bibliography':
+					return new BibliographyNodeView(node, view, at);
+				case 'placeholder':
+					return new PlaceholderRawView(node, view, at);
+				case 'ieee-author':
+					return new IeeeAuthorView(node, view, at);
+				case 'figure-card':
+					return new FigureCardView(node, view, at, tikzLanguage, m.figure_card_tikz(), true);
+				case 'raw-figure':
+					return new RawFigureView(node, view, at, imageDir);
+				default:
+					return drawnOrSource(node, view, at, decorations, latexChipKind(view, true, onJumpToLabel, onJumpToDefinition));
+			}
+		},
 		inline_latex: (node, view, getPos, decorations) =>
-			inlinePlaceholder(node.textContent)
+			inlineChipView(node.textContent) === 'placeholder'
 				? new InlinePlaceholderView(node, view, getPos as () => number)
 				: drawnOrSource(node, view, getPos as () => number, decorations, latexChipKind(view, false, onJumpToLabel, onJumpToDefinition)),
-		includedoc: (node, view, getPos) => new IncludeDocView(node, view, getPos as () => number, imageDir),
 		environment: environmentView,
-		table_wrapper: tableWrapperView,
-		citation: (node, view, getPos) => new CitationView(node, view, getPos as () => number),
-		ref: (node, view) => new RefView(node, view, onJumpToLabel),
-		label: (node, view, getPos) => new LabelView(node, view, getPos as () => number)
+		...pluginNodeViews({ imageDir, onJumpToLabel, onJumpToDefinition })
 	};
 }

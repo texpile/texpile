@@ -1,5 +1,8 @@
+// @vitest-environment jsdom
 import { describe, it, expect } from 'vitest';
-import { CompletionContext } from '@codemirror/autocomplete';
+import { EditorView } from '@codemirror/view';
+import { CompletionContext, type Completion, type CompletionResult } from '@codemirror/autocomplete';
+import { EditorState } from '@codemirror/state';
 import { argumentCompletionSource } from '../../../../../../src/lib/languages/latex/intellisense/completion/arguments';
 import { latexState } from '../../../languages/latex/latexState';
 
@@ -7,9 +10,35 @@ function completeAt(doc: string, pos = doc.length) {
 	const state = latexState(doc);
 	return Promise.resolve(argumentCompletionSource(new CompletionContext(state, pos, false)));
 }
+if (!Range.prototype.getClientRects) Range.prototype.getClientRects = () => [] as unknown as DOMRectList;
 const labels = (r: Awaited<ReturnType<typeof completeAt>>) => (r?.options ?? []).map((o) => o.label);
 
 describe('argument key-value completion (vendored package data + kernel rules)', () => {
+	it('writes the accepted key with a value to type, and a comma continues the list', async () => {
+		const doc = '\\includegraphics[ang';
+		const state = latexState(doc);
+		const result = (await argumentCompletionSource(new CompletionContext(state, doc.length, false))) as CompletionResult;
+		const angle = result.options.find((o) => o.label === 'angle=')!;
+		const view = new EditorView({ state: EditorState.create({ doc, selection: { anchor: doc.length } }) });
+		(angle.apply as (v: EditorView, c: Completion, from: number, to: number) => void)(view, angle, result.from, result.to ?? doc.length);
+		expect(view.state.doc.toString()).toMatch(/^\\includegraphics\[angle=/);
+		view.destroy();
+	});
+
+	it('does not offer the options of another class (beamer has no a4paper)', async () => {
+		expect(labels(await completeAt('\\documentclass[a4]{beamer}', '\\documentclass[a4'.length))).not.toContain('a4paper');
+	});
+
+	it('offers tikz library names, and beamer theme names only in beamer', async () => {
+		expect(labels(await completeAt('\\usetikzlibrary{posit'))).toContain('positioning');
+		expect(labels(await completeAt('\\documentclass{beamer}\n\\usetheme{Berl'))).toContain('Berlin');
+		expect(labels(await completeAt('\\documentclass{article}\n\\usetheme{Berl'))).not.toContain('Berlin');
+	});
+
+	it('offers a later option of the class list', async () => {
+		expect(labels(await completeAt('\\documentclass[12pt,a4]{article}', '\\documentclass[12pt,a4'.length))).toContain('a4paper');
+	});
+
 	it('offers standard class options inside \\documentclass[...]', async () => {
 		const r = await completeAt('\\documentclass[10');
 		expect(labels(r)).toContain('10pt');

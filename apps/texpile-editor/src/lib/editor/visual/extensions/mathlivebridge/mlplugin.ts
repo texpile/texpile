@@ -2,6 +2,7 @@ import { Plugin, PluginKey, TextSelection, type PluginSpec } from 'prosemirror-s
 import { EditorView, type Decoration, type NodeViewConstructor } from 'prosemirror-view';
 import type { Node } from 'prosemirror-model';
 import { MathLiveView } from './mlview.svelte';
+import { caretWherePressed, forgetPress, recordPress } from './caret/mathPressBeside';
 
 export type MathLivePluginState = {
 	/** cursor pos before entering a math node, decides front vs back placement on expand. */
@@ -37,23 +38,7 @@ const mathPluginSpec: PluginSpec<MathLivePluginState> = {
 			inline_math: createMathView(false),
 			block_math: createMathView(true)
 		},
-		handleClickOn(view, _pos, node, nodePos, event, direct) {
-			const me = event as MouseEvent;
-			if (!direct || me.button !== 0 || me.shiftKey || me.metaKey || me.ctrlKey || me.altKey) return false;
-			if (node.isTextblock && node.type.name === 'paragraph') {
-				const onlyMathfieldOrEmpty = node.childCount == 1 && node.child(0).type.name === 'inline_math';
-
-				if (onlyMathfieldOrEmpty) {
-					console.log('Placed Cursor at end of paragraph with only math fields');
-					const endPos = nodePos + node.nodeSize - 1; // last valid text position inside the paragraph
-					const tr = view.state.tr.setSelection(TextSelection.create(view.state.doc, endPos));
-					view.dispatch(tr);
-					view.focus();
-					return true;
-				}
-			}
-			return false;
-		}
+		createSelectionBetween: caretWherePressed
 	}
 };
 
@@ -68,6 +53,7 @@ export function createMathView(displayMode: boolean): NodeViewConstructor {
 }
 
 import { keydownHandler } from 'prosemirror-keymap';
+import { isMac } from '$lib/platform';
 import { NodeSelection, EditorState, Transaction } from 'prosemirror-state';
 import { verticalArrowKeyDown, verticalArrowsAfterUpdate, verticalArrowsMouseDown } from './mlVerticalArrows';
 
@@ -135,18 +121,59 @@ function mlShiftArrowHandler(dir: -1 | 1) {
 	};
 }
 
+// a word key takes the math as one word, as LyX's does an inset: ProseMirror would select it, and so enter it
+function mlWordArrowHandler(dir: -1 | 1) {
+	return (state: EditorState, dispatch?: (tr: Transaction) => void): boolean => {
+		const sel = state.selection;
+		if (!(sel instanceof TextSelection) || !sel.empty) return false;
+		const { $head } = sel;
+		const node = $head.textOffset ? null : dir < 0 ? $head.nodeBefore : $head.nodeAfter;
+		if (node?.type.name !== 'inline_math') return false;
+		dispatch?.(state.tr.setSelection(TextSelection.create(state.doc, $head.pos + dir * node.nodeSize)));
+		return true;
+	};
+}
+
+// as LyX, Backspace or Delete beside a formula goes into it first, where one key took the whole formula
+function mlDeleteHandler(dir: -1 | 1) {
+	return (state: EditorState, dispatch?: (tr: Transaction) => void): boolean => {
+		const sel = state.selection;
+		if (!(sel instanceof TextSelection) || !sel.empty) return false;
+		const { $head } = sel;
+		const node = $head.textOffset ? null : dir < 0 ? $head.nodeBefore : $head.nodeAfter;
+		if (node?.type.name !== 'inline_math') return false;
+		dispatch?.(state.tr.setSelection(NodeSelection.create(state.doc, dir < 0 ? $head.pos - node.nodeSize : $head.pos)));
+		return true;
+	};
+}
+
+const word = isMac ? 'Alt' : 'Ctrl';
 const horizontalArrowKeyDown = keydownHandler({
 	ArrowRight: mlHorizontalArrowHandler('right'),
 	ArrowLeft: mlHorizontalArrowHandler('left'),
 	'Shift-ArrowRight': mlShiftArrowHandler(1),
-	'Shift-ArrowLeft': mlShiftArrowHandler(-1)
+	'Shift-ArrowLeft': mlShiftArrowHandler(-1),
+	[`${word}-ArrowRight`]: mlWordArrowHandler(1),
+	[`${word}-ArrowLeft`]: mlWordArrowHandler(-1),
+	[`Shift-${word}-ArrowRight`]: mlShiftArrowHandler(1),
+	[`Shift-${word}-ArrowLeft`]: mlShiftArrowHandler(-1),
+	Backspace: mlDeleteHandler(-1),
+	Delete: mlDeleteHandler(1)
 });
 
 /** must come before the regular keymap in plugin order. */
 export const mlarrowHandlers = new Plugin({
 	props: {
-		handleKeyDown: (view, event) => verticalArrowKeyDown(view, event) || horizontalArrowKeyDown(view, event),
-		handleDOMEvents: { mousedown: verticalArrowsMouseDown }
+		handleKeyDown: (view, event) => {
+			forgetPress(view);
+			return verticalArrowKeyDown(view, event) || horizontalArrowKeyDown(view, event);
+		},
+		handleDOMEvents: {
+			mousedown: (view, event) => {
+				recordPress(view, event);
+				return verticalArrowsMouseDown(view);
+			}
+		}
 	},
 	view: () => ({
 		update: (view, before) => verticalArrowsAfterUpdate(view, !view.state.selection.eq(before.selection))

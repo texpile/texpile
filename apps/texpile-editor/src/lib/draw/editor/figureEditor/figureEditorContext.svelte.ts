@@ -7,7 +7,8 @@ export class FigureEditorContext {
 
 	constructor(
 		readonly editor: FigureEditorState,
-		readonly gesture: CanvasGesture
+		readonly gesture: CanvasGesture,
+		readonly showCode: ((at: number) => void) | null = null
 	) {}
 }
 

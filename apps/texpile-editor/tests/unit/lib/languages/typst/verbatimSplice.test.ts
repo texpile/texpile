@@ -611,7 +611,7 @@ describe('typst: markup that a seam would open', () => {
 
 	it('a bare url written as a bodiless link call reads back as the url', () => {
 		const parsed = parseTypstFile('See #link("https://github.com/typst/typst") here.\n');
-		expect(parsed.doc.child(0).toString()).toBe('paragraph("See ", inline_latex("https://github.com/typst/typst"), " here.")');
+		expect(parsed.doc.child(0).toString()).toBe('paragraph("See ", link("https://github.com/typst/typst"), " here.")');
 		expect(serializeTypstFile(parsed, parsed.doc)).toBe('See #link("https://github.com/typst/typst") here.\n');
 	});
 
@@ -628,7 +628,7 @@ describe('typst: markup that a seam would open', () => {
 		const cases: [string, string, number, string, string][] = [
 			['```py\nx = arr[i]\n```', 'arr[', 1, '-1', '```py\nx = arr[-1]\n```'],
 			['See `arr[i]` here.', 'arr[', 1, '-1', 'See `arr[-1]` here.'],
-			['Some #text(font: "[x")[y] here.', '"[', 0, '-', 'Some #text(font: "[-x")[y] here.'],
+			['Some #note(stroke: "[x")[y] here.', '"[', 0, '-', 'Some #note(stroke: "[-x")[y] here.'],
 			['A claim#footnote[a] here.', 'footnote[', 0, '- ', 'A claim#footnote[- a] here.']
 		];
 		for (const [block, needle, gone, typed, written] of cases) {

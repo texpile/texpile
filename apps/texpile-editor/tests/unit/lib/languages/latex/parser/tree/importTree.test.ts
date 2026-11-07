@@ -29,6 +29,7 @@ describe('treeToProseMirror', () => {
 
 	it('keeps the braces of a cell that is one group, which an S column reads as text', () => {
 		const { doc } = treeToProseMirror('\\begin{tabular}{lS}\nName & {Percent} \\\\\na & 1.5\n\\end{tabular}\n');
-		expect(nodesNamed(doc, 'inline_latex').map((n) => n.textContent)).toContain('{Percent}');
+		const braced = nodesNamed(doc, 'table_cell').filter((n) => n.attrs.braced);
+		expect(braced.map((n) => n.textContent)).toEqual(['Percent']);
 	});
 });

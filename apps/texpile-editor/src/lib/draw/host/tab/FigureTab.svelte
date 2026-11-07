@@ -13,6 +13,7 @@
 	import { followFigure } from '../anchor/followFigure.svelte';
 	import { closeFigure, publishFigure } from '../anchor/openFigures.svelte';
 	import { selectedRanges } from '../sourceMarks/selectedRanges';
+	import { SHOW_FIGURE_SOURCE, type FigureSourceDetail } from '../card/figureEvents';
 
 	type Props = { path: string; figure: string };
 	const props: Props = $props();
@@ -59,6 +60,11 @@
 		});
 	});
 	$effect(() => () => closeFigure(props.figure));
+
+	function showCode(at: number): void {
+		const detail: FigureSourceDetail = { figure: props.figure, line: offsetToRowCol(follow.text, at).row + 1 };
+		window.dispatchEvent(new CustomEvent(SHOW_FIGURE_SOURCE, { detail }));
+	}
 </script>
 
 {#if index >= 0}
@@ -69,6 +75,7 @@
 		onready={(e) => (editor = e)}
 		history={writes.history}
 		onchange={writes.write}
+		onshowcode={showCode}
 	>
 		<div class="flex min-h-0 min-w-0 flex-1 overflow-clip">
 			<FigureTabLayout />

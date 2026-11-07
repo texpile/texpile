@@ -7,9 +7,9 @@ import type { Node } from 'prosemirror-model';
 import { parseTypstFile, serializeTypstFile } from '$lib/languages/typst/visual/roundtrip';
 import { typstToProseMirror } from '$lib/languages/typst/visual/convert/converter';
 import { serializeToTypst } from '$lib/languages/typst/visual/serialize/serializer';
-import { readTypstCall, rewrittenCall } from '$lib/languages/typst/visual/extensions/drawn/typstCall';
-import { writeSetField, readSetRule } from '$lib/languages/typst/visual/extensions/drawn/setRule/setRuleCall';
-import { writeFootnote } from '$lib/languages/typst/visual/extensions/drawn/footnoteCall';
+import { readTypstCall, rewrittenCall } from '$lib/languages/typst/visual/core/reading/typstCall';
+import { writeSetField, readSetRule } from '$lib/languages/typst/visual/core/setup/setRuleCall';
+import { writeFootnote } from '$lib/languages/typst/visual/plugins/footnote/footnoteCall';
 import { equationNumberingChange, equationsNumbered } from '$lib/languages/typst/visual/equationNumbering';
 
 export const DRAWN_CORPUS: Record<string, string> = {
@@ -75,10 +75,11 @@ describe('a drawn call is a chip of its own', () => {
 		]);
 	});
 
-	it('still merges the code no panel can show', () => {
+	it('keeps a rule no panel can show a chip of its own, apart from the code after it', () => {
 		const blocks = blocksOf(typstToProseMirror(DRAWN_CORPUS.oddlyWritten).doc);
-		expect(blocks[1]).toBe('raw_latex:#set text(lang: "de") if true\n#let gap = 1em');
-		expect(blocks[2]).toBe('raw_latex:#set par(justify:true)');
+		expect(blocks[1]).toBe('raw_latex:#set text(lang: "de") if true');
+		expect(blocks[2]).toBe('raw_latex:#let gap = 1em');
+		expect(blocks[3]).toBe('raw_latex:#set par(justify:true)');
 	});
 
 	it('keeps footnotes and horizontal spaces among the words', () => {

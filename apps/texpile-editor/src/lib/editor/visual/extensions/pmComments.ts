@@ -21,6 +21,7 @@ import { indexStartingBy, pmToSource, type Segment, type SourceMap } from '../so
 import { threadAtPointer } from '$lib/comments/threadAtPointer';
 import { focusPmSuggestionMeta, pmSuggestions, pmSuggestionsKey } from './pmSuggestions';
 import { refuseDropOnGoneBlocks } from './goneBlocksRefuseDrop';
+import { revealPosInCenter } from '../jumpReveal';
 import { pmSelectionToolbar } from './pmSelectionToolbar';
 
 export { flattenDoc, placePmComments, pmRangeOf, type FlatDoc } from './pmCommentsResolve';
@@ -124,15 +125,9 @@ export function revealPmComment(view: EditorView, id: string): boolean {
 	} catch {
 		return false; // the doc moved under the range; the caller falls back to the line jump
 	}
-	const at = view.coordsAtPos(sel.from);
-	let box: HTMLElement | null = view.dom.parentElement;
-	while (box && !/auto|scroll/.test(getComputedStyle(box).overflowY)) box = box.parentElement;
-	if (!box) return true;
-	const b = box.getBoundingClientRect();
-	if (at.top < b.top + REVEAL_EDGE || at.bottom > b.bottom - REVEAL_EDGE) box.scrollTop += at.top - (b.top + b.height / 3);
+	revealPosInCenter(view, sel.from);
 	return true;
 }
-const REVEAL_EDGE = 40;
 
 /** the innermost thread at a position, so nested comments resolve to the one you clicked */
 export function pmCommentAt(state: EditorState, pos: number): PmCommentRange | null {

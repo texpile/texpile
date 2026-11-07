@@ -3,7 +3,10 @@
 import { caretAtPoint, typeAtCaret, type GroupClick } from './caretAtPoint';
 import { windowOf } from '$lib/childWindows/childWindowRegistry.svelte';
 
-type LandingDeps = { cell: (id: number) => HTMLElement | undefined; live: (id: number) => boolean };
+type LandingDeps = { cell: (id: number) => HTMLElement | undefined; live: (id: number) => boolean; exists: (id: number) => boolean };
+
+// a live slot with no text to land in (a figure tab) holds the keys no longer than this
+const LIVE_FRAMES = 30;
 
 /** called during component init: it runs effects */
 export function clickLanding(d: LandingDeps) {
@@ -29,14 +32,17 @@ export function clickLanding(d: LandingDeps) {
 
 	$effect(() => {
 		const click = pending;
+		if (click && !d.exists(click.id)) pending = null;
 		if (!click || !d.live(click.id)) return;
+		let tries = 0;
 		let frame = requestAnimationFrame(function land(): void {
 			const node = d.cell(click.id);
-			if (node && !caretAtPoint(click.at, node)) {
+			const landed = !!node && caretAtPoint(click.at, node);
+			if (!landed && ++tries < LIVE_FRAMES) {
 				frame = requestAnimationFrame(land);
 				return;
 			}
-			if (node && typed) typeAtCaret(typed, node);
+			if (landed && typed) typeAtCaret(typed, node);
 			typed = '';
 			pending = null;
 		});

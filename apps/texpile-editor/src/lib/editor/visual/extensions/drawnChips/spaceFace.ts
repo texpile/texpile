@@ -1,7 +1,6 @@
 // spacing drawn at its real size against the editor's own em: a vertical space as an arrow from its top to its bottom
 // labelled with the command and its length, a horizontal one as a gap in the line
-import { tip } from '$lib/components/tooltip.svelte';
-import type { ChipFace } from './chipFace';
+import { faceElement, tippedFace, type ChipFace } from './chipFace';
 
 /** a length as the editor draws it: in ems of the editor's font, as a share of the text width, or `fill`, stretching
  *  to whatever is left */
@@ -27,8 +26,7 @@ function arrowHead(path: string): SVGSVGElement {
 
 /** heads at both ends of a line; a pull upward points them at each other */
 function verticalArrow(negative: boolean): HTMLElement {
-	const arrow = document.createElement('span');
-	arrow.className = 'drawn-vspace-arrow';
+	const arrow = faceElement('span', 'drawn-vspace-arrow');
 	arrow.appendChild(arrowHead(negative ? POINTS_DOWN : POINTS_UP));
 	arrow.appendChild(document.createElement('span')).className = 'drawn-vspace-shaft';
 	arrow.appendChild(arrowHead(negative ? POINTS_UP : POINTS_DOWN));
@@ -37,32 +35,24 @@ function verticalArrow(negative: boolean): HTMLElement {
 
 /** `command` is the space's command as the language writes it (\vspace, #v) */
 export function verticalSpaceFace(command: string, length: DrawnLength | null, label: string, source: string): ChipFace {
-	const dom = document.createElement('span');
-	dom.className = 'drawn-vspace';
+	const dom = faceElement('span', 'drawn-vspace');
 	const ems = length && 'em' in length ? length.em : length && 'fill' in length ? FILL_EMS : 0;
 	dom.style.height = `${Math.min(MOST_EMS, Math.max(LEAST_EMS, ems))}em`;
 	dom.appendChild(verticalArrow(ems < 0));
-	const name = dom.appendChild(document.createElement('span'));
-	name.className = 'drawn-space-command';
-	name.textContent = command;
+	dom.appendChild(faceElement('span', 'drawn-space-command', command));
 	if (label) {
-		const size = dom.appendChild(document.createElement('span'));
-		size.className = 'drawn-space-length';
-		size.textContent = label;
+		dom.appendChild(faceElement('span', 'drawn-space-length', label));
 	}
-	const tipped = tip(dom, source);
-	return { dom, line: true, destroy: () => tipped.destroy() };
+	return tippedFace(dom, source, { line: true });
 }
 
 /** `marked` draws the gap's extent (an \hspace); the plain spaces (\quad, \,) are just room in the line */
 export function horizontalSpaceFace(length: DrawnLength | null, source: string, marked: boolean): ChipFace {
-	const dom = document.createElement('span');
-	dom.className = marked ? 'drawn-hspace' : 'drawn-space';
+	const dom = faceElement('span', marked ? 'drawn-hspace' : 'drawn-space');
 	if (!length) dom.style.width = '1em';
 	else if ('share' in length) dom.style.width = `${Math.max(0, Math.min(100, length.share * 100))}%`;
 	else if ('fill' in length) dom.style.width = `${FILL_EMS}em`;
 	else if (length.em < 0) dom.classList.add('drawn-hspace-negative');
 	else dom.style.width = `${Math.min(MOST_EMS * 2, length.em)}em`;
-	const tipped = tip(dom, source);
-	return { dom, character: true, destroy: () => tipped.destroy() };
+	return tippedFace(dom, source, { character: true });
 }

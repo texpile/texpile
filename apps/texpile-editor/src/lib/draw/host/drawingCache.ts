@@ -8,6 +8,7 @@ const KEPT = 200;
 const INDEX = 'figures/index.json';
 
 const drawings = new Map<string, string>();
+const drawnAt = new Map<string, number>();
 const looked = new Set<string>();
 const changes = new EventTarget();
 let writing: Promise<void> = Promise.resolve();
@@ -37,14 +38,20 @@ export function cachedDrawing(key: string): string | null {
 	return drawings.get(key) ?? null;
 }
 
+export function drawingTime(key: string): number {
+	return drawnAt.get(key) ?? 0;
+}
+
 export async function loadSavedDrawing(key: string): Promise<void> {
 	const path = texpilePath(workspaceRoot.current ?? '', `figures/${drawingName(key)}.svg`);
 	if (!path || drawings.has(key) || looked.has(path)) return;
 	looked.add(path);
-	if (!(await fileService.exists(path))) return;
+	const file = await fileService.stat(path);
+	if (!file.exists) return;
 	const saved = safeSavedDrawing(await fileService.readText(path));
 	if (!saved) return;
 	drawings.set(key, saved);
+	drawnAt.set(key, file.mtimeMs);
 	changed();
 }
 
@@ -66,6 +73,7 @@ async function keep(root: string, name: string, svg: string): Promise<void> {
 export function saveDrawing(key: string, svg: string): void {
 	if (drawings.get(key) === svg) return;
 	drawings.set(key, svg);
+	drawnAt.set(key, Date.now());
 	changed();
 	const root = workspaceRoot.current;
 	if (root) writing = writing.then(() => keep(root, drawingName(key), svg)).catch(() => {});

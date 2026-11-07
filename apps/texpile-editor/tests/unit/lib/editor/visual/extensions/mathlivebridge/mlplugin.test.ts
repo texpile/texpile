@@ -19,7 +19,7 @@ function sentence(anchor: number, head = anchor) {
 	return EditorState.create({ doc, selection: TextSelection.create(doc, anchor, head) });
 }
 
-function press(state: EditorState, key: string, shiftKey: boolean) {
+function press(state: EditorState, key: string, shiftKey: boolean, ctrlKey = false) {
 	let next = state;
 	const view = {
 		get state() {
@@ -27,7 +27,11 @@ function press(state: EditorState, key: string, shiftKey: boolean) {
 		},
 		dispatch: (tr: Transaction) => (next = next.apply(tr))
 	} as unknown as EditorView;
-	const handled = mlarrowHandlers.props.handleKeyDown!.call(mlarrowHandlers, view, new KeyboardEvent('keydown', { key, shiftKey }));
+	const handled = mlarrowHandlers.props.handleKeyDown!.call(
+		mlarrowHandlers,
+		view,
+		new KeyboardEvent('keydown', { key, shiftKey, ctrlKey })
+	);
 	return { handled, state: next };
 }
 
@@ -44,6 +48,23 @@ describe('mlarrowHandlers', () => {
 		expect(handled).toBe(true);
 		expect(state.selection).toBeInstanceOf(TextSelection);
 		expect([state.selection.anchor, state.selection.head]).toEqual([25, 14]);
+	});
+
+	it('steps over inline math with ctrl right and left, as one word', () => {
+		expect(press(sentence(14), 'ArrowRight', false, true).state.selection).toMatchObject({ empty: true, head: 17 });
+		expect(press(sentence(17), 'ArrowLeft', false, true).state.selection).toMatchObject({ empty: true, head: 14 });
+	});
+
+	it('extends a selection over inline math with ctrl shift right', () => {
+		const { state } = press(sentence(1, 14), 'ArrowRight', true, true);
+		expect([state.selection.anchor, state.selection.head]).toEqual([1, 17]);
+	});
+
+	it('goes into the math on Backspace after it and Delete before it, as LyX selects an inset first', () => {
+		const back = press(sentence(17), 'Backspace', false);
+		expect(back.state.selection).toBeInstanceOf(NodeSelection);
+		expect(back.state.doc.eq(sentence(17).doc)).toBe(true);
+		expect(press(sentence(14), 'Delete', false).state.selection).toMatchObject({ from: 14, to: 17 });
 	});
 
 	it('still enters the math on a plain arrow', () => {

@@ -16,9 +16,11 @@ export function styleFields(source: string, st: Statement): StyleFieldSet {
 	const span = st.kind === 'node' ? nodeTextSpan(st) : null;
 	// circuitikz draws a part as it is, in its line's color
 	const part = readCircuit(source, st).length > 0;
+	const fill = base.fill && !(part && st.kind === 'node');
 	return {
 		...base,
-		fill: base.fill && !(part && st.kind === 'node'),
+		fill,
+		pattern: fill,
 		width: base.width && lined,
 		dash: base.dash && lined,
 		text: base.text && !part && !!(span && source.slice(span.from, span.to).trim()),

@@ -104,6 +104,11 @@ describe('verbatim round-trip (no edits)', () => {
 		expect(reserialize(FILE)).toBe(FILE);
 	});
 
+	it('keeps a display after a \\par on the next line', () => {
+		const file = `${PREAMBLE}\nText before\\par\n\\[ x \\]\nafter.\n\\end{document}\n`;
+		expect(reserialize(file)).toBe(file);
+	});
+
 	it('is byte-identical after a worker-style toJSON/fromJSON round-trip', () => {
 		const parsed = parseLatexFile(FILE);
 		const rehydrated = schema.nodeFromJSON(parsed.doc.toJSON());
@@ -595,6 +600,16 @@ three lines, with an accent caf\\'e and a dash -- in it.
 		block.forEach((c, _o, i) => kids.push(i === leaf ? schema.text(fn(c.text!), c.marks) : c));
 		return replaceChild(doc, 0, block.type.create(block.attrs, Fragment.fromArray(kids), block.marks));
 	}
+
+	it('a word changed just after a line-end comment keeps the comment', () => {
+		const file = `${PREAMBLE}\nText one % trailing note\nmore text here.\n\\end{document}\n`;
+		const parsed = parseLatexFile(file);
+		const out = serializeLatexFile(
+			parsed,
+			edit(parsed.doc, 0, (t) => t.replace('more', 'MORE'))
+		);
+		expect(out).toBe(`${PREAMBLE}\nText one % trailing note\nMORE text here.\n\\end{document}\n`);
+	});
 
 	it('a word typed at the start keeps every wrap after it', () => {
 		const parsed = parseLatexFile(FILE7);

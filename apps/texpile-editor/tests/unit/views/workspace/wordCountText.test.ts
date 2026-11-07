@@ -7,5 +7,6 @@ describe('word count text', () => {
 		expect(wordsText(3)).toBe('3 words');
 		expect(charactersText(1)).toBe('1 character');
 		expect(selectedText(1, 1)).toBe('1 of 1 word');
+		expect(wordsText(1000)).toBe('1,000 words');
 	});
 });

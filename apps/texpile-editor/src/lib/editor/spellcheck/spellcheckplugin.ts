@@ -13,6 +13,7 @@ import './suggestion.css';
 import { editorConfigStore, editorViewStore } from '$lib/stores/editorStore';
 import { activeCompare } from '$lib/workspace/workspaceStore';
 import { observe } from '$lib/runes/observe.svelte';
+import { revealPosInCenter } from '$lib/editor/visual/jumpReveal';
 
 const spellcheckenabled = createSpellCheckEnabledStore(() => false);
 
@@ -207,11 +208,12 @@ export const spellChipPlugin = new Plugin({
 });
 
 function jumpToProblem(dir: 1 | -1): Command {
-	return (state, dispatch) => {
+	return (state, dispatch, view) => {
 		const squiggles: DecorationSet | undefined = proofreadOf(state)?.getState(state)?.decor;
 		const target = nextProblem(squiggles?.find() ?? [], state.selection, dir);
 		if (!target) return false;
-		dispatch?.(state.tr.setSelection(TextSelection.create(state.doc, target.from, target.to)).scrollIntoView());
+		dispatch?.(state.tr.setSelection(TextSelection.create(state.doc, target.from, target.to)));
+		if (view) revealPosInCenter(view, target.from);
 		return true;
 	};
 }

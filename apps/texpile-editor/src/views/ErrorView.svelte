@@ -20,7 +20,7 @@
 </script>
 
 <svelte:head>
-	<title>{status} · {title}</title>
+	<title>{status} - {title}</title>
 </svelte:head>
 
 <AppFrame>

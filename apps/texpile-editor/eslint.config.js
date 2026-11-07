@@ -13,7 +13,7 @@ const restrictedImportPaths = [{ name: 'svelte/store', message: 'runes only; ada
 
 const banPackageData = {
 	group: ['**/knowledge/data', '**/knowledge/data/**'],
-	message: 'the package data has one reader: import what you need from languages/latex/knowledge'
+	message: 'the package data has one reader per language: import what you need from languages/latex/knowledge or languages/typst/knowledge'
 };
 
 // the disk client has one caller; everything else reads and writes through lib/files/service/fileService
@@ -49,6 +49,18 @@ const PROVIDER_IO =
 
 // package-private folders: internals are importable only through the package's entry file
 const packagePrivatePatterns = [
+	{
+		group: ['$lib/languages/latex/visual/plugins/**'],
+		message: 'a LaTeX plugin is reached through latexPlugins.ts and latexDocumentPlugins.ts, never directly'
+	},
+	{
+		group: ['$lib/languages/typst/visual/plugins/**'],
+		message: 'a Typst plugin is reached through typstPlugins.ts and typstDocumentPlugins.ts, never directly'
+	},
+	{
+		group: ['$lib/languages/markdown/visual/plugins/**'],
+		message: 'a Markdown plugin is reached through markdownPlugins.ts, never directly'
+	},
 	{
 		group: ['**/languages/latex/schema/*', '!**/languages/latex/schema/latexPMSchema'],
 		message: 'latexPMSchema internals are package-private; import through latexPMSchema.ts'
@@ -140,6 +152,65 @@ const banDesktopOnly = {
 	],
 	message: 'desktop-only feature; the web guest bundle must not import it statically (gate it behind isDesktop + a dynamic import)'
 };
+
+// a LaTeX plugin is one folder that imports the core's entry and nothing of another plugin (design/visual-plugins.md);
+// the package data's readers and the messages are the two other things it may import. Its import and save take the
+// entry's document half, which the parser's worker can load
+const LATEX_PLUGINS = 'src/lib/languages/latex/visual/plugins';
+const banOtherPlugins = (depth) => ({
+	regex: `^(\\$lib/languages/latex/visual/plugins/|(\\.\\./){${depth}})`,
+	message: 'a plugin imports its own folder and the core entry, never another plugin; what two share belongs in the core'
+});
+const pluginImportsCore = {
+	regex: '^\\$lib/(?!languages/latex/visual/core(/document)?$|languages/latex/knowledge/|paraglide/messages$)',
+	message: 'a plugin reaches the app through the core entry, $lib/languages/latex/visual/core or its document half'
+};
+// the same from inside languages/latex, where a relative path can reach a plugin folder
+const banPluginFolders = {
+	regex: '^\\.{1,2}/(\\.\\./)*(visual/)?plugins/',
+	message: 'a LaTeX plugin is reached through latexPlugins.ts and latexDocumentPlugins.ts, never directly'
+};
+const latexPluginBoundary = [1, 2, 3].map((depth) => ({
+	files: [`${LATEX_PLUGINS}/*/${'*/'.repeat(depth - 1)}*`],
+	rules: languageBoundary([banTypst, banMarkdown, banOtherPlugins(depth), pluginImportsCore])
+}));
+// the same for a Typst plugin, whose package data's readers are languages/typst/knowledge
+const TYPST_PLUGINS = 'src/lib/languages/typst/visual/plugins';
+const banOtherTypstPlugins = (depth) => ({
+	regex: `^(\\$lib/languages/typst/visual/plugins/|(\\.\\./){${depth}})`,
+	message: 'a plugin imports its own folder and the core entry, never another plugin; what two share belongs in the core'
+});
+const typstPluginImportsCore = {
+	regex: '^\\$lib/(?!languages/typst/visual/core(/document)?$|languages/typst/knowledge(/|$)|paraglide/messages$)',
+	message: 'a plugin reaches the app through the core entry, $lib/languages/typst/visual/core or its document half'
+};
+const banTypstPluginFolders = {
+	regex: '^\\.{1,2}/(\\.\\./)*(visual/)?plugins/',
+	message: 'a Typst plugin is reached through typstPlugins.ts and typstDocumentPlugins.ts, never directly'
+};
+const typstPluginBoundary = [1, 2, 3].map((depth) => ({
+	files: [`${TYPST_PLUGINS}/*/${'*/'.repeat(depth - 1)}*`],
+	rules: languageBoundary([banLatex, banMarkdown, banOtherTypstPlugins(depth), typstPluginImportsCore])
+}));
+
+// the same for a Markdown plugin, which reads no package data
+const MARKDOWN_PLUGINS = 'src/lib/languages/markdown/visual/plugins';
+const banOtherMarkdownPlugins = (depth) => ({
+	regex: `^(\\$lib/languages/markdown/visual/plugins/|(\\.\\./){${depth}})`,
+	message: 'a plugin imports its own folder and the core entry, never another plugin; what two share belongs in the core'
+});
+const markdownPluginImportsCore = {
+	regex: '^\\$lib/(?!languages/markdown/visual/core$|paraglide/messages$)',
+	message: 'a plugin reaches the app through the core entry, $lib/languages/markdown/visual/core'
+};
+const banMarkdownPluginFolders = {
+	regex: '^\\.{1,2}/(\\.\\./)*(visual/)?plugins/',
+	message: 'a Markdown plugin is reached through markdownPlugins.ts, never directly'
+};
+const markdownPluginBoundary = [1, 2, 3].map((depth) => ({
+	files: [`${MARKDOWN_PLUGINS}/*/${'*/'.repeat(depth - 1)}*`],
+	rules: languageBoundary([banLatex, banTypst, banOtherMarkdownPlugins(depth), markdownPluginImportsCore])
+}));
 
 export default ts.config(
 	includeIgnoreFile(gitignorePath),
@@ -316,9 +387,21 @@ export default ts.config(
 		}
 	},
 	// cross-language boundaries (see languageBoundary above)
-	{ files: ['src/lib/languages/latex/**'], rules: languageBoundary([banTypst, banMarkdown]) },
-	{ files: ['src/lib/languages/typst/**'], rules: languageBoundary([banLatex, banMarkdown]) },
-	{ files: ['src/lib/languages/markdown/**'], rules: languageBoundary([banLatex, banTypst]) },
+	{ files: ['src/lib/languages/latex/**'], rules: languageBoundary([banTypst, banMarkdown, banPluginFolders]) },
+	{
+		files: ['src/lib/languages/latex/visual/latexPlugins.ts', 'src/lib/languages/latex/visual/latexDocumentPlugins.ts'],
+		rules: languageBoundary([banTypst, banMarkdown])
+	},
+	...latexPluginBoundary,
+	{ files: ['src/lib/languages/typst/**'], rules: languageBoundary([banLatex, banMarkdown, banTypstPluginFolders]) },
+	{
+		files: ['src/lib/languages/typst/visual/typstPlugins.ts', 'src/lib/languages/typst/visual/typstDocumentPlugins.ts'],
+		rules: languageBoundary([banLatex, banMarkdown])
+	},
+	...typstPluginBoundary,
+	{ files: ['src/lib/languages/markdown/**'], rules: languageBoundary([banLatex, banTypst, banMarkdownPluginFolders]) },
+	{ files: ['src/lib/languages/markdown/visual/markdownPlugins.ts'], rules: languageBoundary([banLatex, banTypst]) },
+	...markdownPluginBoundary,
 	{
 		files: ['src/lib/languages/bib/**'],
 		rules: {

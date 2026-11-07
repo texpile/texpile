@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { parseMarkdownFile, serializeMarkdownFile } from '$lib/languages/markdown/visual/roundtrip';
-import { serializeToMarkdown } from '$lib/languages/markdown/visual/serializer';
+import { serializeToMarkdown } from '$lib/languages/markdown/visual/serialize/serializer';
 import { markdownToProseMirror } from '$lib/languages/markdown/visual/converter';
 
 /** the no-edit save: parse then serialize, nothing touched. */
@@ -25,7 +25,7 @@ const CORPUS: Record<string, string> = {
 	// the shapes a real README opens with: badges are link-wrapped images, logos are centred HTML
 	badges:
 		'[![Build](https://img.shields.io/b.svg)](https://ci.example)\n[![Docs](d.svg)](https://d.example)\n\n<p align="center">\n  <img src="logo.png" width="200">\n</p>\n',
-	// markdown-it percent-encodes destinations; a path we look up on disk must survive verbatim
+	// a path we look up on disk must survive verbatim, not percent-encoded
 	nonAsciiPaths: '![图](images/图片.png)\n\n![cafe](images/café.png)\n\n[doc](docs/图片.md)\n',
 	spacedPaths: '![a](<my file.png>)\n\n![b](images/my%20file.png)\n',
 	underscores: 'snake_case_word stays, *real em*, 5 * 3 = 15.\n',

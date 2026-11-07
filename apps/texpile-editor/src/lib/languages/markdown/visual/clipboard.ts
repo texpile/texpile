@@ -6,7 +6,7 @@
 import { Plugin } from 'prosemirror-state';
 import { Slice, Fragment } from 'prosemirror-model';
 import { mdSchema } from './schema';
-import { serializeToMarkdown } from './serializer';
+import { serializeToMarkdown } from './serialize/serializer';
 
 /** serialize a clipboard slice to Markdown. Inline slices (a selection inside one paragraph) wrap
  *  in a paragraph first; block slices serialize as they are, open ends included (a partially

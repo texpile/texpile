@@ -1,0 +1,1 @@
+{"version":1,"id":"@preview/datify:1.0.0","names":{"custom-date-format":{"kind":"function","params":[{"name":"date","positional":true,"required":true},{"name":"pattern","named":true,"default":"\"full\""},{"name":"lang","named":true,"default":"\"en\""}]}}}

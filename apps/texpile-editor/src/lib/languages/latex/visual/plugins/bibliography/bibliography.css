@@ -1,0 +1,21 @@
+.ProseMirror .prosemirror-flat-list.bib-entry {
+	display: block;
+	margin-left: 0;
+	list-style: none;
+}
+
+.ProseMirror .bib-entry > .list-content > p:first-child {
+	margin-top: 0;
+	margin-bottom: 0.5rem;
+	padding-left: 1.5em;
+	text-indent: -1.5em;
+}
+
+.ProseMirror .bib-key {
+	margin-right: 0.5em;
+	user-select: none;
+}
+
+.ProseMirror .bibliography-heading-host {
+	user-select: none;
+}

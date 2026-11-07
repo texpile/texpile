@@ -25,10 +25,7 @@
 				</button>
 			</span>
 		{/if}
-		<span
-			class="text-muted px-2 text-xs whitespace-nowrap tabular-nums"
-			use:tip={`${m.figure_notice_natural()}${m.figure_notice_natural_note()}`}
-		>
+		<span class="px-2 text-xs whitespace-nowrap tabular-nums" use:tip={`${m.figure_notice_natural()}${m.figure_notice_natural_note()}`}>
 			{natural}
 		</span>
 	</div>

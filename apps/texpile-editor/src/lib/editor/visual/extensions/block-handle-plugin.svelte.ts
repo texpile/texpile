@@ -1,12 +1,20 @@
 // notion-style block handle: floating insert/drag/delete gutters beside the hovered block
-import { Plugin, PluginKey, NodeSelection, TextSelection } from 'prosemirror-state';
+import { caretAfterDelete } from './blockHandle/caretAfterDelete';
+import { Plugin, NodeSelection, type EditorState } from 'prosemirror-state';
 import { mount, unmount } from 'svelte';
 import type { EditorView } from 'prosemirror-view';
+import type { Node as PMNode } from 'prosemirror-model';
 import BlockHandle from './BlockHandle.svelte';
 import { scrollParent } from '$lib/editor/visual/scrollParent';
-import type { BlockInsertItem } from './blockInsertItems';
+import type { BlockInsertItem, InsertItem } from '$lib/editor/visual/insert/insertItem';
+import { insertItems } from '$lib/editor/visual/insert/insertItems.svelte';
+import { insertBlockAfter } from '$lib/editor/visual/insert/insertRun';
+import { returnFocusToText } from './popoverFocus/returnFocus';
+import { handleUnitAt } from './blockHandle/handleUnit';
+import { positionOf } from './blockHandle/nodePosition';
+import { blockHandlePluginKey, handleDropEvents, handleDropLine, handleDropState, setHandleDragActive } from './blockHandle/handleDrop';
 
-export const blockHandlePluginKey = new PluginKey('block-handle');
+type ItemsOf = () => readonly InsertItem[];
 
 // left gutter width: two ~22px buttons plus gap
 const GUTTER_OFFSET_LEFT = 48;
@@ -25,10 +33,6 @@ function dropsForLabel(dom: HTMLElement) {
 	// a list item's first paragraph prints its label out past the bullet, which is this margin too
 	return dom.querySelector(":scope > .list-content > p:first-child[data-indent='noindent']") !== null;
 }
-
-// skipped when resolving the hovered block: dragging a row/cell out would tear the schema,
-// so hovering inside a cell surfaces the outer table_wrapper instead
-const SKIP_NODE_TYPES = new Set(['table_row', 'table_cell', 'table_header']);
 
 class BlockHandleView {
 	private view: EditorView;
@@ -50,13 +54,14 @@ class BlockHandleView {
 		popoverOpen: false
 	});
 	private hoveredPos: number | null = null;
+	private hoveredNode: PMNode | null = null;
 	private hideTimer: number | null = null;
 	private rafId: number | null = null;
 	// the last pointer y over the editor, so a scroll can re-anchor without a new mouse event
 	private lastPointerY: number | null = null;
 	private pointerInside = false;
 
-	constructor(view: EditorView, items?: BlockInsertItem[]) {
+	constructor(view: EditorView, items: ItemsOf) {
 		this.view = view;
 
 		this.host = document.createElement('div');
@@ -70,7 +75,8 @@ class BlockHandleView {
 				onInsert: (item: BlockInsertItem) => this.runInsert(item),
 				onDragStart: this.onDragStart,
 				onDelete: this.runDelete,
-				items
+				focusEditor: () => returnFocusToText(view),
+				items: () => items().filter((item): item is BlockInsertItem => item.shape === 'block')
 			}
 		});
 
@@ -80,6 +86,7 @@ class BlockHandleView {
 		this.host.addEventListener('mouseleave', this.scheduleHide);
 		// capture, because scroll does not bubble: this has to catch the editor's scroller and any
 		// nested one (a wide table's wrapper) without knowing which exists
+		view.dom.ownerDocument.addEventListener('dragend', this.onDragEnd, true);
 		view.dom.ownerDocument.addEventListener('scroll', this.onScroll, { capture: true, passive: true });
 	}
 
@@ -120,33 +127,16 @@ class BlockHandleView {
 	}
 
 	// x is pinned to the editor's center so horizontal mouse movement never re-anchors the
-	// handle to an ancestor block; y alone picks the block. returns its pre-position or null.
 	private blockAt(y: number): number | null {
 		const containerRect = this.view.dom.getBoundingClientRect();
-		const stableX = containerRect.left + containerRect.width / 2;
-		const coords = this.view.posAtCoords({ left: stableX, top: y });
-		if (!coords) return null;
-		// coords.inside is the only way to hit atomic-leaf nodeviews (raw_latex / code_block / block_math):
-		// PM can't resolve a coord inside their opaque DOM, so the depth walk below only finds the parent
-		if (coords.inside >= 0) {
-			const insideNode = this.view.state.doc.nodeAt(coords.inside);
-			if (insideNode && insideNode.isBlock && !SKIP_NODE_TYPES.has(insideNode.type.name)) {
-				return coords.inside;
-			}
-		}
-		// fallback: between blocks (inside -1) or a skipped node, walk up for a usable ancestor
-		const resolved = this.view.state.doc.resolve(coords.pos);
-		for (let depth = resolved.depth; depth > 0; depth--) {
-			const node = resolved.node(depth);
-			if (node.isBlock && !SKIP_NODE_TYPES.has(node.type.name)) return resolved.before(depth);
-		}
-		return null;
+		return handleUnitAt(this.view, containerRect.left + containerRect.width / 2, y);
 	}
 
 	private updateFromPoint(y: number) {
 		const blockPos = this.blockAt(y);
 		if (blockPos == null) return; // over padding or outside the doc, leave the gutter as-is
 		this.hoveredPos = blockPos;
+		this.hoveredNode = this.view.state.doc.nodeAt(blockPos);
 
 		const dom = this.view.nodeDOM(blockPos);
 		if (!(dom instanceof HTMLElement)) return;
@@ -202,7 +192,7 @@ class BlockHandleView {
 		if (this.hoveredPos == null) return;
 		const { view } = this;
 		const sel = NodeSelection.create(view.state.doc, this.hoveredPos);
-		view.dispatch(view.state.tr.setSelection(sel));
+		view.dispatch(view.state.tr.setSelection(sel).setMeta(blockHandlePluginKey, { active: true }));
 		(view as unknown as { dragging: unknown }).dragging = { slice: sel.content(), move: true };
 		event.dataTransfer?.setData('text/plain', '');
 		// eslint-disable-next-line no-param-reassign -- the DnD API works by mutating the event's dataTransfer
@@ -215,20 +205,8 @@ class BlockHandleView {
 	private runInsert(item: BlockInsertItem) {
 		if (this.hoveredPos == null) return;
 		const { view } = this;
-		const hovered = view.state.doc.nodeAt(this.hoveredPos);
-		const node = item.make(view.state.schema);
-		if (!hovered || !node) return;
-		// insert as next sibling; if the parent can't accept the node type (heading in a list, ...),
-		// walk up to the nearest ancestor that can, so the click never silently fails
-		let at = this.hoveredPos + hovered.nodeSize;
-		let resolvedAt = view.state.doc.resolve(at);
-		while (resolvedAt.depth > 0 && !resolvedAt.parent.canReplaceWith(resolvedAt.index(), resolvedAt.index(), node.type)) {
-			at = resolvedAt.after();
-			resolvedAt = view.state.doc.resolve(at);
-		}
-		const tr = view.state.tr.insert(at, node);
-		const sel = item.select === 'node' ? NodeSelection.create(tr.doc, at) : TextSelection.near(tr.doc.resolve(at + 1));
-		tr.setSelection(sel).scrollIntoView();
+		const tr = insertBlockAfter(view.state, this.hoveredPos, item);
+		if (!tr) return;
 		view.dispatch(tr);
 		// close the popover before focusing PM: Zag restores focus to the trigger on dismiss and
 		// would yank it back. one frame later, view.focus() takes focus for good.
@@ -244,15 +222,30 @@ class BlockHandleView {
 		if (!node) return;
 		// tr.delete respects the schema: removing the last required child (e.g. last table row)
 		// no-ops instead of corrupting the doc
-		const tr = view.state.tr.delete(this.hoveredPos, this.hoveredPos + node.nodeSize);
+		const { from, to } = view.state.selection;
+		const end = this.hoveredPos + node.nodeSize;
+		const tr = view.state.tr.delete(this.hoveredPos, end);
+		// a caret inside the block would map to the start of the next one; Word leaves it at the end of the one before
+		if (tr.docChanged && to > this.hoveredPos && from < end) tr.setSelection(caretAfterDelete(tr.doc, this.hoveredPos));
 		view.dispatch(tr);
 		view.focus();
 		this.state.visible = false;
 		this.hoveredPos = null;
+		this.hoveredNode = null;
 	};
 
-	update() {
-		if (!this.state.popoverOpen) this.scheduleHide();
+	private onDragEnd = () => setHandleDragActive(this.view, false);
+
+	update(view: EditorView, prevState: EditorState) {
+		view.dom.ownerDocument.documentElement.classList.toggle('pm-handle-drag', blockHandlePluginKey.getState(view.state)?.active === true);
+		if (view.state.doc === prevState.doc) return;
+		if (this.state.popoverOpen) {
+			this.hoveredPos = this.hoveredNode ? positionOf(view.state.doc, this.hoveredNode) : null;
+			return;
+		}
+		if (!this.state.visible) return;
+		if (this.pointerInside && this.lastPointerY != null) this.queueUpdate(this.lastPointerY);
+		else this.state.visible = false;
 	}
 
 	destroy() {
@@ -260,6 +253,8 @@ class BlockHandleView {
 		this.view.dom.removeEventListener('mouseleave', this.onMouseLeave);
 		this.host.removeEventListener('mouseenter', this.cancelHide);
 		this.host.removeEventListener('mouseleave', this.scheduleHide);
+		this.view.dom.ownerDocument.removeEventListener('dragend', this.onDragEnd, true);
+		this.view.dom.ownerDocument.documentElement.classList.remove('pm-handle-drag');
 		this.view.dom.ownerDocument.removeEventListener('scroll', this.onScroll, { capture: true });
 		this.cancelHide();
 		if (this.rafId != null) cancelAnimationFrame(this.rafId);
@@ -268,9 +263,14 @@ class BlockHandleView {
 	}
 }
 
-export function createBlockHandlePlugin(opts: { items?: BlockInsertItem[] } = {}) {
+export function createBlockHandlePlugin(opts: { items?: ItemsOf } = {}) {
 	return new Plugin({
 		key: blockHandlePluginKey,
-		view: (view) => new BlockHandleView(view, opts.items)
+		state: handleDropState,
+		props: {
+			decorations: (state) => handleDropLine(blockHandlePluginKey.getState(state), state.doc),
+			handleDOMEvents: handleDropEvents
+		},
+		view: (view) => new BlockHandleView(view, opts.items ?? (() => insertItems.current))
 	});
 }

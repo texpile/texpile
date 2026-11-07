@@ -1,0 +1,14 @@
+.typ-figure {
+	margin: calc(var(--spacing) * 3) 0;
+	display: flow-root;
+}
+.typ-figure > :first-child {
+	margin-top: 0;
+}
+.typ-figure > :last-child {
+	margin-bottom: 0;
+}
+.typ-figure-caption {
+	margin-top: calc(var(--spacing) * 2);
+	text-align: center;
+}

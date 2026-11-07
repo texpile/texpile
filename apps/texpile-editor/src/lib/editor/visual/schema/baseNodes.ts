@@ -4,7 +4,7 @@
 // mutating these literals would leak across dialects.
 //
 // Deliberately DOM-import-free beyond prosemirror-model: the parse worker loads this module.
-import { createListSpec } from 'prosemirror-flat-list';
+import { createListSpec, defaultAttributesGetter, listToDOM } from 'prosemirror-flat-list';
 import { imageNodes, tableFamilyNodes } from './floatNodes';
 import type { NodeSpec, DOMOutputSpec } from 'prosemirror-model';
 
@@ -271,14 +271,19 @@ export const baseNodes = {
 // common). the list node models one PM node per \item, so this has nowhere else to live:
 // carried verbatim on every list node of the group, spliced back after \begin{...} by the one that opens it
 // envArgs: the environment's own options (enumitem's [resume], [label=...]), on every node too
-// envName: 'description' on every item of one (the editor shows bullets, the file keeps its
-// environment); envKey: which source environment the item came from, never written out;
-// itemLabel: the raw [label] of \item[label], on that item's node
+// envKey: which source environment the item came from, never written out
 baseNodes.list.attrs = {
 	...(baseNodes.list.attrs ?? {}),
 	preBody: { default: null },
 	envArgs: { default: null },
 	envName: { default: null },
 	envKey: { default: null },
-	itemLabel: { default: null }
+	itemLabel: { default: null },
+	itemCmd: { default: null },
+	itemKey: { default: null }
 };
+baseNodes.list.toDOM = (node) =>
+	listToDOM({
+		node,
+		getAttributes: (n) => ({ ...defaultAttributesGetter(n), 'data-list-env': n.attrs.envName ?? undefined })
+	});

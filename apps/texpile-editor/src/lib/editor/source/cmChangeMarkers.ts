@@ -18,6 +18,7 @@ import {
 	type Range,
 	type TransactionSpec
 } from '@codemirror/state';
+import { jumpRevealEffect } from './cmJumpReveal';
 import { isolateHistory } from '@codemirror/commands';
 import { Chunk } from '@codemirror/merge';
 import { m } from '$lib/paraglide/messages';
@@ -120,7 +121,7 @@ function jump(dir: 1 | -1): Command {
 		const next =
 			dir === 1 ? (changes.find((c) => c.from > here) ?? changes[0]) : ([...changes].reverse().find((c) => c.to < here) ?? changes.at(-1)!);
 		const at = view.state.doc.line(next.from).from;
-		view.dispatch({ selection: EditorSelection.cursor(at), effects: EditorView.scrollIntoView(at, { y: 'center' }) });
+		view.dispatch({ selection: EditorSelection.cursor(at), effects: jumpRevealEffect(view, at) });
 		return true;
 	};
 }

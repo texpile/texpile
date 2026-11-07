@@ -18,7 +18,7 @@
 		{"name":"newsubfloat","args":[{"kind":"o","keys":["packages/subfig#keyval:caption"]},{"kind":"m"}],"doc":"This command creates all of the internal structures and commands needed to support the new subfloat (the corresponding float structure must already exist, see section 4.2)."},
 		{"name":"subfigure","args":[{"kind":"o","placeholder":"list entry"},{"kind":"o","placeholder":"subcaption"},{"kind":"m","placeholder":"body"}],"if":"config=altsf"},
 		{"name":"subfigurename","value":""},
-		{"name":"subfloat","args":[{"kind":"o","placeholder":"list entry"},{"kind":"o","placeholder":"subcaption"},{"kind":"m","placeholder":"body","role":"text"}],"doc":"This command creates the sub-float in the floating environment."},
+		{"name":"subfloat","args":[{"kind":"o","placeholder":"list entry","role":"text","part":"short"},{"kind":"o","placeholder":"subcaption","role":"text","part":"caption"},{"kind":"m","placeholder":"body","role":"text"}],"doc":"This command creates the sub-float in the floating environment."},
 		{"name":"subref","args":[{"kind":"s"},{"kind":"m","role":"label"}],"doc":"The \\subref command is provided to give an alternative reference to a sub-float."},
 		{"name":"Subref","args":[{"kind":"m","placeholder":"label"}],"if":"config=altsf"},
 		{"name":"subtable","args":[{"kind":"o","placeholder":"list entry"},{"kind":"o","placeholder":"subcaption"},{"kind":"m","placeholder":"body"}],"if":"config=altsf"},

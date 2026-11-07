@@ -130,7 +130,7 @@ export function paragraphItems(
 		} else if (!child.isText) {
 			const dom = view.nodeDOM(pos + at);
 			if (!(dom instanceof HTMLElement) || dom.hasAttribute(UNPLACEABLE_VIEW)) placeable = false;
-			else if (getComputedStyle(dom).display === 'block') {
+			else if (getComputedStyle(dom).display === 'block' || dom.classList.contains('drawn-chip-line')) {
 				// drawn on a line of its own (a comment, a vertical space): the line before it ends there, as at a \\
 				runs.push({ from, to: from + 1, at, size: child.nodeSize, width: 0 });
 				text += '\n';

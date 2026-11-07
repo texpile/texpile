@@ -68,12 +68,6 @@ export async function waitForDiagnostic(
 	return rows;
 }
 
-/** the diagnostics after the live checks have had time to run on the text as it is */
-export async function settledDiagnostics(source: SourceEditor, ms = 2500): Promise<DiagnosticRow[]> {
-	await source.page.waitForTimeout(ms);
-	return source.diagnostics();
-}
-
 export async function waitForNoDiagnostic(source: SourceEditor, match: (d: DiagnosticRow) => boolean, message: string): Promise<void> {
 	await expect
 		.poll(async () => (await source.diagnostics()).some(match), { message, timeout: 20_000, intervals: [300, 500, 800, 1200] })
@@ -150,27 +144,6 @@ export async function hoverCard(source: SourceEditor, anchor: string, { offset =
 	return cards;
 }
 
-/** the gutter marker beside the line the nth `anchor` is on, hovered; returns the tooltip the marker opened */
-export async function hoverGutterMarker(source: SourceEditor, anchor: string, nth = 0): Promise<Locator> {
-	const { page } = source;
-	await page.waitForTimeout(CHECKS_SETTLE_MS);
-	const c = await pointAt(source, anchor, 1, nth);
-	const marker = await page.evaluate((y) => {
-		const hit = [...document.querySelectorAll('.cm-gutter-lint .cm-gutterElement')].find((el) => {
-			const r = el.getBoundingClientRect();
-			return el.querySelector('.cm-lint-marker') && r.top <= y && y <= r.bottom;
-		});
-		const r = hit?.querySelector('.cm-lint-marker')?.getBoundingClientRect();
-		return r ? { x: r.left + r.width / 2, y: r.top + r.height / 2 } : null;
-	}, c.y);
-	expect(marker, `a lint gutter marker on the line of ${JSON.stringify(anchor)}`).not.toBeNull();
-	await page.mouse.move(marker!.x + 30, marker!.y + 30);
-	await page.mouse.move(marker!.x, marker!.y, { steps: 4 });
-	const tooltip = page.locator('.cm-tooltip-lint').filter({ has: page.locator('.card') });
-	await expect(tooltip.first(), 'the gutter marker tooltip').toBeVisible({ timeout: 5000 });
-	return tooltip;
-}
-
 export function moreActionsButton(card: Locator): Locator {
 	return card.getByRole('button', { name: 'More actions' });
 }
@@ -184,13 +157,4 @@ export async function resetChecks(page: Page): Promise<void> {
 			sw.setFolderCheck(id, undefined);
 		}
 	}, SWITCHES);
-}
-
-export function checkIsOn(page: Page, id: string): Promise<boolean> {
-	return page.evaluate(async ({ s, id }) => (await new Function(`return (async () => ${s})()`)()).checkIsOn(id), { s: SWITCHES, id });
-}
-
-/** changes an app setting as Preferences does */
-export async function updateSetting(page: Page, partial: Record<string, unknown>): Promise<void> {
-	await page.evaluate(async (p) => (await import(/* @vite-ignore */ '/src/lib/settings.ts' as string)).updateSettings(p), partial);
 }

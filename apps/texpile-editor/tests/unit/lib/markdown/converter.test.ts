@@ -114,9 +114,8 @@ describe('markdownToProseMirror', () => {
 		expect(chip).toBe('![icon](i.png)');
 	});
 
-	// markdown-it normalizes every destination through mdurl.encode, which is right for an <img
-	// src> and wrong for a path we resolve on disk and write back to the .md: an image called
-	// 图片.png arrived as %E5%9B%BE%E7%89%87.png, never loaded, and got saved that way.
+	// a renderer percent-encodes every destination, which is right for an <img src> and wrong for a path
+	// we resolve on disk and write back to the .md: an image called 图片.png must stay as it is.
 	it('keeps image/link destinations as the author wrote them', () => {
 		const { doc } = markdownToProseMirror(
 			'![a](images/图片.png)\n\n![b](<my file.png>)\n\n![c](images/my%20file.png)\n\n![d](100%.png)\n\n![e](https://x.example/i.png?w=2&h=1#frag)\n\n[f](docs/café.md)\n'

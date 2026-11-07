@@ -7,13 +7,16 @@
 	import { untrack } from 'svelte';
 	import * as Y from 'yjs';
 	import type { Node as PMNode } from 'prosemirror-model';
-	import type { Transaction } from 'prosemirror-state';
+	import { TextSelection, type Transaction } from 'prosemirror-state';
+	import type { EditorView as PMEditorView } from 'prosemirror-view';
 	import { undo as pmUndo, redo as pmRedo, undoDepth } from 'prosemirror-history';
 	import { bindVisualUndo } from '$lib/editor/visual/visualUndo';
 	import { peersOnText, setRemoteCursors } from '$lib/editor/visual/extensions/remoteCursors';
 	import { applyRemotePatch } from './remotePatch';
 	import { computeBlockPatch, protectCaretBlock } from '$lib/editor/visual/blockPatch';
-	import { offsetAtPm } from '$lib/editor/visual/sourceMap';
+	import { caretAtOffset, offsetAtPm } from '$lib/editor/visual/sourceMap';
+	import { changedSpan } from '$lib/editor/changedSpan';
+	import { revealPosInCenter } from '$lib/editor/visual/jumpReveal';
 	import type { SourceMap } from '$lib/editor/visual/sourceSpans';
 	import type { ParsedLatexFile } from '$lib/workspace/latexRoundtrip';
 	import { EDIT_ORIGIN, SEED_ORIGIN } from '$lib/collab/sharedFiles';
@@ -133,6 +136,10 @@
 		api.lastParsedSource = snapshot;
 		applyRemotePatch(v, newDoc, oldMap, parsed.map, parsed.origins, oldSource, snapshot);
 		api.adopt(parsed, v.state.doc, snapshot);
+		if (revealStep) {
+			revealStep = false;
+			revealChange(v, oldSource, snapshot, parsed.map);
+		}
 		origStale = false;
 		deferredRestamp = false;
 		renderRemoteCursors(); // the patch dropped the carets inside what it replaced
@@ -143,6 +150,7 @@
 	// holds the same step: it starts a group where the editor does (beforeLocalEdit), so taken from there the step
 	// shows at once. A step it does not hold (the disk's, one from source mode) shows once the text is parsed
 	let seenDepth = 0;
+	let revealStep = false;
 	let seenView: unknown = null;
 
 	/** a local visual edit is about to go into the text: a new step of the editor's is a new step of the file's */
@@ -154,6 +162,15 @@
 		if (v === seenView && depth > seenDepth) um.stopCapturing();
 		seenView = v;
 		seenDepth = depth;
+	}
+
+	function revealChange(v: PMEditorView, from: string, to: string, map: SourceMap): void {
+		const span = changedSpan(from, to);
+		const pos = span && caretAtOffset(map, to, span.to);
+		if (pos == null) return;
+		const at = Math.min(pos, v.state.doc.content.size);
+		v.dispatch(v.state.tr.setSelection(TextSelection.near(v.state.doc.resolve(at))));
+		revealPosInCenter(v);
 	}
 
 	function step(dir: 'undo' | 'redo'): boolean {
@@ -171,7 +188,10 @@
 			v.dispatch(taken);
 			seenView = v;
 			seenDepth = undoDepth(v.state);
-		} else scheduleRemotePatch(0);
+		} else {
+			revealStep = true;
+			scheduleRemotePatch(0);
+		}
 		return true;
 	}
 	$effect(() => {
@@ -301,7 +321,9 @@
 		const v = mountedView; // re-fires when the view mounts, so carets render on entry
 		const binding = active() ? session.collabFor(path) : null;
 		if (!binding || !v) return;
-		function onAwareness() {
+		const self = binding.awareness.clientID;
+		function onAwareness(changes: { added: number[]; updated: number[]; removed: number[] }) {
+			if ([...changes.added, ...changes.updated, ...changes.removed].every((id) => id === self)) return;
 			return scheduleRemoteCursorRender();
 		}
 		binding.awareness.on('change', onAwareness);

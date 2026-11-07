@@ -7,19 +7,24 @@
 	import DrawModeIcon from './DrawModeIcon.svelte';
 	import DrawModeMenu from './DrawModeMenu.svelte';
 	import MoreToolsMenu from './MoreToolsMenu.svelte';
-	import { MODE_MENU_TOOLS, VIEW_TOOLS, railTools } from './tools';
+	import { COMPACT_TOOLS, MODE_MENU_TOOLS, VIEW_TOOLS, railTools, type ToolEntry } from './tools';
 
 	const HINTS = { grid: () => m.figure_toolbar_hint_grid(), tree: () => m.figure_toolbar_hint_tree() };
 
 	type Props = { editor: FigureEditorState };
 	const props: Props = $props();
 	const layout = $derived(props.editor.picture?.layout);
-	const tools = $derived(railTools(props.editor.language));
+	const compact = $derived(props.editor.panes.compact);
+	const rail = $derived(railTools(props.editor.language));
+	const tools = $derived(compact ? rail.filter((t) => t && COMPACT_TOOLS.has(t.id)) : rail);
+	const folded = $derived(compact ? rail.filter((t): t is ToolEntry => t !== null && !COMPACT_TOOLS.has(t.id)) : []);
 	const library = $derived(props.editor.language.features.includes('library'));
 </script>
 
 <div
-	class="bg-surface-50-950 border-surface-200-800 rounded-container absolute inset-x-0 top-1.5 z-20 mx-auto flex w-fit max-w-[calc(100%-0.75rem)] flex-wrap items-center justify-center gap-1 border px-2 py-0.5 shadow-lg"
+	class="bg-surface-50-950 border-surface-200-800 rounded-container absolute inset-x-0 top-1.5 z-20 mx-auto flex w-fit max-w-[calc(100%-0.75rem)] {compact
+		? 'flex-nowrap'
+		: 'flex-wrap'} items-center justify-center gap-1 border px-2 py-0.5 shadow-lg"
 	bind:offsetHeight={props.editor.panes.toolbarHeight}
 	role="toolbar"
 	aria-label={m.figure_toolbar()}
@@ -61,7 +66,7 @@
 		<span class="text-muted px-2 text-xs whitespace-nowrap">{HINTS[layout]()}</span>
 	{:else}
 		<span class="border-surface-300-700 mx-1 h-5 border-l"></span>
-		<MoreToolsMenu editor={props.editor} />
+		<MoreToolsMenu editor={props.editor} extra={folded} />
 		{#if library}<button
 				class="btn-icon btn-icon-base {props.editor.libraryShown ? 'bg-primary-tint text-primary-ink' : 'hover:preset-tonal'}"
 				data-library-toggle

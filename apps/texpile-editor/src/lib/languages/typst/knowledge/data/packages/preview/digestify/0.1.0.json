@@ -1,0 +1,1 @@
+{"version":1,"id":"@preview/digestify:0.1.0","names":{"bytes-to-hex":{"kind":"function","params":[{"name":"bytes","positional":true,"required":true},{"name":"upper","named":true,"default":"false"}]},"md4":{"kind":"value"},"md5":{"kind":"value"},"sha1":{"kind":"value"},"sha224":{"kind":"value"},"sha256":{"kind":"value"},"sha384":{"kind":"value"},"sha512":{"kind":"value"}}}

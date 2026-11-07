@@ -75,7 +75,7 @@ export class LocalHistoryActions {
 
 	/** the editor's comparison turned to `entry`; `replacing`, the copy it shows now */
 	show(path: string, entry: LocalHistoryEntry, replacing?: string): void {
-		const compare = { hash: `${LOCAL_REF}${entry.id}`, subject: `${sourceLabel(entry.source)} · ${entryDate(entry.timestamp)}` };
+		const compare = { hash: `${LOCAL_REF}${entry.id}`, subject: `${sourceLabel(entry.source)} - ${entryDate(entry.timestamp)}` };
 		this.deps.openCompareTab(path, compare, replacing);
 	}
 

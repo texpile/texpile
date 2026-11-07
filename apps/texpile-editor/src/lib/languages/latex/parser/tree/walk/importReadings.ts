@@ -5,25 +5,31 @@ import { ACCENT_COMMANDS, SYMBOLS } from '../../../knowledge/commands/texCharact
 import { commonFacts } from '../../../knowledge/commands/commandFacts';
 import { codeOnly } from '../../../texCode';
 import { definedIn, primitiveDefsIn } from '../../../userDefinitions';
+import { commandExpansions } from '../../../knowledge/commands/commandExpansions';
 import { holdsMath } from '../../../knowledge/environments/envFacts';
 import { ignoredMacros, isScopedSwitch } from '../../macros';
 import { definedMacrosIn, type DefinedMacro } from '../../signatures/definedMacros';
 import { signatureOfArgs } from '../../signatures/argSignature';
 import { tableEnvFacts } from '../../signatures/environmentFacts';
-import type { PackageTable } from '../../signatures/packageTable';
+import { repeatsOf, type PackageTable } from '../../signatures/packageTable';
 import { environmentName } from './stretch';
 
 export type ImportReadings = {
 	table: PackageTable;
 	/** the arguments a call of `name` reads; null for a command whose arguments nothing states */
 	argumentsOf(name: string): readonly Argument[] | null;
+	repeatOf(name: string): readonly Argument[];
 	environmentArgumentsOf(name: string): readonly Argument[];
 	/** the loaded files or a redefinition say how the command reads, in text or in math */
 	tableKnows(name: string): boolean;
 };
 
-// the row break's star and [space] follow it directly
-const CODE = new Map<string, Argument[]>([['\\', [{ kind: '!s' }, { kind: '!o' }]]]);
+// a row end's star and [space] follow it directly, \\ in text too
+const ROW_END: Argument[] = [{ kind: '!s' }, { kind: '!o' }];
+
+function codeArguments(name: string): Argument[] | undefined {
+	return commonFacts(name).endsRow ? ROW_END : undefined;
+}
 
 function argsOfSignature(signature: string): Argument[] {
 	return signature
@@ -53,6 +59,13 @@ function replaces(table: Map<string, Argument[]>, d: DefinedMacro): boolean {
 	if (!own) return false;
 	const keeps = d.defines === 'provide' || (!d.signature && (d.defines === 'renew' || d.defines === 'replace'));
 	return !keeps && own.map((a) => a.kind).join(' ') !== d.signature;
+}
+
+const ALIAS = /^\s*\\([a-zA-Z@]+)\s*$/;
+const MOST_ALIASES = 8;
+
+function aliasTargetOf(body: string | null | undefined): string | null {
+	return body ? (ALIAS.exec(body)?.[1] ?? null) : null;
 }
 
 /** a command the data says prints a glyph, with no arguments stated (\textdegree) */
@@ -129,16 +142,28 @@ export function importReadingsOf(options: {
 	for (const d of [...preambleMacros, ...bodyMacros])
 		if (replaces(table, d) && !replaced.has(d.name)) replaced.set(d.name, argsOfSignature(d.signature));
 	const own = new Map<string, Argument[]>();
-	for (const d of [...bodyMacros, ...preambleMacros]) if (!own.has(d.name)) own.set(d.name, argsOfSignature(d.signature));
-	// \def\name#1#2{...} takes two
-	for (const d of primitiveDefsIn(codeOnly(`${options.preamble}\n${options.body}`)))
-		if (d.params !== null && !own.has(d.name))
+	const aliases = new Map<string, string>();
+	for (const d of [...bodyMacros, ...preambleMacros]) {
+		if (own.has(d.name) || aliases.has(d.name)) continue;
+		const target = d.signature ? null : aliasTargetOf(d.body);
+		if (target) aliases.set(d.name, target);
+		else own.set(d.name, argsOfSignature(d.signature));
+	}
+	const primitives = [...primitiveDefsIn(codeOnly(`${options.preamble}\n${options.body}`)), ...commandExpansions()];
+	for (const d of primitives) {
+		if (d.params === null || own.has(d.name) || aliases.has(d.name)) continue;
+		const target = d.params ? null : aliasTargetOf(d.body);
+		if (target) aliases.set(d.name, target);
+		else
 			own.set(
 				d.name,
 				Array.from({ length: d.params }, () => ({ kind: 'm' }))
 			);
-	function stated(name: string): readonly Argument[] | null {
-		return CODE.get(name) ?? replaced.get(name) ?? table.get(name) ?? own.get(name) ?? (printsGlyph(name) ? [] : null);
+	}
+	function stated(name: string, depth = 0): readonly Argument[] | null {
+		const alias = aliases.get(name);
+		const aliased = alias && depth < MOST_ALIASES ? stated(alias, depth + 1) : null;
+		return codeArguments(name) ?? replaced.get(name) ?? table.get(name) ?? own.get(name) ?? aliased ?? (printsGlyph(name) ? [] : null);
 	}
 	const inferred = inferredArguments(
 		options.tree,
@@ -153,7 +178,8 @@ export function importReadingsOf(options: {
 	return {
 		table: options.table,
 		argumentsOf: (name) => stated(name) ?? inferred.get(name) ?? null,
+		repeatOf: (name) => (replaced.has(name) ? [] : (repeatsOf(options.table, name) ?? [])),
 		environmentArgumentsOf: (name) => (Object.hasOwn(options.table.envs, name) ? options.table.envs[name] : environments.get(name)) ?? [],
-		tableKnows: (name) => CODE.has(name) || replaced.has(name) || table.has(name)
+		tableKnows: (name) => !!codeArguments(name) || replaced.has(name) || table.has(name)
 	};
 }

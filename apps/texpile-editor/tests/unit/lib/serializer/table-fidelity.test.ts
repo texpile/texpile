@@ -111,7 +111,7 @@ describe('table floats', () => {
 
 describe('a float around a table kept as written', () => {
 	it('stays an environment, so the document holds only valid nodes', () => {
-		const src = '\\begin{table}\n\\caption{T}\n\\begin{longtable}{ll}\nA & B \\\\\n\\endhead\nx & y \\\\\n\\end{longtable}\n\\end{table}';
+		const src = '\\begin{table}\n\\caption{T}\n\\begin{longtable}{ll}\n\\endhead\nx & y \\\\\n\\end{longtable}\n\\end{table}';
 		const { doc } = treeToProseMirror(src);
 		expect(() => doc.check()).not.toThrow();
 		expect(doc.child(0).type.name).toBe('environment');
