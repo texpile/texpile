@@ -6,16 +6,16 @@ export function readLabelName(source: string): string | null {
 	return name && sanitizeLabel(name) === name ? name : null;
 }
 
+/** the label and its references in one step, so no state of the document has them apart */
 export function setLabelName(view: EditorView, pos: number, name: string): void {
 	const node = view.state.doc.nodeAt(pos);
 	if (node?.type.name !== 'label' || node.attrs.name === name || labelTaken(view.state.doc, name, pos)) return;
-	view.dispatch(view.state.tr.setNodeMarkup(pos, null, { ...node.attrs, name }));
+	const tr = view.state.tr.setNodeMarkup(pos, null, { ...node.attrs, name });
+	repointRefs(tr, view.state.doc, String(node.attrs.name ?? ''), name);
+	view.dispatch(tr);
 }
 
-export function repointLabelRefs(view: EditorView, from: string, to: string): void {
-	if (!from || from === to || sanitizeLabel(to) !== to) return;
-	const tr = view.state.tr;
-	repointRefs(tr, view.state.doc, from, to);
-	if (tr.docChanged) view.dispatch(tr);
-	announceLabelRenamed(from, to);
+// once per panel, so the other files take one rename for a name typed over many edits
+export function announceLabelMove(from: string, to: string): void {
+	if (sanitizeLabel(to) === to) announceLabelRenamed(from, to);
 }

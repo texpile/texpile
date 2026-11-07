@@ -10,7 +10,7 @@ import { history, undo } from 'prosemirror-history';
 import { EditorView } from 'prosemirror-view';
 import { schema } from '$lib/languages/latex/schema/latexPMSchema';
 import { LabelView } from '$lib/languages/latex/visual/plugins/label/node/labelView.svelte';
-import { readLabelName, repointLabelRefs, setLabelName } from '$lib/languages/latex/visual/plugins/label/node/renameLabel';
+import { readLabelName, setLabelName } from '$lib/languages/latex/visual/plugins/label/node/renameLabel';
 import { chipPanel, closeChipPanel } from '$lib/editor/visual/extensions/drawnChips/chipPanel.svelte';
 
 /** a doc holding one label and the references pointing at it */
@@ -64,22 +64,43 @@ describe('the label chip', () => {
 });
 
 describe('the label chip panel', () => {
-	it('holds the label as LaTeX and renames the references once, when it closes', () => {
+	it('holds the label as LaTeX, takes the references along as it is typed and tells the other files once', () => {
 		const view = makeEditor('sec:old', ['sec:old', 'sec:old', 'other:thing']);
 		const chip = new LabelView(view.state.doc.nodeAt(labelPos(view))!, view, () => labelPos(view));
+		const told: unknown[] = [];
+		const listen = (e: Event) => told.push((e as CustomEvent).detail);
+		addEventListener('texpile:label-renamed', listen);
 		chip.dom.querySelector('button')!.click();
 		const request = chipPanel.request!;
 		expect(request.source).toBe('\\label{sec:old}');
 
 		request.write('\\label{sec:ne');
 		expect(view.state.doc.nodeAt(labelPos(view))?.attrs.name).toBe('sec:old');
+		request.write('\\label{sec:n}');
 		request.write('\\label{sec:new}');
 		expect(view.state.doc.nodeAt(labelPos(view))?.attrs.name).toBe('sec:new');
-		expect(refTexts(view)).toEqual(['sec:old', 'sec:old', 'other:thing']);
-
-		closeChipPanel('enter');
 		expect(refTexts(view)).toEqual(['sec:new', 'sec:new', 'other:thing']);
+
+		chip.update(view.state.doc.nodeAt(labelPos(view))!);
+		closeChipPanel('enter');
+		expect(told).toEqual([{ from: 'sec:old', to: 'sec:new' }]);
+		removeEventListener('texpile:label-renamed', listen);
 		chip.destroy();
+		view.destroy();
+	});
+
+	it('tells the other files when the chip goes away with its panel open', () => {
+		const view = makeEditor('sec:old', ['sec:old']);
+		const chip = new LabelView(view.state.doc.nodeAt(labelPos(view))!, view, () => labelPos(view));
+		const told: unknown[] = [];
+		const listen = (e: Event) => told.push((e as CustomEvent).detail);
+		addEventListener('texpile:label-renamed', listen);
+		chip.dom.querySelector('button')!.click();
+		chipPanel.request!.write('\\label{sec:new}');
+		chip.update(view.state.doc.nodeAt(labelPos(view))!);
+		chip.destroy();
+		expect(told).toEqual([{ from: 'sec:old', to: 'sec:new' }]);
+		removeEventListener('texpile:label-renamed', listen);
 		view.destroy();
 	});
 });
@@ -95,19 +116,11 @@ describe('renaming a label', () => {
 	it('takes every reference along in one undo step', () => {
 		const view = makeEditor('sec:old', ['sec:old', 'sec:old', 'other:thing'], { history: true });
 		setLabelName(view, labelPos(view), 'sec:new');
-		repointLabelRefs(view, 'sec:old', 'sec:new');
 		expect(refTexts(view)).toEqual(['sec:new', 'sec:new', 'other:thing']);
 
 		undo(view.state, view.dispatch);
 		expect(refTexts(view)).toEqual(['sec:old', 'sec:old', 'other:thing']);
-		view.destroy();
-	});
-
-	it('leaves the references alone for a name that is not valid', () => {
-		const view = makeEditor('sec:old', ['sec:old']);
-		repointLabelRefs(view, 'sec:old', ' ');
-		repointLabelRefs(view, 'sec:old', 'sec: my new!');
-		expect(refTexts(view)).toEqual(['sec:old']);
+		expect(view.state.doc.nodeAt(labelPos(view))?.attrs.name).toBe('sec:old');
 		view.destroy();
 	});
 

@@ -10,7 +10,7 @@ import type { EditorView, NodeView } from 'prosemirror-view';
 import type { Node as PMNode } from 'prosemirror-model';
 import { mount, unmount } from 'svelte';
 import LabelDisplay from './LabelDisplay.svelte';
-import { readLabelName, repointLabelRefs, setLabelName } from './renameLabel';
+import { announceLabelMove, readLabelName, setLabelName } from './renameLabel';
 
 type LabelDisplayProps = { name: string; onOpen: () => void };
 
@@ -45,22 +45,29 @@ export class LabelView implements NodeView {
 		quietTemplateSpaces(this.dom);
 	}
 
+	private nameAtOpen: string | null = null;
+
 	private openPanel(): void {
 		if (chipPanelOpenFor(this.dom)) return;
-		const opened = String(this.node.attrs.name ?? '');
+		this.nameAtOpen = String(this.node.attrs.name ?? '');
 		openFieldPanel({
 			anchor: this.dom,
-			source: labelSource(opened),
+			source: labelSource(this.nameAtOpen),
 			view: this.view,
 			write: (next) => {
 				const name = readLabelName(next);
 				if (name) setLabelName(this.view, this.getPos(), name);
 			},
 			onClose: (how) => {
-				repointLabelRefs(this.view, opened, String(this.view.state.doc.nodeAt(this.getPos())?.attrs.name ?? ''));
+				this.announceRename();
 				if (how !== 'away') this.view.focus();
 			}
 		});
+	}
+
+	private announceRename(): void {
+		if (this.nameAtOpen !== null) announceLabelMove(this.nameAtOpen, String(this.node.attrs.name ?? ''));
+		this.nameAtOpen = null;
 	}
 
 	update(node: PMNode): boolean {
@@ -79,6 +86,7 @@ export class LabelView implements NodeView {
 	}
 
 	destroy(): void {
+		if (chipPanelOpenFor(this.dom)) this.announceRename();
 		dismissChipPanel(this.dom);
 		unmount(this.svelteComponent);
 	}
