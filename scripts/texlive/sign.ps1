@@ -23,7 +23,25 @@ if (-not $DryRun) {
 	Import-Module TrustedSigning -MinimumVersion 0.5.0
 }
 
-$unsigned = @(Get-ChildItem $Dir -Recurse -File -Include *.exe, *.dll | Where-Object { (Get-AuthenticodeSignature $_.FullName).Status -ne 'Valid' })
+# signtool signs a PE file only; TeX Live's dviout carries an older kind of .exe (GRAPHIC\PS\gssub.exe)
+function Test-PortableExecutable([string]$Path) {
+	$stream = [IO.File]::OpenRead($Path)
+	try {
+		$reader = New-Object IO.BinaryReader($stream)
+		if ($stream.Length -lt 64 -or $reader.ReadUInt16() -ne 0x5A4D) { return $false }
+		$stream.Position = 0x3C
+		$offset = $reader.ReadInt32()
+		if ($offset -lt 0 -or $offset + 4 -gt $stream.Length) { return $false }
+		$stream.Position = $offset
+		return $reader.ReadUInt32() -eq 0x00004550
+	} finally {
+		$stream.Dispose()
+	}
+}
+
+$candidates = @(Get-ChildItem $Dir -Recurse -File -Include *.exe, *.dll | Where-Object { (Get-AuthenticodeSignature $_.FullName).Status -ne 'Valid' })
+$unsigned = @($candidates | Where-Object { Test-PortableExecutable $_.FullName })
+foreach ($file in $candidates | Where-Object { $unsigned -notcontains $_ }) { Write-Host "not a PE file, left as it is: $($file.FullName.Substring($Dir.Length + 1))" }
 if (-not $unsigned.Count) { throw 'found no program to sign' }
 Write-Host "$($unsigned.Count) programs to sign"
 
