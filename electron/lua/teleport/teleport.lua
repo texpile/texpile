@@ -162,10 +162,10 @@ end
 function T.wind_down()
 	T.silent, T.cutting, T.want_point = true, true, true
 end
--- the next edit of the same file asks for the run to end once its first page is out
+-- the next edit of the same file asks for the run to end, which it does once its first page is out
 local last_poll = 0
 function T.poll_cut(now)
-	if not T.cut_path or T.cutting then return end
+	if not T.cut_path or T.cutting or not T.report_from or T.shipped < T.report_from then return end
 	local t = os.gettimeofday()
 	if not now and t - last_poll < 0.02 then return end
 	last_poll = t
@@ -420,6 +420,8 @@ function texpile_tele_point(line, opening)
 end
 
 function T.point(line, opening)
+	-- before a stop's diff, which a newer edit would waste
+	T.poll_cut(true)
 	if T.cutting then
 		if clean(line) then T.settle() end
 		return

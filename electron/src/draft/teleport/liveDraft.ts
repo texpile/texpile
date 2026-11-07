@@ -46,8 +46,8 @@ export class LiveDraft {
 	#running: DraftEngine | null = null;
 	// the newest waiting edit of each file, in the order they came: an older one of the same file is in its diff
 	#queued = new Map<string, Queued>();
-	// set once the running teleport's first page is out: a newer edit of the same file may stop it there, as that
-	// edit's diff holds this one too
+	// a newer edit of the running teleport's file holds this one in its diff: the engine ends the run once its first
+	// page is out
 	#cut: { file: string; now: () => void } | null = null;
 	#closed = false;
 
@@ -199,6 +199,17 @@ export class LiveDraft {
 		}
 		killAfter('stalled', STALL_MS);
 		let cutAsked = false;
+		let paged = false;
+		this.#cut = {
+			file,
+			now: () => {
+				if (cutAsked) return;
+				cutAsked = true;
+				engine.cut(serve.cut);
+				if (paged) killAfter('cut', CUT_MS);
+			}
+		};
+		if (this.#queued.has(file)) this.#cut.now();
 		// pages read in order, each as soon as the engine reports it
 		let pages = Promise.resolve();
 		const outcome = await engine.teleport(planRel, (p) => {
@@ -206,16 +217,9 @@ export class LiveDraft {
 				const page = await readPage(engine.abs, this.root, p.n, p.w, p.h, p.unc);
 				if (!this.#closed) onPage(page);
 			});
-			if (!cutAsked) killAfter('stalled', STALL_MS);
-			this.#cut = {
-				file,
-				now: () => {
-					engine.cut(serve.cut);
-					if (!cutAsked) killAfter('cut', CUT_MS);
-					cutAsked = true;
-				}
-			};
-			if (this.#queued.has(file)) this.#cut.now();
+			if (cutAsked && !paged) killAfter('cut', CUT_MS);
+			else if (!cutAsked) killAfter('stalled', STALL_MS);
+			paged = true;
 		});
 		clearTimeout(watch);
 		this.#cut = null;
