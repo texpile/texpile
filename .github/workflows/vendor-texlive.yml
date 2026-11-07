@@ -1,0 +1,293 @@
+# Builds the TeX Live vendor/texlive.json pins for each platform with TeX Live's own install-tl and tlmgr, runs live
+# mode's gate on each build, and puts the builds on dl.texpile.com/vendor/texlive/<version>/, where the Toolchain's
+# TeX install downloads them. Started by hand only; see vendor/README.md.
+#
+# Every build installs from the one mirror the snapshot job picked and checks before and after that the mirror still
+# serves the same package database, so all of them hold one revision. The Windows programs TeX Live leaves unsigned
+# are signed with Azure Trusted Signing, using release.yml's credentials; the macOS and Linux files are kept as built.
+#
+# With Publish off the run stops at workflow artifacts. A published version is never replaced: SHA256SUMS goes up
+# last, and its presence stops a second upload.
+name: vendor-texlive
+
+on:
+  workflow_dispatch:
+    inputs:
+      publish:
+        description: 'Upload to dl.texpile.com (off: build the bundles as workflow artifacts only)'
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+
+concurrency: vendor-texlive
+
+jobs:
+  snapshot:
+    runs-on: ubuntu-latest
+    outputs:
+      mirror: ${{ steps.pick.outputs.mirror }}
+      tlpdb: ${{ steps.pick.outputs.tlpdb }}
+      version: ${{ steps.pick.outputs.version }}
+    steps:
+      - uses: actions/checkout@v7
+
+      - id: pick
+        name: Pick a mirror and read the revision it serves
+        run: |
+          set -euo pipefail
+          year="$(jq -r .year vendor/texlive.json)"
+          repository="$(jq -r .repository vendor/texlive.json)"
+          # mirror.ctan.org can send a request to a mirror whose certificate chain curl refuses; each try is a new pick
+          mirror=
+          for attempt in 1 2 3 4 5; do
+            if url="$(curl -fsSL -o /dev/null -w '%{url_effective}' "$repository/tlpkg/texlive.tlpdb.sha512")"; then
+              mirror="${url%/tlpkg/texlive.tlpdb.sha512}"
+              break
+            fi
+          done
+          [ -n "$mirror" ] || { echo "::error::no mirror of $repository answered"; exit 1; }
+          tlpdb="$(curl -fsSL --retry 3 "$mirror/tlpkg/texlive.tlpdb.sha512")"
+          curl -fsSL --retry 3 "$mirror/tlpkg/texlive.tlpdb.xz" | xz -dc > texlive.tlpdb
+          [ "$(sha512sum texlive.tlpdb | cut -d' ' -f1)" = "${tlpdb%% *}" ] || { echo "::error::$mirror serves a package database that fails its checksum"; exit 1; }
+          config="$(awk '/^name 00texlive.config$/,/^$/' texlive.tlpdb)"
+          release="$(echo "$config" | sed -n 's|^depend release/||p')"
+          revision="$(echo "$config" | sed -n 's|^depend revision/||p')"
+          [ "$release" = "$year" ] || { echo "::error::$repository serves TeX Live $release and the pin asks for $year"; exit 1; }
+          echo "Installing TeX Live $year, revision $revision, from $mirror" >> "$GITHUB_STEP_SUMMARY"
+          echo "mirror=$mirror" >> "$GITHUB_OUTPUT"
+          echo "tlpdb=$tlpdb" >> "$GITHUB_OUTPUT"
+          echo "version=$year-r$revision" >> "$GITHUB_OUTPUT"
+
+  build:
+    needs: snapshot
+    strategy:
+      matrix:
+        include:
+          - platform: x86_64-linux
+            runner: ubuntu-latest
+          - platform: aarch64-linux
+            runner: ubuntu-24.04-arm
+          - platform: universal-darwin
+            # not macos-latest: release.yml's signing keychain would not unlock on its newer image
+            runner: macos-15
+          - platform: windows
+            runner: windows-latest
+    runs-on: ${{ matrix.runner }}
+    timeout-minutes: 120
+    env:
+      MIRROR: ${{ needs.snapshot.outputs.mirror }}
+      TLPDB: ${{ needs.snapshot.outputs.tlpdb }}
+      PLATFORM: ${{ matrix.platform }}
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Install TeX Live
+        if: runner.os != 'Windows'
+        run: |
+          set -euo pipefail
+          same() {
+            [ "$(curl -fsSL --retry 3 "$MIRROR/tlpkg/texlive.tlpdb.sha512")" = "$TLPDB" ] \
+              || { echo "::error::$MIRROR moved to a newer revision during the run; run the workflow again"; exit 1; }
+          }
+          same
+          mkdir installer
+          curl -fsSL --retry 3 "$MIRROR/install-tl-unx.tar.gz" | tar -xz -C installer --strip-components=1
+          perl installer/install-tl -no-interaction -portable -scheme scheme-basic -no-doc-install -no-src-install \
+            -texdir "$PWD/texlive" -repository "$MIRROR"
+          tlmgr="$PWD/texlive/bin/$PLATFORM/tlmgr"
+          "$tlmgr" --repository "$MIRROR" install $(cat vendor/texlive-packages.txt)
+          "$tlmgr" option repository "$(jq -r .repository vendor/texlive.json)"
+          same
+
+      - name: Install TeX Live
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: |
+          $ErrorActionPreference = 'Stop'
+          function Assert-SameRevision {
+            if ((Invoke-RestMethod "$env:MIRROR/tlpkg/texlive.tlpdb.sha512").Trim() -ne $env:TLPDB) {
+              throw "$env:MIRROR moved to a newer revision during the run; run the workflow again"
+            }
+          }
+          Assert-SameRevision
+          Invoke-WebRequest "$env:MIRROR/install-tl.zip" -OutFile install-tl.zip
+          Expand-Archive install-tl.zip -DestinationPath installer
+          $installer = (Get-ChildItem installer -Directory | Select-Object -First 1).FullName
+          & "$installer\install-tl-windows.bat" -no-gui -no-interaction -portable -scheme scheme-basic -no-doc-install `
+            -no-src-install -texdir "$PWD\texlive" -repository $env:MIRROR
+          if ($LASTEXITCODE) { throw "install-tl exited with $LASTEXITCODE" }
+          $tlmgr = "$PWD\texlive\bin\windows\tlmgr.bat"
+          & $tlmgr --repository $env:MIRROR install (Get-Content vendor\texlive-packages.txt)
+          if ($LASTEXITCODE) { throw "tlmgr exited with $LASTEXITCODE" }
+          & $tlmgr option repository (Get-Content vendor\texlive.json | ConvertFrom-Json).repository
+          if ($LASTEXITCODE) { throw "tlmgr exited with $LASTEXITCODE" }
+          Assert-SameRevision
+
+      - name: Check the macOS programs carry TeX Live's signatures
+        if: runner.os == 'macOS'
+        run: |
+          set -euo pipefail
+          find "texlive/bin/$PLATFORM" -type f -perm -u+x | while read -r program; do
+            if file "$program" | grep -q Mach-O; then codesign --verify --strict "$program"; fi
+          done
+
+      - name: Set up Azure Trusted Signing
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: |
+          Install-PSResource -Name TrustedSigning -Version '[0.5.0,)' -Repository PSGallery -TrustRepository -Scope CurrentUser -ErrorAction Stop
+          Import-Module TrustedSigning -MinimumVersion 0.5.0 -ErrorAction Stop
+
+      - name: Sign the programs TeX Live leaves unsigned
+        if: runner.os == 'Windows'
+        shell: pwsh
+        env:
+          AZURE_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
+          AZURE_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
+          AZURE_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
+          SIGN_ENDPOINT: ${{ vars.AZURE_ENDPOINT }}
+          SIGN_ACCOUNT: ${{ vars.AZURE_CODE_SIGNING_ACCOUNT }}
+          SIGN_PROFILE: ${{ vars.AZURE_CERT_PROFILE }}
+        run: |
+          $ErrorActionPreference = 'Stop'
+          # Microsoft's runtime DLLs come signed and keep their own signature
+          $unsigned = @(Get-ChildItem texlive -Recurse -File -Include *.exe, *.dll | Where-Object { (Get-AuthenticodeSignature $_.FullName).Status -ne 'Valid' })
+          if (-not $unsigned.Count) { throw 'found no program to sign' }
+          $unsigned.FullName | Set-Content "$env:RUNNER_TEMP\unsigned.txt"
+          # the timestamp keeps the signatures valid once the three-day certificate lapses
+          Invoke-TrustedSigning -Endpoint $env:SIGN_ENDPOINT -CodeSigningAccountName $env:SIGN_ACCOUNT `
+            -CertificateProfileName $env:SIGN_PROFILE -FilesCatalog "$env:RUNNER_TEMP\unsigned.txt" -FileDigest SHA256 `
+            -TimestampRfc3161 'http://timestamp.acs.microsoft.com' -TimestampDigest SHA256
+          foreach ($file in $unsigned) {
+            $signature = Get-AuthenticodeSignature $file.FullName
+            if ($signature.Status -ne 'Valid' -or -not $signature.TimeStamperCertificate) { throw "$($file.FullName): $($signature.Status)" }
+          }
+          Write-Host "signed $($unsigned.Count) programs"
+
+      - name: Pack the bundle
+        if: runner.os != 'Windows'
+        run: |
+          set -euo pipefail
+          # tlmgr's copy of the mirror's package database; it fetches a fresh one on its next run
+          rm -f texlive/tlpkg/texlive.tlpdb.main.*
+          mkdir dist
+          tar -cJf "dist/texlive-$PLATFORM.tar.xz" texlive
+
+      - name: Pack the bundle
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: |
+          $ErrorActionPreference = 'Stop'
+          Remove-Item texlive\tlpkg\texlive.tlpdb.main.*
+          New-Item -ItemType Directory dist | Out-Null
+          # the tar the app unpacks with; it reads zip, and xz only on some Windows builds
+          & "$env:SystemRoot\System32\tar.exe" -a -cf "dist\texlive-$env:PLATFORM.zip" texlive
+          if ($LASTEXITCODE) { throw "tar exited with $LASTEXITCODE" }
+
+      - uses: actions/upload-artifact@v7
+        with:
+          name: texlive-${{ matrix.platform }}
+          path: dist/
+          if-no-files-found: error
+          compression-level: 0
+
+      - uses: pnpm/action-setup@v6
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+          cache: pnpm
+
+      - run: pnpm install --frozen-lockfile
+
+      # after packing: the gate's runs write the font cache into the tree
+      - name: Run live mode's gate on the fixtures
+        shell: bash
+        working-directory: apps/texpile-editor
+        run: |
+          set -euo pipefail
+          export PATH="$(cd "../../texlive/bin/$PLATFORM" && pwd):$PATH"
+          for fixture in tests/live/fixtures/*/; do
+            # ctex comes from tlmgr when a document first loads it
+            [ "$(basename "$fixture")" = cjk ] && continue
+            node tests/live/teleport/edits.mjs "$fixture" main.tex --edits=6 --seed=1
+          done
+
+  publish:
+    needs: [snapshot, build]
+    runs-on: ubuntu-latest
+    environment: CICD
+    env:
+      BUCKET: texpile-releases
+      VERSION: ${{ needs.snapshot.outputs.version }}
+      OUT: vendor-texlive-${{ needs.snapshot.outputs.version }}
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/download-artifact@v8
+        with:
+          pattern: texlive-*
+          merge-multiple: true
+          path: ${{ env.OUT }}
+
+      - name: Add the source, the licenses and the checksums
+        run: |
+          set -euo pipefail
+          source="$(jq -r .source vendor/texlive.json)"
+          name="$(basename "$source")"
+          url=
+          for attempt in 1 2 3 4 5; do
+            if url="$(curl -fsSL -o "$OUT/$name" -w '%{url_effective}' "$source")"; then break; fi
+            url=
+          done
+          [ -n "$url" ] || { echo "::error::no mirror served $source"; exit 1; }
+          (cd "$OUT" && curl -fsSL --retry 3 "$url.sha512" | sha512sum --strict -c -)
+          tar -xJf "$OUT/texlive-x86_64-linux.tar.xz" -C "$RUNNER_TEMP" texlive/LICENSE.TL texlive/LICENSE.CTAN
+          cp "$RUNNER_TEMP/texlive/LICENSE.TL" "$RUNNER_TEMP/texlive/LICENSE.CTAN" "$OUT/"
+          printf 'TeX Live %s, revision %s of its repository, installed with its own install-tl and tlmgr.\nThe Windows programs TeX Live leaves unsigned are signed by Texpile LLC. Nothing else is changed.\nThe source of the programs is %s. The Subversion repository of TeX Live holds every revision.\n' \
+            "${VERSION%%-r*}" "${VERSION##*-r}" "$name" > "$OUT/SOURCE"
+          (cd "$OUT" && sha256sum texlive-* > SHA256SUMS && cat SHA256SUMS)
+
+      - name: Write the hashes the app pins
+        run: |
+          {
+            echo 'For `electron/src/texlive/texliveRelease.ts`:'
+            echo '```ts'
+            echo "export const TEXLIVE_VERSION = '$VERSION';"
+            echo 'const SHA256_BY_PLATFORM: Record<string, string> = {'
+            grep -v -- '-source\.tar\.xz$' "$OUT/SHA256SUMS" | while read -r hash name; do
+              platform="${name#texlive-}"
+              platform="${platform%.zip}"
+              platform="${platform%.tar.xz}"
+              echo "	'$platform': '$hash',"
+            done
+            echo '};'
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Upload to dl.texpile.com
+        if: inputs.publish
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        run: |
+          set -euo pipefail
+          prefix="vendor/texlive/$VERSION"
+          if npx wrangler@4 r2 object get "$BUCKET/$prefix/SHA256SUMS" --file "$RUNNER_TEMP/published" --remote > /dev/null 2>&1; then
+            echo "::error::$prefix is already published; a new build of it would break the hashes Texpile pins"
+            exit 1
+          fi
+          put() { npx wrangler@4 r2 object put "$BUCKET/$prefix/$1" --file "$OUT/$1" --remote --content-type "$2"; }
+          for file in "$OUT"/texlive-*; do
+            name="$(basename "$file")"
+            case "$name" in
+              *.zip) put "$name" application/zip ;;
+              *) put "$name" application/x-xz ;;
+            esac
+          done
+          put LICENSE.TL 'text/plain; charset=utf-8'
+          put LICENSE.CTAN 'text/plain; charset=utf-8'
+          put SOURCE 'text/plain; charset=utf-8'
+          put SHA256SUMS 'text/plain; charset=utf-8'
