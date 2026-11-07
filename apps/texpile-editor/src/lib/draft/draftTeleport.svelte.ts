@@ -10,6 +10,8 @@ type TeleportHooks = {
 	mainFile: () => string;
 	applyPage: (p: DraftPage, seq: number) => Promise<void>;
 	landed: (r: TeleportLanded) => Promise<void>;
+	/** the compile in flight, which lands the index edits teleport from */
+	compileInFlight: () => Promise<unknown> | null;
 	setStatus: (s: string) => void;
 	emit: (kind: string, detail?: unknown) => void;
 };
@@ -38,6 +40,12 @@ export class DraftTeleport {
 		const seq = ++this.seq;
 		const t0 = performance.now();
 		const r = await n.draftTeleport({ root: this.hooks.root(), mainFile: this.hooks.mainFile(), file, text, seq });
+		// a new compile would start the running one over, and typing then kept a slow first compile from ending
+		const compile = !r.ok && r.reason === 'no-index' ? this.hooks.compileInFlight() : null;
+		if (compile) {
+			await compile;
+			return this.edit(file, text);
+		}
 		await this.pageQueue;
 		this.hooks.emit('teleport', { ...r, seq, file, roundTripMs: Math.round(performance.now() - t0) });
 		if (r.ok) {

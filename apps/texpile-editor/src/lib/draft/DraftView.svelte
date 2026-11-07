@@ -232,7 +232,10 @@
 			{ id: 'save', inMenu: true, render: save }
 		]}
 	/>
-	<ProgressLine active={ctrl.savingPdf && compiler.compiling} label={m.draft_status_compiling_export()} />
+	<ProgressLine active={compiler.compiling && !compiler.quiet} label={compiler.status} />
+	{#if compiler.slow}
+		<p class="text-muted m-3 shrink-0 text-center text-sm">{m.draft_first_compile_slow()}</p>
+	{/if}
 	{#if compiler.missingTool}
 		<div class="text-error-ink bg-surface-50-950 rounded-container m-3 flex shrink-0 items-center gap-3 p-3 text-xs">
 			<span class="min-w-0 flex-1">{compiler.error}</span>

@@ -1247,6 +1247,7 @@
 	"draft_status_updated": "Updated in {ms} ms",
 	"draft_status_compiling": "Compiling project…",
 	"draft_status_compiling_export": "Compiling document for export…",
+	"draft_first_compile_slow": "The first preview takes longest because it runs the whole document. Edits after it show in a moment.",
 	"draft_status_compiled": "Compiled in {secs} s",
 	"draft_compiled_passes": "{passes} passes",
 	"draft_preview_error_label": "preview error",

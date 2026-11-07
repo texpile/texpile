@@ -1247,6 +1247,7 @@
 	"draft_status_updated": "In {ms} ms aktualisiert",
 	"draft_status_compiling": "Projekt wird kompiliert…",
 	"draft_status_compiling_export": "Dokument wird für den Export kompiliert…",
+	"draft_first_compile_slow": "Die erste Vorschau dauert am längsten, weil sie das ganze Dokument setzt. Änderungen danach erscheinen gleich.",
 	"draft_status_compiled": "In {secs} s kompiliert",
 	"draft_compiled_passes": "{passes} Durchläufe",
 	"draft_preview_error_label": "Vorschaufehler",

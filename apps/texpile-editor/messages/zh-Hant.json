@@ -1247,6 +1247,7 @@
 	"draft_status_updated": "已在 {ms} 毫秒內更新",
 	"draft_status_compiling": "正在編譯專案……",
 	"draft_status_compiling_export": "正在編譯文件以匯出……",
+	"draft_first_compile_slow": "首次預覽耗時最長，因為它要處理整份文件。之後的修改會很快顯示。",
 	"draft_status_compiled": "已在 {secs} 秒內編譯完成",
 	"draft_compiled_passes": "{passes} 次編譯",
 	"draft_preview_error_label": "預覽錯誤",

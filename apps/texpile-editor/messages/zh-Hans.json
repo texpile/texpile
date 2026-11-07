@@ -1247,6 +1247,7 @@
 	"draft_status_updated": "已在 {ms} 毫秒内更新",
 	"draft_status_compiling": "正在编译项目……",
 	"draft_status_compiling_export": "正在编译文档以导出……",
+	"draft_first_compile_slow": "首次预览耗时最长，因为它要处理整个文档。之后的修改会很快显示。",
 	"draft_status_compiled": "已在 {secs} 秒内编译完成",
 	"draft_compiled_passes": "{passes} 次编译",
 	"draft_preview_error_label": "预览错误",
