@@ -36,7 +36,7 @@ With more than one TeX Live or MiKTeX installed, pick one under **Distribution**
 
 A TeX on PATH or in **Folders** comes first. To use the TeX Live Texpile installed, pick **TeX Live 2026 (installed by Texpile)** under **Distribution**. **Remove** deletes it.
 
-When a document loads a package this TeX Live lacks, the live preview installs it with tlmgr, TeX Live's own package manager, and compiles again. Each package needs the internet once.
+When a document loads a package this TeX Live lacks, the live preview and **Compile** install it with tlmgr, TeX Live's own package manager, and compile again. Each package needs the internet once.
 
 ## Install tinymist for Typst
 
