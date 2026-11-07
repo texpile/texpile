@@ -119,8 +119,6 @@
 		el.addEventListener('wheel', onWheel, { passive: false });
 		return () => el.removeEventListener('wheel', onWheel);
 	});
-	// the losing side of a takeover pauses immediately rather than on the next keystroke
-	$effect(() => compiler.attachPreempt());
 	$effect(() => ctrl.teleport.attach());
 </script>
 
@@ -235,16 +233,6 @@
 		]}
 	/>
 	<ProgressLine active={ctrl.savingPdf && compiler.compiling} label={m.draft_status_compiling_export()} />
-	{#if compiler.busyElsewhere}
-		<div
-			class="border-surface-300-700 bg-surface-50-950 rounded-container m-3 flex shrink-0 items-center justify-between gap-3 border p-3 text-sm"
-		>
-			<span class="text-muted">{m.draft_busy_other_window()}</span>
-			<button class="btn btn-xs preset-filled-primary-500 shrink-0" onclick={() => compiler.takeoverEngine()}
-				>{m.draft_busy_takeover()}</button
-			>
-		</div>
-	{/if}
 	{#if compiler.missingTool}
 		<div class="text-error-ink bg-surface-50-950 rounded-container m-3 flex shrink-0 items-center gap-3 p-3 text-xs">
 			<span class="min-w-0 flex-1">{compiler.error}</span>

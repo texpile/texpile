@@ -1,12 +1,14 @@
-// Engines parked at the base, ready for a teleport or a compile. A teleport hands its engine back, which then parks
-// at the base again; the pool spawns a new one only when an engine exits. A spare is only as good as what it read
-// before the base: the main file's preamble, the seed files and the project files the preamble loaded.
+// Engines parked at the base, ready for a teleport or a compile, one pool per folder. A teleport hands its engine
+// back, which then parks at the base again; the pool spawns a new one only when an engine exits. A spare is only as
+// good as what it read before the base: the main file's preamble, the seed files and the project files the preamble
+// loaded.
 import * as fs from 'node:fs';
 import * as path from 'node:path';
 import * as crypto from 'node:crypto';
 import { DraftEngine } from './draftEngine';
+import { normRoot } from '../../windows/normRoot';
 
-// each parked lualatex holds 100 to 300 MB; the count takes in the ones serving
+// each parked lualatex holds 100 to 300 MB; the count takes in the ones serving, per folder
 const ENGINES = 2;
 const IDLE_STOP_MS = 10 * 60 * 1000;
 // a served run that reaches no clean point in this long is in a loop
@@ -26,12 +28,6 @@ export type PoolConfig = {
 	/** fonts for a spare to load while it waits, root-relative */
 	fontList?: string;
 };
-
-let spares: Spare[] = [];
-// taken and not handed back yet, with the key and stamp they were taken under
-const out = new Map<DraftEngine, Spare>();
-let config: PoolConfig | null = null;
-let idleTimer: NodeJS.Timeout | null = null;
 
 /** a main file's text up to and including its \begin{document} line, with line ends as the engine's reader sees them */
 export function preambleOfText(src: string): string | null {
@@ -71,59 +67,12 @@ function retire(e: DraftEngine): void {
 	else e.remove();
 }
 
-// a spare that died goes; a taken engine's folder is its taker's to remove
-function watchExit(s: Spare): void {
-	void s.engine.exited.then(() => {
-		const spare = spares.includes(s);
-		spares = spares.filter((x) => x !== s);
-		if (out.get(s.engine) === s) out.delete(s.engine);
-		if (spare) retire(s.engine);
-		if (config) warmPool(config);
-	});
-}
-
-function spawnSpare(c: PoolConfig): void {
-	// the engine reads the preamble from disk, so that is what it holds
-	const preamble = diskPreamble(c.root, c.mainRel);
-	if (preamble === null) return;
-	const engine = new DraftEngine(c.root, c.mainRel, c.engineDir, c.seedDir, c.engine);
-	const spare: Spare = {
-		engine,
-		key: keyOf(c, preamble),
-		stamp: engine.ready.then((files) => (files ? stampOf(c.root, files) : null)),
-		at: engine.ready.then((files) => files !== null)
-	};
-	preload(spare, c);
-	spares.push(spare);
-	watchExit(spare);
-}
-
 // stdin holds the command until the engine reaches the base
 function preload(s: Spare, c: PoolConfig): void {
 	if (!c.fontList || s.fonts === c.fontList) return;
 	s.engine.preloadFonts(c.fontList);
 	// eslint-disable-next-line no-param-reassign -- the spare records what it was sent
 	s.fonts = c.fontList;
-}
-
-function armIdleStop(): void {
-	if (idleTimer) clearTimeout(idleTimer);
-	idleTimer = setTimeout(() => stopPool(), IDLE_STOP_MS);
-	idleTimer.unref?.();
-}
-
-/** keeps SPARES engines warming for this configuration, dropping any warmed for another */
-export function warmPool(c: PoolConfig): void {
-	config = c;
-	const key = keyOf(c, c.preamble);
-	for (const s of spares.filter((x) => x.key !== key)) {
-		spares = spares.filter((x) => x !== s);
-		s.engine.remove();
-	}
-	for (const s of spares) preload(s, c);
-	// disk moved on from what the configuration expects: a spare would hold the wrong base
-	if (diskPreamble(c.root, c.mainRel) === c.preamble) while (spares.length + out.size < ENGINES) spawnSpare(c);
-	armIdleStop();
 }
 
 // the first of these to reach the base
@@ -139,69 +88,157 @@ function firstAtBase(list: Spare[]): Promise<Spare | null> {
 	});
 }
 
+class EnginePool {
+	spares: Spare[] = [];
+	// taken and not handed back yet, with the key and stamp they were taken under
+	out = new Map<DraftEngine, Spare>();
+	config: PoolConfig | null = null;
+	idleTimer: NodeJS.Timeout | null = null;
+
+	constructor(private readonly onStop: () => void) {}
+
+	// a spare that died goes; a taken engine's folder is its taker's to remove
+	watchExit(s: Spare): void {
+		void s.engine.exited.then(() => {
+			const spare = this.spares.includes(s);
+			this.spares = this.spares.filter((x) => x !== s);
+			if (this.out.get(s.engine) === s) this.out.delete(s.engine);
+			if (spare) retire(s.engine);
+			if (this.config) this.warm(this.config);
+		});
+	}
+
+	spawnSpare(c: PoolConfig): void {
+		// the engine reads the preamble from disk, so that is what it holds
+		const preamble = diskPreamble(c.root, c.mainRel);
+		if (preamble === null) return;
+		const engine = new DraftEngine(c.root, c.mainRel, c.engineDir, c.seedDir, c.engine);
+		const spare: Spare = {
+			engine,
+			key: keyOf(c, preamble),
+			stamp: engine.ready.then((files) => (files ? stampOf(c.root, files) : null)),
+			at: engine.ready.then((files) => files !== null)
+		};
+		preload(spare, c);
+		this.spares.push(spare);
+		this.watchExit(spare);
+	}
+
+	armIdleStop(): void {
+		if (this.idleTimer) clearTimeout(this.idleTimer);
+		this.idleTimer = setTimeout(() => this.stop(), IDLE_STOP_MS);
+		this.idleTimer.unref?.();
+	}
+
+	warm(c: PoolConfig): void {
+		this.config = c;
+		const key = keyOf(c, c.preamble);
+		for (const s of this.spares.filter((x) => x.key !== key)) {
+			this.spares = this.spares.filter((x) => x !== s);
+			s.engine.remove();
+		}
+		for (const s of this.spares) preload(s, c);
+		// disk moved on from what the configuration expects: a spare would hold the wrong base
+		if (diskPreamble(c.root, c.mainRel) === c.preamble) while (this.spares.length + this.out.size < ENGINES) this.spawnSpare(c);
+		this.armIdleStop();
+	}
+
+	async take(c: PoolConfig, unserved: boolean): Promise<DraftEngine> {
+		const key = keyOf(c, c.preamble);
+		for (;;) {
+			const s = await firstAtBase(this.spares.filter((x) => x.key === key && !x.engine.dead && !(unserved && x.engine.serves)));
+			if (!s) break;
+			if (!this.spares.includes(s)) continue;
+			this.spares = this.spares.filter((x) => x !== s);
+			const files = await s.engine.ready;
+			if (files && (await s.stamp) === (c.preStamp ?? stampOf(c.root, files))) {
+				this.out.set(s.engine, s);
+				this.warm(c);
+				return s.engine;
+			}
+			retire(s.engine);
+		}
+		const engine = new DraftEngine(c.root, c.mainRel, c.engineDir, c.seedDir, c.engine);
+		const s: Spare = {
+			engine,
+			key,
+			stamp: engine.ready.then((files) => (files ? stampOf(c.root, files) : null)),
+			at: Promise.resolve(false)
+		};
+		this.out.set(engine, s);
+		this.watchExit(s);
+		this.warm(c);
+		return engine;
+	}
+
+	giveBack(engine: DraftEngine): void {
+		const s = this.out.get(engine);
+		// it exited as its run ended
+		if (!s) {
+			retire(engine);
+			return;
+		}
+		this.out.delete(engine);
+		const c = this.config;
+		if (!c || s.key !== keyOf(c, c.preamble)) {
+			retire(engine);
+			if (c) this.warm(c);
+			return;
+		}
+		const back: Spare = { ...s, at: engine.parked, fonts: undefined };
+		const late = setTimeout(() => engine.kill(), PARK_MS);
+		void engine.parked.then(() => clearTimeout(late));
+		this.spares.unshift(back);
+		preload(back, c);
+		this.watchExit(back);
+	}
+
+	stop(): void {
+		if (this.idleTimer) clearTimeout(this.idleTimer);
+		this.idleTimer = null;
+		this.config = null;
+		for (const s of [...this.spares, ...this.out.values()]) s.engine.remove();
+		this.spares = [];
+		this.out.clear();
+		this.onStop();
+	}
+}
+
+const pools = new Map<string, EnginePool>();
+function poolFor(root: string): EnginePool {
+	const key = normRoot(root);
+	let pool = pools.get(key);
+	if (!pool) {
+		const made = new EnginePool(() => {
+			if (pools.get(key) === made) pools.delete(key);
+		});
+		pools.set(key, made);
+		pool = made;
+	}
+	return pool;
+}
+
+/** keeps ENGINES engines warming at this configuration's base, dropping any warmed for another */
+export function warmPool(c: PoolConfig): void {
+	poolFor(c.root).warm(c);
+}
+
 /**
  * An engine at the base for this configuration: the first spare there, else a fresh one that reads the preamble.
  * `unserved` is for a compile, whose PDF must hold its own pages alone
  */
-export async function takeEngine(c: PoolConfig, unserved = false): Promise<DraftEngine> {
-	const key = keyOf(c, c.preamble);
-	for (;;) {
-		const s = await firstAtBase(spares.filter((x) => x.key === key && !x.engine.dead && !(unserved && x.engine.serves)));
-		if (!s) break;
-		if (!spares.includes(s)) continue;
-		spares = spares.filter((x) => x !== s);
-		const files = await s.engine.ready;
-		if (files && (await s.stamp) === (c.preStamp ?? stampOf(c.root, files))) {
-			out.set(s.engine, s);
-			warmPool(c);
-			return s.engine;
-		}
-		retire(s.engine);
-	}
-	const engine = new DraftEngine(c.root, c.mainRel, c.engineDir, c.seedDir, c.engine);
-	const s: Spare = {
-		engine,
-		key,
-		stamp: engine.ready.then((files) => (files ? stampOf(c.root, files) : null)),
-		at: Promise.resolve(false)
-	};
-	out.set(engine, s);
-	watchExit(s);
-	warmPool(c);
-	return engine;
+export function takeEngine(c: PoolConfig, unserved = false): Promise<DraftEngine> {
+	return poolFor(c.root).take(c, unserved);
 }
 
-/** a teleport is done with its engine: it serves again once it parks, if the pool still wants its base */
+/** a teleport is done with its engine: it serves again once it parks, if its pool still wants its base */
 export function giveBack(engine: DraftEngine): void {
-	const s = out.get(engine);
-	// it exited as its run ended
-	if (!s) {
-		retire(engine);
-		return;
-	}
-	out.delete(engine);
-	if (!config || s.key !== keyOf(config, config.preamble)) {
-		retire(engine);
-		if (config) warmPool(config);
-		return;
-	}
-	const back: Spare = { ...s, at: engine.parked, fonts: undefined };
-	const late = setTimeout(() => engine.kill(), PARK_MS);
-	void engine.parked.then(() => clearTimeout(late));
-	spares.unshift(back);
-	preload(back, config);
-	watchExit(back);
+	const pool = pools.get(normRoot(engine.root));
+	if (pool) pool.giveBack(engine);
+	else retire(engine);
 }
 
-export function poolConfig(): PoolConfig | null {
-	return config;
-}
-
-export function stopPool(): void {
-	if (idleTimer) clearTimeout(idleTimer);
-	idleTimer = null;
-	config = null;
-	for (const s of [...spares, ...out.values()]) s.engine.remove();
-	spares = [];
-	out.clear();
+/** the folder's engines stop; with no folder, every folder's */
+export function stopPool(root?: string): void {
+	for (const [key, pool] of [...pools]) if (root === undefined || key === normRoot(root)) pool.stop();
 }

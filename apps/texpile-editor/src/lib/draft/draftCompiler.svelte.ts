@@ -1,5 +1,4 @@
-// The full-compile lifecycle: cancel-on-supersede compiles and the one-live-preview engine ownership (engine-busy
-// pause + takeover).
+// The full-compile lifecycle: cancel-on-supersede compiles.
 import { nativeBridge, type DraftResult } from '$lib/workspace/fileSystem';
 import { readBackExtensions } from '$lib/languages/latex/knowledge/registries/sidecarExtensions';
 import { m } from '$lib/paraglide/messages';
@@ -22,45 +21,16 @@ export class DraftCompiler {
 	error = $state<string | null>(null);
 	/** the engine was not found; the banner offers the Toolchain folders */
 	missingTool = $state<string | null>(null);
-	// one live preview at a time: another window owns the warm engine (main's draftOwner);
-	// this preview is paused until the user explicitly takes the engine over
-	busyElsewhere = $state(false);
 
 	private compileToken = 0;
 	private newest: Promise<boolean | null> | null = null;
 
 	constructor(private hooks: CompilerHooks) {}
 
-	// explicit user action from the paused banner: steal the engine and start fresh here
-	async takeoverEngine(): Promise<void> {
-		const n = nativeBridge();
-		if (!n?.draftTakeover) return;
-		try {
-			await n.draftTakeover({ root: this.hooks.root() });
-		} catch {
-			/* the engine may already be free */
-		}
-		this.busyElsewhere = false;
-		void this.compile('takeover');
-	}
-
-	// the losing side of a takeover: main pushes this so we pause immediately instead of
-	// showing a stale "ready" state until the next keystroke discovers engine-busy
-	attachPreempt(): (() => void) | undefined {
-		const n = nativeBridge();
-		if (!n?.onDraftPreempted) return undefined;
-		return n.onDraftPreempted(() => {
-			this.busyElsewhere = true;
-			this.compiling = false;
-			this.status = '';
-		});
-	}
-
 	/** true when the pass landed pages, false when it failed or never ran, null when a newer pass superseded it */
 	compile(reason = 'trigger'): Promise<boolean | null> {
 		const n = nativeBridge();
 		if (!n || !this.hooks.root() || !this.hooks.mainFile()) return Promise.resolve(false);
-		if (this.busyElsewhere) return Promise.resolve(false); // paused: don't fight the owning window on every trigger
 		// cancel-on-supersede: don't queue behind an in-flight compile -- fire a fresh one. The
 		// service kills the older run's lualatex, so a hung/slow compile never blocks the latest
 		// edit (else the 120s pass timeout would freeze the preview). This run drops its own
@@ -103,11 +73,7 @@ export class DraftCompiler {
 				// svelte-check doesn't reliably narrow this cross-module discriminated union.
 				// A service-side 'superseded' isn't an error -- the newer compile will render.
 				const fail = r as { error: string; log?: string; tool?: string };
-				if (fail.error === 'engine-busy') {
-					// another window owns the live-preview engine: pause with the banner
-					this.busyElsewhere = true;
-					this.status = '';
-				} else if (fail.error === 'engine-missing' && fail.tool) {
+				if (fail.error === 'engine-missing' && fail.tool) {
 					this.missingTool = fail.tool;
 					this.error = m.draft_engine_missing({ tool: fail.tool });
 					this.status = '';

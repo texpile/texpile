@@ -13,6 +13,7 @@ import { adoptIndex } from './teleport/teleportService';
 import type { DraftEngine } from './teleport/draftEngine';
 import { shellEnvReady } from '../shell/shellEnv';
 import { findProgram } from '../shell/findProgram';
+import { normRoot } from '../windows/normRoot';
 
 export type DraftResult =
 	| {
@@ -39,7 +40,7 @@ type DraftBody = { root: string; mainFile: string; engineDir: string; engine?: s
 type CompileRun = { gen: number; engine: DraftEngine | null };
 const compileRuns = new Map<string, CompileRun>();
 function runFor(root: string): CompileRun {
-	const key = process.platform === 'win32' ? path.resolve(root).toLowerCase() : path.resolve(root);
+	const key = normRoot(root);
 	let r = compileRuns.get(key);
 	if (!r) {
 		r = { gen: 0, engine: null };

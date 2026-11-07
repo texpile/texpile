@@ -25,7 +25,8 @@ beforeAll(async () => {
 	fs.writeFileSync(path.join(project, 'fig.png'), 'png');
 	fs.writeFileSync(path.join(outside, 'secret.png'), 'secret');
 	fs.symlinkSync(outside, path.join(project, 'link'), 'junction');
-	const { windowRoots, normRoot } = await import('../../../../../electron/src/windows/windowRegistry');
+	const { windowRoots } = await import('../../../../../electron/src/windows/windowRegistry');
+	const { normRoot } = await import('../../../../../electron/src/windows/normRoot');
 	windowRoots.set(1, { raw: project, norm: normRoot(project) });
 	(await import('../../../../../electron/src/appProtocols')).registerProtocolHandlers();
 });

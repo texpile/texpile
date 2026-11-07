@@ -7,7 +7,8 @@ import { Readable } from 'node:stream';
 import { MIME } from './fs/fsService';
 import { isAllowedFontPath } from './fontT1Map';
 import { bundleDir } from './appIdentity';
-import { windowRoots, normRoot } from './windows/windowRegistry';
+import { windowRoots } from './windows/windowRegistry';
+import { normRoot } from './windows/normRoot';
 
 // a `standard` scheme enforces strict MIME checks on module scripts and worker imports,
 // so text/javascript must be exact

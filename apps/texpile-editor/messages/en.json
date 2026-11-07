@@ -1670,8 +1670,6 @@
 	"menubar_new_window": "New Window",
 	"menubar_open_folder_new_window": "Open Folder in New Window…",
 	"menubar_close_window": "Close Window",
-	"draft_busy_other_window": "Live preview is active in another window.",
-	"draft_busy_takeover": "Use Live Preview Here",
 	"start_new_window": "New Window",
 	"filetree_confirm_delete_many": "Delete {count} items?",
 	"filetree_delete_many": "Delete {count} Items",

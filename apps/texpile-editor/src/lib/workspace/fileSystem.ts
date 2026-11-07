@@ -67,7 +67,7 @@ export type TeleportResult =
 	  }
 	| {
 			ok: false;
-			reason: 'no-index' | 'preamble' | 'outside' | 'held' | 'refused' | 'failed' | 'superseded' | 'engine-busy';
+			reason: 'no-index' | 'preamble' | 'outside' | 'held' | 'refused' | 'failed' | 'superseded';
 			detail?: string;
 			ms: number;
 	  };
@@ -153,8 +153,6 @@ type TexpileNative = {
 	imageOriginalAt?: (path: string) => Promise<number | null>;
 	imageRestoreOriginal?: (path: string) => Promise<void>;
 	drawFile?: (reported: string) => Promise<Uint8Array>;
-	draftTakeover?: (body: { root: string }) => Promise<{ ok: boolean }>;
-	onDraftPreempted?: (cb: (notice: { root: string }) => void) => () => void;
 	draftSavePdf: (body: { root: string; defaultName: string; to?: string }) => Promise<{ saved: boolean; path?: string }>;
 	savePdfBytes?: (body: { bytes: Uint8Array; defaultName: string; to?: string }) => Promise<{ saved: boolean; path?: string }>;
 	gitStatus: (root: string) => Promise<GitStatusResult>;

@@ -19,6 +19,7 @@ function fakeEngine() {
 	const loops = looping-- > 0;
 	let killed = () => undefined as void;
 	return {
+		root,
 		rel,
 		abs,
 		dead: false,

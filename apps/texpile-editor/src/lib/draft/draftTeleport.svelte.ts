@@ -46,7 +46,7 @@ export class DraftTeleport {
 			return 'shown';
 		}
 		if (r.reason === 'held') return 'held';
-		if (r.reason === 'superseded' || r.reason === 'outside' || r.reason === 'engine-busy') return 'none';
+		if (r.reason === 'superseded' || r.reason === 'outside') return 'none';
 		// the preamble changed, or no index yet, or the engine refused: only a full pass shows it
 		return 'compile';
 	}

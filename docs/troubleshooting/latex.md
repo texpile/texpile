@@ -24,6 +24,5 @@ order: 1
 | You see                                                   | Fix                                                                                                             |
 | --------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------- |
 | "lualatex was not found, so the live preview cannot run." | Click **Check Toolchain** and install or locate lualatex.                                                       |
-| "Live preview is active in another window."               | Click **Use Live Preview Here**.                                                                                |
 | **preview error**                                         | Open Problems to see the error. The live preview runs lualatex, so a document that needs pdflatex uses Compile. |
 | Live mode cannot be turned on                             | You are hosting a shared session. End it first.                                                                 |

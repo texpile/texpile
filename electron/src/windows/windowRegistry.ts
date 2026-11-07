@@ -1,7 +1,7 @@
 // The multi-window registry (one workspace per window, VS Code model): what each window has
 // open, what a fresh window should open once loaded, and which closes are being held.
 import { BrowserWindow } from 'electron';
-import * as path from 'node:path';
+import { normRoot } from './normRoot';
 import { writeSettings } from '../appSettings';
 
 /** `file`: a single file open on its own, which is no project: nothing else opens into its window, and it is not remembered */
@@ -31,13 +31,6 @@ export function beginQuit(): void {
 export function cancelQuit(): void {
 	quitting = false;
 	persistOpenFolders();
-}
-
-// Windows hands out the same folder with varying drive-letter case, so root identity
-// must compare case-insensitively there (mirrors the renderer's workspaceStore)
-export function normRoot(p: string): string {
-	const s = path.resolve(p).replace(/[\\/]+$/, '');
-	return process.platform === 'win32' ? s.toLowerCase() : s;
 }
 
 export function windowFor(wcId: number): BrowserWindow | null {

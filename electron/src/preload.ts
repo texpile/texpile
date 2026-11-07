@@ -226,16 +226,6 @@ contextBridge.exposeInMainWorld('texpileNative', {
 	draftStop: () => invokeFs('draft:stop', {}),
 	...drawBridge,
 	...imageBridge,
-	/** Steal the draft engines from the window that currently owns them (explicit user action). */
-	draftTakeover: (body: { root: string }) => invokeFs('draft:takeover', body),
-	/** subscribe to "another window took the engine" pushes; returns an unsubscribe fn. */
-	onDraftPreempted: (cb: (ev: { root: string }) => void) => {
-		function h(_e: unknown, ev: { root: string }) {
-			cb(ev);
-		}
-		ipcRenderer.on('draft:preempted', h);
-		return () => ipcRenderer.removeListener('draft:preempted', h);
-	},
 	/** Save the live preview's reconcile PDF via a save dialog -> { saved, path? }. */
 	draftSavePdf: (body: { root: string; defaultName: string; to?: string }) => invokeFs('draft:savePdf', body),
 	/** Save PDF bytes the viewer holds (a guest has no file on disk) -> { saved, path? }. */
