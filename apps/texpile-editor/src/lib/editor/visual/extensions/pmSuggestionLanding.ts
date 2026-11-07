@@ -3,7 +3,7 @@ import type { Node as PMNode, ResolvedPos } from 'prosemirror-model';
 import { bySource, indexStartingBy, pmToSource, sourceToPm, type RegionParse, type Segment, type SourceMap } from '../sourceSpans';
 import { blockAtSource } from '../sourceMap';
 import { isSelfRendered } from '../diff/selfRendered';
-import type { Shown, Side } from './pmSuggestionTypes';
+import type { Shown, Side, Span } from './pmSuggestionTypes';
 
 // the block a position of a region's document is in; at a boundary two blocks share, the side names it
 function blockOnSide(blocks: Segment[], pos: number, assoc: Side): Segment | null {
@@ -28,14 +28,16 @@ export function atNodeEdge(doc: PMNode, pos: number, assoc: Side): number {
 }
 
 // the editor position of a byte: exact in a run, the nearest run's edge in the same block, or the
-// block itself when it has no runs
-function land(map: SourceMap, offset: number, assoc: Side): Landing | null {
+// block itself when it has no runs. `line` is the bytes of the textblock the byte is in: a block can
+// hold several (a frame's items), and the editor holds no runs for one that was typed in
+function land(map: SourceMap, offset: number, assoc: Side, line?: Span): Landing | null {
 	const exact = sourceToPm(map.leaves, offset, assoc);
 	if (exact !== null) return { pos: exact, block: null };
 	const block = blockAtSource(map, offset);
 	const sorted = bySource(map.leaves);
 	const i = indexStartingBy(sorted, 'srcFrom', offset);
 	function within(s: Segment | null) {
+		if (line && s && (s.srcFrom < line.from || s.srcTo > line.to)) return null;
 		return s && block && s.srcFrom >= block.srcFrom && s.srcTo <= block.srcTo ? s : null;
 	}
 	const before = within(i >= 0 ? sorted[i] : null);
@@ -43,6 +45,18 @@ function land(map: SourceMap, offset: number, assoc: Side): Landing | null {
 	const pick = assoc < 0 ? (before ?? after) : (after ?? before);
 	if (pick) return { pos: pick === before ? pick.pmTo : pick.pmFrom, block: null };
 	return block ? { pos: block.pmFrom, block } : null;
+}
+
+// the bytes the runs of a textblock of the stretch cover, as the editor's map counts them
+function lineBytes(leaves: Segment[], lo: number, hi: number, at: number): Span | undefined {
+	let from = Infinity;
+	let to = -Infinity;
+	for (const s of leaves)
+		if (s.pmFrom >= lo && s.pmTo <= hi) {
+			from = Math.min(from, s.srcFrom);
+			to = Math.max(to, s.srcTo);
+		}
+	return from <= to ? { from: at + from, to: at + to } : undefined;
 }
 
 // the editor can hold whitespace at a textblock's edge that the file does not (a paragraph split after a
@@ -77,9 +91,10 @@ export function landIn(shown: Shown, region: RegionParse, pos: number, assoc: Si
 		const own = shown.doc.nodeAt(start);
 		return { pos: own && own.type === node.type ? start + 1 : start, block: null };
 	}
+	const line = $pos.parent.isTextblock ? lineBytes(leaves, $pos.start(), $pos.end(), shown.at) : undefined;
 	const exact = pmToSource(leaves, pos, assoc);
 	if (exact !== null) {
-		const l = land(shown.map, shown.at + exact, assoc);
+		const l = land(shown.map, shown.at + exact, assoc, line);
 		if (l && !l.block) return pastUnwritten(shown.doc, l, $pos);
 	}
 	if ($pos.parent.isTextblock) {
@@ -93,7 +108,7 @@ export function landIn(shown: Shown, region: RegionParse, pos: number, assoc: Si
 		const after = within(i + 1 < leaves.length ? leaves[i + 1] : null);
 		const pick = assoc < 0 ? (before ?? after) : (after ?? before);
 		if (pick) {
-			const l = land(shown.map, shown.at + (pick === before ? pick.srcTo : pick.srcFrom), pick === before ? -1 : 1);
+			const l = land(shown.map, shown.at + (pick === before ? pick.srcTo : pick.srcFrom), pick === before ? -1 : 1, line);
 			if (l && !l.block) return pastUnwritten(shown.doc, l, $pos);
 		}
 	}
