@@ -31,8 +31,8 @@ export type DraftResult =
 			marginY: number;
 			pages: DraftPage[];
 	  }
-	/** error 'engine-missing' names the program in `tool` */
-	| { ok: false; error: string; ms: number; log?: string; superseded?: true; tool?: string };
+	/** error 'engine-missing' names the program in `tool`; 'latex-too-old' the format's LaTeX version in `found` */
+	| { ok: false; error: string; ms: number; log?: string; superseded?: true; tool?: string; found?: string };
 
 type DraftBody = { root: string; mainFile: string; engineDir: string; engine?: string; readBack: ReadBackFiles };
 
@@ -74,6 +74,7 @@ export async function compileDraft(body: DraftBody): Promise<DraftResult> {
 	if (!fs.existsSync(gi)) fs.writeFileSync(gi, '*\n');
 
 	let last: { engine: DraftEngine; seedDir: string; preFiles: string[]; preStamp: string } | null = null;
+	let oldLatex: string | null = null;
 	async function enginePass(): Promise<void> {
 		if (superseded()) return;
 		const seedDir = collectSeeds(root, outAbs, body.readBack);
@@ -86,6 +87,7 @@ export async function compileDraft(body: DraftBody): Promise<DraftResult> {
 		run.engine = eng;
 		const timer = setTimeout(() => eng.kill(), PASS_TIMEOUT_MS);
 		const preFiles = await eng.ready;
+		if (!preFiles && eng.oldLatex) oldLatex = eng.oldLatex;
 		const preStamp = preFiles ? stampOf(root, preFiles) : '';
 		await eng.go();
 		clearTimeout(timer);
@@ -119,6 +121,7 @@ export async function compileDraft(body: DraftBody): Promise<DraftResult> {
 	const refsBefore = refState();
 	seedBbl(root, outAbs, body.mainFile);
 	await enginePass();
+	if (oldLatex) return { ok: false, error: 'latex-too-old', found: oldLatex, ms: Date.now() - t0 };
 	let passes = 1;
 	// a changed .bbl needs up to two extra passes (bbl read, \bibcite written, \cite resolved); a first compile one
 	const bblChanged = superseded() ? false : await auxCycle(root, outAbs, body.mainFile);

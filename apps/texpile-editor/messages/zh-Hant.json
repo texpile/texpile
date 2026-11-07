@@ -1252,6 +1252,7 @@
 	"draft_compiled_passes": "{passes} 次編譯",
 	"draft_preview_error_label": "預覽錯誤",
 	"draft_engine_missing": "找不到 {tool}，因此無法執行即時預覽。",
+	"draft_latex_too_old": "即時模式需要 LaTeX 2021-06 或更新版本。此 TeX 的版本為 {found}。",
 	"draft_toolbar_save_pdf": "儲存 PDF",
 	"draft_toolbar_zoom_out": "縮小",
 	"draft_toolbar_actual_size": "實際大小（100%）",

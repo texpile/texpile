@@ -50,7 +50,7 @@ export type DraftResult =
 			marginY: number;
 			pages: DraftPage[];
 	  }
-	| { ok: false; error: string; ms: number; log?: string; superseded?: true };
+	| { ok: false; error: string; ms: number; log?: string; superseded?: true; found?: string };
 
 /** an edit's teleport (see electron/src/draft/teleport/liveDraft.ts); its pages arrive through onDraftPage */
 export type TeleportResult =

@@ -89,10 +89,13 @@ export class DraftCompiler {
 			} else if (!(r as { superseded?: boolean }).superseded) {
 				// svelte-check doesn't reliably narrow this cross-module discriminated union.
 				// A service-side 'superseded' isn't an error -- the newer compile will render.
-				const fail = r as { error: string; log?: string; tool?: string };
+				const fail = r as { error: string; log?: string; tool?: string; found?: string };
 				if (fail.error === 'engine-missing' && fail.tool) {
 					this.missingTool = fail.tool;
 					this.error = m.draft_engine_missing({ tool: fail.tool });
+					this.status = '';
+				} else if (fail.error === 'latex-too-old' && fail.found) {
+					this.error = m.draft_latex_too_old({ found: fail.found });
 					this.status = '';
 				} else {
 					// The message only, never fail.log. This banner's job is "the preview could not be

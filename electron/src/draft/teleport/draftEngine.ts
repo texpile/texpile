@@ -50,6 +50,8 @@ export class DraftEngine {
 	readonly ready: Promise<string[] | null>;
 	readonly exited: Promise<number | null>;
 	dead = false;
+	/** the format's LaTeX version, when it is older than live mode needs; the process then exits before the base */
+	oldLatex: string | null = null;
 	/** teleports served, which also numbers each serve's files */
 	serves = 0;
 	/** after a teleport: true once the process waits at its base again, false when it exited instead */
@@ -121,7 +123,8 @@ export class DraftEngine {
 					/* names it could not quote: the folder's mtimes still cover the preamble */
 				}
 				settle.ready?.(files);
-			} else if (m[1] === 'PARKED') this.#parkWaiters.shift()?.(true);
+			} else if (m[1] === 'OLDLATEX') this.oldLatex = m[2];
+			else if (m[1] === 'PARKED') this.#parkWaiters.shift()?.(true);
 			else this.#listener?.(m[1], m[2]);
 		});
 		void this.exited.then(() => {

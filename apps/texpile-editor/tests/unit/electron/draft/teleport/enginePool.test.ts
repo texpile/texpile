@@ -32,6 +32,11 @@ vi.mock('../../../../../../../electron/src/draft/teleport/draftEngine', () => ({
 const { warmPool, takeEngine, takeStaged, stageEngine, giveBack, stopPool } =
 	await import('../../../../../../../electron/src/draft/teleport/enginePool');
 
+// what the pool did to a mocked engine
+function seen(engine: unknown): { stagedWith: string | null; dropped: boolean } {
+	return engine as { stagedWith: string | null; dropped: boolean };
+}
+
 // a compile on an engine that served ships its pages after the empty ones of its teleports
 it('hands a compile only an engine that never served', async () => {
 	const c = {
@@ -95,12 +100,12 @@ it('hands a staged engine to its own chain, and sends it back to the base for an
 	expect(takeStaged(c, 'chain-2')).toBeNull();
 	const staged = takeStaged(c, 'chain-1');
 	expect(staged).not.toBe(running);
-	expect(staged?.stagedWith).toBe('plan-1');
+	expect(seen(staged).stagedWith).toBe('plan-1');
 	running.parked = Promise.resolve(true);
 	giveBack(running);
 	stageEngine(c, 'chain-3', () => ({ planRel: 'plan-3', serve: 3 }));
-	expect(running.stagedWith).toBe('plan-3');
+	expect(seen(running).stagedWith).toBe('plan-3');
 	expect(await takeEngine(c)).toBe(running);
-	expect(running.dropped).toBe(true);
+	expect(seen(running).dropped).toBe(true);
 	stopPool();
 });

@@ -1252,6 +1252,7 @@
 	"draft_compiled_passes": "{passes} Durchläufe",
 	"draft_preview_error_label": "Vorschaufehler",
 	"draft_engine_missing": "{tool} wurde nicht gefunden, daher kann die Live-Vorschau nicht laufen.",
+	"draft_latex_too_old": "Der Live-Modus braucht LaTeX 2021-06 oder neuer. Dieses TeX hat {found}.",
 	"draft_toolbar_save_pdf": "PDF speichern",
 	"draft_toolbar_zoom_out": "Verkleinern",
 	"draft_toolbar_actual_size": "Tatsächliche Größe (100 %)",

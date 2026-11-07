@@ -22,6 +22,13 @@ local function say(s)
 end
 T.say, T.OUT = say, OUT
 
+-- live mode reads paragraphs through LaTeX's para hooks, which came in its 2021-06 release
+local latex = token.get_macro("fmtversion") or ""
+if latex < "2021-06-01" then
+	say("OLDLATEX " .. latex)
+	os.exit(4)
+end
+
 dofile(DIR .. "/serial.lua")(T)
 dofile(DIR .. "/scan.lua")(T)
 dofile(DIR .. "/apply.lua")(T)
