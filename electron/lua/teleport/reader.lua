@@ -222,7 +222,17 @@ return function(T)
 		return lfs.attributes(copy, "mode") == "file" and copy or nil
 	end
 
+	-- the stream the next file opens on: 0 for \input, n + 1 for \openin n. A file opened for \read is never on the
+	-- input stack, and graphics leaves each image's check open until its stream opens the next
+	local stream = 0
+	luatexbase.add_to_callback("find_read_file", function(id, name)
+		stream = id
+		return kpse.find_file(name, "tex", true)
+	end, "texpile.tele.find")
+
 	luatexbase.add_to_callback("open_read_file", function(name)
+		local input = stream == 0
+		stream = 0
 		local rel = rel_of(name)
 		if T.base then name = seed_of(rel) or name end
 		if not T.base and not pre_seen[rel] and not rel:match("^/") and not rel:match("^%a:") and not rel:match("^_draft/") then
@@ -232,7 +242,7 @@ return function(T)
 		local r = is_source(rel) and source_reader(name, rel) or plain_reader(name)
 		if not r then return nil end
 		if T.base and r.source then T.entered(rel) end
-		T.stack[#T.stack + 1] = r
+		if input then T.stack[#T.stack + 1] = r end
 		return { reader = r.reader, close = r.close }
 	end, "texpile.tele.reader")
 end

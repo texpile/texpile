@@ -29,13 +29,14 @@ export function planLua(
 	edit: LineEdit,
 	stage: number,
 	srcFiles: string[],
-	serve: { src: string; cut: string }
+	serve: { src: string; cut: string },
+	images?: string
 ): string {
 	const over = [...overrides].map(([rel, from]) => `[${luaString(rel)}]=${luaString(from)}`);
 	return (
 		`return {chain={${plan.chain.map(luaPoint).join(',')}},stops={${plan.stops.map(luaPoint).join(',')}},` +
 		`overrides={${over.join(',')}},edit={f=${luaString(file)},from=${edit.from},oldTo=${edit.oldTo},newTo=${edit.newTo}},` +
 		`stage={f=${luaString(file)},l=${stage}},files={${srcFiles.map(luaString).join(',')}},` +
-		`src=${luaString(serve.src + '/')},cut=${luaString(serve.cut)}}\n`
+		`src=${luaString(serve.src + '/')},cut=${luaString(serve.cut)}${images ? `,images=${luaString(images)}` : ''}}\n`
 	);
 }

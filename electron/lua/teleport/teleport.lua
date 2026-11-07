@@ -35,6 +35,7 @@ dofile(DIR .. "/apply.lua")(T)
 dofile(DIR .. "/reader.lua")(T)
 dofile(DIR .. "/reset.lua")(T)
 dofile(DIR .. "/serve.lua")(T)
+dofile(DIR .. "/images.lua")(T)
 
 token.set_macro(PREFIX .. "undef", "", "global")
 tex.sprint({ token.create("global"), token.create("let"), token.create(PREFIX .. "undef"), token.create(PREFIX .. "never") })
@@ -298,7 +299,7 @@ local function write_fonts()
 end
 
 -- at the base: GO compiles on, TELE <plan> teleports, PRE <plan> applies the plan's chain and waits there for the edit,
--- FONTS <list> loads fonts and waits again
+-- FONTS <list> loads fonts and IMAGES <list> images, and waits again
 function texpile_tele_next()
 	local l = io.stdin:read("*l")
 	if l then l = l:gsub("\r$", "") end
@@ -308,6 +309,13 @@ function texpile_tele_next()
 		T.reload_disk()
 		index_file = io.open(OUT .. "index.jsonl", "w")
 		luatexbase.add_to_callback("stop_run", write_fonts, "texpile.tele.fonts")
+		luatexbase.add_to_callback("stop_run", function() T.write_images(OUT .. "images.lua") end, "texpile.tele.images")
+		return
+	end
+	local images = l and l:match("^IMAGES (.+)$")
+	if images then
+		T.preload_images(images)
+		tex.sprint("\\directlua{texpile_tele_next()}")
 		return
 	end
 	local fonts = l and l:match("^FONTS (.+)$")
@@ -365,6 +373,10 @@ local function canon(rec)
 	local c = {}
 	for k, v in pairs(rec) do c[k] = v end
 	c.page, c.contrib = strip(rec.page), strip(rec.contrib)
+	-- a served process holds graphics' cache of images the compile read only later
+	local macros = {}
+	for _, m in ipairs(rec.macros) do if not T.is_image_cache(m.n) then macros[#macros + 1] = m end end
+	c.macros = macros
 	local boxes = {}
 	for i, b in ipairs(rec.boxes) do boxes[i] = { i = b.i, list = strip(b.list) } end
 	c.boxes = boxes
@@ -393,6 +405,8 @@ end
 
 local function write_point(rec, opening)
 	if T.silent then return end
+	local why = T.image_refusal(rec)
+	if why then rec.refuse = rec.refuse and (rec.refuse .. "; " .. why) or why end
 	T.seq = T.seq + 1
 	local file = string.format("%sr-%05d.lua", OUT, T.seq)
 	rec.id = T.seq

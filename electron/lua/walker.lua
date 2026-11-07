@@ -550,9 +550,8 @@ local function walk(head, parent, x, y, emit, fonts, last_ef, colorStack, rtl, s
 				-- inner rule -- verified empirically); no useful glyph content
 				-- inside, so don't recurse. The rule carries no filename; its index names the file
 				local file = type(imgIndex) == "number" and M.imageFile and M.imageFile(imgIndex)
-				emit(string.format('{"t":"image","x":%.4f,"y":%.4f,"w":%.4f,"h":%.4f,"d":%.4f%s%s}',
+				emit(string.format('{"t":"image","x":%.4f,"y":%.4f,"w":%.4f,"h":%.4f,"d":%.4f%s}',
 					x / pt, yy / pt, n.width / pt, n.height / pt, n.depth / pt,
-					type(imgIndex) == "number" and (',"ix":' .. imgIndex) or "",
 					file and (',"file":"' .. file:gsub('[%c"\\]', "") .. '"') or ""))
 			else
 				local r = dirOf(n)

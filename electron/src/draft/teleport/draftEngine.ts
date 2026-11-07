@@ -138,6 +138,10 @@ export class DraftEngine {
 		this.#child.stdin?.write(`FONTS ${listRel}\n`);
 	}
 
+	preloadImages(listRel: string): void {
+		this.#child.stdin?.write(`IMAGES ${listRel}\n`);
+	}
+
 	/** compiles the whole document from the base, recording points as it goes */
 	go(): Promise<number | null> {
 		this.#child.stdin?.write('GO\n');

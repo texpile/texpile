@@ -295,34 +295,7 @@ return function(T)
 			end
 		end
 		if A.fontcs[r.curfont] then tex.sprint({ token.create(A.fontcs[r.curfont]) }) end
-		-- graphics keeps each image in a macro named for the file (\useimageresource <index>), and an image's index
-		-- is its PDF object number: the images load again in index order, the numbers below each taken first
-		local imgs = {}
-		for _, m in ipairs(r.macros) do
-			local file, hash = m.n:match("^(.-) image(.*)$")
-			local b = m.b
-			if file and (hash == "" or hash:sub(1, 1) == ":") and b and b[1] == "useimageresource" then
-				local digits = {}
-				for i = 2, #b do if type(b[i]) == "table" and b[i][1] == 12 then digits[#digits + 1] = utf8.char(b[i][2]) end end
-				local idx = tonumber(table.concat(digits))
-				if idx then imgs[#imgs + 1] = { idx = idx, file = file, hash = hash } end
-			end
-		end
-		table.sort(imgs, function(a, b) return a.idx < b.idx end)
-		for _, im in ipairs(imgs) do
-			if im.idx > tex.lastsavedimageresourceindex then
-				local box, page, decode = im.hash:match("^:(%a+)"), im.hash:match(":P(%d+)"), im.hash:match(":D(%b[])")
-				local interp = im.hash:find(":I", 1, true)
-				local cmd = "\\saveimageresource "
-				if decode or interp then cmd = cmd .. "attr{" .. (decode and ("/Decode" .. decode) or "") .. (interp and "/Interpolate true" or "") .. "}" end
-				if page then cmd = cmd .. " page " .. page end
-				if box then cmd = cmd .. " " .. box end
-				tex.sprint("\\directlua{texpile_tele_reserve(" .. (im.idx - 1) .. ")}")
-				tex.sprint(cmd .. "{")
-				tex.sprint(-2, im.file)
-				tex.sprint("}\\directlua{texpile_tele_imgcheck(" .. im.idx .. ")}")
-			end
-		end
+		A.image_cache = T.apply_images(r)
 		-- object numbers the restored nodes and macros hold must not be handed out again
 		tex.sprint("\\directlua{texpile_tele_reserve(" .. (r.maxobj or 0) .. ")}")
 		tex.sprint("\\directlua{texpile_tele_apply4()}")
@@ -359,7 +332,7 @@ return function(T)
 		-- a node pointing at an image this process does not have crashes the backend at shipout
 		local acc = resource_refs(r.page, resource_refs(r.contrib, { img = 0, box = 0 }))
 		for _, b in ipairs(r.boxes) do resource_refs(b.list, acc) end
-		if acc.img > tex.lastsavedimageresourceindex or acc.box > tex.lastsavedboxresourceindex then
+		if acc.img > texpile_images_read() or acc.box > tex.lastsavedboxresourceindex then
 			T.refuse(string.format("the page uses image %d and box resource %d", acc.img, acc.box))
 			return
 		end
@@ -466,6 +439,7 @@ return function(T)
 		for _, n in ipairs(r.names) do listed[n.n] = true end
 		for _, m in ipairs(r.macros) do listed[m.n] = true end
 		for _, n in ipairs(r.nfss) do listed[n] = true end
+		for _, n in ipairs(A.image_cache or {}) do listed[n] = true end
 		local seq, other = {}, {}
 		local L = token.create("let")
 		-- the hash is walked again only when the apply made names the record does not account for

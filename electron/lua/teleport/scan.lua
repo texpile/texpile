@@ -194,6 +194,7 @@ return function(T)
 		b.contriblen = node.length(tex.lists.contrib_head)
 		b.pagecopy, b.contribcopy = node.copy_list(tex.lists.page_head), node.copy_list(tex.lists.contrib_head)
 		b.deadcycles, b.insertpenalties = tex.deadcycles, tex.insertpenalties
+		b.maxobj = pdf.getmaxobjnum()
 		b.prevdepth, b.prevgraf, b.curfont = tex.nest[0].prevdepth, tex.nest[0].prevgraf, font.current()
 		T.base = b
 	end

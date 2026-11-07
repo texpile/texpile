@@ -71,6 +71,8 @@ export class PointIndex {
 	readonly basis = new Map<string, string>();
 	/** the fonts the recording loaded after its base, root-relative */
 	fontList?: string;
+	/** the images graphics kept by the end of the recording, root-relative */
+	imageList?: string;
 
 	constructor(
 		public entries: IndexEntry[],
@@ -214,6 +216,7 @@ export class PointIndex {
 		for (const e of this.entries) if ('point' in e) add(e.point.rec);
 		for (const p of this.basis.values()) add(p);
 		add(this.seedDir + '/');
+		for (const p of [this.fontList, this.imageList]) if (p) add(p);
 		return out;
 	}
 }

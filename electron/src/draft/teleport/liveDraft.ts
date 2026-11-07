@@ -134,7 +134,8 @@ export class LiveDraft {
 			seedDir: this.index.seedDir,
 			preamble,
 			preStamp: this.index.preStamp,
-			fontList: this.index.fontList
+			fontList: this.index.fontList,
+			imageList: this.index.imageList
 		};
 	}
 
@@ -203,7 +204,7 @@ export class LiveDraft {
 			const serve = { src: `${to.rel}/tele/s${n}`, cut: `${to.rel}/tele/cut-${n}` };
 			fs.writeFileSync(
 				path.join(this.root, planRel),
-				planLua(plan, overrides, file, edit, paragraphStart(lines, edit), this.srcFiles, serve)
+				planLua(plan, overrides, file, edit, paragraphStart(lines, edit), this.srcFiles, serve, this.index.imageList)
 			);
 			return planRel;
 		};

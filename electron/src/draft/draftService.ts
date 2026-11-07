@@ -191,6 +191,7 @@ export async function compileDraft(body: DraftBody): Promise<DraftResult> {
 		);
 		index.adoptBasis(path.join(done.engine.abs, 'tele', 'src'));
 		index.fontList = `${done.engine.rel}/tele/fonts.lua`;
+		index.imageList = `${done.engine.rel}/tele/images.lua`;
 		adoptIndex({ root, mainRel, engineDir, index, count: manifest.count, srcFiles: manifest.srcFiles ?? [] });
 	}
 

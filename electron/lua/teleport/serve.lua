@@ -12,6 +12,7 @@ return function(T)
 	function T.park()
 		local b = T.base
 		local why = T.no_park or (T.wrote_objects() and "the run wrote PDF objects") or (T.serves >= MAX_SERVES and "served " .. T.serves)
+			or (not T.images_like_compile() and "an image is not at the compile's object")
 			or (#T.stack ~= 1 and "inside a file")
 			or ((tex.nest.ptr ~= 0 or tex.currentgrouplevel ~= b.level or tex.currentiflevel ~= b.iflevel) and "not at a clean point")
 		if why then
@@ -116,7 +117,7 @@ return function(T)
 		repeat
 			l = io.stdin:read("*l")
 			if l then l = l:gsub("\r$", "") end
-		until not (l and l:match("^FONTS "))
+		until not (l and (l:match("^FONTS ") or l:match("^IMAGES ")))
 		local plan = l and l:match("^TELE (.+)$")
 		if l == "DROP" then
 			T.wind_down()
@@ -151,6 +152,7 @@ return function(T)
 		end
 		T.reset_snapshots()
 		T.mark_objects()
+		T.adopt_images(plan.images)
 		T.cut_path = plan.cut
 		for rel, path in pairs(plan.overrides or {}) do
 			T.overrides[rel] = path
@@ -170,6 +172,7 @@ return function(T)
 		T.files = plan.files
 		-- no point before the edit: the run goes on from the base it waits at
 		if #T.chain == 0 then
+			T.apply_images({ macros = {} })
 			T.stack[1].jump = T.base_line
 			T.report_from = T.shipped + 1
 			T.adopt_files()

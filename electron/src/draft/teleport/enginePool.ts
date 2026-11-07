@@ -21,6 +21,7 @@ type Spare = {
 	stamp: Promise<string | null>;
 	at: Promise<boolean>;
 	fonts?: string;
+	images?: string;
 	staged?: string;
 };
 export type PoolConfig = {
@@ -34,6 +35,8 @@ export type PoolConfig = {
 	preStamp: string | null;
 	/** fonts for a spare to load while it waits, root-relative */
 	fontList?: string;
+	/** images for a spare to load while it waits, root-relative */
+	imageList?: string;
 };
 
 /** a main file's text up to and including its \begin{document} line, with line ends as the engine's reader sees them */
@@ -76,10 +79,16 @@ function retire(e: DraftEngine): void {
 
 // stdin holds the command until the engine reaches the base
 function preload(s: Spare, c: PoolConfig): void {
-	if (!c.fontList || s.fonts === c.fontList) return;
-	s.engine.preloadFonts(c.fontList);
-	// eslint-disable-next-line no-param-reassign -- the spare records what it was sent
-	s.fonts = c.fontList;
+	if (c.fontList && s.fonts !== c.fontList) {
+		s.engine.preloadFonts(c.fontList);
+		// eslint-disable-next-line no-param-reassign -- the spare records what it was sent
+		s.fonts = c.fontList;
+	}
+	if (c.imageList && s.images !== c.imageList) {
+		s.engine.preloadImages(c.imageList);
+		// eslint-disable-next-line no-param-reassign
+		s.images = c.imageList;
+	}
 }
 
 // the first of these to reach the base
@@ -226,7 +235,7 @@ class EnginePool {
 			if (c) this.warm(c);
 			return;
 		}
-		const back: Spare = { ...s, at: engine.parked, fonts: undefined };
+		const back: Spare = { ...s, at: engine.parked, fonts: undefined, images: undefined };
 		const late = setTimeout(() => engine.kill(), PARK_MS);
 		void engine.parked.then(() => clearTimeout(late));
 		this.spares.unshift(back);

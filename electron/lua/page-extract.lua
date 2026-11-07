@@ -33,6 +33,24 @@ end, "texpile.imagefile")
 walker.imageFile = function(ix)
 	return image_files[ix]
 end
+function texpile_images_read()
+	return #image_files
+end
+
+-- each read takes the next image object, so the k-th of them holds the k-th file; nil once a read took none (an image
+-- made from Lua)
+local image_objs, scanned = {}, 0
+function texpile_image_objects()
+	local top = pdf.getmaxobjnum()
+	for n = scanned + 1, top do
+		if pdf.getobjtype(n) == "ximage" then image_objs[#image_objs + 1] = n end
+	end
+	scanned = top
+	if #image_objs ~= #image_files then return nil end
+	local at = {}
+	for k, n in ipairs(image_objs) do at[n] = image_files[k] end
+	return at
+end
 
 -- the page count and file table go into teleport records, so a teleported run numbers and labels the same way
 TEXPILE_TELE_CARRY = TEXPILE_TELE_CARRY or {}

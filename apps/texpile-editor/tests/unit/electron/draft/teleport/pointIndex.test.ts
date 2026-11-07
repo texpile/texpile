@@ -54,3 +54,10 @@ it('moves the points past the stop by the lines the edit added', () => {
 	ix.merge(plan, 'main.tex', { from: 8, oldTo: 8, newTo: 10 }, [point('n', [['main.tex', 11]])], 'c');
 	expect(ix.entries.map((e) => ('point' in e ? `${e.point.rec}@${e.point.stack[0][1]}` : 'enter'))).toEqual(['a@5', 'n@11', 'c@42']);
 });
+
+// the sweep removed the compile's folder once no point lived there, and with its image list gone no engine parked
+it('keeps the folder that holds the image list', () => {
+	const ix = index([point('_draft/pserved/tele/r-00001.lua', [['main.tex', 9]])]);
+	ix.imageList = '_draft/pcompile/tele/images.lua';
+	expect(ix.folders().has('pcompile')).toBe(true);
+});
