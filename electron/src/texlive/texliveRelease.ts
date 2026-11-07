@@ -1,7 +1,7 @@
 // the one TeX Live build Texpile installs itself, and which of its archives fits this machine
 import type { Libc } from '../install/linuxLibc';
 
-export const TEXLIVE_VERSION = '2026-r81008';
+export const TEXLIVE_VERSION = '2026-r81008-eec2f0';
 
 export const TEXLIVE_YEAR = Number(TEXLIVE_VERSION.slice(0, 4));
 
@@ -17,18 +17,18 @@ export type TexLivePlatform = 'x86_64-linux' | 'aarch64-linux' | 'universal-darw
 // Copied from that version's SHA256SUMS, pinned here as for tinymist (tinymistRelease.ts). A version bump replaces
 // TEXLIVE_VERSION and every line below together
 const SHA256_BY_PLATFORM: Record<TexLivePlatform, string> = {
-	'x86_64-linux': 'eb9e8de5f649f91e55a5540374701b488422ab08e50a97e3dec28326dc12a06f',
-	'aarch64-linux': 'db4612439000f653bdf14ec56bebbc14958bacb0d2ff00a95d62d36ee19df191',
-	'universal-darwin': '18418e5fee366eb904d7a49994dcbe53250b0aaea9b55b6ad8b2a6cb38d25983',
-	windows: '978d3b53c050c774dd20b422011a44bbd8b086a20c858b700438e29b6bbc9c09'
+	'x86_64-linux': 'de3c2890a10fef8a8298ac9956439a62d4308a23b3e50fcd5894e2c504ee8d99',
+	'aarch64-linux': '8de8612d11925094b21192e07d3b742b178020dcbcfc44a462a641f3b597d3eb',
+	'universal-darwin': 'a4d5f0010dd4d61eb9bb5232b049fcdbd25bd45a40c1d9350404f91061ff114e',
+	windows: '9921b769a69437f005daea9aa62f06b4d47d173cd1c8b0980004d9c18366212c'
 };
 
 // for the offer, before anything is downloaded
 const MEGABYTES_BY_PLATFORM: Record<TexLivePlatform, number> = {
-	'x86_64-linux': 175,
+	'x86_64-linux': 174,
 	'aarch64-linux': 180,
 	'universal-darwin': 230,
-	windows: 282
+	windows: 287
 };
 
 export type TexLiveAsset = {
