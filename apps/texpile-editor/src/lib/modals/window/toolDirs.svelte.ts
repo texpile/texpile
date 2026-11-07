@@ -73,6 +73,13 @@ class ToolDirs {
 		await this.write(settings.current.toolDirs.filter((d) => d !== entry));
 	}
 
+	/** every entry that names `dir`, gone from the list */
+	async forget(dir: string): Promise<void> {
+		await this.refresh();
+		const gone = this.rows.filter((r) => [r.absolute, r.real].some((p) => folderKey(p) === folderKey(dir))).map((r) => r.entry);
+		if (gone.length) await this.write(settings.current.toolDirs.filter((d) => !gone.includes(d)));
+	}
+
 	async write(toolDirs: string[]): Promise<void> {
 		this.busy = true;
 		try {

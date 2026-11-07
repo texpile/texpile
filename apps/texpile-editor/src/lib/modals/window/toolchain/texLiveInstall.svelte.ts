@@ -1,6 +1,7 @@
 // Texpile's own TeX Live as every window sees it, as for tinymist (tinymistInstall.svelte.ts): the one install under
 // way, how the last one ended, and what is on disk
 import { toolchainProbe } from '../toolchainProbe.svelte';
+import { toolDirs } from '../toolDirs.svelte';
 
 function bridge(): TexpileTexLiveBridge | undefined {
 	return typeof window !== 'undefined' ? window.texpileTexLive : undefined;
@@ -57,8 +58,11 @@ class TexLiveInstaller {
 		this.listen(b);
 		this.failure = null;
 		this.removing = true;
+		const bin = this.status?.installed?.bin ?? null;
 		try {
-			await b.remove();
+			const result = await b.remove();
+			// a Distribution pick of the tree that is gone leaves PATH as it was before it
+			if (result.ok && bin) await toolDirs.forget(bin);
 		} finally {
 			this.removing = false;
 		}
