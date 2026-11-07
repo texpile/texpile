@@ -48,7 +48,7 @@
 		"prettier": "^3.9.10",
 		"prettier-plugin-svelte": "^4.1.1",
 		"prettier-plugin-tailwindcss": "^0.8.1",
-		"simple-git": "^3.36.0",
+		"simple-git": "^4.0.2",
 		"typescript": "^6.0.3",
 		"typescript-eslint": "^8.72.0",
 		"wait-on": "^9.1.0",
