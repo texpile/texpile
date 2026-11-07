@@ -5,7 +5,8 @@ import * as fs from 'node:fs';
 import * as path from 'node:path';
 import { applyAppIdentity, portable } from './appIdentity';
 import { shellEnvReady } from './shell/shellEnv';
-import { setToolDirs } from './shell/toolDirs';
+import { setPathFallback, setToolDirs } from './shell/toolDirs';
+import { managedTexLiveBin } from './texlive/managedTexLive';
 import { stopCwdProgramLookup } from './shell/findProgram';
 import { registerPrivilegedSchemes, registerProtocolHandlers } from './appProtocols';
 import { readSettings, writeSettings, registerSettingsIpc } from './appSettings';
@@ -263,6 +264,7 @@ app.whenReady().then(() => {
 
 	// warmed here, not at module scope: the login shell it spawns is slower than the whole launch
 	setToolDirs(readSettings().toolDirs);
+	setPathFallback(managedTexLiveBin());
 	void shellEnvReady();
 
 	// Not before the renderer has been served its own bundle. The app:// handler runs on this

@@ -4,7 +4,8 @@
 import { it, expect, beforeEach } from 'vitest';
 import { tinymistInstaller } from '../../../../src/lib/modals/window/tinymistInstall.svelte';
 import { toolchainProbe } from '../../../../src/lib/modals/window/toolchainProbe.svelte';
-import { tinymistFailureText, tinymistStepPercent, tinymistStepText } from '../../../../src/lib/modals/window/tinymistInstallText';
+import { tinymistFailureText, tinymistStepText } from '../../../../src/lib/modals/window/tinymistInstallText';
+import { installStepPercent } from '../../../../src/lib/modals/window/toolchain/installStepUtils';
 
 type Fake = {
 	finish?: (result: TinymistInstallResult) => void;
@@ -14,7 +15,7 @@ type Fake = {
 
 let fake: Fake;
 // the installer subscribes once, as it would to the one bridge a window has
-const broadcast: { progress?: (step: TinymistInstallStep) => void; finished?: (result: TinymistInstallResult) => void } = {};
+const broadcast: { progress?: (step: InstallStep) => void; finished?: (result: TinymistInstallResult) => void } = {};
 const INSTALLED = { command: '/data/tinymist/tinymist', version: '0.15.8', typstVersion: '0.15.1' };
 
 beforeEach(() => {
@@ -30,7 +31,7 @@ beforeEach(() => {
 				};
 			}),
 		cancelTinymistInstall: () => fake.finish?.({ ok: false, reason: 'cancelled', detail: 'cancelled' }),
-		onTinymistProgress: (cb: (step: TinymistInstallStep) => void) => {
+		onTinymistProgress: (cb: (step: InstallStep) => void) => {
 			broadcast.progress = cb;
 			return () => undefined;
 		},
@@ -105,8 +106,8 @@ it('words each step and each failure', () => {
 		'Downloading tinymist 0.15.8: 1.0 of 3.0 MB'
 	);
 	expect(tinymistStepText({ phase: 'download', received: 0, total: 0 }, '0.15.8')).toBe('Downloading tinymist 0.15.8');
-	expect(tinymistStepPercent({ phase: 'download', received: 1, total: 4 })).toBe(25);
-	expect(tinymistStepPercent({ phase: 'extract', received: 0, total: 0 })).toBe(100);
+	expect(installStepPercent({ phase: 'download', received: 1, total: 4 })).toBe(25);
+	expect(installStepPercent({ phase: 'extract', received: 0, total: 0 })).toBe(100);
 	expect(tinymistFailureText({ reason: 'offline', detail: 'net::ERR_INTERNET_DISCONNECTED' })).toMatch(/Could not reach dl\.texpile\.com/);
 	expect(tinymistFailureText({ reason: 'checksum', detail: '' })).toMatch(/download was damaged/);
 	expect(tinymistFailureText({ reason: 'disk', detail: 'ENOSPC: no space left on device' })).toMatch(/ENOSPC/);

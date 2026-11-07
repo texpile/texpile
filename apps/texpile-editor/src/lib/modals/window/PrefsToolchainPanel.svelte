@@ -10,6 +10,7 @@
 	import { distros } from './distros.svelte';
 	import ToolchainDistributionRow from './ToolchainDistributionRow.svelte';
 	import ToolchainTinymistRow from './ToolchainTinymistRow.svelte';
+	import ToolchainTexLiveRow from './toolchain/ToolchainTexLiveRow.svelte';
 	import { tinymistSourceLabel } from './tinymistInstallText';
 	import PrefsRow from './rows/PrefsRow.svelte';
 	import { m } from '$lib/paraglide/messages';
@@ -151,7 +152,9 @@
 			</div>
 		{/each}
 	</div>
-	{#if group === 'typst'}
+	{#if group === 'latex'}
+		<div class={SUB}><ToolchainTexLiveRow /></div>
+	{:else if group === 'typst'}
 		<div class={SUB}><ToolchainTinymistRow /></div>
 	{/if}
 {/snippet}

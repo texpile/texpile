@@ -22,7 +22,7 @@ export type ToolDistro = {
 	detail: string;
 	/** the copy the shell PATH reaches on its own */
 	onPath: boolean;
-	/** Texpile's own tinymist, the one Preferences › Toolchain installs */
+	/** Texpile's own copy, the one Preferences › Toolchain installs */
 	managed: boolean;
 };
 
@@ -45,7 +45,9 @@ function pathDirs(): string[] {
 		.filter(Boolean);
 }
 
-export function latexPlaces(home = os.homedir(), env = process.env): DistroPlaces {
+/** `managedBin`: Texpile's own TeX Live, when installed */
+export function latexPlaces(managedBin: string | null = null, home = os.homedir(), env = process.env): DistroPlaces {
+	const managed = managedBin ? [managedBin] : [];
 	if (process.platform === 'win32') {
 		const miktex = ['MiKTeX', 'miktex', 'bin', 'x64'];
 		return {
@@ -53,7 +55,8 @@ export function latexPlaces(home = os.homedir(), env = process.env): DistroPlace
 			yearRoots: [path.join(env.SystemDrive || 'C:', '\\texlive')],
 			binDirs: [
 				path.join(env.LOCALAPPDATA || path.join(home, 'AppData', 'Local'), 'Programs', ...miktex),
-				path.join(env.ProgramFiles || 'C:\\Program Files', ...miktex)
+				path.join(env.ProgramFiles || 'C:\\Program Files', ...miktex),
+				...managed
 			],
 			pathDirs: pathDirs()
 		};
@@ -61,7 +64,7 @@ export function latexPlaces(home = os.homedir(), env = process.env): DistroPlace
 	return {
 		program: 'pdflatex',
 		yearRoots: ['/usr/local/texlive', '/opt/texlive', path.join(home, 'texlive')],
-		binDirs: [path.join(home, 'bin')],
+		binDirs: [path.join(home, 'bin'), ...managed],
 		pathDirs: pathDirs()
 	};
 }
@@ -170,13 +173,13 @@ async function probeDir(
 	return { family, name, dir, dirs, detail: family === 'typst' ? name : (firstInformativeLine(out) ?? name), onPath, managed };
 }
 
-/** `configured` is the folder list as settings hold it */
-export async function detectDistros(configured: unknown, userData: string): Promise<ToolDistro[]> {
+/** `configured` is the folder list as settings hold it; `texBin` is Texpile's own TeX Live, when installed */
+export async function detectDistros(configured: unknown, userData: string, texBin: string | null): Promise<ToolDistro[]> {
 	await shellEnvReady();
 	const listed = Array.isArray(configured) ? configured.filter((d): d is string => typeof d === 'string' && d.trim() !== '') : [];
 	const extra = listed.map((d) => resolveToolDir(d));
 	const families: [DistroFamily, DistroPlaces, string | null][] = [
-		['latex', latexPlaces(), null],
+		['latex', latexPlaces(texBin), texBin && realDir(texBin, 'pdflatex')],
 		['typst', typstPlaces(userData), managedDistroDir(userData)]
 	];
 	const found = await Promise.all(

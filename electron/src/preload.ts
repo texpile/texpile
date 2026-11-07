@@ -3,6 +3,7 @@ import { invokeFs } from './preloadIpc';
 import { drawBridge } from './draw/drawPreload';
 import { imageBridge } from './images/imagePreload';
 import './preloadSnippets';
+import './preloadTexLive';
 
 // main pushes open-path/open-folder on did-finish-load, which can beat the renderer's
 // subscription (mount waits on the settings IPC; the route-split boot is fast enough to lose

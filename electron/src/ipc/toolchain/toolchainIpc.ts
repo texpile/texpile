@@ -1,12 +1,13 @@
 import { app, ipcMain } from 'electron';
 import * as fs from 'node:fs';
-import { readSettings } from '../appSettings';
-import { portable } from '../appIdentity';
-import { dirForms } from '../shell/toolDirs';
-import { detectDistros } from '../shell/distros';
-import * as toolchain from '../toolchain';
-import { kpsewhich } from '../shell/kpsewhich';
-import { probePackage } from '../packages/packageProbe';
+import { readSettings } from '../../appSettings';
+import { portable } from '../../appIdentity';
+import { dirForms } from '../../shell/toolDirs';
+import { detectDistros } from '../../shell/distros';
+import * as toolchain from '../../toolchain';
+import { kpsewhich } from '../../shell/kpsewhich';
+import { probePackage } from '../../packages/packageProbe';
+import { managedTexLiveBin } from '../../texlive/managedTexLive';
 
 function str(v: unknown): string {
 	return typeof v === 'string' ? v : '';
@@ -19,7 +20,7 @@ export function registerToolchainIpc(): void {
 			if (!e.sender.isDestroyed()) e.sender.send('toolchain:probe:result', p);
 		})
 	);
-	ipcMain.handle('toolchain:distros', () => detectDistros(readSettings().toolDirs, app.getPath('userData')));
+	ipcMain.handle('toolchain:distros', () => detectDistros(readSettings().toolDirs, app.getPath('userData'), managedTexLiveBin()));
 	// a .bib the TeX installation has (IEEEabrv.bib), for the reference checks; a bare name only
 	ipcMain.handle('toolchain:texBib', async (_e, name: unknown) => {
 		if (typeof name !== 'string' || !/^[\w.+-]+\.bib$/i.test(name)) return null;

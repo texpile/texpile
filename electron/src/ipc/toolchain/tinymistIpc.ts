@@ -2,10 +2,11 @@
 // and outcome sent to every window, since any of them may be showing the Toolchain tab
 import { app, BrowserWindow, ipcMain, net } from 'electron';
 import * as fs from 'node:fs';
-import { managedTinymistPath, probeTinymist } from '../typstService';
-import { installTinymist, removeTinymist, type TinymistInstallResult, type TinymistInstallStep } from '../tinymist/tinymistInstall';
-import { linuxLibc, tinymistAssetFor, TINYMIST_VERSION } from '../tinymist/tinymistRelease';
-import { whileTypstLspsStopped } from './typstIpc';
+import { managedTinymistPath, probeTinymist } from '../../typstService';
+import { installTinymist, removeTinymist, type TinymistInstallResult, type TinymistInstallStep } from '../../tinymist/tinymistInstall';
+import { currentLibc } from '../../install/linuxLibc';
+import { tinymistAssetFor, TINYMIST_VERSION } from '../../tinymist/tinymistRelease';
+import { whileTypstLspsStopped } from '../typstIpc';
 
 // progress is a bar, not a log: a 30MB download arrives in thousands of chunks
 const PROGRESS_EVERY_MS = 100;
@@ -39,18 +40,8 @@ function broadcast(channel: string, payload: unknown): void {
 	}
 }
 
-// process.report is how Node tells glibc from musl; only Linux asks
-function glibcVersion(): string | undefined {
-	try {
-		const report = process.report?.getReport() as { header?: { glibcVersionRuntime?: string } } | undefined;
-		return report?.header?.glibcVersionRuntime;
-	} catch {
-		return undefined;
-	}
-}
-
 function currentAsset() {
-	return tinymistAssetFor(process.platform, process.arch, process.platform === 'linux' ? linuxLibc(glibcVersion()) : 'gnu');
+	return tinymistAssetFor(process.platform, process.arch, currentLibc());
 }
 
 async function status(): Promise<ManagedTinymistStatus> {

@@ -3,6 +3,8 @@ import * as path from 'node:path';
 import { withPathDirs } from './pathDirs';
 
 let configured: string[] = [];
+// Texpile's own TeX, behind PATH: a TeX the writer installed comes first
+let behind: string | null = null;
 // PATH as the login shell gave it, before any of the user's folders; null until shellEnv has run
 let baseline: string | null = null;
 const listeners = new Set<(pathValue: string) => void>();
@@ -39,7 +41,8 @@ function apply(): void {
 	const resolved = configured.map((d) => resolveToolDir(d));
 	const listed = new Set(resolved.map(folderKey));
 	const rest = (baseline ?? '').split(sep).filter((p) => p && !listed.has(folderKey(p)));
-	process.env[key] = withPathDirs({ [key]: rest.join(sep) }, resolved)[key];
+	const front = withPathDirs({ [key]: rest.join(sep) }, resolved);
+	process.env[key] = withPathDirs(front, [behind], true)[key];
 	for (const fn of listeners) fn(process.env[key] ?? '');
 }
 
@@ -62,6 +65,16 @@ export function baselinePath(): string {
 export function setToolDirs(dirs: unknown): void {
 	configured = Array.isArray(dirs) ? dirs.filter((d): d is string => typeof d === 'string' && d.trim() !== '') : [];
 	if (baseline !== null) apply();
+}
+
+/** the folder after the rest of PATH; null for none */
+export function setPathFallback(dir: string | null): void {
+	behind = dir;
+	if (baseline !== null) apply();
+}
+
+export function pathFallback(): string | null {
+	return behind;
 }
 
 /** call once process.env.PATH is the user's own */

@@ -10,7 +10,7 @@ function bridge(): TexpileTypstBridge | undefined {
 class TinymistInstaller {
 	status = $state<ManagedTinymistStatus | null>(null);
 	/** non-null while an install runs */
-	step = $state<TinymistInstallStep | null>(null);
+	step = $state<InstallStep | null>(null);
 	/** how the last install or removal failed; cleared by the next attempt */
 	failure = $state<Extract<TinymistInstallResult, { ok: false }> | null>(null);
 	removing = $state(false);

@@ -65,18 +65,18 @@ declare global {
 		detail: string;
 		/** the copy the shell PATH reaches on its own */
 		onPath: boolean;
-		/** Texpile's own tinymist, the one Preferences › Toolchain installs */
+		/** Texpile's own copy, the one Preferences › Toolchain installs */
 		managed: boolean;
 	};
 
-	/** how far an install of Texpile's own tinymist has got; received/total are bytes while downloading */
-	type TinymistInstallStep = { phase: 'download' | 'verify' | 'extract'; received: number; total: number };
+	/** how far an install of Texpile's own tinymist or TeX Live has got; received/total are bytes while downloading */
+	type InstallStep = { phase: 'download' | 'verify' | 'extract'; received: number; total: number };
 
-	type TinymistInstallFailure = 'unsupported' | 'offline' | 'download' | 'checksum' | 'extract' | 'disk' | 'broken' | 'cancelled';
+	type InstallFailure = 'unsupported' | 'offline' | 'download' | 'checksum' | 'extract' | 'disk' | 'broken' | 'cancelled';
 
 	/** an install's outcome; a removal's success carries no command */
 	type TinymistInstallResult =
-		{ ok: true; command?: string; version?: string; typstVersion?: string } | { ok: false; reason: TinymistInstallFailure; detail: string };
+		{ ok: true; command?: string; version?: string; typstVersion?: string } | { ok: false; reason: InstallFailure; detail: string };
 
 	type ManagedTinymistStatus = {
 		/** the release Install fetches */
@@ -86,7 +86,35 @@ declare global {
 		/** Texpile's copy when there is one; version null when it no longer runs */
 		installed: { command: string; version: string | null; typstVersion: string | null } | null;
 		/** the step an install under way has reached */
-		step: TinymistInstallStep | null;
+		step: InstallStep | null;
+	};
+
+	/** an install's outcome; a removal's success carries no folder */
+	type TexLiveInstallResult = { ok: true; bin?: string; detail?: string } | { ok: false; reason: InstallFailure; detail: string };
+
+	type ManagedTexLiveStatus = {
+		/** the build Install fetches, e.g. 2026-r81008 */
+		pinned: string;
+		year: number;
+		/** the download's size; null when Texpile has no build for this computer */
+		megabytes: number | null;
+		/** Texpile's tree when there is one; detail null when it no longer runs */
+		installed: { bin: string; detail: string | null } | null;
+		/** the step an install under way has reached */
+		step: InstallStep | null;
+	};
+
+	/** Texpile's own TeX Live (absent from an older main process) */
+	type TexpileTexLiveBridge = {
+		status(): Promise<ManagedTexLiveStatus>;
+		/** download, check and install the pinned build; joins an install already under way */
+		install(): Promise<TexLiveInstallResult>;
+		cancel(): void;
+		remove(): Promise<TexLiveInstallResult>;
+		/** an install's progress, whichever window started it; returns an unsubscribe fn */
+		onProgress(cb: (step: InstallStep) => void): () => void;
+		/** an install or removal ended, in any window; returns an unsubscribe fn */
+		onFinished(cb: (result: TexLiveInstallResult) => void): () => void;
 	};
 
 	type TexpileTypstBridge = {
@@ -99,7 +127,7 @@ declare global {
 		cancelTinymistInstall?(): void;
 		removeTinymist?(): Promise<TinymistInstallResult>;
 		/** An install's progress, whichever window started it; returns an unsubscribe fn. */
-		onTinymistProgress?(cb: (step: TinymistInstallStep) => void): () => void;
+		onTinymistProgress?(cb: (step: InstallStep) => void): () => void;
 		/** An install or removal ended, in any window; returns an unsubscribe fn. */
 		onTinymistFinished?(cb: (result: TinymistInstallResult) => void): () => void;
 		/** Probe every external program the app shells out to. */
@@ -202,6 +230,8 @@ declare global {
 		texpileTerminal?: TexpileTerminalBridge;
 		/** tinymist bridge (Electron only; undefined in the browser dev server). */
 		texpileTypst?: TexpileTypstBridge;
+		/** Texpile's own TeX Live (Electron only; undefined in the browser dev server). */
+		texpileTexLive?: TexpileTexLiveBridge;
 		/** Zotero citation bridge (Electron only; undefined in the browser dev server). */
 		texpileZotero?: TexpileZoteroBridge;
 		/** Cite by DOI's lookup (Electron only; undefined in the browser dev server). */

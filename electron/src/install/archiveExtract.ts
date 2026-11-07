@@ -2,9 +2,13 @@
 import { execFile } from 'node:child_process';
 import * as fs from 'node:fs';
 import * as path from 'node:path';
-import { TinymistInstallError } from './tinymistInstallError';
+import { InstallError } from './installError';
 
 const EXTRACT_TIMEOUT_MS = 120_000;
+
+export type ArchiveFormat = 'zip' | 'tar.gz' | 'tar.xz';
+
+const READ_FLAGS: Record<ArchiveFormat, string> = { zip: '-xf', 'tar.gz': '-xzf', 'tar.xz': '-xJf' };
 
 /**
  * The tar that can read the archive.
@@ -19,13 +23,19 @@ export function tarCommand(platform: NodeJS.Platform, env: NodeJS.ProcessEnv): s
 	return path.win32.join(env.SystemRoot || env.windir || 'C:\\Windows', 'System32', 'tar.exe');
 }
 
-export function extractArchive(archive: string, format: 'zip' | 'tar.gz', into: string, platform = process.platform): Promise<void> {
-	const args = format === 'zip' ? ['-xf', archive, '-C', into] : ['-xzf', archive, '-C', into];
+export function extractArchive(
+	archive: string,
+	format: ArchiveFormat,
+	into: string,
+	platform = process.platform,
+	timeout = EXTRACT_TIMEOUT_MS
+): Promise<void> {
+	const args = [READ_FLAGS[format], archive, '-C', into];
 	return new Promise((resolve, reject) => {
-		execFile(tarCommand(platform, process.env), args, { timeout: EXTRACT_TIMEOUT_MS, windowsHide: true }, (err, _stdout, stderr) => {
+		execFile(tarCommand(platform, process.env), args, { timeout, windowsHide: true }, (err, _stdout, stderr) => {
 			if (!err) return resolve();
 			const said = String(stderr).trim().split(/\r?\n/)[0];
-			reject(TinymistInstallError.from(said ? Object.assign(new Error(said), { code: diskCode(said) }) : err, 'extract'));
+			reject(InstallError.from(said ? Object.assign(new Error(said), { code: diskCode(said) }) : err, 'extract'));
 		});
 	});
 }

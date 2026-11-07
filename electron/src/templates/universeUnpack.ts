@@ -6,7 +6,7 @@ import { execFile } from 'node:child_process';
 import { cp, mkdir, mkdtemp, readFile, rm, stat, writeFile } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join, resolve, sep } from 'node:path';
-import { tarCommand } from '../tinymist/tinymistArchive';
+import { tarCommand } from '../install/archiveExtract';
 import { packageUrl } from './typstUniverse';
 
 const DOWNLOAD_TIMEOUT_MS = 120_000;

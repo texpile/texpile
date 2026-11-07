@@ -4,7 +4,7 @@ import * as fs from 'node:fs';
 import { Readable } from 'node:stream';
 import { pipeline } from 'node:stream/promises';
 import type { ReadableStream as NodeReadableStream } from 'node:stream/web';
-import { TinymistInstallError } from './tinymistInstallError';
+import { InstallError } from './installError';
 
 // a connection that stops sending is not an error on its own; without a limit the install waits for ever
 const STALL_MS = 30_000;
@@ -35,7 +35,7 @@ export async function downloadArchive(
 	}
 	try {
 		const res = await requestArchive(fetchArchive, url, both, signal);
-		if (!res.ok || !res.body) throw new TinymistInstallError('download', `HTTP ${res.status}`);
+		if (!res.ok || !res.body) throw new InstallError('download', `HTTP ${res.status}`);
 		// an encoded body arrives decoded, and its length no longer says how much to expect
 		const total = res.headers.get('content-encoding') ? 0 : Number(res.headers.get('content-length')) || 0;
 		const hash = createHash('sha256');
@@ -57,7 +57,7 @@ export async function downloadArchive(
 		).catch((err: unknown) => {
 			throw streamFailure(err, signal, stall.signal);
 		});
-		if (total && received !== total) throw new TinymistInstallError('download', `received ${received} of ${total} bytes`);
+		if (total && received !== total) throw new InstallError('download', `received ${received} of ${total} bytes`);
 		return hash.digest('hex');
 	} finally {
 		clearTimeout(timer);
@@ -68,17 +68,17 @@ async function requestArchive(fetchArchive: FetchArchive, url: string, both: Abo
 	try {
 		return await fetchArchive(url, { signal: both });
 	} catch (err) {
-		if (cancel.aborted) throw new TinymistInstallError('cancelled', 'cancelled');
+		if (cancel.aborted) throw new InstallError('cancelled', 'cancelled');
 		const message = err instanceof Error ? err.message : String(err);
 		// something answered, only not as dl.texpile.com (an intercepting proxy): show its error, not "offline"
 		const refused = /ERR_CERT|ERR_SSL|certificate/i.test(message);
-		throw new TinymistInstallError(refused ? 'download' : 'offline', message, { cause: err });
+		throw new InstallError(refused ? 'download' : 'offline', message, { cause: err });
 	}
 }
 
-function streamFailure(err: unknown, cancel: AbortSignal, stall: AbortSignal): TinymistInstallError {
-	if (err instanceof TinymistInstallError) return err;
-	if (cancel.aborted) return new TinymistInstallError('cancelled', 'cancelled');
-	if (stall.aborted) return new TinymistInstallError('download', 'the download stalled', { cause: err });
-	return TinymistInstallError.from(err, 'download');
+function streamFailure(err: unknown, cancel: AbortSignal, stall: AbortSignal): InstallError {
+	if (err instanceof InstallError) return err;
+	if (cancel.aborted) return new InstallError('cancelled', 'cancelled');
+	if (stall.aborted) return new InstallError('download', 'the download stalled', { cause: err });
+	return InstallError.from(err, 'download');
 }

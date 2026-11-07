@@ -7,6 +7,8 @@
 	import { toolDirs } from '../toolDirs.svelte';
 	import { tinymistInstaller } from '../tinymistInstall.svelte';
 	import TinymistInstallProgress from '../TinymistInstallProgress.svelte';
+	import { texLiveInstaller } from '../toolchain/texLiveInstall.svelte';
+	import TexLiveInstallProgress from '../toolchain/TexLiveInstallProgress.svelte';
 	import { engineRows, type Typesetters } from './typesetterStatus.svelte';
 	import { m } from '$lib/paraglide/messages';
 
@@ -15,6 +17,7 @@
 
 	// the probe and the folder list are refreshed by the dialog around it, which waits on what the probe finds
 	void tinymistInstaller.refresh();
+	void texLiveInstaller.refresh();
 
 	async function addFolder(): Promise<void> {
 		await toolDirs.browse();
@@ -22,16 +25,26 @@
 	}
 
 	const engines = $derived(engineRows(want, program));
+	const noTex = $derived(!toolchainProbe.distros.some((d) => d.family === 'latex'));
 </script>
 
 <!-- each row says its state the way Preferences › Toolchain does, in words and a colored icon, on two
      lines so every row is the same height; a missing one can be looked for again from its own row -->
 <div class="border-surface-200-800 divide-surface-200-800 rounded-container divide-y border">
 	{#each engines as e (e.kind)}
-		<!-- Typst is the one typesetter Texpile can fetch for the reader: one program, no installer of its own -->
-		{@const installable = e.kind === 'Typst' && !e.found && tinymistInstaller.offered}
+		<!-- Texpile fetches tinymist, and TeX Live where no TeX is found at all -->
+		{@const typst = e.kind === 'Typst'}
+		{@const installer = e.found
+			? null
+			: typst
+				? tinymistInstaller.offered
+					? tinymistInstaller
+					: null
+				: noTex && texLiveInstaller.offered
+					? texLiveInstaller
+					: null}
 		<!-- an install under way is the row's state until it ends, whatever a look at the computer says meanwhile -->
-		{@const installing = installable && !!tinymistInstaller.step}
+		{@const installing = !!installer?.step}
 		{@const checking = toolchainProbe.probing && !e.found && !installing}
 		<div class="flex min-h-16 items-center gap-3 px-4 py-3">
 			{#if checking || installing}
@@ -54,18 +67,20 @@
 						{/if}
 					</div>
 				{/if}
-				{#if installable}
+				{#if installer && typst}
 					<TinymistInstallProgress />
+				{:else if installer}
+					<TexLiveInstallProgress />
 				{/if}
 			</div>
 			{#if installing}
 				<button
 					type="button"
 					class="btn preset-tonal shrink-0 text-xs"
-					onclick={() => tinymistInstaller.cancel()}
-					disabled={tinymistInstaller.step?.phase !== 'download'}
+					onclick={() => installer?.cancel()}
+					disabled={installer?.step?.phase !== 'download'}
 				>
-					{m.tinymist_install_cancel()}
+					{typst ? m.tinymist_install_cancel() : m.texlive_install_cancel()}
 				</button>
 			{:else if !e.found}
 				<button
