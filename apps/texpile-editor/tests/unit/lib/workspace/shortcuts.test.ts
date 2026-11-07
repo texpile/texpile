@@ -1,5 +1,6 @@
 // @vitest-environment jsdom
 import { describe, it, expect, vi } from 'vitest';
+import type { PaletteActions } from '$lib/workspace/commandPalette.svelte';
 
 const store = { path: '/w/gone.tex' as string | null };
 vi.mock('$lib/workspace/workspaceStore', () => ({
@@ -8,6 +9,7 @@ vi.mock('$lib/workspace/workspaceStore', () => ({
 }));
 
 const { createKeydownHandler } = await import('$lib/workspace/shortcuts');
+const { setPaletteActions } = await import('$lib/workspace/commandPalette.svelte');
 
 const inert = {
 	closeTab: () => {},
@@ -123,5 +125,38 @@ describe('Ctrl+O', () => {
 		term.className = 'xterm';
 		handle(press(term.appendChild(document.createElement('textarea'))));
 		expect(openFolder).toHaveBeenCalledTimes(1);
+	});
+});
+
+describe('Alt+Z', () => {
+	const press = (target: EventTarget, preventDefault = () => {}) =>
+		({
+			ctrlKey: false,
+			metaKey: false,
+			shiftKey: false,
+			altKey: true,
+			key: 'z',
+			code: 'KeyZ',
+			target,
+			preventDefault
+		}) as unknown as KeyboardEvent;
+
+	it('opens the Zotero picker from the editor, and leaves the key to a text field and to a window that cannot cite', () => {
+		const insertZoteroCitation = vi.fn();
+		const cites = (canZoteroCite: boolean) =>
+			setPaletteActions({ canZoteroCite: () => canZoteroCite, insertZoteroCitation } as unknown as PaletteActions);
+		const handle = createKeydownHandler(inert);
+		const editor = document.body.appendChild(document.createElement('div'));
+		editor.contentEditable = 'true';
+		cites(true);
+		handle(press(editor));
+		expect(insertZoteroCitation).toHaveBeenCalledTimes(1);
+		handle(press(document.body.appendChild(document.createElement('input'))));
+		const preventDefault = vi.fn();
+		cites(false);
+		handle(press(editor, preventDefault));
+		expect(insertZoteroCitation).toHaveBeenCalledTimes(1);
+		expect(preventDefault).not.toHaveBeenCalled();
+		setPaletteActions(null);
 	});
 });

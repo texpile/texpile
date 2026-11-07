@@ -19,6 +19,7 @@ On macOS, use Cmd for Ctrl and Option for Alt, unless a row says otherwise.
 | Ctrl T         | Go to file                                                                    |
 | Ctrl Alt Enter | Compile, or stop a running compile                                            |
 | Ctrl Shift F   | Find in files                                                                 |
+| Alt Z          | Insert a citation from Zotero                                                 |
 | Ctrl Shift G   | Source Control, with the cursor in the message box (Control Shift G on macOS) |
 | Ctrl Enter     | Commit, from the Source Control message box                                   |
 | F8             | Next spelling problem                                                         |
@@ -58,6 +59,10 @@ On macOS, use Cmd for Ctrl and Option for Alt, unless a row says otherwise.
 | Alt Enter        | Quick fixes (Typst)                                                             |
 | Ctrl Space       | Open suggestions, or the symbol search inside math (Control Space on macOS)     |
 | Ctrl Shift Space | Show the arguments of the command around the cursor (Cmd Shift Space on macOS)  |
+| Ctrl Shift [     | Fold the block at the cursor (Cmd Option [ on macOS)                            |
+| Ctrl Shift ]     | Unfold the block at the cursor (Cmd Option ] on macOS)                          |
+| Ctrl Alt [       | Fold every block (Control Option [ on macOS)                                    |
+| Ctrl Alt ]       | Unfold every block (Control Option ] on macOS)                                  |
 | Tab              | Accept the starter text in an empty .tex file                                   |
 | Esc              | Hide the math preview until the cursor leaves the math                          |
 | Alt F5           | Next change since the last commit                                               |

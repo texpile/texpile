@@ -10,6 +10,7 @@ import { nativeBridge } from '$lib/workspace/fileSystem';
 import { elementOf, pdfFindFor } from '$lib/preview/pdfViewFind';
 import { isMac } from '$lib/platform';
 import { editorGroups } from './groups/editorGroups.svelte';
+import { commandPalette } from './commandPalette.svelte';
 
 /** where a keystroke is typing, not a command */
 export const TYPING_HOSTS = 'input, textarea, [contenteditable="true"], .xterm';
@@ -56,6 +57,12 @@ function historyKey(e: KeyboardEvent): 'undo' | 'redo' | null {
 	const k = e.key.toLowerCase();
 	if (k === 'z') return e.shiftKey ? 'redo' : 'undo';
 	return k === 'y' && !e.shiftKey ? 'redo' : null;
+}
+
+/** Alt+Z, the Zotero picker; Option+Z on macOS, where the key reads as Ω */
+export function isZoteroKey(e: KeyboardEvent): boolean {
+	if (!e.altKey || e.ctrlKey || e.metaKey || e.shiftKey) return false;
+	return e.key.toLowerCase() === 'z' || (isMac && e.code === 'KeyZ');
 }
 
 export function createKeydownHandler(deps: ShortcutDeps): (e: KeyboardEvent) => void {
@@ -122,6 +129,11 @@ export function createKeydownHandler(deps: ShortcutDeps): (e: KeyboardEvent) => 
 		} else if (mod && e.key === '0') {
 			e.preventDefault();
 			uiZoomReset();
+		} else if (isZoteroKey(e) && commandPalette.actions?.canZoteroCite?.()) {
+			// a field and the terminal keep the key
+			if (e.defaultPrevented || (e.target instanceof Element && e.target.closest('input, textarea, .xterm'))) return;
+			e.preventDefault();
+			commandPalette.actions?.insertZoteroCitation?.();
 		} else if (mod && e.altKey && e.key === 'Enter' && deps.terminalAvailable()) {
 			// was ctrl/cmd+alt+b (LaTeX Workshop's default build chord), but macOS treats option+b
 			// as a dead key for a special character, so e.key never reliably comes through as "b"

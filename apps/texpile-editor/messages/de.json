@@ -642,6 +642,8 @@
 	"menubar_shortcut_go_to_definition": "Zur Definition springen (Label, Makro, Zitat, \\input)",
 	"menubar_shortcut_open_suggestions": "Vorschläge öffnen",
 	"menubar_shortcut_argument_hints": "Argumenthinweise anzeigen",
+	"menubar_shortcut_fold": "Einklappen / Ausklappen",
+	"menubar_shortcut_fold_all": "Alle einklappen / Alle ausklappen",
 	"menubar_shortcut_hide_math_preview": "Formelvorschau ausblenden, bis der Cursor die Formel verlässt",
 	"menubar_shortcut_quick_fix": "Schnellkorrekturen (Typst)",
 	"menubar_shortcut_next_problem": "Nächster oder vorheriger Rechtschreibfehler",

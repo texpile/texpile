@@ -21,6 +21,7 @@
 				{ keys: combo('Z'), label: m.menubar_undo() },
 				{ keys: combo('Z', { shift: true }), label: m.menubar_redo() },
 				{ keys: combo('V', { shift: true }), label: m.ctxmenu_paste_without_formatting() },
+				{ keys: isMac ? '⌥Z' : 'Alt+Z', label: m.zotero_insert_citation() },
 				{ keys: isMac ? 'F8 / ⇧F8' : 'F8 / Shift+F8', label: m.menubar_shortcut_next_problem() },
 				{ keys: combo(','), label: m.menubar_preferences() }
 			]
@@ -44,6 +45,8 @@
 				{ keys: isMac ? '⌥↩' : 'Alt+Enter', label: m.menubar_shortcut_quick_fix() },
 				{ keys: isMac ? '⌃Space' : 'Ctrl+Space', label: m.menubar_shortcut_open_suggestions() },
 				{ keys: combo('Space', { shift: true }), label: m.menubar_shortcut_argument_hints() },
+				{ keys: isMac ? '⌥⌘[ / ⌥⌘]' : 'Ctrl+Shift+[ / Ctrl+Shift+]', label: m.menubar_shortcut_fold() },
+				{ keys: isMac ? '⌃⌥[ / ⌃⌥]' : 'Ctrl+Alt+[ / Ctrl+Alt+]', label: m.menubar_shortcut_fold_all() },
 				{ keys: 'Esc', label: m.menubar_shortcut_hide_math_preview() }
 			]
 		},

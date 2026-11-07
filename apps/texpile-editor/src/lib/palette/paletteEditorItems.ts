@@ -36,6 +36,7 @@ export function editorItems(a: PaletteActions): PaletteItem[] {
 			label: m.zotero_insert_citation(),
 			group,
 			keywords: 'zotero cite citation bibliography reference bibtex import',
+			hint: isMac ? '⌥Z' : 'Alt+Z',
 			icon: BookMarked,
 			run: () => a.insertZoteroCitation?.()
 		});

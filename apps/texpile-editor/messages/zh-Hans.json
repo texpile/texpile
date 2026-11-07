@@ -642,6 +642,8 @@
 	"menubar_shortcut_go_to_definition": "跳转到定义（标签、宏、引用、\\input）",
 	"menubar_shortcut_open_suggestions": "打开建议",
 	"menubar_shortcut_argument_hints": "显示参数提示",
+	"menubar_shortcut_fold": "折叠 / 展开",
+	"menubar_shortcut_fold_all": "全部折叠 / 全部展开",
 	"menubar_shortcut_hide_math_preview": "隐藏数学预览，直到光标离开数学区域",
 	"menubar_shortcut_quick_fix": "快速修复（Typst）",
 	"menubar_shortcut_next_problem": "下一个或上一个拼写问题",

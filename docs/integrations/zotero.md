@@ -14,7 +14,7 @@ Insert citations from your Zotero library into a LaTeX or Typst document.
 
 Keep Zotero running and set a main file. Each reference needs a citation key.
 
-Right-click in the editor › **Insert Citation from Zotero**, tick one or more references, and click **Insert**. Texpile inserts `\cite{key1,key2}` or `@key1 @key2` and copies the references into your bibliography.
+Right-click in the editor › **Insert Citation from Zotero**, or press `Alt+Z` (`⌥Z` on macOS). Tick one or more references and click **Insert**. Texpile inserts `\cite{key1,key2}` or `@key1 @key2` and copies the references into your bibliography.
 
 ![The right-click menu with the two citation actions](../../landing/src/lib/assets/showcase/docs/review/comment-context-menu.png)
 

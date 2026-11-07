@@ -642,6 +642,8 @@
 	"menubar_shortcut_go_to_definition": "跳轉到定義（標籤、巨集、引用、\\input）",
 	"menubar_shortcut_open_suggestions": "開啟建議",
 	"menubar_shortcut_argument_hints": "顯示參數提示",
+	"menubar_shortcut_fold": "摺疊 / 展開",
+	"menubar_shortcut_fold_all": "全部摺疊 / 全部展開",
 	"menubar_shortcut_hide_math_preview": "隱藏數學預覽，直到游標離開數學區域",
 	"menubar_shortcut_quick_fix": "快速修正（Typst）",
 	"menubar_shortcut_next_problem": "下一個或上一個拼寫問題",
