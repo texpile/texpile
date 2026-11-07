@@ -8,6 +8,9 @@ export const TEXLIVE_YEAR = Number(TEXLIVE_VERSION.slice(0, 4));
 // Texpile's own build (the vendor-texlive workflow; vendor/README.md)
 const RELEASE_URL = `https://dl.texpile.com/vendor/texlive/${TEXLIVE_VERSION}/`;
 
+// where tlmgr finds the year's packages once the next release has taken over mirror.ctan.org
+export const TEXLIVE_FINAL_REPOSITORY = `https://ftp.math.utah.edu/pub/tex/historic/systems/texlive/${TEXLIVE_YEAR}/tlnet-final`;
+
 /** TeX Live's own name for the folder under bin/ */
 export type TexLivePlatform = 'x86_64-linux' | 'aarch64-linux' | 'universal-darwin' | 'windows';
 

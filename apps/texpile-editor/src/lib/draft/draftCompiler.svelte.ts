@@ -1,6 +1,7 @@
 // The full-compile lifecycle: cancel-on-supersede compiles.
 import { nativeBridge, type DraftResult } from '$lib/workspace/fileSystem';
 import { readBackExtensions } from '$lib/languages/latex/knowledge/registries/sidecarExtensions';
+import { installMissingFile } from './missingPackage';
 import { m } from '$lib/paraglide/messages';
 
 // a first compile still running after this long gets a note: typing waits on it
@@ -30,6 +31,8 @@ export class DraftCompiler {
 	error = $state<string | null>(null);
 	/** the engine was not found; the banner offers the Toolchain folders */
 	missingTool = $state<string | null>(null);
+	/** the package file Texpile's TeX Live is installing for the document */
+	installing = $state<string | null>(null);
 
 	private compileToken = 0;
 	private newest: Promise<boolean | null> | null = null;
@@ -77,7 +80,21 @@ export class DraftCompiler {
 		this.error = null;
 		this.missingTool = null;
 		try {
-			const r = await n.draftCompile({ root: this.hooks.root(), mainFile: this.hooks.mainFile(), readBack: readBackExtensions() });
+			const body = { root: this.hooks.root(), mainFile: this.hooks.mainFile(), readBack: readBackExtensions() };
+			let r = await n.draftCompile(body);
+			// Texpile's TeX Live installs each package file the document lacks, once, and compiles again
+			const tried = new Set<string>();
+			let missing: string | null = null;
+			for (let file = missingFile(r); file && !tried.has(file) && myToken === this.compileToken; file = missingFile(r)) {
+				tried.add(file);
+				this.quiet = false;
+				this.status = m.draft_status_installing({ file });
+				this.installing = file;
+				missing = await installMissingFile(file, body.root);
+				this.installing = null;
+				if (missing) break;
+				r = await n.draftCompile(body);
+			}
 			if (slowTimer) clearTimeout(slowTimer);
 			if (myToken !== this.compileToken) {
 				this.hooks.emit('compile-superseded', { reason });
@@ -89,8 +106,11 @@ export class DraftCompiler {
 			} else if (!(r as { superseded?: boolean }).superseded) {
 				// svelte-check doesn't reliably narrow this cross-module discriminated union.
 				// A service-side 'superseded' isn't an error -- the newer compile will render.
-				const fail = r as { error: string; log?: string; tool?: string; found?: string };
-				if (fail.error === 'engine-missing' && fail.tool) {
+				const fail = r as { error: string; log?: string; tool?: string; found?: string; file?: string };
+				if (fail.error === 'file-missing' && fail.file) {
+					this.error = missing ?? m.draft_file_missing({ file: fail.file });
+					this.status = '';
+				} else if (fail.error === 'engine-missing' && fail.tool) {
 					this.missingTool = fail.tool;
 					this.error = m.draft_engine_missing({ tool: fail.tool });
 					this.status = '';
@@ -124,4 +144,9 @@ export class DraftCompiler {
 		this.hooks.afterCompile();
 		return landed;
 	}
+}
+
+function missingFile(r: DraftResult): string | null {
+	const fail = r as { ok: boolean; error?: string; file?: string };
+	return !fail.ok && fail.error === 'file-missing' && fail.file ? fail.file : null;
 }

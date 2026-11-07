@@ -233,7 +233,9 @@
 		]}
 	/>
 	<ProgressLine active={compiler.compiling && !compiler.quiet} label={compiler.status} />
-	{#if compiler.slow}
+	{#if compiler.installing}
+		<p class="text-muted m-3 shrink-0 text-center text-sm">{m.draft_status_installing({ file: compiler.installing })}</p>
+	{:else if compiler.slow}
 		<p class="text-muted m-3 shrink-0 text-center text-sm">{m.draft_first_compile_slow()}</p>
 	{/if}
 	{#if compiler.missingTool}

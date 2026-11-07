@@ -4,13 +4,17 @@ import { BrowserWindow, ipcMain, net } from 'electron';
 import { execFile } from 'node:child_process';
 import * as fs from 'node:fs';
 import * as path from 'node:path';
+import { stopPool } from '../../draft/teleport/enginePool';
 import { stopTeleports } from '../../draft/teleport/teleportService';
 import { stopDrawing } from '../../draw/drawDaemon';
+import { shellEnvReady } from '../../shell/shellEnv';
 import { setPathFallback } from '../../shell/toolDirs';
 import { firstInformativeLine } from '../../toolchain';
-import { managedTexLiveAsset, managedTexLiveBin, managedTexLiveRoot } from '../../texlive/managedTexLive';
+import { managedTexLiveAsset, managedTexLiveBin, managedTexLiveRoot, texInUseIsManaged } from '../../texlive/managedTexLive';
 import { installTexLive, removeTexLive, type TexLiveInstallResult, type TexLiveInstallStep } from '../../texlive/texliveInstall';
-import { TEXLIVE_VERSION, TEXLIVE_YEAR } from '../../texlive/texliveRelease';
+import { installPackageFor, isPackageFile, type PackageInstall } from '../../texlive/texlivePackages';
+import { TEXLIVE_FINAL_REPOSITORY, TEXLIVE_VERSION, TEXLIVE_YEAR } from '../../texlive/texliveRelease';
+import { runTlmgr } from '../../texlive/tlmgr';
 
 // progress is a bar, not a log: a 300MB download arrives in tens of thousands of chunks
 const PROGRESS_EVERY_MS = 100;
@@ -108,11 +112,24 @@ function startInstall(): Promise<TexLiveInstallResult> {
 	return done;
 }
 
+// only Texpile's own tree: a TeX the writer installed is theirs to change
+async function installFor(file: unknown, root: unknown): Promise<PackageInstall | { ok: false; reason: 'not-managed'; detail: string }> {
+	if (typeof file !== 'string' || !isPackageFile(file)) return { ok: false, reason: 'unknown', detail: String(file) };
+	await shellEnvReady();
+	const bin = managedTexLiveBin();
+	if (!bin || !texInUseIsManaged()) return { ok: false, reason: 'not-managed', detail: file };
+	const result = await inTurn(() => installPackageFor(file, (args) => runTlmgr(bin, args), TEXLIVE_FINAL_REPOSITORY));
+	// a warm spare read the file list before the install
+	if (result.ok && typeof root === 'string') stopPool(root);
+	return result;
+}
+
 export function registerTexLiveIpc(): void {
 	ipcMain.handle('toolchain:texlive:status', () => status());
 	// a second click, from this window or another, joins the install under way
 	ipcMain.handle('toolchain:texlive:install', () => install?.done ?? startInstall());
 	ipcMain.on('toolchain:texlive:cancel', () => install?.cancel.abort());
+	ipcMain.handle('toolchain:texlive:installFor', (_e, file: unknown, root: unknown) => installFor(file, root));
 	ipcMain.handle('toolchain:texlive:remove', () =>
 		inTurn(() => removeTexLive(managedTexLiveRoot(), swapTree)).then((result) => {
 			broadcast('toolchain:texlive:finished', result);

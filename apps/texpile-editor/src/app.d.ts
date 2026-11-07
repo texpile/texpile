@@ -104,6 +104,10 @@ declare global {
 		step: InstallStep | null;
 	};
 
+	/** a package file a document loads, installed into Texpile's TeX Live; not-managed when another TeX is in use */
+	type PackageInstallResult =
+		{ ok: true; package: string } | { ok: false; reason: 'offline' | 'unknown' | 'failed' | 'not-managed'; detail: string };
+
 	/** Texpile's own TeX Live (absent from an older main process) */
 	type TexpileTexLiveBridge = {
 		status(): Promise<ManagedTexLiveStatus>;
@@ -111,6 +115,8 @@ declare global {
 		install(): Promise<TexLiveInstallResult>;
 		cancel(): void;
 		remove(): Promise<TexLiveInstallResult>;
+		/** the package holding `file`, installed with tlmgr; `root`'s warm engines restart after */
+		installFor(file: string, root: string): Promise<PackageInstallResult>;
 		/** an install's progress, whichever window started it; returns an unsubscribe fn */
 		onProgress(cb: (step: InstallStep) => void): () => void;
 		/** an install or removal ended, in any window; returns an unsubscribe fn */

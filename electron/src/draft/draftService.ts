@@ -14,6 +14,7 @@ import type { DraftEngine } from './teleport/draftEngine';
 import { shellEnvReady } from '../shell/shellEnv';
 import { findProgram } from '../shell/findProgram';
 import { normRoot } from '../windows/normRoot';
+import { missingTexFile } from '../texlive/texlivePackages';
 
 export type DraftResult =
 	| {
@@ -31,8 +32,8 @@ export type DraftResult =
 			marginY: number;
 			pages: DraftPage[];
 	  }
-	/** error 'engine-missing' names the program in `tool`; 'latex-too-old' the format's LaTeX version in `found` */
-	| { ok: false; error: string; ms: number; log?: string; superseded?: true; tool?: string; found?: string };
+	/** error 'engine-missing' names the program in `tool`; 'latex-too-old' the format's LaTeX version in `found`; 'file-missing' the package file in `file` */
+	| { ok: false; error: string; ms: number; log?: string; superseded?: true; tool?: string; found?: string; file?: string };
 
 type DraftBody = { root: string; mainFile: string; engineDir: string; engine?: string; readBack: ReadBackFiles };
 
@@ -149,17 +150,19 @@ export async function compileDraft(body: DraftBody): Promise<DraftResult> {
 
 	const manifestPath = path.join(outAbs, 'pages.json');
 	if (!fs.existsSync(manifestPath)) {
-		let log = '';
+		let full = '';
 		try {
-			log = fs
-				.readFileSync(path.join(outAbs, 'draft.log'), 'utf8')
-				.split('\n')
-				.filter((l) => /^!|error/i.test(l))
-				.slice(-12)
-				.join('\n');
+			full = fs.readFileSync(path.join(outAbs, 'draft.log'), 'utf8');
 		} catch {
 			/* no log */
 		}
+		const file = missingTexFile(full);
+		if (file) return { ok: false, error: 'file-missing', file, ms };
+		const log = full
+			.split('\n')
+			.filter((l) => /^!|error/i.test(l))
+			.slice(-12)
+			.join('\n');
 		return { ok: false, error: 'Draft compile produced no pages (is lualatex on PATH? see _draft/draft.log)', ms, log };
 	}
 
