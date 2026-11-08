@@ -19,7 +19,7 @@ A LaTeX project, with the PDF and the bottom panel open.
 5. **Tabs.** Ctrl Shift T reopens the last closed tab.
 6. **Editor.** The visual editor, or the source editor.
 7. **PDF.** The bar on the editor's right edge shows and hides it.
-8. **Bottom panel.** Terminal › Show Terminal opens it.
+8. **Bottom panel.** Layout › Bottom Panel shows and hides it, and Terminal › Show Terminal opens it on a terminal.
 9. **Layout.** Shows and hides the sidebar, the bottom panel and the PDF, and splits the editor or the PDF. See [Layout](#layout).
 
 ## Editor and PDF bars
@@ -40,9 +40,10 @@ Edits save on their own a moment after you stop typing. Ctrl S (Cmd S on macOS) 
 
 ![The Layout menu, with Panels, Editors and Preview](../landing/src/lib/assets/showcase/docs/app/tour-layout.png)
 
-- **Panels** shows and hides the sidebar, the terminal and the PDF.
+- **Panels** shows and hides the sidebar, the bottom panel and the PDF.
 - **Editors** shows one editor, two side by side, two stacked, or four in a grid. See [Split view](split-view.md).
-- **Preview** splits the PDF into two views, one above the other, or opens it in a window of its own.
+- **PDF** splits the PDF into two views, one above the other, or opens it in a window of its own.
+- **Zoom** makes the whole window larger or smaller. Click the percentage to go back to 100%.
 
 ## Sidebar
 
@@ -61,10 +62,10 @@ The Agent tab is a chat with an AI agent on your computer. It shows while at lea
 | Menu     | What is in it                                                                                                                                                                                |
 | -------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | File     | New, Open Folder, Clone Repository…, New Window, Open Folder in New Window…, Save, Save as Template…, Version History…, Restore Deleted File…, Close Workspace, Shared Session, Preferences… |
-| Edit     | Command Palette, Go to File, Undo, Redo, Find…                                                                                                                                               |
-| View     | Zoom In, Zoom Out, Reset Zoom                                                                                                                                                                |
+| Edit     | Command Palette, Go to File, Undo, Redo, Find…, Spelling (Check Spelling & Grammar, Folder Language)                                                                                         |
 | Insert   | Math, Image…, Table, Link…, References, Symbol…, and the rest for your file type                                                                                                             |
 | Format   | Bold, Italic, Underline, Text Style, Headings, Block Quote, Format Document                                                                                                                  |
-| Spelling | Check Spelling & Grammar, Edit Dictionary…, Spelling and Grammar Settings…                                                                                                                   |
 | Terminal | Compile, Configure Compile Command…, New Terminal, Show Terminal                                                                                                                             |
 | Help     | Keyboard Shortcuts, Open Tutorial, What's New, Documentation, Join Discord, Report a Problem…, Check for Updates                                                                             |
+
+Layout, at the right of the title bar, shows the sidebar, the bottom panel and the PDF, arranges the editors, and holds the zoom. On macOS the system menu bar also has View, with the zoom and Enter Full Screen.

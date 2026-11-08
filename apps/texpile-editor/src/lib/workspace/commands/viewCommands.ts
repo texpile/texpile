@@ -18,6 +18,12 @@ export function viewCommands(a: PaletteActions): CommandImpl[] {
 			title: () => (a.sidebarOpen() ? m.palette_hide_sidebar() : m.palette_show_sidebar()),
 			run: () => a.toggleSidebar()
 		},
+		{
+			id: 'view.bottomPanel',
+			enabled: () => a.terminalAvailable(),
+			title: () => (a.bottomPanelOpen() ? m.palette_hide_bottom_panel() : m.palette_show_bottom_panel()),
+			run: () => a.toggleBottomPanel()
+		},
 		...COLOR_VISION_MODES.map((mode): CommandImpl => ({
 			id: `view.colorVision.${mode}`,
 			enabled: () => mode !== colorVision.current,

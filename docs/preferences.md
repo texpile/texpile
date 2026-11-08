@@ -22,7 +22,7 @@ Preferences holds the settings for the whole app. Open it with Ctrl , (Cmd , on 
 | Editor › Auto-fraction, Tab out of brackets, Matrix keys | Source editor math only. See [Math typing helpers](typing.md#math-typing-helpers).                                                                                                              |
 | Editor › Fold when a file opens                          | Source editor only. Each stop to the right folds more: figures and tables, then equations, then all environments, then everything. A file you folded or unfolded yourself opens as you left it. |
 | Spelling › Check spelling and grammar                    | Off by default.                                                                                                                                                                                 |
-| Spelling › This folder › Language                        | The same choice as Spelling › Folder Language. Needs an open folder.                                                                                                                            |
+| Spelling › This folder › Language                        | The same choice as Edit › Spelling › Folder Language. Needs an open folder.                                                                                                                     |
 | Spelling › Default language                              | For documents that name no language, in folders set to Automatic. English by default.                                                                                                           |
 | Spelling › Custom Dictionary                             | One list per language. Separate several words with spaces, commas, or semicolons.                                                                                                               |
 | Spelling › Grammar rules                                 | All off by default. Shown while English is the default language or the open folder is checked in English.                                                                                       |
@@ -42,6 +42,6 @@ Preferences holds the settings for the whole app. Open it with Ctrl , (Cmd , on 
 ## Not in Preferences
 
 - The compile command, output paths, and live mode are saved per folder: Terminal › Configure Compile Command….
-- Interface zoom: View › Zoom In, Zoom Out, Reset Zoom.
+- Interface zoom: Layout › Zoom.
 - Which panels show, and how the editor and the PDF are split: Layout in the title bar.
 - Dark PDF pages: **Invert colors** in the PDF bar's "…" menu, remembered separately for light and dark mode.

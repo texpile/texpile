@@ -9,6 +9,7 @@
 		value: string;
 		label: string;
 		select: (value: string) => void;
+		disabled?: boolean;
 		children: Snippet;
 	};
 
@@ -16,7 +17,7 @@
 </script>
 
 <Menu onSelect={(d) => props.select(d.value)}>
-	<Menu.TriggerItem value={props.value} class={menuBarItemClass}>
+	<Menu.TriggerItem value={props.value} class={menuBarItemClass} disabled={props.disabled}>
 		<Menu.ItemText>{props.label}</Menu.ItemText><ChevronRight class="size-4 opacity-60" />
 	</Menu.TriggerItem>
 	<Portal>

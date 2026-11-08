@@ -30,6 +30,8 @@ function actions(host: boolean): PaletteActions {
 		openFile: () => {},
 		toggleSidebar: () => {},
 		sidebarOpen: () => true,
+		toggleBottomPanel: () => {},
+		bottomPanelOpen: () => false,
 		toggleTerminal: () => {},
 		terminalVisible: () => false,
 		terminalAvailable: () => host,

@@ -40,6 +40,8 @@ export type PaletteActions = {
 	openFile(abs: string): void;
 	toggleSidebar(): void;
 	sidebarOpen(): boolean;
+	toggleBottomPanel(): void;
+	bottomPanelOpen(): boolean;
 	toggleTerminal(): void;
 	terminalVisible(): boolean;
 	terminalAvailable(): boolean;

@@ -298,6 +298,38 @@ function template(win: BrowserWindow, s: MenuState): MenuItemConstructorOptions[
 					label: label(s, 'find', 'Find'),
 					accelerator: accelerator(s, 'find', 'CmdOrCtrl+F'),
 					click: () => fire(win, 'edit:find')
+				},
+				// Edit › Spelling, where Mac apps keep it; the dictionary and grammar rules live in Preferences
+				{
+					...doc,
+					label: label(s, 'spelling', 'Spelling'),
+					submenu: [
+						{
+							...doc,
+							label: label(s, 'checkSpelling', 'Check Spelling'),
+							type: 'checkbox',
+							checked: s.spellcheck,
+							click: () => fire(win, 'spelling:toggle')
+						},
+						...(s.spellLanguages?.length
+							? [
+									{
+										...doc,
+										label: label(s, 'folderLanguage', 'Folder Language'),
+										submenu: s.spellLanguages.flatMap((item, i) => [
+											{
+												label: item.label,
+												type: 'checkbox' as const,
+												checked: item.checked,
+												enabled: s.canChooseSpellLanguage !== false,
+												click: () => fire(win, `spelling:lang:${item.value}`)
+											},
+											...(i === 0 ? [{ type: 'separator' as const }] : [])
+										])
+									}
+								]
+							: [])
+					]
 				}
 			]
 		},
@@ -491,39 +523,6 @@ function template(win: BrowserWindow, s: MenuState): MenuItemConstructorOptions[
 							{ label: label(s, 'formatDocument', 'Format Document'), click: () => fire(win, 'format:format-document') }
 						]
 					: [])
-			]
-		},
-		{
-			label: label(s, 'spelling', 'Spelling'),
-			submenu: [
-				{
-					...doc,
-					label: label(s, 'checkSpelling', 'Check Spelling'),
-					type: 'checkbox',
-					checked: s.spellcheck,
-					click: () => fire(win, 'spelling:toggle')
-				},
-				...(s.spellLanguages?.length
-					? [
-							{
-								...doc,
-								label: label(s, 'folderLanguage', 'Folder Language'),
-								submenu: s.spellLanguages.flatMap((item, i) => [
-									{
-										label: item.label,
-										type: 'checkbox' as const,
-										checked: item.checked,
-										enabled: s.canChooseSpellLanguage !== false,
-										click: () => fire(win, `spelling:lang:${item.value}`)
-									},
-									...(i === 0 ? [{ type: 'separator' as const }] : [])
-								])
-							}
-						]
-					: []),
-				{ type: 'separator' },
-				{ label: label(s, 'dictionary', 'Edit Dictionary…'), click: () => fire(win, 'spelling:dictionary') },
-				{ label: label(s, 'spellingSettings', 'Spelling and Grammar Settings…'), click: () => fire(win, 'spelling:settings') }
 			]
 		},
 		...(s.terminalAvailable

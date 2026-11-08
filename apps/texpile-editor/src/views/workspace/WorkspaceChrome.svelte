@@ -67,7 +67,6 @@
 			hostMode: boolean;
 			canManageTree: boolean;
 			canFormat: boolean;
-			uiZoomPercent: number;
 			/** the compile target is Typst; New-file menus offer .typ instead of .tex/.cls/.sty */
 			typstProject: boolean;
 			/** the open file's spelling language */
@@ -131,7 +130,6 @@
 			onNewTerminal={actions.newTerminal}
 			onToggleTerminal={actions.toggleTerminal}
 			onFormatDocument={menu.canFormat ? actions.openFormatModal : undefined}
-			uiZoomPercent={menu.uiZoomPercent}
 			onZoomIn={actions.uiZoomIn}
 			onZoomOut={actions.uiZoomOut}
 			onZoomReset={actions.uiZoomReset}

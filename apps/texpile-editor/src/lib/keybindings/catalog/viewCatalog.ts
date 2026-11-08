@@ -1,4 +1,4 @@
-import { CloudDownload, Columns2, Eye, GitBranch, GitCompare, GitMerge, PanelLeft, Search, Undo2 } from '@lucide/svelte';
+import { CloudDownload, Columns2, Eye, GitBranch, GitCompare, GitMerge, PanelBottom, PanelLeft, Search, Undo2 } from '@lucide/svelte';
 import { COLOR_VISION_MODES, colorVisionLabel } from '$lib/preview/colorVision/colorVision';
 import { m } from '$lib/paraglide/messages';
 import type { CommandInfo } from '../commands/commandRegistry';
@@ -16,6 +16,12 @@ export const VIEW_COMMANDS: CommandInfo[] = [
 		title: () => m.keybindings_cmd_toggle_sidebar(),
 		category,
 		palette: { keywords: 'explorer files panel', icon: PanelLeft }
+	},
+	{
+		id: 'view.bottomPanel',
+		title: () => m.keybindings_cmd_toggle_bottom_panel(),
+		category,
+		palette: { keywords: 'dock terminal problems comments agent panel', icon: PanelBottom }
 	},
 	// the simulations are found by typing (color, blind, protan...) rather than listed, four rows of one feature in the
 	// browse list; the way back is listed while on

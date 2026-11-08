@@ -340,6 +340,8 @@ export function makePaletteActions(d: ActionSurfaceDeps) {
 		hasSidebar: () => !fileMode.current,
 		toggleSidebar: () => d.layout().toggleSidebar(),
 		sidebarOpen: () => d.layout().sidebarOpen,
+		toggleBottomPanel: () => d.termDock().togglePanel(),
+		bottomPanelOpen: () => d.termDock().visible,
 		toggleTerminal: () => d.termDock().toggle(),
 		terminalVisible: () => d.termDock().visible,
 		terminalAvailable: () => d.termDock().available,

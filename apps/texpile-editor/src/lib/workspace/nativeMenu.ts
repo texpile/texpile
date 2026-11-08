@@ -170,8 +170,6 @@ function labels(tool: 'latexindent' | 'typstyle'): Record<string, string> {
 		quote: m.menubar_format_blockquote(),
 		formatDocument: m.menubar_format_document({ tool }),
 		checkSpelling: m.menubar_check_spelling(),
-		dictionary: m.menubar_edit_dictionary(),
-		spellingSettings: m.menubar_spelling_settings(),
 		folderLanguage: m.spelling_folder_language(),
 		compile: m.menubar_terminal_compile(),
 		configureCompile: m.menubar_configure_compile_command(),

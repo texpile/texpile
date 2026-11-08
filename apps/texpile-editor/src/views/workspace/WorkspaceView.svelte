@@ -50,7 +50,6 @@
 	import { followFigureTabs } from '$lib/draw/host/figureTabs.svelte';
 	import ZoteroCitationDialog from '$lib/zotero/ZoteroCitationDialog.svelte';
 	import CiteByDoiDialog from '$lib/cite/CiteByDoiDialog.svelte';
-	import { settings } from '$lib/settings';
 	import { basename, dirname, isDesktop } from '$lib/workspace/fileSystem';
 	import { fileService } from '$lib/files/service/fileService';
 	import { diskProvider } from '$lib/workspace/diskProvider';
@@ -315,7 +314,6 @@
 	// four files per command. Cleared on destroy so a keystroke after the workspace closed is inert.
 	onMount(() => bindPaletteCommands(makePaletteActions(actionDeps)));
 
-	const uiZoomPercent = $derived(Math.round((settings.current.uiZoom ?? 1) * 100));
 	bindWorkspaceShortcuts({
 		closeTab: (t) => editFlow.closeTab(t),
 		reopenTab: () => editFlow.reopenTab(),
@@ -364,7 +362,6 @@
 			hostMode,
 			canManageTree: provider.caps.manageTree,
 			canFormat: fmt.canFormatDoc(),
-			uiZoomPercent,
 			typstProject: cc.typstProject,
 			spelling: spellingFor(doc.path ?? null, hasVisualMode(kind) ? doc.texSource : doc.rawContent)
 		}}
