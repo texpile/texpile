@@ -1,5 +1,5 @@
-// The two custom schemes: app:// serves the packaged renderer bundle (with its CSP), and
-// texfile:// serves workspace files (images, PDFs) confined to the claimed roots.
+// The custom schemes: app:// serves the packaged renderer bundle (with its CSP), texfile:// serves workspace files
+// (images, PDFs) confined to the claimed roots, and texpile-theme:// a custom theme's own files (themes/themeProtocol.ts).
 import { protocol } from 'electron';
 import * as fs from 'node:fs';
 import * as path from 'node:path';
@@ -9,6 +9,7 @@ import { isPreviewFile } from './draft/previewFiles';
 import { bundleDir } from './appIdentity';
 import { windowRoots } from './windows/windowRegistry';
 import { normRoot } from './windows/normRoot';
+import { registerThemeProtocol, THEME_SCHEME } from './themes/themeProtocol';
 
 // a `standard` scheme enforces strict MIME checks on module scripts and worker imports,
 // so text/javascript must be exact
@@ -45,8 +46,8 @@ const RENDERER_CSP = [
 	"default-src 'none'",
 	"script-src 'self' 'wasm-unsafe-eval'",
 	"style-src 'self' 'unsafe-inline'",
-	"img-src 'self' texfile: blob: data:",
-	"font-src 'self' data:",
+	"img-src 'self' texfile: texpile-theme: blob: data:",
+	"font-src 'self' texpile-theme: data:",
 	"connect-src 'self' texfile: blob: data: https: wss: ws:",
 	"worker-src 'self' blob:",
 	"child-src 'self' blob:",
@@ -76,7 +77,8 @@ export function registerPrivilegedSchemes(): void {
 	protocol.registerSchemesAsPrivileged([
 		// codeCache: without it V8 recompiles the whole renderer bundle on every launch
 		{ scheme: 'app', privileges: { standard: true, secure: true, supportFetchAPI: true, stream: true, codeCache: true } },
-		{ scheme: 'texfile', privileges: { standard: true, secure: true, supportFetchAPI: true, stream: true, corsEnabled: true } }
+		{ scheme: 'texfile', privileges: { standard: true, secure: true, supportFetchAPI: true, stream: true, corsEnabled: true } },
+		THEME_SCHEME
 	]);
 }
 
@@ -118,6 +120,7 @@ async function insideClaimedRoot(p: string): Promise<boolean> {
 }
 
 export function registerProtocolHandlers(): void {
+	registerThemeProtocol();
 	protocol.handle('app', async (request) => {
 		const url = new URL(request.url);
 		let rel = decodeURIComponent(url.pathname);

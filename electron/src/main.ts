@@ -27,6 +27,7 @@ import { registerWindowGlassIpc } from './windowGlass';
 import { registerNativeAppearanceIpc } from './nativeAppearance';
 import { registerSurfacesIpc } from './ipc/surfacesIpc';
 import { registerKeybindingsIpc } from './ipc/keybindingsIpc';
+import { registerThemesIpc } from './themes/themesIpc';
 import { registerDeferredIpc, shutdownDeferred } from './ipc/deferredIpc';
 import { registerWindowChrome } from './windowChrome';
 import { installInFlight, launchedMidInstall } from './updates/midInstallLaunch';
@@ -50,6 +51,7 @@ registerWindowGlassIpc(() => chromeColors().background);
 registerNativeAppearanceIpc();
 registerSurfacesIpc();
 registerKeybindingsIpc();
+registerThemesIpc();
 
 // .tex handed over by the OS before any window exists; consumed at whenReady
 let initialOpenPath: string | null = null;

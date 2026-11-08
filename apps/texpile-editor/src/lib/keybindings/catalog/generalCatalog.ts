@@ -1,4 +1,4 @@
-import { Keyboard } from '@lucide/svelte';
+import { Keyboard, Palette } from '@lucide/svelte';
 import { m } from '$lib/paraglide/messages';
 import type { CommandInfo } from '../commands/commandRegistry';
 
@@ -35,6 +35,13 @@ export const GENERAL_COMMANDS: CommandInfo[] = [
 	})),
 	{ id: 'edit.undo', title: () => m.menubar_undo(), category, palette: keyless },
 	{ id: 'edit.redo', title: () => m.menubar_redo(), category, palette: keyless },
+	// the way back from a theme that hides the window's own controls
+	{
+		id: 'view.defaultTheme',
+		title: () => m.theme_cmd_use_default(),
+		category,
+		palette: { keywords: 'theme reset default appearance colors css custom', icon: Palette }
+	},
 	{ id: 'view.zoomIn', title: () => m.menubar_shortcut_zoom_in_interface(), category, palette: keyless },
 	{ id: 'view.zoomOut', title: () => m.menubar_shortcut_zoom_out_interface(), category, palette: keyless },
 	{ id: 'view.zoomReset', title: () => m.menubar_shortcut_reset_interface_zoom(), category, palette: keyless },

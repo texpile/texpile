@@ -5,6 +5,7 @@ import { imageBridge } from './images/imagePreload';
 import './preloadSnippets';
 import './preloadTexLive';
 import './preloadKeybindings';
+import './preloadThemes';
 
 // main pushes open-path/open-folder on did-finish-load, which can beat the renderer's
 // subscription (mount waits on the settings IPC; the route-split boot is fast enough to lose

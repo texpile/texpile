@@ -8,6 +8,7 @@ import type { CommandImpl } from '$lib/keybindings/commands/commandRegistry';
 import { commandPalette } from '$lib/workspace/commandPalette.svelte';
 import { editorGroups } from '../groups/editorGroups.svelte';
 import { uiZoomIn, uiZoomOut, uiZoomReset, type ShortcutDeps } from '../shortcuts';
+import { setThemeName, themeName } from '$lib/theme';
 
 function cycleTab(step: 1 | -1): void {
 	// by tab key, so a file and a comparison of it are two stops rather than one
@@ -43,6 +44,7 @@ export function windowCommands(deps: ShortcutDeps): CommandImpl[] {
 		},
 		// a .pdf tab or a PDF view with the focus: the editors bind Ctrl+F themselves, and off macOS no native menu carries it
 		{ id: 'pdf.find', enabled: () => !!pdfFindFor(keyTarget()), run: () => pdfFindFor(keyTarget())?.() },
+		{ id: 'view.defaultTheme', enabled: () => themeName.current !== 'theme', run: () => setThemeName('theme') },
 		{ id: 'view.zoomIn', run: uiZoomIn },
 		{ id: 'view.zoomOut', run: uiZoomOut },
 		{ id: 'view.zoomReset', run: uiZoomReset }

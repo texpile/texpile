@@ -55,6 +55,7 @@ function grammarShown(): boolean {
 const STATIC_ROWS = [
 	{ id: 'appearance-mode', tab: 'appearance', label: () => m.prefs_mode(), note: () => m.prefs_appearance_hint() },
 	{ id: 'appearance-theme', tab: 'appearance', label: () => m.prefs_theme() },
+	{ id: 'custom-themes', tab: 'appearance', label: () => m.prefs_custom_themes(), note: () => m.prefs_custom_themes_note() },
 	{ id: 'window-transparency', tab: 'appearance', label: () => m.prefs_window_transparency() },
 	{ id: 'ui-language', tab: 'appearance', label: () => m.prefs_language() },
 

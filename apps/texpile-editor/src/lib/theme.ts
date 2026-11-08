@@ -5,6 +5,8 @@
 import { box } from '$lib/runes/box.svelte';
 import { layout, updateLayout } from '$lib/storage/layout';
 import { nativeBridge } from '$lib/workspace/fileSystem';
+import { applyCustomTheme, clearCustomTheme, onCustomThemesChanged } from '$lib/customThemes/customThemes.svelte';
+import { customThemeFile } from '$lib/customThemes/themeFiles';
 
 export type ThemeChoice = 'light' | 'dark' | 'system';
 
@@ -64,13 +66,23 @@ function isPreset(name: string): boolean {
 	return /^[a-z][a-z0-9-]*$/.test(name) && name !== 'theme';
 }
 
-/** put the theme's variables on the page: a <link> for a preset, nothing for the bundled default.
- *  theme-init.js does the same before first paint, and a match with what it left is kept rather
- *  than re-fetched, which would paint the default for a frame. */
+async function applyCustom(name: string, file: string): Promise<void> {
+	const applied = await applyCustomTheme(file);
+	if (themeName.current !== name) return;
+	if (applied) themeEpoch.current += 1;
+	else setThemeName('theme');
+}
+
+/** put the theme's variables on the page: a <link> for a preset, nothing for the bundled default, and a custom
+ *  theme on top of the default. theme-init.js does the same before first paint, and a match with what it left is
+ *  kept rather than re-fetched, which would paint the default for a frame. */
 function applyThemeName(wanted: string): void {
-	const name = isPreset(wanted) ? wanted : 'theme';
-	themeName.current = name;
+	const custom = customThemeFile(wanted);
+	themeName.current = custom ? wanted : isPreset(wanted) ? wanted : 'theme';
 	if (typeof document === 'undefined') return;
+	const name = custom ? 'theme' : themeName.current;
+	if (custom) void applyCustom(wanted, custom);
+	else clearCustomTheme();
 	const root = document.documentElement;
 	if (root.getAttribute('data-theme') === name && (name === 'theme' || document.getElementById(THEME_EL))) return;
 	document.getElementById(THEME_EL)?.remove();
@@ -98,4 +110,7 @@ if (typeof document !== 'undefined') {
 	apply(resolve(choice));
 	watchSystem(choice);
 	applyThemeName(layout.current.themeName);
+	onCustomThemesChanged(() => {
+		if (customThemeFile(themeName.current)) applyThemeName(themeName.current);
+	});
 }

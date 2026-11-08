@@ -26,6 +26,16 @@
 		// under /themes. Mirrors applyThemeName in src/lib/theme.ts, which finds the link in place
 		// and leaves it.
 		var name = (layout && layout.v === 1 && layout.themeName) || 'theme';
+		// a custom theme: the copy src/lib/customThemes keeps, as the constructed sheet it puts on the page
+		if (name.indexOf('custom:') === 0) {
+			var cached = JSON.parse(localStorage.getItem('texpile:custom-theme') || 'null');
+			if (cached && cached.name === name) {
+				var sheet = new CSSStyleSheet();
+				sheet.replaceSync(cached.css);
+				document.adoptedStyleSheets = [sheet];
+			}
+			name = 'theme';
+		}
 		if (/^[a-z][a-z0-9-]*$/.test(name) && name !== 'theme') {
 			document.write('<link id="texpile-theme" rel="stylesheet" href="/themes/' + name + '.css">');
 		} else name = 'theme';

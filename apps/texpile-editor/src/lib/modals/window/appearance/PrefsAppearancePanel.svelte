@@ -5,6 +5,7 @@
 	import { changeUiLocale, uiLocaleOptions } from '../prefsOptions';
 	import AppearanceMode from '../AppearanceMode.svelte';
 	import ThemePicker from '../ThemePicker.svelte';
+	import CustomThemePicker from './CustomThemePicker.svelte';
 	import PrefsRow from '../rows/PrefsRow.svelte';
 	import PrefsSwitchRow from '../rows/PrefsSwitchRow.svelte';
 	import { m } from '$lib/paraglide/messages';
@@ -17,6 +18,7 @@
 	<AppearanceMode />
 </PrefsRow>
 <ThemePicker />
+<CustomThemePicker />
 <PrefsSwitchRow
 	id="window-transparency"
 	checked={windowGlass.works && settings.current.transparentWindow === true}
