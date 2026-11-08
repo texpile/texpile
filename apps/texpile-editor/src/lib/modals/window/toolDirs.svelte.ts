@@ -13,7 +13,7 @@ export type ToolDirRow = {
 	exists: boolean;
 };
 
-function folderOf(file: string): string {
+export function folderOf(file: string): string {
 	return file.slice(0, Math.max(file.lastIndexOf('/'), file.lastIndexOf('\\')));
 }
 
@@ -28,7 +28,6 @@ async function forms(entry: string): Promise<{ absolute: string; relative: strin
 
 class ToolDirs {
 	rows = $state<ToolDirRow[]>([]);
-	draft = $state('');
 	busy = $state(false);
 
 	async refresh(): Promise<void> {
@@ -42,16 +41,12 @@ class ToolDirs {
 
 	async browse(): Promise<void> {
 		const dir = await nativeBridge()?.pickFolder?.(m.prefs_toolchain_dirs_add_title());
-		if (dir) await this.suggest(dir);
+		if (dir) await this.add(dir);
 	}
 
 	async locate(tool: string): Promise<void> {
 		const file = await nativeBridge()?.pickFile?.(m.prefs_toolchain_locate_title({ name: tool }));
-		if (file) await this.suggest(folderOf(file));
-	}
-
-	private async suggest(dir: string): Promise<void> {
-		this.draft = await this.spelling(dir);
+		if (file) await this.add(folderOf(file));
 	}
 
 	/** how a folder is written down: relative to a portable app on its own drive, else absolute */
@@ -60,12 +55,10 @@ class ToolDirs {
 		return f.relative ?? f.absolute;
 	}
 
-	async add(): Promise<void> {
-		const entry = this.draft.trim();
-		if (!entry) return;
+	private async add(dir: string): Promise<void> {
+		const entry = await this.spelling(dir);
 		const f = await forms(entry);
 		if (this.rows.some((r) => folderKey(r.real) === folderKey(f.real))) return;
-		this.draft = '';
 		await this.write([...settings.current.toolDirs, entry]);
 	}
 

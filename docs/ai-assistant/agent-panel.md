@@ -30,5 +30,5 @@ Revert covers text files up to 1 MB and works until you close the window.
 | You see                  | Fix                                                                                             |
 | ------------------------ | ----------------------------------------------------------------------------------------------- |
 | {agent} is not signed in | Run the command shown in a terminal. **Open Terminal** opens one.                               |
-| {agent} was not found    | Install it, or add its folder in `Preferences › Programs › Other folders`. Click **Try Again**. |
+| {agent} was not found    | Install it, or add its folder in `Preferences › Compiler › Other folders`. Click **Try Again**. |
 | {agent} stopped          | The note shows its last message. Click **Try Again**.                                           |

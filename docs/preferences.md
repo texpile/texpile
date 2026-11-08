@@ -24,16 +24,17 @@ Preferences holds the settings for the whole app. Open it with Ctrl , (Cmd , on 
 | Spelling › Default language                              | For documents that name no language, in folders set to Automatic. English by default.                                               |
 | Spelling › Custom Dictionary                             | One list per language. Separate several words with spaces, commas, or semicolons.                                                   |
 | Spelling › Grammar rules                                 | All off by default. Shown while English is the default language or the open folder is checked in English.                           |
+| Version Control › Git Program                            | The git Texpile runs. When git is missing, **Locate** adds its folder to Compiler › Other folders.                                  |
 | Version Control › Autofetch                              | Fetches from the default remote every 3 minutes.                                                                                    |
 | Version Control › Git Identity                           | Read-only. Change it with `git config` in a terminal.                                                                               |
 | Version Control › Keep version history                   | Keeps a copy of each save for 30 days.                                                                                              |
 | Collaboration › Display name                             | Shown in shared sessions and on your comments. Left empty, you show as Host or Guest.                                               |
-| Programs › Other folders                                 | Texpile looks here first for every program it runs, including your compile command. See [Programs](build-and-preview/toolchain.md). |
-| Programs › TeX and Typst                                 | Which TeX distribution and which tinymist Texpile uses. Each picker also installs Texpile's own.                                    |
+| Compiler › Other folders                                 | Texpile looks here first for every program it runs, including your compile command. See [Compiler](build-and-preview/toolchain.md). |
+| Compiler › LaTeX and Typst                               | Which TeX distribution and which tinymist Texpile uses. Each picker also installs Texpile's own.                                    |
 | Integrations › Find and cite papers online               | Looks papers up through Crossref, DataCite, doi.org, Open Library, and PubMed.                                                      |
 | AI Assistant › Disable all AI integrations in Texpile    | Turns off Refine, the Agent tab and the MCP server. Your choices below it stay as they were.                                        |
 | AI Assistant › MCP server                                | Lets an AI assistant such as Claude Code see your open files. See [MCP server](ai-assistant/mcp.md).                                |
-| AI Assistant › Refine with                               | Only agents Texpile finds can be picked. To add another, add its folder under Programs › Other folders.                             |
+| AI Assistant › Refine with                               | Only agents Texpile finds can be picked. To add another, add its folder under Compiler › Other folders.                             |
 | AI Assistant › Agent tab                                 | Untick every agent to remove the tab.                                                                                               |
 
 ## Not in Preferences

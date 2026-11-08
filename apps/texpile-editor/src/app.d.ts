@@ -53,6 +53,8 @@ declare global {
 		timedOut?: boolean;
 		/** the command probed, as spawned (a bare name means it came from PATH) */
 		command: string;
+		/** the file that answered, so a folder in the list can say what it holds */
+		path?: string;
 	};
 
 	type ToolDistro = {

@@ -187,6 +187,14 @@ const STATIC_ROWS = [
 	{ id: 'grammar-rules', tab: 'proofing', section: 'spellAll', label: () => m.prefs_grammar_rules(), shown: grammarShown },
 
 	{
+		id: 'git-program',
+		tab: 'vcs',
+		section: 'git',
+		label: () => m.prefs_git_program(),
+		note: () => m.prefs_git_program_note(),
+		shown: isDesktop
+	},
+	{
 		id: 'check-new-versions',
 		tab: 'vcs',
 		section: 'git',
@@ -220,6 +228,8 @@ const STATIC_ROWS = [
 
 	{ id: 'collab-name', tab: 'collaboration', label: () => m.prefs_collab_name(), note: () => m.prefs_collab_name_note() },
 
+	{ id: 'compiler-latex', tab: 'toolchain', label: () => m.prefs_group_latex() },
+	{ id: 'compiler-typst', tab: 'toolchain', label: () => m.prefs_group_typst() },
 	{ id: 'toolchain-dirs', tab: 'toolchain', label: () => m.prefs_toolchain_dirs(), note: () => m.prefs_toolchain_dirs_hint() },
 
 	{ id: 'zotero', tab: 'integrations', label: () => m.prefs_zotero(), note: () => m.prefs_zotero_note() },

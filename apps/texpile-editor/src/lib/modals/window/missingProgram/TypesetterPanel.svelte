@@ -21,7 +21,6 @@
 
 	async function addFolder(): Promise<void> {
 		await toolDirs.browse();
-		await toolDirs.add();
 	}
 
 	const engines = $derived(engineRows(want, program));

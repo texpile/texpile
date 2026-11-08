@@ -1,17 +1,17 @@
 ---
-description: The Programs page in Preferences shows the programs Texpile runs and where it finds them. It picks the TeX and Typst install Texpile uses and installs TeX Live and tinymist.
+description: The Compiler page in Preferences picks the LaTeX and Typst install Texpile uses, installs TeX Live and tinymist, and adds folders to search.
 order: 1
 ---
 
-# Programs
+# Compiler
 
-**File › Preferences… › Programs** shows the programs Texpile runs and where it finds them.
+**File › Preferences… › Compiler** has a row for LaTeX, a row for Typst and a row for other folders.
 
-![The Programs page of Preferences with the TeX picker, four LaTeX programs marked Not found, 4 more programs work, and the Typst picker](../../landing/src/lib/assets/showcase/docs/app/preferences-toolchain.png)
+![The Compiler page of Preferences with the LaTeX row saying 4 of 8 programs work, four programs marked Not found, the Typst row and Other folders](../../landing/src/lib/assets/showcase/docs/app/preferences-toolchain.png)
 
-Each language has a picker for the install Texpile uses: **TeX** for LaTeX and **Typst** for Typst. Under it, a program that is missing or does not run gets a row of its own. The programs that work fold into one line. **Show** lists them with their versions. Texpile checks the programs again each time the page opens.
+Each language row has a picker for the install Texpile uses. The line under the language's name says how its programs are doing, for example "7 of 8 programs work." **Show** lists the ones that work with their versions. A program that is missing or does not run gets a line of its own under the row. When Texpile finds none of a language's programs, the row says **Not found.** with a **How to install** link to the install guide. Texpile checks the programs again each time the page opens.
 
-The last item in each picker, **How to install TeX** or **How to install tinymist**, opens the install guide.
+Git is in **Preferences › Version Control**, in the **Git Program** row. When git is missing, that row links to [Install Git](../installation/git.md) and has **Locate**.
 
 Texpile needs only the programs your commands call. The default compile command needs latexmk and lualatex. Live preview needs lualatex, **Format Document** needs latexindent, and jumping between the text and the PDF needs synctex.
 
@@ -30,15 +30,15 @@ Texpile reads your PATH once, when it starts: restart it after you change PATH. 
 
 ## Pick an install and add folders
 
-The **TeX** picker lists every TeX Live and MiKTeX Texpile finds. The one in use has a check mark. Pick another to put its folder first. **(on PATH)** marks the one your PATH reaches.
+The **LaTeX** picker lists every TeX Live and MiKTeX Texpile finds. The one in use has a check mark. Pick another to put its folder first. **(on PATH)** marks the one your PATH reaches.
 
-Texpile searches **Other folders** before PATH, for every program it runs, including your compile command. **Locate** on a **Not found** row adds the program's folder.
+Texpile searches **Other folders** before PATH, for every program it runs, including your compile command and git. **Add Folder** adds one, and **Locate** on a **Not found** line adds that program's folder. Each folder shows what Texpile found in it.
 
 ## Install TeX Live
 
-Open the **TeX** picker and click **Install TeX Live 2026 from Texpile**. The **Set Up LaTeX** dialog offers it too when Texpile finds no TeX. Texpile downloads TeX Live 2026 from dl.texpile.com and checks it against a checksum. The download is 174 MB on Linux, 230 MB on macOS and 287 MB on Windows. It holds lualatex, pdflatex, xelatex, latexmk, biber and the packages most papers load.
+Open the **LaTeX** picker and click **Install TeX Live 2026 from Texpile**. With no TeX found, the row has an **Install TeX Live 2026 from Texpile** button in place of the picker. The **Set Up LaTeX** dialog offers it too. Texpile downloads TeX Live 2026 from dl.texpile.com and checks it against a checksum. The download is 174 MB on Linux, 230 MB on macOS and 287 MB on Windows. It holds lualatex, pdflatex, xelatex, latexmk, biber and the packages most papers load.
 
-![The TeX picker open with TeX Live 2023/Debian checked and Install TeX Live 2026 from Texpile, 174 MB](../../landing/src/lib/assets/showcase/docs/app/toolchain-tex-picker.png)
+![The LaTeX picker open with TeX Live 2023/Debian checked and Install TeX Live 2026 from Texpile, 174 MB](../../landing/src/lib/assets/showcase/docs/app/toolchain-tex-picker.png)
 
 After the install, the picker uses **TeX Live 2026 (installed by Texpile)**. Pick another install to switch back. To delete it, click **Remove** next to "Texpile installed TeX Live 2026."
 
@@ -46,7 +46,7 @@ When a document loads a package this TeX Live lacks, the live preview and **Comp
 
 ## Install tinymist for Typst
 
-Open the **Typst** picker and click the option that starts with **Install tinymist**. The **Set Up Typst** dialog and the "tinymist is not installed." bar above a `.typ` file offer it too.
+Open the **Typst** picker and click the option that starts with **Install tinymist**. With no tinymist found, the row has an install button in place of the picker. The **Set Up Typst** dialog and the "tinymist is not installed." bar above a `.typ` file offer it too.
 
 After the install, the picker uses the entry that ends in **(installed by Texpile)**. Pick another install to switch back. **Remove** deletes the tinymist Texpile installed.
 

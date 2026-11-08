@@ -9,6 +9,7 @@
 import { execFile } from 'node:child_process';
 import { timeSync } from './startupStats';
 import { shellEnvReady } from './shell/shellEnv';
+import { findProgram } from './shell/findProgram';
 
 // a packed program (biber, latexindent on Windows) unpacks itself on its first run, which can take a while
 export const PROBE_TIMEOUT_MS = 30_000;
@@ -24,6 +25,8 @@ export type ToolProbe = {
 	timedOut?: boolean;
 	/** the command probed, as spawned (a bare name means it came from PATH) */
 	command: string;
+	/** the file that answered, so a folder in the list can say what it holds */
+	path?: string;
 };
 
 /**
@@ -94,7 +97,9 @@ export async function probeToolchain(onEach?: (p: ToolProbe) => void): Promise<T
 	await shellEnvReady();
 	return Promise.all(
 		TOOLS.map(async (t) => {
-			const p = await probeOne(t.id, t.command, t.args);
+			const probed = await probeOne(t.id, t.command, t.args);
+			const file = probed.found ? findProgram(t.command) : null;
+			const p = file ? { ...probed, path: file } : probed;
 			onEach?.(p);
 			return p;
 		})

@@ -10,7 +10,7 @@ order: 2
 | You see                                                     | Fix                                                                                             |
 | ----------------------------------------------------------- | ----------------------------------------------------------------------------------------------- |
 | "tinymist is not installed."                                | Click **Set Up Typst**, or [install it yourself](../installation/typst/README.md).              |
-| tinymist shows **Does not run.**                            | In Preferences › Programs, open the **Typst** picker and install tinymist from Texpile.         |
+| tinymist shows **Does not run.**                            | In Preferences › Compiler, open the **Typst** picker and install tinymist from Texpile.         |
 | The preview says Connecting or Reconnecting for a long time | Restart Texpile.                                                                                |
 | "Nothing to preview yet."                                   | The document has an error. Fix it in Problems.                                                  |
 | The preview shows another file than the one open            | The preview shows the main file. Right-click the open file › **Set as Main File**.              |

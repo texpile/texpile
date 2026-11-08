@@ -1,4 +1,4 @@
-// Texpile's own copy for each language, in the one shape a Toolchain section reads
+// Texpile's own copy for each language, in the one shape a Compiler row reads
 import type { Component } from 'svelte';
 import { distros } from '../distros.svelte';
 import { tinymistInstaller } from '../tinymistInstall.svelte';
@@ -19,8 +19,8 @@ export type LanguageInstall = {
 	readonly progress: Component;
 	readonly removeLabel: string;
 	readonly cancelLabel: string;
-	/** the install guide's page for this language, for an install of one's own */
-	readonly guide: { label: string; url: string };
+	/** the install guide's page for this language */
+	readonly docs: string;
 	refresh(): void;
 	install(): void;
 	cancel(): void;
@@ -53,9 +53,7 @@ export const texLiveInstall: LanguageInstall = {
 	get cancelLabel() {
 		return m.texlive_install_cancel();
 	},
-	get guide() {
-		return { label: m.prefs_toolchain_guide_tex(), url: 'https://texpile.com/docs/installation/latex' };
-	},
+	docs: 'https://texpile.com/docs/installation/latex',
 	refresh: () => void texLiveInstaller.refresh(),
 	install: () => void texLiveInstaller.install().then((r) => (r?.ok ? distros.useManaged('latex') : undefined)),
 	cancel: () => texLiveInstaller.cancel(),
@@ -86,9 +84,7 @@ export const tinymistInstall: LanguageInstall = {
 	get cancelLabel() {
 		return m.tinymist_install_cancel();
 	},
-	get guide() {
-		return { label: m.prefs_toolchain_guide_tinymist(), url: 'https://texpile.com/docs/installation/typst' };
-	},
+	docs: 'https://texpile.com/docs/installation/typst',
 	refresh: () => void tinymistInstaller.refresh(),
 	install: () => void tinymistInstaller.install().then((r) => (r?.ok ? distros.useManaged('typst') : undefined)),
 	cancel: () => tinymistInstaller.cancel(),

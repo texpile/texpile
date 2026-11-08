@@ -12,7 +12,7 @@ Texpile recommends using TeX Live and MacTeX. However, other distros such as MiK
 
 ## From Texpile
 
-Open **File › Preferences… › Toolchain**, open the **TeX** picker and click **Install TeX Live 2026 from Texpile**. A compile or live preview that finds no TeX offers the same install. See [Install TeX Live](../../build-and-preview/toolchain.md#install-tex-live).
+Open **File › Preferences… › Compiler**, open the **LaTeX** picker and click **Install TeX Live 2026 from Texpile**. A compile or live preview that finds no TeX offers the same install. See [Install TeX Live](../../build-and-preview/toolchain.md#install-tex-live).
 
 ## Install a TeX distribution yourself
 

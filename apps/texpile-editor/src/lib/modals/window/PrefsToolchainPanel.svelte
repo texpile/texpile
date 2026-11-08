@@ -3,8 +3,7 @@
 	import { toolsInGroup, type ToolGroup } from '$lib/workspace/toolchainCatalog';
 	import { toolchainProbe } from './toolchainProbe.svelte';
 	import { toolDirs } from './toolDirs.svelte';
-	import LanguageSection from './toolchain/LanguageSection.svelte';
-	import ProgramStatus from './toolchain/ProgramStatus.svelte';
+	import LanguageRow from './toolchain/LanguageRow.svelte';
 	import OtherFolders from './toolchain/OtherFolders.svelte';
 	import { texLiveInstall, tinymistInstall } from './toolchain/languageInstalls';
 	import { tinymistProbe, type ProgramRow } from './toolchain/toolchainRows';
@@ -30,8 +29,6 @@
 	<p class="text-warning-ink pt-1 text-xs">{m.prefs_toolchain_probe_failed()}</p>
 {/if}
 
-<LanguageSection heading={m.prefs_group_latex()} pickLabel={m.prefs_toolchain_pick_tex()} install={texLiveInstall} rows={rowsOf('latex')} />
-<LanguageSection heading={m.prefs_group_typst()} pickLabel={m.prefs_group_typst()} install={tinymistInstall} rows={rowsOf('typst')} />
-<h3 class="text-muted pt-4 pb-1 text-xs font-semibold tracking-wide uppercase">{m.prefs_group_vcs()}</h3>
-<ProgramStatus rows={rowsOf('general')} />
+<LanguageRow id="compiler-latex" install={texLiveInstall} rows={rowsOf('latex')} />
+<LanguageRow id="compiler-typst" install={tinymistInstall} rows={rowsOf('typst')} />
 <OtherFolders />
