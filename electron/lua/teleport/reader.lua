@@ -226,8 +226,12 @@ return function(T)
 	-- the stream the next file opens on: 0 for \input, n + 1 for \openin n. A file opened for \read is never on the
 	-- input stack, and graphics leaves each image's check open until its stream opens the next
 	local stream = 0
+	-- LuaTeX looks in -output-directory only while no callback answers for it, and kpathsea does from TeX Live 2023
 	luatexbase.add_to_callback("find_read_file", function(id, name)
 		stream = id
+		if TEXPILE_DRAFT_OUT and not name:match("^/") and not name:match("^%a:") and lfs.attributes(DRAFT .. name, "mode") == "file" then
+			return DRAFT .. name
+		end
 		return kpse.find_file(name, "tex", true)
 	end, "texpile.tele.find")
 
