@@ -9,7 +9,9 @@ order: 1
 
 ![The Programs page of Preferences with the TeX picker, four LaTeX programs marked Not found, 4 more programs work, and the Typst picker](../../landing/src/lib/assets/showcase/docs/app/preferences-toolchain.png)
 
-Each language has a picker for the install Texpile uses: **TeX** for LaTeX and **Typst** for Typst. Under it, a program that is missing or does not run gets a row of its own. The programs that work fold into one line. **Show** lists them with their versions.
+Each language has a picker for the install Texpile uses: **TeX** for LaTeX and **Typst** for Typst. Under it, a program that is missing or does not run gets a row of its own. The programs that work fold into one line. **Show** lists them with their versions. Texpile checks the programs again each time the page opens.
+
+The last item in each picker, **How to install TeX** or **How to install tinymist**, opens the install guide.
 
 Texpile needs only the programs your commands call. The default compile command needs latexmk and lualatex. Live preview needs lualatex, **Format Document** needs latexindent, and jumping between the text and the PDF needs synctex.
 

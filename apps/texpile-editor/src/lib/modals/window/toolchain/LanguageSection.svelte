@@ -11,7 +11,13 @@
 </script>
 
 <h3 class="text-muted pt-4 pb-1 text-xs font-semibold tracking-wide uppercase">{props.heading}</h3>
-<DistroPicker family={install.family} label={props.pickLabel} offer={install.offer} onInstall={() => install.install()} />
+<DistroPicker
+	family={install.family}
+	label={props.pickLabel}
+	offer={install.offer}
+	guide={install.guide}
+	onInstall={() => install.install()}
+/>
 <div class="flex items-end gap-3">
 	<div class="min-w-0 flex-1 pb-1"><Progress /></div>
 	<!-- only the download can stop; checking and unpacking finish -->

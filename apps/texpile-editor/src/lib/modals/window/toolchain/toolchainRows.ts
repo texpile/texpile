@@ -1,5 +1,5 @@
 // what Preferences › Toolchain lists for a language: the picker's installs and the programs that need a row of their own
-import { Download } from '@lucide/svelte';
+import { Download, ExternalLink } from '@lucide/svelte';
 import type { DropdownGroup } from '$lib/menus/MenuDropdown.svelte';
 // eslint-disable-next-line no-restricted-imports -- a type, erased from the bundle
 import type { ToolInfo } from '$lib/workspace/toolchainCatalog';
@@ -7,6 +7,7 @@ import { installedYear } from './install/texLiveInstallText';
 import { m } from '$lib/paraglide/messages';
 
 export const INSTALL_VALUE = 'texpile-install';
+export const GUIDE_VALUE = 'install-guide';
 
 export type InstallOffer = { label: string; note?: string };
 
@@ -24,8 +25,8 @@ export function distroLabel(d: ToolDistro | null): string {
 	return d.name;
 }
 
-/** every install, the one in use checked, then Texpile's own when it has one to offer */
-export function distroGroups(list: ToolDistro[], inUse: ToolDistro | null, offer: InstallOffer | null): DropdownGroup[] {
+/** every install, the one in use checked, then Texpile's own when it has one to offer and the install guide */
+export function distroGroups(list: ToolDistro[], inUse: ToolDistro | null, offer: InstallOffer | null, guide: string): DropdownGroup[] {
 	const groups: DropdownGroup[] = [];
 	const options = list.map((d) => ({
 		value: d.dir,
@@ -34,7 +35,9 @@ export function distroGroups(list: ToolDistro[], inUse: ToolDistro | null, offer
 		checked: d.dir === inUse?.dir
 	}));
 	if (options.length) groups.push({ options });
-	if (offer) groups.push({ options: [{ value: INSTALL_VALUE, label: offer.label, note: offer.note, icon: Download, checked: false }] });
+	const install = { value: INSTALL_VALUE, label: offer?.label ?? '', note: offer?.note, icon: Download, checked: false };
+	const howTo = { value: GUIDE_VALUE, label: guide, icon: ExternalLink, checked: false };
+	groups.push({ options: offer ? [install, howTo] : [howTo] });
 	return groups;
 }
 

@@ -14,8 +14,8 @@
 	void toolDirs.refresh();
 	texLiveInstall.refresh();
 	tinymistInstall.refresh();
-	// probed on first view, not on dialog mount: it spawns ten processes, and most users never open this category
-	if (probe.tinymist === 'unchecked' && !probe.probing) void probe.run();
+	// looked at again each time the page opens, for a program installed since
+	if (!probe.probing) void probe.run();
 
 	function rowsOf(group: ToolGroup): ProgramRow[] {
 		if (probe.probeFailed) return [];
@@ -26,17 +26,8 @@
 	}
 </script>
 
-<div class="border-surface-200-800 flex items-center justify-between gap-3 border-b pt-1 pb-3">
-	<!-- always shown, so there is one place to go when a program is missing -->
-	<a class="anchor text-xs" href="https://texpile.com/docs/installation" target="_blank" rel="noopener noreferrer"
-		>{m.prefs_toolchain_install_guide()}</a
-	>
-	<button class="btn preset-tonal shrink-0 text-xs" onclick={() => void probe.run()} disabled={probe.probing}>
-		{probe.probing ? m.prefs_toolchain_checking() : m.prefs_toolchain_recheck()}
-	</button>
-</div>
 {#if probe.probeFailed}
-	<p class="text-warning-ink pt-3 text-xs">{m.prefs_toolchain_probe_failed()}</p>
+	<p class="text-warning-ink pt-1 text-xs">{m.prefs_toolchain_probe_failed()}</p>
 {/if}
 
 <LanguageSection heading={m.prefs_group_latex()} pickLabel={m.prefs_toolchain_pick_tex()} install={texLiveInstall} rows={rowsOf('latex')} />
