@@ -1,5 +1,5 @@
-// The words for an install of Texpile's own tinymist: its progress, its failures, and which copy is in use
-import { megabytes } from './toolchain/installStepUtils';
+// The words for an install of Texpile's own tinymist: its progress and its failures
+import { megabytes } from './toolchain/install/installStepUtils';
 import { m } from '$lib/paraglide/messages';
 
 export function tinymistStepText(step: InstallStep, version: string): string {
@@ -27,8 +27,4 @@ export function tinymistFailureText(failure: { reason: InstallFailure; detail: s
 		case 'cancelled':
 			return m.tinymist_install_failed_download({ detail: failure.detail });
 	}
-}
-
-export function tinymistSourceLabel(source: TinymistInfo['source']): string {
-	return source === 'managed' ? m.tinymist_source_managed() : m.tinymist_source_path();
 }

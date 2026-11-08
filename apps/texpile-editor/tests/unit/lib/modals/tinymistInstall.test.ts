@@ -5,7 +5,7 @@ import { it, expect, beforeEach } from 'vitest';
 import { tinymistInstaller } from '../../../../src/lib/modals/window/tinymistInstall.svelte';
 import { toolchainProbe } from '../../../../src/lib/modals/window/toolchainProbe.svelte';
 import { tinymistFailureText, tinymistStepText } from '../../../../src/lib/modals/window/tinymistInstallText';
-import { installStepPercent } from '../../../../src/lib/modals/window/toolchain/installStepUtils';
+import { installStepPercent } from '../../../../src/lib/modals/window/toolchain/install/installStepUtils';
 
 type Fake = {
 	finish?: (result: TinymistInstallResult) => void;

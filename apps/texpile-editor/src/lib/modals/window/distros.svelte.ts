@@ -1,6 +1,7 @@
 // which install compiles each format: the one whose bin folder the Folders list holds first, else PATH's
 import { toolchainProbe } from './toolchainProbe.svelte';
 import { folderKey, toolDirs, type ToolDirRow } from './toolDirs.svelte';
+import { folderFor } from './toolchain/toolchainRows';
 
 type Family = ToolDistro['family'];
 
@@ -41,11 +42,12 @@ class Distros {
 		return this.list(family).find((d) => d.onPath) ?? null;
 	}
 
-	/** Texpile's own copy is installed and another one is in use */
-	managedNotInUse(family: Family): boolean {
-		const managed = this.list(family).find((d) => d.managed);
-		if (!managed) return false;
-		return (this.active(family) ?? this.onPath(family) ?? managed).dir !== managed.dir;
+	/** after Texpile installs its own copy from the picker: that copy is the one picked */
+	async useManaged(family: Family): Promise<void> {
+		await toolchainProbe.run();
+		const list = this.list(family);
+		const managed = list.find((d) => d.managed);
+		if (managed) await this.choose(family, folderFor(list, managed.dir));
 	}
 
 	async choose(family: Family, dir: string | null): Promise<void> {

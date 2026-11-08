@@ -1,6 +1,6 @@
 // @vitest-environment jsdom
 import { expect, it } from 'vitest';
-import { installForCompileLog, missingPackageFile } from '../../../../../../src/lib/modals/window/toolchain/texLivePackages';
+import { installForCompileLog, missingPackageFile } from '../../../../../../../src/lib/modals/window/toolchain/install/texLivePackages';
 
 it("reads the package file a compile lacks and leaves the writer's own .tex alone", () => {
 	expect(missingPackageFile("(./main.tex\n! LaTeX Error: File `chemfig.sty' not found.\n")).toBe('chemfig.sty');

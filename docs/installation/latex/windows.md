@@ -10,4 +10,4 @@ order: 1
 
 Run [install-tl-windows.exe](https://mirror.ctan.org/systems/texlive/tlnet/install-tl-windows.exe) (recommended) from CTAN for TeX Live, or install [MiKTeX](https://miktex.org/download). Restart Texpile if it is open.
 
-You only need one of the distros above. In the rare case where you have multiple TeX distributions installed, you can pick one under **Distribution** in Preferences › Toolchain.
+You only need one of the distros above. In the rare case where you have multiple TeX distributions installed, you can pick one with the **TeX** picker in Preferences › Toolchain.

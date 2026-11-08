@@ -1,7 +1,7 @@
 // Texpile's own TeX Live as every window sees it, as for tinymist (tinymistInstall.svelte.ts): the one install under
 // way, how the last one ended, and what is on disk
-import { toolchainProbe } from '../toolchainProbe.svelte';
-import { toolDirs } from '../toolDirs.svelte';
+import { toolchainProbe } from '../../toolchainProbe.svelte';
+import { toolDirs } from '../../toolDirs.svelte';
 
 function bridge(): TexpileTexLiveBridge | undefined {
 	return typeof window !== 'undefined' ? window.texpileTexLive : undefined;
@@ -38,14 +38,15 @@ class TexLiveInstaller {
 		}
 	}
 
-	async install(): Promise<void> {
+	/** resolves to how it ended, or null without the bridge */
+	async install(): Promise<TexLiveInstallResult | null> {
 		const b = bridge();
-		if (!b) return;
+		if (!b) return null;
 		this.listen(b);
 		this.failure = null;
 		this.step = { phase: 'download', received: 0, total: 0 };
 		// main's broadcast, which reaches this window too, reports how it ended
-		await b.install();
+		return await b.install();
 	}
 
 	cancel(): void {

@@ -31,7 +31,7 @@ export function texLiveFailureText(failure: { reason: InstallFailure; detail: st
 }
 
 /** the installed tree's year as its programs name it, which a later pin can move past */
-export function texLiveInstalledText(detail: string, pinnedYear: number): string {
-	const year = /\(TeX Live (\d{4})\)/.exec(detail)?.[1] ?? String(pinnedYear);
-	return m.prefs_texlive_managed_installed({ year });
+export function installedYear(detail: string): number | null {
+	const year = /\(TeX Live (\d{4})\)/.exec(detail)?.[1];
+	return year ? Number(year) : null;
 }

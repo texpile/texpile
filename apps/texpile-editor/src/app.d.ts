@@ -49,6 +49,8 @@ declare global {
 		/** first informative line of the tool's own version output, when it gave one */
 		detail?: string;
 		broken?: boolean;
+		/** broken by giving no answer within the probe's 30 s */
+		timedOut?: boolean;
 		/** the command probed, as spawned (a bare name means it came from PATH) */
 		command: string;
 	};

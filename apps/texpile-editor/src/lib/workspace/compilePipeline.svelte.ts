@@ -28,7 +28,7 @@ import { drivesTypst, isTypstCommand } from './typstCommand';
 import { basename, dirname, joinPath, revealItem, samePath } from './fileSystem';
 import { toaster } from '$lib/modals/toaster-svelte';
 import { reportMissingTool } from './toolMissing';
-import { installForCompileLog } from '$lib/modals/window/toolchain/texLivePackages';
+import { installForCompileLog } from '$lib/modals/window/toolchain/install/texLivePackages';
 import { m } from '$lib/paraglide/messages';
 
 // what the Compile menu asked for besides a plain run: both are latexmk flags spliced into the same command

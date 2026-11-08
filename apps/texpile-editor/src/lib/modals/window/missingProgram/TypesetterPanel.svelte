@@ -7,8 +7,8 @@
 	import { toolDirs } from '../toolDirs.svelte';
 	import { tinymistInstaller } from '../tinymistInstall.svelte';
 	import TinymistInstallProgress from '../TinymistInstallProgress.svelte';
-	import { texLiveInstaller } from '../toolchain/texLiveInstall.svelte';
-	import TexLiveInstallProgress from '../toolchain/TexLiveInstallProgress.svelte';
+	import { texLiveInstaller } from '../toolchain/install/texLiveInstall.svelte';
+	import TexLiveInstallProgress from '../toolchain/install/TexLiveInstallProgress.svelte';
 	import { engineRows, type Typesetters } from './typesetterStatus.svelte';
 	import { m } from '$lib/paraglide/messages';
 

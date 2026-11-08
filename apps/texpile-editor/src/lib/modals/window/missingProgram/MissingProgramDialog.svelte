@@ -15,7 +15,7 @@
 	import { ExternalLink } from '@lucide/svelte';
 	import type { DialogButton } from '$lib/modals/dialogButtons';
 	import { tinymistInstaller } from '../tinymistInstall.svelte';
-	import { texLiveInstaller } from '../toolchain/texLiveInstall.svelte';
+	import { texLiveInstaller } from '../toolchain/install/texLiveInstall.svelte';
 	import { m } from '$lib/paraglide/messages';
 
 	const INSTALL_GUIDE = 'https://texpile.com/docs/installation';

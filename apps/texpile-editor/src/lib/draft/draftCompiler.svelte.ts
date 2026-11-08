@@ -1,7 +1,7 @@
 // The full-compile lifecycle: cancel-on-supersede compiles.
 import { nativeBridge, type DraftResult } from '$lib/workspace/fileSystem';
 import { readBackExtensions } from '$lib/languages/latex/knowledge/registries/sidecarExtensions';
-import { installMissingFile, texLiveInUse } from '$lib/modals/window/toolchain/texLivePackages';
+import { installMissingFile, texLiveInUse } from '$lib/modals/window/toolchain/install/texLivePackages';
 import { m } from '$lib/paraglide/messages';
 
 // a first compile still running after this long gets a note: typing waits on it

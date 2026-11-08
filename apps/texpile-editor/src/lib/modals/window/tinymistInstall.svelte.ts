@@ -2,6 +2,7 @@
 // window started it), how the last one ended, and what is on disk. Held at module scope so the
 // Toolchain tab, the missing-typesetter dialog and the Typst banner all show the same install.
 import { toolchainProbe } from './toolchainProbe.svelte';
+import { toolDirs } from './toolDirs.svelte';
 
 function bridge(): TexpileTypstBridge | undefined {
 	return typeof window !== 'undefined' ? window.texpileTypst : undefined;
@@ -66,9 +67,11 @@ class TinymistInstaller {
 		this.listen(b);
 		this.failure = null;
 		this.removing = true;
+		const dir = toolchainProbe.distros.find((d) => d.family === 'typst' && d.managed)?.dir ?? null;
 		try {
 			const result = await b.removeTinymist();
 			if (!b.onTinymistFinished) this.finish(result);
+			if (result.ok && dir) await toolDirs.forget(dir);
 		} finally {
 			this.removing = false;
 		}
