@@ -1852,6 +1852,7 @@
 	"prefs_texlive_managed_none": "Texpile can install TeX Live {year} for you. The download is {size} MB.",
 	"prefs_texlive_managed_installed": "Texpile installed TeX Live {year}.",
 	"prefs_texlive_managed_broken": "TeX Live does not run. Remove it and install it again.",
+	"prefs_managed_pick_hint": "Pick it under Distribution to use it.",
 	"typst_preview_open": "Open Typst Live Preview",
 	"typst_preview_failed": "Could not start the Typst preview",
 	"typst_preview_label": "Typst preview",

@@ -1,7 +1,7 @@
 <script lang="ts">
-	// Texpile's own TeX Live: install it when no TeX is found, remove the one it put there
+	// Texpile's own TeX Live: install it, remove the one it put there
 	import { tip } from '$lib/components/tooltip.svelte';
-	import { toolchainProbe } from '../toolchainProbe.svelte';
+	import { distros } from '../distros.svelte';
 	import { texLiveInstaller } from './texLiveInstall.svelte';
 	import { texLiveInstalledText } from './texLiveInstallText';
 	import TexLiveInstallProgress from './TexLiveInstallProgress.svelte';
@@ -12,12 +12,9 @@
 
 	const status = $derived(installer.status);
 	const installed = $derived(status?.installed ?? null);
-	// with a TeX of the writer's own there is nothing to offer: a TeX on PATH comes first
-	const missing = $derived(toolchainProbe.checked && !toolchainProbe.probing && !toolchainProbe.distros.some((d) => d.family === 'latex'));
-	const shown = $derived(installer.offered && (!!installed || missing || installer.busy || !!installer.failure));
 </script>
 
-{#if shown && status}
+{#if installer.offered && status}
 	<div class="border-surface-200-800 flex items-start justify-between gap-6 border-b py-4">
 		<div class="min-w-0 flex-1">
 			<div class="text-sm font-medium">{m.prefs_texlive_managed()}</div>
@@ -26,6 +23,7 @@
 					{m.prefs_texlive_managed_none({ year: String(status.year), size: String(status.megabytes) })}
 				{:else if installed.detail}
 					<span use:tip={installed.bin}>{texLiveInstalledText(installed.detail, status.year)}</span>
+					{#if distros.managedNotInUse('latex')}{m.prefs_managed_pick_hint()}{/if}
 				{:else}
 					{m.prefs_texlive_managed_broken()}
 				{/if}

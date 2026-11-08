@@ -41,6 +41,13 @@ class Distros {
 		return this.list(family).find((d) => d.onPath) ?? null;
 	}
 
+	/** Texpile's own copy is installed and another one is in use */
+	managedNotInUse(family: Family): boolean {
+		const managed = this.list(family).find((d) => d.managed);
+		if (!managed) return false;
+		return (this.active(family) ?? this.onPath(family) ?? managed).dir !== managed.dir;
+	}
+
 	async choose(family: Family, dir: string | null): Promise<void> {
 		const entry = dir === null ? null : await toolDirs.spelling(dir);
 		// a folder that also holds the other kind stays, or it would unpick that one too
