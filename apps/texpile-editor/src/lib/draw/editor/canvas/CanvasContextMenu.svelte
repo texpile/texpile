@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { keyLabel } from '$lib/keybindings/keybindings.svelte';
 	import { m } from '$lib/paraglide/messages';
 	import { Menu, Portal } from '@skeletonlabs/skeleton-svelte';
 	import { runEditCommand, selectionCommands, type EditCommand } from '../chrome/editCommands';
@@ -16,9 +17,9 @@
 			? selectionCommands(props.editor)
 			: [
 					{ value: 'paste', label: m.figure_cmd_paste(), shortcut: shortcutText('V') },
-					{ value: 'select-all', label: m.figure_cmd_select_all(), shortcut: shortcutText('A') },
+					{ value: 'select-all', label: m.figure_cmd_select_all(), shortcut: keyLabel('figure.selectAll') },
 					null,
-					{ value: 'grid', label: props.editor.gridShown ? m.figure_grid_hide() : m.figure_grid_show(), shortcut: shortcutText("'") },
+					{ value: 'grid', label: props.editor.gridShown ? m.figure_grid_hide() : m.figure_grid_show(), shortcut: keyLabel('figure.grid') },
 					{ value: 'fit', label: m.figure_zoom_fit(), shortcut: shortcutText('1', { mod: false, shift: true }) },
 					{ value: 'shortcuts', label: m.figure_shortcuts_title(), shortcut: '?' }
 				]

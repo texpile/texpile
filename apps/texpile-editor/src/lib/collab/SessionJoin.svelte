@@ -202,11 +202,11 @@
 						<span class="cap-center">{m.session_relay_label()}</span>
 					</button>
 					{#if advancedOpen}
-						<div class="mt-2 flex gap-2">
+						<div class="mt-2 flex items-stretch gap-2">
 							<input class="input flex-1 text-sm" bind:value={relayDraft} oninput={() => (relayTouched = true)} />
 							<button
 								type="button"
-								class="btn-icon btn-icon-xs hover:preset-tonal shrink-0"
+								class="btn preset-tonal shrink-0 px-3"
 								onclick={resetRelay}
 								disabled={relayIsDefault}
 								use:tip={m.collab_relay_reset_title()}

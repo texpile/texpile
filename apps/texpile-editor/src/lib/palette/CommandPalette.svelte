@@ -7,12 +7,11 @@
 	// the same library as the rest of the UI; the filtering, ranking and highlighting are ours.
 	//
 	// No props: the commands come from the palette action registry, which WorkspaceView fills in.
-	import { inChildWindows } from '$lib/childWindows/childWindowRegistry.svelte';
 	import { untrack } from 'svelte';
 	import { Combobox, useListCollection } from '@skeletonlabs/skeleton-svelte';
 	import { Search } from '@lucide/svelte';
 	import Kbd from '$lib/components/Kbd.svelte';
-	import { isMac } from '$lib/platform';
+	import { registerCommands } from '$lib/keybindings/commands/commandRegistry';
 	import { commandPalette, type PaletteMode } from '$lib/workspace/commandPalette.svelte';
 	import FileIcon from '$lib/filetree/FileIcon.svelte';
 	import { buildCommands, type PaletteItem } from './paletteCommands';
@@ -23,38 +22,23 @@
 
 	let query = $state('');
 
-	// Cmd on macOS, Ctrl elsewhere - not "either". Ctrl+K on macOS is emacs kill-line, which
-	// CodeMirror's standard keymap binds there, and stealing it would break editing for the people
-	// most likely to notice.
-	function paletteChord(e: KeyboardEvent): PaletteMode | null {
-		const mod = isMac ? e.metaKey && !e.ctrlKey : e.ctrlKey && !e.metaKey;
-		if (!mod || e.altKey) return null;
-		if (!e.shiftKey && e.key.toLowerCase() === 'k') return 'all';
-		// VS Code's chord, for the muscle memory it comes with
-		if (e.shiftKey && e.key.toLowerCase() === 'p') return 'all';
-		// the file picker, on the key that opens a tab everywhere else
-		if (!e.shiftKey && e.key.toLowerCase() === 't') return 'files';
-		return null;
-	}
-
-	function onWindowKeydown(e: KeyboardEvent) {
-		const mode = paletteChord(e);
-		if (!mode) return;
-		e.preventDefault();
+	function openPalette(mode: PaletteMode) {
+		// from an editor in its own window, the palette opens here, and this window comes forward with it
+		window.focus();
 		query = '';
 		commandPalette.toggle(mode);
 	}
-	// from an editor in its own window, the palette opens here, and this window comes forward with it
-	inChildWindows('keydown', (e) => {
-		if (!paletteChord(e)) return;
-		window.focus();
-		onWindowKeydown(e);
-	});
+	$effect(() =>
+		registerCommands([
+			{ id: 'palette.open', run: () => openPalette('all') },
+			{ id: 'palette.goToFile', run: () => openPalette('files') }
+		])
+	);
 
 	/**
 	 * Escape, in the CAPTURE phase.
 	 *
-	 * It used to sit in the bubble handler above and did nothing: while the palette is open the focus
+	 * It used to sit in a bubble handler and did nothing: while the palette is open the focus
 	 * is in the Combobox input, and zag handles Escape there to dismiss its own listbox and stops the
 	 * event - so it never reached the window and the dialog stayed up. Capture runs on the way down,
 	 * before the input ever sees the key, so the palette closes whatever the widget decides to do
@@ -168,7 +152,7 @@
 		'grid w-full grid-cols-[auto_1fr_auto] items-center gap-3 rounded-base px-2.5 py-1.5 text-sm data-[highlighted]:preset-tonal';
 </script>
 
-<svelte:window onkeydown={onWindowKeydown} onkeydowncapture={onWindowKeydownCapture} />
+<svelte:window onkeydowncapture={onWindowKeydownCapture} />
 
 {#if commandPalette.open}
 	<div

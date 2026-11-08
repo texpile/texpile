@@ -161,6 +161,8 @@ const STATIC_ROWS = [
 	{ id: 'snippets-folder', tab: 'snippets', label: () => m.prefs_snippets_project(), note: () => m.prefs_snippets_project_note() },
 	{ id: 'snippets-global', tab: 'snippets', label: () => m.prefs_snippets_global(), note: () => m.prefs_snippets_global_note() },
 
+	{ id: 'keybindings', tab: 'keybindings', label: () => m.menubar_keyboard_shortcuts() },
+
 	{ id: 'spellcheck', tab: 'proofing', label: () => m.prefs_spellcheck() },
 	{
 		id: 'folder-language',

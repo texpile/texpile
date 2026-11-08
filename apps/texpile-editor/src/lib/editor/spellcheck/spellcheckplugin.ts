@@ -1,5 +1,5 @@
 import { Plugin, TextSelection, type Command, type EditorState } from 'prosemirror-state';
-import { keymap } from 'prosemirror-keymap';
+import { pmCommandKeys } from '$lib/keybindings/editors/pmCommandKeys';
 import { Decoration, DecorationSet, type EditorView } from 'prosemirror-view';
 import type { Node as PMNode } from 'prosemirror-model';
 import { createProofreadPlugin, createSpellCheckEnabledStore, invalidateProofreadCache } from 'prosemirror-proofread';
@@ -219,4 +219,7 @@ function jumpToProblem(dir: 1 | -1): Command {
 }
 
 /** F8 and Shift-F8, as in source mode: to the next or previous spelling or grammar problem */
-export const spellProblemKeymap = keymap({ F8: jumpToProblem(1), 'Shift-F8': jumpToProblem(-1) });
+export const spellProblemKeymap = pmCommandKeys({
+	'editor.nextSpellingProblem': jumpToProblem(1),
+	'editor.previousSpellingProblem': jumpToProblem(-1)
+});

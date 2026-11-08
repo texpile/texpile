@@ -1,9 +1,9 @@
 <script lang="ts">
+	import { keyLabel } from '$lib/keybindings/keybindings.svelte';
 	// superscript and subscript behind one toolbar button, each turned on or off on its own
 	import { tip } from '$lib/components/tooltip.svelte';
 	import MenuDropdown from '$lib/menus/MenuDropdown.svelte';
 	import { ChevronDown, Superscript, Subscript } from '@lucide/svelte';
-	import { combo } from '$lib/chrome/shortcutText';
 	import { m } from '$lib/paraglide/messages';
 
 	type Props = {
@@ -20,8 +20,8 @@
 	const groups = $derived([
 		{
 			options: [
-				{ value: 'sup', label: m.tbar_superscript(), icon: Superscript, keys: combo('.'), checked: sup },
-				{ value: 'sub', label: m.tbar_subscript(), icon: Subscript, keys: combo(',', { shift: true }), checked: sub }
+				{ value: 'sup', label: m.tbar_superscript(), icon: Superscript, keys: keyLabel('editor.superscript'), checked: sup },
+				{ value: 'sub', label: m.tbar_subscript(), icon: Subscript, keys: keyLabel('editor.subscript'), checked: sub }
 			]
 		}
 	]);

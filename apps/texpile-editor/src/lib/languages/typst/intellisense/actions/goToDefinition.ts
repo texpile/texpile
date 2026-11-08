@@ -2,7 +2,7 @@
 // path names. Through the editor's own LSPPlugin, so a guest is answered by the host's tinymist.
 import { LSPPlugin } from '@codemirror/lsp-client';
 import { syntaxTree } from '@codemirror/language';
-import { EditorView, keymap } from '@codemirror/view';
+import { EditorView } from '@codemirror/view';
 import type { Extension, StateEffect } from '@codemirror/state';
 import { m } from '$lib/paraglide/messages';
 import { jumpRevealEffect } from '$lib/editor/source/cmJumpReveal';
@@ -12,6 +12,7 @@ import { workspaceRoot } from '$lib/workspace/workspaceStore';
 import { pathFromUri } from '../lspClient';
 import { relFromSessionUri } from '../guest/sessionUri';
 import type { LspPosition, LspRange } from '../lspRange.types';
+import { cmCommandKeys } from '$lib/keybindings/editors/cmCommandKeys';
 
 /** what the caret is on when a click could mean "take me there": a name, a path, a reference */
 const NAVIGABLE = new Set(['Ident', 'MathIdent', 'Str', 'Ref', 'RefMarker', 'Label']);
@@ -97,7 +98,12 @@ function startGoTo(view: EditorView, pos: number, hooks: GoToHooks): boolean {
  */
 export function typstGoTo(hooks: GoToHooks): Extension {
 	return [
-		keymap.of([{ key: 'F12', run: (view) => startGoTo(view, view.state.selection.main.head, hooks), preventDefault: true }]),
+		cmCommandKeys({
+			'editor.goToDefinition': (view) => {
+				void startGoTo(view, view.state.selection.main.head, hooks);
+				return true;
+			}
+		}),
 		EditorView.domEventHandlers({
 			mousedown(event, view) {
 				if (!(event.ctrlKey || event.metaKey) || event.button !== 0) return false;

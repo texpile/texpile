@@ -1,7 +1,7 @@
 // Paste in the source editor. Plain text stays the default; a spreadsheet range becomes a table and a
 // URL over selected words a link, a picture is saved into the project, and a paste that could have
 // gone another way leaves the Paste As button. Smart Paste off leaves CodeMirror's own paste.
-import { EditorView as CMView, keymap } from '@codemirror/view';
+import { EditorView as CMView } from '@codemirror/view';
 import { Facet, type EditorState, type Extension } from '@codemirror/state';
 import { syntaxTree } from '@codemirror/language';
 import type { SyntaxNode } from '@lezer/common';
@@ -17,6 +17,7 @@ import { clipboardImage, pasteImageFile } from './sourcePasteImage';
 import { isLiteralAt, isMathContext } from '$lib/languages/latex/intellisense/completion/mathContext';
 import { commandNames } from '$lib/languages/latex/knowledge/calls/commandCalls';
 import { typstInsertContextAt } from '$lib/languages/typst/symbols/typstSymbolInsert';
+import { cmCommandKeys } from '$lib/keybindings/editors/cmCommandKeys';
 
 export type SourcePasteSetup = {
 	dialect: PasteDialect;
@@ -203,15 +204,12 @@ export function sourcePaste(setup: SourcePasteSetup): Extension {
 		sourcePasteSetup.of(setup),
 		pasteAsWidget(),
 		CMView.domEventHandlers({ paste: handlePaste }),
-		keymap.of([
-			{
-				key: 'Mod-Shift-v',
-				run(view) {
-					if (view.state.readOnly) return false;
-					void pasteAtCursor(view);
-					return true;
-				}
+		cmCommandKeys({
+			'editor.pasteWithoutFormatting': (view) => {
+				if (view.state.readOnly) return false;
+				void pasteAtCursor(view);
+				return true;
 			}
-		])
+		})
 	];
 }

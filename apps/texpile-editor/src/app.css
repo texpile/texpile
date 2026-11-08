@@ -182,6 +182,7 @@ html.window-glass
 		.z-template-picker,
 		.z-fullscreen-modal,
 		.z-pdf-viewer,
+		.z-context-menu,
 		.z-tooltip,
 		.cm-tooltip,
 		.cm-panels
@@ -1203,6 +1204,8 @@ html.pm-drop-refused .pm-drop-cursor {
 	--z-index-template-picker: 2000;
 	--z-index-fullscreen-modal: 3000;
 	--z-index-pdf-viewer: 3000;
+	/* opened from whatever is under the pointer, a dialog included */
+	--z-index-context-menu: 3500;
 	/* the one hover hint sits above every layer: it is transient, tiny, and hints controls inside modals too */
 	--z-index-tooltip: 4000;
 }
@@ -1393,6 +1396,10 @@ html.pm-drop-refused .pm-drop-cursor {
 
 @utility z-dropdown {
 	z-index: var(--z-index-dropdown) !important;
+}
+
+@utility z-context-menu {
+	z-index: var(--z-index-context-menu) !important;
 }
 
 @utility z-tooltip {

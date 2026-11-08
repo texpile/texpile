@@ -1,7 +1,7 @@
 // harper spell/grammar check for SOURCE mode: mask LaTeX markup (texMask), lint the prose with
 // the same harper worker + dictionary the visual editor uses, underline with the same
 // proofread-* styles, and open the shared SuggestionBox on click.
-import { Decoration, EditorView, ViewPlugin, keymap, type DecorationSet, type ViewUpdate } from '@codemirror/view';
+import { Decoration, EditorView, ViewPlugin, type DecorationSet, type ViewUpdate } from '@codemirror/view';
 import { Facet, RangeSetBuilder } from '@codemirror/state';
 import { onLintRulesChanged, type LintMatch } from '$lib/editor/spellcheck/linter';
 import { proofreadIn } from '$lib/editor/spellcheck/languages/proofreadIn';
@@ -17,6 +17,7 @@ import { maskTex, overlapsMask, type TexMask } from './texMask';
 import { clearOfOldWords, liveSuggestionRanges } from '$lib/editor/source/cmSuggestions';
 import { nextProblem, type Span } from './problemNav';
 import './suggestion.css';
+import { cmCommandKeys } from '$lib/keybindings/editors/cmCommandKeys';
 
 type SpellMarkup = 'plaintext' | 'markdown' | 'typst';
 
@@ -359,10 +360,17 @@ export function jumpToProblem(view: EditorView, dir: 1 | -1): boolean {
 	return true;
 }
 
-const problemKeymap = keymap.of([
-	{ key: 'F8', run: (view) => jumpToProblem(view, 1), preventDefault: true },
-	{ key: 'Shift-F8', run: (view) => jumpToProblem(view, -1), preventDefault: true }
-]);
+// taken even with no problem to go to, as the key always was
+const problemKeymap = cmCommandKeys({
+	'editor.nextSpellingProblem': (view) => {
+		jumpToProblem(view, 1);
+		return true;
+	},
+	'editor.previousSpellingProblem': (view) => {
+		jumpToProblem(view, -1);
+		return true;
+	}
+});
 
 /** proofreading for source mode in the language `spelling` names; obeys the shared spell-check setting */
 /** `markup` selects Harper's parser; omit it for LaTeX/plain prose (see spellMarkup). */

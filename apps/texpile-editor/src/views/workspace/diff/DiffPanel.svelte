@@ -9,6 +9,7 @@
 	import { centerRevertArrows } from './diffRevertArrows';
 	import { joinCollapsedBars } from './diffCollapsedBars';
 	import { EditorView, lineNumbers, keymap, drawSelection } from '@codemirror/view';
+	import { cmCommandKeys } from '$lib/keybindings/editors/cmCommandKeys';
 	import { EditorState, type Extension } from '@codemirror/state';
 	import { defaultKeymap, history, historyKeymap } from '@codemirror/commands';
 	import { tabIndentBinding } from '$lib/editor/source/extensions/keybindings/cmTabKey';
@@ -116,10 +117,7 @@
 	}
 
 	/** the change after or before the caret, as Alt+F5 and Shift+Alt+F5 step the source editor's margin */
-	const STEP_KEYS = keymap.of([
-		{ key: 'Alt-F5', run: goToNextChunk },
-		{ key: 'Shift-Alt-F5', run: goToPreviousChunk }
-	]);
+	const STEP_KEYS = cmCommandKeys({ 'editor.nextChange': goToNextChunk, 'editor.previousChange': goToPreviousChunk });
 
 	export function step(dir: 1 | -1): void {
 		if (!modifiedView) return;

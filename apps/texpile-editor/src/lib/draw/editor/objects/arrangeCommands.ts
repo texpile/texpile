@@ -7,8 +7,6 @@ import { subtree } from './statementTree';
 type Editor = FigureEditorState;
 export type OrderMove = 'back' | 'backward' | 'forward' | 'front';
 
-const ORDER_KEYS: Record<string, [OrderMove, OrderMove]> = { BracketLeft: ['backward', 'back'], BracketRight: ['forward', 'front'] };
-
 function siblings(ed: Editor) {
 	const ids = chosen(ed).map((s) => s.i);
 	if (!ids.length) return null;
@@ -101,17 +99,4 @@ export function renameStatement(ed: Editor, i: number, label: string) {
 	const st = ed.tree.byId.get(i);
 	if (!st) return;
 	ed.applyIfChanged(ed.language.writeLabel(ed.source, st, label));
-}
-
-export function handleArrangeKey(e: KeyboardEvent, ed: Editor) {
-	if (!(e.ctrlKey || e.metaKey) || e.altKey) return false;
-	const order = ORDER_KEYS[e.code];
-	if (order) {
-		orderSelection(ed, order[e.shiftKey ? 1 : 0]);
-		return true;
-	}
-	if (e.code !== 'KeyG') return false;
-	if (e.shiftKey) ungroupSelection(ed);
-	else groupSelection(ed);
-	return true;
 }

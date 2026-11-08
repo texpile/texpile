@@ -11,7 +11,7 @@
 	import { setSpellcheckEnabled } from '$lib/editor/spellcheck/config/spellcheckConfig';
 	import { hasVisualMode, isRawTextKind, formatOf, type FileKind } from '$lib/workspace/documentBuffer.svelte';
 	import { editSelect, formatSelect } from './menuBarCommands';
-	import { preferencesOpen, shortcutsOpen, openPreferencesAt } from '$lib/stores/dialogStore';
+	import { preferencesOpen, openPreferencesAt } from '$lib/stores/dialogStore';
 	import { commandPalette } from '$lib/workspace/commandPalette.svelte';
 	import { attachNativeMenu, publishMenuState } from '$lib/workspace/nativeMenu';
 	import { typstExport } from '$lib/languages/typst/export/dialog/typstExportState.svelte';
@@ -160,7 +160,7 @@
 	}
 
 	function helpSelect(value: string) {
-		if (value === 'shortcuts') shortcutsOpen.current = true;
+		if (value === 'shortcuts') openPreferencesAt('keybindings');
 		else if (value === 'whatsnew') whatsNewOpen.current = true;
 		else if (value === 'docs') window.open('https://texpile.com/docs', '_blank', 'noopener,noreferrer');
 		else if (value === 'discord') window.open('https://discord.gg/7wanVzCBWf', '_blank', 'noopener,noreferrer');

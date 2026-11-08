@@ -31,6 +31,7 @@ const TABS = [
 	'LaTeX',
 	'Typst',
 	'Snippets',
+	'Keyboard Shortcuts',
 	'Spelling',
 	'Version Control',
 	'Collaboration',

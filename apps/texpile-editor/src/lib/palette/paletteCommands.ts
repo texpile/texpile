@@ -1,17 +1,11 @@
-// What the Ctrl+K palette can run.
-//
-// Every entry delegates to a workspace action that already exists and is already reachable from a
-// menu or a shortcut. The palette is a faster way in, not a second implementation - so a command
-// that stops working here is a command that stopped working everywhere, which is the point.
-//
-// Rebuilt on each open (not memoized): labels depend on live state - "Show terminal" vs "Hide
-// terminal", which view mode is already active - and an open palette is not a hot path.
+// What the Ctrl+K palette can run: every command in the catalog that can run here now, with its key beside it, and the
+// package file rows. Rebuilt on each open: labels read live state ("Show terminal" vs "Hide terminal")
 import type { Component } from 'svelte';
+import '$lib/keybindings/catalog';
+import { catalogCommands, commandEnabled, commandTitle, runCommand } from '$lib/keybindings/commands/commandRegistry';
+import { keyLabel } from '$lib/keybindings/keybindings.svelte';
 import type { PaletteActions } from '$lib/workspace/commandPalette.svelte';
-import { compileItems } from './paletteCompileItems';
-import { viewItems } from './paletteViewItems';
-import { editorItems } from './paletteEditorItems';
-import { fileItems } from './paletteFileItems';
+import { packageFileItems } from './palettePackageItems';
 
 export type PaletteItem = {
 	id: string;
@@ -33,5 +27,22 @@ export type PaletteItem = {
 
 /** the action commands, in the order they appear when nothing has been typed */
 export function buildCommands(a: PaletteActions): PaletteItem[] {
-	return [...compileItems(a), ...viewItems(a), ...editorItems(a), ...fileItems(a)];
+	const items: PaletteItem[] = [];
+	for (const command of catalogCommands()) {
+		if (!command.palette || !commandEnabled(command.id)) continue;
+		items.push({
+			id: command.id,
+			label: commandTitle(command.id),
+			group: command.category(),
+			keywords: command.palette.keywords,
+			hint: keyLabel(command.id) || undefined,
+			icon: command.palette.icon,
+			searchOnly: command.palette.searchOnly,
+			run: () => runCommand(command.id)
+		});
+	}
+	const packages = packageFileItems(a);
+	const lastOfGroup = items.findLastIndex((item) => item.group === packages[0]?.group);
+	items.splice(lastOfGroup + 1 || items.length, 0, ...packages);
+	return items;
 }

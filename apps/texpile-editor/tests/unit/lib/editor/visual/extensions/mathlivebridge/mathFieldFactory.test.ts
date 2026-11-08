@@ -1,6 +1,6 @@
 import { describe, it, expect, vi } from 'vitest';
 
-const platform = vi.hoisted(() => ({ isMac: true }));
+const platform = vi.hoisted(() => ({ isMac: true, isWindows: false }));
 vi.mock('$lib/platform', () => platform);
 vi.mock('mathlive', () => ({ MathfieldElement: class {} }));
 

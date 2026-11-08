@@ -26,6 +26,7 @@ import { registerWorkspaceWindowIpc, openFolderInNewWindow } from './ipc/workspa
 import { registerWindowGlassIpc } from './windowGlass';
 import { registerNativeAppearanceIpc } from './nativeAppearance';
 import { registerSurfacesIpc } from './ipc/surfacesIpc';
+import { registerKeybindingsIpc } from './ipc/keybindingsIpc';
 import { registerDeferredIpc, shutdownDeferred } from './ipc/deferredIpc';
 import { registerWindowChrome } from './windowChrome';
 
@@ -47,6 +48,7 @@ registerWorkspaceWindowIpc();
 registerWindowGlassIpc(() => chromeColors().background);
 registerNativeAppearanceIpc();
 registerSurfacesIpc();
+registerKeybindingsIpc();
 
 // .tex handed over by the OS before any window exists; consumed at whenReady
 let initialOpenPath: string | null = null;

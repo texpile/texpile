@@ -2,6 +2,7 @@
 	import { onMount } from 'svelte';
 	import { navigate, route } from '$lib/router.svelte';
 	import { nativeBridge, openNewWindow } from '$lib/workspace/fileSystem';
+	import { registerCommands } from '$lib/keybindings/commands/commandRegistry';
 	import { openFileInWindow, openFolderInWindow } from '$lib/workspace/openWorkspace';
 	import { warnMissingFolder } from '$lib/workspace/missingFolder';
 	import { settings, loadSettings } from '$lib/settings';
@@ -126,14 +127,8 @@
 		});
 	});
 
-	// app-level so it works on the start screen too, not just inside a workspace. There is no
-	// native menu to hang an accelerator on (main.ts clears it outside macOS), so it lives here.
-	function onKeydown(e: KeyboardEvent) {
-		if ((e.metaKey || e.ctrlKey) && e.shiftKey && e.key.toLowerCase() === 'n') {
-			e.preventDefault();
-			openNewWindow();
-		}
-	}
+	// app-level so it works on the start screen too, not just inside a workspace
+	$effect(() => registerCommands([{ id: 'window.new', run: () => openNewWindow() }]));
 
 	import { Toast } from '@skeletonlabs/skeleton-svelte';
 	import { CircleAlert, CircleCheck, Info, LoaderCircle, TriangleAlert } from '@lucide/svelte';
@@ -144,8 +139,6 @@
 	import RefineCard from '$lib/ai/RefineCard.svelte';
 	import MissingProgramDialog from '$lib/modals/window/missingProgram/MissingProgramDialog.svelte';
 </script>
-
-<svelte:window onkeydown={onKeydown} />
 
 <Toast.Group {toaster}>
 	{#snippet children(toast)}

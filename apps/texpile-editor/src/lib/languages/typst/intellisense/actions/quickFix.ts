@@ -1,7 +1,7 @@
 // Alt-Enter in Typst source: the fixes and rewrites tinymist offers at the caret, as a menu.
 import { LSPPlugin } from '@codemirror/lsp-client';
 import { forEachDiagnostic } from '@codemirror/lint';
-import { keymap, type EditorView } from '@codemirror/view';
+import type { EditorView } from '@codemirror/view';
 import type { ChangeSpec, Extension, Text } from '@codemirror/state';
 import { showContextMenu, type ContextMenuItem } from '$lib/menus/contextMenu.svelte';
 import { normalizePath, underRoot } from '$lib/workspace/fileSystem';
@@ -10,6 +10,7 @@ import { workspaceRoot } from '$lib/workspace/workspaceStore';
 import { m } from '$lib/paraglide/messages';
 import { pathFromUri } from '../lspClient';
 import type { LspRange } from '../lspRange.types';
+import { cmCommandKeys } from '$lib/keybindings/editors/cmCommandKeys';
 
 type SnippetTextEdit = { range: LspRange; newText: string; insertTextFormat?: number };
 type ResourceOp = { kind: 'create' | 'rename' | 'delete'; uri?: string };
@@ -115,17 +116,14 @@ async function quickFix(view: EditorView, plugin: LSPPlugin, hooks: QuickFixHook
 
 /** Alt-Enter: the fixes and rewrites tinymist offers where the caret is, as a menu */
 export function typstQuickFix(hooks: QuickFixHooks): Extension {
-	return keymap.of([
-		{
-			key: 'Alt-Enter',
-			preventDefault: true,
-			run(view) {
-				const plugin = LSPPlugin.get(view);
-				if (!plugin) return false;
-				plugin.client.sync();
-				quickFix(view, plugin, hooks).catch((e) => plugin.reportError(m.typst_quick_fix_failed(), e));
-				return true;
-			}
+	// taken even before the server is up, as the key always was
+	return cmCommandKeys({
+		'editor.quickFix': (view) => {
+			const plugin = LSPPlugin.get(view);
+			if (!plugin) return true;
+			plugin.client.sync();
+			quickFix(view, plugin, hooks).catch((e) => plugin.reportError(m.typst_quick_fix_failed(), e));
+			return true;
 		}
-	]);
+	});
 }

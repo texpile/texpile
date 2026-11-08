@@ -64,6 +64,8 @@ export type MenuState = {
 	home?: boolean;
 	/** already-localized labels, so this module never has to know about locales */
 	labels: Record<string, string>;
+	/** each item's key as the renderer's keybindings have it, keyed as the labels are; null for an item with no key */
+	keys?: Record<string, string | null>;
 };
 
 const isMac = process.platform === 'darwin';
@@ -73,6 +75,10 @@ const states = new Map<number, MenuState>();
 
 function label(s: MenuState, key: string, fallback: string): string {
 	return s.labels[key] || fallback;
+}
+
+function accelerator(s: MenuState, key: string, fallback: string): string | undefined {
+	return s.keys && key in s.keys ? (s.keys[key] ?? undefined) : fallback;
 }
 
 /** send a menu selection to the window it belongs to, in the same `menu:value` shape the in-app
@@ -134,10 +140,18 @@ function homeTemplate(win: BrowserWindow, s: MenuState): MenuItemConstructorOpti
 		{
 			label: label(s, 'file', 'File'),
 			submenu: [
-				{ label: label(s, 'openFolder', 'Open Folder…'), accelerator: 'CmdOrCtrl+O', click: () => void homeActions?.openFolder(win) },
+				{
+					label: label(s, 'openFolder', 'Open Folder…'),
+					accelerator: accelerator(s, 'openFolder', 'CmdOrCtrl+O'),
+					click: () => void homeActions?.openFolder(win)
+				},
 				...recents,
 				{ type: 'separator' },
-				{ label: label(s, 'newWindow', 'New Window'), accelerator: 'Shift+CmdOrCtrl+N', click: () => homeActions?.newWindow() },
+				{
+					label: label(s, 'newWindow', 'New Window'),
+					accelerator: accelerator(s, 'newWindow', 'Shift+CmdOrCtrl+N'),
+					click: () => homeActions?.newWindow()
+				},
 				{ label: label(s, 'openFolderNewWindow', 'Open Folder in New Window'), click: () => void homeActions?.openFolderNewWindow(win) },
 				{ type: 'separator' },
 				// a project window's Cmd+W closes its tab first (shortcuts.ts); here there is only the window
@@ -163,7 +177,11 @@ function template(win: BrowserWindow, s: MenuState): MenuItemConstructorOptions[
 			submenu: [
 				{ role: 'about', label: label(s, 'about', `About ${app.name}`) },
 				{ type: 'separator' },
-				{ label: label(s, 'preferences', 'Preferences…'), accelerator: 'CmdOrCtrl+,', click: () => fire(win, 'file:preferences') },
+				{
+					label: label(s, 'preferences', 'Preferences…'),
+					accelerator: accelerator(s, 'preferences', 'CmdOrCtrl+,'),
+					click: () => fire(win, 'file:preferences')
+				},
 				...(s.canShare ? [{ label: label(s, 'share', 'Share Session…'), click: () => fire(win, 'file:share-session') }] : []),
 				{ type: 'separator' },
 				{ role: 'services', label: label(s, 'services', 'Services') },
@@ -202,16 +220,24 @@ function template(win: BrowserWindow, s: MenuState): MenuItemConstructorOptions[
 					: []),
 				...(s.canOpenFolder
 					? [
-							{ label: label(s, 'openFolder', 'Open Folder…'), accelerator: 'CmdOrCtrl+O', click: () => fire(win, 'openfolder:newfolder') },
+							{
+								label: label(s, 'openFolder', 'Open Folder…'),
+								accelerator: accelerator(s, 'openFolder', 'CmdOrCtrl+O'),
+								click: () => fire(win, 'openfolder:newfolder')
+							},
 							...recentItems(win, s)
 						]
 					: []),
 				...(s.canClone ? [{ label: label(s, 'clone', 'Clone Repository…'), click: () => fire(win, 'file:clone') }] : []),
 				{ type: 'separator' },
-				{ label: label(s, 'newWindow', 'New Window'), accelerator: 'Shift+CmdOrCtrl+N', click: () => fire(win, 'file:new-window') },
+				{
+					label: label(s, 'newWindow', 'New Window'),
+					accelerator: accelerator(s, 'newWindow', 'Shift+CmdOrCtrl+N'),
+					click: () => fire(win, 'file:new-window')
+				},
 				{ label: label(s, 'openFolderNewWindow', 'Open Folder in New Window'), click: () => fire(win, 'file:open-folder-new-window') },
 				{ type: 'separator' },
-				{ label: label(s, 'save', 'Save'), accelerator: 'CmdOrCtrl+S', click: () => fire(win, 'file:save') },
+				{ label: label(s, 'save', 'Save'), accelerator: accelerator(s, 'save', 'CmdOrCtrl+S'), click: () => fire(win, 'file:save') },
 				...(s.canSaveTemplate
 					? [{ label: label(s, 'saveAsTemplate', 'Save as Template…'), click: () => fire(win, 'file:save-as-template') }]
 					: []),
@@ -236,13 +262,31 @@ function template(win: BrowserWindow, s: MenuState): MenuItemConstructorOptions[
 		{
 			label: label(s, 'edit', 'Edit'),
 			submenu: [
-				{ label: label(s, 'palette', 'Command Palette'), accelerator: 'CmdOrCtrl+K', click: () => fire(win, 'edit:palette') },
-				{ label: label(s, 'goToFile', 'Go to File'), accelerator: 'CmdOrCtrl+T', click: () => fire(win, 'edit:goToFile') },
+				{
+					label: label(s, 'palette', 'Command Palette'),
+					accelerator: accelerator(s, 'palette', 'CmdOrCtrl+K'),
+					click: () => fire(win, 'edit:palette')
+				},
+				{
+					label: label(s, 'goToFile', 'Go to File'),
+					accelerator: accelerator(s, 'goToFile', 'CmdOrCtrl+T'),
+					click: () => fire(win, 'edit:goToFile')
+				},
 				{ type: 'separator' },
 				// our own undo/redo, not the roles: the document history is ProseMirror's or
 				// CodeMirror's, and the native role would only reach a focused native input
-				{ ...doc, label: label(s, 'undo', 'Undo'), accelerator: 'CmdOrCtrl+Z', click: () => fire(win, 'edit:undo') },
-				{ ...doc, label: label(s, 'redo', 'Redo'), accelerator: 'Shift+CmdOrCtrl+Z', click: () => fire(win, 'edit:redo') },
+				{
+					...doc,
+					label: label(s, 'undo', 'Undo'),
+					accelerator: accelerator(s, 'undo', 'CmdOrCtrl+Z'),
+					click: () => fire(win, 'edit:undo')
+				},
+				{
+					...doc,
+					label: label(s, 'redo', 'Redo'),
+					accelerator: accelerator(s, 'redo', 'Shift+CmdOrCtrl+Z'),
+					click: () => fire(win, 'edit:redo')
+				},
 				{ type: 'separator' },
 				{ role: 'cut', label: label(s, 'cut', 'Cut') },
 				{ role: 'copy', label: label(s, 'copy', 'Copy') },
@@ -252,7 +296,7 @@ function template(win: BrowserWindow, s: MenuState): MenuItemConstructorOptions[
 				{
 					enabled: s.findable ?? doc.enabled,
 					label: label(s, 'find', 'Find'),
-					accelerator: 'CmdOrCtrl+F',
+					accelerator: accelerator(s, 'find', 'CmdOrCtrl+F'),
 					click: () => fire(win, 'edit:find')
 				}
 			]
@@ -260,9 +304,21 @@ function template(win: BrowserWindow, s: MenuState): MenuItemConstructorOptions[
 		{
 			label: label(s, 'view', 'View'),
 			submenu: [
-				{ label: label(s, 'zoomIn', 'Zoom In'), accelerator: 'CmdOrCtrl+Plus', click: () => fire(win, 'view:zoom-in') },
-				{ label: label(s, 'zoomOut', 'Zoom Out'), accelerator: 'CmdOrCtrl+-', click: () => fire(win, 'view:zoom-out') },
-				{ label: label(s, 'zoomReset', 'Reset Zoom'), accelerator: 'CmdOrCtrl+0', click: () => fire(win, 'view:zoom-reset') },
+				{
+					label: label(s, 'zoomIn', 'Zoom In'),
+					accelerator: accelerator(s, 'zoomIn', 'CmdOrCtrl+Plus'),
+					click: () => fire(win, 'view:zoom-in')
+				},
+				{
+					label: label(s, 'zoomOut', 'Zoom Out'),
+					accelerator: accelerator(s, 'zoomOut', 'CmdOrCtrl+-'),
+					click: () => fire(win, 'view:zoom-out')
+				},
+				{
+					label: label(s, 'zoomReset', 'Reset Zoom'),
+					accelerator: accelerator(s, 'zoomReset', 'CmdOrCtrl+0'),
+					click: () => fire(win, 'view:zoom-reset')
+				},
 				{ type: 'separator' },
 				// Electron's role is a static "Toggle Full Screen"; mac apps say Enter / Exit and flip.
 				// Main can read the state directly, and watchWindowState rebuilds on the transition.
@@ -279,10 +335,14 @@ function template(win: BrowserWindow, s: MenuState): MenuItemConstructorOptions[
 					...pm,
 					label: label(s, 'math', 'Math'),
 					submenu: [
-						{ label: label(s, 'mathInline', 'Inline Equation'), accelerator: 'CmdOrCtrl+M', click: () => fire(win, 'math:inline') },
+						{
+							label: label(s, 'mathInline', 'Inline Equation'),
+							accelerator: accelerator(s, 'mathInline', 'CmdOrCtrl+M'),
+							click: () => fire(win, 'math:inline')
+						},
 						{
 							label: label(s, 'mathDisplay', 'Display Equation'),
-							accelerator: 'Shift+CmdOrCtrl+M',
+							accelerator: accelerator(s, 'mathDisplay', 'Shift+CmdOrCtrl+M'),
 							click: () => fire(win, 'math:display')
 						},
 						// LaTeX environments; a typst/markdown document has nowhere to put \begin{align}
@@ -378,11 +438,28 @@ function template(win: BrowserWindow, s: MenuState): MenuItemConstructorOptions[
 		{
 			label: label(s, 'format', 'Format'),
 			submenu: [
-				{ ...pm, label: label(s, 'bold', 'Bold'), accelerator: 'CmdOrCtrl+B', click: () => fire(win, 'format:bold') },
-				{ ...pm, label: label(s, 'italic', 'Italic'), accelerator: 'CmdOrCtrl+I', click: () => fire(win, 'format:italic') },
+				{
+					...pm,
+					label: label(s, 'bold', 'Bold'),
+					accelerator: accelerator(s, 'bold', 'CmdOrCtrl+B'),
+					click: () => fire(win, 'format:bold')
+				},
+				{
+					...pm,
+					label: label(s, 'italic', 'Italic'),
+					accelerator: accelerator(s, 'italic', 'CmdOrCtrl+I'),
+					click: () => fire(win, 'format:italic')
+				},
 				// markdown has no underline mark and no underline syntax
 				...(dialect !== 'md'
-					? [{ ...pm, label: label(s, 'underline', 'Underline'), accelerator: 'CmdOrCtrl+U', click: () => fire(win, 'format:underline') }]
+					? [
+							{
+								...pm,
+								label: label(s, 'underline', 'Underline'),
+								accelerator: accelerator(s, 'underline', 'CmdOrCtrl+U'),
+								click: () => fire(win, 'format:underline')
+							}
+						]
 					: []),
 				{ ...pm, label: label(s, 'inlineCode', 'Inline Code'), click: () => fire(win, 'format:code') },
 				// the styles the visual editor draws that no mark gives
@@ -454,7 +531,11 @@ function template(win: BrowserWindow, s: MenuState): MenuItemConstructorOptions[
 					{
 						label: label(s, 'terminal', 'Terminal'),
 						submenu: [
-							{ label: label(s, 'compile', 'Compile'), accelerator: 'Alt+CmdOrCtrl+Return', click: () => fire(win, 'terminal:compile') },
+							{
+								label: label(s, 'compile', 'Compile'),
+								accelerator: accelerator(s, 'compile', 'Alt+CmdOrCtrl+Return'),
+								click: () => fire(win, 'terminal:compile')
+							},
 							{ label: label(s, 'configureCompile', 'Configure Compile Command…'), click: () => fire(win, 'terminal:configure') },
 							{ type: 'separator' as const },
 							{ label: label(s, 'newTerminal', 'New Terminal'), click: () => fire(win, 'terminal:new') },

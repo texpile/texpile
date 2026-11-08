@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { withKeyLabel } from '$lib/keybindings/keybindings.svelte';
 	// The left sidebar: folder header + explorer / source-control / find-in-files, with the file
 	// tree and (in explorer) a resizable table-of-contents. Presentational — logic stays in the view.
 	import { parentRepoToConfirm } from '$lib/workspace/parentRepo.svelte';
@@ -38,7 +39,6 @@
 	import type { TocList } from '$lib/editor/visual/extensions/tableofcontents/tocStore';
 	import type { GitStatusEntry, GitLogEntry, GitFileChange } from '$lib/workspace/scm/git';
 	import { m } from '$lib/paraglide/messages';
-	import { combo } from '$lib/chrome/shortcutText';
 	import { canKeepLocalHistory } from '$lib/workspace/localHistory/localHistory.svelte';
 	import { Popover, Portal } from '@skeletonlabs/skeleton-svelte';
 	import { FilePlus, FolderPlus, RefreshCw, GitBranch, Search, MoreHorizontal } from '@lucide/svelte';
@@ -213,7 +213,7 @@
 						key: 'search',
 						icon: Search,
 						label: m.wsview_find_in_files(),
-						title: m.wsview_find_in_files_title({ combo: combo('F', { shift: true }) }),
+						title: withKeyLabel((combo) => m.wsview_find_in_files_title({ combo }), 'view.findInFiles'),
 						active: view === 'search',
 						run: () => (view === 'search' ? (view = 'explorer') : onOpenGlobalSearch())
 					}

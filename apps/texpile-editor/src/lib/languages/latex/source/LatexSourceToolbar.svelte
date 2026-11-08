@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { withKeyLabel } from '$lib/keybindings/keybindings.svelte';
 	// Source-mode toolbar: buttons for the same LaTeX-wrapping shortcuts formatShortcuts() binds
 	// (Mod-b/i/u/`/./,/Shift-b/Shift-`/Alt-1-2-3/m/Shift-m), for people who don't know the chords.
 	// unlike the Visual toolbar, buttons don't show an "active" state, which would need re-parsing
@@ -64,7 +65,7 @@
 				render: button,
 				payload: {
 					label: m.srctoolbar_bold_aria(),
-					title: m.srctoolbar_bold_title(),
+					title: withKeyLabel((combo) => m.srctoolbar_bold_title({ combo }), 'editor.bold'),
 					action: run((s) => computeToggleWrap(s, 'textbf')),
 					Icon: Bold
 				}
@@ -74,7 +75,7 @@
 				render: button,
 				payload: {
 					label: m.srctoolbar_italic_aria(),
-					title: m.srctoolbar_italic_title(),
+					title: withKeyLabel((combo) => m.srctoolbar_italic_title({ combo }), 'editor.italic'),
 					action: run((s) => computeToggleWrap(s, 'textit')),
 					Icon: Italic
 				}
@@ -84,7 +85,7 @@
 				render: button,
 				payload: {
 					label: m.srctoolbar_underline_aria(),
-					title: m.srctoolbar_underline_title(),
+					title: withKeyLabel((combo) => m.srctoolbar_underline_title({ combo }), 'editor.underline'),
 					action: run((s) => computeToggleWrap(s, 'underline')),
 					Icon: Underline,
 					iconClass: 'h-4.5 w-4.5 translate-y-[1px]'
@@ -95,7 +96,7 @@
 				render: button,
 				payload: {
 					label: m.srctoolbar_monospace_aria(),
-					title: m.srctoolbar_monospace_title(),
+					title: withKeyLabel((combo) => m.srctoolbar_monospace_title({ combo }), 'editor.inlineCode'),
 					action: run((s) => computeToggleWrap(s, 'texttt')),
 					Icon: Code
 				}
@@ -105,7 +106,7 @@
 				render: button,
 				payload: {
 					label: m.srctoolbar_superscript_aria(),
-					title: m.srctoolbar_superscript_title(),
+					title: withKeyLabel((combo) => m.srctoolbar_superscript_title({ combo }), 'editor.superscript'),
 					action: run((s) => computeToggleWrap(s, 'textsuperscript')),
 					Icon: Superscript
 				}
@@ -115,7 +116,7 @@
 				render: button,
 				payload: {
 					label: m.srctoolbar_subscript_aria(),
-					title: m.srctoolbar_subscript_title(),
+					title: withKeyLabel((combo) => m.srctoolbar_subscript_title({ combo }), 'editor.subscript'),
 					action: run((s) => computeToggleWrap(s, 'textsubscript')),
 					Icon: Subscript
 				}
@@ -149,7 +150,7 @@
 				render: button,
 				payload: {
 					label: m.srctoolbar_quote_block_aria(),
-					title: m.srctoolbar_quote_title(),
+					title: withKeyLabel((combo) => m.srctoolbar_quote_title({ combo }), 'editor.blockquote'),
 					action: run((s) => computeWrapBlock(s, '\\begin{quote}\n', '\n\\end{quote}')),
 					Icon: Quote
 				}
@@ -159,7 +160,7 @@
 				render: button,
 				payload: {
 					label: m.srctoolbar_verbatim_block_aria(),
-					title: m.srctoolbar_verbatim_title(),
+					title: withKeyLabel((combo) => m.srctoolbar_verbatim_title({ combo }), 'editor.codeBlock'),
 					action: run((s) => computeWrapBlock(s, '\\begin{verbatim}\n', '\n\\end{verbatim}')),
 					Icon: Code
 				}
@@ -169,7 +170,7 @@
 				render: button,
 				payload: {
 					label: m.srctoolbar_inline_math_aria(),
-					title: m.srctoolbar_inline_math_title(),
+					title: withKeyLabel((combo) => m.srctoolbar_inline_math_title({ combo }), 'editor.inlineMath'),
 					action: run((s) => computeWrapBlock(s, '\\(', '\\)')),
 					Icon: Sigma
 				}

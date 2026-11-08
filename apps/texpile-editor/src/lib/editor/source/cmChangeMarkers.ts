@@ -22,6 +22,7 @@ import { jumpRevealEffect } from './cmJumpReveal';
 import { isolateHistory } from '@codemirror/commands';
 import { Chunk } from '@codemirror/merge';
 import { m } from '$lib/paraglide/messages';
+import { cmCommandKeys } from '$lib/keybindings/editors/cmCommandKeys';
 
 export const setChangeBaseline = StateEffect.define<string | null>();
 
@@ -319,11 +320,8 @@ export function cmChangeMarkers(): Extension {
 			lineMarkerChange: (u) => u.startState.field(changeDiff) !== u.state.field(changeDiff),
 			domEventHandlers: { mousedown: peekFromGutter }
 		}),
-		keymap.of([
-			{ key: 'Alt-F5', run: nextChange },
-			{ key: 'Shift-Alt-F5', run: previousChange },
-			{ key: 'Escape', run: closePeek }
-		]),
+		cmCommandKeys({ 'editor.nextChange': nextChange, 'editor.previousChange': previousChange }),
+		keymap.of([{ key: 'Escape', run: closePeek }]),
 		theme
 	];
 }

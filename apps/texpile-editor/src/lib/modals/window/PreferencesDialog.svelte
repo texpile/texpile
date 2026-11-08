@@ -11,6 +11,7 @@
 	import PrefsTypstPanel from './editor/PrefsTypstPanel.svelte';
 	import PrefsLatexChecks from './checks/PrefsLatexChecks.svelte';
 	import PrefsSnippetsPanel from './snippets/PrefsSnippetsPanel.svelte';
+	import PrefsKeybindingsPanel from './keybindings/PrefsKeybindingsPanel.svelte';
 	import PrefsSpellingPanel from './spelling/PrefsSpellingPanel.svelte';
 	import PrefsVersionControlPanel from './PrefsVersionControlPanel.svelte';
 	import PrefsCollaborationPanel from './PrefsCollaborationPanel.svelte';
@@ -119,6 +120,8 @@
 				<PrefsTypstPanel />
 			{:else if navigation.tab === 'snippets'}
 				<PrefsSnippetsPanel />
+			{:else if navigation.tab === 'keybindings'}
+				<PrefsKeybindingsPanel />
 			{:else if navigation.tab === 'proofing'}
 				<PrefsSpellingPanel />
 			{:else if navigation.tab === 'vcs'}

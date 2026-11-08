@@ -14,6 +14,8 @@ import type { ViewUpdate } from '@codemirror/view';
 import { EditorState, Prec, type Compartment, type Extension } from '@codemirror/state';
 import { defaultKeymap } from '@codemirror/commands';
 import { tabIndentBinding } from './extensions/keybindings/cmTabKey';
+import { cmCommandKeys } from '$lib/keybindings/editors/cmCommandKeys';
+import { cmEditorScope, languageOfFile } from '$lib/keybindings/editors/editorScopes';
 import { MARKDOWN_LIST_MARKER, TYPST_LIST_MARKER, wrapIndent } from './extensions/wrap-indent/wrapIndent';
 import { sourceMathSearch } from './extensions/math-search/sourceMathSearch';
 import { bracketMatching, codeFolding, indentOnInput, foldGutter, LanguageDescription } from '@codemirror/language';
@@ -106,6 +108,7 @@ export function buildSourceExtensions(deps: SourceSetupDeps): Extension[] {
 	const pasteDialect = pasteDialectOf(fileFor);
 	const snippetOptions = { stopUndoCapture: () => deps.undoManager?.stopCapturing() };
 	return [
+		cmEditorScope(languageOfFile(fileFor)),
 		...(deps.readOnly ? [] : [cmChangeMarkers()]),
 		// gutters render in extension order: lint goes before lineNumbers so it lands on their left
 		// the hover first: hover cards share one box, which opens on the side the first one asks for
@@ -215,8 +218,8 @@ export function buildSourceExtensions(deps: SourceSetupDeps): Extension[] {
 		synctexFlash(), // flash the line jumped to by SyncTeX inverse search / Find-in-Files
 		// compact find/replace widget, floated top-right (styles in SourceEditor)
 		texpileSearch(),
+		cmCommandKeys({ 'editor.find': toggleSearchPanel }),
 		keymap.of([
-			{ key: 'Mod-f', run: toggleSearchPanel },
 			{ key: 'Escape', run: closeSearchPanelAnimated },
 			...defaultKeymap,
 			// the file's history, which the visual editor and the disk share; a view with no text binding is read-only

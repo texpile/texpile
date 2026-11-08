@@ -26,6 +26,7 @@ import { documentPackages, preambleOf, preamblePackagesNow } from '../packages/l
 import { documentReading } from './documentReadings';
 import { renderArgumentHint } from './argumentHintDom';
 import { hintOf, readingOfSignature, type ArgumentHint } from './argumentSlots';
+import { cmCommandKeys } from '$lib/keybindings/editors/cmCommandKeys';
 
 const LOOK_BACK = 2000;
 // \input name: the command and a space before the name
@@ -198,15 +199,12 @@ const blurWatcher = ViewPlugin.define((view) => ({
 }));
 
 // Mod-Shift-Space is VS Code's Trigger Parameter Hints
-const hintKeymap = keymap.of([
-	{
-		key: 'Mod-Shift-Space',
-		run(view) {
-			view.dispatch({ effects: askHint.of(null) });
-			return true;
-		}
+const hintKeymap = cmCommandKeys({
+	'editor.argumentHints': (view) => {
+		view.dispatch({ effects: askHint.of(null) });
+		return true;
 	}
-]);
+});
 
 // ahead of the completion keymap, which takes Escape while a source is merely active; VS Code's list takes it only while shown
 const hintEscape = Prec.highest(

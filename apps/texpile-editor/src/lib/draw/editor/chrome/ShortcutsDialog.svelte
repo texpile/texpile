@@ -1,10 +1,11 @@
 <script lang="ts">
+	import { keyLabel } from '$lib/keybindings/keybindings.svelte';
 	import { m } from '$lib/paraglide/messages';
 	import type { FigureEditorState } from '../state/editorState.svelte';
 	import { ALL_TOOLS, isOffered } from '../tools/tools';
 	import Kbd from '$lib/components/Kbd.svelte';
 	import Modal from '$lib/modals/Modal.svelte';
-	import { redoShortcutText, shortcutText } from './menubar/shortcutText';
+	import { shortcutText } from './menubar/shortcutText';
 
 	type Props = { editor: FigureEditorState };
 	const props: Props = $props();
@@ -25,17 +26,17 @@
 		{
 			group: m.figure_shortcuts_edit(),
 			items: [
-				{ keys: shortcutText('Z'), label: m.figure_cmd_undo() },
-				{ keys: redoShortcutText(), label: m.figure_cmd_redo() },
-				{ keys: shortcutText('D'), label: m.figure_cmd_duplicate() },
+				{ keys: keyLabel('figure.undo'), label: m.figure_cmd_undo() },
+				{ keys: keyLabel('figure.redo'), label: m.figure_cmd_redo() },
+				{ keys: keyLabel('figure.duplicate'), label: m.figure_cmd_duplicate() },
 				{ keys: 'Del', label: m.figure_cmd_delete() },
-				{ keys: shortcutText('A'), label: m.figure_cmd_select_all() },
+				{ keys: keyLabel('figure.selectAll'), label: m.figure_cmd_select_all() },
 				{ keys: '← ↑ → ↓', label: m.figure_shortcut_nudge() },
-				{ keys: shortcutText('G'), label: m.figure_cmd_group() },
-				{ keys: shortcutText('G', { shift: true }), label: m.figure_cmd_ungroup() },
-				{ keys: shortcutText(']'), label: m.figure_cmd_forward() },
-				{ keys: shortcutText('['), label: m.figure_cmd_backward() },
-				{ keys: shortcutText('L', { shift: true }), label: m.figure_cmd_lock() },
+				{ keys: keyLabel('figure.group'), label: m.figure_cmd_group() },
+				{ keys: keyLabel('figure.ungroup'), label: m.figure_cmd_ungroup() },
+				{ keys: keyLabel('figure.bringForward'), label: m.figure_cmd_forward() },
+				{ keys: keyLabel('figure.sendBackward'), label: m.figure_cmd_backward() },
+				{ keys: keyLabel('figure.lock'), label: m.figure_cmd_lock() },
 				{ keys: 'Esc', label: m.figure_shortcut_escape() }
 			]
 		},
@@ -51,13 +52,13 @@
 		{
 			group: m.figure_shortcuts_view(),
 			items: [
-				{ keys: shortcutText('+'), label: m.figure_zoom_in() },
-				{ keys: shortcutText('-'), label: m.figure_zoom_out() },
-				{ keys: shortcutText('0'), label: m.figure_shortcut_zoom_100() },
+				{ keys: keyLabel('figure.zoomIn'), label: m.figure_zoom_in() },
+				{ keys: keyLabel('figure.zoomOut'), label: m.figure_zoom_out() },
+				{ keys: keyLabel('figure.zoom100'), label: m.figure_shortcut_zoom_100() },
 				{ keys: shortcutText('1', { mod: false, shift: true }), label: m.figure_zoom_fit() },
 				{ keys: shortcutText('2', { mod: false, shift: true }), label: m.figure_shortcut_fit_selection() },
 				{ keys: 'Space', label: m.figure_shortcut_pan() },
-				{ keys: shortcutText("'"), label: m.figure_shortcut_grid() },
+				{ keys: keyLabel('figure.grid'), label: m.figure_shortcut_grid() },
 				{ keys: '?', label: m.figure_shortcuts_title() }
 			]
 		}
