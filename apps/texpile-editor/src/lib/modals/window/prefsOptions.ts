@@ -16,6 +16,17 @@ export function keymapOptions(): { value: AppSettings['editorKeymap']; label: st
 	];
 }
 
+// what the source editor folds when a file first opens, least to most
+export function foldOnOpenStops(): { value: AppSettings['foldOnOpen']; label: string }[] {
+	return [
+		{ value: 'off', label: m.fold_level_off() },
+		{ value: 'floats', label: m.fold_level_floats() },
+		{ value: 'equations', label: m.fold_level_equations() },
+		{ value: 'environments', label: m.fold_level_environments() },
+		{ value: 'everything', label: m.fold_level_everything() }
+	];
+}
+
 export function uiLocaleOptions(): { value: AppSettings['uiLocale']; label: string }[] {
 	return (Object.entries(LOCALE_META) as [AppSettings['uiLocale'], (typeof LOCALE_META)[AppSettings['uiLocale']]][]).map(
 		([value, meta]) => ({ value, label: meta.label })

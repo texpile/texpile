@@ -364,7 +364,7 @@ export class MathLiveView implements NodeView {
 				// block math: re-detect the multiline env from the new content and sync attrs
 				const newAttrs = this.isblock && this.syntax === 'latex' ? syncBlockMathAttrs(this.node, newValue) : { ...this.node.attrs };
 
-				tr.replaceWith(startPos, endPos, nodeType.create(newAttrs, this.view.state.schema.text(newValue)));
+				tr.replaceWith(startPos, endPos, nodeType.create(newAttrs, this.view.state.schema.text(newValue), this.node.marks));
 				tr.setSelection(TextSelection.create(tr.doc, startPos + 1));
 				this.view.dispatch(tr);
 			} else {

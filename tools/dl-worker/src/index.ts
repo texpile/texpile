@@ -262,7 +262,7 @@ export default {
 		if (isInstaller(key) && countable(request)) {
 			const ua = request.headers.get('user-agent') ?? '';
 			const country = ((request as unknown as { cf?: { country?: string } }).cf?.country ?? '').toString();
-			// the in-app updater stamps x-texpile-version on every request (electron/src/updates.ts),
+			// the in-app updater stamps x-texpile-version on every request (electron/src/updates/updates.ts),
 			// splitting update traffic from real acquisition downloads
 			const channel = request.headers.has('x-texpile-version') ? 'updater' : 'web';
 			// fire-and-forget; the runtime buffers and ships data points itself

@@ -13,7 +13,7 @@ import { changeTextNow, textNow } from '$lib/buffers/textNow';
 import { fileService } from '$lib/files/service/fileService';
 import { toaster } from '$lib/modals/toaster-svelte';
 import { m } from '$lib/paraglide/messages';
-import { bibPathsFromSource, translatorForSource, appendBibEntries, citationTextFor } from './bibTarget';
+import { bibPathsFromSource, translatorForSource, appendBibEntries, citationTextAt } from './bibTarget';
 import { typstBibliographyPaths } from '$lib/languages/typst/bibliographyPaths';
 import { zoteroPicker } from './pickerState.svelte';
 
@@ -170,8 +170,8 @@ export function insertCitation(keys: string[], kind: 'tex' | 'typ'): void {
 	}
 	const cm = sourceCmView.current;
 	if (!cm || !cm.dom.isConnected) return;
-	const insert = citationTextFor(keys, kind);
 	const { from, to } = cm.state.selection.main;
+	const insert = citationTextAt(keys, kind, cm.state.sliceDoc(Math.max(0, from - 2000), from));
 	cm.dispatch({ changes: { from, to, insert }, selection: { anchor: from + insert.length }, scrollIntoView: true });
 	cm.focus();
 }

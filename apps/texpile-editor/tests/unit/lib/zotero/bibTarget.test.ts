@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { appendBibEntries, bibPathsFromSource, citationTextFor, translatorForSource } from '$lib/zotero/bibTarget';
+import { appendBibEntries, bibPathsFromSource, citationTextAt, citationTextFor, translatorForSource } from '$lib/zotero/bibTarget';
 
 describe('bibPathsFromSource', () => {
 	it('takes addbibresource as written, options and all', async () => {
@@ -110,5 +110,14 @@ describe('citationTextFor', () => {
 	it('renders each dialect', () => {
 		expect(citationTextFor(['a', 'b'], 'tex')).toBe('\\cite{a,b}');
 		expect(citationTextFor(['a', 'b'], 'typ')).toBe('@a @b');
+	});
+});
+
+describe('citationTextAt', () => {
+	it('joins the key list of a \\cite the caret is in, and a typed @', () => {
+		expect(citationTextAt(['a', 'b'], 'tex', 'See \\cite{')).toBe('a,b');
+		expect(citationTextAt(['b'], 'tex', 'See \\cite{a')).toBe(',b');
+		expect(citationTextAt(['a'], 'tex', 'See ')).toBe('\\cite{a}');
+		expect(citationTextAt(['a', 'b'], 'typ', 'See @')).toBe('a @b');
 	});
 });

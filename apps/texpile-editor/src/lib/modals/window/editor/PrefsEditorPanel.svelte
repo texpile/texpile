@@ -1,10 +1,11 @@
 <script lang="ts">
 	import { settings, updateSettings, type AppSettings } from '$lib/settings';
 	import { m } from '$lib/paraglide/messages';
-	import { keymapOptions } from '../prefsOptions';
+	import { foldOnOpenStops, keymapOptions } from '../prefsOptions';
 	import PrefsHeading from '../rows/PrefsHeading.svelte';
 	import PrefsSelectRow from '../rows/PrefsSelectRow.svelte';
 	import PrefsSwitchRow from '../rows/PrefsSwitchRow.svelte';
+	import PrefsSliderRow from '../rows/PrefsSliderRow.svelte';
 
 	const hyphenWhy = $derived(settings.current.visualJustify === false ? m.prefs_visual_hyphenate_needs_justify() : '');
 </script>
@@ -31,6 +32,12 @@
 		onChange={(v) => updateSettings({ autoFraction: v })}
 	/>
 	<PrefsSwitchRow id="tab-out" checked={settings.current.tabOut === true} onChange={(v) => updateSettings({ tabOut: v })} />
+	<PrefsSliderRow
+		id="fold-on-open"
+		value={settings.current.foldOnOpen ?? 'off'}
+		stops={foldOnOpenStops()}
+		onChange={(v) => updateSettings({ foldOnOpen: v as AppSettings['foldOnOpen'] })}
+	/>
 	<PrefsSwitchRow id="matrix-keys" checked={settings.current.matrixKeys === true} onChange={(v) => updateSettings({ matrixKeys: v })} />
 </div>
 <PrefsHeading section="visual" />

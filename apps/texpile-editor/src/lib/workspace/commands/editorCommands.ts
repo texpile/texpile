@@ -5,11 +5,16 @@ import { changedLines, nextChange, previousChange, revertChange, revertChangeAt 
 import { conflictBlocks, nextConflict, previousConflict } from '$lib/editor/source/cmConflicts';
 import { renameLabelOf, renameTargetOf } from '$lib/languages/latex/intellisense/rename/renameCommand';
 import { hasSourcePaste, showPasteAsMenu } from '$lib/editor/source/paste/cmSourcePaste';
+import { foldAllOfKind, hasFoldKinds, unfoldAllOfKind } from '$lib/editor/source/extensions/fold-kinds/foldKinds';
 import { settings, updateSettings } from '$lib/settings';
 import type { CommandImpl } from '$lib/keybindings/commands/commandRegistry';
 import type { PaletteActions } from '$lib/workspace/commandPalette.svelte';
 import type { EditorView as CMView } from '@codemirror/view';
 import { m } from '$lib/paraglide/messages';
+
+function foldsByKind(): boolean {
+	return !!sourceCmView.current && hasFoldKinds(sourceCmView.current.state);
+}
 
 function onView(step: (view: CMView) => unknown): () => void {
 	return () => {
@@ -55,6 +60,10 @@ export function editorCommands(a: PaletteActions): CommandImpl[] {
 			enabled: () => !!sourceCmView.current && hasSourcePaste(sourceCmView.current.state) && !sourceCmView.current.state.readOnly,
 			run: () => void (sourceCmView.current && showPasteAsMenu(sourceCmView.current))
 		},
+		{ id: 'editor.foldEquations', enabled: foldsByKind, run: onView((v) => foldAllOfKind(v, 'equation')) },
+		{ id: 'editor.unfoldEquations', enabled: foldsByKind, run: onView((v) => unfoldAllOfKind(v, 'equation')) },
+		{ id: 'editor.foldFiguresAndTables', enabled: foldsByKind, run: onView((v) => foldAllOfKind(v, 'float')) },
+		{ id: 'editor.unfoldFiguresAndTables', enabled: foldsByKind, run: onView((v) => unfoldAllOfKind(v, 'float')) },
 		{
 			id: 'editor.renameSymbol',
 			enabled: () => !!renaming(),

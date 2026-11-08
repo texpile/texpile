@@ -94,5 +94,6 @@ export const DEFAULT_KEYBINDINGS: DefaultKeybinding[] = [
 	// was Mod+Alt+B, LaTeX Workshop's build chord, but Option+B is a dead key on macOS
 	{ command: 'compile.run', key: 'mod+alt+enter', late: true },
 	{ command: 'compile.stop', key: 'mod+alt+enter', late: true },
+	{ command: 'editor.zoteroCitation', key: 'alt+z', when: '!inputFocus && !terminalFocus', late: true },
 	...EDITOR_KEYBINDINGS
 ];

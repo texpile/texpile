@@ -1,10 +1,12 @@
 // the source editor's folds, kept with the file's place (docPositions) and folded again when the file opens. A fold is
 // kept by its first line, so a file changed on disk since still folds the line it was on
 import { ViewPlugin, type EditorView, type ViewUpdate } from '@codemirror/view';
-import { foldable, foldedRanges, foldEffect, foldState, unfoldEffect } from '@codemirror/language';
+import { foldable, foldedRanges, foldEffect, foldState, syntaxTreeAvailable, unfoldEffect } from '@codemirror/language';
 import type { EditorState, StateEffect } from '@codemirror/state';
 import { docPositions, type SavedFold } from '$lib/workspace/docPositions';
 import { trailingDebounce } from '$lib/trailingDebounce';
+import { settings } from '$lib/settings';
+import { clearOfCaret, foldsOnOpen, hasFoldKinds, type FoldOnOpen } from '../fold-kinds/foldKinds';
 
 // a fold the language cannot give yet (the Typst parser is a lazy import, and its text arrives after the editor) is
 // tried again as the editor updates, for this long
@@ -34,6 +36,10 @@ export function foldMemory(path: string) {
 		class {
 			/** saved folds not folded again yet; null once none are left */
 			private pending: SavedFold[] | null;
+			/** the setting's folds, for a file the reader never folded or unfolded; off once applied */
+			private openLevel: FoldOnOpen;
+			/** folded or unfolded by the reader: only then are the folds this file's own to keep */
+			private touched: boolean;
 			private readonly restoreUntil = Date.now() + RESTORE_FOR_MS;
 			private restoring = false;
 			private restoreQueued = false;
@@ -41,20 +47,37 @@ export function foldMemory(path: string) {
 			private readonly saveLater = trailingDebounce<void>(400, () => this.save());
 
 			constructor(private readonly view: EditorView) {
-				const folds = docPositions.get(path)?.folds ?? [];
-				this.saved = JSON.stringify(folds);
-				this.pending = folds.length ? [...folds] : null;
+				const folds = docPositions.get(path)?.folds;
+				// nothing kept yet, so the reader's first fold or unfold is always written
+				this.saved = folds === undefined ? '' : JSON.stringify(folds);
+				this.pending = folds?.length ? [...folds] : null;
+				this.touched = folds !== undefined;
+				this.openLevel = this.touched ? 'off' : (settings.current.foldOnOpen ?? 'off');
 				this.queueRestore();
 			}
 
 			/** never dispatching from inside the editor's own construction or update */
 			private queueRestore(): void {
-				if (!this.pending || this.restoreQueued) return;
+				if ((!this.pending && this.openLevel === 'off') || this.restoreQueued) return;
 				this.restoreQueued = true;
 				queueMicrotask(() => {
 					this.restoreQueued = false;
 					this.restore();
+					this.foldForSetting();
 				});
+			}
+
+			private foldForSetting(): void {
+				if (this.openLevel === 'off') return;
+				if (Date.now() > this.restoreUntil) return void (this.openLevel = 'off');
+				const { state } = this.view;
+				if (!hasFoldKinds(state) || !syntaxTreeAvailable(state, state.doc.length)) return;
+				const ranges = clearOfCaret(state, foldsOnOpen(state, this.openLevel));
+				this.openLevel = 'off';
+				if (!ranges.length) return;
+				this.restoring = true;
+				this.view.dispatch({ effects: ranges.map((r) => foldEffect.of(r)) });
+				this.restoring = false;
 			}
 
 			private restore(): void {
@@ -84,6 +107,7 @@ export function foldMemory(path: string) {
 			}
 
 			private save(): void {
+				if (!this.touched) return;
 				const { state } = this.view;
 				const folds: SavedFold[] = [];
 				const rows = new Set<number>();
@@ -109,9 +133,13 @@ export function foldMemory(path: string) {
 				if (refolded && !this.restoring) {
 					// the reader folding or unfolding by hand settles what is folded; what never came back is let go
 					this.pending = null;
+					this.openLevel = 'off';
+					this.touched = true;
 					this.saveLater.cancel();
 					this.save();
 				} else if (u.docChanged && (foldedRanges(u.state).size || foldedRanges(u.startState).size)) this.saveLater();
+				// typing before a slow language arrives keeps the file as it is
+				if (u.transactions.some((tr) => tr.isUserEvent('input') || tr.isUserEvent('delete'))) this.openLevel = 'off';
 				this.queueRestore();
 			}
 

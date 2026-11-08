@@ -182,7 +182,7 @@ jobs:
           missing=0
           for f in "Texpile-Setup-$VERSION.exe" "Texpile-Setup-$VERSION.exe.blockmap" "Texpile-$VERSION-portable.zip" \
                    "Texpile-$VERSION.dmg" "Texpile-$VERSION.zip" "Texpile-$VERSION.zip.blockmap" \
-                   "Texpile-$VERSION.AppImage" "texpile-$VERSION.deb" \
+                   "Texpile.AppImage" "texpile-$VERSION.deb" \
                    latest.yml latest-mac.yml latest-linux.yml; do
             [ -f "dist/$f" ] || { echo "::error::missing artifact dist/$f"; missing=1; }
           done
@@ -204,14 +204,14 @@ jobs:
           put "v$VERSION/Texpile-Setup-$VERSION.exe" "dist/Texpile-Setup-$VERSION.exe" application/octet-stream
           put "v$VERSION/Texpile-$VERSION-portable.zip" "dist/Texpile-$VERSION-portable.zip" application/zip
           put "v$VERSION/Texpile-$VERSION.dmg" "dist/Texpile-$VERSION.dmg" application/octet-stream
-          put "v$VERSION/Texpile-$VERSION.AppImage" "dist/Texpile-$VERSION.AppImage" application/octet-stream
+          put "v$VERSION/Texpile.AppImage" "dist/Texpile.AppImage" application/octet-stream
           put "v$VERSION/texpile-$VERSION.deb" "dist/texpile-$VERSION.deb" application/octet-stream
           put "v$VERSION/Texpile-$VERSION.zip" "dist/Texpile-$VERSION.zip" application/zip
           put "v$VERSION/Texpile-Setup-$VERSION.exe.blockmap" "dist/Texpile-Setup-$VERSION.exe.blockmap" application/octet-stream
           put "v$VERSION/Texpile-$VERSION.zip.blockmap" "dist/Texpile-$VERSION.zip.blockmap" application/octet-stream
           put "Texpile-Setup.exe" "dist/Texpile-Setup-$VERSION.exe" application/octet-stream
           put "Texpile.dmg" "dist/Texpile-$VERSION.dmg" application/octet-stream
-          put "Texpile.AppImage" "dist/Texpile-$VERSION.AppImage" application/octet-stream
+          put "Texpile.AppImage" "dist/Texpile.AppImage" application/octet-stream
           put "texpile.deb" "dist/texpile-$VERSION.deb" application/octet-stream
           put "latest.yml" "dist/latest.yml" "text/yaml; charset=utf-8"
           put "latest-mac.yml" "dist/latest-mac.yml" "text/yaml; charset=utf-8"

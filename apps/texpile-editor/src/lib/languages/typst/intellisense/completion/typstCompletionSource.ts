@@ -10,6 +10,7 @@ import { EditorState, type ChangeDesc, type Extension, type Text } from '@codemi
 import type { EditorView } from '@codemirror/view';
 import { LSPPlugin } from '@codemirror/lsp-client';
 import { positionCompletionInfo } from '$lib/editor/source/tooltips/completionInfoPosition';
+import { zoteroCompletion } from '$lib/editor/source/extensions/zotero-completion/zoteroCompletion';
 
 type LspPosition = { line: number; character: number };
 type LspRange = { start: LspPosition; end: LspPosition };
@@ -165,10 +166,18 @@ export async function typstCompletionSource(context: CompletionContext): Promise
 	return buildResult(plugin, doc, list, word ? word.from : context.pos, context.pos, null);
 }
 
+// beside tinymist's references after a typed @
+export function typstZoteroSource(context: CompletionContext): CompletionResult | null {
+	const typed = context.matchBefore(/(?:^|\W)@[\w:.-]*$/);
+	const zotero = typed ? zoteroCompletion(context.view) : null;
+	if (!typed || !zotero) return null;
+	return { from: typed.from + typed.text.lastIndexOf('@') + 1, options: [zotero], validFor: /^[\w:.-]*$/ };
+}
+
 /** the completion extension for an editor bound to a tinymist client */
 export function typstCompletion(): Extension {
 	return [
 		autocompletion({ positionInfo: positionCompletionInfo }),
-		EditorState.languageData.of(() => [{ autocomplete: typstCompletionSource }])
+		EditorState.languageData.of(() => [{ autocomplete: typstCompletionSource }, { autocomplete: typstZoteroSource }])
 	];
 }

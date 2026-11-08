@@ -10,7 +10,8 @@ const texpile = useTexpile({
 		'panel.tex': doc('Last paragraph of the text.\n\n\\bibliographystyle{plainnat}\n\\bibliography{refs}'),
 		'popover.tex': doc('Alpha words \\cite{knuth84} and \\label{sec:a} beta.'),
 		'math.tex': doc('Before the formula.\n\n\\[ x+y \\]\n\nAfter the formula.'),
-		'paste.tex': doc('Some text \\textbf{\\emph{nested}} words and \\url{http://x.org} end.')
+		'paste.tex': doc('Some text \\textbf{\\emph{nested}} words and \\url{http://x.org} end.'),
+		'color.tex': `\\documentclass{article}\n\\usepackage{xcolor}\n\\begin{document}\n\n\\textcolor{red}{We know that $(a+b)^2$ can be evaluated as $a^2+b^2+2ab$.}\n\n\\end{document}\n`
 	}
 });
 const visual = () => new VisualEditor(texpile().page, texpile().root);
@@ -90,4 +91,19 @@ test('Ctrl+Z in a display formula undoes in the file, back to the bytes it had',
 	await disk().expectFile('math.tex', (t) => t !== original, 'the typed letter is saved');
 	await v.page.keyboard.press('ControlOrMeta+z');
 	await disk().expectFile('math.tex', (t) => t === original, 'one undo brings the original back');
+});
+
+test('editing a formula in colored text keeps it in the color, as one \\textcolor', async () => {
+	const v = visual();
+	await v.open('color.tex');
+	await v.caretAfter('We know that ');
+	await v.press('ArrowRight');
+	await v.page.waitForTimeout(400);
+	await v.press('End');
+	await v.type('+1');
+	await disk().expectFile(
+		'color.tex',
+		(t) => t.includes('\\textcolor{red}{We know that $(a+b)^2+1$ can be evaluated as') && t.split('\\textcolor').length === 2,
+		'the edited formula stays inside the one color run'
+	);
 });

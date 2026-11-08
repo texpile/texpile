@@ -1,20 +1,23 @@
 // public entry point for the intellisense module: completion, keyboard shortcuts, hover, folding,
 // and go-to-definition, composed for either a .tex buffer or a .bib buffer.
-import { acceptCompletion, autocompletion, completionStatus, startCompletion } from '@codemirror/autocomplete';
+import { autocompletion, completionStatus, startCompletion } from '@codemirror/autocomplete';
 import { snippetCompletionSource } from '$lib/editor/snippets/cmSnippets';
-import { EditorView, keymap, tooltips } from '@codemirror/view';
-import { Prec, type Extension } from '@codemirror/state';
+import { EditorView, tooltips } from '@codemirror/view';
+import type { Extension } from '@codemirror/state';
 import { latexCompletionSource, bibFileCompletionSource } from './completion/dispatch';
 import { frecencyTracker } from './completion/frecency';
 import { formatShortcuts } from './shortcuts';
 import { latexHover } from './hover';
 import { latexFolding } from './fold';
+import { latexFoldKinds } from './latexFoldKinds';
+import { foldKinds } from '$lib/editor/source/extensions/fold-kinds/foldKinds';
 import { goToDefinition, type DefinitionHooks } from './definition';
 import { argumentHints } from './signature/argumentHints';
 import { latexRename } from './rename/renameCommand';
 import { latexOwnSyntax } from '../source/latexOwnSyntax';
 import { tooltipCardTheme } from '$lib/editor/source/tooltips/tooltipCardTheme';
 import { positionCompletionInfo } from '$lib/editor/source/tooltips/completionInfoPosition';
+import { tabAcceptsCompletion } from '$lib/editor/source/extensions/keybindings/cmTabKey';
 
 export { latexCompletionSource, bibFileCompletionSource };
 
@@ -50,15 +53,11 @@ function reactivate(context: RegExp): Extension {
 export function latexAutocomplete(opts: IntellisenseOptions = {}): Extension {
 	const source = opts.bib ? bibFileCompletionSource : latexCompletionSource;
 	const ext: Extension[] = [
-		// Tab takes the selected row as Enter does, in a snippet field too, as in VS Code; with no list open it indents or
-		// moves to the next field. First, to come before the snippet keymap at the same precedence
-		Prec.highest(keymap.of([{ key: 'Tab', run: acceptCompletion }])),
-		// accepted at once, as VS Code does: CodeMirror's 75 ms wait turned a quick Tab into a jump to the next field
+		tabAcceptsCompletion,
 		autocompletion({
 			override: [source, snippetCompletionSource],
 			activateOnTyping: true,
 			icons: false,
-			interactionDelay: 0,
 			positionInfo: positionCompletionInfo
 		}),
 		reactivate(opts.bib ? BIB_CONTEXT : TEX_CONTEXT),
@@ -78,6 +77,7 @@ export function latexIntellisense(opts: IntellisenseOptions & DefinitionHooks = 
 		formatShortcuts(),
 		latexHover(),
 		latexFolding(),
+		foldKinds.of(latexFoldKinds),
 		latexRename(),
 		goToDefinition({ onJumpToFile: opts.onJumpToFile, onOpenFileAt: opts.onOpenFileAt })
 	];

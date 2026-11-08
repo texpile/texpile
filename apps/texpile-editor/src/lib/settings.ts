@@ -85,6 +85,8 @@ export type AppSettings = {
 	citeByDoiEnabled: boolean;
 	/** modal keybindings for the source editor and code blocks. */
 	editorKeymap: 'default' | 'vim' | 'emacs';
+	/** what the source editor folds the first time a file opens, from nothing to every fold */
+	foldOnOpen: 'off' | 'floats' | 'equations' | 'environments' | 'everything';
 	/** UI display language. Not the LaTeX document language (see DocumentLanguage). */
 	uiLocale: 'en' | 'zh-Hans' | 'zh-Hant' | 'de' | 'pt-BR';
 	/** shared-session relay endpoint (ws:// or wss://); the self-hosted-relay escape hatch. */
@@ -159,6 +161,7 @@ const DEFAULTS: AppSettings = {
 	zoteroEnabled: true,
 	citeByDoiEnabled: true,
 	editorKeymap: 'default',
+	foldOnOpen: 'off',
 	uiLocale: 'en',
 	collabRelayUrl: DEFAULT_COLLAB_RELAY_URL,
 	openFolders: [],

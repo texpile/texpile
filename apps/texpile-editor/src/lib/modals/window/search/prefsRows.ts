@@ -84,6 +84,13 @@ const STATIC_ROWS = [
 	},
 	{ id: 'tab-out', tab: 'editor', section: 'source', label: () => m.prefs_tab_out(), note: () => m.prefs_tab_out_note() },
 	{
+		id: 'fold-on-open',
+		tab: 'editor',
+		section: 'source',
+		label: () => m.prefs_fold_on_open(),
+		note: () => m.prefs_fold_on_open_note()
+	},
+	{
 		id: 'matrix-keys',
 		tab: 'editor',
 		section: 'source',

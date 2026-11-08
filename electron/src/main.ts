@@ -29,6 +29,7 @@ import { registerSurfacesIpc } from './ipc/surfacesIpc';
 import { registerKeybindingsIpc } from './ipc/keybindingsIpc';
 import { registerDeferredIpc, shutdownDeferred } from './ipc/deferredIpc';
 import { registerWindowChrome } from './windowChrome';
+import { installInFlight, launchedMidInstall } from './updates/midInstallLaunch';
 
 applyAppIdentity();
 stopCwdProgramLookup();
@@ -180,10 +181,12 @@ app.on('open-url', (event, url) => {
 
 // a second launch routes its file to the right window; launching with no file opens a
 // fresh window (VS Code model), instead of just focusing the existing one
-if (!app.requestSingleInstanceLock()) {
+if (launchedMidInstall() || !app.requestSingleInstanceLock()) {
 	app.quit();
 } else {
 	app.on('second-instance', (_e, argv) => {
+		// the deb install blocks this process, and a window opened after it keeps the old version running
+		if (installInFlight()) return;
 		const link = linkFromArgv(argv);
 		if (link) {
 			requestJoinSession(link);

@@ -9,7 +9,9 @@ import {
 	Keyboard,
 	Omega,
 	TextCursorInput,
-	Undo2
+	Undo2,
+	FoldVertical,
+	UnfoldVertical
 } from '@lucide/svelte';
 import { m } from '$lib/paraglide/messages';
 import type { CommandInfo } from '../commands/commandRegistry';
@@ -57,6 +59,30 @@ export const EDITOR_COMMANDS: CommandInfo[] = [
 			keywords: 'paste clipboard plain text table spreadsheet excel sheets link markdown formatting convert',
 			icon: ClipboardPaste
 		}
+	},
+	{
+		id: 'editor.foldEquations',
+		title: () => m.fold_cmd_equations(),
+		category,
+		palette: { keywords: 'collapse hide math formula align display', icon: FoldVertical }
+	},
+	{
+		id: 'editor.unfoldEquations',
+		title: () => m.fold_cmd_unfold_equations(),
+		category,
+		palette: { keywords: 'expand show math formula align display', icon: UnfoldVertical }
+	},
+	{
+		id: 'editor.foldFiguresAndTables',
+		title: () => m.fold_cmd_floats(),
+		category,
+		palette: { keywords: 'collapse hide figure table float tabular', icon: FoldVertical }
+	},
+	{
+		id: 'editor.unfoldFiguresAndTables',
+		title: () => m.fold_cmd_unfold_floats(),
+		category,
+		palette: { keywords: 'expand show figure table float tabular', icon: UnfoldVertical }
 	},
 	{
 		id: 'editor.renameSymbol',

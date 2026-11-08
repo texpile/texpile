@@ -74,6 +74,12 @@ describe('marks', () => {
 		const out = serializeToLatex(doc(p(tx('site', mk('link', { href: 'http://x.com?a=1&b=2' })))));
 		expect(out).toContain('\\href{http://x.com?a=1&b=2}{site}');
 	});
+	it('textcolor writes a leading space before the command, where the PDF keeps it', () => {
+		expect(serializeToLatex(doc(p(tx('This'), tx(' can be', mk('textcolor', { color: 'red' })))))).toContain(
+			'This \\textcolor{red}{can be}'
+		);
+	});
+
 	it('textcolor escapes its color value but emits the command', () => {
 		expect(serializeToLatex(doc(p(tx('R', mk('textcolor', { color: 'red' })))))).toContain('\\textcolor{red}{R}');
 	});

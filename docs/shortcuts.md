@@ -54,6 +54,7 @@ Keys: `a` to `z`, `0` to `9`, `f1` to `f24`, `enter`, `tab`, `space`, `backspace
 | Ctrl T         | Go to file                                                                    |
 | Ctrl Alt Enter | Compile, or stop a running compile                                            |
 | Ctrl Shift F   | Find in files                                                                 |
+| Alt Z          | Insert a citation from Zotero                                                 |
 | Ctrl Shift G   | Source Control, with the cursor in the message box (Control Shift G on macOS) |
 | Ctrl Enter     | Commit, from the Source Control message box                                   |
 | F8             | Next spelling problem                                                         |
@@ -93,7 +94,13 @@ Keys: `a` to `z`, `0` to `9`, `f1` to `f24`, `enter`, `tab`, `space`, `backspace
 | Alt Enter        | Quick fixes (Typst)                                                             |
 | Ctrl Space       | Open suggestions, or the symbol search inside math (Control Space on macOS)     |
 | Ctrl Shift Space | Show the arguments of the command around the cursor (Cmd Shift Space on macOS)  |
+| Ctrl Shift [     | Fold the block at the cursor (Cmd Option [ on macOS)                            |
+| Ctrl Shift ]     | Unfold the block at the cursor (Cmd Option ] on macOS)                          |
+| Ctrl Alt [       | Fold every block (Control Option [ on macOS)                                    |
+| Ctrl Alt ]       | Unfold every block (Control Option ] on macOS)                                  |
 | Tab              | Accept the starter text in an empty .tex file                                   |
 | Esc              | Hide the math preview until the cursor leaves the math                          |
 | Alt F5           | Next change since the last commit                                               |
 | Shift Alt F5     | Previous change since the last commit                                           |
+
+The command palette has Fold All Equations and Fold All Figures and Tables, each with an Unfold command. Give them keys in Preferences › Keyboard Shortcuts. Preferences › Editor › Fold when a file opens folds them for you. A file keeps the folds you leave it with.

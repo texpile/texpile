@@ -15,12 +15,14 @@ export type EnvFacts = {
 	numbering?: 'per-row' | 'single';
 	in?: 'math';
 	labels?: true;
+	/** the float type it captions as, for one the float registry does not name (wrapfigure) */
+	float?: string;
 	args?: { kind: string }[];
 };
 
 const INDEX = (envFactsIndex as { envs: Record<string, EnvFacts> }).envs;
 const NONE: EnvFacts = {};
-const FIELDS = ['body', 'cells', 'rows', 'item', 'numbering', 'in', 'labels'] as const;
+const FIELDS = ['body', 'cells', 'rows', 'item', 'numbering', 'in', 'labels', 'float'] as const;
 
 /** the reading most files that define the environment give; {} for one no file reads specially */
 export function commonEnvFacts(name: string): EnvFacts {

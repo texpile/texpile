@@ -32,8 +32,9 @@ export function createMathField(createblock = false) {
 				return true;
 			}
 		} else {
-			const newNode = state.schema.nodes.inline_math.create({}, state.schema.text(' '));
 			const $from = state.doc.resolve(from);
+			// in colored text the formula is colored too, and so is what is typed after it
+			const newNode = state.schema.nodes.inline_math.create({}, state.schema.text(' '), state.storedMarks ?? $from.marks());
 
 			if ($from.parent.canReplaceWith($from.index(), $from.index(), newNode.type)) {
 				const tr = state.tr.insert(from, newNode);

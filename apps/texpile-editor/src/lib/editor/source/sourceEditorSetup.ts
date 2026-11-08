@@ -13,7 +13,7 @@ import {
 import type { ViewUpdate } from '@codemirror/view';
 import { EditorState, Prec, type Compartment, type Extension } from '@codemirror/state';
 import { defaultKeymap } from '@codemirror/commands';
-import { tabIndentBinding } from './extensions/keybindings/cmTabKey';
+import { tabAcceptsCompletion, tabIndentBinding } from './extensions/keybindings/cmTabKey';
 import { cmCommandKeys } from '$lib/keybindings/editors/cmCommandKeys';
 import { cmEditorScope, languageOfFile } from '$lib/keybindings/editors/editorScopes';
 import { MARKDOWN_LIST_MARKER, TYPST_LIST_MARKER, wrapIndent } from './extensions/wrap-indent/wrapIndent';
@@ -60,6 +60,7 @@ import { sourcePaste } from './paste/cmSourcePaste';
 import type { PasteDialect } from '$lib/editor/paste/pastedImages';
 import { dirname } from '$lib/workspace/fileSystem';
 import { foldMemory } from './extensions/fold-memory/foldMemory';
+import { trimAutoIndent } from './extensions/line-indent/trimAutoIndent';
 import { sourceTooltipSpace } from './toolbar/tooltipSpace';
 import { sourceSnippets } from '$lib/editor/snippets/cmSnippets';
 
@@ -152,6 +153,7 @@ export function buildSourceExtensions(deps: SourceSetupDeps): Extension[] {
 		crosshairCursor(),
 		bracketMatching(),
 		indentOnInput(),
+		trimAutoIndent(),
 		deps.langConf.of([]),
 		cmSyntaxHighlight(),
 		// guests included: the sources read stores fed through the workspace provider, so a
@@ -174,6 +176,7 @@ export function buildSourceExtensions(deps: SourceSetupDeps): Extension[] {
 				? // md chords; $-math, spellcheck and project file paths are dialect-free
 					// the fold rail as .tex and .typ have it; lang-markdown already folds a heading's section
 					[
+						tabAcceptsCompletion,
 						mdSourceShortcuts(),
 						mdPathCompletion(),
 						sourceSnippets('markdown', snippetOptions),
@@ -190,6 +193,8 @@ export function buildSourceExtensions(deps: SourceSetupDeps): Extension[] {
 							// RAIL is mounted here rather than with the language, whose parser is a dynamic
 							// import: a gutter arriving a second late shoves the text sideways on every open
 							[
+								// tinymist's list too, which lands later in lspConf
+								tabAcceptsCompletion,
 								typSourceShortcuts(),
 								// ahead of defaultKeymap below, as latexListContinuation is
 								typstEnterContinuation(),

@@ -8,7 +8,7 @@ import { parseBibtex, referencesToBib } from '$lib/languages/bib/biblatex';
 import { typstBibliographyPaths } from '$lib/languages/typst/bibliographyPaths';
 import { codeOnly } from '$lib/languages/latex/texCode';
 import { fileCallsIn, namesTried } from '$lib/languages/latex/knowledge/calls/fileCommands';
-import { rolesOf } from '$lib/languages/latex/knowledge/calls/commandCalls';
+import { argumentAt, rolesOf } from '$lib/languages/latex/knowledge/calls/commandCalls';
 import type { Argument } from '$lib/languages/latex/knowledge/types';
 
 /**
@@ -101,4 +101,13 @@ export function appendBibEntries(existing: string, incoming: string): AppendResu
 /** the caret text for the picked keys, per dialect */
 export function citationTextFor(keys: string[], kind: 'tex' | 'typ'): string {
 	return kind === 'typ' ? keys.map((k) => `@${k}`).join(' ') : `\\cite{${keys.join(',')}}`;
+}
+
+/** the source text for the picked keys at a caret with `before` behind it, joining a \cite's key list or a typed @ */
+export function citationTextAt(keys: string[], kind: 'tex' | 'typ', before: string): string {
+	const full = citationTextFor(keys, kind);
+	if (kind === 'typ') return before.endsWith('@') ? full.slice(1) : full;
+	const open = argumentAt(before, ['citekey']);
+	if (!open || open.arg.arg.defines) return full;
+	return (open.value.value.trim() ? ',' : '') + keys.join(',');
 }

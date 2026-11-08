@@ -35,6 +35,7 @@ const DEFAULT_SETTINGS = {
 	smartPaste: true, // formatting, tables and Markdown from other apps come in converted on paste
 	typstPreviewFollow: false,
 	editorKeymap: 'default', // modal keybindings for the source editor: 'default' | 'vim' | 'emacs'
+	foldOnOpen: 'off', // what the source editor folds when a file first opens: 'off' | 'floats' | 'equations' | 'environments' | 'everything'
 	uiLocale: 'en', // UI display language, not the LaTeX document language. Overridden per-read by
 	// the detected system language until the user picks one; see systemUiLocale + readSettings.
 	collabRelayUrl: 'wss://collab.texpile.com', // shared-session relay endpoint

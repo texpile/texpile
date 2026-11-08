@@ -43,7 +43,7 @@ describe('the rows on screen', () => {
 	// the snippets panel hands its ids to a snippet, not to the row component
 	const used = [
 		...text.matchAll(
-			/<(?:Prefs(?:Row|SwitchRow|SelectRow)|LanguageRow)\b[^>]*?\bid=(?:"([^"]+)"|\{([^}]+)\})|\{@render fileRow\(\s*'([^']+)'/g
+			/<(?:Prefs(?:Row|SwitchRow|SelectRow|SliderRow)|LanguageRow)\b[^>]*?\bid=(?:"([^"]+)"|\{([^}]+)\})|\{@render fileRow\(\s*'([^']+)'/g
 		)
 	].map((u) => [u[0], u[1] ?? u[3], u[2]] as const);
 

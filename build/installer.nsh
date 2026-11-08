@@ -7,3 +7,8 @@
 !macro customInstall
   System::Call 'shell32::SHChangeNotify(i, i, i, i) v (0x08000000, 0, 0, 0)'
 !macroend
+
+; per user only, so the folder page is the one extra step and updates stay silent without admin
+!macro customInstallMode
+  StrCpy $isForceCurrentInstall "1"
+!macroend

@@ -93,17 +93,13 @@ class DocPositionsStore {
 		this.persist();
 	}
 
-	/** a file with folds and no place yet starts at its top, as it would with no record */
+	/** a file with folds and no place yet starts at its top, as it would with no record; none folded is kept too, so
+	 *  the fold-on-open setting leaves a file the reader unfolded alone */
 	setFolds(path: string, folds: SavedFold[]): void {
 		const rel = this.relOf(path);
 		if (!rel) return;
 		const prev = this.byRel.get(rel);
-		if (!prev && !folds.length) return;
-		this.byRel.set(rel, {
-			...(prev ?? { row: 0, column: 0, firstVisibleLine: 1 }),
-			folds: folds.length ? folds : undefined,
-			at: Date.now()
-		});
+		this.byRel.set(rel, { ...(prev ?? { row: 0, column: 0, firstVisibleLine: 1 }), folds, at: Date.now() });
 		this.evict();
 		this.persist();
 	}

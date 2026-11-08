@@ -21,9 +21,12 @@ test('a drawn author block opens its LaTeX in the chip panel, and an edit there 
 	await expect(source).toContainText('Ada Lovelace');
 	await expect(block).toBeVisible();
 	await page.keyboard.press('ControlOrMeta+End');
-	await page.keyboard.type('  \\And\n  Grace Hopper\n');
+	// Enter keeps the indent of the line above
+	await page.keyboard.type('  \\And\nGrace Hopper\n');
 	await expect(block).toContainText('Grace Hopper');
-	await expect.poll(() => new Disk(root).read('authors.tex'), { timeout: 10_000 }).toContain('Grace Hopper\n}\n\\begin{document}');
+	await expect
+		.poll(() => new Disk(root).read('authors.tex'), { timeout: 10_000 })
+		.toMatch(/ {2}\\And\n {2}Grace Hopper\n\s*\}\n\\begin\{document\}/);
 	await page.keyboard.press('Escape');
 	await expect(page.locator('.drawn-chip-panel')).toHaveCount(0);
 });

@@ -17,8 +17,8 @@
 	"envs": [
 		{"name":"rotate","args":[{"kind":"m"}],"doc":"Rotate the contents of the environment, leaving no space."},
 		{"name":"sideways","doc":"Environment to turn the contents through 90 degrees."},
-		{"name":"sidewaysfigure","star":{},"args":[{"kind":"o","placeholder":"placement"}],"doc":"The environments sidewaystable and sidewaysfigure introduce landscape-form floating tables and figures, respectively. (Each of the environments has a “starred” version, such as sidewaystable*, for a single-column float in a double-column area of the document.)"},
-		{"name":"sidewaystable","star":{},"args":[{"kind":"o","placeholder":"placement"}],"doc":"The environments sidewaystable and sidewaysfigure introduce landscape-form floating tables and figures, respectively. (Each of the environments has a “starred” version, such as sidewaystable*, for a single-column float in a double-column area of the document.)"},
+		{"name":"sidewaysfigure","star":{},"args":[{"kind":"o","placeholder":"placement"}],"doc":"The environments sidewaystable and sidewaysfigure introduce landscape-form floating tables and figures, respectively. (Each of the environments has a “starred” version, such as sidewaystable*, for a single-column float in a double-column area of the document.)","float":"figure"},
+		{"name":"sidewaystable","star":{},"args":[{"kind":"o","placeholder":"placement"}],"doc":"The environments sidewaystable and sidewaysfigure introduce landscape-form floating tables and figures, respectively. (Each of the environments has a “starred” version, such as sidewaystable*, for a single-column float in a double-column area of the document.)","float":"table"},
 		{"name":"turn","args":[{"kind":"m"}]}
 	],
 	"keys": {

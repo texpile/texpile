@@ -80,6 +80,19 @@ describe('the default keys', () => {
 		expect(run).toHaveBeenCalledTimes(1);
 	});
 
+	it('open the Zotero picker on Alt+Z, and leave the key to a field and to a window that cannot cite', () => {
+		let canCite = true;
+		const run = vi.fn();
+		commands([{ id: 'editor.zoteroCitation', enabled: () => canCite, run }]);
+		const editor = document.body.appendChild(document.createElement('div'));
+		editor.contentEditable = 'true';
+		press('z', 'KeyZ', { altKey: true }, editor);
+		press('z', 'KeyZ', { altKey: true }, document.body.appendChild(document.createElement('input')));
+		canCite = false;
+		expect(press('z', 'KeyZ', { altKey: true }, editor).defaultPrevented).toBe(false);
+		expect(run).toHaveBeenCalledTimes(1);
+	});
+
 	// Ctrl on every platform, as in VS Code: Cmd+Shift+G stays find previous on a Mac
 	it('open Source Control on Ctrl+Shift+G before an editor takes it as find previous', () => {
 		const run = vi.fn();

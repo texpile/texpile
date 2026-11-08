@@ -8,7 +8,8 @@ import { app, BrowserWindow } from 'electron';
 import * as fs from 'node:fs';
 import * as path from 'node:path';
 import { autoUpdater } from 'electron-updater';
-import { portable } from './appIdentity';
+import { portable } from '../appIdentity';
+import { clearInstallMark, markInstallStarted } from './midInstallLaunch';
 
 export type CheckResult =
 	| {
@@ -41,6 +42,13 @@ function installMode(): 'restart' | 'package-manager' | 'portable' {
 // returned as a status instead of emitted
 let op: 'download' | 'install' | null = null;
 let wired = false;
+let downloadedFile: string | null = null;
+let hiddenForInstall: BrowserWindow[] = [];
+
+function showHiddenWindows(): void {
+	for (const w of hiddenForInstall) if (!w.isDestroyed()) w.show();
+	hiddenForInstall = [];
+}
 
 // broadcast, not a pinned webContents: on macOS the window can close and be recreated
 // mid-download, and a stale target would strand the completion event
@@ -60,10 +68,15 @@ function wire(): void {
 	});
 	autoUpdater.on('update-downloaded', (downloaded) => {
 		op = null;
+		downloadedFile = downloaded.downloadedFile;
 		send('update:downloaded', { version: downloaded.version });
 	});
 	autoUpdater.on('error', (err) => {
 		if (!op) return;
+		if (op === 'install') {
+			clearInstallMark();
+			showHiddenWindows();
+		}
 		op = null;
 		send('update:error', { message: err instanceof Error ? err.message : String(err) });
 	});
@@ -110,10 +123,13 @@ export async function download(): Promise<void> {
 export function install(): void {
 	// a failed install emits 'error' instead of quitting; `op` lets it through to the renderer
 	op = 'install';
-	// Every platform goes through electron-updater, deb included. We used to spawn pkexec + dpkg
-	// ourselves on deb (see e4a996f) because the library installs it with spawnSync and the window
-	// sits in the WM's not-responding overlay for the whole password prompt. That trade turned out
-	// worse in practice, so the freeze is back and the hand-rolled install is gone.
+	markInstallStarted(downloadedFile);
 	// silent install + relaunch on windows; mac and linux ignore the flags
-	autoUpdater.quitAndInstall(true, true);
+	if (installMode() !== 'package-manager') return autoUpdater.quitAndInstall(true, true);
+	// electron-updater runs pkexec + dpkg under spawnSync (a hand-rolled async install, e4a996f, was worse), so the
+	// windows go before it blocks instead of sitting in the not-responding overlay through the password prompt
+	hiddenForInstall = BrowserWindow.getAllWindows().filter((w) => !w.isDestroyed() && w.isVisible());
+	for (const w of hiddenForInstall) w.hide();
+	// time for the window manager to unmap them before the main process stops answering
+	setTimeout(() => autoUpdater.quitAndInstall(true, true), 300);
 }
