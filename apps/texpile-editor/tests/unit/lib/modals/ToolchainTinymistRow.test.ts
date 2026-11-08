@@ -1,5 +1,5 @@
 // @vitest-environment jsdom
-// Preferences › Toolchain's row for Texpile's own tinymist: offered when none is found, managed once installed
+// Preferences › Toolchain's row for Texpile's own tinymist: offered wherever there is a build, managed once installed
 import { it, expect, afterEach } from 'vitest';
 import { mount, unmount, flushSync, tick } from 'svelte';
 import ToolchainTinymistRow from '../../../../src/lib/modals/window/ToolchainTinymistRow.svelte';
@@ -47,9 +47,9 @@ it('offers reinstall and remove for the copy it installed', async () => {
 	expect(target.textContent).toContain('tinymist 0.15.8, installed by Texpile.');
 });
 
-it('stays out of the way of a tinymist the reader installed', async () => {
+it('offers the install beside a tinymist the reader installed', async () => {
 	const target = await render({ installed: null, inUse: ON_PATH });
-	expect(target.textContent?.trim()).toBe('');
+	expect(buttons(target)).toEqual(['Install tinymist']);
 });
 
 it('offers nothing where tinymist publishes no build', async () => {
