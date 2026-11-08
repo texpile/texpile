@@ -1,5 +1,5 @@
 <script lang="ts">
-	// external apps Texpile talks to, as opposed to Toolchain's programs it runs. One on/off per integration
+	// external apps Texpile talks to, as opposed to the programs it runs. One on/off per integration
 	import { settings, updateSettings } from '$lib/settings';
 	import PrefsSwitchRow from '../rows/PrefsSwitchRow.svelte';
 </script>

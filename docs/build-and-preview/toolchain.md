@@ -1,19 +1,19 @@
 ---
-description: The Toolchain panel in Preferences shows the programs Texpile runs and where it finds them. It picks the TeX and Typst install Texpile uses and installs TeX Live and tinymist.
+description: The Programs page in Preferences shows the programs Texpile runs and where it finds them. It picks the TeX and Typst install Texpile uses and installs TeX Live and tinymist.
 order: 1
 ---
 
-# Toolchain
+# Programs
 
-**File › Preferences… › Toolchain** shows the programs Texpile runs and where it finds them.
+**File › Preferences… › Programs** shows the programs Texpile runs and where it finds them.
 
-![The Toolchain tab of Preferences with the TeX picker, four LaTeX programs marked Not found, 4 more programs work, and the Typst picker](../../landing/src/lib/assets/showcase/docs/app/preferences-toolchain.png)
+![The Programs page of Preferences with the TeX picker, four LaTeX programs marked Not found, 4 more programs work, and the Typst picker](../../landing/src/lib/assets/showcase/docs/app/preferences-toolchain.png)
 
 Each language has a picker for the install Texpile uses: **TeX** for LaTeX and **Typst** for Typst. Under it, a program that is missing or does not run gets a row of its own. The programs that work fold into one line. **Show** lists them with their versions.
 
 Texpile needs only the programs your commands call. The default compile command needs latexmk and lualatex. Live preview needs lualatex, **Format Document** needs latexindent, and jumping between the text and the PDF needs synctex.
 
-Texpile reads your PATH once, when it starts: restart it after you change PATH. Folders you add here apply at once.
+Texpile reads your PATH once, when it starts: restart it after you change PATH. Folders you add under **Other folders** apply at once.
 
 ## The Set Up dialog
 

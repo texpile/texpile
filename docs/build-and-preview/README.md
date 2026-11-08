@@ -1,6 +1,6 @@
 ---
 nav: Build and preview
-description: How Texpile builds and previews a LaTeX or Typst document, and the toolchain, Problems panel, PDF pane and terminal around it.
+description: How Texpile builds and previews a LaTeX or Typst document, and the programs, Problems panel, PDF pane and terminal around it.
 blurb: The programs, the Compile button, the Problems panel, and the PDF pane.
 icon: play
 order: 27

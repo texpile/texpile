@@ -27,13 +27,10 @@
 </script>
 
 <div class="border-surface-200-800 flex items-center justify-between gap-3 border-b pt-1 pb-3">
-	<p class="text-muted text-xs">
-		{m.prefs_toolchain_intro()}
-		{m.prefs_toolchain_docs_hint()}
-		<a class="anchor" href="https://texpile.com/docs/installation" target="_blank" rel="noopener noreferrer"
-			>{m.prefs_toolchain_install_guide()}</a
-		>
-	</p>
+	<!-- always shown, so there is one place to go when a program is missing -->
+	<a class="anchor text-xs" href="https://texpile.com/docs/installation" target="_blank" rel="noopener noreferrer"
+		>{m.prefs_toolchain_install_guide()}</a
+	>
 	<button class="btn preset-tonal shrink-0 text-xs" onclick={() => void probe.run()} disabled={probe.probing}>
 		{probe.probing ? m.prefs_toolchain_checking() : m.prefs_toolchain_recheck()}
 	</button>

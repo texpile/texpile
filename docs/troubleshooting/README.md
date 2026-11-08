@@ -14,12 +14,12 @@ Find the message you see. [LaTeX](latex.md), [Typst](typst.md), [Git](git.md) an
 
 ## Programs
 
-| You see                                                  | Fix                                                                         |
-| -------------------------------------------------------- | --------------------------------------------------------------------------- |
-| A program shows **Not found** in Preferences › Toolchain | Click **Locate** and pick the program's file, or add its folder in Folders. |
-| **Found, does not run**                                  | Texpile found the program, but it fails to start. Reinstall it.             |
-| "No main file is set."                                   | Click **Set Main File**.                                                    |
-| Git features are missing                                 | [Install git](../installation/git.md).                                      |
+| You see                                                 | Fix                                                                               |
+| ------------------------------------------------------- | --------------------------------------------------------------------------------- |
+| A program shows **Not found** in Preferences › Programs | Click **Locate** and pick the program's file, or add its folder in Other folders. |
+| A program shows **Does not run.**                       | Texpile found the program and it fails to start. Reinstall it.                    |
+| "No main file is set."                                  | Click **Set Main File**.                                                          |
+| Git features are missing                                | [Install git](../installation/git.md).                                            |
 
 ## Editing
 
@@ -45,7 +45,7 @@ Find the message you see. [LaTeX](latex.md), [Typst](typst.md), [Git](git.md) an
 
 | You see                           | Fix                                                                                           |
 | --------------------------------- | --------------------------------------------------------------------------------------------- |
-| An agent shows **Not found**      | Install it, or add its folder in Preferences › Toolchain › Folders.                           |
+| An agent shows **Not found**      | Install it, or add its folder in Preferences › Programs › Other folders.                      |
 | No Agent tab                      | Tick an agent in Preferences › AI Assistant › Agent tab.                                      |
 | "Not running: …" under MCP server | Another program uses the port. See [Change the port](../ai-assistant/mcp.md#change-the-port). |
 | "The text from … was not used"    | The agent's result broke a rule. The note under it says which.                                |
