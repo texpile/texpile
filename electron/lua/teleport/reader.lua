@@ -82,12 +82,13 @@ return function(T)
 		return nil
 	end
 
-	local function source_reader(name, rel)
+	-- `input`: the file opens for \input; LaTeX before 2023 opens it on an \openin stream first to see that it exists
+	local function source_reader(name, rel, input)
 		local lines = lines_of(T.overrides[rel] or name)
 		if not lines then return nil end
 		snapshot(rel, lines)
 		local r = { rel = rel, path = name, source = true, pos = 0, injected = {}, lines = lines }
-		local entry = T.entries[rel]
+		local entry = input and T.entries[rel]
 		if entry then T.entries[rel] = nil end
 		function r.reader()
 			if r.drain then return nil end
@@ -244,9 +245,9 @@ return function(T)
 			pre_seen[rel] = true
 			T.pre_files[#T.pre_files + 1] = rel
 		end
-		local r = is_source(rel) and source_reader(name, rel) or plain_reader(name)
+		local r = is_source(rel) and source_reader(name, rel, input) or plain_reader(name)
 		if not r then return nil end
-		if T.base and r.source then T.entered(rel) end
+		if T.base and r.source and input then T.entered(rel) end
 		if input then T.stack[#T.stack + 1] = r end
 		return { reader = r.reader, close = r.close }
 	end, "texpile.tele.reader")
