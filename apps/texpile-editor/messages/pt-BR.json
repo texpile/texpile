@@ -1791,6 +1791,8 @@
 	"prefs_toolchain_dirs_remove": "Remover",
 	"prefs_toolchain_dir_missing": "Pasta não encontrada",
 	"prefs_toolchain_locate": "Localizar",
+	"prefs_toolchain_locate_tex": "Localizar TeX…",
+	"prefs_toolchain_locate_tinymist": "Localizar tinymist…",
 	"prefs_toolchain_locate_title": "Escolher o Programa {name}",
 	"prefs_toolchain_distro_managed": "{name} (instalado pelo Texpile)",
 	"tinymist_install": "Instalar o tinymist",

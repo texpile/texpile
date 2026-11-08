@@ -1,5 +1,5 @@
 // what Preferences › Compiler lists for a language: the picker's installs, its status line and the programs that need a line of their own
-import { Download } from '@lucide/svelte';
+import { Download, FolderSearch } from '@lucide/svelte';
 import type { DropdownGroup } from '$lib/menus/MenuDropdown.svelte';
 // eslint-disable-next-line no-restricted-imports -- a type, erased from the bundle
 import type { ToolInfo } from '$lib/workspace/toolchainCatalog';
@@ -7,6 +7,7 @@ import { installedYear } from './install/texLiveInstallText';
 import { m } from '$lib/paraglide/messages';
 
 export const INSTALL_VALUE = 'texpile-install';
+export const LOCATE_VALUE = 'locate';
 
 export type InstallOffer = { label: string; note?: string };
 
@@ -24,8 +25,8 @@ export function distroLabel(d: ToolDistro | null): string {
 	return d.name;
 }
 
-/** every install, the one in use checked, then Texpile's own when it has one to offer */
-export function distroGroups(list: ToolDistro[], inUse: ToolDistro | null, offer: InstallOffer | null): DropdownGroup[] {
+/** every install, the one in use checked, then Texpile's own when it has one to offer, then one Texpile does not find */
+export function distroGroups(list: ToolDistro[], inUse: ToolDistro | null, offer: InstallOffer | null, locate: string): DropdownGroup[] {
 	const groups: DropdownGroup[] = [];
 	const options = list.map((d) => ({
 		value: d.dir,
@@ -34,7 +35,9 @@ export function distroGroups(list: ToolDistro[], inUse: ToolDistro | null, offer
 		checked: d.dir === inUse?.dir
 	}));
 	if (options.length) groups.push({ options });
-	if (offer) groups.push({ options: [{ value: INSTALL_VALUE, label: offer.label, note: offer.note, icon: Download, checked: false }] });
+	const find = { value: LOCATE_VALUE, label: locate, icon: FolderSearch, checked: false };
+	const install = offer && { value: INSTALL_VALUE, label: offer.label, note: offer.note, icon: Download, checked: false };
+	groups.push({ options: install ? [install, find] : [find] });
 	return groups;
 }
 

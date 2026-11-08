@@ -17,10 +17,14 @@ export type LanguageInstall = {
 	readonly step: InstallStep | null;
 	readonly busy: boolean;
 	readonly progress: Component;
+	/** the install button's words where no install was found, beside Locate */
+	readonly installLabel: string;
 	readonly removeLabel: string;
 	readonly cancelLabel: string;
 	/** the install guide's page for this language */
 	readonly docs: string;
+	/** Locate's menu item, and the program it asks for: one in the install's own folder */
+	readonly locate: { label: string; program: string };
 	refresh(): void;
 	install(): void;
 	cancel(): void;
@@ -47,6 +51,9 @@ export const texLiveInstall: LanguageInstall = {
 		return texLiveInstaller.busy;
 	},
 	progress: TexLiveInstallProgress,
+	get installLabel() {
+		return m.texlive_install();
+	},
 	get removeLabel() {
 		return m.texlive_remove();
 	},
@@ -54,6 +61,9 @@ export const texLiveInstall: LanguageInstall = {
 		return m.texlive_install_cancel();
 	},
 	docs: 'https://texpile.com/docs/installation/latex',
+	get locate() {
+		return { label: m.prefs_toolchain_locate_tex(), program: 'lualatex' };
+	},
 	refresh: () => void texLiveInstaller.refresh(),
 	install: () => void texLiveInstaller.install().then((r) => (r?.ok ? distros.useManaged('latex') : undefined)),
 	cancel: () => texLiveInstaller.cancel(),
@@ -78,6 +88,9 @@ export const tinymistInstall: LanguageInstall = {
 		return tinymistInstaller.busy;
 	},
 	progress: TinymistInstallProgress,
+	get installLabel() {
+		return m.tinymist_install();
+	},
 	get removeLabel() {
 		return m.tinymist_remove();
 	},
@@ -85,6 +98,9 @@ export const tinymistInstall: LanguageInstall = {
 		return m.tinymist_install_cancel();
 	},
 	docs: 'https://texpile.com/docs/installation/typst',
+	get locate() {
+		return { label: m.prefs_toolchain_locate_tinymist(), program: 'tinymist' };
+	},
 	refresh: () => void tinymistInstaller.refresh(),
 	install: () => void tinymistInstaller.install().then((r) => (r?.ok ? distros.useManaged('typst') : undefined)),
 	cancel: () => tinymistInstaller.cancel(),

@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { Download } from '@lucide/svelte';
 	import { tip } from '$lib/components/tooltip.svelte';
+	import { toolDirs } from '../toolDirs.svelte';
 	import { distros } from '../distros.svelte';
 	import { toolchainProbe } from '../toolchainProbe.svelte';
 	import PrefsRow from '../rows/PrefsRow.svelte';
@@ -12,6 +13,7 @@
 	import ProgramWorkingRow from './ProgramWorkingRow.svelte';
 	import type { LanguageInstall } from './languageInstalls';
 	import { languageNote, splitPrograms, type ProgramRow } from './toolchainRows';
+	import { m } from '$lib/paraglide/messages';
 
 	const props: { id: PrefsRowId; install: LanguageInstall; rows: ProgramRow[] } = $props();
 	const install = $derived(props.install);
@@ -28,18 +30,37 @@
 			<LanguageNote {note} docs={install.docs} {open} onToggle={() => (open = !open)} />
 		{/snippet}
 		{#if picks}
-			<DistroPicker family={install.family} offer={install.offer} busy={install.busy} onInstall={() => install.install()} />
-		{:else if install.offer}
-			<button
-				type="button"
-				class="btn preset-tonal text-sm"
-				use:tip={install.offer.note}
-				onclick={() => install.install()}
-				disabled={install.busy}
-			>
-				<Download class="size-4" />
-				<span class="cap-center">{install.offer.label}</span>
-			</button>
+			<DistroPicker
+				family={install.family}
+				offer={install.offer}
+				locate={install.locate}
+				busy={install.busy}
+				onInstall={() => install.install()}
+			/>
+		{:else}
+			<!-- nothing found: Texpile's own install, or one it does not know where to look for -->
+			<div class="flex gap-2">
+				<button
+					type="button"
+					class="btn preset-tonal text-sm"
+					onclick={() => void toolDirs.locate(install.locate.program)}
+					disabled={toolDirs.busy || install.busy}
+				>
+					{m.prefs_toolchain_locate()}
+				</button>
+				{#if install.offer}
+					<button
+						type="button"
+						class="btn preset-filled-primary-500 text-sm"
+						use:tip={install.offer.note ?? install.offer.label}
+						onclick={() => install.install()}
+						disabled={install.busy}
+					>
+						<Download class="size-4" />
+						<span class="cap-center">{install.installLabel}</span>
+					</button>
+				{/if}
+			</div>
 		{/if}
 	</PrefsRow>
 	<div class="flex items-end gap-3">

@@ -14,12 +14,12 @@ Find the message you see. [LaTeX](latex.md), [Typst](typst.md), [Git](git.md) an
 
 ## Programs
 
-| You see                                                 | Fix                                                                               |
-| ------------------------------------------------------- | --------------------------------------------------------------------------------- |
-| A program shows **Not found** in Preferences › Compiler | Click **Locate** and pick the program's file, or add its folder in Other folders. |
-| A program shows **Does not run.**                       | Texpile found the program and it fails to start. Reinstall it.                    |
-| "No main file is set."                                  | Click **Set Main File**.                                                          |
-| Git features are missing                                | [Install git](../installation/git.md).                                            |
+| You see                                                 | Fix                                                                                   |
+| ------------------------------------------------------- | ------------------------------------------------------------------------------------- |
+| A program shows **Not found** in Preferences › Compiler | Add it with your TeX distribution's package manager, such as tlmgr or MiKTeX Console. |
+| A program shows **Does not run.**                       | Texpile found the program and it fails to start. Reinstall it.                        |
+| "No main file is set."                                  | Click **Set Main File**.                                                              |
+| Git features are missing                                | [Install git](../installation/git.md).                                                |
 
 ## Editing
 

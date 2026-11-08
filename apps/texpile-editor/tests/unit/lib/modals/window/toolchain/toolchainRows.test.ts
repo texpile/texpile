@@ -4,6 +4,7 @@ import {
 	folderFor,
 	INSTALL_VALUE,
 	languageNote,
+	LOCATE_VALUE,
 	splitPrograms,
 	texLiveOffer
 } from '../../../../../../src/lib/modals/window/toolchain/toolchainRows';
@@ -24,12 +25,12 @@ const MANAGED = distro('TeX Live 2026', '/data/texlive/bin/x86_64-linux', { mana
 const STATUS: ManagedTexLiveStatus = { pinned: '2026-r81008', year: 2026, megabytes: 174, installed: null, step: null };
 
 it('lists every install with the one in use checked, then the install from Texpile', () => {
-	const groups = distroGroups([PATH_TL, MANAGED], MANAGED, { label: 'Install TeX Live 2026 from Texpile' });
+	const groups = distroGroups([PATH_TL, MANAGED], MANAGED, { label: 'Install TeX Live 2026 from Texpile' }, 'Locate TeX…');
 	expect(groups[0].options.map((o) => [o.label, o.checked])).toEqual([
 		['TeX Live 2025', false],
 		['TeX Live 2026', true]
 	]);
-	expect(groups[1].options.map((o) => o.value)).toEqual([INSTALL_VALUE]);
+	expect(groups[1].options.map((o) => o.value)).toEqual([INSTALL_VALUE, LOCATE_VALUE]);
 	// the copy PATH reaches needs no folder entry, so picking it clears the list
 	expect(folderFor([PATH_TL, MANAGED], PATH_TL.dir)).toBeNull();
 	expect(folderFor([PATH_TL, MANAGED], MANAGED.dir)).toBe(MANAGED.dir);

@@ -30,15 +30,17 @@ Texpile reads your PATH once, when it starts: restart it after you change PATH. 
 
 ## Pick an install and add folders
 
-The **LaTeX** picker lists every TeX Live and MiKTeX Texpile finds. The one in use has a check mark. Pick another to put its folder first. **(on PATH)** marks the one your PATH reaches.
+The **LaTeX** picker lists every TeX Live and MiKTeX Texpile finds. The one in use has a check mark. Pick another to put its folder first. **(on PATH)** marks the one your PATH reaches. For a TeX Texpile does not find, choose **Locate TeX…** at the end of the menu and pick lualatex in it. The **Typst** picker has **Locate tinymist…** in the same place.
 
-Texpile searches **Other folders** before PATH, for every program it runs, including your compile command and git. **Add Folder** adds one, and **Locate** on a **Not found** line adds that program's folder. Each folder shows what Texpile found in it.
+Add a program missing from your TeX with that distribution's package manager, such as tlmgr or MiKTeX Console.
+
+Texpile searches **Other folders** before PATH, for every program it runs, including your compile command and git. **Add Folder** adds one. Each folder shows what Texpile found in it.
 
 ## Install TeX Live
 
-Open the **LaTeX** picker and click **Install TeX Live 2026 from Texpile**. With no TeX found, the row has an **Install TeX Live 2026 from Texpile** button in place of the picker. The **Set Up LaTeX** dialog offers it too. Texpile downloads TeX Live 2026 from dl.texpile.com and checks it against a checksum. The download is 174 MB on Linux, 230 MB on macOS and 287 MB on Windows. It holds lualatex, pdflatex, xelatex, latexmk, biber and the packages most papers load.
+Open the **LaTeX** picker and click **Install TeX Live 2026 from Texpile**. With no TeX found, the row has **Locate** and **Install TeX Live** in place of the picker. The **Set Up LaTeX** dialog offers it too. Texpile downloads TeX Live 2026 from dl.texpile.com and checks it against a checksum. The download is 174 MB on Linux, 230 MB on macOS and 287 MB on Windows. It holds lualatex, pdflatex, xelatex, latexmk, biber and the packages most papers load.
 
-![The LaTeX picker open with TeX Live 2023/Debian checked and Install TeX Live 2026 from Texpile, 174 MB](../../landing/src/lib/assets/showcase/docs/app/toolchain-tex-picker.png)
+![The LaTeX picker open with TeX Live 2023/Debian checked, Install TeX Live 2026 from Texpile with its size, and Locate TeX…](../../landing/src/lib/assets/showcase/docs/app/toolchain-tex-picker.png)
 
 After the install, the picker uses **TeX Live 2026 (installed by Texpile)**. Pick another install to switch back. To delete it, click **Remove** next to "Texpile installed TeX Live 2026."
 
@@ -46,7 +48,7 @@ When a document loads a package this TeX Live lacks, the live preview and **Comp
 
 ## Install tinymist for Typst
 
-Open the **Typst** picker and click the option that starts with **Install tinymist**. With no tinymist found, the row has an install button in place of the picker. The **Set Up Typst** dialog and the "tinymist is not installed." bar above a `.typ` file offer it too.
+Open the **Typst** picker and click the option that starts with **Install tinymist**. With no tinymist found, the row has **Locate** and **Install tinymist** in place of the picker. The **Set Up Typst** dialog and the "tinymist is not installed." bar above a `.typ` file offer it too.
 
 After the install, the picker uses the entry that ends in **(installed by Texpile)**. Pick another install to switch back. **Remove** deletes the tinymist Texpile installed.
 

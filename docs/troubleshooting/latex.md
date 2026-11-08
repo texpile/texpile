@@ -23,7 +23,7 @@ order: 1
 
 | You see                                   | Fix                                                                                                             |
 | ----------------------------------------- | --------------------------------------------------------------------------------------------------------------- |
-| "lualatex is not installed."              | Click **Compiler Settings**. Install TeX Live from the **LaTeX** picker, or click **Locate** beside lualatex.   |
+| "lualatex is not installed."              | Click **Compiler Settings**. Click **Install TeX Live**, or **Locate** for a TeX Texpile does not find.         |
 | "Live mode needs LaTeX 2021-06 or newer." | Update TeX Live, MacTeX or MiKTeX.                                                                              |
 | **preview error**                         | Open Problems to see the error. The live preview runs lualatex, so a document that needs pdflatex uses Compile. |
 | Live mode cannot be turned on             | You are hosting a shared session. End it first.                                                                 |

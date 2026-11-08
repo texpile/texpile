@@ -2,7 +2,6 @@
 	import { Minus, TriangleAlert } from '@lucide/svelte';
 	import { tip } from '$lib/components/tooltip.svelte';
 	import { toolchainProbe } from '../toolchainProbe.svelte';
-	import { toolDirs } from '../toolDirs.svelte';
 	import { problemText, type ProgramRow } from './toolchainRows';
 	import { m } from '$lib/paraglide/messages';
 
@@ -33,10 +32,6 @@
 			disabled={toolchainProbe.probing}
 		>
 			{m.prefs_toolchain_recheck()}
-		</button>
-	{:else}
-		<button type="button" class="btn btn-sm preset-tonal shrink-0" onclick={() => void toolDirs.locate(tool.name)} disabled={toolDirs.busy}>
-			{m.prefs_toolchain_locate()}
 		</button>
 	{/if}
 </div>

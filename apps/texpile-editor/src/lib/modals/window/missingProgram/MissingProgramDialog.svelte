@@ -75,6 +75,10 @@
 			const install: DialogButton = {
 				label: family === 'typst' ? m.tinymist_install() : m.texlive_install(),
 				role: 'primary',
+				tip:
+					offer === texLiveInstaller && texLiveInstaller.status?.megabytes
+						? m.prefs_texlive_install_size({ size: String(texLiveInstaller.status.megabytes) })
+						: undefined,
 				disabled: toolchainProbe.probing || offer.busy,
 				onclick: () => void offer.install()
 			};
