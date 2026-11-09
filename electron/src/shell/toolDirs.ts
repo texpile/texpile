@@ -82,3 +82,14 @@ export function applyToolDirs(): void {
 	baseline ??= process.env[pathKey()] ?? '';
 	apply();
 }
+
+// the update installer starts the new version with this process's environment, which would take PATH with the
+// folders as its baseline
+export function restoreBaselinePath(): void {
+	if (baseline !== null) process.env[pathKey()] = baseline;
+}
+
+/** undoes restoreBaselinePath */
+export function reapplyToolDirs(): void {
+	if (baseline !== null) apply();
+}

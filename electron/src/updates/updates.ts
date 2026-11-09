@@ -9,6 +9,7 @@ import * as fs from 'node:fs';
 import * as path from 'node:path';
 import { autoUpdater } from 'electron-updater';
 import { portable } from '../appIdentity';
+import { reapplyToolDirs, restoreBaselinePath } from '../shell/toolDirs';
 import { clearInstallMark, markInstallStarted } from './midInstallLaunch';
 
 export type CheckResult =
@@ -58,11 +59,21 @@ function send(channel: string, payload: unknown): void {
 	}
 }
 
+function handOffToInstaller(): void {
+	markInstallStarted(downloadedFile);
+	restoreBaselinePath();
+}
+
 function wire(): void {
 	if (wired) return;
 	wired = true;
 	autoUpdater.autoDownload = false;
 	autoUpdater.autoInstallOnAppQuit = false;
+	// a quit after the download installs silently through electron-updater's own quit listener, added at download
+	// completion, so this one runs first; no relaunch because the writer quit
+	app.on('quit', (_e, exitCode) => {
+		if (op !== 'install' && downloadedFile && exitCode === 0 && autoUpdater.autoInstallOnAppQuit) handOffToInstaller();
+	});
 	autoUpdater.on('download-progress', (p) => {
 		send('update:progress', { percent: p.percent, transferred: p.transferred, total: p.total });
 	});
@@ -75,6 +86,7 @@ function wire(): void {
 		if (!op) return;
 		if (op === 'install') {
 			clearInstallMark();
+			reapplyToolDirs();
 			showHiddenWindows();
 		}
 		op = null;
@@ -121,9 +133,11 @@ export async function download(): Promise<void> {
 }
 
 export function install(): void {
+	// a second click while the first install runs would hide nothing and lose the windows the first one hid
+	if (op === 'install') return;
 	// a failed install emits 'error' instead of quitting; `op` lets it through to the renderer
 	op = 'install';
-	markInstallStarted(downloadedFile);
+	handOffToInstaller();
 	// windows shows the installer's progress bar: a silent one ran for a minute with no window, and people opened Texpile
 	// again; mac and linux ignore the flags
 	if (installMode() !== 'package-manager') return autoUpdater.quitAndInstall(process.platform !== 'win32', true);
