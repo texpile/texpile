@@ -136,10 +136,11 @@
 		{ id: 'page', render: page },
 		{ id: 'zoom', render: zoom },
 		{ id: 'search', pinned: true, alignEnd: true, render: search },
-		// rarely reached for, so they sit in the ... at every width and the bar stays short
+		// rarely reached for, so they sit in the ... at every width and the bar stays short. Rotation is each view's own:
+		// the lower bar has it alone, as a button where the top bar's ... is
+		{ id: 'rotate', inMenu: documentMenu, pinned: !documentMenu, render: rotate },
 		...(documentMenu
 			? [
-					{ id: 'rotate', inMenu: true, render: rotate },
 					...(invertable ? [{ id: 'invert', inMenu: true, render: invert }] : []),
 					{ id: 'vision', inMenu: true, render: vision },
 					{ id: 'present', inMenu: true, render: present },

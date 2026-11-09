@@ -37,6 +37,9 @@ export type Attached = { path: string; lines: SelectedLines | null };
 /** an image pasted, dropped or picked, as the base64 of its bytes; size is null where it could not be read */
 export type PastedImage = { name: string; mimeType: string; base64: string; size: { width: number; height: number } | null };
 
+/** a message written while the agent works, sent when its turn ends */
+export type QueuedMessage = { text: string; attached: Attached | null; images: PastedImage[] };
+
 export type ChatItem =
 	| { kind: 'user'; id: string; text: string; attached: Attached | null; images?: PastedImage[] }
 	| { kind: 'agent'; id: string; text: string }

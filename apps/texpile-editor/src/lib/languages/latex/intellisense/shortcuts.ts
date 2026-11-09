@@ -121,6 +121,7 @@ export function formatShortcuts(): Extension {
 	return cmCommandKeys({
 		'editor.bold': (v) => toggleWrapKeyword(v, 'textbf'),
 		'editor.italic': (v) => toggleWrapKeyword(v, 'textit'),
+		'editor.emphasis': (v) => toggleWrapKeyword(v, 'emph'),
 		'editor.underline': (v) => toggleWrapKeyword(v, 'underline'),
 		'editor.inlineCode': (v) => toggleWrapKeyword(v, 'texttt'),
 		'editor.superscript': (v) => toggleWrapKeyword(v, 'textsuperscript'),

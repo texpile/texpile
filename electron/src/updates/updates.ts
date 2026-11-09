@@ -124,8 +124,9 @@ export function install(): void {
 	// a failed install emits 'error' instead of quitting; `op` lets it through to the renderer
 	op = 'install';
 	markInstallStarted(downloadedFile);
-	// silent install + relaunch on windows; mac and linux ignore the flags
-	if (installMode() !== 'package-manager') return autoUpdater.quitAndInstall(true, true);
+	// windows shows the installer's progress bar: a silent one ran for a minute with no window, and people opened Texpile
+	// again; mac and linux ignore the flags
+	if (installMode() !== 'package-manager') return autoUpdater.quitAndInstall(process.platform !== 'win32', true);
 	// electron-updater runs pkexec + dpkg under spawnSync (a hand-rolled async install, e4a996f, was worse), so the
 	// windows go before it blocks instead of sitting in the not-responding overlay through the password prompt
 	hiddenForInstall = BrowserWindow.getAllWindows().filter((w) => !w.isDestroyed() && w.isVisible());

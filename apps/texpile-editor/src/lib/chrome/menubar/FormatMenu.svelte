@@ -37,6 +37,12 @@
 				<Menu.Item value="italic" class={menuBarItemClass}
 					><Menu.ItemText>{m.menubar_format_italic()}</Menu.ItemText><span class="text-muted">{keyLabel('editor.italic')}</span></Menu.Item
 				>
+				{#if dialect === 'tex'}
+					<Menu.Item value="emphasis" class={menuBarItemClass}
+						><Menu.ItemText>{m.menubar_format_emphasis()}</Menu.ItemText><span class="text-muted">{keyLabel('editor.emphasis')}</span
+						></Menu.Item
+					>
+				{/if}
 				<!-- markdown has no underline mark and no underline syntax -->
 				{#if dialect !== 'md'}
 					<Menu.Item value="underline" class={menuBarItemClass}

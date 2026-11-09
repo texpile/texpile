@@ -249,11 +249,12 @@ export class SuggestionsController {
 		this.accepts.clear();
 	}
 
-	async accept(t: CommentThread): Promise<void> {
+	/** `by` names an agent deciding through MCP; the reader otherwise */
+	async accept(t: CommentThread, by?: string): Promise<void> {
 		if (!isOpenSuggestion(t)) return;
 		await this.settle();
 		const at = this.states.get(t.file)?.placed.find((s) => s.id === t.id);
-		await this.deps.commit(...(await this.anchorNow(t.file, t.id)), await this.decision(t, 'accepted'));
+		await this.deps.commit(...(await this.anchorNow(t.file, t.id)), await this.decision(t, 'accepted', by));
 		this.drop(t.file, t.id);
 		if (t.file !== this.deps.activeFile()) return;
 		this.accepts.set(++this.acceptSeq, { file: t.file, thread: t, at });
@@ -273,7 +274,7 @@ export class SuggestionsController {
 		if (this.states.has(a.file)) this.refit(a.file);
 	}
 
-	async reject(t: CommentThread): Promise<boolean> {
+	async reject(t: CommentThread, by?: string): Promise<boolean> {
 		const file = this.deps.activeFile();
 		if (!isOpenSuggestion(t) || t.file !== file) return false;
 		await this.settle();
@@ -281,7 +282,7 @@ export class SuggestionsController {
 		const state = this.states.get(file);
 		const s = state?.text === text ? state.placed.find((x) => x.id === t.id) : undefined;
 		if (!state || !s) return false;
-		const decided = await this.decision(t, 'rejected');
+		const decided = await this.decision(t, 'rejected', by);
 		// in a session's log before the words come back, so nobody takes them for a new change
 		const recorded = this.deps.commit(decided);
 		if (!(await this.deps.applyEdit({ from: s.from, to: s.to, insert: s.restore }))) {
@@ -442,8 +443,14 @@ export class SuggestionsController {
 		return moved.filter((e) => e.t === 'anchor' && e.thread === id);
 	}
 
-	private async decision(t: CommentThread, decision: SuggestionDecision | undefined): Promise<CommentEvent> {
-		return resolveEvent({ thread: t.id, resolved: !!decision, decision, by: await this.deps.author(), at: new Date().toISOString() });
+	private async decision(t: CommentThread, decision: SuggestionDecision | undefined, by?: string): Promise<CommentEvent> {
+		return resolveEvent({
+			thread: t.id,
+			resolved: !!decision,
+			decision,
+			by: by ?? (await this.deps.author()),
+			at: new Date().toISOString()
+		});
 	}
 
 	private drop(file: string, id: string): void {

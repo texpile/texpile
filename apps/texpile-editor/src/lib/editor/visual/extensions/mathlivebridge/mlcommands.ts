@@ -33,11 +33,15 @@ export function createMathField(createblock = false) {
 			}
 		} else {
 			const $from = state.doc.resolve(from);
+			// selected words become the formula (#145)
+			const wrap = from < to && $from.sameParent(state.doc.resolve(to));
+			const source = wrap ? state.doc.textBetween(from, to) : '';
+			const marks = wrap ? (state.doc.nodeAt(from)?.marks ?? $from.marks()) : (state.storedMarks ?? $from.marks());
 			// in colored text the formula is colored too, and so is what is typed after it
-			const newNode = state.schema.nodes.inline_math.create({}, state.schema.text(' '), state.storedMarks ?? $from.marks());
+			const newNode = state.schema.nodes.inline_math.create({}, state.schema.text(source.trim() ? source : ' '), marks);
 
 			if ($from.parent.canReplaceWith($from.index(), $from.index(), newNode.type)) {
-				const tr = state.tr.insert(from, newNode);
+				const tr = wrap ? state.tr.replaceWith(from, to, newNode) : state.tr.insert(from, newNode);
 				const nodeSelection = NodeSelection.create(tr.doc, from);
 				tr.setSelection(nodeSelection);
 				dispatch?.(tr);

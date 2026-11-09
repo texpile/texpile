@@ -93,3 +93,26 @@ describe('the author a tool writes under', () => {
 		expect(authorOf({})).toBe('AI assistant');
 	});
 });
+
+describe('decide_suggestion', () => {
+	it('accepts under the agent’s name, and asks for the file open before a reject the editor could not do', async () => {
+		const { decideSuggestionPayload } = await import('$lib/workspace/mcpComments');
+		const suggestion = { ...threads[0], id: 's', restore: 'old words', resolved: false };
+		const accept = vi.fn(async () => {});
+		const reject = vi.fn(async () => false);
+		const d = {
+			comments: { threads: [suggestion], store: { writable: true }, suggestions: { accept, reject } } as never,
+			getLoadedPath: () => null,
+			getBuffer: () => '',
+			adoptDiskChange: async () => {}
+		};
+		expect(await decideSuggestionPayload(d, { thread: 's', decision: 'accept', by: 'Codex' })).toMatchObject({
+			ok: true,
+			decision: 'accepted'
+		});
+		expect(accept).toHaveBeenCalledWith(suggestion, 'Codex');
+		const refused = await decideSuggestionPayload(d, { thread: 's', decision: 'reject' });
+		expect(refused).toMatchObject({ ok: false });
+		expect((refused as { reason: string }).reason).toContain('open_file main.tex');
+	});
+});

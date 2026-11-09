@@ -13,6 +13,7 @@ function formatCommand(id: string, title: () => string): CommandInfo {
 export const FORMAT_COMMANDS: CommandInfo[] = [
 	formatCommand('bold', () => m.menubar_format_bold()),
 	formatCommand('italic', () => m.menubar_format_italic()),
+	formatCommand('emphasis', () => m.menubar_format_emphasis()),
 	formatCommand('underline', () => m.menubar_format_underline()),
 	formatCommand('strikethrough', () => m.mdtoolbar_strike()),
 	formatCommand('inlineCode', () => m.menubar_format_inline_code()),

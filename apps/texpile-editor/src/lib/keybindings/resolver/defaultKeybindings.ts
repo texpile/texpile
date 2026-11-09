@@ -5,6 +5,7 @@ import type { DefaultKeybinding } from './keybindingRules';
 const EDITOR_KEYBINDINGS: DefaultKeybinding[] = [
 	{ command: 'editor.bold', key: 'mod+b' },
 	{ command: 'editor.italic', key: 'mod+i' },
+	{ command: 'editor.emphasis', key: 'mod+e' },
 	{ command: 'editor.underline', key: 'mod+u' },
 	{ command: 'editor.inlineCode', key: 'mod+`' },
 	{ command: 'editor.superscript', key: 'mod+.' },

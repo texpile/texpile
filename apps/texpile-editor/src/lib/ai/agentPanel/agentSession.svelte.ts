@@ -22,7 +22,8 @@ import type {
 	ContextUsage,
 	PanelAgent,
 	PastedImage,
-	PermissionAsk
+	PermissionAsk,
+	QueuedMessage
 } from './agentPanel.types';
 
 export class AgentSession {
@@ -52,6 +53,7 @@ export class AgentSession {
 	/** the chat open now, as the agent names it */
 	chat = $state<string | null>(null);
 	usage = $state<ContextUsage | null>(null);
+	queued = $state<QueuedMessage[]>([]);
 	private unsubscribe: (() => void) | null = null;
 	/** bumped by each start and close, so what a turn of an earlier conversation brings back goes nowhere */
 	private conversation = 0;
@@ -81,6 +83,7 @@ export class AgentSession {
 		this.chats = [];
 		this.chat = null;
 		this.usage = null;
+		this.queued = [];
 		this.state = 'starting';
 		const r = await bridge.start();
 		if (conversation !== this.conversation) return;
@@ -118,7 +121,12 @@ export class AgentSession {
 
 	async send(text: string, attached: Attached | null, images: PastedImage[] = []): Promise<void> {
 		const bridge = this.bridge();
-		if (!bridge || this.state !== 'ready' || (!text.trim() && !images.length)) return;
+		if (!bridge || (!text.trim() && !images.length)) return;
+		if (this.state === 'working') {
+			this.queued = [...this.queued, { text, attached, images }];
+			return;
+		}
+		if (this.state !== 'ready') return;
 		const conversation = this.conversation;
 		// at once: a message sent while the save and main's look at the folder run would start a second turn
 		this.state = 'working';
@@ -141,15 +149,27 @@ export class AgentSession {
 		if (!r.ok && r.error && this.stateNow() !== 'signed-out') after.push({ kind: 'error', id: itemId(), text: r.error });
 		if (files.length) after.push({ kind: 'changes', id: itemId(), files });
 		if (after.length) this.items = [...this.items, ...after];
+		if (this.stopAsked || this.stateNow() !== 'ready' || !this.queued.length) return;
+		const [next, ...rest] = this.queued;
+		this.queued = rest;
+		await this.send(next.text, next.attached, next.images);
 	}
 
 	private stateNow(): AgentState {
 		return this.state;
 	}
 
-	cancel(): void {
+	/** what was queued comes back to the box, as Claude Code does on an interrupt, rather than going after a stop */
+	cancel(): QueuedMessage[] {
 		this.stopAsked = true;
 		this.bridge()?.cancel();
+		const back = this.queued;
+		this.queued = [];
+		return back;
+	}
+
+	unqueue(index: number): void {
+		this.queued = this.queued.filter((_, i) => i !== index);
 	}
 
 	answer(id: string, optionId: string | null): void {
@@ -177,6 +197,7 @@ export class AgentSession {
 		this.items = [];
 		this.asks = [];
 		this.usage = null;
+		this.queued = [];
 		this.replaying = true;
 		const r = await bridge.openChat(id).finally(() => (this.replaying = false));
 		if (conversation !== this.conversation) return;
@@ -186,6 +207,7 @@ export class AgentSession {
 	close(): void {
 		this.bridge()?.close();
 		this.conversation += 1;
+		this.queued = [];
 		this.root = null;
 		this.agent = null;
 		this.state = 'idle';

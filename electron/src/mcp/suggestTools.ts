@@ -1,4 +1,4 @@
-// The one tool that changes a document: an edit that lands as a suggestion the reader accepts or rejects
+// The tools that change a document through suggestions: making one, and deciding one
 import type { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 import { z } from 'zod';
 import { relayer, type TargetWindow } from './relay';
@@ -32,5 +32,25 @@ export function registerSuggestTools(server: McpServer, target: TargetWindow): v
 		// longer than the default wait: a visual editor re-reads the changed paragraph before it can answer
 		({ path: p, quote, replacement, note, prefix, suffix, line, by, root }) =>
 			relay(root, 'suggest_edit', { path: p, quote, replacement, note, prefix, suffix, line, by }, 10000)
+	);
+
+	server.registerTool(
+		'decide_suggestion',
+		{
+			title: 'Accept or reject a suggestion',
+			description:
+				'Decide a pending suggestion, as the Accept and Reject buttons on its card do, recorded under your ' +
+				'name. accept keeps the new words; reject puts the old words back, which the editor does in the open ' +
+				'file only, so open_file its file first. Thread ids come from get_comments, where a suggestion has ' +
+				'suggestion set. Decide only what the user asked you to: a suggestion is theirs to review.',
+			inputSchema: {
+				thread: z.string().describe('suggestion thread id, from get_comments'),
+				decision: z.enum(['accept', 'reject']),
+				by: byArg,
+				root: rootArg
+			}
+		},
+		// longer than the default wait: a reject edits the open file and waits for the editor to settle
+		({ thread, decision, by, root }) => relay(root, 'suggestion_decide', { thread, decision, by }, 10000)
 	);
 }

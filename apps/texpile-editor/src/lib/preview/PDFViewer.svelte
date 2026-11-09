@@ -9,7 +9,7 @@
 	import { FLOATING_BAR_BOTTOM } from '$lib/editor/floatingBar';
 	import { pdfFindToggle } from '$lib/stores/editorStore';
 	import { pdfViewFind } from './pdfViewFind';
-	import { PictureInPicture2 } from '@lucide/svelte';
+	import { PictureInPicture2, X } from '@lucide/svelte';
 	import PdfSplitViews from './PdfSplitViews.svelte';
 	import PdfViewScope from '$lib/pdf-view/PdfViewScope.svelte';
 	import { tip } from '$lib/components/tooltip.svelte';
@@ -165,13 +165,20 @@
 	{/if}
 {/snippet}
 
+<!-- where the top bar has the popout, so the two bars line up -->
+{#snippet closeSplit()}
+	<button onclick={() => updateLayout({ pdfSplit: false })} use:tip={m.pdf_split_close()} aria-label={m.pdf_split_close()}>
+		<X size={16} />
+	</button>
+{/snippet}
+
 <!-- each view's own bar; the top one also carries the project's controls and the popout -->
 {#snippet toolbar(place: number)}
 	<PdfViewScope {place}>
 		<PdfToolbar
 			leading={place > 0 ? undefined : (controls ?? (filename && !inEditor ? leading : undefined))}
 			leadIsControls={place === 0 && !!controls}
-			trailing={place === 0 && onPopout ? trailing : undefined}
+			trailing={place > 0 ? closeSplit : onPopout ? trailing : undefined}
 			{asTabStrip}
 			{inEditor}
 			inPopout={placement === 'window'}

@@ -33,7 +33,8 @@ export function registerCommentTools(server: McpServer, target: TargetWindow): v
 				'threads, since they are pinned to the quoted text and an edit that rewrites it detaches ' +
 				'them. unsaved:true means the lines refer to the open buffer, not the file on disk. A thread with ' +
 				'suggestion set is a suggested edit that is already in the file: quote holds the words it put in, ' +
-				'suggestion.oldWords the words it took out, and it stays pending until someone accepts or rejects it.',
+				'suggestion.oldWords the words it took out, and it stays pending until someone accepts or rejects it ' +
+				'(decide_suggestion).',
 			inputSchema: {
 				path: z.string().optional().describe('workspace-relative file to filter to; omit for the whole workspace'),
 				includeResolved: z.boolean().optional().describe('also list resolved threads; default false'),

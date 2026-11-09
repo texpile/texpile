@@ -18,25 +18,34 @@ import type { McpHost } from './server';
  * free when the user is sitting in front of it.
  */
 const INSTRUCTIONS = [
-	'Texpile is a local, offline LaTeX editor. It opens a FOLDER of .tex files, and the file on disk IS the document:',
-	'no database, no document ids, and saving writes the .tex back in place.',
+	'Texpile is a local, offline editor for LaTeX, Typst and Markdown. It opens a FOLDER, and the file on disk IS the',
+	'document: no database, no document ids, and saving writes the file back in place.',
 	'',
 	'What this server gives you is the state of the editor the user is actually looking at, and the ability to steer it.',
 	'Its one change to a document is suggest_edit: it puts your edit into the open file as a suggestion under your name,',
 	'which the user accepts or rejects. Use it for wording the author should review (a rewrite, a grammar fix, a fix',
 	'for a compile error), and your own file tools for mechanical edits, which land as plain changes.',
+	'decide_suggestion accepts or rejects a pending suggestion, when the user asks you to.',
 	'',
-	'Before you read a .tex from disk, check get_editor_state. A tab marked dirty means the editor holds newer content',
+	'Before you read a file from disk, check get_editor_state. A tab marked dirty means the editor holds newer content',
 	'than the file, and get_unsaved returns it. Writing a file the editor holds unsaved edits in merges your change',
 	'into them when it touches other words; only a change to the same words asks the user which to keep.',
 	'',
-	'Line numbers only mean anything in Source view. In Visual view the caret is a ProseMirror position that does not',
-	'map to a line, and get_editor_state honestly reports null rather than guessing.',
+	'.tex, .typ and .md files each open in Visual or Source view. Line numbers only mean anything in Source view. In',
+	'Visual view the caret is a ProseMirror position that does not map to a line, and get_editor_state honestly reports',
+	'null rather than guessing.',
 	'',
-	'The window belongs to the user. open_file, set_view_mode and show_diff all change what is on their screen, so',
-	'use them when you have something worth showing, not to mirror your own progress.',
+	'The window belongs to the user. open_file, set_view_mode, show_diff and set_live_preview all change what is on',
+	'their screen, so use them when you have something worth showing, not to mirror your own progress. A window can be',
+	'split into editor groups; the tabs reported, and every file these tools open or edit, belong to the focused group.',
 	'',
-	'If a compile fails because the wrong file is main, or none is set, set_main_file fixes it and you can retry.',
+	"What compile does depends on get_editor_state.compileMode. terminal runs the project's command in a shell and",
+	'ends, so poll get_diagnostics. live (LaTeX live mode) and typst-preview are engines that rebuild on every change',
+	'with no run to wait for and no terminal: their diagnostics arrive by themselves. get_compile_config names the PDF',
+	'the user is looking at in each mode.',
+	'',
+	'If a compile fails because the wrong file is main, or none is set, set_main_file fixes it and you can retry. A',
+	'compile command that came with the folder runs only once the user accepts it; until then compile refuses.',
 	'',
 	'Do not infer where a build lands from the compile command. A folder can override the PDF and log paths',
 	'independently of it, which is normal in a repo where one output directory serves several documents, so',
@@ -70,9 +79,10 @@ export function buildServer(currentHost: () => McpHost | null): McpServer {
 				'unsaved changes, the active file, view mode, caret and selection. Use this to work on what ' +
 				'the user is actually looking at. Prefer the workspace whose root matches your working ' +
 				'directory over the focused one, since focus changes when the user clicks another window. ' +
-				'Note livePreview: when true the user is not running their compile command at all, so ' +
-				'compile only nudges an engine already going, the PDF is _draft/draft.pdf rather than the ' +
-				'one their command would produce, and diagnostics come from that engine.',
+				"The tabs are the focused editor group's. compileMode says what compile does: terminal runs the " +
+				'project command; live is LaTeX live mode, an engine that rebuilds on each change into ' +
+				'_draft/draft.pdf; typst-preview renders the Typst main in the Preview pane and writes no PDF. ' +
+				'In the last two, diagnostics come from that engine as it goes.',
 			inputSchema: {}
 		},
 		async () => {
@@ -127,8 +137,9 @@ export function buildServer(currentHost: () => McpHost | null): McpServer {
 				'moving across two polls a few seconds apart before treating the numbers as final. ' +
 				'Reading straight after calling compile, without checking those, gets you the ' +
 				'PREVIOUS run - errors rarely differ between two runs so it looks right, while status.pages ' +
-				'quietly describes the document you had before. In live-preview mode (live:true) no shell ' +
-				'compile runs at all, so this can be whatever .log was left in the folder, however old.',
+				'quietly describes the document you had before. mode says where these came from: in live ' +
+				'and typst-preview mode the engine publishes after each pass of its own, compiling stays false ' +
+				'and there is nothing to poll for.',
 			inputSchema: { root: z.string().optional().describe('workspace root; defaults to the focused window') }
 		},
 		async ({ root }) => {
@@ -148,7 +159,7 @@ export function buildServer(currentHost: () => McpHost | null): McpServer {
 				'Bring a file in the workspace forward in the editor, optionally at a line. NOTE: passing a ' +
 				'line switches the window to Source mode, because a line number only means anything there - ' +
 				'omit it to open the file without changing how the user is viewing their document. Paths are ' +
-				'workspace-relative.',
+				'workspace-relative, and the file opens in the focused editor group.',
 			inputSchema: {
 				path: z.string().describe('workspace-relative path, e.g. sections/method.tex'),
 				line: z.number().int().positive().optional().describe('1-based line; switches to Source mode'),
@@ -171,7 +182,7 @@ export function buildServer(currentHost: () => McpHost | null): McpServer {
 		{
 			title: 'Show a file diff in Texpile',
 			description:
-				"Switch the window to Diff view, showing the file's working changes against git HEAD. Useful " +
+				"Open a comparison tab of the file's working changes against git HEAD, beside the file. Useful " +
 				'after you have edited files, so the user can see what changed. This changes what is on ' +
 				'screen, so use it when you have something worth showing, not speculatively.',
 			inputSchema: {
@@ -196,7 +207,8 @@ export function buildServer(currentHost: () => McpHost | null): McpServer {
 		{
 			title: 'Set the Texpile view mode',
 			description:
-				'Switch between Visual (WYSIWYG), Source (LaTeX) and Diff. Changes what the user sees, so ' +
+				'Switch the open .tex, .typ or .md file between Visual (WYSIWYG) and Source. diff is the same as ' +
+				'show_diff: it opens a comparison tab and leaves the mode alone. Changes what the user sees, so ' +
 				'prefer leaving it alone unless the mode is the point - for example switching to Source ' +
 				'before pointing at a specific line.',
 			inputSchema: {
@@ -222,8 +234,9 @@ export function buildServer(currentHost: () => McpHost | null): McpServer {
 				'Forward sync: scroll the output pane to where a line of the open file renders, and open the ' +
 				'pane if it is closed. This is the good way to point at something, because the user keeps ' +
 				'reading their document while seeing the typeset result. LaTeX files need a compiled PDF with ' +
-				'SyncTeX data (approximate if the file changed since the last compile); Typst files jump the ' +
-				'live Preview pane instead, which must be running - Typst has no SyncTeX.',
+				'SyncTeX data (approximate if the file changed since the last compile), which in live mode is ' +
+				"the live engine's; Typst files jump the Preview pane instead, which must be running - Typst " +
+				'has no SyncTeX. Markdown has no output pane.',
 			inputSchema: {
 				line: z.number().int().positive().describe('1-based line in the currently open file'),
 				root: z.string().optional().describe('workspace root; defaults to the focused window')
@@ -274,13 +287,14 @@ export function buildServer(currentHost: () => McpHost | null): McpServer {
 		{
 			title: 'Compile the document',
 			description:
-				"Run the project's configured compile, exactly as the toolbar button does. Returns as soon as " +
-				'it starts, since a compile takes seconds to minutes - so the reply is NOT a result. To get ' +
-				'the result, poll get_diagnostics until compiling is false; that same reply then already ' +
-				'contains the results of this run (diagnostics are published before the run is marked ' +
-				'finished, and that holds even when latexmk found the build up to date and re-ran nothing). ' +
-				'In live mode the preview is already recompiling incrementally and this only nudges it. Runs ' +
-				'in its own terminal either way and does not take over whatever shell the user is in.',
+				'Compile, exactly as the toolbar button does; the reply says which mode ran and what to do next. ' +
+				'terminal: returns as soon as the command starts, so the reply is NOT a result. Poll ' +
+				'get_diagnostics until compiling is false; that same reply then already contains the results ' +
+				'of this run (diagnostics are published before the run is marked finished, even when latexmk ' +
+				'found the build up to date). It runs in its own terminal, never the shell the user is in. ' +
+				'live: asks the live engine for a full pass; no terminal. typst-preview: opens the Preview ' +
+				'pane, which renders on every change. Refused while a compile command that came with the ' +
+				'folder waits for the user to accept it.',
 			// No engine and no flags, deliberately. The compile runs with -no-shell-escape, which is the
 			// only thing standing between "compile a .tex file" and arbitrary code execution; a flags
 			// passthrough would hand that to anything able to write a .tex file, including the caller.
@@ -289,8 +303,9 @@ export function buildServer(currentHost: () => McpHost | null): McpServer {
 		async ({ root }) => {
 			const t = target(root);
 			if (!t) return fail('no matching Texpile window');
-			const r = (await askRenderer(t.win, 'compile')) as { ok?: boolean; mode?: string; note?: string } | null;
+			const r = (await askRenderer(t.win, 'compile')) as { ok?: boolean; reason?: string; mode?: string; note?: string } | null;
 			if (r === null) return fail('the editor did not respond in time');
+			if (!r.ok) return fail(r.reason ?? 'the editor did not compile');
 			// pass the renderer's own mode and guidance through rather than restating it here, so the
 			// two cannot drift apart
 			return ok(r);
@@ -302,10 +317,12 @@ export function buildServer(currentHost: () => McpHost | null): McpServer {
 		{
 			title: 'Get the compile configuration',
 			description:
-				'The compile command, its format (latex or typst), the engine, the output directory, and - the ' +
-				'part worth having - the RESOLVED paths the PDF pane and the log parser actually watch. In a monorepo those are ' +
-				'routinely not what the command implies, because a folder can override either one. Read this ' +
-				'before assuming where a build landed.',
+				'The compile command, its format (latex or typst), mode (terminal, live or typst-preview), the ' +
+				'engine, the output directory, and - the part worth having - the RESOLVED paths the PDF pane and ' +
+				'the log parser actually watch. In a monorepo those are routinely not what the command implies, ' +
+				"because a folder can override either one. In live mode pdfPath is the live engine's " +
+				'_draft/draft.pdf and logPath is null; in typst-preview mode both are null. Read this before ' +
+				'assuming where a build landed.',
 			inputSchema: { root: z.string().optional().describe('workspace root; defaults to the focused window') }
 		},
 		async ({ root }) => {
@@ -340,6 +357,30 @@ export function buildServer(currentHost: () => McpHost | null): McpServer {
 			const t = target(root);
 			if (!t) return fail('no matching Texpile window');
 			const r = (await askRenderer(t.win, 'set_output_paths', { outputDir, pdf, log })) as { ok?: boolean; reason?: string } | null;
+			if (r === null) return fail('the editor did not respond in time');
+			if (!r.ok) return fail(r.reason ?? 'the editor refused the change');
+			return ok(r);
+		}
+	);
+
+	server.registerTool(
+		'set_live_preview',
+		{
+			title: 'Turn the live preview on or off',
+			description:
+				'For a LaTeX main file this is live mode: an engine that rebuilds into _draft/draft.pdf on each ' +
+				'change instead of running the compile command. For a Typst main it is the Preview pane. Saved ' +
+				"in the folder's .texpile/config.json, the same switch as the compile settings. Live mode cannot " +
+				'be turned on while the window hosts a shared session.',
+			inputSchema: {
+				on: z.boolean(),
+				root: z.string().optional().describe('workspace root; defaults to the focused window')
+			}
+		},
+		async ({ on, root }) => {
+			const t = target(root);
+			if (!t) return fail('no matching Texpile window');
+			const r = (await askRenderer(t.win, 'live_preview', { on })) as { ok?: boolean; reason?: string } | null;
 			if (r === null) return fail('the editor did not respond in time');
 			if (!r.ok) return fail(r.reason ?? 'the editor refused the change');
 			return ok(r);

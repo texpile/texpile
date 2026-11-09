@@ -107,3 +107,15 @@ describe('Ctrl+M in colored text', () => {
 		expect(next.doc.nodeAt(5)?.marks.map((m) => m.type.name)).toEqual(['textcolor']);
 	});
 });
+
+describe('Ctrl+M with words selected', () => {
+	it('turns the selected words into the formula', () => {
+		const doc = schema.node('doc', null, [schema.node('paragraph', null, [schema.text('so a^2 + b^2 holds')])]);
+		const state = EditorState.create({ doc, selection: TextSelection.create(doc, 4, 13) });
+		let next = state;
+		createMathField()(state, (tr) => (next = state.apply(tr)));
+		expect(next.doc.nodeAt(4)?.type.name).toBe('inline_math');
+		expect(next.doc.nodeAt(4)?.textContent).toBe('a^2 + b^2');
+		expect(next.doc.textContent).toBe('so a^2 + b^2 holds');
+	});
+});

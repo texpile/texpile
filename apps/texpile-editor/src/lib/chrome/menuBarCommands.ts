@@ -151,6 +151,9 @@ export function formatSelect(value: string, dialect: MenuDialect = 'tex') {
 		case 'italic':
 			runMark('em');
 			break;
+		case 'emphasis':
+			runMark('em', { cmd: 'emph' });
+			break;
 		case 'underline':
 			runMark('u');
 			break;

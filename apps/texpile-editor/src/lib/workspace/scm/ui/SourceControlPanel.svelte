@@ -221,20 +221,20 @@
 		     an unrelated heading it read as a stray duplicate of the file tree's own refresh -->
 		<!-- a container, so in a narrow sidebar Sync and Publish drop their word and Refresh stays in sight -->
 		<!-- as tall as the editor's tab strip, rule included, so the two rows line up across the divider -->
-		<div class="text-muted border-surface-200-800 @container flex h-9 shrink-0 items-center gap-1.5 border-b px-3 text-xs">
+		<div class="border-surface-200-800 @container flex h-9 shrink-0 items-center gap-1.5 border-b px-3 text-xs">
 			<!-- a label, as on master: switching is Switch branch in the command palette. Detached, git
 			     calls the branch "HEAD", which says nothing; this says what it means and where the way back is -->
-			<GitBranch class="size-3.5 shrink-0" />
+			<GitBranch class="text-muted size-3.5 shrink-0" />
 			{#if detached}
-				<span class="cap-center shrink-100 truncate font-medium {branchFit}" use:tip={m.vcs_detached_tip()}
+				<span class="text-muted cap-center shrink-100 truncate font-medium {branchFit}" use:tip={m.vcs_detached_tip()}
 					>{m.vcs_detached({ short: shortHead })}</span
 				>
 			{:else}
-				<span class="cap-center shrink-100 truncate font-medium {branchFit}">{branch ?? m.vcs_no_branch()}</span>
+				<span class="text-muted cap-center shrink-100 truncate font-medium {branchFit}">{branch ?? m.vcs_no_branch()}</span>
 			{/if}
 			<!-- the tip is read out as well as hovered -->
 			{#if opNote}
-				<span class="cap-center truncate" use:tip={opNote.tip}>{opNote.label}<span class="sr-only">. {opNote.tip}</span></span>
+				<span class="text-muted cap-center truncate" use:tip={opNote.tip}>{opNote.label}<span class="sr-only">. {opNote.tip}</span></span>
 			{/if}
 			<div class="ml-auto flex shrink-0 items-center gap-1">
 				<SyncControls place="header" {tracking} {ahead} {behind} {hasCommits} {detached} {branch} {operation} {busy} {onSync} {onPublish} />

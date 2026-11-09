@@ -38,15 +38,15 @@
 			</div>
 		{/if}
 		{#if props.text.trim()}
-			<p class="bg-surface-100-900 rounded-container px-3 py-1.5 text-sm leading-relaxed break-words whitespace-pre-wrap">{props.text}</p>
+			<p class="bg-surface-100-900 rounded-container px-3 py-1.5 text-base leading-relaxed break-words whitespace-pre-wrap">{props.text}</p>
 		{/if}
 	</div>
 {:else if props.kind === 'agent'}
 	<!-- eslint-disable-next-line svelte/no-at-html-tags -- markdown-it with html off: the agent's own HTML stays text -->
-	<div class="agent-markdown text-sm leading-relaxed break-words">{@html html}</div>
+	<div class="agent-markdown text-base leading-relaxed break-words">{@html html}</div>
 {:else}
-	<p class="text-error-ink flex gap-1.5 text-sm leading-relaxed break-words whitespace-pre-wrap">
-		<CircleAlert class="mt-0.5 size-4 shrink-0" /><span class="min-w-0">{props.text}</span>
+	<p class="text-error-ink flex gap-1.5 text-base leading-relaxed break-words whitespace-pre-wrap">
+		<CircleAlert class="mt-1 size-4 shrink-0" /><span class="min-w-0">{props.text}</span>
 	</p>
 {/if}
 

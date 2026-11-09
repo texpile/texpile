@@ -179,6 +179,7 @@ export function latexEditorPlugins(setup: LatexEditorSetup): Plugin[] {
 		pmCommandKeys({
 			'editor.bold': toggleMark(schema.marks.strong),
 			'editor.italic': toggleMark(schema.marks.em),
+			'editor.emphasis': toggleMark(schema.marks.em, { cmd: 'emph' }),
 			'editor.inlineCode': toggleMark(schema.marks.code),
 			'editor.underline': toggleMark(schema.marks.u),
 			'editor.superscript': toggleMark(schema.marks.sup),

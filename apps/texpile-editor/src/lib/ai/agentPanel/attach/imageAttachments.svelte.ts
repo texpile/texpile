@@ -21,6 +21,10 @@ export class ImageAttachments {
 		return true;
 	}
 
+	restore(images: PastedImage[]): void {
+		this.list = [...images, ...this.list];
+	}
+
 	remove(index: number): void {
 		this.list = this.list.filter((_, i) => i !== index);
 	}

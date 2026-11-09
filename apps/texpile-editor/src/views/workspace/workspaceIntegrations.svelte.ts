@@ -9,6 +9,7 @@ import { capsOf, fileMode } from '$lib/workspace/fileMode.svelte';
 import { untrack } from 'svelte';
 import { publishWindowState } from '$lib/workspace/mcpPublish';
 import { attachMcpCommands } from '$lib/workspace/mcpCommands';
+import { compileConfig } from '$lib/workspace/projectConfigSync.svelte';
 import { attachSessionHandlers } from '$lib/collab/workspaceSession';
 import { DocRegistries } from '$lib/workspace/docRegistries.svelte';
 import { ScmActions } from '$lib/workspace/scm/actions/scmActions.svelte';
@@ -251,6 +252,7 @@ export class WorkspaceIntegrations {
 			void isDirty.current;
 			void settings.current;
 			void tabs.list;
+			void compileConfig.current;
 			publishWindowState(modes.mode);
 		});
 		// the MCP tools that need this window: get_unsaved / get_diagnostics answer here, and the
