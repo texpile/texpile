@@ -72,25 +72,34 @@ function sheetOf(css: string, win: Window & typeof globalThis = window): CSSStyl
 	return sheet;
 }
 
-/** false when the file is gone */
-export async function applyCustomTheme(file: string): Promise<boolean> {
+let pageRequest = 0;
+
+/** 'superseded' when another theme was put on the page while the file was read */
+export async function applyCustomTheme(file: string): Promise<'applied' | 'missing' | 'superseded'> {
+	const request = ++pageRequest;
 	const text = await readTheme(file).catch(() => null);
+	if (request !== pageRequest) return 'superseded';
 	if (text === null) {
 		clearCustomTheme();
-		return false;
+		return 'missing';
 	}
 	const css = resolveThemeUrls(text) + filledShadesCss(text);
 	pageCss = css;
 	// the document's constructed sheets are the custom theme's alone
 	document.adoptedStyleSheets = [sheetOf(css)];
 	cache({ name: customThemeName(file), css });
-	return true;
+	return 'applied';
 }
 
-export function clearCustomTheme(): void {
+/** true when a custom theme was on the page */
+export function clearCustomTheme(): boolean {
+	pageRequest += 1;
+	// theme-init.js may have put one there before pageCss is known
+	const had = pageCss !== null || (typeof document !== 'undefined' && !!document.adoptedStyleSheets?.length);
 	pageCss = null;
-	if (typeof document !== 'undefined' && document.adoptedStyleSheets?.length) document.adoptedStyleSheets = [];
+	if (had && typeof document !== 'undefined') document.adoptedStyleSheets = [];
 	cache(null);
+	return had;
 }
 
 /** the theme on this page, made again in another window's document */

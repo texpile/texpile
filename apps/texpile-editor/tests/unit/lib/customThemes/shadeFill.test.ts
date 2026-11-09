@@ -22,4 +22,11 @@ describe('a color family a theme sets in part', () => {
 		expect(css).not.toContain('--color-primary-');
 		expect(filledShadesCss(':root { --color-surface-50-950: red; }')).toBe('');
 	});
+
+	it('is filled in dark mode only when the theme sets it in dark mode only', () => {
+		const css = filledShadesCss(":root { --syntax-keyword: #c792ea; }\n[data-mode='dark'] { --color-surface-950: #011627; }");
+		expect(css).not.toContain(':root');
+		expect(css).not.toContain("[data-mode='light']");
+		expect(css).toContain("[data-mode='dark'] {\n\t--color-surface-50: color-mix(in oklab, var(--color-surface-950) 6%, white);");
+	});
 });

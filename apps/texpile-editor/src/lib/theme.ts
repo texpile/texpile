@@ -67,9 +67,9 @@ function isPreset(name: string): boolean {
 }
 
 async function applyCustom(name: string, file: string): Promise<void> {
-	const applied = await applyCustomTheme(file);
-	if (themeName.current !== name) return;
-	if (applied) themeEpoch.current += 1;
+	const result = await applyCustomTheme(file);
+	if (result === 'superseded' || themeName.current !== name) return;
+	if (result === 'applied') themeEpoch.current += 1;
 	else setThemeName('theme');
 }
 
@@ -81,10 +81,14 @@ function applyThemeName(wanted: string): void {
 	themeName.current = custom ? wanted : isPreset(wanted) ? wanted : 'theme';
 	if (typeof document === 'undefined') return;
 	const name = custom ? 'theme' : themeName.current;
+	const clearedCustom = !custom && clearCustomTheme();
 	if (custom) void applyCustom(wanted, custom);
-	else clearCustomTheme();
 	const root = document.documentElement;
-	if (root.getAttribute('data-theme') === name && (name === 'theme' || document.getElementById(THEME_EL))) return;
+	if (root.getAttribute('data-theme') === name && (name === 'theme' || document.getElementById(THEME_EL))) {
+		// back to the default from a custom theme: no attribute changes, so nothing else announces it
+		if (clearedCustom) themeEpoch.current += 1;
+		return;
+	}
 	document.getElementById(THEME_EL)?.remove();
 	if (name !== 'theme') {
 		const link = document.createElement('link');

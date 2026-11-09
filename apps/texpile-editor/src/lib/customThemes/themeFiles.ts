@@ -1,5 +1,5 @@
 // a custom theme as the themes folder holds it: a .css file, picked by name as `custom:<file>`
-import { declaredShades, fillFamily, type ColorFamily } from './shadeFill';
+import { declaredShades, fillFamily, modeDeclarations, type ColorFamily, type ThemeMode } from './shadeFill';
 
 export const CUSTOM_THEME_PREFIX = 'custom:';
 /** where a theme's relative url() resolves: its own files, served by texpile-theme:// */
@@ -43,8 +43,8 @@ export function themeLabel(file: string): string {
 		.join(' ');
 }
 
-function tileShades(css: string, family: ColorFamily): Map<number, string> {
-	const set = declaredShades(css, family);
+function tileShades(css: string, family: ColorFamily, mode: ThemeMode): Map<number, string> {
+	const set = declaredShades(modeDeclarations(css, mode), family);
 	return new Map([...set, ...fillFamily(set, (_shade, value) => value)]);
 }
 
@@ -55,13 +55,14 @@ function pick(value: string | undefined, fallback: string): string {
 
 /** the tile's colors from what the theme sets and blends, the rest from the theme it builds on */
 export function themeSwatch(css: string, base: ThemeSwatch): ThemeSwatch {
-	const primary = tileShades(css, 'primary');
-	const surface = tileShades(css, 'surface');
+	const primary = tileShades(css, 'primary', 'light');
+	const light = tileShades(css, 'surface', 'light');
+	const dark = tileShades(css, 'surface', 'dark');
 	return {
 		primary: pick(primary.get(500), base.primary),
-		surfaceLight: pick(surface.get(50), base.surfaceLight),
-		surfaceDark: pick(surface.get(950), base.surfaceDark),
-		panelLight: pick(surface.get(200), base.panelLight),
-		panelDark: pick(surface.get(800), base.panelDark)
+		surfaceLight: pick(light.get(50), base.surfaceLight),
+		surfaceDark: pick(dark.get(950), base.surfaceDark),
+		panelLight: pick(light.get(200), base.panelLight),
+		panelDark: pick(dark.get(800), base.panelDark)
 	};
 }

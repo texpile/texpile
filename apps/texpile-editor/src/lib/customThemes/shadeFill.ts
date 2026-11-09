@@ -5,11 +5,39 @@ const FAMILIES = ['primary', 'secondary', 'tertiary', 'success', 'warning', 'err
 const SHADES = [50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950];
 
 export type ColorFamily = (typeof FAMILIES)[number];
+export type ThemeMode = 'light' | 'dark';
 /** an anchor shade's color where a blend uses it: its var() in a stylesheet, the value itself on a tile */
 export type ShadeRef = (shade: number, value: string) => string;
 
 function declaredValue(css: string, name: string): string | null {
-	return new RegExp(`${name}\\s*:\\s*([^;}]+)`).exec(css)?.[1].trim() ?? null;
+	return [...css.matchAll(new RegExp(`${name}\\s*:\\s*([^;}]+)`, 'g'))].at(-1)?.[1].trim() ?? null;
+}
+
+const DARK = /\[data-mode\s*=\s*['"]?dark['"]?\s*\]|\.dark(?![\w-])/;
+const LIGHT = /\[data-mode\s*=\s*['"]?light['"]?\s*\]/;
+const NOT = /:not\(([^()]*)\)/g;
+
+function modeOf(selector: string): ThemeMode | null {
+	const plain = selector.replace(NOT, '');
+	const negated = [...selector.matchAll(NOT)].map((m) => m[1]).join(' ');
+	if (DARK.test(plain) || LIGHT.test(negated)) return 'dark';
+	if (LIGHT.test(plain) || DARK.test(negated)) return 'light';
+	return null;
+}
+
+/** the theme's declarations that apply in a mode: those under no mode selector, then the mode's own */
+export function modeDeclarations(css: string, mode: ThemeMode): string {
+	const byMode = { both: '', light: '', dark: '' };
+	const preludes: string[] = [];
+	const parts = css.replace(/\/\*[\s\S]*?\*\//g, '').split(/([{}])/);
+	for (let i = 0; i < parts.length; i += 2) {
+		const opens = parts[i + 1] === '{';
+		const cut = opens ? parts[i].lastIndexOf(';') + 1 : parts[i].length;
+		byMode[modeOf(preludes.join(' ')) ?? 'both'] += parts[i].slice(0, cut) + ';';
+		if (opens) preludes.push(parts[i].slice(cut));
+		else preludes.pop();
+	}
+	return byMode.both + byMode[mode];
 }
 
 export function declaredShades(css: string, family: ColorFamily): Map<number, string> {
@@ -50,8 +78,7 @@ function contrastOf(family: ColorFamily, shade: number): string {
 	return `oklch(from var(--color-${family}-${shade}) calc((0.62 - l) * 1000) 0 0)`;
 }
 
-/** the declarations a theme leaves out of each family it touches, with every shade's text color to match */
-export function filledShadesCss(css: string): string {
+function filledLines(css: string): string[] {
 	const lines: string[] = [];
 	for (const family of FAMILIES) {
 		const set = declaredShades(css, family);
@@ -62,5 +89,18 @@ export function filledShadesCss(css: string): string {
 			if (declaredValue(css, `${name}(?![0-9])`) === null) lines.push(`${name}: ${contrastOf(family, shade)};`);
 		}
 	}
-	return lines.length ? `\n:root {\n\t${lines.join('\n\t')}\n}\n` : '';
+	return lines;
+}
+
+function ruleOf(selector: string, lines: string[]): string {
+	return lines.length ? `\n${selector} {\n\t${lines.join('\n\t')}\n}\n` : '';
+}
+
+/** the declarations a theme leaves out of each family it touches, with every shade's text color to match, filled per
+ *  mode when the theme sets shades for one mode only */
+export function filledShadesCss(css: string): string {
+	const light = filledLines(modeDeclarations(css, 'light'));
+	const dark = filledLines(modeDeclarations(css, 'dark'));
+	if (light.join() === dark.join()) return ruleOf(':root', light);
+	return ruleOf("[data-mode='light']", light) + ruleOf("[data-mode='dark']", dark);
 }
