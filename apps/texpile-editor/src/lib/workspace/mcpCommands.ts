@@ -137,6 +137,12 @@ function diagnosticsPayload(deps: McpCommandDeps) {
 	};
 }
 
+async function loadedNow(deps: McpCommandDeps, abs: string, ms = 5000): Promise<boolean> {
+	for (const end = Date.now() + ms; Date.now() < end; await new Promise((resolve) => setTimeout(resolve, 50)))
+		if (samePath(deps.getLoadedPath() ?? '', abs)) return true;
+	return false;
+}
+
 /**
  * Switching mode can be REFUSED, so this reports what actually happened instead of assuming.
  * isGitRepo is probed at launch, so a repo created since leaves it stale; diff checks again before giving up.
@@ -371,6 +377,10 @@ export function attachMcpCommands(deps: McpCommandDeps): () => void {
 				const abs = resolveInWorkspace(rel);
 				if (!abs) return reply({ ok: false, reason: 'path is outside this workspace' });
 				deps.openFile(abs);
+				// the tab opens at once and its document later: diffing now compared the file open before
+				return void loadedNow(deps, abs)
+					.then((open) => (open ? viewModePayload(deps, 'diff') : { ok: false, reason: 'the file did not open' }))
+					.then(reply);
 			}
 			return void viewModePayload(deps, 'diff').then(reply);
 		}
