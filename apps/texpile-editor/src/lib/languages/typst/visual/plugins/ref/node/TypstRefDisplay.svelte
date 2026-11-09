@@ -61,7 +61,7 @@
 	<Portal>
 		<Popover.Positioner class="z-floating-ui">
 			<Popover.Content
-				class="card bg-surface-50-950 border-surface-300-700 z-[200] max-w-[min(90vw,28rem)] min-w-[300px] border p-4 shadow-lg"
+				class="card bg-surface-50-950 border-surface-300-700 z-[200] max-h-[var(--available-height)] max-w-[min(90vw,28rem)] min-w-[300px] overflow-y-auto border p-4 shadow-lg"
 			>
 				<!-- mounted on open only: the form lists the whole bibliography -->
 				{#if dropdownOpen}
