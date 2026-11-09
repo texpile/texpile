@@ -9,7 +9,7 @@ type TeleportHooks = {
 	root: () => string;
 	mainFile: () => string;
 	applyPage: (p: DraftPage, seq: number) => Promise<void>;
-	landed: (r: TeleportLanded) => Promise<void>;
+	landed: (r: TeleportLanded, seq: number) => Promise<void>;
 	/** the compile in flight, which lands the index edits teleport from */
 	compileInFlight: () => Promise<unknown> | null;
 	setStatus: (s: string) => void;
@@ -49,7 +49,7 @@ export class DraftTeleport {
 		await this.pageQueue;
 		this.hooks.emit('teleport', { ...r, seq, file, roundTripMs: Math.round(performance.now() - t0) });
 		if (r.ok) {
-			await this.hooks.landed(r);
+			await this.hooks.landed(r, seq);
 			if (r.from !== undefined) this.hooks.setStatus(m.draft_status_updated({ ms: Math.round(r.ms) }));
 			return 'shown';
 		}
