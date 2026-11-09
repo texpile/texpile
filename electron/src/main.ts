@@ -200,7 +200,8 @@ if (launchedMidInstall() || !app.requestSingleInstanceLock()) {
 			return;
 		}
 		const dir = folderFromArgv(argv);
-		createWindow(startUrl(), dir ? { kind: 'folder', path: dir } : undefined);
+		if (dir) requestOpenFolder(dir);
+		else createWindow(startUrl());
 	});
 }
 
