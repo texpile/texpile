@@ -127,6 +127,11 @@ function workspaceOf(client: LSPClient): TypstWorkspace | null {
 	return client.workspace instanceof TypstWorkspace ? client.workspace : null;
 }
 
+/** the running server's client, only if it serves `root`; never starts one */
+export function runningTypstClient(root: string | null): LSPClient | null {
+	return session && session.root === root ? session.client : null;
+}
+
 /** the running server's workspace, only if it serves `root`; never starts one */
 function runningWorkspace(root: string | null): TypstWorkspace | null {
 	return session && session.root === root ? workspaceOf(session.client) : null;

@@ -14,6 +14,7 @@ import { collabHost } from '$lib/collab/hostStore.svelte';
 import { basename, claimWorkspace, purgeUndoBackups } from '$lib/workspace/fileSystem';
 import { askBeforeDiskUndo } from '$lib/buffers/fileUndo';
 import { confirmAsk } from '$lib/modals/confirm.svelte';
+import { nudgeTypstDisk } from '$lib/languages/typst/intellisense/diskNudge';
 import { m } from '$lib/paraglide/messages';
 import type { PaneLayout } from '$lib/workspace/paneLayout.svelte';
 import type { TerminalDockState } from '$lib/workspace/terminalDockState.svelte';
@@ -101,6 +102,7 @@ export function startWorkspace(d: StartupDeps): (() => void) | undefined {
 		syncBuffers: (changed) => void editFlow.saver.syncFromDisk(changed),
 		runCompile: () => d.compiler.runCompile(),
 		loadExternalPdf: () => void d.compiler.loadExternalPdf(),
+		nudgeTypst: (paths) => nudgeTypstDisk(workspaceRoot.current, paths),
 		onWindowResize: () => {
 			layout.reclampPdf();
 			termDock.reclamp();

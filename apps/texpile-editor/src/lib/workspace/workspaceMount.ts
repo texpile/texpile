@@ -2,7 +2,7 @@
 // the close handshake with the main process.
 import { nativeBridge } from '$lib/workspace/fileSystem';
 import { fileService } from '$lib/files/service/fileService';
-import { fileUriOf } from '$lib/files/identity/fileUris';
+import { fileUriOf, pathOfFileUri } from '$lib/files/identity/fileUris';
 import { ResourceSet } from '$lib/files/identity/resourceMap';
 import { fileAsStamped } from '$lib/files/service/fileStamp';
 import type { FileOperationEvent } from '$lib/files/changes/fileOperations';
@@ -23,6 +23,8 @@ export type WindowWiringDeps = {
 	reloadProjectState(): void;
 	/** show a PDF something other than our Compile wrote (an agent, latexmk -pvc, another editor) */
 	loadExternalPdf(): void;
+	/** the project files an outside write changed, for the Typst server that may have missed them */
+	nudgeTypst(paths: string[]): void;
 };
 
 // a replace across fifty files is one refresh
@@ -62,6 +64,7 @@ export function attachWindowListeners(deps: WindowWiringDeps): () => void {
 		deps.reloadReferences();
 		if (!deps.isHost()) return;
 		deps.syncBuffers((path) => e.contains(fileUriOf(path)));
+		deps.nudgeTypst([...e.rawUpdated, ...e.rawAdded].map(pathOfFileUri));
 		deps.loadExternalPdf();
 		deps.reloadProjectState();
 	}
