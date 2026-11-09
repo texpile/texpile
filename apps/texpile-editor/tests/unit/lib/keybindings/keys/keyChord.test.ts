@@ -53,6 +53,20 @@ describe('a key press', () => {
 		expect(chordOfEvent(press('ArrowUp', 'ArrowUp', { altKey: true }), true)?.key).toBe('up');
 	});
 
+	it('reads a + key of its own as the = key, and a shifted punctuation key by its place', () => {
+		// German: + sits where US ] is; Ctrl+Shift+, types ; and Ctrl+Shift+0 types =
+		expect(chordOfEvent(press('+', 'BracketRight', { ctrlKey: true }), false)).toMatchObject({ key: '=', ctrl: true });
+		expect(chordOfEvent(press('+', 'NumpadAdd', { ctrlKey: true }), false)?.key).toBe('=');
+		expect(chordOfEvent(press('+', 'NumpadAdd', { ctrlKey: true, shiftKey: true }), false)?.key).toBe('=');
+		expect(chordOfEvent(press(';', 'Comma', { ctrlKey: true, shiftKey: true }), false)).toMatchObject({ key: ',', shift: true });
+		expect(chordOfEvent(press('=', 'Digit0', { ctrlKey: true, shiftKey: true }), false)?.key).toBe('0');
+		// US
+		expect(chordOfEvent(press('+', 'Equal', { ctrlKey: true, shiftKey: true }), false)).toMatchObject({ key: '=', shift: true });
+		expect(chordOfEvent(press('Z', 'KeyZ', { ctrlKey: true, shiftKey: true }), false)?.key).toBe('z');
+		expect(chordOfEvent(press('Tab', 'Tab', { ctrlKey: true, shiftKey: true }), false)?.key).toBe('tab');
+		expect(electronAccelerator(parseKeys('mod+=', true)!, true)).toBe('Cmd+Plus');
+	});
+
 	it('is no shortcut for a modifier alone, IME composition or AltGr typing', () => {
 		expect(chordOfEvent(press('Control', 'ControlLeft', { ctrlKey: true }), false)).toBeNull();
 		expect(chordOfEvent({ ...press('a', 'KeyA'), isComposing: true }, false)).toBeNull();

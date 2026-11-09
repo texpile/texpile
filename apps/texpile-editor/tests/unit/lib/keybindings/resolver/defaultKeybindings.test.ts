@@ -105,6 +105,13 @@ describe('the default keys', () => {
 		expect(run).toHaveBeenCalledTimes(1);
 	});
 
+	it('leave every Option and letter press to typing on macOS', () => {
+		const optionLetters = defaultItems(DEFAULT_KEYBINDINGS, 'mac').filter(({ keys }) =>
+			keys?.some((c) => c.alt && !c.ctrl && !c.meta && /^[a-z0-9]$/.test(c.key))
+		);
+		expect(optionLetters.map((i) => i.command)).toEqual([]);
+	});
+
 	it('focus an editor by the digit key on AZERTY, where it types &', () => {
 		const run = vi.fn();
 		commands([{ id: 'view.focusEditor1', run }]);

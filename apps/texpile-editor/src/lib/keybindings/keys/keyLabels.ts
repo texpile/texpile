@@ -57,7 +57,9 @@ const ACCELERATOR_KEYS: Record<string, string> = {
 	right: 'Right',
 	pageup: 'PageUp',
 	pagedown: 'PageDown',
-	space: 'Space'
+	space: 'Space',
+	// the menu shows ⌘+, and a layout's own + key matches it
+	'=': 'Plus'
 };
 
 /** what Electron's native menu takes; null for a chord sequence, which a native menu cannot show */
