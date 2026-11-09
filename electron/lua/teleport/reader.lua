@@ -82,12 +82,34 @@ return function(T)
 		return nil
 	end
 
+	local function brace_delta(line)
+		if not line:find("[{}]") or tex.getcatcode(123) ~= 1 or tex.getcatcode(125) ~= 2 then return 0 end
+		local d, i = 0, 1
+		while i <= #line do
+			local c = line:byte(i)
+			if c == 92 then i = i + 1
+			elseif c == 37 then break
+			elseif c == 123 then d = d + 1
+			elseif c == 125 then d = d - 1 end
+			i = i + 1
+		end
+		return d
+	end
+
+	-- a macro still reading arguments would take the probe as one, and Lua cannot see TeX's scanner
+	local function between_commands(r, l, nextl)
+		if r.depth > 0 then return false end
+		local prev = r.lines[nextl - 1]
+		if l and l:find("^%s*[{%[*]") and not (prev and prev:find("^%s*$")) then return false end
+		return tex.nest.ptr == 0 and tex.currentgrouplevel == T.base.level and tex.currentiflevel == T.base.iflevel
+	end
+
 	-- `input`: the file opens for \input; LaTeX before 2023 opens it on an \openin stream first to see that it exists
 	local function source_reader(name, rel, input)
 		local lines = lines_of(T.overrides[rel] or name)
 		if not lines then return nil end
 		snapshot(rel, lines)
-		local r = { rel = rel, path = name, source = true, pos = 0, injected = {}, lines = lines }
+		local r = { rel = rel, path = name, source = true, pos = 0, depth = 0, injected = {}, lines = lines }
 		local entry = input and T.entries[rel]
 		if entry then T.entries[rel] = nil end
 		function r.reader()
@@ -102,7 +124,7 @@ return function(T)
 			end
 			T.poll_cut()
 			if r.jump then
-				r.pos = r.jump - 1
+				r.pos, r.depth = r.jump - 1, 0
 				r.jump = nil
 			end
 			local nextl = r.pos + 1
@@ -121,7 +143,7 @@ return function(T)
 				-- a nested teleport enters here: the record of this line goes in before it is read
 				local e = entry
 				entry = nil
-				r.pos = e.line - 1
+				r.pos, r.depth = e.line - 1, 0
 				nextl = e.line
 				r.injected[nextl] = true
 				tex.inputlineno = nextl - 1
@@ -136,7 +158,7 @@ return function(T)
 				local l = r.lines[nextl]
 				local opening = l ~= nil and opens_file(l)
 				local staged = T.stage and r.rel == T.stage.f and nextl == T.stage.l
-				if T.want_point or opening or staged or (T.stops and T.stops[T.key_of(T.stack_now(nextl) or {})]) then
+				if (T.want_point or opening or staged or (T.stops and T.stops[T.key_of(T.stack_now(nextl) or {})])) and between_commands(r, l, nextl) then
 					r.injected[nextl] = true
 					tex.inputlineno = nextl - 1
 					return "\\directlua{texpile_tele_point(" .. nextl .. "," .. (opening and "true" or "false") .. ")}%"
@@ -152,6 +174,7 @@ return function(T)
 			end
 			r.pos = nextl
 			if l == nil then return nil end
+			r.depth = l:find("^%s*$") and 0 or math.max(0, r.depth + brace_delta(l))
 			tex.inputlineno = nextl
 			if T.serving and not T.no_park and l:find("\\", 1, true) then T.no_park = lasting(l) end
 			return l
