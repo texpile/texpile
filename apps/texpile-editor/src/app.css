@@ -595,9 +595,22 @@ select.input {
 .ProseMirror.pm-lines-plain > .prosemirror-flat-list p {
 	text-align: justify;
 }
-/* while the column's width is changing the browser wraps on its own, and the marks stay in place for when it rests */
-.ProseMirror.pm-lines-native .pm-line-par {
-	text-wrap-mode: wrap;
+/* while the column's width is changing the editor keeps the width its lines were broken for and its parent clips what
+   runs past a narrower column; the pane is grayed out over it until the lines are broken again, as Overleaf does */
+.ProseMirror.pm-lines-frozen {
+	flex: none;
+	max-width: none;
+	pointer-events: none;
+}
+:has(> .ProseMirror.pm-lines-frozen) {
+	overflow-x: clip;
+}
+[data-editor-frame]:has(.ProseMirror.pm-lines-frozen)::after {
+	content: '';
+	position: absolute;
+	inset: 0;
+	background-color: var(--color-surface-200-800);
+	pointer-events: none;
 }
 /* an input method's text grows at the caret and cannot be re-broken until it commits (compositionWrap) */
 .ProseMirror.pm-composing .pm-line-par.pm-line-caret {
