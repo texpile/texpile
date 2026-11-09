@@ -597,7 +597,8 @@ select.input {
 }
 /* while the column's width is changing the editor keeps the width its lines were broken for and its parent clips what
    runs past a narrower column; the pane is covered until the lines are broken again, as Overleaf does, and names its
-   file so split panes stay told apart. The solid ground: a see-through window clears the usual one */
+   file so split panes stay told apart. The previews are covered the same way while their width moves (resizeCover).
+   The solid ground: a see-through window clears the usual one */
 .ProseMirror.pm-lines-frozen {
 	flex: none;
 	max-width: none;
@@ -606,8 +607,9 @@ select.input {
 :has(> .ProseMirror.pm-lines-frozen) {
 	overflow-x: clip;
 }
-[data-editor-frame]:has(.ProseMirror.pm-lines-frozen)::after {
-	content: attr(data-editor-frame);
+[data-resize-cover]:has(.ProseMirror.pm-lines-frozen)::after,
+[data-resize-cover][data-resizing]::after {
+	content: attr(data-resize-cover);
 	position: absolute;
 	inset: 0;
 	display: flex;

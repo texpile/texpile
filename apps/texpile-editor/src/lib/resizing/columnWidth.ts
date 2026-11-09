@@ -1,20 +1,20 @@
-// the width of the column the visual editor sits in, as the line breaker follows it
+// the width of a pane's column: one change, or a stream of them that comes to rest
 
-// how long the width has to hold still before the document is broken again
+// how long the width has to hold still before the pane redraws for it
 const WIDTH_REST_MS = 150;
 
 type ColumnWidthHooks = {
-	/** break the whole document for the width it has now; `nextFrame` from an observer, which may not change heights */
+	/** redraw for the width it has now; `nextFrame` from an observer, which may not change heights */
 	breakNow(nextFrame: boolean): void;
-	/** the width keeps moving: keep the editor at the width its lines were broken for */
+	/** the width keeps moving: hold what is drawn until it rests */
 	hold(): void;
 	/** the width came to rest after moving */
 	rest(): void;
 };
 
-/** a width that changes once (the comment margin opening) is broken for at once. A splitter drag or a window resize
- *  changes it every frame, and breaking a long document, or letting the browser wrap it, every frame is what made
- *  dragging slow; the editor holds its width until the width rests */
+/** a width that changes once (the comment margin opening) is redrawn for at once. A splitter drag or a window resize
+ *  changes it every frame, and re-breaking a long document every frame is what made dragging slow; the pane holds
+ *  what it drew until the width rests */
 export class ColumnWidth {
 	moving = false;
 	private width = -1;

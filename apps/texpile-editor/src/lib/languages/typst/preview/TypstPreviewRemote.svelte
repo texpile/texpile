@@ -33,6 +33,7 @@
 	import { followScrollTick } from './followSignal';
 	import { scrollbarRadius, textColour, themeColour } from './themeColour';
 	import { m } from '$lib/paraglide/messages';
+	import { resizeCover } from '$lib/resizing/resizeCover';
 
 	type Props = {
 		/** a splitter is being dragged; hold the frame's size instead of reflowing it every frame */
@@ -333,15 +334,19 @@
 		]}
 	/>
 
-	<div bind:this={frameBox} class="relative min-h-0 flex-1 overflow-hidden">
+	<div
+		bind:this={frameBox}
+		class="relative min-h-0 flex-1 overflow-hidden"
+		data-resize-cover={m.typst_preview_label()}
+		{@attach resizeCover}
+	>
 		{#if frameUrl}
 			<ColorVisionFilter class="h-full">
 				<iframe
 					bind:this={frame}
 					src={frameUrl}
 					title={m.typst_preview_label()}
-					class="h-full border-0 transition-[filter] duration-100"
-					class:blur-[1.5px]={frozenWidth !== null}
+					class="h-full border-0"
 					class:pointer-events-none={frozenWidth !== null}
 					style:width={frozenWidth !== null ? `${frozenWidth}px` : '100%'}
 					onerror={() => (error = m.typst_preview_frame_failed())}

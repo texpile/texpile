@@ -8,7 +8,7 @@ import { templateFeaturesStore } from '$lib/stores/editorStore';
 import { isLargeDocument } from '$lib/languages/latex/visual/largeDocument';
 import { hasOldWords, pmSuggestionsKey } from '../extensions/pmSuggestionsState';
 import { contentWidth } from '../lineBoxes';
-import { ColumnWidth } from './columnWidth';
+import { ColumnWidth } from '$lib/resizing/columnWidth';
 import { compositionWrapPlugin } from './compositionWrap';
 import { hyphenSelectionPlugin } from './hyphenSelection';
 import type { DocumentHyphenation } from './documentHyphenationLanguage';

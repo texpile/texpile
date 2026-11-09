@@ -9,6 +9,7 @@
 	import { FLOATING_BAR_BOTTOM } from '$lib/editor/floatingBar';
 	import { pdfFindToggle } from '$lib/stores/editorStore';
 	import { pdfViewFind } from './pdfViewFind';
+	import { resizeCover } from '$lib/resizing/resizeCover';
 	import { PictureInPicture2, X } from '@lucide/svelte';
 	import PdfSplitViews from './PdfSplitViews.svelte';
 	import PdfViewScope from '$lib/pdf-view/PdfViewScope.svelte';
@@ -209,6 +210,8 @@
 					<div
 						class="relative flex min-h-0 flex-1 flex-col"
 						data-pdf-view
+						data-resize-cover={filename ?? label ?? ''}
+						{@attach resizeCover}
 						tabindex="-1"
 						{@attach pdfViewFind(
 							() => (finds[place] = !finds[place]),

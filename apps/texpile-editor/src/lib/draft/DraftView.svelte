@@ -10,6 +10,7 @@
 	import PageField from '$lib/preview/zoom/PageField.svelte';
 	import ColorVisionMenu from '$lib/preview/colorVision/ColorVisionMenu.svelte';
 	import ColorVisionFilter from '$lib/preview/colorVision/ColorVisionFilter.svelte';
+	import { resizeCover } from '$lib/resizing/resizeCover';
 	import InvertColorsItem from '$lib/preview/invertColors/InvertColorsItem.svelte';
 	import { pagesInverted } from '$lib/preview/invertColors/pagesInverted';
 	import { wheelZoomFactor } from '$lib/preview/zoom/wheelZoom';
@@ -255,46 +256,49 @@
 		<pre
 			class="text-error-ink bg-surface-50-950 rounded-container m-3 max-h-40 shrink-0 [scrollbar-gutter:stable] overflow-auto p-3 text-xs whitespace-pre-wrap">{compiler.error}</pre>
 	{/if}
-	<ColorVisionFilter class="flex min-h-0 flex-1 flex-col">
-		<div
-			bind:this={vp.scroller}
-			bind:clientWidth={vp.containerW}
-			onscroll={() => vp.onScroll()}
-			class="flex flex-1 [scrollbar-gutter:stable] flex-col items-center-safe gap-4 overflow-auto p-5"
-		>
-			{#each ctrl.pages as p (p.n)}
-				<div class="relative rounded-[2px] shadow-(--page-shadow)">
-					<canvas
-						bind:this={ctrl.canvasEls[p.n - 1]}
-						class:invert-94={pagesInverted()}
-						class:hue-rotate-180={pagesInverted()}
-						ondblclick={(e) => ctrl.onCanvasDblClick(p.n, e)}
-					></canvas>
-					{#if vp.editBand && vp.editBand.page === p.n}
-						<!-- the lines the edit changed; fades shortly after typing stops -->
-						<div
-							class="rounded-base bg-draft-band/30 pointer-events-none absolute"
-							transition:fade={{ duration: 300 }}
-							style="left:{(ctrl.paper.mx + vp.editBand.colL) * vp.dispScale}px; top:{(ctrl.paper.my + vp.editBand.top - 2) *
-								vp.dispScale}px; width:{(vp.editBand.colR - vp.editBand.colL) * vp.dispScale}px; height:{(vp.editBand.bottom -
-								vp.editBand.top +
-								4) *
-								vp.dispScale}px"
-						></div>
-					{/if}
-					{#if vp.clickMark && vp.clickMark.page === p.n}
-						<!-- where the sync double-click landed -->
-						<div
-							class="pointer-events-none absolute"
-							transition:fade={{ duration: 200 }}
-							style="left:{vp.clickMark.x * vp.dispScale}px; top:{vp.clickMark.y * vp.dispScale}px"
-						>
-							<span class="border-primary-500 absolute size-6 -translate-x-1/2 -translate-y-1/2 animate-ping rounded-full border-2"></span>
-							<span class="bg-primary-500 absolute size-1.5 -translate-x-1/2 -translate-y-1/2 rounded-full"></span>
-						</div>
-					{/if}
-				</div>
-			{/each}
-		</div>
-	</ColorVisionFilter>
+	<div class="relative flex min-h-0 flex-1 flex-col" data-resize-cover={m.wsview_live_preview_label()} {@attach resizeCover}>
+		<ColorVisionFilter class="flex min-h-0 flex-1 flex-col">
+			<div
+				bind:this={vp.scroller}
+				bind:clientWidth={vp.containerW}
+				onscroll={() => vp.onScroll()}
+				class="flex flex-1 [scrollbar-gutter:stable] flex-col items-center-safe gap-4 overflow-auto p-5"
+			>
+				{#each ctrl.pages as p (p.n)}
+					<div class="relative rounded-[2px] shadow-(--page-shadow)">
+						<canvas
+							bind:this={ctrl.canvasEls[p.n - 1]}
+							class:invert-94={pagesInverted()}
+							class:hue-rotate-180={pagesInverted()}
+							ondblclick={(e) => ctrl.onCanvasDblClick(p.n, e)}
+						></canvas>
+						{#if vp.editBand && vp.editBand.page === p.n}
+							<!-- the lines the edit changed; fades shortly after typing stops -->
+							<div
+								class="rounded-base bg-draft-band/30 pointer-events-none absolute"
+								transition:fade={{ duration: 300 }}
+								style="left:{(ctrl.paper.mx + vp.editBand.colL) * vp.dispScale}px; top:{(ctrl.paper.my + vp.editBand.top - 2) *
+									vp.dispScale}px; width:{(vp.editBand.colR - vp.editBand.colL) * vp.dispScale}px; height:{(vp.editBand.bottom -
+									vp.editBand.top +
+									4) *
+									vp.dispScale}px"
+							></div>
+						{/if}
+						{#if vp.clickMark && vp.clickMark.page === p.n}
+							<!-- where the sync double-click landed -->
+							<div
+								class="pointer-events-none absolute"
+								transition:fade={{ duration: 200 }}
+								style="left:{vp.clickMark.x * vp.dispScale}px; top:{vp.clickMark.y * vp.dispScale}px"
+							>
+								<span class="border-primary-500 absolute size-6 -translate-x-1/2 -translate-y-1/2 animate-ping rounded-full border-2"
+								></span>
+								<span class="bg-primary-500 absolute size-1.5 -translate-x-1/2 -translate-y-1/2 rounded-full"></span>
+							</div>
+						{/if}
+					</div>
+				{/each}
+			</div>
+		</ColorVisionFilter>
+	</div>
 </div>
