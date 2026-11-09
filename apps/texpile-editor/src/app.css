@@ -596,7 +596,8 @@ select.input {
 	text-align: justify;
 }
 /* while the column's width is changing the editor keeps the width its lines were broken for and its parent clips what
-   runs past a narrower column; the pane is grayed out over it until the lines are broken again, as Overleaf does */
+   runs past a narrower column; the pane is covered until the lines are broken again, as Overleaf does, and names its
+   file so split panes stay told apart. The solid ground: a see-through window clears the usual one */
 .ProseMirror.pm-lines-frozen {
 	flex: none;
 	max-width: none;
@@ -606,10 +607,18 @@ select.input {
 	overflow-x: clip;
 }
 [data-editor-frame]:has(.ProseMirror.pm-lines-frozen)::after {
-	content: '';
+	content: attr(data-editor-frame);
 	position: absolute;
 	inset: 0;
-	background-color: var(--color-surface-200-800);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: 1rem;
+	overflow: hidden;
+	text-align: center;
+	color: var(--muted-text);
+	font-size: var(--text-sm);
+	background-color: light-dark(var(--solid-surface-50, var(--color-surface-50)), var(--solid-surface-950, var(--color-surface-950)));
 	pointer-events: none;
 }
 /* an input method's text grows at the caret and cannot be re-broken until it commits (compositionWrap) */

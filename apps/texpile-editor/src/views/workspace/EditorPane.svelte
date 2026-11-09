@@ -274,8 +274,8 @@
 				/>
 			{/if}
 			<!-- relative anchors the floating find bar; it sits outside the scroller so it doesn't scroll away.
-			     data-editor-frame: the blur over a resizing editor (app.css) -->
-			<div class="relative min-h-0 min-w-0 flex-1" data-editor-frame>
+			     data-editor-frame: the file named over a resizing editor (app.css) -->
+			<div class="relative min-h-0 min-w-0 flex-1" data-editor-frame={loadedPath ? basename(loadedPath) : ''}>
 				{#if loadedPath}<FigureOverlay path={loadedPath} {figure} {viewMode} />{/if}
 				{#if loadedPath && structured && viewMode === 'visual' && visualDoc && !comparing && !parked}
 					<SearchBar />
