@@ -43,10 +43,19 @@ function removes(removal: KeybindingItem, item: KeybindingItem): boolean {
 	return !removal.when || whenText(removal.when) === whenText(item.when);
 }
 
+/** a user key runs where the command's default runs: late, or from the editor's keymap */
+function withDefaultPhase(entry: KeybindingItem, defaults: KeybindingItem[]): KeybindingItem {
+	if (entry.keys?.length !== 1) return entry;
+	const own = defaults.filter((d) => d.command === entry.command);
+	if (!own.some((d) => d.late || d.editor)) return entry;
+	return { ...entry, late: own.some((d) => d.late), editor: own.some((d) => d.editor) };
+}
+
 export function buildKeybindingTable(defaults: KeybindingItem[], user: KeybindingItem[]): KeybindingTable {
 	const removals = user.filter((u) => u.command.startsWith('-'));
 	const kept = defaults.filter((d) => !removals.some((r) => removes(r, d)));
-	const items = [...kept, ...user.filter((u) => !u.command.startsWith('-') && u.command)];
+	const added = user.filter((u) => !u.command.startsWith('-') && u.command).map((u) => withDefaultPhase(u, defaults));
+	const items = [...kept, ...added];
 	const byFirstChord = new Map<string, KeybindingItem[]>();
 	for (const item of items) {
 		if (!item.keys?.length || item.when?.kind === 'false') continue;

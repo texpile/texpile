@@ -60,6 +60,30 @@ describe('keybinding resolution', () => {
 		expect(keysOf(table, 'file.save')).toEqual(press('mod+shift+s'));
 	});
 
+	it('runs a user key where the command default runs: late, or only from the editor', () => {
+		const flagged = defaultItems(
+			[
+				{ command: 'tab.close', key: 'mod+w', late: true },
+				{ command: 'editor.nextChange', key: 'alt+f5', editor: true }
+			],
+			'linux'
+		);
+		const { items } = userItems(
+			[
+				{ key: 'mod+shift+w', command: 'tab.close' },
+				{ key: 'mod+w', command: '-tab.close' },
+				{ key: 'f6', command: 'editor.nextChange' }
+			],
+			false
+		);
+		const table = buildKeybindingTable(flagged, items);
+		expect(resolveKeys(table, press('mod+shift+w'), () => undefined, all).kind).toBe('none');
+		const late = resolveKeys(table, press('mod+shift+w'), () => undefined, all, true);
+		expect(late.kind === 'found' && late.item.command).toBe('tab.close');
+		expect(resolveKeys(table, press('f6'), () => undefined, all).kind).toBe('none');
+		expect(resolveKeys(table, press('f6'), () => undefined, all, true).kind).toBe('none');
+	});
+
 	it('removes defaults only, narrowed by key prefix and when', () => {
 		const { items } = userItems(
 			[
