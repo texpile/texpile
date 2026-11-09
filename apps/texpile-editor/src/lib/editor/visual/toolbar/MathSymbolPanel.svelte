@@ -88,7 +88,11 @@
 <!-- on the body: the floating toolbar is translated, which makes it the box a fixed panel inside it is placed in (#146) -->
 <div
 	bind:this={panelEl}
-	{@attach (el) => el.ownerDocument.body.append(el)}
+	{@attach (el) => {
+		el.ownerDocument.body.append(el);
+		// moved out of the component's range, so unmounting no longer removes it
+		return () => el.remove();
+	}}
 	class="card bg-surface-50-950 border-surface-300-700 fixed z-50 flex max-h-[min(26rem,60vh)] min-w-[200px] flex-col border shadow-lg"
 	style="top: {top}px; left: {shownLeft}px"
 >
