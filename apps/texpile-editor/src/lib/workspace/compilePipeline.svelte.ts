@@ -411,7 +411,8 @@ export class CompilePipeline {
 			const folder = workspaceRoot.current;
 			if (!toolMissing && logAdvanced && logPath && folder && mode !== 'clean') {
 				const log = await this.deps.readText(logPath).catch(() => '');
-				if (await installForCompileLog(log, folder)) void this.startCompile('scratch');
+				// an install can take minutes, and the folder open by then may be another one
+				if ((await installForCompileLog(log, folder)) && workspaceRoot.current === folder) void this.startCompile('scratch');
 			}
 		}, 400);
 	}
