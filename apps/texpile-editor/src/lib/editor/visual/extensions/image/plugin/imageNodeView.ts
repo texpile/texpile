@@ -1,5 +1,5 @@
 /* eslint-disable no-param-reassign -- the node view initializes the img element it is handed */
-import { TextSelection } from 'prosemirror-state';
+import { caretIntoCaption } from './captionCaret';
 import type { Node } from 'prosemirror-model';
 import type { EditorView, NodeView } from 'prosemirror-view';
 import { missingImageNote } from '../missingImagePlaceholder';
@@ -171,14 +171,10 @@ export function imageNodeView(pluginSettings: ImagePluginSettings) {
 		const contentEl = pluginSettings.hasTitle && document.createElement('div');
 		if (contentEl) {
 			contentEl.className = 'imagePluginContent';
-			contentEl.addEventListener('click', (e) => {
+			// text and formulas inside the caption take their own clicks
+			contentEl.addEventListener('mousedown', (e) => {
 				const pos = getPos();
-				if (!pos || contentEl.innerText.length > 1) {
-					return;
-				}
-				e.preventDefault();
-				view.dispatch(view.state.tr.setSelection(TextSelection.near(view.state.doc.resolve(pos + 1))));
-				view.focus();
+				if (e.target === contentEl && e.button === 0 && pos !== undefined) caretIntoCaption(view, pos, e);
 			});
 			contentEl.className = 'text';
 			root.appendChild(contentEl);
