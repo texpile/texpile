@@ -11,6 +11,7 @@
 	import type { TreeNameEditor } from './treeNameEditor.svelte';
 	import { gitBadgeOf, folderTitle, STATUS_COLOR, STATUS_DECOR, STATUS_TITLE } from './treeBadges';
 	import { focusSelect } from './focusSelect';
+	import { justMoved } from './treeMoves';
 	import { m } from '$lib/paraglide/messages';
 
 	type Props = {
@@ -36,7 +37,7 @@
 	let wasActive = false;
 	$effect(() => {
 		const active = isActive(entry);
-		if (active && !wasActive) row?.scrollIntoView?.({ block: 'nearest' });
+		if (active && !wasActive && !justMoved(entry.path)) row?.scrollIntoView?.({ block: 'nearest' });
 		wasActive = active;
 	});
 </script>

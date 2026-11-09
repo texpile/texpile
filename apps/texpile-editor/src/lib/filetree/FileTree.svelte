@@ -15,6 +15,7 @@
 	import { namePastedFiles, type ImportItem } from './treeImport';
 	import { isInside, nameTaken, includeFileName } from './treePaths';
 	import { focusSelect } from './focusSelect';
+	import { watchTreeMoves } from './treeMoves';
 	import { tip } from '$lib/components/tooltip.svelte';
 	import { m } from '$lib/paraglide/messages';
 	import { confirmAsk } from '$lib/modals/confirm.svelte';
@@ -124,6 +125,8 @@
 			if (revealed !== a && sel.reveal(a)) revealed = a;
 		});
 	});
+
+	$effect(() => watchTreeMoves());
 
 	// a request can land before a fresh tree holds the file
 	$effect(() => {
