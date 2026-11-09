@@ -3,6 +3,7 @@
 // these and the preview chain passes it down whole -- no per-field prop threading.
 import type DraftView from './DraftView.svelte';
 import { DraftDispatcher } from './draftDispatcher';
+import { watchDraftInputs } from './draftInputWatch';
 import { workspaceRoot, mainFile } from '$lib/workspace/workspaceStore';
 import { latexLiveMode } from '$lib/workspace/projectConfigSync.svelte';
 import { compileBaseDir } from '$lib/workspace/compileCommand';
@@ -52,11 +53,12 @@ export class DraftController {
 
 	constructor(deps: DraftControllerDeps) {
 		this.#deps = deps;
+		const isActive = () => latexLiveMode() && deps.pdfPaneOpen() && !!deps.getLoadedPath() && !this.paused;
 		this.dispatcher = new DraftDispatcher({
 			getRoot: () => this.root,
 			getSource: () => deps.getSource(),
 			getLoadedPath: () => deps.getLoadedPath(),
-			isActive: () => latexLiveMode() && deps.pdfPaneOpen() && !!deps.getLoadedPath() && !this.paused,
+			isActive,
 			flushSaves: () => deps.flushSaves(),
 			triggerFullCompile: () => this.trigger++,
 			triggerQuietCompile: () => this.quietTrigger++,
@@ -82,6 +84,16 @@ export class DraftController {
 		$effect(() => {
 			this.runDecision();
 		});
+
+		$effect(() =>
+			watchDraftInputs({
+				root: () => this.root,
+				loadedPath: () => deps.getLoadedPath(),
+				isActive,
+				edit: (path, text) => this.dispatcher.runFile(path, text),
+				rebuild: () => this.dispatcher.rebuild()
+			})
+		);
 	}
 
 	runDecision = () => this.dispatcher.run();

@@ -56,6 +56,11 @@ export class DraftDispatcher {
 		else this.deps.triggerFullCompile();
 	}
 
+	/** a file only a full pass reads changed (a .bib, a package, an image) */
+	rebuild(): void {
+		if (this.deps.isActive()) this.after(RECOMPILE_DEBOUNCE_MS, () => void this.compileNow(true));
+	}
+
 	/** a full compile already covers the current source: the next edit is measured from it */
 	adoptCurrentAsBaseline(): void {
 		const path = this.deps.getLoadedPath();
@@ -66,7 +71,12 @@ export class DraftDispatcher {
 	run(): void {
 		const src = this.deps.getSource();
 		const path = this.deps.getLoadedPath();
-		if (!this.deps.isActive() || !path) return;
+		if (path) this.runFile(path, src);
+	}
+
+	/** a file the document reads has new text, the open one or another (draftInputWatch) */
+	runFile(path: string, src: string): void {
+		if (!this.deps.isActive()) return;
 		if (src === this.lastSrc.get(path)) return;
 		this.lastSrc.set(path, src);
 		const root = this.deps.getRoot();
