@@ -43,18 +43,29 @@ function removes(removal: KeybindingItem, item: KeybindingItem): boolean {
 	return !removal.when || whenText(removal.when) === whenText(item.when);
 }
 
-/** a user key runs where the command's default runs: late, or from the editor's keymap */
-function withDefaultPhase(entry: KeybindingItem, defaults: KeybindingItem[]): KeybindingItem {
-	if (entry.keys?.length !== 1) return entry;
+const TERMINAL_FOCUS: WhenExpression = { kind: 'has', key: 'terminalFocus' };
+
+function also(when: WhenExpression | null, more: WhenExpression): WhenExpression {
+	return when ? { kind: 'and', exprs: [when, more] } : more;
+}
+
+/** a user key as VS Code runs one: it wins over the editors' own keys, and in the terminal the command decides, so
+ *  one whose default waits for the shell waits too (commandsToSkipShell). A command an editor runs stays the editor's */
+function asUserKey(entry: KeybindingItem, defaults: KeybindingItem[]): KeybindingItem[] {
+	if (entry.keys?.length !== 1) return [entry];
 	const own = defaults.filter((d) => d.command === entry.command);
-	if (!own.some((d) => d.late || d.editor)) return entry;
-	return { ...entry, late: own.some((d) => d.late), editor: own.some((d) => d.editor) };
+	if (own.some((d) => d.editor)) return [{ ...entry, editor: true }];
+	if (!own.some((d) => d.late)) return [entry];
+	return [
+		{ ...entry, when: also(entry.when, { kind: 'not', expr: TERMINAL_FOCUS }) },
+		{ ...entry, when: also(entry.when, TERMINAL_FOCUS), late: true }
+	];
 }
 
 export function buildKeybindingTable(defaults: KeybindingItem[], user: KeybindingItem[]): KeybindingTable {
 	const removals = user.filter((u) => u.command.startsWith('-'));
 	const kept = defaults.filter((d) => !removals.some((r) => removes(r, d)));
-	const added = user.filter((u) => !u.command.startsWith('-') && u.command).map((u) => withDefaultPhase(u, defaults));
+	const added = user.filter((u) => !u.command.startsWith('-') && u.command).flatMap((u) => asUserKey(u, defaults));
 	const items = [...kept, ...added];
 	const byFirstChord = new Map<string, KeybindingItem[]>();
 	for (const item of items) {

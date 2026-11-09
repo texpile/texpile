@@ -60,7 +60,8 @@ describe('keybinding resolution', () => {
 		expect(keysOf(table, 'file.save')).toEqual(press('mod+shift+s'));
 	});
 
-	it('runs a user key where the command default runs: late, or only from the editor', () => {
+	// as VS Code: a user key wins over the editors, and in the terminal the command decides (commandsToSkipShell)
+	it('runs a user key before the editors, after the terminal for a command that waits for the shell', () => {
 		const flagged = defaultItems(
 			[
 				{ command: 'tab.close', key: 'mod+w', late: true },
@@ -77,8 +78,11 @@ describe('keybinding resolution', () => {
 			false
 		);
 		const table = buildKeybindingTable(flagged, items);
-		expect(resolveKeys(table, press('mod+shift+w'), () => undefined, all).kind).toBe('none');
-		const late = resolveKeys(table, press('mod+shift+w'), () => undefined, all, true);
+		const inEditor = resolveKeys(table, press('mod+shift+w'), () => undefined, all);
+		expect(inEditor.kind === 'found' && inEditor.item.command).toBe('tab.close');
+		const inTerminal = (key: string) => key === 'terminalFocus';
+		expect(resolveKeys(table, press('mod+shift+w'), inTerminal, all).kind).toBe('none');
+		const late = resolveKeys(table, press('mod+shift+w'), inTerminal, all, true);
 		expect(late.kind === 'found' && late.item.command).toBe('tab.close');
 		expect(resolveKeys(table, press('f6'), () => undefined, all).kind).toBe('none');
 		expect(resolveKeys(table, press('f6'), () => undefined, all, true).kind).toBe('none');
