@@ -149,7 +149,8 @@ export class AgentSession {
 		if (!r.ok && r.error && this.stateNow() !== 'signed-out') after.push({ kind: 'error', id: itemId(), text: r.error });
 		if (files.length) after.push({ kind: 'changes', id: itemId(), files });
 		if (after.length) this.items = [...this.items, ...after];
-		if (this.stopAsked || this.stateNow() !== 'ready' || !this.queued.length) return;
+		// a stop gave the queue back to the box, so what is queued now came after it
+		if (this.stateNow() !== 'ready' || !this.queued.length) return;
 		const [next, ...rest] = this.queued;
 		this.queued = rest;
 		await this.send(next.text, next.attached, next.images);

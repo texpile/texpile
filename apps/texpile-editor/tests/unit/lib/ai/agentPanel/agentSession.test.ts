@@ -110,3 +110,37 @@ it('sends a message written during a turn once the turn ends, and gives it back 
 	expect(prompts).toHaveLength(2);
 	release();
 });
+
+it('sends a message written after Stop, while the stopped turn is still ending', async () => {
+	const prompts: unknown[] = [];
+	let finish = () => {};
+	const bridge = {
+		start: async () => ({ ok: true, agent: 'claude' }),
+		prompt: (blocks: unknown[]) => {
+			prompts.push(blocks);
+			return new Promise((resolve) => (finish = () => resolve({ ok: true, stopReason: 'cancelled', changes: [] })));
+		},
+		cancel: () => {},
+		onEvent: () => () => {}
+	} as unknown as AcpBridge;
+	const release = provideAgentHost({
+		openCompareTab: () => {},
+		openFile: () => {},
+		writeText: async () => {},
+		flushPendingSave: async () => {},
+		selection: () => null
+	});
+	const session = new AgentSession(() => bridge);
+	await session.start('/p');
+	session.receive({ type: 'state', state: 'ready' });
+	const first = session.send('one', null);
+	await vi.waitFor(() => expect(prompts).toHaveLength(1));
+	session.cancel();
+	await session.send('rewritten', null);
+	finish();
+	await vi.waitFor(() => expect(prompts).toHaveLength(2));
+	expect(prompts[1]).toEqual([{ type: 'text', text: 'rewritten' }]);
+	finish();
+	await first;
+	release();
+});
