@@ -122,7 +122,13 @@ export function formatSelect(value: string, dialect: MenuDialect = 'tex') {
 	if (cm) {
 		const s = cm.state;
 		if (dialect === 'tex') {
-			const MACRO: Partial<Record<string, string>> = { bold: 'textbf', italic: 'textit', underline: 'underline', code: 'texttt' };
+			const MACRO: Partial<Record<string, string>> = {
+				bold: 'textbf',
+				italic: 'textit',
+				emphasis: 'emph',
+				underline: 'underline',
+				code: 'texttt'
+			};
 			const H: Partial<Record<string, string>> = { h1: 'section', h2: 'subsection', h3: 'subsubsection' };
 			if (MACRO[value]) cmApply(cm, computeToggleWrap(s, MACRO[value]));
 			else if (H[value]) cmApply(cm, computeWrapBlock(s, `\\${H[value]}{`, '}'));
