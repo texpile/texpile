@@ -1,7 +1,7 @@
 // a file the document reads changed without being the open one: an agent's write, a pull, an edit in another editor
 // group. Live mode followed only the open file, so the preview kept the old text until the next keystroke there
 import { fileService } from '$lib/files/service/fileService';
-import { isSameFile, pathBelow } from '$lib/files/identity/fileUris';
+import { isSameFile, pathBelow, pathOfFileUri } from '$lib/files/identity/fileUris';
 import { textNow } from '$lib/buffers/textNow';
 
 const TEXT = /\.tex$/i;
@@ -29,14 +29,11 @@ export function watchDraftInputs(deps: DraftInputDeps): () => void {
 		}
 	}
 	const offChanges = fileService.onDidFilesChange((e) =>
-		changed(
-			[...e.rawUpdated, ...e.rawAdded].map((uri) => uri.fsPath),
-			(path) => fileService.readText(path)
-		)
+		changed([...e.rawUpdated, ...e.rawAdded].map(pathOfFileUri), (path) => fileService.readText(path))
 	);
 	// the app's own writes: an MCP edit, or a file saved from another editor group
 	const offWrites = fileService.onDidRunOperation((e) => {
-		if (e.isOperation('write')) changed([e.resource.fsPath], (path) => textNow(path));
+		if (e.isOperation('write')) changed([pathOfFileUri(e.resource)], (path) => textNow(path));
 	});
 	return () => {
 		offChanges();
