@@ -346,7 +346,6 @@
 	<WorkspaceChrome
 		bind:layout
 		bind:termDock
-		{compiler}
 		{scm}
 		treeOps={files.treeOps}
 		{guest}

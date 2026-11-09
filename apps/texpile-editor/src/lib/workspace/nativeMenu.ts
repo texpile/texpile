@@ -37,7 +37,6 @@ export type NativeMenuHandlers = {
 	math(value: string): void;
 	format(value: string): void;
 	spelling(value: string): void;
-	terminal(value: string): void;
 	help(value: string): void;
 };
 
@@ -57,8 +56,6 @@ export type MenuStateInput = {
 	/** Spelling > Folder Language, labeled; the first is Automatic */
 	spellLanguages: { value: string; label: string; checked: boolean }[];
 	canChooseSpellLanguage: boolean;
-	terminalAvailable: boolean;
-	terminalVisible: boolean;
 	canShare: boolean;
 	canCloseWorkspace: boolean;
 	canFormat: boolean;
@@ -92,7 +89,6 @@ function labels(tool: 'latexindent' | 'typstyle'): Record<string, string> {
 		insert: m.menubar_menu_insert(),
 		format: m.menubar_menu_format(),
 		spelling: m.menubar_menu_spelling(),
-		terminal: m.menubar_menu_terminal(),
 		new: m.menubar_new_file_menu(),
 		newTex: m.menubar_new_tex(),
 		newTyp: m.menubar_new_typ(),
@@ -171,10 +167,6 @@ function labels(tool: 'latexindent' | 'typstyle'): Record<string, string> {
 		formatDocument: m.menubar_format_document({ tool }),
 		checkSpelling: m.menubar_check_spelling(),
 		folderLanguage: m.spelling_folder_language(),
-		compile: m.menubar_terminal_compile(),
-		configureCompile: m.menubar_configure_compile_command(),
-		newTerminal: m.menubar_new_terminal(),
-		showTerminal: m.menubar_show_terminal(),
 		shortcuts: m.menubar_keyboard_shortcuts(),
 		whatsNew: m.whatsnew_menu_label(),
 		documentation: m.menubar_documentation(),
@@ -218,7 +210,6 @@ const MENU_COMMANDS: Record<string, string> = {
 	zoomIn: 'view.zoomIn',
 	zoomOut: 'view.zoomOut',
 	zoomReset: 'view.zoomReset',
-	compile: 'compile.run',
 	find: 'editor.find',
 	mathInline: 'editor.inlineMath',
 	mathDisplay: 'editor.displayMath',
@@ -272,8 +263,6 @@ export function attachNativeMenu(handlers: NativeMenuHandlers): () => void {
 				return handlers.format(value);
 			case 'spelling':
 				return handlers.spelling(value);
-			case 'terminal':
-				return handlers.terminal(value);
 			case 'help':
 				return handlers.help(value);
 		}

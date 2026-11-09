@@ -29,7 +29,6 @@
 	import FormatMenu from './menubar/FormatMenu.svelte';
 	import { folderLanguageItems } from '$lib/editor/spellcheck/languages/folderLanguageMenu';
 	import type { SpellingChoice } from '$lib/editor/spellcheck/languages/spellingLanguage.svelte';
-	import TerminalMenu from './menubar/TerminalMenu.svelte';
 	import HelpMenu from './menubar/HelpMenu.svelte';
 	import TextPrompt from './menubar/TextPrompt.svelte';
 	import { reportProblemUrl } from './menubar/reportProblemUrl';
@@ -64,13 +63,6 @@
 		onSave?: () => void;
 		/** shared-session dialog (desktop only). */
 		onShareSession?: () => void;
-		/** Terminal menu (shown only in the desktop app). */
-		terminalAvailable?: boolean;
-		terminalVisible?: boolean;
-		onCompile?: () => void;
-		onConfigureCompile?: () => void;
-		onNewTerminal?: () => void;
-		onToggleTerminal?: () => void;
 		/** Reindent the current document via latexindent (opens the confirm-first modal). */
 		onFormatDocument?: () => void;
 		/** whole-window zoom, for the macOS View menu; the others zoom from Layout */
@@ -96,12 +88,6 @@
 		onCloseWorkspace,
 		onSave,
 		onShareSession,
-		terminalAvailable = false,
-		terminalVisible = false,
-		onCompile,
-		onConfigureCompile,
-		onNewTerminal,
-		onToggleTerminal,
 		onFormatDocument,
 		onZoomIn,
 		onZoomOut,
@@ -130,14 +116,11 @@
 	 * TitleBar decides how many fit: it is the only place that can measure the row, the menus and the
 	 * window controls together, and the budget comes from keeping the command center centred.
 	 */
-	// file edit insert format [terminal] help. The count has to follow terminalAvailable rather than
-	// being a constant 6: the fit loop advances one step per resize, so a menu that renders nothing
-	// would be a step that frees no width, produce no resize, and stall the loop one short.
-	const menuCount = $derived(terminalAvailable ? 6 : 5);
-	const helpIndex = $derived(terminalAvailable ? 5 : 4);
+	// file edit insert format help
+	const menuCount = 5;
+	const helpIndex = 4;
 	$effect(() => {
-		const n = menuCount;
-		untrack(() => titleBarLayout.setTotal(n)); // setTotal writes what it reads; see TitleBar's fit()
+		untrack(() => titleBarLayout.setTotal(menuCount)); // setTotal writes what it reads; see TitleBar's fit()
 	});
 	const visible = $derived(titleBarLayout.visibleMenus);
 	const overflowing = $derived(visible < menuCount);
@@ -207,13 +190,6 @@
 		else if (value.startsWith('lang:')) onSpellLanguage?.(value.slice(5));
 	}
 
-	function terminalSelect(value: string) {
-		if (value === 'compile') onCompile?.();
-		else if (value === 'configure') onConfigureCompile?.();
-		else if (value === 'new') onNewTerminal?.();
-		else if (value === 'toggle') onToggleTerminal?.();
-	}
-
 	// On macOS the menus are drawn by the system menu bar, and a native selection arrives here as the
 	// same `menu:value` string a trigger would have produced - so both paths run one dispatcher.
 	const nativeMenus = isMac && isDesktop();
@@ -228,7 +204,6 @@
 			math: mathSelect,
 			format: formatMenuSelect,
 			spelling: spellcheckSelect,
-			terminal: terminalSelect,
 			help: helpSelect
 		})
 	);
@@ -244,8 +219,6 @@
 			spellcheck: spellcheckOn,
 			spellLanguages,
 			canChooseSpellLanguage: !!onSpellLanguage,
-			terminalAvailable,
-			terminalVisible,
 			canShare: !!onShareSession,
 			canCloseWorkspace: !!onCloseWorkspace,
 			canFormat: !!onFormatDocument,
@@ -341,9 +314,6 @@
 	{/if}
 	{#if showAt(3, overflow)}
 		<FormatMenu index={3} select={formatMenuSelect} {structured} {dialect} {fileKind} canFormatDocument={!!onFormatDocument} />
-	{/if}
-	{#if terminalAvailable && showAt(4, overflow)}
-		<TerminalMenu index={4} select={terminalSelect} {terminalVisible} />
 	{/if}
 	{#if showAt(helpIndex, overflow)}
 		<HelpMenu index={helpIndex} select={helpSelect} />

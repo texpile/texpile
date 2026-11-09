@@ -36,8 +36,6 @@ export type MenuState = {
 	/** Spelling > Folder Language, labeled, Automatic first; absent from a renderer predating it */
 	spellLanguages?: { value: string; label: string; checked: boolean }[];
 	canChooseSpellLanguage?: boolean;
-	terminalAvailable: boolean;
-	terminalVisible: boolean;
 	canShare: boolean;
 	canCloseWorkspace: boolean;
 	canFormat: boolean;
@@ -525,29 +523,6 @@ function template(win: BrowserWindow, s: MenuState): MenuItemConstructorOptions[
 					: [])
 			]
 		},
-		...(s.terminalAvailable
-			? [
-					{
-						label: label(s, 'terminal', 'Terminal'),
-						submenu: [
-							{
-								label: label(s, 'compile', 'Compile'),
-								accelerator: accelerator(s, 'compile', 'Alt+CmdOrCtrl+Return'),
-								click: () => fire(win, 'terminal:compile')
-							},
-							{ label: label(s, 'configureCompile', 'Configure Compile Command…'), click: () => fire(win, 'terminal:configure') },
-							{ type: 'separator' as const },
-							{ label: label(s, 'newTerminal', 'New Terminal'), click: () => fire(win, 'terminal:new') },
-							{
-								label: label(s, 'showTerminal', 'Show Terminal'),
-								type: 'checkbox' as const,
-								checked: s.terminalVisible,
-								click: () => fire(win, 'terminal:toggle')
-							}
-						]
-					}
-				]
-			: []),
 		// The role stays: it is what calls [NSApp setWindowsMenu:], which is how AppKit knows to append
 		// the live window list and the tab items. But a label on the parent renames only the title -
 		// the stock submenu is nested roles carrying Electron's own English - so it is spelt out here.

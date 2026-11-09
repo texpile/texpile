@@ -591,7 +591,6 @@
 	"menubar_format_document": "格式化文档 ({tool})…",
 	"menubar_menu_spelling": "拼写检查",
 	"menubar_check_spelling": "检查拼写和语法",
-	"menubar_menu_terminal": "终端",
 	"menubar_terminal_compile": "编译",
 	"menubar_configure_compile_command": "配置编译命令…",
 	"menubar_new_terminal": "新建终端",

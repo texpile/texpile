@@ -591,7 +591,6 @@
 	"menubar_format_document": "Format Document ({tool})…",
 	"menubar_menu_spelling": "Spelling",
 	"menubar_check_spelling": "Check Spelling & Grammar",
-	"menubar_menu_terminal": "Terminal",
 	"menubar_terminal_compile": "Compile",
 	"menubar_configure_compile_command": "Configure Compile Command…",
 	"menubar_new_terminal": "New Terminal",

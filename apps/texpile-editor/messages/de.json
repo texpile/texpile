@@ -591,7 +591,6 @@
 	"menubar_format_document": "Dokument formatieren ({tool})…",
 	"menubar_menu_spelling": "Rechtschreibung",
 	"menubar_check_spelling": "Rechtschreibung & Grammatik prüfen",
-	"menubar_menu_terminal": "Terminal",
 	"menubar_terminal_compile": "Kompilieren",
 	"menubar_configure_compile_command": "Kompilierbefehl konfigurieren…",
 	"menubar_new_terminal": "Neues Terminal",

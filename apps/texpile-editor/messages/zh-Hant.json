@@ -591,7 +591,6 @@
 	"menubar_format_document": "格式化文件 ({tool})…",
 	"menubar_menu_spelling": "拼字檢查",
 	"menubar_check_spelling": "檢查拼字與文法",
-	"menubar_menu_terminal": "終端機",
 	"menubar_terminal_compile": "編譯",
 	"menubar_configure_compile_command": "設定編譯指令…",
 	"menubar_new_terminal": "新增終端機",

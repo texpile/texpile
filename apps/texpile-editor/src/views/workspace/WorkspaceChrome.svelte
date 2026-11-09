@@ -35,7 +35,6 @@
 		children,
 		layout = $bindable(),
 		termDock = $bindable(),
-		compiler,
 		scm,
 		treeOps,
 		guest,
@@ -51,7 +50,6 @@
 		children: Snippet;
 		layout: PaneLayout;
 		termDock: TerminalDockState;
-		compiler: Any;
 		scm: Any;
 		treeOps: Any;
 		guest: boolean;
@@ -123,12 +121,6 @@
 			onCloseWorkspace={menu.hostMode ? actions.closeWorkspace : undefined}
 			onSave={actions.save}
 			onShareSession={menu.shareable ? actions.openShare : undefined}
-			terminalAvailable={termDock.available}
-			terminalVisible={termDock.visible}
-			onCompile={compiler.runCompile}
-			onConfigureCompile={actions.openCompileModal}
-			onNewTerminal={actions.newTerminal}
-			onToggleTerminal={actions.toggleTerminal}
 			onFormatDocument={menu.canFormat ? actions.openFormatModal : undefined}
 			onZoomIn={actions.uiZoomIn}
 			onZoomOut={actions.uiZoomOut}
