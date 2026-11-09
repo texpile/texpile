@@ -118,4 +118,25 @@ describe('Ctrl+M with words selected', () => {
 		expect(next.doc.nodeAt(4)?.textContent).toBe('a^2 + b^2');
 		expect(next.doc.textContent).toBe('so a^2 + b^2 holds');
 	});
+
+	// a raw % in the formula's source commented out its closing $ on save
+	it('escapes what would end or comment out the formula', () => {
+		const doc = schema.node('doc', null, [schema.node('paragraph', null, [schema.text('a 50% cut')])]);
+		const state = EditorState.create({ doc, selection: TextSelection.create(doc, 3, 6) });
+		let next = state;
+		createMathField()(state, (tr) => (next = state.apply(tr)));
+		expect(next.doc.nodeAt(3)?.textContent).toBe('50\\%');
+	});
+
+	it('leaves a selection holding a formula as it is', () => {
+		const formula = schema.nodes.inline_math.create({}, schema.text('x'));
+		const doc = schema.node('doc', null, [schema.node('paragraph', null, [schema.text('see '), formula, schema.text(' here')])]);
+		const state = EditorState.create({ doc, selection: TextSelection.create(doc, 1, doc.content.size - 1) });
+		let next = state;
+		createMathField()(state, (tr) => (next = state.apply(tr)));
+		let formulas = 0;
+		next.doc.descendants((n) => void (n.type.name === 'inline_math' && formulas++));
+		expect(formulas).toBe(2);
+		expect(next.doc.textContent).toContain('see x here');
+	});
 });
