@@ -29,6 +29,7 @@
 	import EditorPaneHead from './pane/EditorPaneHead.svelte';
 	import FloatingFormatBar from './pane/FloatingFormatBar.svelte';
 	import { heldVisualDoc } from './pane/heldVisualDoc.svelte';
+	import { visualReady } from './pane/visualReady.svelte';
 	import UnreadableFileNote from './pane/UnreadableFileNote.svelte';
 	import { slotDrag } from '$lib/workspace/groups/slotDrag.svelte';
 	import { formatToolbarOf } from './pane/formatToolbar';
@@ -141,10 +142,11 @@
 	//
 	// Keeping the loading bar rendered until then puts it on screen during that import-await paint,
 	// and whatever was last painted stays up through the block that follows.
-	//
-	// Tracked per path rather than as a plain boolean so opening another file resets it for free.
-	let readyFor = $state<string | null>(null);
-	const editorReady = $derived(!!loadedPath && readyFor === loadedPath);
+	const visual = visualReady(
+		() => ({ path: loadedPath, doc: visualDoc, parked }),
+		() => (parked ? null : editorViewStore.current?.state.doc)
+	);
+	const editorReady = $derived(visual.ready);
 
 	/** Rendered for the whole build, but it holds itself invisible until the wait is real (see
 	 * lateReveal.ts), so a fast build never flashes a bar. Deliberately not a size threshold: that
@@ -200,18 +202,14 @@
 	const mountNote = visualMountNote({
 		doc: () => visualDoc ?? null,
 		path: () => loadedPath,
-		building: () => structured && viewMode === 'visual' && readyFor !== loadedPath
-	});
-	// a parked group's editor already shows its file; going live on it builds nothing, so nothing is noted
-	$effect.pre(() => {
-		if (parked && loadedPath) readyFor = loadedPath;
+		building: () => structured && viewMode === 'visual' && !visual.ready
 	});
 
 	/** a callback, not an effect: it dispatches a selection an effect would re-enter on */
 	function onVisualReady(): void {
 		mark('editor-ready');
 		warmEditor();
-		readyFor = loadedPath;
+		visual.built(loadedPath);
 		mountNote.ready(loadedPath);
 		// a parked group's editor is not the store's, and it keeps where it was
 		if (parked) return;
