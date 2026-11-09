@@ -53,9 +53,13 @@
 	$effect(() => selected.watch());
 	// what the x took off, which stays off until the file or the selected lines change
 	let detached = $state<string | null>(null);
+	// a message Stop gave back keeps the lines it was going to carry, over what is selected now
+	let restored = $state<Attached | null>(null);
 	const attached = $derived.by((): Attached | null => {
 		// a command goes alone: the agent runs one only when its text comes by itself
-		if (!props.file || runsCommand(text, props.commands)) return null;
+		if (runsCommand(text, props.commands)) return null;
+		if (restored) return attachedKey(restored) === detached ? null : restored;
+		if (!props.file) return null;
 		const lines = props.takesSelection && selected.current?.path === props.file ? selected.current.lines : null;
 		const a = { path: props.file, lines };
 		return attachedKey(a) === detached ? null : a;
@@ -67,6 +71,7 @@
 		if (empty) return;
 		props.onSend(text, attached, images.list);
 		text = '';
+		restored = null;
 		images.clear();
 	}
 
@@ -74,6 +79,7 @@
 		const back = props.onStop();
 		if (!back.length) return;
 		text = [...back.map((q) => q.text), text].filter((t) => t.trim()).join('\n\n');
+		restored = back.find((q) => q.attached)?.attached ?? null;
 		images.restore(back.flatMap((q) => q.images));
 	}
 
