@@ -18,7 +18,7 @@ A modern, desktop editor for LaTeX, Typst, and Markdown. For Windows, macOS, and
 
 ---
 
-![Texpile editing a LaTeX paper: an equation, a TikZ figure, a citation, the source, a Git commit and a shared session](docs/images/overview.gif)
+![Texpile editing a LaTeX paper: an equation, a TikZ figure, a citation, the source, a Git commit and a shared session](docs/images/overview.webp)
 
 ## Why Texpile
 
