@@ -1,77 +1,46 @@
-// Draft-mode engine ownership and its IPC. One live preview at a time: the warm engine (and its
-// reconcile compiles) belong to one window. A second window asking gets a clean 'engine-busy'
-// value instead of silently thrashing the daemon between roots; its DraftView offers an explicit
-// takeover.
+// Draft-mode IPC. Every window runs its own live preview; windows on the same folder share its engines, which stop
+// once no window's preview wants them.
 import * as draftService from '../draft/draftService';
-import * as draftDaemon from '../draft/draftDaemon';
-import { stopWarmCompiler, type ReadBackFiles } from '../draft/draftWarmCompile';
+import { teleport, stopTeleports } from '../draft/teleport/teleportService';
+import type { ReadBackFiles } from '../draft/draftProducts';
 import { luaDir } from '../appIdentity';
-import { normRoot, windowFor } from '../windows/windowRegistry';
+import { normRoot } from '../windows/normRoot';
 import { handleFsE } from './ipcResult';
 
-let draftOwner: { wcId: number; root: string } | null = null;
+// the folder each window's preview runs
+const previewRoots = new Map<number, string>();
 
-function draftBusy(e: Electron.IpcMainInvokeEvent, root: string): boolean {
-	if (!draftOwner) return false;
-	if (draftOwner.wcId === e.sender.id) return false;
-	if (normRoot(draftOwner.root) === normRoot(root)) return false;
-	if (!windowFor(draftOwner.wcId)) {
-		draftOwner = null; // owner window is gone; the engine is free
-		return false;
-	}
-	return true;
+/** a window's preview closed, or the window did: its folder's engines stop unless another window uses them */
+export function releaseDraftFor(wcId: number): void {
+	const root = previewRoots.get(wcId);
+	if (root === undefined) return;
+	previewRoots.delete(wcId);
+	if (![...previewRoots.values()].includes(root)) stopTeleports(root);
 }
 
-/** a closing window that owned the warm engine takes it down, so it doesn't hold memory orphaned */
-export function releaseDraftOwnerFor(wcId: number): void {
-	if (draftOwner?.wcId === wcId) {
-		draftDaemon.stopDaemon();
-		stopWarmCompiler();
-		draftOwner = null;
-	}
+function previewIn(wcId: number, root: string): void {
+	const key = normRoot(root);
+	if (previewRoots.get(wcId) === key) return;
+	releaseDraftFor(wcId);
+	previewRoots.set(wcId, key);
 }
 
 export function registerDraftIpc(): void {
 	handleFsE('draft:compile', async (e, body: { root: string; mainFile: string; readBack: ReadBackFiles }) => {
-		if (draftBusy(e, body.root)) return { ok: false, error: 'engine-busy', ms: 0 };
-		draftOwner = { wcId: e.sender.id, root: body.root };
+		previewIn(e.sender.id, body.root);
 		return draftService.compileDraft({ ...body, engineDir: luaDir() });
 	});
-	handleFsE('draft:typeset', async (e, body: { root: string; mainFile: string; text: string; hsize?: number; splitTo?: number }) => {
-		if (draftBusy(e, body.root)) return { ok: false, error: 'engine-busy' };
-		draftOwner = { wcId: e.sender.id, root: body.root };
-		return draftDaemon.typesetParagraph({ ...body, engineDir: luaDir() });
+	// `seq` comes back on every page, so the window can tell this edit's pages from an earlier one's
+	handleFsE('draft:teleport', async (e, body: { root: string; mainFile: string; file: string; text: string; seq: number }) => {
+		previewIn(e.sender.id, body.root);
+		const sender = e.sender;
+		return teleport(body, (page) => {
+			if (!sender.isDestroyed()) sender.send('draft:page', { root: body.root, seq: body.seq, page });
+		});
 	});
-	handleFsE(
-		'draft:skeleton',
-		async (e, body: { root: string; mainFile: string; items: draftDaemon.SkeletonItem[]; targetPt: number } & draftDaemon.SkeletonMode) => {
-			if (draftBusy(e, body.root)) return { ok: false, error: 'engine-busy' };
-			draftOwner = { wcId: e.sender.id, root: body.root };
-			return draftDaemon.splitSkeleton({ ...body, engineDir: luaDir() });
-		}
-	);
-	// stop the warm engine when draft mode is switched off / the preview closes, so we don't
-	// leave an idle lualatex process holding memory for the rest of the session. Only the
-	// owner may stop it: another window closing its (blocked) preview must not kill ours.
+	// draft mode off or the preview closed: no idle lualatex holds memory for the rest of the session
 	handleFsE('draft:stop', async (e) => {
-		if (!draftOwner || draftOwner.wcId === e.sender.id) {
-			draftDaemon.stopDaemon();
-			stopWarmCompiler();
-			draftOwner = null;
-		}
-		return { ok: true };
-	});
-	// explicit user action from the blocked window's DraftView: steal the engine
-	handleFsE('draft:takeover', async (e, body: { root: string }) => {
-		// tell the window LOSING the engine to pause right away; without this it only finds
-		// out on its next keystroke and shows a stale "engine ready" state until then
-		if (draftOwner && draftOwner.wcId !== e.sender.id) {
-			const prev = windowFor(draftOwner.wcId);
-			if (prev && !prev.webContents.isDestroyed()) prev.webContents.send('draft:preempted', { root: draftOwner.root });
-		}
-		draftDaemon.stopDaemon();
-		stopWarmCompiler();
-		draftOwner = { wcId: e.sender.id, root: body.root };
+		releaseDraftFor(e.sender.id);
 		return { ok: true };
 	});
 }

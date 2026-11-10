@@ -1,5 +1,5 @@
 // @vitest-environment jsdom
-import { it, expect } from 'vitest';
+import { it, expect, vi } from 'vitest';
 import { flushSync, mount, unmount } from 'svelte';
 import { AgentSession, agentSession } from '$lib/ai/agentPanel/agentSession.svelte';
 import { provideAgentHost } from '$lib/ai/agentPanel/agentHost.svelte';
@@ -71,4 +71,76 @@ it("keeps the agent's last count of the context, and forgets it with the chat", 
 	expect(session.items).toEqual([]);
 	await session.openChat('older');
 	expect(session.usage).toBeNull();
+});
+
+it('sends a message written during a turn once the turn ends, and gives it back on Stop instead', async () => {
+	const prompts: unknown[] = [];
+	let finish = () => {};
+	const bridge = {
+		start: async () => ({ ok: true, agent: 'claude' }),
+		prompt: (blocks: unknown[]) => {
+			prompts.push(blocks);
+			return new Promise((resolve) => (finish = () => resolve({ ok: true, stopReason: 'end_turn', changes: [] })));
+		},
+		cancel: () => finish(),
+		onEvent: () => () => {}
+	} as unknown as AcpBridge;
+	const release = provideAgentHost({
+		openCompareTab: () => {},
+		openFile: () => {},
+		writeText: async () => {},
+		flushPendingSave: async () => {},
+		selection: () => null
+	});
+	const session = new AgentSession(() => bridge);
+	await session.start('/p');
+	session.receive({ type: 'state', state: 'ready' });
+	const first = session.send('one', null);
+	await Promise.resolve();
+	await session.send('two', null);
+	expect(session.queued.map((q) => q.text)).toEqual(['two']);
+	finish();
+	await vi.waitFor(() => expect(prompts).toHaveLength(2));
+	expect(prompts[1]).toEqual([{ type: 'text', text: 'two' }]);
+	expect(session.queued).toEqual([]);
+
+	await session.send('three', null);
+	expect(session.cancel().map((q) => q.text)).toEqual(['three']);
+	await first;
+	expect(prompts).toHaveLength(2);
+	release();
+});
+
+it('sends a message written after Stop, while the stopped turn is still ending', async () => {
+	const prompts: unknown[] = [];
+	let finish = () => {};
+	const bridge = {
+		start: async () => ({ ok: true, agent: 'claude' }),
+		prompt: (blocks: unknown[]) => {
+			prompts.push(blocks);
+			return new Promise((resolve) => (finish = () => resolve({ ok: true, stopReason: 'cancelled', changes: [] })));
+		},
+		cancel: () => {},
+		onEvent: () => () => {}
+	} as unknown as AcpBridge;
+	const release = provideAgentHost({
+		openCompareTab: () => {},
+		openFile: () => {},
+		writeText: async () => {},
+		flushPendingSave: async () => {},
+		selection: () => null
+	});
+	const session = new AgentSession(() => bridge);
+	await session.start('/p');
+	session.receive({ type: 'state', state: 'ready' });
+	const first = session.send('one', null);
+	await vi.waitFor(() => expect(prompts).toHaveLength(1));
+	session.cancel();
+	await session.send('rewritten', null);
+	finish();
+	await vi.waitFor(() => expect(prompts).toHaveLength(2));
+	expect(prompts[1]).toEqual([{ type: 'text', text: 'rewritten' }]);
+	finish();
+	await first;
+	release();
 });

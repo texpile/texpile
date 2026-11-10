@@ -52,7 +52,7 @@
 				/>
 				<button
 					type="button"
-					class="btn btn-xs hover:preset-tonal shrink-0"
+					class="btn btn-sm preset-tonal shrink-0 px-3"
 					onclick={() => (outputs.pdf = '')}
 					disabled={!outputs.pdf}
 					use:tip={m.wsview_clear_autodetect_title()}
@@ -75,7 +75,7 @@
 				/>
 				<button
 					type="button"
-					class="btn btn-xs hover:preset-tonal shrink-0"
+					class="btn btn-sm preset-tonal shrink-0 px-3"
 					onclick={() => (outputs.log = '')}
 					disabled={!outputs.log}
 					use:tip={m.wsview_clear_autodetect_title()}

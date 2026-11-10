@@ -1,13 +1,12 @@
 // the one tinymist release Texpile installs itself, and which of its archives fits this machine
+import type { Libc } from '../install/linuxLibc';
+
 export const TINYMIST_VERSION = '0.15.8';
 
 // Texpile's own copy of the release, its Windows and macOS programs signed by Texpile LLC (the
 // vendor-tinymist workflow; vendor/README.md): an unsigned program in Texpile's folder is what a
 // virus scanner flags, and the warning would name Texpile
 const RELEASE_URL = `https://dl.texpile.com/vendor/tinymist/${TINYMIST_VERSION}/`;
-
-// the gnu builds link glibc 2.28 (tinymist builds them in a manylinux_2_28 container)
-const GNU_MIN_GLIBC = [2, 28];
 
 // Copied from that copy's SHA256SUMS; the Linux archives are tinymist's own and keep its hashes.
 // Pinned here rather than fetched next to the archive: a checksum from the same place as the
@@ -23,8 +22,6 @@ const SHA256_BY_TARGET: Record<string, string> = {
 	'aarch64-unknown-linux-gnu': 'ec78300e89b34e0958b615b1d42c275fd11bf91d2d27401bbef07150e477f199',
 	'aarch64-unknown-linux-musl': '8055377bfd463c05dc7e9cf4116d355ba0c2bb80a68a583b31905830f2d311eb'
 };
-
-export type Libc = 'gnu' | 'musl';
 
 export type TinymistAsset = {
 	/** the archive's file name in the release, e.g. tinymist-x86_64-unknown-linux-gnu.tar.gz */
@@ -52,17 +49,4 @@ export function tinymistAssetFor(platform: NodeJS.Platform, arch: string, libc: 
 	const format = platform === 'win32' ? 'zip' : 'tar.gz';
 	const name = `tinymist-${target}.${format}`;
 	return { name, url: RELEASE_URL + name, sha256, format };
-}
-
-/**
- * Which Linux build runs here, from the glibc version the runtime reports (undefined off glibc).
- *
- * gnu wherever it can run: the musl build is static and runs anywhere, but tinymist brings no
- * allocator of its own, so on musl it compiles with musl's malloc, which is markedly slower.
- */
-export function linuxLibc(glibcVersion: string | undefined): Libc {
-	const parts = (glibcVersion ?? '').split('.').map(Number);
-	if (parts.length < 2 || parts.some((n) => !Number.isFinite(n))) return 'musl';
-	const [major, minor] = parts;
-	return major > GNU_MIN_GLIBC[0] || (major === GNU_MIN_GLIBC[0] && minor >= GNU_MIN_GLIBC[1]) ? 'gnu' : 'musl';
 }

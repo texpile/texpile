@@ -96,7 +96,9 @@ linux:
 
 # built names are the download names here too (latest-linux.yml records them, see mac note)
 appImage:
-  artifactName: ${productName}-${version}.${ext}
+  # no version in the name: electron-updater overwrites an AppImage named without one, so a launcher pointing at it
+  # still works after an update
+  artifactName: ${productName}.${ext}
 deb:
   artifactName: texpile-${version}.${ext}
   # stock postinst probes userns as root, leaving chrome-sandbox non-SUID on Ubuntu 24.04+
@@ -200,4 +202,8 @@ nsis:
   # tells Explorer the associations changed; electron-builder only does that on UNINSTALL
   include: build/installer.nsh
   license: build/license.txt
+  oneClick: false
+  allowToChangeInstallationDirectory: true
+  installerSidebar: build/installerSidebar.bmp
+  uninstallerSidebar: build/uninstallerSidebar.bmp
   artifactName: ${productName}-Setup-${version}.${ext}

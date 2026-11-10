@@ -156,10 +156,7 @@ export function relabelDimension(source: string, pictureIndex: number, i: number
 function readMeasured(source: string, picture: Picture, st: Statement): FigureDimension | null {
 	if (!isDimension(source, st)) return null;
 	const text = source.slice(st.from, st.to);
-	// a node's corner as written now, `n.south -| n.west`, or as an earlier version wrote it, `n.south west`
-	const node = /\(\$\(([^().]+)\.(north|south)(?: -\| [^().]+\.| )(west|east)\)\+\((0|-?\d*\.?\d+cm),(0|-?\d*\.?\d+cm)\)\$\) edge/.exec(
-		text
-	);
+	const node = /\(\$\(([^().]+)\.(north|south) -\| [^().]+\.(west|east)\)\+\((0|-?\d*\.?\d+cm),(0|-?\d*\.?\d+cm)\)\$\) edge/.exec(text);
 	if (node) {
 		const ref = refOf(source, picture, node[1]);
 		const axis = node[4] === '0' ? 'x' : 'y';

@@ -46,13 +46,3 @@ export function openPreferencesAt(tab: string): void {
 	preferencesTab.current = tab;
 	preferencesOpen.current = true;
 }
-
-/**
- * The shortcut sheet, for the same reason and then one more.
- *
- * These were local state in WorkspaceMenuBar, which also MOUNTED the dialogs - fine while the host
- * menu bar is the only way in. But a guest session renders no menu bar at all, so for a guest the
- * dialogs did not exist, and the palette's Preferences command set a flag nothing was listening to.
- * The flags live here and WindowDialogs mounts the dialogs for both.
- */
-export const shortcutsOpen = box(false);

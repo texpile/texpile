@@ -15,7 +15,9 @@ import type { Extension } from '@codemirror/state';
 const HEADINGS = new Set(commandsWith('section'));
 const PARSE_BUDGET_MS = 100;
 
-function foldTree(state: EditorState): Tree {
+type FoldRange = { from: number; to: number };
+
+export function foldTree(state: EditorState): Tree {
 	return ensureSyntaxTree(state, state.doc.length, PARSE_BUDGET_MS) ?? syntaxTree(state);
 }
 
@@ -23,18 +25,36 @@ function environmentNameOf(state: EditorState, node: SyntaxNode): string {
 	return state.sliceDoc(node.from, node.to).replace(/^\\(?:begin|end)\s*\{\s*|\s*\}$/g, '');
 }
 
-function environmentFoldRange(state: EditorState, lineStart: number, lineEnd: number): { from: number; to: number } | null {
-	let range: { from: number; to: number } | null = null;
+/** the fold of the environment a \begin opens */
+export function environmentFoldOf(state: EditorState, begin: SyntaxNode): { name: string; range: FoldRange } | null {
+	const end = begin.parent?.lastChild;
+	const name = environmentNameOf(state, begin);
+	// folding the whole document body is useless
+	if (!end || end.name !== 'EndEnv' || name === 'document' || environmentNameOf(state, end) !== name) return null;
+	return end.from > begin.to ? { name, range: { from: begin.to, to: end.from } } : null;
+}
+
+const DISPLAY_MATH = new Set(['BracketMath', 'DisplayMath']);
+const DISPLAY_CLOSERS = new Set(['CloseDisplay', 'DoubleDollar']);
+
+/** \[ \] and $$ $$ across lines fold between their delimiters */
+export function displayMathFoldOf(state: EditorState, math: SyntaxNode): FoldRange | null {
+	const open = math.firstChild;
+	const close = math.lastChild;
+	if (!open || !close || close === open || !DISPLAY_CLOSERS.has(close.name)) return null;
+	return state.doc.lineAt(open.to).number < state.doc.lineAt(close.from).number ? { from: open.to, to: close.from } : null;
+}
+
+function environmentFoldRange(state: EditorState, lineStart: number, lineEnd: number): FoldRange | null {
+	let range: FoldRange | null = null;
 	foldTree(state).iterate({
 		from: lineStart,
 		to: lineEnd,
 		enter(ref) {
-			if (range || ref.from < lineStart || (ref.name !== 'BeginEnv' && ref.name !== 'VerbatimBegin')) return !range;
-			const end = ref.node.parent?.lastChild;
-			const name = environmentNameOf(state, ref.node);
-			// folding the whole document body is useless
-			if (!end || end.name !== 'EndEnv' || name === 'document' || environmentNameOf(state, end) !== name) return false;
-			if (end.from > ref.to) range = { from: ref.to, to: end.from };
+			if (range || ref.from < lineStart) return !range;
+			if (ref.name === 'BeginEnv' || ref.name === 'VerbatimBegin') range = environmentFoldOf(state, ref.node)?.range ?? null;
+			else if (DISPLAY_MATH.has(ref.name)) range = displayMathFoldOf(state, ref.node);
+			else return true;
 			return false;
 		}
 	});
@@ -153,7 +173,7 @@ export const foldMarkerTheme = EditorView.baseTheme({
 	'.cm-foldGutter .cm-foldMarker:hover': { opacity: '1' }
 });
 
-/** folding for LaTeX source: environments and section headings. */
+/** folding for LaTeX source: environments, display math and section headings. */
 export function latexFolding(): Extension {
 	return [foldService.of(foldRangeAt), foldGutter({ markerDOM: foldMarkerDom }), foldMarkerTheme, keymap.of(foldKeymap)];
 }

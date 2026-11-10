@@ -4,5 +4,8 @@
 # NSIS license page is a classic edit control, needs CRLF to render line breaks
 build/license.txt -text
 
+# live gate fixture written with Windows line ends
+apps/texpile-editor/tests/live/fixtures/crlf/main.tex -text
+
 # generated package data (see the dir's README.md)
 apps/texpile-editor/src/lib/languages/latex/intellisense/data/packages/*.json linguist-generated

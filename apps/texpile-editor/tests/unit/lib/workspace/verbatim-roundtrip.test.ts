@@ -309,6 +309,18 @@ describe('group (one source construct -> many blocks) is all-or-nothing', () => 
 		// the sibling paragraph above the list is still byte-exact
 		expect(out).toContain('Double blank line above this paragraph.');
 	});
+
+	// 2303.01634 classical_notes.tex: byte-identical environments in a row came back as one list
+	const SAME_LISTS =
+		'Text.\n\n\\begin{itemize}\n    \\item\n\\end{itemize}\n\n\n\n\\begin{itemize}\n    \\item\n\\end{itemize}\n\n\\begin{itemize}\n    \\item\n\\end{itemize}\n\n\\begin{enumerate}\n\\item a\n\\end{enumerate}\n\\begin{enumerate}\n\\item a\n\\end{enumerate}\n';
+
+	it('byte-identical environments in a row are separate lists', () => {
+		const parsed = parseLatexFile(SAME_LISTS);
+		expect(serializeLatexFile(parsed, parsed.doc)).toBe(SAME_LISTS);
+		const afresh = serializeLatexFile(parsed, withoutOrigins(parsed.doc));
+		expect(afresh.match(/\\begin\{itemize\}/g)?.length).toBe(3);
+		expect(afresh.match(/\\begin\{enumerate\}/g)?.length).toBe(2);
+	});
 });
 
 describe('a container written out afresh keeps its untouched children as their bytes', () => {

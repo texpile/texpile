@@ -21,6 +21,9 @@ import { TypstParser, typstHighlight } from 'texpile-typst-syntax-wasm';
 import { loadTypstParser } from '../syntax/typstTrees';
 import { isCodeChip } from '../syntax/codeChip';
 import { typstFold, typstFoldSections } from '../intellisense/typstFold';
+import { typstFoldKinds } from '../intellisense/typstFoldKinds';
+import { foldKinds } from '$lib/editor/source/extensions/fold-kinds/foldKinds';
+import { lineIndentation } from '$lib/editor/source/extensions/line-indent/lineIndent';
 
 /**
  * Fold RANGES and the fold keymap - deliberately NOT the gutter.
@@ -32,7 +35,7 @@ import { typstFold, typstFoldSections } from '../intellisense/typstFold';
  * the parser - the ranges.
  */
 function typstFolding(): Extension {
-	return [typstFoldSections, keymap.of(foldKeymap)];
+	return [typstFoldSections, keymap.of(foldKeymap), foldKinds.of(typstFoldKinds)];
 }
 
 // Typst's comment delimiters. `line` is what Mod-/ (toggleComment) actually uses: without it the
@@ -43,8 +46,12 @@ function typstFolding(): Extension {
 // here than for a bracket
 const typstFacet = defineLanguageFacet({
 	commentTokens: { line: '//', block: { open: '/*', close: '*/' } },
-	closeBrackets: { brackets: ['(', '[', '{', '"', '$'], before: ';:.,=}])>$ \t' }
+	closeBrackets: { brackets: ['(', '[', '{', '"', '$'], before: ';:.,=}])>$ \t' },
+	indentOnInput: /^\s*[}\])]$/
 });
+
+// a // after a colon is a link
+const typstIndentation = lineIndentation({ trailingComment: /(?<![:\\])\/\/.*$/, closesLine: /^\s*[}\])]/ });
 
 function makeLanguage(support: Extension[], code = false): LanguageSupport {
 	loadTypstParser().catch(() => undefined);
@@ -59,7 +66,7 @@ function makeLanguage(support: Extension[], code = false): LanguageSupport {
 		languageDataProp.add((type) => (type.isTop ? typstFacet : undefined))
 	);
 	const parser = code ? made.forCode() : made;
-	return new LanguageSupport(new Language(typstFacet, parser, support, 'typst'));
+	return new LanguageSupport(new Language(typstFacet, parser, support, 'typst'), typstIndentation);
 }
 
 /**

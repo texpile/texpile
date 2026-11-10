@@ -35,11 +35,12 @@ import type { Node as PMNode } from 'prosemirror-model';
 import { liveText } from '$lib/buffers/liveText.svelte';
 import { standaloneText, type DocumentText } from '$lib/buffers/documentText';
 
-export type FileKind = 'tex' | 'md' | 'typ' | 'bib' | 'pdf' | 'image' | 'binary' | 'text' | null;
+export type FileKind = 'tex' | 'md' | 'typ' | 'bib' | 'pdf' | 'image' | 'media' | 'binary' | 'text' | null;
 export type DocMeta = Pick<ParsedLatexFile, 'preamble' | 'postamble' | 'hadDocumentEnv' | 'table'> | null;
 
 const IMAGE_EXT = /\.(png|jpe?g|gif|svg|webp|bmp|ico)$/i;
-const BINARY_EXT = /\.(pdf|zip|gz|tar|otf|ttf|woff2?|eot|docx?|pptx?|xlsx?|bin)$/i;
+const MEDIA_EXT = /\.(mp4|m4v|webm|mov|mkv|ogv|mp3|m4a|aac|wav|ogg|oga|opus|flac)$/i;
+const BINARY_EXT = /\.(pdf|zip|gz|tar|otf|ttf|woff2?|eot|docx?|pptx?|xlsx?|bin|avi|wmv|flv)$/i;
 
 export function fileKind(path: string | null): FileKind {
 	if (!path) return null;
@@ -49,6 +50,7 @@ export function fileKind(path: string | null): FileKind {
 	if (/\.bib$/i.test(path)) return 'bib';
 	if (/\.pdf$/i.test(path)) return 'pdf';
 	if (IMAGE_EXT.test(path)) return 'image';
+	if (MEDIA_EXT.test(path)) return 'media';
 	if (BINARY_EXT.test(path)) return 'binary';
 	return 'text';
 }
@@ -64,6 +66,11 @@ export function formatOf(kind: FileKind): 'tex' | 'md' | 'typ' {
 }
 
 /** kinds edited as raw text in the source editor, with no visual representation. */
+/** kinds shown by a viewer, with nothing loaded into a text buffer */
+export function isViewerKind(kind: FileKind): kind is 'pdf' | 'image' | 'media' | 'binary' {
+	return kind === 'pdf' || kind === 'image' || kind === 'media' || kind === 'binary';
+}
+
 export function isRawTextKind(kind: FileKind): kind is 'text' | 'bib' {
 	return kind === 'text' || kind === 'bib';
 }
@@ -136,6 +143,8 @@ export class DocumentBuffer {
 	private model = $state.raw<DocumentText | null>(null);
 	private visualKind = $state(false);
 	private standalone = false;
+	/** the path the model was made for, which a rename moves ahead of a guest's shared text */
+	private modelPath: string | null = null;
 	/** the text the file opened with, the baseline of a file no buffer holds */
 	private opened = '';
 	docMeta = $state<DocMeta>(null);
@@ -269,6 +278,7 @@ export class DocumentBuffer {
 		this.sourceMap = emptyMap();
 		this.visualStale = false;
 		this.model = null;
+		this.modelPath = null;
 		this.standalone = false;
 		this.opened = '';
 		this.path = null;
@@ -300,6 +310,7 @@ export class DocumentBuffer {
 		// a read-only file is never written, so it never shares the buffers' text
 		const model = issue ? null : this.deps.textModel?.(path);
 		this.model = model || standaloneText(text);
+		this.modelPath = path;
 		this.standalone = !model;
 		this.visualKind = visual;
 		this.encodingIssue = issue;
@@ -330,20 +341,24 @@ export class DocumentBuffer {
 		const model = this.encodingIssue ? null : this.deps.textModel?.(to);
 		if (model) {
 			this.model = model;
+			this.modelPath = to;
 			this.standalone = false;
 		}
 		return true;
 	}
 
-	/** a file opened before its shared text existed (a guest's new file) takes it once it does, with what was typed meanwhile */
+	/** the open file takes its shared text once the session has it: a guest's new file with what was typed meanwhile, or
+	 *  a file the guest renamed, written under its old name until the host has moved it */
 	bindModel(): void {
-		if (!this.standalone || !this.path || this.encodingIssue || !this.model) return;
+		if (!this.path || this.encodingIssue || !this.model || (!this.standalone && this.modelPath === this.path)) return;
 		const model = this.deps.textModel?.(this.path);
-		if (!model) return;
+		if (!model || (!this.standalone && model.text !== this.model.text)) return;
 		const typed = this.model.text.toString();
+		const standalone = this.standalone;
 		this.model = model;
+		this.modelPath = this.path;
 		this.standalone = false;
-		if (typed !== this.opened) model.write(typed, this.opened);
+		if (standalone && typed !== this.opened) model.write(typed, this.opened);
 	}
 
 	/** an edit goes into the file's text, which writes it on its own; `before` is the text the change was made to */
@@ -448,10 +463,10 @@ export class DocumentBuffer {
 		// reference handshake: the editor sees its own live doc and skips the state swap
 		this.visualDoc = liveDoc;
 		this.lastDoc = liveDoc;
-		if (liveDoc.eq(parsed.doc)) {
-			this.sourceMap = parsed.map;
-			this.lastDocSource = text;
-		} else this.restate(liveDoc);
+		// the patched doc was made from `text`, so what it writes differently is a change to that text
+		this.lastDocSource = text;
+		if (liveDoc.eq(parsed.doc)) this.sourceMap = parsed.map;
+		else this.restate(liveDoc);
 		this.offerInserts();
 	}
 

@@ -5,18 +5,21 @@ import * as fs from 'node:fs';
 import * as path from 'node:path';
 import { applyAppIdentity, portable } from './appIdentity';
 import { shellEnvReady } from './shell/shellEnv';
-import { setToolDirs } from './shell/toolDirs';
+import { setPathFallback, setToolDirs } from './shell/toolDirs';
+import { managedTexLiveBin } from './texlive/managedTexLive';
 import { stopCwdProgramLookup } from './shell/findProgram';
 import { registerPrivilegedSchemes, registerProtocolHandlers } from './appProtocols';
 import { readSettings, writeSettings, registerSettingsIpc } from './appSettings';
 import { chromeColors, createWindow, startUrl } from './windows/createWindow';
-import { windowRoots, pendingOpens, normRoot, windowFor, windowWithRoot, focusWindow, beginQuit } from './windows/windowRegistry';
+import { windowRoots, pendingOpens, windowFor, windowWithRoot, focusWindow, beginQuit } from './windows/windowRegistry';
+import { normRoot } from './windows/normRoot';
 import { registerBootstrapIpc } from './ipc/bootstrapIpc';
 import { registerStartupStatsIpc } from './startupStats';
 import { startStartupProfile } from './startupProfile';
 import { registerFsIpc } from './ipc/fsIpc';
 import { registerDraftIpc } from './ipc/draftIpc';
 import { registerDrawIpc } from './draw/drawIpc';
+import { registerFigureStoreIpc } from './draw/figureStoreIpc';
 import { stopCetz } from './draw/cetzEngine';
 import { stopDrawing } from './draw/drawDaemon';
 import { registerImageIpc } from './images/imageIpc';
@@ -24,8 +27,11 @@ import { registerWorkspaceWindowIpc, openFolderInNewWindow } from './ipc/workspa
 import { registerWindowGlassIpc } from './windowGlass';
 import { registerNativeAppearanceIpc } from './nativeAppearance';
 import { registerSurfacesIpc } from './ipc/surfacesIpc';
-import { registerDeferredIpc, shutdownDeferred } from './ipc/deferredIpc';
+import { registerKeybindingsIpc } from './ipc/keybindingsIpc';
+import { registerThemesIpc } from './themes/themesIpc';
+import { registerDeferredIpc, registerDeferredReadyIpc, shutdownDeferred } from './ipc/deferredIpc';
 import { registerWindowChrome } from './windowChrome';
+import { installInFlight, launchedMidInstall } from './updates/midInstallLaunch';
 
 applyAppIdentity();
 stopCwdProgramLookup();
@@ -35,16 +41,20 @@ registerPrivilegedSchemes();
 registerSettingsIpc();
 // before every other surface: preload calls it synchronously while the window is still loading
 registerBootstrapIpc();
+registerDeferredReadyIpc();
 registerStartupStatsIpc();
 startStartupProfile();
 registerFsIpc();
 registerDraftIpc();
 registerDrawIpc();
+registerFigureStoreIpc();
 registerImageIpc();
 registerWorkspaceWindowIpc();
 registerWindowGlassIpc(() => chromeColors().background);
 registerNativeAppearanceIpc();
 registerSurfacesIpc();
+registerKeybindingsIpc();
+registerThemesIpc();
 
 // .tex handed over by the OS before any window exists; consumed at whenReady
 let initialOpenPath: string | null = null;
@@ -176,10 +186,12 @@ app.on('open-url', (event, url) => {
 
 // a second launch routes its file to the right window; launching with no file opens a
 // fresh window (VS Code model), instead of just focusing the existing one
-if (!app.requestSingleInstanceLock()) {
+if (launchedMidInstall() || !app.requestSingleInstanceLock()) {
 	app.quit();
 } else {
 	app.on('second-instance', (_e, argv) => {
+		// the deb install blocks this process, and a window opened after it keeps the old version running
+		if (installInFlight()) return;
 		const link = linkFromArgv(argv);
 		if (link) {
 			requestJoinSession(link);
@@ -191,7 +203,8 @@ if (!app.requestSingleInstanceLock()) {
 			return;
 		}
 		const dir = folderFromArgv(argv);
-		createWindow(startUrl(), dir ? { kind: 'folder', path: dir } : undefined);
+		if (dir) requestOpenFolder(dir);
+		else createWindow(startUrl());
 	});
 }
 
@@ -262,6 +275,7 @@ app.whenReady().then(() => {
 
 	// warmed here, not at module scope: the login shell it spawns is slower than the whole launch
 	setToolDirs(readSettings().toolDirs);
+	setPathFallback(managedTexLiveBin());
 	void shellEnvReady();
 
 	// Not before the renderer has been served its own bundle. The app:// handler runs on this

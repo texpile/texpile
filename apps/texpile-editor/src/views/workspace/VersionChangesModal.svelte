@@ -106,8 +106,8 @@
 			</ul>
 
 			<div class="border-surface-200-800 rounded-base flex min-w-0 flex-1 flex-col overflow-hidden border">
-				<div class="bg-surface-100-900 border-surface-200-800 text-muted flex min-h-8 shrink-0 items-center gap-2 border-b px-3 text-xs">
-					<span class="min-w-0 truncate">{picked ? labels.relPath(picked.path) : ''}</span>
+				<div class="bg-surface-100-900 border-surface-200-800 flex min-h-8 shrink-0 items-center gap-2 border-b px-3 text-xs">
+					<span class="text-muted min-w-0 truncate">{picked ? labels.relPath(picked.path) : ''}</span>
 					<button
 						class="btn-icon btn-icon-xs hover:preset-tonal ml-auto"
 						onclick={() => (diffLayout = diffLayout === 'split' ? 'unified' : 'split')}

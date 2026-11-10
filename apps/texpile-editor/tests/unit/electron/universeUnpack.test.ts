@@ -5,7 +5,7 @@ import { mkdirSync, mkdtempSync, readFileSync, readdirSync, rmSync, writeFileSyn
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { afterEach, describe, expect, it } from 'vitest';
-import { tarCommand } from '../../../../../electron/src/tinymist/tinymistArchive';
+import { tarCommand } from '../../../../../electron/src/install/archiveExtract';
 import { templateManifest, unpackUniverseTemplate } from '../../../../../electron/src/templates/universeUnpack';
 
 const made: string[] = [];

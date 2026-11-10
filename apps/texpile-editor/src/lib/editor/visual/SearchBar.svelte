@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { isCommandKey } from '$lib/keybindings/editors/editorKeys';
 	import { inChildWindows } from '$lib/childWindows/childWindowRegistry.svelte';
 	import { slide } from 'svelte/transition';
 	import { onMount, onDestroy, untrack } from 'svelte';
@@ -21,8 +22,7 @@
 	}
 
 	function handleKeydown(e: KeyboardEvent): void {
-		// ignore Ctrl/Cmd+Shift+F, that's Find in Files (handled elsewhere)
-		if (e.key.toLowerCase() === 'f' && (e.ctrlKey || e.metaKey) && !e.shiftKey) {
+		if (isCommandKey(e, 'editor.find')) {
 			e.preventDefault();
 			display.current = !display.current;
 			setTimeout(() => bar?.focusQuery(), 0);

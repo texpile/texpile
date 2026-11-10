@@ -1,8 +1,11 @@
 import { contextBridge, ipcRenderer, webUtils } from 'electron';
-import { invokeFs } from './preloadIpc';
+import { invokeFs, invokeReady } from './preloadIpc';
 import { drawBridge } from './draw/drawPreload';
 import { imageBridge } from './images/imagePreload';
 import './preloadSnippets';
+import './preloadTexLive';
+import './preloadKeybindings';
+import './preloadThemes';
 
 // main pushes open-path/open-folder on did-finish-load, which can beat the renderer's
 // subscription (mount waits on the settings IPC; the route-split boot is fast enough to lose
@@ -44,32 +47,34 @@ contextBridge.exposeInMainWorld('texpileNative', {
 	/** what this window is opening and the settings to open it with, known before the first render. */
 	bootstrap,
 	/** native folder picker; resolves to the chosen absolute path or null. */
-	openFolder: () => ipcRenderer.invoke('dialog:openFolder'),
-	/** native pickers with a title of the caller's choosing; the chosen absolute path or null. */
-	pickFolder: (title: string) => ipcRenderer.invoke('dialog:pickFolder', title),
-	pickFile: (title: string) => ipcRenderer.invoke('dialog:pickFile', title),
-	getSettings: () => ipcRenderer.invoke('settings:get'),
+	openFolder: () => invokeReady('dialog:openFolder'),
+	/** native pickers with a title of the caller's choosing; every chosen folder, or the one chosen file or null. */
+	pickFolders: (title: string) => invokeReady('dialog:pickFolder', title),
+	pickFile: (title: string) => invokeReady('dialog:pickFile', title),
+	getSettings: () => invokeReady('settings:get'),
 	/** merges a partial update into settings; resolves to the updated settings. */
-	setSettings: (partial: Record<string, unknown>) => ipcRenderer.invoke('settings:set', partial),
+	setSettings: (partial: Record<string, unknown>) => invokeReady('settings:set', partial),
 	/** replace settings.json WHOLE (the migration's write; merge-writes cannot delete keys). */
-	replaceSettings: (full: Record<string, unknown>) => ipcRenderer.invoke('settings:replace', full),
+	replaceSettings: (full: Record<string, unknown>) => invokeReady('settings:replace', full),
 	/** set the whole-window zoom factor (clamped 0.5..2.5); resolves to the applied factor. */
-	setZoomFactor: (factor: number) => ipcRenderer.invoke('window:setZoom', factor),
+	setZoomFactor: (factor: number) => invokeReady('window:setZoom', factor),
 	/** whether this system can blur what lies behind a window (Windows 11 22H2 on, macOS). */
-	windowGlassWorks: () => ipcRenderer.invoke('window:glassWorks'),
+	windowGlassWorks: () => invokeReady('window:glassWorks'),
+	/** the font families installed on this computer, sorted */
+	installedFonts: () => invokeFs('fonts:list'),
 	/** the blurred, see-through window material on or off, for every window; resolves to what was applied. */
-	setWindowGlass: (on: boolean) => ipcRenderer.invoke('window:setGlass', on),
+	setWindowGlass: (on: boolean) => invokeReady('window:setGlass', on),
 	/** menus, dialogs and the vibrancy material take the app's light / dark / system choice. */
 	setNativeAppearance: (choice: 'light' | 'dark' | 'system') => ipcRenderer.send('window:appearance', choice),
 	/** a native message box, modal to this window; resolves to the index of the pressed button
 	 *  in the array as sent (primary first, cancel last), or null. */
-	showMessageBox: (req: Record<string, unknown>) => ipcRenderer.invoke('dialog:messageBox', req),
+	showMessageBox: (req: Record<string, unknown>) => invokeReady('dialog:messageBox', req),
 	/** a native context menu at window coordinates; resolves to the chosen item id, or null. */
-	popupMenu: (req: Record<string, unknown>) => ipcRenderer.invoke('menu:popup', req),
+	popupMenu: (req: Record<string, unknown>) => invokeReady('menu:popup', req),
 	/** whether AI-assistant access is enabled, and the loopback port if it is listening. */
-	mcpStatus: () => ipcRenderer.invoke('mcp:status'),
+	mcpStatus: () => invokeReady('mcp:status'),
 	/** turn AI-assistant access on or off; persists and starts/stops the server. */
-	mcpSetEnabled: (enabled: boolean) => ipcRenderer.invoke('mcp:setEnabled', enabled),
+	mcpSetEnabled: (enabled: boolean) => invokeReady('mcp:setEnabled', enabled),
 	/** report what this window is showing, for the MCP get_editor_state tool. Fire and forget:
 	 *  it is a cache update, and a dropped one is corrected by the next push. */
 	mcpPublishState: (state: unknown) => ipcRenderer.send('mcp:publishState', state),
@@ -80,28 +85,28 @@ contextBridge.exposeInMainWorld('texpileNative', {
 	/** subscribe to a texpile:// join link the OS handed over; the payload is the raw URL. */
 	onJoinSession: (cb: (url: string) => void) => onJoinSessionBuffered(cb),
 	/** register this window as the folder's owner; { ok:false } means another window has it (and was focused). */
-	claimWorkspace: (root: string, kind?: 'file' | 'folder') => ipcRenderer.invoke('workspace:claim', root, kind),
+	claimWorkspace: (root: string, kind?: 'file' | 'folder') => invokeReady('workspace:claim', root, kind),
 	/** mark this window as back on the start screen. */
-	releaseWorkspace: () => ipcRenderer.invoke('workspace:release'),
+	releaseWorkspace: () => invokeReady('workspace:release'),
 	/** open an empty new window. */
-	newWindow: () => ipcRenderer.invoke('window:new'),
+	newWindow: () => invokeReady('window:new'),
 	/** palette "Toggle Developer Tools"; the window's own devtools, not a global */
 	toggleDevTools: () => ipcRenderer.send('window:toggle-devtools'),
 	/** what the main process was doing during launch; see startupStats.ts */
-	startupMainStats: () => ipcRenderer.invoke('startup:mainStats'),
+	startupMainStats: () => invokeReady('startup:mainStats'),
 	/** palette "Reload workspace": reload this window and reopen its folder (main keeps the root) */
 	reloadWorkspace: () => ipcRenderer.send('window:reload-workspace'),
 
 	// ---- custom title bar. The window is frameless off macOS, so these are the only way to
 	// minimise, maximise or close it. `close` goes through the normal close path, unsaved-changes
 	// hold included. ----
-	windowMinimize: () => ipcRenderer.invoke('window:minimize'),
+	windowMinimize: () => invokeReady('window:minimize'),
 	/** maximize or restore; resolves to the resulting maximized state. */
-	windowToggleMaximize: () => ipcRenderer.invoke('window:toggleMaximize'),
-	windowClose: () => ipcRenderer.invoke('window:close'),
-	windowIsMaximized: () => ipcRenderer.invoke('window:isMaximized'),
+	windowToggleMaximize: () => invokeReady('window:toggleMaximize'),
+	windowClose: () => invokeReady('window:close'),
+	windowIsMaximized: () => invokeReady('window:isMaximized'),
 	/** where the pointer is on the screen: a tab let go outside every window opens there in one of its own */
-	cursorScreenPoint: () => ipcRenderer.invoke('window:cursorScreenPoint'),
+	cursorScreenPoint: () => invokeReady('window:cursorScreenPoint'),
 	/** repaint / resize the Chromium-drawn window controls to match our title bar (not macOS). */
 	windowSetOverlay: (o: { height?: number; color?: string; symbolColor?: string }) => ipcRenderer.send('window:overlay', o),
 	/** subscribe to maximize / full-screen changes, so the title bar can swap its restore icon. */
@@ -125,9 +130,9 @@ contextBridge.exposeInMainWorld('texpileNative', {
 		return () => ipcRenderer.removeListener('main:menu-action', h);
 	},
 	/** folder picker + new window in one step (deduped against already-open folders). */
-	openFolderNewWindow: () => ipcRenderer.invoke('window:openFolderNew'),
+	openFolderNewWindow: () => invokeReady('window:openFolderNew'),
 	/** true exactly once per app session; the winner runs the update check / What's New. */
-	claimStartupTasks: () => ipcRenderer.invoke('session:claimStartupTasks'),
+	claimStartupTasks: () => invokeReady('session:claimStartupTasks'),
 	/** subscribe to "this window is about to close" (main holds the close until closeDecision). */
 	onBeforeClose: (cb: () => void) => {
 		function h() {
@@ -197,7 +202,7 @@ contextBridge.exposeInMainWorld('texpileNative', {
 	/** discard a folder's undo backups -> { ok }. */
 	fsPurgeUndo: (root: string) => invokeFs('fs:purgeUndo', root),
 	/** select a file in the OS file manager (Explorer, Finder, ...) -> { ok }. */
-	revealItem: (path: string) => ipcRenderer.invoke('shell:revealItem', path),
+	revealItem: (path: string) => invokeReady('shell:revealItem', path),
 	/** find-in-files -> { results, truncated, total? }. */
 	fsSearch: (root: string, q: string, regex: boolean, caseSensitive: boolean) => invokeFs('fs:search', root, q, regex, caseSensitive),
 	/** { exists, mtimeMs, size }, used to poll for a freshly-written compile output. */
@@ -211,33 +216,21 @@ contextBridge.exposeInMainWorld('texpileNative', {
 	 * engine's exact per-page positioned records. -> { ok, pages, paperW, paperH, ... }. */
 	draftCompile: (body: { root: string; mainFile: string; readBack: { byTex: string[]; byTools: string[] } }) =>
 		invokeFs('draft:compile', body),
-	/** Draft-mode instant path: typeset ONE paragraph on the warm daemon (~1-2ms). */
-	draftTypeset: (body: { root: string; mainFile: string; text: string; hsize?: number; splitTo?: number }) =>
-		invokeFs('draft:typeset', body),
-	/** Draft-mode page-break certificate: re-split a page's dimension skeleton on the engine. */
-	draftSkeleton: (body: {
-		root: string;
-		mainFile: string;
-		items: unknown[];
-		targetPt: number;
-		capacity?: boolean;
-		pack?: boolean;
-		maxDepth?: number;
-	}) => invokeFs('draft:skeleton', body),
-	/** Stop the warm daemon (draft mode off / preview closed) so it stops holding memory. */
+	/** Draft-mode edit: the engine teleports before the edit and typesets on -> { ok, from?, stop?, count, srcFiles }
+	 * or { ok: false, reason }. Pages arrive through onDraftPage as they ship. */
+	draftTeleport: (body: { root: string; mainFile: string; file: string; text: string; seq: number }) => invokeFs('draft:teleport', body),
+	/** subscribe to the pages a teleport ships; returns an unsubscribe fn. */
+	onDraftPage: (cb: (ev: { root: string; seq: number; page: unknown }) => void) => {
+		function h(_e: unknown, ev: { root: string; seq: number; page: unknown }) {
+			cb(ev);
+		}
+		ipcRenderer.on('draft:page', h);
+		return () => ipcRenderer.removeListener('draft:page', h);
+	},
+	/** Stop the draft engines (draft mode off / preview closed) so they stop holding memory. */
 	draftStop: () => invokeFs('draft:stop', {}),
 	...drawBridge,
 	...imageBridge,
-	/** Steal the warm engine from the window that currently owns it (explicit user action). */
-	draftTakeover: (body: { root: string }) => invokeFs('draft:takeover', body),
-	/** subscribe to "another window took the engine" pushes; returns an unsubscribe fn. */
-	onDraftPreempted: (cb: (ev: { root: string }) => void) => {
-		function h(_e: unknown, ev: { root: string }) {
-			cb(ev);
-		}
-		ipcRenderer.on('draft:preempted', h);
-		return () => ipcRenderer.removeListener('draft:preempted', h);
-	},
 	/** Save the live preview's reconcile PDF via a save dialog -> { saved, path? }. */
 	draftSavePdf: (body: { root: string; defaultName: string; to?: string }) => invokeFs('draft:savePdf', body),
 	/** Save PDF bytes the viewer holds (a guest has no file on disk) -> { saved, path? }. */
@@ -316,20 +309,20 @@ contextBridge.exposeInMainWorld('texpileNative', {
 	localHistoryUsage: () => invokeFs('history:usage'),
 	localHistoryAll: (root: string) => invokeFs('history:all', root),
 	/** Signing in to GitHub in the browser (githubAuth.ts): offered only once Texpile's OAuth app is configured. */
-	githubSignInAvailable: () => ipcRenderer.invoke('github:available'),
+	githubSignInAvailable: () => invokeReady('github:available'),
 	/** the signed-in GitHub account's login, or null */
-	githubAccount: () => ipcRenderer.invoke('github:account'),
+	githubAccount: () => invokeReady('github:account'),
 	/** the one-time code to show -> { ok, userCode?, verificationUri?, failure? } */
-	githubStartSignIn: () => ipcRenderer.invoke('github:startSignIn'),
-	githubOpenVerification: () => ipcRenderer.invoke('github:openVerification'),
+	githubStartSignIn: () => invokeReady('github:startSignIn'),
+	githubOpenVerification: () => invokeReady('github:openVerification'),
 	/** waits until the code was typed at GitHub, or it expired or was cancelled -> { ok, login?, failure? } */
-	githubFinishSignIn: () => ipcRenderer.invoke('github:finishSignIn'),
-	githubCancelSignIn: () => ipcRenderer.invoke('github:cancelSignIn'),
-	githubSignOut: () => ipcRenderer.invoke('github:signOut'),
+	githubFinishSignIn: () => invokeReady('github:finishSignIn'),
+	githubCancelSignIn: () => invokeReady('github:cancelSignIn'),
+	githubSignOut: () => invokeReady('github:signOut'),
 	/** answer git's github.com question with the account just signed in -> true */
-	gitAskpassUseGithub: (id: number) => ipcRenderer.invoke('git:askpassUseGithub', id),
+	gitAskpassUseGithub: (id: number) => invokeReady('git:askpassUseGithub', id),
 	/** drop every sign-in Texpile kept in the keychain -> true. */
-	gitForgetSignIns: () => ipcRenderer.invoke('git:forgetSignIns'),
+	gitForgetSignIns: () => invokeReady('git:forgetSignIns'),
 	/** git clone into <parent>/<name> -> { ok, path?, failure? }; progress arrives on onGitCloneProgress.
 	 *  shallow: the newest version only, for a template whose history is left behind */
 	gitClone: (url: string, parent: string, name: string, opts?: { shallow?: boolean }) => invokeFs('git:clone', url, parent, name, opts),
@@ -363,19 +356,19 @@ contextBridge.exposeInMainWorld('texpileNative', {
 		return () => ipcRenderer.removeListener('git:askpassClosed', h);
 	},
 	/** answer a git:askpass question; null cancels. */
-	gitAskpassReply: (id: number, answer: string | null) => ipcRenderer.invoke('git:askpassReply', id, answer)
+	gitAskpassReply: (id: number, answer: string | null) => invokeReady('git:askpassReply', id, answer)
 });
 
 // in-app updates: check/download are explicit renderer calls, events stream back per channel
 contextBridge.exposeInMainWorld('texpileUpdates', {
 	/** ask the feed for a newer version -> { status: 'update' | 'none' | 'error' | 'unsupported', ... }.
 	 *  `manual` skips the check counter. */
-	check: (manual = false) => ipcRenderer.invoke('update:check', manual),
+	check: (manual = false) => invokeReady('update:check', manual),
 	/** start downloading the update found by check(); progress arrives via onProgress, and the
 	 *  downloaded update installs at next quit (or immediately via install()). */
 	download: () => invokeFs('update:download'),
 	/** quit and install the downloaded update (relaunches). */
-	install: () => ipcRenderer.invoke('update:install'),
+	install: () => invokeReady('update:install'),
 	onProgress: (cb: (p: { percent: number; transferred: number; total: number }) => void) => {
 		function h(_e: unknown, p: { percent: number; transferred: number; total: number }) {
 			cb(p);
@@ -404,9 +397,9 @@ contextBridge.exposeInMainWorld('texpileUpdates', {
 // @codemirror/lsp-client's Transport speaks.
 contextBridge.exposeInMainWorld('texpileTypst', {
 	/** locate tinymist. Resolves null when it isn't installed. */
-	resolve: () => ipcRenderer.invoke('typst:resolve'),
+	resolve: () => invokeReady('typst:resolve'),
 	/** probe every external program the app shells out to (latexmk, git, synctex, ...). */
-	probeToolchain: () => ipcRenderer.invoke('toolchain:probe'),
+	probeToolchain: () => invokeReady('toolchain:probe'),
 	/** each probe result as it lands, ahead of probeToolchain resolving; returns an unsubscribe fn */
 	onProbeResult: (cb: (p: unknown) => void) => {
 		function h(_e: unknown, p: unknown) {
@@ -416,18 +409,18 @@ contextBridge.exposeInMainWorld('texpileTypst', {
 		return () => ipcRenderer.removeListener('toolchain:probe:result', h);
 	},
 	/** the TeX and Typst installs on this machine, the one PATH reaches marked. */
-	distros: () => ipcRenderer.invoke('toolchain:distros'),
+	distros: () => invokeReady('toolchain:distros'),
 	/** a .bib from the TeX installation by bare name, as text; null when it has none */
-	texBib: (name: string) => ipcRenderer.invoke('toolchain:texBib', name),
-	packageFiles: (spec: string) => ipcRenderer.invoke('typst:packageFiles', spec),
+	texBib: (name: string) => invokeReady('toolchain:texBib', name),
+	packageFiles: (spec: string) => invokeReady('typst:packageFiles', spec),
 	/** a tool folder as absolute, relative (portable app, same drive) and real path, plus whether it exists */
-	dirForms: (entry: string) => ipcRenderer.invoke('toolchain:dirForms', entry),
+	dirForms: (entry: string) => invokeReady('toolchain:dirForms', entry),
 	/** Texpile's own copy of tinymist: the pinned release, whether this machine has a build, what is installed */
-	tinymistStatus: () => ipcRenderer.invoke('typst:tinymist:status'),
+	tinymistStatus: () => invokeReady('typst:tinymist:status'),
 	/** download, check and install the pinned tinymist; joins an install already under way */
-	installTinymist: () => ipcRenderer.invoke('typst:tinymist:install'),
+	installTinymist: () => invokeReady('typst:tinymist:install'),
 	cancelTinymistInstall: () => ipcRenderer.send('typst:tinymist:cancel'),
-	removeTinymist: () => ipcRenderer.invoke('typst:tinymist:remove'),
+	removeTinymist: () => invokeReady('typst:tinymist:remove'),
 	/** an install's progress, whichever window started it; returns an unsubscribe fn */
 	onTinymistProgress: (cb: (step: unknown) => void) => {
 		function h(_e: unknown, step: unknown) {
@@ -446,10 +439,10 @@ contextBridge.exposeInMainWorld('texpileTypst', {
 	},
 	/** fetch tinymist's preview page, theme it, and re-serve it; resolves to a typstpreview:// URL. */
 	preparePreview: (host: string, background: string, foreground: string, scrollbarThumb: string, scrollbarRadius: number, dark: boolean) =>
-		ipcRenderer.invoke('typst:preview:prepare', { host, background, foreground, scrollbarThumb, scrollbarRadius, dark }),
+		invokeReady('typst:preview:prepare', { host, background, foreground, scrollbarThumb, scrollbarRadius, dark }),
 	releasePreview: () => ipcRenderer.send('typst:preview:release'),
 	/** the raw page as tinymist serves it, for a session host to ship to guests. */
-	previewPageHtml: (host: string) => ipcRenderer.invoke('typst:preview:pageHtml', { host }),
+	previewPageHtml: (host: string) => invokeReady('typst:preview:pageHtml', { host }),
 	/** serve the host-shipped page for this (guest) window's frame; networkless CSP. */
 	prepareGuestPreview: (
 		html: string,
@@ -458,7 +451,7 @@ contextBridge.exposeInMainWorld('texpileTypst', {
 		scrollbarThumb: string,
 		scrollbarRadius: number,
 		dark: boolean
-	) => ipcRenderer.invoke('typst:preview:prepareGuest', { html, background, foreground, scrollbarThumb, scrollbarRadius, dark }),
+	) => invokeReady('typst:preview:prepareGuest', { html, background, foreground, scrollbarThumb, scrollbarRadius, dark }),
 
 	// ---- preview relay (host side): websocket legs to the preview task's data plane, one per
 	// guest. `id` is this window's handle; traffic is opaque bytes both ways. ----
@@ -474,7 +467,7 @@ contextBridge.exposeInMainWorld('texpileTypst', {
 		return () => ipcRenderer.removeListener('typst:relay:event', h);
 	},
 	/** spawn `tinymist lsp` for this window, rooted at `root`. */
-	startLsp: (root: string | null) => ipcRenderer.invoke('typst:lsp:start', root),
+	startLsp: (root: string | null) => invokeReady('typst:lsp:start', root),
 	send: (json: string) => ipcRenderer.send('typst:lsp:send', json),
 	stopLsp: () => ipcRenderer.send('typst:lsp:stop'),
 	/** subscribe to server->client messages. Returns an unsubscribe fn. */
@@ -498,19 +491,19 @@ contextBridge.exposeInMainWorld('texpileTypst', {
 // Zotero citations, through Better BibTeX's localhost server (see electron/src/zotero.ts)
 contextBridge.exposeInMainWorld('texpileZotero', {
 	/** is Zotero up, and does it have the Better BibTeX plugin */
-	probe: () => ipcRenderer.invoke('zotero:probe'),
+	probe: () => invokeReady('zotero:probe'),
 	/** library matches for a query, with their citekeys - feeds the in-app picker dialog */
-	search: (query: string) => ipcRenderer.invoke('zotero:search', { query }),
+	search: (query: string) => invokeReady('zotero:search', { query }),
 	/** the picked entries as bib text, via the named BBT translator */
-	exportBib: (keys: string[], translator: string) => ipcRenderer.invoke('zotero:export', { keys, translator })
+	exportBib: (keys: string[], translator: string) => invokeReady('zotero:export', { keys, translator })
 });
 
 // Cite by DOI's lookups (see electron/src/ipc/doiIpc.ts)
 contextBridge.exposeInMainWorld('texpileDoi', {
-	lookup: (doi: string) => ipcRenderer.invoke('doi:lookup', { doi }),
-	search: (query: string) => ipcRenderer.invoke('doi:search', { query }),
-	isbn: (isbn: string) => ipcRenderer.invoke('doi:isbn', { isbn }),
-	pmid: (pmid: string) => ipcRenderer.invoke('doi:pmid', { pmid })
+	lookup: (doi: string) => invokeReady('doi:lookup', { doi }),
+	search: (query: string) => invokeReady('doi:search', { query }),
+	isbn: (isbn: string) => invokeReady('doi:isbn', { isbn }),
+	pmid: (pmid: string) => invokeReady('doi:pmid', { pmid })
 });
 
 // templates: the user's own, saved under userData, and the Typst Universe gallery (see templatesIpc.ts)
@@ -528,8 +521,8 @@ contextBridge.exposeInMainWorld('texpileTemplates', {
 	adopt: (dir: string, root: string) => invokeFs('templates:adopt', { dir, root }),
 	discard: (dir: string) => invokeFs('templates:discard', dir),
 	/** goes online: the gallery calls it when opened, never before */
-	universeIndex: () => ipcRenderer.invoke('templates:universeIndex'),
-	universeThumbnail: (name: string, version: string) => ipcRenderer.invoke('templates:universeThumbnail', { name, version }),
+	universeIndex: () => invokeReady('templates:universeIndex'),
+	universeThumbnail: (name: string, version: string) => invokeReady('templates:universeThumbnail', { name, version }),
 	/** download a Universe template and copy it into a staged folder -> { entryPath } */
 	universeUnpack: (name: string, version: string, dir: string) => invokeFs('templates:universeUnpack', { name, version, dir })
 });
@@ -538,30 +531,30 @@ contextBridge.exposeInMainWorld('texpileTemplates', {
 // the agents ticked there to run
 contextBridge.exposeInMainWorld('texpileAgent', {
 	/** which preset agents are on PATH */
-	detect: () => ipcRenderer.invoke('agent:detect') as Promise<Record<string, boolean>>,
+	detect: () => invokeReady('agent:detect') as Promise<Record<string, boolean>>,
 	/** the models a preset agent offers, asked of the agent */
-	models: (agent: 'claude' | 'codex' | 'agy') => ipcRenderer.invoke('agent:models', agent),
+	models: (agent: 'claude' | 'codex' | 'agy') => invokeReady('agent:models', agent),
 	/** run an agent on a prompt, `system` holding the task's rules; resolves { ok, text } or { ok: false, error } */
-	run: (id: string, prompt: string, system: string, agent: string) => ipcRenderer.invoke('agent:run', { id, prompt, system, agent }),
+	run: (id: string, prompt: string, system: string, agent: string) => invokeReady('agent:run', { id, prompt, system, agent }),
 	cancel: (id: string) => ipcRenderer.send('agent:cancel', id)
 });
 
 // the agent panel's conversation over ACP; main picks the program and the folder, a window only talks
 contextBridge.exposeInMainWorld('texpileAcp', {
 	/** which preset agents are on PATH */
-	detect: () => ipcRenderer.invoke('acp:detect') as Promise<Record<string, boolean>>,
+	detect: () => invokeReady('acp:detect') as Promise<Record<string, boolean>>,
 	/** start the chosen agent in this window's folder, replacing any conversation it had */
-	start: () => ipcRenderer.invoke('acp:start'),
+	start: () => invokeReady('acp:start'),
 	/** one turn; resolves when the agent is done, with the files it changed */
-	prompt: (blocks: unknown[]) => ipcRenderer.invoke('acp:prompt', blocks),
+	prompt: (blocks: unknown[]) => invokeReady('acp:prompt', blocks),
 	cancel: () => ipcRenderer.send('acp:cancel'),
 	/** optionId null declines the request */
 	answer: (id: string, optionId: string | null) => ipcRenderer.send('acp:answer', { id, optionId }),
-	setConfig: (configId: string, value: string) => ipcRenderer.invoke('acp:config', { configId, value }),
+	setConfig: (configId: string, value: string) => invokeReady('acp:config', { configId, value }),
 	/** the agent's own past chats in this folder; Texpile keeps no copy */
-	chats: () => ipcRenderer.invoke('acp:chats'),
+	chats: () => invokeReady('acp:chats'),
 	/** one of them again, which the agent replays into the window */
-	openChat: (id: string) => ipcRenderer.invoke('acp:openChat', id),
+	openChat: (id: string) => invokeReady('acp:openChat', id),
 	close: () => ipcRenderer.send('acp:close'),
 	onEvent: (cb: (event: unknown) => void) => {
 		function h(_e: unknown, event: unknown) {
@@ -575,15 +568,15 @@ contextBridge.exposeInMainWorld('texpileAcp', {
 // terminal bridge to the node-pty shells in the main process, keyed by a string `id`
 contextBridge.exposeInMainWorld('texpileTerminal', {
 	/** whether node-pty loaded. Resolves { ok, error? }; error says why it failed. */
-	available: () => ipcRenderer.invoke('terminal:available'),
+	available: () => invokeReady('terminal:available'),
 	/** spawn (or reuse) a shell for `id` in `cwd`. Resolves { ok, shell?, error? }. */
-	spawn: (opts: { id: string; cwd?: string; cols?: number; rows?: number }) => ipcRenderer.invoke('terminal:spawn', opts),
+	spawn: (opts: { id: string; cwd?: string; cols?: number; rows?: number }) => invokeReady('terminal:spawn', opts),
 	/** send keystrokes (append '\r' to run a command). */
 	write: (id: string, data: string) => ipcRenderer.send('terminal:input', { id, data }),
 	resize: (id: string, cols: number, rows: number) => ipcRenderer.send('terminal:resize', { id, cols, rows }),
 	kill: (id: string) => ipcRenderer.send('terminal:kill', { id }),
 	/** end the shell's foreground job and its children; resolves true when there was one. */
-	interrupt: (id: string) => ipcRenderer.invoke('terminal:interrupt', { id }) as Promise<boolean>,
+	interrupt: (id: string) => invokeReady('terminal:interrupt', { id }) as Promise<boolean>,
 	/** subscribe to output; cb gets { id, data }. Returns an unsubscribe fn. */
 	onData: (cb: (msg: { id: string; data: string }) => void) => {
 		function h(_e: unknown, msg: { id: string; data: string }) {

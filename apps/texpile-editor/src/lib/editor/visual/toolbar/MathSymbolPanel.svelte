@@ -16,6 +16,13 @@
 	let { groupId, top, left, onClose }: { groupId: string; top: number; left: number; onClose: () => void } = $props();
 
 	let panelEl = $state<HTMLDivElement>();
+	// each group is its own width, so the right edge is kept in the window by the panel's measured width
+	let width = $state(0);
+	$effect(() => {
+		void groupId;
+		width = panelEl?.offsetWidth ?? 0;
+	});
+	const shownLeft = $derived(panelEl ? Math.max(4, Math.min(left, windowOf(panelEl).innerWidth - width - 4)) : left);
 
 	const group = $derived(SYMBOL_GROUPS.find((g) => g.id === groupId) ?? SYMBOL_GROUPS[0]);
 
@@ -78,10 +85,16 @@
 	});
 </script>
 
+<!-- on the body: the floating toolbar is translated, which makes it the box a fixed panel inside it is placed in (#146) -->
 <div
 	bind:this={panelEl}
+	{@attach (el) => {
+		el.ownerDocument.body.append(el);
+		// moved out of the component's range, so unmounting no longer removes it
+		return () => el.remove();
+	}}
 	class="card bg-surface-50-950 border-surface-300-700 fixed z-50 flex max-h-[min(26rem,60vh)] min-w-[200px] flex-col border shadow-lg"
-	style="top: {top}px; left: {left}px"
+	style="top: {top}px; left: {shownLeft}px"
 >
 	<div class="border-surface-300-700 flex shrink-0 items-center justify-between border-b px-3 py-1.5">
 		<span class="text-muted text-xs font-semibold uppercase">{group.label()}</span>

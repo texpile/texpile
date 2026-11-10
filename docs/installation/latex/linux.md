@@ -8,6 +8,8 @@ order: 3
 
 # LaTeX on Linux
 
+Texpile can install TeX Live for you on Linux with glibc. See [From Texpile](README.md#from-texpile-recommended). To install TeX Live yourself, read on.
+
 Installing from upstream is recommended since the TeX distribution in your distro's repositories might be outdated.
 
 ## From upstream

@@ -77,7 +77,9 @@ export function paintRange(doc: PMNode, r: PaintedRange): Decoration[] {
 		const start = pos;
 		const end = pos + node.nodeSize;
 		if (start === end || node.isText) return;
-		if (!DRAWN_TYPES.has(node.type.name)) return !node.isAtom;
+		// a chip is skipped by the inline decoration over the words, so a range painted by hand names it too
+		const chip = !r.nativeText && node.isInline && node.isAtom && node.type.name !== 'hard_break';
+		if (!DRAWN_TYPES.has(node.type.name) && !chip) return !node.isAtom;
 		if (r.nativeNode && r.from === start && r.to === end) return false;
 		if (r.mirrored && MIRRORING_TYPES.has(node.type.name)) return false;
 		// a range that covers a code block from its outside edges is crossing it; inside means within its text

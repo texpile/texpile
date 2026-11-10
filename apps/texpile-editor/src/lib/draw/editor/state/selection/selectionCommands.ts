@@ -69,6 +69,11 @@ export function moveSelection(ed: Editor, by: Point) {
 	if (by[0] || by[1]) ed.applyIfChanged(carried(ed, by));
 }
 
+/** the text moving the selection by `by` writes, null when it stays */
+export function movedText(ed: Editor, by: Point): string | null {
+	return by[0] || by[1] ? carried(ed, by) : null;
+}
+
 function canvasStep(ed: Editor, du: number, dv: number): Point {
 	const m = ed.render.transformOf(ed.selected);
 	const [ox, oy] = canvasPoint(0, 0, m);

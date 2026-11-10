@@ -93,6 +93,12 @@ export class FigureEditorState {
 	editingText = $state(false);
 	/** a point drag shows its result before it is written: the engine draws this text, the code keeps the last written one */
 	preview = $state<string | null>(null);
+	/** the text a selection drag would leave if it ended now; the canvas shows the drag by offset */
+	moved = $state<string | null>(null);
+	/** what the canvas shows that is not written yet */
+	get unwritten(): string | null {
+		return this.preview ?? this.moved;
+	}
 
 	snapScene = $derived.by(() => editorSnapScene(this, this.#shownParts));
 	snapBoxes = $derived.by(() => editorSnapBoxes(this, this.#shownParts));
@@ -135,8 +141,7 @@ export class FigureEditorState {
 	) {
 		this.language = language;
 		this.shownIndex = shownIndex;
-		const text = language.upToDate(initial);
-		this.text = text;
+		this.text = initial;
 		this.#onchange = onchange;
 		this.#history = history;
 		this.viewport.limitTo(() => this.viewRect);
@@ -153,7 +158,7 @@ export class FigureEditorState {
 			(source, failure) => this.#takeBackBroken(source, null, failure)
 		);
 		this.code = createCodeDocument(
-			text,
+			initial,
 			(c) => this.#codeChanged(c),
 			language.codeLanguage,
 			history,
@@ -199,7 +204,7 @@ export class FigureEditorState {
 	}
 
 	load(source: string) {
-		this.code.reset(this.language.upToDate(source));
+		this.code.reset(source);
 		this.startersDismissed = false;
 		this.preview = null;
 		this.tool = 'select';

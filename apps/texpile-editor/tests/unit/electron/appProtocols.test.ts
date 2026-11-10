@@ -13,7 +13,7 @@ vi.mock('electron', () => ({
 	app: { isPackaged: false, getName: () => 'Texpile', getPath: () => os.tmpdir() },
 	protocol: { handle: (scheme: string, fn: Handle) => h.handlers.set(scheme, fn), registerSchemesAsPrivileged: () => {} }
 }));
-vi.mock('../../../../../electron/src/fontT1Map', () => ({ isAllowedFontPath: () => false }));
+vi.mock('../../../../../electron/src/draft/previewFiles', () => ({ isPreviewFile: () => false }));
 
 const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'texpile-texfile-'));
 const project = path.join(dir, 'project');
@@ -25,7 +25,8 @@ beforeAll(async () => {
 	fs.writeFileSync(path.join(project, 'fig.png'), 'png');
 	fs.writeFileSync(path.join(outside, 'secret.png'), 'secret');
 	fs.symlinkSync(outside, path.join(project, 'link'), 'junction');
-	const { windowRoots, normRoot } = await import('../../../../../electron/src/windows/windowRegistry');
+	const { windowRoots } = await import('../../../../../electron/src/windows/windowRegistry');
+	const { normRoot } = await import('../../../../../electron/src/windows/normRoot');
 	windowRoots.set(1, { raw: project, norm: normRoot(project) });
 	(await import('../../../../../electron/src/appProtocols')).registerProtocolHandlers();
 });

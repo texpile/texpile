@@ -1,32 +1,25 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-// One live draft-preview session: owns the compiled document state (pages, paper, page
-// records, live patches) and composes the fonts/bitmaps/viewport/patcher/compiler pieces.
-// Everything painted came from the real engine; see DraftView.svelte for the view shell.
+// One live draft-preview session: owns the compiled document state (pages, paper, page records) and composes the
+// fonts, bitmaps, viewport, compiler and teleport pieces. Everything painted came from the real engine; see
+// DraftView.svelte for the view shell.
 import { tick } from 'svelte';
-import { parseRecords, pageIsRtl } from './pageRecords';
-import { locateParagraph } from './locate/locateParagraph';
-import { bandStartLine } from './locate/bandStart';
-import type { LocateContext, PaperMetrics } from './locate/locate.types';
-import { verifyPatches } from './patch/verifyPatches';
-import { recordsAfterPatch, patchedRecords, withoutInk } from './patch/patchedRecords';
-import { recordDrift } from './patch/recordDrift';
-import type { ParaParams } from './column/paraPrefix';
-import { patchInk, type Patch, type PatchReq } from './patch/patch.types';
-import type { SeamEntry } from './patch/seam.types';
-import { DraftFonts } from './draftFonts';
-import { DraftBitmaps } from './draftBitmaps';
-import { paintRecords, type PaintDeps } from './draftPaint';
-import { DraftViewport } from './draftViewport.svelte';
-import { DraftPatcher } from './draftPatcher.svelte';
+import { parseRecords, pageIsRtl } from './records/pageRecords';
+import { pdfDrawings, type PdfDrawing } from './records/pdfDrawings';
+import type { PaperMetrics } from './draftPaper';
+import { DraftFonts } from './paint/draftFonts';
+import { DraftBitmaps } from './paint/draftBitmaps';
+import { paintRecords, type PaintDeps } from './paint/draftPaint';
+import { DraftViewport, type EditBand } from './draftViewport.svelte';
 import { DraftCompiler } from './draftCompiler.svelte';
-import { resetEngineTruth, updateEngineTruth } from './engineTruth';
-import { wordAt } from './draftWordAt';
-import { whyPhrase } from './whyPhrase';
+import { DraftTeleport, type TeleportLanded } from './draftTeleport.svelte';
+import { editBand, shippedPage, type ShippedPage } from './records/editBand';
+import { wordAt } from './records/draftWordAt';
+import { shiftSourceLines, type SourceShift } from './records/sourceShifts';
 import { BP2PT } from './texUnits';
 import { saveDraftPdf } from './save/saveDraftPdf';
 import { basename, nativeBridge, revealItem } from '$lib/workspace/fileSystem';
 import { toaster } from '$lib/modals/toaster-svelte';
-import type { DraftPage } from '$lib/workspace/fileSystem';
+import type { DraftPage, DraftResult } from '$lib/workspace/fileSystem';
 import { m } from '$lib/paraglide/messages';
 
 type SessionOpts = {
@@ -41,21 +34,7 @@ type SessionOpts = {
 
 export class DraftSession {
 	pages = $state<DraftPage[]>([]);
-	paper = $state<PaperMetrics>({
-		w: 595,
-		h: 842,
-		colW: 0,
-		textW: 0,
-		fs: 0,
-		mx: 72.27,
-		my: 72.27,
-		colSep: 0,
-		blSkip: 0,
-		parSkip: 0,
-		topSkip: 0,
-		lsLimit: 0,
-		srcFiles: []
-	});
+	paper = $state<PaperMetrics>({ w: 595, h: 842, mx: 72.27, my: 72.27, srcFiles: [] });
 	canvasEls = $state<HTMLCanvasElement[]>([]);
 	savingPdf = $state(false);
 
@@ -63,36 +42,29 @@ export class DraftSession {
 	readonly bitmaps: DraftBitmaps;
 	readonly vp: DraftViewport;
 	readonly compiler: DraftCompiler;
-	readonly patcher: DraftPatcher;
+	readonly teleport: DraftTeleport;
 
 	private parsedPages = new Map<number, any[]>();
-	// pages whose records a patch derived rather than a compile: graded against the engine's
-	// own the next time a pass lands on them (see recordDrift)
-	private adoptedPages = new Set<number>();
-	private patchedPages = new Set<number>();
-	// per-break pruned runs from the last compile: junction truth for the certified hop
-	private seams: SeamEntry[] = [];
-	private paras = new Map<number, ParaParams>();
-	// a live patch stays on screen after the fast path applies it; keep it so a zoom
-	// re-render (which redraws from the untouched page records) re-applies it instead of
-	// reverting. Cleared on a full compile (fresh records already carry the edit).
-	private activePatch = new Map<number, Patch | Patch[]>(); // arrays = split patches (column spans)
-	private locateCtx: LocateContext;
+	// pages a teleport drew since the last compile: its PDF does not have them, so they draw from records
+	private notInPdf = new Set<number>();
+	// the pages the latest teleport shipped, until its highlight is up
+	private shipped: { seq: number; pages: ShippedPage[]; shown: boolean } = { seq: -1, pages: [], shown: false };
+	/** an edit the engine refused shows with the next compile, which then takes the preview to it */
+	private followCompile = false;
+	private drawingsInPdf = new Map<string, PdfDrawing>();
 
 	constructor(private opts: SessionOpts) {
-		resetEngineTruth(); // a fresh session's document owns the truth; never inherit another's
 		this.bitmaps = new DraftBitmaps({
 			root: opts.root,
 			paper: () => this.paper,
 			dispScale: () => this.vp.dispScale,
-			repaint: (n) => void this.renderPage(n, this.activePatch.get(n)),
+			repaint: (n) => void this.renderPage(n),
 			emit: (k, d) => this.ev(k, d)
 		});
 		this.vp = new DraftViewport({
 			canvas: (n) => this.canvasEls[n - 1],
 			pageCount: () => this.pages.length,
 			recordsRaw: (n) => this.pages[n - 1]?.records ?? '',
-			hasPatch: (n) => this.activePatch.has(n),
 			paper: () => this.paper,
 			renderPage: (n) => this.renderPage(n),
 			emit: (k, d) => this.ev(k, d)
@@ -100,109 +72,36 @@ export class DraftSession {
 		this.compiler = new DraftCompiler({
 			root: opts.root,
 			mainFile: opts.mainFile,
-			paperColW: () => this.paper.colW,
-			patchInFlight: () => this.patcher.inFlight,
 			applyCompiled: (r) => this.applyCompiled(r),
 			afterCompile: () => {
-				this.patcher.afterCompile();
-				// inserts/structural edits typed mid-compile could only bail; have the editor
-				// re-evaluate the buffer against the fresh baseline now instead of waiting for the
-				// next keystroke (the "typed during a reconcile, nothing showed" hole)
+				// edits typed while the pass ran are measured against its fresh index now
 				this.opts.onSettled()?.();
-				// The draft compile writes its OWN log; the normal pipeline polls the expected .log
-				// of the user's compile command, which never runs in live mode -- so a document with
-				// real LaTeX errors reported nothing while the engine still shipped pages.
+				// the draft compile writes its own log, which the Problems panel reads
 				this.opts.onDiagnostics()?.(this.opts.root() + '/_draft/draft.log');
 			},
 			paused: opts.paused,
+			hasPages: () => this.pages.length > 0,
 			emit: (k, d) => this.ev(k, d)
 		});
-		this.patcher = new DraftPatcher({
-			hasNative: () => !!nativeBridge(),
-			pageCount: () => this.pages.length,
-			compiling: () => this.compiler.compiling,
+		this.teleport = new DraftTeleport({
+			root: opts.root,
+			mainFile: opts.mainFile,
+			applyPage: (p, seq) => this.applyPage(p, seq),
+			landed: (r, seq) => this.landed(r, seq),
+			moveSourceLines: (stop, shifts) => this.moveSourceLines(stop, shifts),
+			compileInFlight: () => this.compiler.inFlight(),
 			setStatus: (s) => (this.compiler.status = s),
-			compile: (reason) => void this.compiler.compile(reason),
-			locate: (file, line, orig, listItem, endLine) => locateParagraph(this.locateCtx, file, line, orig, listItem, endLine),
-			bandStart: (file, line, endLine) => bandStartLine(this.locateCtx, file, line, endLine),
-			daemonTypeset: (body) => this.compiler.daemonTypeset(body),
-			pageRecords: (n) => this.pageRecords(n),
-			paper: () => this.paper,
-			missingInk: (records) => this.fonts.missingInk(records),
-			applyPatch: async (n, p) => {
-				this.activePatch.set(n, p);
-				await this.renderPage(n, p);
-				this.patchedPages.add(n);
-			},
-			clearPatch: async (n) => {
-				// stays in patchedPages: the page painted patch ink and must repaint on landing
-				if (this.activePatch.delete(n)) await this.renderPage(n);
-			},
-			adoptPatchedRecords: (n, p) => this.adoptPatchedRecords(n, p),
-			showEditBand: (b, holdMs) => this.vp.showEditBand(b, holdMs),
-			synctex: (b) => nativeBridge()!.synctex(b as any),
-			pdfPath: () => this.opts.root() + '/_draft/draft.pdf',
-			seams: () => this.seams,
-			paraParams: (pi) => this.paras.get(pi),
-			pageIsRtl: (p) => this.rtlPage(p),
-			splitSkeleton: (items, targetPt, mode) => {
-				const nb = nativeBridge();
-				if (!nb?.draftSkeleton) return Promise.resolve({ ok: false as const, error: 'no-bridge' });
-				return nb.draftSkeleton({ root: this.opts.root(), mainFile: this.opts.mainFile(), items, targetPt, ...mode });
-			},
-			followEdit: (page, top, bottom, colL, colR) => this.vp.followEdit(page, top, bottom, colL, colR),
+			refused: () => (this.followCompile = true),
 			emit: (k, d) => this.ev(k, d)
 		});
-		// reactive state crosses into the extracted locate/patch modules through accessors
-		// only, so a captured context never goes stale when a compile replaces pages/paper
-		this.locateCtx = {
-			pdfPath: () => this.opts.root() + '/_draft/draft.pdf',
-			paper: () => this.paper,
-			pageNumbers: () => this.pages.map((p) => p.n),
-			pageCount: () => this.pages.length,
-			pageRecords: (n) => this.pageRecords(n),
-			rtlPage: (n) => this.rtlPage(n),
-			synctex: (b) => nativeBridge()!.synctex(b as any),
-			typesetParagraph: ({ text, hsize }) => this.compiler.daemonTypeset({ text, hsize }),
-			paraParams: (pi) => this.paras.get(pi),
-			emit: (k, d) => this.ev(k, d)
-		};
 	}
 
-	// test hook: structured decision log readable from Playwright via window.__draftEvents
-	// (renderer console.log isn't reliably relayed through _electron). Capped so a long
-	// session can't grow it without bound.
+	// test hook: a structured decision log, read through window.__draftEvents
 	ev(kind: string, detail?: unknown): void {
 		const w = window as unknown as { __draftEvents?: unknown[] };
 		const a = (w.__draftEvents ||= []);
 		a.push({ kind, detail, t: performance.now() });
 		if (a.length > 200) a.splice(0, a.length - 200);
-	}
-
-	// The record store, advanced by the patch that just painted rather than by a compile. Only
-	// the parsed map moves: this.pages keeps the compile's raw strings, so the next real pass
-	// still starts from the engine's own text and any drift here cannot outlive it.
-	private adoptPatchedRecords(n: number, p: Patch): any[] | null {
-		const meta = this.pages[n - 1] as any;
-		if (!meta || meta.spill) return null;
-		const before = this.pageRecords(n);
-		const next = recordsAfterPatch(before, p);
-		this.parsedPages.set(n, next);
-		this.adoptedPages.add(n);
-		this.ev('records-adopted', { page: n, records: next.length });
-		// The store just changed WITHOUT a compile, and the located-geometry caches key their
-		// validity off store changes -- so the invalidation lives HERE, with the write, where
-		// no second (or future third) writer can forget it. Left to callers, it was forgotten:
-		// typing past a wrap reused a cal describing the pre-adoption band, wiped one line too
-		// few, and left each keystroke's last line behind, a staircase marching down the page.
-		// An adoption where nothing moved and the block kept its lines keeps the caches: plain
-		// typing must not pay a relocate on every keystroke.
-		function lines(rs: any[]) {
-			return rs.filter((r) => r.t === 'pl' || r.t === 'line').length;
-		}
-		const dropped = p.splices.flatMap((s) => before.slice(s.from, s.to));
-		if (p.moves.length || lines(dropped) !== lines(patchInk(p) as any[])) this.patcher.geometryChanged();
-		return next;
 	}
 
 	pageRecords(n: number): any[] {
@@ -214,27 +113,26 @@ export class DraftSession {
 		return this.parsedPages.get(n)!;
 	}
 	// a right-to-left page's records are in logical order while the PDF is in visual order, so
-	// nothing on it may be painted or spliced from records -- it waits for the exact-PDF raster
+	// nothing on it may be painted from records -- it waits for the exact-PDF raster
 	rtlPage(n: number): boolean {
 		return pageIsRtl(this.pages[n - 1]?.unc);
 	}
 
-	private paintDeps(): PaintDeps {
-		return { fonts: this.fonts, bitmaps: this.bitmaps, paper: this.paper };
+	private paintDeps(n: number): PaintDeps {
+		return {
+			fonts: this.fonts,
+			bitmaps: this.bitmaps,
+			paper: this.paper,
+			inPdf: !this.notInPdf.has(n),
+			drawingInPdf: (rec) => (rec.k ? this.drawingsInPdf.get(rec.k) : undefined)
+		};
 	}
 
-	async renderPage(n: number, requestedPatch?: Patch | Patch[]): Promise<void> {
+	async renderPage(n: number): Promise<void> {
 		const cv = this.canvasEls[n - 1];
-		if (!cv) return;
-		// windowed: plain repaints of off-screen pages wait for window entry; explicit patch
-		// splices and pages carrying a live patch always paint (they are the user's focus)
-		if (!requestedPatch && !this.activePatch.has(n) && !this.vp.inWindow(n)) return;
-		// a plain re-render (e.g. after a zoom) must re-apply any live patch on this page
-		const patch = requestedPatch ?? this.activePatch.get(n);
-		const patches: Patch[] = !patch ? [] : Array.isArray(patch) ? patch : [patch];
+		if (!cv || !this.vp.inWindow(n)) return;
 		const records = this.pageRecords(n);
 		await this.fonts.ensureFonts(records);
-		for (const p of patches) await this.fonts.ensureFonts(patchInk(p));
 		const S = this.vp.dispScale;
 		const dpr = Math.min(2, window.devicePixelRatio || 1);
 		cv.width = Math.round(this.paper.w * S * dpr);
@@ -246,88 +144,36 @@ export class DraftSession {
 		ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
 		ctx.fillStyle = '#fff';
 		ctx.fillRect(0, 0, this.paper.w * S, this.paper.h * S);
-		// exact-PDF base: paint the raster when it has landed for this compile+scale; the
-		// records draw covers the page meanwhile (and permanently when the PDF is truncated).
-		// the raster is the RESTING view only: pages carrying a live patch always draw from
-		// records -- the proven splice renderer -- and snap to the base when the patch clears
+		// the exact-PDF raster is the resting view; the records draw covers the page until it lands, and for good on
+		// a page the PDF does not have yet
+		const inPdf = !this.notInPdf.has(n);
 		const bkey = this.bitmaps.baseKey(n, dpr);
-		const base = this.bitmaps.base(bkey);
-		const ready = !!base && base !== 'loading' && base !== 'failed';
-		// an RTL page has no correct record rendering at all, so it takes the raster even under a
-		// patch -- compositing patch ink onto it would put mirrored glyphs back on the page
-		const rtl = this.rtlPage(n);
-		if (ready && (!patches.length || rtl)) {
+		const base = inPdf ? this.bitmaps.base(bkey) : undefined;
+		if (base && base !== 'loading' && base !== 'failed') {
 			ctx.drawImage(base as ImageBitmap, 0, 0, this.paper.w * S, this.paper.h * S);
 			return;
 		}
-		// a spill page has no raster to wait for: the PDF this compile produced ends before it
-		if (!base && !this.pages[n - 1]?.spill) this.bitmaps.requestBase(n, bkey);
-		// hold the white page until the raster lands rather than flash mirrored text. If the
-		// raster can never land (a truncated PDF -- 'failed'), fall through: wrong-order ink still
-		// carries the words, and a permanently blank page carries nothing.
-		if (rtl && base !== 'failed') return;
-		if (!patches.length) {
-			paintRecords(ctx, records, S, 0, n, this.paintDeps());
-			return;
-		}
-		// the page's own records with each patch's old block taken out and its moved items in place; the edited
-		// blocks draw separately, each with its own font records, whose ids are the daemon's
-		paintRecords(ctx, patchedRecords(records, patches.map(withoutInk)), S, 0, n, this.paintDeps());
-		for (const p of patches) for (const s of p.splices) if (s.recs.length) paintRecords(ctx, s.recs, S, 0, n, this.paintDeps());
+		if (inPdf && !base) this.bitmaps.requestBase(n, bkey);
+		// hold the white page until the raster lands rather than flash mirrored text; a raster that can never land
+		// falls through, as wrong-order ink still carries the words
+		if (this.rtlPage(n) && inPdf && base !== 'failed') return;
+		const drawings = paintRecords(ctx, records, S, 0, n, this.paintDeps(n));
+		if (drawings.fromPdf || drawings.unmatched) this.ev('drawings', { page: n, ...drawings });
 	}
 
-	private async applyCompiled(r: any): Promise<void> {
+	private async applyCompiled(r: Extract<DraftResult, { ok: true }>): Promise<void> {
+		const shown = this.followCompile ? this.pages : [];
+		this.followCompile = false;
 		if (r.paperW > 0) {
-			this.paper = {
-				w: r.paperW,
-				h: r.paperH,
-				colW: r.colW,
-				textW: r.textW || 0,
-				fs: r.footSkip || 0,
-				mx: r.marginX,
-				my: r.marginY,
-				colSep: r.colSep || 0,
-				blSkip: r.blSkip || 0,
-				parSkip: r.parSkip || 0,
-				topSkip: r.topSkip || 0,
-				lsLimit: r.lsLimit || 0,
-				srcFiles: r.srcFiles ?? []
-			};
+			this.paper = { w: r.paperW, h: r.paperH, mx: r.marginX, my: r.marginY, srcFiles: r.srcFiles ?? [] };
 			if (this.vp.fitMode) this.vp.fitToWidth(); // size to the pane now that the paper dims are known
 		}
-		// counter truth + the executed \begin{document} line: the decision layer pins to these
-		updateEngineTruth({ counters: r.counters ?? [], bodyLine: r.bodyLine, mainRel: this.opts.mainFile() });
 		this.pages = r.pages;
-		// the walker checks its own glyph placement against the engine's line width and had
-		// been discarding the answer. It is 0.0000 on every page of every fixture, so a
-		// nonzero one means this page's records do not reproduce the engine and anything
-		// spliced onto it is suspect. Surfaced rather than refused: no fixture exercises
-		// font expansion, where a legitimate rounding difference could appear.
-		const drift = (r.pages as { n: number; dev?: number }[]).filter((p) => (p.dev ?? 0) > 0);
-		if (drift.length) this.ev('page-walk-drift', { pages: drift.map((p) => ({ n: p.n, dev: p.dev })) });
-		// grade the derived records against the engine's own BEFORE dropping them: this is the
-		// only check that the incremental record store still describes the same document the
-		// compiler does, and it is worth having loudly rather than discovering it by a locate
-		// going wrong three edits later
-		for (const n of this.adoptedPages) {
-			const adopted = this.parsedPages.get(n);
-			if (!adopted) continue;
-			const d = recordDrift(adopted, parseRecords(this.pages[n - 1]?.records ?? '').records);
-			if (d.maxDy > 0.05 || d.maxDx > 0.05 || d.rows !== d.freshRows) this.ev('records-adopted-drift', { page: n, ...d });
-		}
-		this.adoptedPages.clear();
 		this.parsedPages.clear();
-		this.seams = r.seams ?? [];
-		this.paras = new Map(((r.paras ?? []) as ParaParams[]).map((p) => [p.i, p]));
-		this.patcher.geometryChanged(); // geometry changed; paragraphs re-locate on next patch
-		this.bitmaps.invalidate(); // tier-2 crops come from THIS compile's PDF
-		// pages we patched must repaint even if their records didn't change
-		for (const pn of this.patchedPages) this.vp.prevRecords.delete(pn);
-		this.patchedPages.clear();
-		// grade every live patch against the engine's truth before dropping it
-		verifyPatches({ pageRecords: (n) => this.pageRecords(n), emit: (k, d) => this.ev(k, d) }, this.activePatch);
-		this.activePatch.clear(); // fresh records already carry the edits
-		this.vp.clearEditBand(); // fresh layout may have shifted the band; don't highlight a stale spot
+		this.notInPdf.clear();
+		this.drawingsInPdf = pdfDrawings(r.pages);
+		this.bitmaps.invalidate(); // crops and rasters come from THIS compile's PDF
+		this.vp.clearEditBand();
 		await tick(); // let the {#each} create/resize canvases
 		this.vp.applyCssSizes(); // every page needs its CSS box (scroll geometry), painted or not
 		let changed = 0;
@@ -335,53 +181,88 @@ export class DraftSession {
 			if (!this.vp.inWindow(p.n)) continue; // off-window pages paint on scroll-in
 			if (this.vp.prevRecords.get(p.n) !== p.records) {
 				const cv = this.canvasEls[p.n - 1];
-				if (cv && cv.width > 0) {
-					// ONE visual swap per reconcile: hold the page's last frame (the
-					// last exact patch) and repaint once when the
-					// fresh PDF raster lands -- painting records first and the raster
-					// ~300ms later double-swapped the page at every typing pause
-					this.bitmaps.requestBaseAuto(p.n);
-				} else {
-					await this.renderPage(p.n);
-				}
+				// one visual swap: a page already on screen holds its frame until the fresh raster lands
+				if (cv && cv.width > 0) this.bitmaps.requestBaseAuto(p.n);
+				else await this.renderPage(p.n);
 				this.vp.prevRecords.set(p.n, p.records);
 				changed++;
 			}
 		}
 		this.vp.updateWindow();
-		// drop stale hashes for removed pages
+		if (shown.length) this.followCompiledEdit(shown);
 		for (const k of [...this.vp.prevRecords.keys()]) if (k > this.pages.length) this.vp.prevRecords.delete(k);
 		const secs = (r.ms / 1000).toFixed(1);
 		const passesSuffix = (r.passes ?? 1) > 1 ? ` - ${m.draft_compiled_passes({ passes: r.passes })}` : '';
-		// an abandon-triggered pass closes its own loop: the status that said "Recompiling
-		// (heading)..." lands as "Recompiled (heading) in 0.7 s", not a generic compile line
-		const why = this.compiler.lastReason.startsWith('abandon:') ? whyPhrase(this.compiler.lastReason.slice(8)) : null;
-		this.compiler.status = `${why ? m.draft_status_recompiled({ reason: why, secs }) : m.draft_status_compiled({ secs })}${passesSuffix}`;
+		this.compiler.status = `${m.draft_status_compiled({ secs })}${passesSuffix}`;
 		this.ev('compiled', { pages: this.pages.length, passes: r.passes ?? 1, changed, ms: r.ms });
-		const f = this.patcher.takeFocus();
-		if (f) {
-			// jump to the structurally-edited paragraph in the fresh layout: its text is on
-			// the page now, so the content-based locate can find it. Best effort.
-			locateParagraph(this.locateCtx, f.file, f.line, f.text, f.listItem, f.endLine)
-				.then((fc) => {
-					if ('bail' in fc) return;
-					this.vp.showEditBand({
-						page: fc.pageNo,
-						top: fc.b1 - fc.medGap * 0.8,
-						bottom: fc.bk + fc.medGap * 0.3,
-						colL: fc.colL,
-						colR: fc.colR
-					});
-					this.vp.followEdit(fc.pageNo, fc.b1, fc.bk, fc.colL, fc.colR);
-				})
-				.catch(() => {
-					/* focus is cosmetic; never block the render on it */
-				});
-		}
 	}
 
-	instantPatch(req: PatchReq): Promise<void> {
-		return this.patcher.instantPatch(req);
+	/** the first change a compile made to the pages shown before, as a teleport's band */
+	private followCompiledEdit(shown: DraftPage[]): void {
+		const changed = this.pages
+			.filter((p) => shown[p.n - 1]?.records !== p.records)
+			.map((p) => shippedPage(p.n, parseRecords(shown[p.n - 1]?.records ?? '').records, parseRecords(p.records).records));
+		if (changed.length) this.followBand(editBand(changed, true), changed[0].n);
+	}
+
+	/** with no changed words to show, the first page that changed */
+	private followBand(band: EditBand | null, page: number): void {
+		if (!band) {
+			if (this.vp.followEdits) this.vp.goToPage(page);
+			return;
+		}
+		this.ev('edit-band', band);
+		this.vp.showEditBand(band);
+		this.vp.followEdit(band.page, band.top, band.bottom, band.colL, band.colR);
+	}
+
+	/** a page a teleport shipped replaces the one shown; the lines holding the first word the edit changed take the highlight */
+	private async applyPage(p: DraftPage, seq: number): Promise<void> {
+		const after = parseRecords(p.records).records;
+		if (seq !== this.shipped.seq) this.shipped = { seq, pages: [], shown: false };
+		this.shipped.pages.push(shippedPage(p.n, this.pageRecords(p.n), after));
+		const pages = [...this.pages];
+		pages[p.n - 1] = p;
+		for (let i = 0; i < pages.length; i++) if (!pages[i]) pages[i] = { n: i + 1, w: p.w, h: p.h, records: '' };
+		this.pages = pages;
+		this.parsedPages.set(p.n, after);
+		this.notInPdf.add(p.n);
+		await tick();
+		this.vp.applyCssSizes();
+		await this.renderPage(p.n);
+		this.vp.prevRecords.set(p.n, p.records);
+		this.showShippedBand(seq, false);
+	}
+
+	private showShippedBand(seq: number, ended: boolean): void {
+		if (seq !== this.shipped.seq || this.shipped.shown) return;
+		const band = editBand(this.shipped.pages, ended);
+		if (!band && !(ended && this.shipped.pages.length)) return;
+		this.shipped.shown = true;
+		this.followBand(band, this.shipped.pages[0]?.n ?? 1);
+	}
+
+	private moveSourceLines(stop: number, shifts: SourceShift[]): void {
+		const pages = [...this.pages];
+		for (let i = stop; i < pages.length; i++) {
+			const records = shiftSourceLines(pages[i].records, shifts);
+			if (records === null) continue;
+			pages[i] = { ...pages[i], records };
+			this.parsedPages.delete(i + 1);
+		}
+		this.pages = pages;
+	}
+
+	/** a teleport finished: the pages past its stop keep their ink and move their source lines, or the count is new */
+	private async landed(r: TeleportLanded, seq: number): Promise<void> {
+		this.showShippedBand(seq, true);
+		if (r.srcFiles.length) this.paper = { ...this.paper, srcFiles: r.srcFiles };
+		if (r.shifts) this.moveSourceLines(r.stop ?? this.pages.length, r.shifts);
+		if (r.stop === undefined && this.pages.length > r.count) {
+			this.pages = this.pages.slice(0, r.count);
+			await tick();
+			this.vp.applyCssSizes();
+		}
 	}
 
 	// inverse: double-click a page -> source location via the reconcile PDF's synctex
@@ -425,7 +306,6 @@ export class DraftSession {
 					.replace(/\.tex$/i, '') + '.pdf';
 			const res = await saveDraftPdf({
 				settleEdits: async () => {
-					await this.patcher.flushReconcile();
 					await this.opts.settleEdits()?.();
 				},
 				compile: () => this.compiler.compileToLand('save-pdf'),

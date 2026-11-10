@@ -17,8 +17,11 @@ import {
 	selectDocEnd,
 	selectDocStart
 } from '$lib/editor/visual/selectDocBoundary';
+import { lineEdgeKeys } from '$lib/editor/visual/lineEdgeArrows';
 import { TypstBibliographyView, isTypstBibliography } from './extensions/typstBibliographyView.svelte';
 import { keymap } from 'prosemirror-keymap';
+import { pmCommandKeys } from '$lib/keybindings/editors/pmCommandKeys';
+import { pmEditorScope } from '$lib/keybindings/editors/editorScopes';
 import { baseKeymap, toggleMark } from 'prosemirror-commands';
 import { history } from 'prosemirror-history';
 import { undoVisual, redoVisual } from '$lib/editor/visual/visualUndo';
@@ -52,7 +55,6 @@ import { typstDrawnEnvView } from './extensions/layout/typstEnvViews';
 import { TypstLayoutView } from './extensions/layout/typstLayoutView.svelte';
 import { pluginEditorPlugins, pluginNodeViews } from './core/plugin/editorPieces';
 import { hasTypstMarkup } from './pasteMarkup';
-import { isMac } from '$lib/platform';
 import { splitBlockWithoutDuplicates, toggleHeading } from '$lib/editor/visual/helperCommands';
 import { createMathField } from '$lib/editor/visual/extensions/mathlivebridge/mlcommands';
 import { imagePlugin } from '$lib/editor/visual/extensions/image';
@@ -77,6 +79,7 @@ import { proofreadPlugin, spellClickBoundaryPlugin, spellProblemKeymap } from '$
 import type { SpellLanguage } from '$lib/editor/spellcheck/languages/spellLanguages';
 import { createBoundaryClickPlugin } from '$lib/editor/visual/extensions/boundary-click-plugin';
 import { wordSelectionTrim } from '$lib/editor/visual/extensions/wordSelectionTrim';
+import { unfocusedPressCaret } from '$lib/editor/visual/extensions/unfocusedPress';
 import { dragSelectionPlugin } from '$lib/editor/visual/extensions/dragSelection/dragSelectionPlugin';
 import { createBlockHandlePlugin } from '$lib/editor/visual/extensions/block-handle-plugin.svelte';
 import { wholeBlockDragPlugin } from '$lib/editor/visual/extensions/wholeBlockDrag';
@@ -217,6 +220,20 @@ export function typstEditorPlugins(setup: TypstEditorSetup): Plugin[] {
 		keymap({ Backspace: selectFigureBackward, Delete: selectFigureForward }),
 		keymap(listKeymap),
 		inputRules({ rules: typInputRules }),
+		pmCommandKeys({
+			'editor.bold': toggleMark(typSchema.marks.strong),
+			'editor.italic': toggleMark(typSchema.marks.em),
+			'editor.underline': toggleMark(typSchema.marks.u),
+			'editor.superscript': toggleMark(typSchema.marks.sup),
+			'editor.subscript': toggleMark(typSchema.marks.sub),
+			'editor.inlineCode': toggleMark(typSchema.marks.code),
+			'editor.codeBlock': createCodeBlock(),
+			'editor.inlineMath': createMathField(),
+			'editor.displayMath': createMathField(true),
+			// typst headings nest to six
+			...Object.fromEntries([0, 1, 2, 3, 4, 5, 6].map((n) => [`editor.heading${n}`, toggleHeading(n)]))
+		}),
+		pmEditorScope('typst'),
 		keymap({
 			'Mod-z': undoVisual,
 			'Mod-y': redoVisual,
@@ -228,23 +245,11 @@ export function typstEditorPlugins(setup: TypstEditorSetup): Plugin[] {
 			ArrowLeft: holdAtDocStart,
 			ArrowDown: holdAtDocEnd,
 			ArrowRight: holdAtDocEnd,
+			...lineEdgeKeys,
 			'Mod-End': selectDocEnd,
 			'Shift-Mod-Home': extendToDocStart,
 			'Shift-Mod-End': extendToDocEnd,
-			'Mod-b': toggleMark(typSchema.marks.strong),
-			'Mod-i': toggleMark(typSchema.marks.em),
-			'Mod-u': toggleMark(typSchema.marks.u),
-			'Mod-.': toggleMark(typSchema.marks.sup),
-			'Mod-Shift-,': toggleMark(typSchema.marks.sub), // Mod-, is Preferences
-			'Mod-`': toggleMark(typSchema.marks.code),
-			'Mod-Shift-`': createCodeBlock(),
 			Enter: splitBlockWithoutDuplicates,
-			'Mod-m': createMathField(),
-			'Mod-Shift-m': createMathField(true),
-			// Word/Docs convention, same as the other editors; typst headings nest to six
-			'Mod-Alt-0': toggleHeading(0),
-			...Object.fromEntries([1, 2, 3, 4, 5, 6].map((n) => [`Mod-Alt-${n}`, toggleHeading(n)])),
-			...(isMac ? {} : { 'Mod-Shift-1': toggleHeading(1), 'Mod-Shift-2': toggleHeading(2), 'Mod-Shift-3': toggleHeading(3) }),
 			// table cell first, then list indent; always consume so focus stays in the editor
 			Tab: (state, dispatch) => goToNextCell(1)(state, dispatch) || indentListItem()(state, dispatch) || true,
 			'Shift-Tab': (state, dispatch) => goToNextCell(-1)(state, dispatch) || createDedentListCommand()(state, dispatch) || true
@@ -271,6 +276,7 @@ export function typstEditorPlugins(setup: TypstEditorSetup): Plugin[] {
 		spellProblemKeymap,
 		createBoundaryClickPlugin(),
 		wordSelectionTrim(),
+		unfocusedPressCaret(),
 		dragSelectionPlugin(),
 		// the Notion-style + / drag / delete gutter, with the typst insert set
 		createBlockHandlePlugin(),

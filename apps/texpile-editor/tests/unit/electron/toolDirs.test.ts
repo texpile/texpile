@@ -1,12 +1,20 @@
 import { it, expect, afterEach } from 'vitest';
 import * as path from 'node:path';
-import { appDir, applyToolDirs, dirForms, onToolPathChange, setToolDirs } from '../../../../../electron/src/shell/toolDirs';
+import {
+	appDir,
+	applyToolDirs,
+	dirForms,
+	onToolPathChange,
+	setPathFallback,
+	setToolDirs
+} from '../../../../../electron/src/shell/toolDirs';
 
 const key = Object.keys(process.env).find((k) => k.toLowerCase() === 'path') ?? 'PATH';
 const saved = process.env[key];
 const sep = process.platform === 'win32' ? ';' : ':';
 
 afterEach(() => {
+	setPathFallback(null);
 	setToolDirs([]);
 	process.env[key] = saved;
 	delete process.env.APPIMAGE;
@@ -51,4 +59,14 @@ it('tells a listener the new PATH each time the folders move it', () => {
 	onToolPathChange((p) => seen.push(p));
 	setToolDirs(['/opt/other']);
 	expect(seen).toEqual([['/opt/other', '/usr/bin', '/bin'].join(sep)]);
+});
+
+it("puts Texpile's own TeX after the shell PATH, and in front once it is picked", () => {
+	const tex = path.resolve('/', 'data', 'texlive', 'bin', 'x86_64-linux');
+	process.env[key] = ['/usr/bin', '/bin'].join(sep);
+	applyToolDirs();
+	setPathFallback(tex);
+	expect(process.env[key]).toBe(['/usr/bin', '/bin', tex].join(sep));
+	setToolDirs([tex]);
+	expect(process.env[key]).toBe([tex, '/usr/bin', '/bin'].join(sep));
 });

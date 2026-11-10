@@ -16,7 +16,11 @@
 </script>
 
 {#if compact}
-	<div class="pointer-events-none absolute inset-x-2 bottom-14 z-20 flex max-h-[45%] min-w-0 flex-col justify-end gap-2" data-figure-panels>
+	<!-- in the flow below the canvas, so a drag on the canvas never starts on a panel; pb-14 leaves the pills' strip -->
+	<div
+		class="bg-surface-50-950 flex max-h-[45%] min-w-0 shrink-0 flex-col justify-end gap-2 px-2 pt-2 pb-14 not-has-[section,aside]:hidden"
+		data-figure-panels
+	>
 		{@render props.children()}
 	</div>
 {:else}

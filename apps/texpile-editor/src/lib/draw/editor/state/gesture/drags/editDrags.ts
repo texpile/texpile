@@ -60,6 +60,16 @@ function draggedEndSource(
 	return ed.language.attachEnd(drag.base, ed.shownIndex, drag.i, drag.k, to);
 }
 
+/** the drag's result is written once, as the pointer comes up */
+export function releaseEditDrag(ed: FigureEditorState, drag: EditDrag) {
+	const done = ed.preview;
+	// eslint-disable-next-line no-param-reassign -- the drag is over
+	ed.preview = null;
+	if (drag.kind === 'end' && drag.placed !== undefined) {
+		if (drag.placed) ed.applyPlaced(drag.placed, false);
+	} else if (done !== null && done !== ed.source) ed.applyEdit(done);
+}
+
 export function placedArrowEnd(ed: FigureEditorState, drag: EndDrag, target: EndAttachment | null) {
 	return target && ed.language.pointArrow(drag.base, ed.shownIndex, drag.i, drag.k, target.ref);
 }

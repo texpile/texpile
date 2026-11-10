@@ -74,6 +74,12 @@ export class TerminalDockState {
 		if (!this.isGuest()) updateLayout({ terminalVisible: false });
 	}
 
+	/** Layout › Bottom Panel: the panel on the tab it was on, with no shell made for it */
+	togglePanel() {
+		if (this.visible) this.hide();
+		else this.show();
+	}
+
 	/** the Terminal toggle: this one IS a request for a terminal, so it makes sure one exists */
 	toggle() {
 		if (this.visible) {

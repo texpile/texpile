@@ -86,7 +86,6 @@ export const cetzLanguage: FigureLanguage = {
 	statementAt: (picture, pos) => statementAt(picture as CetzPicture, pos),
 	describe: (source, st) => describeStatement(source, st as CetzStatement),
 	render: (engine, source, picture) => renderCetz(engine, source, picture as CetzPicture),
-	upToDate: (source) => source,
 
 	libraryElements: LIBRARY_ELEMENTS,
 	addElement,

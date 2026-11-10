@@ -9,7 +9,7 @@ import { orderForPlatform } from '../ipc/messageBoxOrder';
 import { forgetWindow } from '../mcp/windowState';
 import { forgetWindowChrome, watchWindowState } from '../windowChrome';
 import { applySavedGlass, GLASS_AT_CREATION } from '../windowGlass';
-import { releaseDraftOwnerFor } from '../ipc/draftIpc';
+import { releaseDraftFor } from '../ipc/draftIpc';
 import {
 	windowRoots,
 	pendingOpens,
@@ -258,8 +258,8 @@ export function createWindow(url: string, pending?: PendingOpen): BrowserWindow 
 		pendingCloses.delete(wcId);
 		forgetWindow(wcId); // or a dead window keeps answering get_editor_state
 		forgetWindowChrome(wcId); // and hand the macOS menu bar to whichever window is left
-		// the closing window may have owned the warm engine: stop it so it doesn't hold memory orphaned
-		releaseDraftOwnerFor(wcId);
+		// the closing window's preview lets go of its folder's engines
+		releaseDraftFor(wcId);
 		// last window closing means "quit" on win/linux: keep the snapshot for next launch
 		if (BrowserWindow.getAllWindows().length > 0) persistOpenFolders();
 		// the close hold cancelled the original quit; once every window has agreed, finish it

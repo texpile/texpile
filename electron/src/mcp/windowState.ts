@@ -19,13 +19,15 @@ export type TabState = {
 export type WindowState = {
 	mainFile: string | null;
 	activeFile: string | null;
-	viewMode: 'visual' | 'source' | 'diff' | null;
+	viewMode: 'visual' | 'source' | null;
 	tabs: TabState[];
 	cursor: { line: number; column: number } | null;
 	selection: { text: string } | null;
 	/** live preview rather than the shell compile: compile only nudges an engine already running,
 	 *  the PDF is _draft/draft.pdf, and diagnostics come from that engine's own log */
 	livePreview: boolean;
+	/** what Compile runs: the live LaTeX engine, the Typst preview, or the project's command in a terminal */
+	compileMode: 'live' | 'typst-preview' | 'terminal';
 	/** when the renderer last pushed; exposed so a stale window is visible rather than silently old */
 	updatedAt: number;
 };
@@ -55,6 +57,7 @@ const EMPTY: WindowState = {
 	cursor: null,
 	selection: null,
 	livePreview: false,
+	compileMode: 'terminal',
 	updatedAt: 0
 };
 

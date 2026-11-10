@@ -2,6 +2,9 @@
 import type { Eol } from '$lib/workspace/edits/lineEndings';
 import type { TextBuffers } from './textBuffers';
 
+/** a held file's text the disk never had, LF, and the line endings it is written with */
+export type UnwrittenText = { path: string; text: string; eol: Eol };
+
 export type FileWriterDeps = {
 	getLoadedPath(): string | null;
 	isGuest(): boolean;
@@ -61,18 +64,18 @@ export class FileWriter {
 		return { path, content };
 	}
 
-	/** something at `path`, or under it, holds edits that are not on disk */
-	unwrittenUnder(path: string): boolean {
+	/** `path` is deleted: what was held of it, and of everything under it, goes. Returns the texts the disk never had,
+	 *  a collaborator's last words included */
+	dropUnder(path: string): UnwrittenText[] {
 		const files = this.files;
 		const key = files ? this.deps.keyOf(path) : null;
-		return !!key && files!.under(key).some((k) => files!.hasPending(k) || files!.isDirty(k));
-	}
-
-	/** `path` is deleted: what was held of it, and of everything under it, goes */
-	dropUnder(path: string): void {
-		const files = this.files;
-		const key = files ? this.deps.keyOf(path) : null;
-		if (key) for (const k of files!.under(key)) files!.drop(k);
+		if (!key) return [];
+		const unwritten = files!
+			.under(key)
+			.filter((k) => files!.hasPending(k) || files!.isDirty(k))
+			.map((k) => ({ path: files!.abs(k), text: files!.text(k)!.toString(), eol: files!.eolOf(k) }));
+		for (const k of files!.under(key)) files!.drop(k);
+		return unwritten;
 	}
 
 	/** the File Cache Conflict choice for a file */

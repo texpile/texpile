@@ -4,7 +4,7 @@ import { createBlockAssembly, type DocSerializeResult } from '$lib/serializer/bl
 import type { ParseOrigins } from '$lib/editor/visual/parseOrigins';
 import type { Ctx } from '$lib/serializer/types';
 import type { MarkdownSaveCore } from '../core';
-import { interrupts, nodeSaves, spliceChild } from '../core/plugin/pluginMap';
+import { interrupts, nodeSaves, spliceChild, tightPair } from '../core/plugin/pluginMap';
 import { escMd } from './inlineSyntax';
 import { renderInline, mdShadow, isMdHandlerLeaf } from './markdownInline';
 
@@ -83,6 +83,7 @@ const assembly = createBlockAssembly((node, ctx) => serializeMdNode(node, ctx), 
 		return tail === '' || PLAIN_SEAM.test(tail[0]) ? bytes : null;
 	},
 	spliceChild: (parent, index) => spliceChild(parent, index),
+	boundary: (prev, next) => (tightPair(prev.node, next.node) ? '\n' : null),
 	continuation
 });
 

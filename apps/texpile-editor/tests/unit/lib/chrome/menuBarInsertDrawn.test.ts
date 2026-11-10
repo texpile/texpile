@@ -1,6 +1,6 @@
 // @vitest-environment jsdom
 import { it, expect, afterEach } from 'vitest';
-import { EditorState, TextSelection } from 'prosemirror-state';
+import { EditorState, NodeSelection, TextSelection } from 'prosemirror-state';
 import { EditorView } from 'prosemirror-view';
 import { EditorState as CMState } from '@codemirror/state';
 import { EditorView as CMView } from '@codemirror/view';
@@ -39,6 +39,14 @@ it('keeps a command name from running into the word after it', async () => {
 	expect(para.child(chip).textContent).toBe('\\quad');
 	// the word after it starts past a space, so \quad never reads as \quadafter
 	expect(para.child(chip + 1).text?.startsWith(' ')).toBe(true);
+});
+
+it('puts in a citation node, the node a reopen reads \\cite as, selected for its picker', async () => {
+	const view = editorWith('As shown in three steps.', ' steps');
+	await insert('citation');
+	const { selection } = view.state;
+	expect(selection instanceof NodeSelection && selection.node.type.name).toBe('citation');
+	expect(view.state.doc.firstChild!.textContent).toBe('As shown in three steps.');
 });
 
 it('puts a comment after the paragraph instead of through a word', async () => {

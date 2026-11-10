@@ -274,23 +274,6 @@
 		right: calc(var(--spacing) * 20);
 	}
 
-	/* @target chips: citation tint when the key resolves in the bibliography, neutral otherwise */
-	:global(.TypstEditor .typ-ref) {
-		border-radius: var(--radius-base);
-		padding: 0 0.2em;
-		font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-		font-size: 0.85em;
-		background: color-mix(in srgb, var(--color-surface-500) 14%, transparent);
-		cursor: pointer;
-	}
-	:global(.TypstEditor .typ-ref-known) {
-		background: color-mix(in srgb, var(--color-primary-500) 16%, transparent);
-		color: var(--primary-ink);
-	}
-	:global(.dark .TypstEditor .typ-ref-known) {
-		color: var(--primary-ink);
-	}
-
 	/* figure-wrapped tables render through the shared tableWrapperView (typst mode), which owns
 	   the "Table N" header and caption layout; numbering stays approximate (raw-island tables
 	   aren't counted, the preview is the authority) */

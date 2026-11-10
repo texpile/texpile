@@ -11,6 +11,7 @@
 	import type { TreeNameEditor } from './treeNameEditor.svelte';
 	import { gitBadgeOf, folderTitle, STATUS_COLOR, STATUS_DECOR, STATUS_TITLE } from './treeBadges';
 	import { focusSelect } from './focusSelect';
+	import { justMoved } from './treeMoves';
 	import { m } from '$lib/paraglide/messages';
 
 	type Props = {
@@ -36,7 +37,7 @@
 	let wasActive = false;
 	$effect(() => {
 		const active = isActive(entry);
-		if (active && !wasActive) row?.scrollIntoView?.({ block: 'nearest' });
+		if (active && !wasActive && !justMoved(entry.path)) row?.scrollIntoView?.({ block: 'nearest' });
 		wasActive = active;
 	});
 </script>
@@ -79,7 +80,7 @@
 				     the mark sits in one column instead of trailing a name of whatever length -->
 				<span class="flex w-3.5 shrink-0 items-center justify-center">
 					{#if isMain(entry)}
-						<Star class="fill-primary-500 text-primary-ink size-3" aria-label={m.filetree_main_file_label()} />
+						<Star class="fill-primary-500 text-primary-500 size-3" aria-label={m.filetree_main_file_label()} />
 					{/if}
 				</span>
 				<FileIcon name={entry.name} class="size-4 shrink-0" />
@@ -100,10 +101,7 @@
 					draggable="false"
 					onpointerdown={(e) => e.stopPropagation()}
 					onclick={(e) => e.stopPropagation()}
-					onkeydown={(e) => {
-						if (e.key === 'Enter') editor.commitRename(entry);
-						else if (e.key === 'Escape') editor.renaming = null;
-					}}
+					onkeydown={(e) => editor.keydownRename(e, entry)}
 					onblur={(e) => editor.blurRename(e, entry)}
 				/>
 			{:else}

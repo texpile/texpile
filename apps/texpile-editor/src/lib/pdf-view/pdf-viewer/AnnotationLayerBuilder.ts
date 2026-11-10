@@ -16,6 +16,7 @@
 /** renders PDF annotations (links, form widgets, popups); adapted from PDF.js annotation_layer_builder.js. */
 import type { PDFPageProxy, PageViewport } from 'pdfjs-dist/legacy/build/pdf.mjs';
 import type { SimpleLinkService } from './SimpleLinkService';
+import { keepScriptedVisibility, type FormScripting } from './PdfScripting';
 
 let AnnotationLayer: typeof import('pdfjs-dist/legacy/build/pdf.mjs').AnnotationLayer;
 
@@ -33,6 +34,8 @@ export type AnnotationLayerBuilderOptions = {
 	annotationStorage?: any;
 	imageResourcesPath?: string;
 	renderForms?: boolean;
+	forms?: FormScripting | null;
+	annotationCanvasMap?: Map<string, HTMLCanvasElement>;
 	onAppend?: (div: HTMLDivElement) => void;
 };
 
@@ -48,6 +51,8 @@ export class AnnotationLayerBuilder {
 	private annotationStorage: any;
 	private imageResourcesPath: string;
 	private renderForms: boolean;
+	private forms: FormScripting | null;
+	private annotationCanvasMap: Map<string, HTMLCanvasElement> | null;
 	private onAppend: ((div: HTMLDivElement) => void) | null;
 
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -58,7 +63,9 @@ export class AnnotationLayerBuilder {
 	constructor(options: AnnotationLayerBuilderOptions) {
 		this.pdfPage = options.pdfPage;
 		this.linkService = options.linkService;
-		this.annotationStorage = options.annotationStorage ?? null;
+		this.forms = options.forms ?? null;
+		this.annotationCanvasMap = options.annotationCanvasMap ?? null;
+		this.annotationStorage = options.annotationStorage ?? this.forms?.annotationStorage ?? null;
 		this.imageResourcesPath = options.imageResourcesPath ?? '';
 		this.renderForms = options.renderForms ?? true;
 		this.onAppend = options.onAppend ?? null;
@@ -96,7 +103,7 @@ export class AnnotationLayerBuilder {
 		this.annotationLayer = new AnnotationLayer({
 			div: this.div,
 			accessibilityManager: null,
-			annotationCanvasMap: null,
+			annotationCanvasMap: this.annotationCanvasMap,
 			annotationEditorUIManager: null,
 			page: this.pdfPage,
 			viewport: viewport.clone({ dontFlip: true }),
@@ -118,10 +125,11 @@ export class AnnotationLayerBuilder {
 			linkService: this.linkService,
 			downloadManager: undefined,
 			annotationStorage: this.annotationStorage,
-			enableScripting: false,
-			hasJSActions: false,
-			fieldObjects: null
+			enableScripting: this.forms?.enableScripting ?? false,
+			hasJSActions: this.forms?.hasJSActions ?? false,
+			fieldObjects: this.forms?.fieldObjects ?? null
 		});
+		keepScriptedVisibility(this.div, this.forms);
 	}
 
 	update(viewport: PageViewport): void {

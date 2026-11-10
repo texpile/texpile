@@ -12,6 +12,8 @@ The preview renders the main file as you type, in the visual and the source edit
 
 ![The Typst preview with its toolbar, four controls marked](../../landing/src/lib/assets/showcase/docs/typst/live-preview.png)
 
+The basic controls should be self-explanatory:
+
 1. **Jump to preview.** Shows the cursor's place in the preview. Click the preview to jump back to the source.
 2. **Follow.** Keeps the preview on the cursor as you type.
 3. **"…".** **Export as PDF, PNG, SVG, or HTML…** saves the document. See [Export](export.md).

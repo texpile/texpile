@@ -1,17 +1,35 @@
 <script lang="ts">
-	// one screencast on its own, looping in a section's frame: the hero's player with a single scene and no guide
-	import { untrack } from 'svelte';
-	import HeroSceneWindow from './HeroSceneWindow.svelte';
-	import type { HeroScene } from './heroScenes';
-	import { ScenePlayer } from './scenePlayer.svelte';
+	// one short recording looping in a section's frame; it loads and plays once it is near the screen
+	import { SCENE_HEIGHT, SCENE_WIDTH } from './heroScenes';
+	import { whenNear } from './whenNear';
 
-	type SceneLoopProps = { scene: HeroScene; poster: string; alt: string };
+	type SceneLoopProps = { video: string; poster: string; alt: string };
 	const props: SceneLoopProps = $props();
-	const { poster, alt } = $derived(props);
+	const { video, poster, alt } = $derived(props);
 
-	const player = new ScenePlayer([untrack(() => props.scene)]);
+	function playNear(el: HTMLVideoElement) {
+		// with reduced motion the poster stays
+		if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+		return whenNear(el, () => {
+			el.play().catch(() => {});
+			return () => el.pause();
+		});
+	}
 </script>
 
 <div class="border-surface-200 overflow-hidden rounded-xl border shadow-2xl">
-	<HeroSceneWindow {player} {poster} {alt} lazy />
+	<video
+		{@attach playNear}
+		src={video}
+		{poster}
+		aria-label={alt}
+		width={SCENE_WIDTH}
+		height={SCENE_HEIGHT}
+		muted
+		loop
+		playsinline
+		disablepictureinpicture
+		preload="none"
+		class="block h-auto w-full"
+	></video>
 </div>

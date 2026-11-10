@@ -44,7 +44,7 @@ onSnippetRegistry(() => {
 	const files = snippetFiles();
 	snippetStatus.files = files;
 	snippetStatus.folderText = folderSnippetText();
-	allowTabsOutsideRoot((path) => snippetFileAt(path, null, files)?.layer === 'global');
+	allowTabsOutsideRoot('snippets', (path) => snippetFileAt(path, null, files)?.layer === 'global');
 	// the file open in the editor has its own bar saying what failed, and changes on every autosave
 	const open = activeFilePath.current ? snippetFileAt(activeFilePath.current, workspaceRoot.current, files) : null;
 	// a warning is for when the file is open: its snippet still works

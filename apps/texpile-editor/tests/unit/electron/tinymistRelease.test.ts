@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
-import { linuxLibc, tinymistAssetFor, TINYMIST_VERSION } from '../../../../../electron/src/tinymist/tinymistRelease';
-import { tarCommand } from '../../../../../electron/src/tinymist/tinymistArchive';
+import { tinymistAssetFor, TINYMIST_VERSION } from '../../../../../electron/src/tinymist/tinymistRelease';
+import { tarCommand } from '../../../../../electron/src/install/archiveExtract';
 
 // Texpile's signed copy, laid out as the release is
 const RELEASE = `https://dl.texpile.com/vendor/tinymist/${TINYMIST_VERSION}/`;
@@ -42,21 +42,6 @@ describe('tinymistAssetFor', () => {
 		expect(tinymistAssetFor('win32', 'ia32', 'gnu')).toBeNull();
 		expect(tinymistAssetFor('linux', 'arm', 'gnu')).toBeNull();
 		expect(tinymistAssetFor('freebsd', 'x64', 'gnu')).toBeNull();
-	});
-});
-
-describe('linuxLibc', () => {
-	it('takes the gnu build on a glibc new enough for it', () => {
-		expect(linuxLibc('2.28')).toBe('gnu');
-		expect(linuxLibc('2.39')).toBe('gnu');
-		expect(linuxLibc('3.0')).toBe('gnu');
-	});
-
-	it('falls back to the static musl build on an old glibc or none', () => {
-		expect(linuxLibc('2.27')).toBe('musl');
-		expect(linuxLibc('1.99')).toBe('musl');
-		expect(linuxLibc(undefined)).toBe('musl');
-		expect(linuxLibc('')).toBe('musl');
 	});
 });
 

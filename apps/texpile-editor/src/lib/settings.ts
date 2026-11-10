@@ -72,6 +72,8 @@ export type AppSettings = {
 	visualJustify: boolean;
 	/** long words may split at line ends in justified text. The hyphens are drawn, never written to the file. */
 	visualHyphenate: boolean;
+	/** family of the visual editor's text; '' follows the theme */
+	textFont: string;
 	/** formatting, tables and Markdown from other apps are converted on paste; off pastes their plain text */
 	smartPaste: boolean;
 	/** the Typst preview scrolls to follow the caret. Off by default, as in tinymist. A pane
@@ -85,6 +87,8 @@ export type AppSettings = {
 	citeByDoiEnabled: boolean;
 	/** modal keybindings for the source editor and code blocks. */
 	editorKeymap: 'default' | 'vim' | 'emacs';
+	/** what the source editor folds the first time a file opens, from nothing to every fold */
+	foldOnOpen: 'off' | 'floats' | 'equations' | 'environments' | 'everything';
 	/** UI display language. Not the LaTeX document language (see DocumentLanguage). */
 	uiLocale: 'en' | 'zh-Hans' | 'zh-Hant' | 'de' | 'pt-BR';
 	/** shared-session relay endpoint (ws:// or wss://); the self-hosted-relay escape hatch. */
@@ -154,11 +158,13 @@ const DEFAULTS: AppSettings = {
 	sourceLineWrap: true,
 	visualJustify: true,
 	visualHyphenate: true,
+	textFont: '',
 	smartPaste: true,
 	typstPreviewFollow: false,
 	zoteroEnabled: true,
 	citeByDoiEnabled: true,
 	editorKeymap: 'default',
+	foldOnOpen: 'off',
 	uiLocale: 'en',
 	collabRelayUrl: DEFAULT_COLLAB_RELAY_URL,
 	openFolders: [],

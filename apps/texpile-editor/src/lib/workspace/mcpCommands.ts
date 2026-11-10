@@ -6,13 +6,15 @@ import { fileMode } from './fileMode.svelte';
 import { workspaceRoot, isDirty, mainFile, texFiles, effectiveCompileFormat } from './workspaceStore';
 import { isGitRepo, refreshGitStatus } from './scm/gitStore';
 import { compileLog } from '$lib/stores/compileLogStore';
-import { compileConfig } from './projectConfigSync.svelte';
+import { compileConfig, projectConfigSync } from './projectConfigSync.svelte';
+import { compileLane } from './compileLane';
 import { relativeTo, samePath } from './fileSystem';
 import { collabHost } from '$lib/collab/hostStore.svelte';
 import { inOpenTree, resolveInWorkspace } from './mcpWorkspacePath';
 import {
 	addCommentPayload,
 	commentsPayload,
+	decideSuggestionPayload,
 	reanchorCommentPayload,
 	replyCommentPayload,
 	resolveCommentPayload,
@@ -20,6 +22,7 @@ import {
 } from './mcpComments';
 import { suggestEditPayload } from './mcpSuggestEdit';
 import {
+	compileBaseDir,
 	compileOutDir,
 	detectEngine,
 	expectedLogPath,
@@ -39,10 +42,11 @@ export type McpCommandDeps = {
 	openFile(abs: string): void;
 	/** open at a 1-based line; switches to Source, where a line number is meaningful */
 	openFileAtLine(abs: string, line: number): void;
+	/** opens a comparison tab of the open file against git HEAD */
 	showDiff(): void;
-	setViewMode(mode: 'visual' | 'source' | 'diff'): void;
+	setViewMode(mode: 'visual' | 'source'): void;
 	/** the mode actually in effect, so a refused switch can be reported instead of assumed */
-	getViewMode(): 'visual' | 'source' | 'diff';
+	getViewMode(): 'visual' | 'source';
 	/** forward SyncTeX: move the PDF pane to where a source line renders */
 	syncToLine(line: number): void;
 	/** run the project's configured compile, exactly as the toolbar button does */
@@ -107,12 +111,9 @@ function diagnosticsPayload(deps: McpCommandDeps) {
 	// shell reporting the command exited; with it off, it is inferred from the log going quiet and
 	// can fire during a long between-pass pause (biber, on-the-fly package installs).
 	const endSignal = compileConfig.current.completionMarker ? 'shell-exit' : 'log-quiet';
-	// Live mode does NOT write this: its incremental engine keeps its own diagnostics and never
-	// touches a .log. So what is here is whatever the last SHELL compile left behind - or, if there
-	// hasn't been one, the .log found sitting in the folder when it was opened, which can be
-	// arbitrarily old. Saying so beats letting a caller read `status.pages` off a stale run.
-	const live = compileConfig.current.latex.liveMode;
-	if (!log) return { compiled: false, compiling, endSignal, live, errors: [], warnings: [] };
+	// the live engine and the Typst preview publish here after each pass of their own, and neither has a run to wait on
+	const mode = compileLane();
+	if (!log) return { compiled: false, compiling, endSignal, mode, errors: [], warnings: [] };
 	const parsedLog = log;
 	const root = workspaceRoot.current;
 	function trim(list: typeof parsedLog.errors) {
@@ -122,7 +123,7 @@ function diagnosticsPayload(deps: McpCommandDeps) {
 		compiled: true,
 		compiling,
 		endSignal,
-		live,
+		mode,
 		status: parsedLog.status,
 		// which log this describes and when it was written. everything below - the counts, and
 		// status.pages especially - belongs to THAT run, not necessarily the last one the user watched
@@ -136,15 +137,15 @@ function diagnosticsPayload(deps: McpCommandDeps) {
 	};
 }
 
+async function loadedNow(deps: McpCommandDeps, abs: string, ms = 5000): Promise<boolean> {
+	for (const end = Date.now() + ms; Date.now() < end; await new Promise((resolve) => setTimeout(resolve, 50)))
+		if (samePath(deps.getLoadedPath() ?? '', abs)) return true;
+	return false;
+}
+
 /**
  * Switching mode can be REFUSED, so this reports what actually happened instead of assuming.
- * Diff is the case that bites: viewModeSwitch.set() returns silently when the folder is not a git
- * repo or nothing is loaded, so a tool that reported success was simply lying - which is exactly how
- * a caller ended up believing diff worked and then that it silently no-oped.
- *
- * isGitRepo is also probed at launch, so a repo created afterwards (git init in a terminal, or a
- * clone landing) leaves it stale and diff refuses for a reason that is no longer true. Re-checking
- * before giving up costs one git call on a path that is already a user-visible action.
+ * isGitRepo is probed at launch, so a repo created since leaves it stale; diff checks again before giving up.
  */
 async function viewModePayload(deps: McpCommandDeps, mode: unknown) {
 	if (mode !== 'visual' && mode !== 'source' && mode !== 'diff') return { ok: false, reason: 'unknown mode', viewMode: deps.getViewMode() };
@@ -158,6 +159,9 @@ async function viewModePayload(deps: McpCommandDeps, mode: unknown) {
 				reason: 'this workspace is not a git repository, so there is nothing to diff against',
 				viewMode: deps.getViewMode()
 			};
+		// diff is a comparison tab beside the file, shown in the mode the window is in
+		deps.showDiff();
+		return { ok: true, opened: 'comparison tab', viewMode: deps.getViewMode() };
 	}
 	deps.setViewMode(mode);
 	const now = deps.getViewMode();
@@ -220,9 +224,11 @@ function compileConfigPayload(deps: McpCommandDeps) {
 	const main = mainFile.current;
 	const format = effectiveCompileFormat(main);
 	const ov = compileConfig.current[format].outputs;
+	const mode = compileLane();
 	function rel(p: string | null) {
 		return p && root ? relativeTo(root, p) : p;
 	}
+	const draftBase = mode === 'live' ? compileBaseDir(cmd, root, main) : null;
 	return {
 		command: cmd,
 		// the typesetter in effect, from the main file's extension and nothing else. Change it by
@@ -233,13 +239,29 @@ function compileConfigPayload(deps: McpCommandDeps) {
 		latexmk: usesLatexmk(cmd),
 		outputDir: compileOutDir(cmd),
 		mainFile: main ? rel(main) : null,
-		pdfPath: rel(expectedPdfPath(cmd, root, main, ov.pdf)),
-		logPath: rel(expectedLogPath(cmd, root, main, ov)),
+		// the live engine builds in _draft beside the main file's base; the Typst preview writes no PDF
+		pdfPath: draftBase
+			? rel(`${draftBase}/_draft/draft.pdf`)
+			: mode === 'typst-preview'
+				? null
+				: rel(expectedPdfPath(cmd, root, main, ov.pdf)),
+		logPath: mode === 'terminal' ? rel(expectedLogPath(cmd, root, main, ov)) : null,
 		// null rather than absent, so "no override, this was detected" is distinguishable from
 		// "an override happens to match what would have been detected"
 		overrides: { pdf: ov.pdf ?? null, log: ov.log ?? null },
-		live: compileConfig.current.latex.liveMode
+		mode
 	};
+}
+
+/** live mode for a LaTeX main, the Typst preview for a .typ main: the switches in the compile settings */
+function livePreviewPayload(on: unknown) {
+	const root = workspaceRoot.current;
+	if (!root) return { ok: false, reason: 'no folder is open' };
+	if (typeof on !== 'boolean') return { ok: false, reason: 'on must be true or false' };
+	if (effectiveCompileFormat(mainFile.current) === 'typst') projectConfigSync.setTypstPreview(root, on);
+	else if (on && collabHost.active) return { ok: false, reason: 'live mode is off while this window hosts a shared session' };
+	else projectConfigSync.setLiveMode(root, on);
+	return { ok: true, mode: compileLane() };
 }
 
 /**
@@ -301,7 +323,15 @@ function syncTexPayload(deps: McpCommandDeps, line: unknown) {
 
 /** wire the MCP request/command channels; returns the detach function */
 // a lone file is no project: nothing that reads or changes the folder around it, or compiles it
-const PROJECT_REQUESTS = new Set(['set_output_paths', 'main_file', 'compile', 'show_diff']);
+const PROJECT_REQUESTS = new Set(['set_output_paths', 'main_file', 'compile', 'show_diff', 'live_preview']);
+
+const COMPILE_NOTES = {
+	live: 'Live mode: no terminal and no compile command. The live engine recompiles on its own as files change, and this asked it for a full pass. Its diagnostics reach get_diagnostics as each pass ends, and compiling stays false; the PDF is the pdfPath get_compile_config reports.',
+	'typst-preview':
+		'Typst preview: this opened the Preview pane, which renders on every change through tinymist. Nothing runs to an end and no PDF is written; get_diagnostics holds the current problems.',
+	terminal:
+		'Terminal mode: runs the configured compile command in the Compile shell. Poll get_diagnostics until compiling is false; that same reply already contains the results of this run (even when latexmk found the build up to date and re-ran nothing).'
+} as const;
 const LONE_FILE = 'a single file is open in this window, not a folder: open it in a workspace first';
 
 export function attachMcpCommands(deps: McpCommandDeps): () => void {
@@ -325,30 +355,20 @@ export function attachMcpCommands(deps: McpCommandDeps): () => void {
 		if (req.kind === 'comment_resolve') return void resolveCommentPayload(deps.comments, a).then(reply);
 		if (req.kind === 'comment_reanchor') return void reanchorCommentPayload(deps.comments, a).then(reply);
 		if (req.kind === 'suggest_edit') return void suggestEditPayload(deps.comments, a).then(reply);
+		if (req.kind === 'suggestion_decide') return void decideSuggestionPayload(deps.comments, a).then(reply);
+		if (req.kind === 'live_preview') return reply(livePreviewPayload(a.on));
 		if (req.kind === 'compile') {
-			// Live mode and terminal mode are different enough that the caller has to be told which one
-			// it got. In live mode runCompile() drives the incremental draft engine, the preview is
-			// already refreshing on its own, and diagnostics come from that engine rather than a .log a
-			// shell wrote - so "I compiled, now poll get_diagnostics" is the wrong mental model there.
-			const live = compileConfig.current.latex.liveMode;
+			const mode = compileLane();
+			// the same gate startCompile holds, which only says so in a toast
+			if (mode === 'terminal' && projectConfigSync.pending)
+				return reply({
+					ok: false,
+					reason: "this folder's compile command waits for the user to accept it in the bar above the editor; nothing ran"
+				});
 			deps.runCompile();
-			// Dispatch only either way. A terminal compile is seconds to minutes, so waiting here would
-			// just time out.
-			//
-			// The completion contract rides on ordering, not timestamps: every terminal-mode completion
-			// path publishes the parsed log BEFORE dropping busy (finalizeCompile and watchLog both
-			// await publishLogDiagnostics first), so the first diagnostics reply with compiling:false
-			// already carries this run's results. A latexmk that skips an up-to-date build still ends
-			// the run, and the previously published diagnostics are then correct because nothing
-			// changed - which is what lets the caller's rule stay one sentence.
-			return reply({
-				ok: true,
-				started: true,
-				mode: live ? 'live' : 'terminal',
-				note: live
-					? 'Live mode: the preview recompiles incrementally on its own, so this only nudges it. Diagnostics come from the draft engine.'
-					: 'Terminal mode: runs the configured compile command in the Compile shell. Poll get_diagnostics until compiling is false; that same reply already contains the results of this run (even when latexmk found the build up to date and re-ran nothing).'
-			});
+			// dispatch only: a terminal compile publishes the parsed log BEFORE dropping busy, so the first
+			// diagnostics reply with compiling:false already carries this run's results
+			return reply({ ok: true, started: true, mode, note: COMPILE_NOTES[mode] });
 		}
 		if (req.kind === 'view_mode') return void viewModePayload(deps, a.mode).then(reply);
 		if (req.kind === 'show_diff') {
@@ -357,6 +377,12 @@ export function attachMcpCommands(deps: McpCommandDeps): () => void {
 				const abs = resolveInWorkspace(rel);
 				if (!abs) return reply({ ok: false, reason: 'path is outside this workspace' });
 				deps.openFile(abs);
+				// the tab opens at once and its document later: diffing now compared the file open before
+				return void loadedNow(deps, abs)
+					.then((open) =>
+						open ? viewModePayload(deps, 'diff') : { ok: false, reason: 'the file did not open', viewMode: deps.getViewMode() }
+					)
+					.then(reply);
 			}
 			return void viewModePayload(deps, 'diff').then(reply);
 		}

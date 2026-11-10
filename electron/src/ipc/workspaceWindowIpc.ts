@@ -7,12 +7,12 @@ import {
 	windowRoots,
 	pendingOpens,
 	pendingCloses,
-	normRoot,
 	windowFor,
 	windowWithRoot,
 	focusWindow,
 	persistOpenFolders
 } from '../windows/windowRegistry';
+import { normRoot } from '../windows/normRoot';
 
 // first renderer to ask runs the once-per-session startup work (update check, What's New)
 let startupTasksClaimed = false;

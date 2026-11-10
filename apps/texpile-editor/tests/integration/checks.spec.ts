@@ -110,7 +110,7 @@ test.describe('folding', () => {
 	async function unfoldEverything(): Promise<void> {
 		const { source, page } = texpile();
 		await source.evalView('view.focus();');
-		await source.press('Control+Alt+BracketRight');
+		await source.press('ControlOrMeta+Alt+BracketRight');
 		await expect(page.locator('.cm-foldPlaceholder')).toHaveCount(0);
 		await page.waitForTimeout(700);
 	}
@@ -183,7 +183,7 @@ test.describe('format shortcuts', () => {
 		const { source } = texpile();
 		await withFile(source, 'main.tex', async () => {
 			await selectWord('Speed');
-			await source.press('Control+i');
+			await source.press('ControlOrMeta+i');
 			await expect.poll(() => fs.readFileSync(source.path('main.tex'), 'utf8'), { timeout: 10_000 }).toContain('\\textit{Speed} is');
 		});
 	});

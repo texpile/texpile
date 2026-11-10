@@ -93,10 +93,10 @@ test.describe('undo and redo in the visual editor', () => {
 		await v.caretAtEndOf('Hello');
 		await v.type(' there');
 		await disk().expectFile('undo-type.tex', (t) => t.includes('Hello there'), 'typed text saved');
-		await v.press('Control+z');
+		await v.press('ControlOrMeta+z');
 		await disk().expectFile('undo-type.tex', (t) => t === doc('Hello'), 'undo reached the disk');
 		expect(await v.text()).toBe('Hello');
-		await v.press('Control+Shift+KeyZ');
+		await v.press('ControlOrMeta+Shift+KeyZ');
 		await disk().expectFile('undo-type.tex', (t) => t.includes('Hello there'), 'redo reached the disk');
 		expect(await v.text()).toBe('Hello there');
 	});

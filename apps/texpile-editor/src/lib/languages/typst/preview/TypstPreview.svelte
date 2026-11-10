@@ -23,6 +23,7 @@
 	import { scrollbarRadius, textColour, themeColour } from './themeColour';
 	import { askForProgram, tinymistMissing } from '$lib/modals/window/missingProgram/missingProgram.svelte';
 	import { m } from '$lib/paraglide/messages';
+	import { resizeCover } from '$lib/resizing/resizeCover';
 
 	type Props = {
 		/** `host:port` of the running preview server, or null while it is still starting */
@@ -44,8 +45,8 @@
 	 *
 	 * An iframe re-lays out its whole document on every width change, and this one re-renders a
 	 * typeset document, so following the pointer costs a full reflow per frame. Holding the old
-	 * width and taking the cost once on release is what keeps the drag smooth; the frame is blurred
-	 * meanwhile so the stale size reads as deliberate rather than broken.
+	 * width and taking the cost once on release is what keeps the drag smooth; the pane is covered
+	 * meanwhile, as the editor is (resizeCover).
 	 */
 	let frozenWidth = $state<number | null>(null);
 	$effect(() => {
@@ -69,7 +70,7 @@
 	// theme's stylesheet has loaded, not when its name does
 	const background = $derived.by(() => {
 		void themeEpoch.current;
-		return themeColour('--solid-pdf-page-area-bg', dark ? '#09090b' : '#f4f4f5');
+		return themeColour('--pdf-page-area-bg', dark ? '#09090b' : '#f4f4f5');
 	});
 	const scrollbarThumb = $derived.by(() => {
 		void themeEpoch.current;
@@ -310,7 +311,12 @@
 		]}
 	/>
 
-	<div bind:this={frameBox} class="relative min-h-0 flex-1 overflow-hidden">
+	<div
+		bind:this={frameBox}
+		class="relative min-h-0 flex-1 overflow-hidden"
+		data-resize-cover={m.typst_preview_label()}
+		{@attach resizeCover}
+	>
 		{#if frameUrl}
 			<!-- sandboxed by origin, not by the sandbox attribute: the page needs scripts and its own
 			     wasm, and its CSP (set where it is served) is what actually bounds it -->
@@ -319,8 +325,7 @@
 					bind:this={frame}
 					src={frameUrl}
 					title={m.typst_preview_label()}
-					class="h-full border-0 transition-[filter] duration-100"
-					class:blur-[1.5px]={frozenWidth !== null}
+					class="h-full border-0"
 					class:pointer-events-none={frozenWidth !== null}
 					style:width={frozenWidth !== null ? `${frozenWidth}px` : '100%'}
 					onerror={() => (error = m.typst_preview_frame_failed())}

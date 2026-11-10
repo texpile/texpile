@@ -69,8 +69,15 @@ export const tooltipCardTheme = EditorView.theme({
 		color: 'inherit'
 	},
 	'.cm-tooltip-autocomplete .cm-completionIcon': { width: '1em', padding: '0', marginRight: '0', fontSize: '100%', opacity: '0.6' },
-	'.cm-tooltip-autocomplete .cm-completionLabel': { flex: '1 1 auto', minWidth: '0' },
+	// the label keeps its width and a long detail (a Typst function's signature) is the part cut short
+	'.cm-tooltip-autocomplete .cm-completionLabel': { flex: '1 0 auto' },
 	'.cm-tooltip-autocomplete .cm-completionDetail': {
+		flex: '0 1 auto',
+		minWidth: '0',
+		maxWidth: '24em',
+		overflow: 'hidden',
+		textOverflow: 'ellipsis',
+		whiteSpace: 'nowrap',
 		marginLeft: 'calc(var(--spacing) * 3)',
 		fontFamily: FONT,
 		fontStyle: 'normal',

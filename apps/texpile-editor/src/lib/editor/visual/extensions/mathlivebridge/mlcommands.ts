@@ -1,4 +1,5 @@
 import { EditorState, NodeSelection, Transaction } from 'prosemirror-state';
+import { formulaFromSelection } from './selectionFormula';
 
 export function createMathField(createblock = false) {
 	return function (state: EditorState, dispatch?: (tr: Transaction) => void): boolean {
@@ -32,11 +33,17 @@ export function createMathField(createblock = false) {
 				return true;
 			}
 		} else {
-			const newNode = state.schema.nodes.inline_math.create({}, state.schema.text(' '));
 			const $from = state.doc.resolve(from);
+			// selected words become the formula (#145)
+			const selected = from < to && $from.sameParent(state.doc.resolve(to)) ? formulaFromSelection(state.doc, from, to) : null;
+			const wrap = selected !== null;
+			const source = selected ?? '';
+			const marks = wrap ? (state.doc.nodeAt(from)?.marks ?? $from.marks()) : (state.storedMarks ?? $from.marks());
+			// in colored text the formula is colored too, and so is what is typed after it
+			const newNode = state.schema.nodes.inline_math.create({}, state.schema.text(source.trim() ? source : ' '), marks);
 
 			if ($from.parent.canReplaceWith($from.index(), $from.index(), newNode.type)) {
-				const tr = state.tr.insert(from, newNode);
+				const tr = wrap ? state.tr.replaceWith(from, to, newNode) : state.tr.insert(from, newNode);
 				const nodeSelection = NodeSelection.create(tr.doc, from);
 				tr.setSelection(nodeSelection);
 				dispatch?.(tr);

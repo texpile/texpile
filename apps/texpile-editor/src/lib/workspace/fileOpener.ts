@@ -63,13 +63,19 @@ export class FileOpener {
 
 	/** the open-time parse finishes here: fill the visual pane (the spinner branch yields to the
 	 * editor reactively), or - if the user bailed to Source while it ran - stash the doc so the
-	 * Visual toggle is instant. Discarded when superseded or the buffer changed underneath it;
-	 * the toggle just reparses then. */
+	 * Visual toggle is instant. Discarded when superseded; when the text changed underneath it, the
+	 * visual pane parses the text again and the source editor drops it. */
 	private adoptBackgroundParse(parseP: Promise<ParseOutcome>, path: string, source: string, seq: number): void {
 		const { doc, parser } = this.deps;
 		void parseP.then((o) => {
 			if (!this.current(path) || !parser.isCurrent(seq) || doc.path !== path) return;
-			if (doc.texSource !== source) return; // edited meanwhile: stale, drop it
+			if (doc.texSource !== source) {
+				// a collaborator typed in the file while it parsed, and nothing else would take the spinner down
+				const now = doc.texSource;
+				if (this.deps.isVisualMode() && !hasConflictMarkers(now))
+					this.adoptBackgroundParse(this.deps.parse(now, formatOf(fileKind(path))), path, now, parser.nextSequence());
+				return;
+			}
 			if (o.failure) {
 				this.deps.fallbackToSource(o.failure);
 				return;

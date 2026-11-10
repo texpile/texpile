@@ -28,7 +28,7 @@ const CLOSERS = new Set(['RightBrace', 'RightBracket', 'RightParen']);
  * the unmatched opener as an Error node and the block runs to end of file, so folding it would
  * collapse the rest of the document.
  */
-function insideDelimiters(node: SyntaxNode) {
+export function insideDelimiters(node: SyntaxNode) {
 	const first = node.firstChild;
 	const last = node.lastChild;
 	if (!first || !last || last.from <= first.to) return null;
@@ -36,8 +36,18 @@ function insideDelimiters(node: SyntaxNode) {
 	return { from: first.to, to: last.from };
 }
 
+/** a display equation across lines folds between its dollars */
+export function displayEquationFold(node: SyntaxNode, state: EditorState) {
+	const open = node.firstChild;
+	const close = node.lastChild;
+	if (!open || !close || open.name !== 'Dollar' || close.name !== 'Dollar' || close === open) return null;
+	if (open.nextSibling?.name !== 'Space' || close.prevSibling?.name !== 'Space') return null;
+	return state.doc.lineAt(open.to).number < state.doc.lineAt(close.from).number ? { from: open.to, to: close.from } : null;
+}
+
 export const typstFold = foldNodeProp.add({
 	'CodeBlock ContentBlock Args Params Array Dict Destructuring Parenthesized ImportItems': insideDelimiters,
+	Equation: displayEquationFold,
 	// a raw block collapses to its opening fence
 	Raw: (node) => {
 		const first = node.firstChild;

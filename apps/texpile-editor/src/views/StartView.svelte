@@ -1,8 +1,9 @@
 <script lang="ts">
+	import { keyLabel } from '$lib/keybindings/keybindings.svelte';
+	import { registerCommands } from '$lib/keybindings/commands/commandRegistry';
 	import { tip } from '$lib/components/tooltip.svelte';
 	import { navigate } from '$lib/router.svelte';
 	import { AppWindow, Folder, FolderGit2, FolderOpen, Loader2, Settings, Users } from '@lucide/svelte';
-	import { combo } from '$lib/chrome/shortcutText';
 	import { whatsNewOpen, hasUnseenWhatsNew } from '$lib/whatsNew';
 	import AppFrame from '$lib/chrome/AppFrame.svelte';
 	import RecentFoldersModal from '$lib/modals/start/RecentFoldersModal.svelte';
@@ -95,26 +96,19 @@
 	});
 
 	// Ctrl+O off macOS, where no native menu carries it; a Mac's start screen menu takes Cmd+O first
-	function onKeydown(e: KeyboardEvent) {
-		if (!(e.metaKey || e.ctrlKey) || e.shiftKey || e.altKey) return;
-		if (e.key === ',') {
-			e.preventDefault();
-			void showPrefs();
-		} else if (e.key.toLowerCase() === 'o' && !busy) {
-			e.preventDefault();
-			void openFolder();
-		} else {
-			// the key's place, so Ctrl+1 is the same key on AZERTY, where it types &
-			const digit = /^Digit([1-9])$/.exec(e.code);
-			const folder = digit && visibleRecents[Number(digit[1]) - 1];
-			if (!folder || busy) return;
-			e.preventDefault();
-			void openFolder(folder);
-		}
-	}
+	$effect(() =>
+		registerCommands([
+			{ id: 'file.preferences', run: () => void showPrefs() },
+			{ id: 'file.openFolder', enabled: () => !busy, run: () => void openFolder() },
+			...[1, 2, 3, 4, 5, 6, 7, 8, 9].map((n) => ({
+				id: `start.openRecent${n}`,
+				enabled: () => !busy && !!visibleRecents[n - 1],
+				run: () => void openFolder(visibleRecents[n - 1])
+			}))
+		])
+	);
 </script>
 
-<svelte:window onkeydown={onKeydown} />
 <svelte:head><title>Texpile</title></svelte:head>
 
 <!-- my-auto rather than centering the container: a tall list on a short window would otherwise
@@ -133,7 +127,7 @@
 			<button class={rowClass} onclick={() => openFolder()} disabled={busy}>
 				{#if busy}<Loader2 class="text-muted size-4 shrink-0 animate-spin" />{:else}<FolderOpen class="text-muted size-4 shrink-0" />{/if}
 				<span>{m.start_open_folder()}</span>
-				<span class={shortcutClass}>{combo('O')}</span>
+				<span class={shortcutClass}>{keyLabel('file.openFolder')}</span>
 			</button>
 			{#if canClone()}
 				<button class={rowClass} onclick={cloneRepository} disabled={busy}>
@@ -149,13 +143,13 @@
 				<button class={rowClass} onclick={openNewWindow}>
 					<AppWindow class="text-muted size-4 shrink-0" />
 					<span>{m.start_new_window()}</span>
-					<span class={shortcutClass}>{combo('N', { shift: true })}</span>
+					<span class={shortcutClass}>{keyLabel('window.new')}</span>
 				</button>
 			{/if}
 			<button class={rowClass} onclick={showPrefs}>
 				<Settings class="text-muted size-4 shrink-0" />
 				<span>{m.menubar_preferences()}</span>
-				<span class={shortcutClass}>{combo(',')}</span>
+				<span class={shortcutClass}>{keyLabel('file.preferences')}</span>
 			</button>
 
 			{#if error}
@@ -179,7 +173,7 @@
 								<span class="max-w-[45%] shrink-0 truncate group-hover:underline">{basename(folder)}</span>
 								<span class="text-faint min-w-0 truncate text-xs">{folder}</span>
 							</span>
-							<span class={shortcutClass}>{combo(String(i + 1))}</span>
+							<span class={shortcutClass}>{keyLabel(`start.openRecent${i + 1}`)}</span>
 						</button>
 					{/each}
 					{#if recentFolders.current.length > visibleRecents.length}

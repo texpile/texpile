@@ -1,0 +1,50 @@
+// a file the document reads changed without being the open one: an agent's write, a pull, an edit in another editor
+// group, a figure tab's drag before it is written. Live mode followed only the open file, so the preview kept the old
+// text until the next keystroke there
+import { fileService } from '$lib/files/service/fileService';
+import { isSameFile, pathBelow, pathOfFileUri } from '$lib/files/identity/fileUris';
+import { textNow } from '$lib/buffers/textNow';
+import { onUnwrittenText } from '$lib/draw/host/tab/unwrittenText.svelte';
+
+export const TEXT = /\.tex$/i;
+// read whole by a compile: a teleport only carries a .tex file's text
+export const REBUILD = /\.(sty|cls|bib|bbl|png|jpe?g)$/i;
+
+export type DraftInputDeps = {
+	root(): string;
+	loadedPath(): string | null;
+	isActive(): boolean;
+	edit(path: string, text: string): void;
+	rebuild(): void;
+};
+
+export function watchDraftInputs(deps: DraftInputDeps): () => void {
+	function changed(paths: string[], read: (path: string) => Promise<string>): void {
+		if (!deps.isActive()) return;
+		const root = deps.root();
+		const open = deps.loadedPath();
+		for (const path of paths) {
+			const rel = root ? pathBelow(root, path) : null;
+			if (!rel || rel.startsWith('_draft/') || (open && isSameFile(path, open))) continue;
+			if (TEXT.test(path)) void read(path).then((text) => deps.edit(path, text));
+			else if (REBUILD.test(path)) deps.rebuild();
+		}
+	}
+	const offChanges = fileService.onDidFilesChange((e) =>
+		changed([...e.rawUpdated, ...e.rawAdded].map(pathOfFileUri), (path) => fileService.readText(path))
+	);
+	// the app's own writes: an MCP edit, or a file saved from another editor group
+	const offWrites = fileService.onDidRunOperation((e) => {
+		if (e.isOperation('write')) changed([pathOfFileUri(e.resource)], (path) => textNow(path));
+	});
+	// the open file too: its buffer only takes the drag on release
+	const offCanvas = onUnwrittenText((path, text) => {
+		const root = deps.root();
+		if (deps.isActive() && root && pathBelow(root, path) && TEXT.test(path)) deps.edit(path, text);
+	});
+	return () => {
+		offChanges();
+		offWrites();
+		offCanvas();
+	};
+}

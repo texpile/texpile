@@ -117,6 +117,6 @@ test('renaming from the \\label changes the definition and every \\ref and \\cre
 	expect(count(disk().read('chapters/results.tex'), 'sec:intro')).toBe(0);
 	expect(count(disk().read('main.tex') + disk().read('chapters/results.tex'), 'sec:overview')).toBe(4);
 	await expect(toast(/Renamed 4 uses in 2 files/)).toBeVisible();
-	await page.keyboard.press('Control+z');
+	await page.keyboard.press('ControlOrMeta+z');
 	await diskIs({ 'main.tex': MAIN, 'chapters/results.tex': RESULTS }, 'after Ctrl+Z');
 });

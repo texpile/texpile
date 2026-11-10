@@ -127,6 +127,8 @@ export class AcpSession {
 				takesSelection: !!init.agentCapabilities?.promptCapabilities?.embeddedContext,
 				takesImages: !!init.agentCapabilities?.promptCapabilities?.image
 			});
+			// read now, while the reader types, so the first turn rereads only what changed
+			void takeSnapshot(this.o.root).then((s) => (this.known ??= s));
 		} catch (e) {
 			if (this.closing) return;
 			if (authRequired(e)) this.o.emit({ type: 'state', state: 'signed-out' });

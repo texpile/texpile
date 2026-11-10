@@ -17,7 +17,7 @@ function visual(): VisualEditor {
 
 async function openFind(v: VisualEditor, query: string): Promise<void> {
 	await v.page.locator('.ProseMirror p').first().click();
-	await v.page.keyboard.press('Control+f');
+	await v.page.keyboard.press('ControlOrMeta+f');
 	await expect(v.page.getByRole('textbox', { name: 'Find' })).toBeFocused();
 	await v.page.keyboard.type(query);
 }

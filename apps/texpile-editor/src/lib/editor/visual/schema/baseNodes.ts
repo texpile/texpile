@@ -192,8 +192,7 @@ export const baseNodes = {
 		inline: true,
 		group: 'inline',
 		selectable: false,
-		// true = a \\ forced break. false is a legacy value kept so stale docs don't crash;
-		// it serializes to nothing. suffix: what followed the \\ in the source ('*', '[2ex]');
+		// suffix: what followed the \\ in the source ('*', '[2ex]');
 		// command: 'newline' when the source wrote \newline
 		attrs: { lineBreak: { default: true }, suffix: { default: '' }, command: { default: null } },
 		parseDOM: [{ tag: 'br' }],

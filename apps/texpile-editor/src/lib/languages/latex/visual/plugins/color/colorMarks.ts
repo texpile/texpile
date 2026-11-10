@@ -26,9 +26,13 @@ export function colorMark(
 	return im.core.inline(braced[1].body, { ...ctx, marks: [...ctx.marks, { type, attrs: { color, ...extra, model } }] });
 }
 
-export function textcolorMark(a: Record<string, unknown>): { open: string; close: string } {
+// \color ends in \ignorespaces, so a space just inside \textcolor{red}{ x} never reaches the PDF
+export function textcolorMark(a: Record<string, unknown>, inner: string): { open: string; close: string; inner: string } {
 	const c = xcolorOf(a.color ?? 'black', a.model);
-	return c ? { open: `\\textcolor${c.model ? `[${c.model}]` : ''}{${esc(c.value)}}{`, close: '}' } : { open: '', close: '' };
+	if (!c) return { open: '', close: '', inner };
+	const space = /^\s*/.exec(inner)?.[0] ?? '';
+	const command = `\\textcolor${c.model ? `[${c.model}]` : ''}{${esc(c.value)}}{`;
+	return { open: space + command, close: '}', inner: inner.slice(space.length) };
 }
 
 // \sethlcolor takes a color name, never a model, so a color only a model can say highlights in the default one

@@ -15,6 +15,7 @@
 	import { ExternalLink } from '@lucide/svelte';
 	import type { DialogButton } from '$lib/modals/dialogButtons';
 	import { tinymistInstaller } from '../tinymistInstall.svelte';
+	import { texLiveInstaller } from '../toolchain/install/texLiveInstall.svelte';
 	import { m } from '$lib/paraglide/messages';
 
 	const INSTALL_GUIDE = 'https://texpile.com/docs/installation';
@@ -44,7 +45,7 @@
 	$effect(() => {
 		if (!program || found) return;
 		function onFocus(): void {
-			if (!tinymistInstaller.step) void toolchainProbe.run();
+			if (!tinymistInstaller.step && !texLiveInstaller.step) void toolchainProbe.run();
 		}
 		window.addEventListener('focus', onFocus);
 		return () => window.removeEventListener('focus', onFocus);
@@ -54,19 +55,32 @@
 		askedProgram.current = null;
 	}
 
-	const installable = $derived(family === 'typst' && !found && tinymistInstaller.offered);
+	// TeX Live only where no TeX is found at all: one that is there but not in use is picked in Preferences
+	const noTex = $derived(family === 'latex' && !found && !toolchainProbe.distros.some((d) => d.family === 'latex'));
+	const installer = $derived(
+		family === 'typst' && !found && tinymistInstaller.offered
+			? tinymistInstaller
+			: noTex && texLiveInstaller.offered
+				? texLiveInstaller
+				: null
+	);
 	// the one step that gets the reader further is the blue button: Texpile's install, or the guide to installing one.
 	// A distribution that left the program out has neither, as its own package manager adds it. A download under way is
 	// cancelled from its row, beside its progress
 	const buttons = $derived.by((): DialogButton[] => {
 		const closeButton: DialogButton = { label: m.modal_close_aria(), role: 'cancel', onclick: close };
-		if (installable && tinymistInstaller.step) return [closeButton];
-		if (installable) {
+		const offer = installer;
+		if (offer?.step) return [closeButton];
+		if (offer) {
 			const install: DialogButton = {
-				label: m.tinymist_install(),
+				label: family === 'typst' ? m.tinymist_install() : m.texlive_install(),
 				role: 'primary',
-				disabled: toolchainProbe.probing || tinymistInstaller.busy,
-				onclick: () => void tinymistInstaller.install()
+				tip:
+					offer === texLiveInstaller && texLiveInstaller.status?.megabytes
+						? m.prefs_texlive_install_size({ size: String(texLiveInstaller.status.megabytes) })
+						: undefined,
+				disabled: toolchainProbe.probing || offer.busy,
+				onclick: () => void offer.install()
 			};
 			return [closeButton, install];
 		}
@@ -89,7 +103,9 @@
 					? m.program_missing_typst()
 					: distro
 						? m.program_missing_in_distro({ program, distro: distro.name })
-						: m.program_missing_latex({ program })}
+						: installer
+							? m.program_missing_latex_offer({ program })
+							: m.program_missing_latex({ program })}
 		</p>
 		<TypesetterPanel want={{ latex: family === 'latex', typst: family === 'typst' }} {program} />
 		<!-- the way to everything else on the left, the dialog's own buttons on the right -->

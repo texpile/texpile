@@ -43,6 +43,25 @@ describe('a figure tab holds its picture by an anchor in the text', () => {
 		expect(placeOf(id, ytext, ytext.toString())?.state).toBe('shown');
 	});
 
+	it('follows its file to a new name, whose text is a new one in the same doc', () => {
+		const { ytext } = fileText();
+		const id = opened(ytext);
+		const renamed = ytext.doc!.getText('renamed.tex');
+		renamed.insert(0, FILE);
+		ytext.delete(0, ytext.length);
+		expect(placeOf(id, renamed, FILE)?.state).toBe('shown');
+	});
+
+	it('is the one the renamed file opens again', () => {
+		const { ytext } = fileText();
+		const id = opened(ytext);
+		const renamed = ytext.doc!.getText('renamed.tex');
+		renamed.insert(0, FILE);
+		ytext.delete(0, ytext.length);
+		placeOf(id, renamed, FILE);
+		expect(figureFor('/w/renamed.tex', renamed, FILE, FILE.indexOf('\\begin{tikzpicture}'))).toBe(id);
+	});
+
 	it('is incomplete while its \\end is gone', () => {
 		const { ytext } = fileText();
 		const id = opened(ytext);

@@ -13,13 +13,17 @@ export class ImageViewport {
 	y = $state(0);
 	fitted = $state(true);
 
-	/** `topInset`: what a floating bar covers */
-	constructor(private readonly topInset = 0) {}
+	/** `topInset`: what a floating bar covers; `enlarge`: fit grows a small picture past its own size */
+	constructor(
+		private readonly topInset = 0,
+		private readonly enlarge = false
+	) {}
 
 	get fitScale(): number {
 		const { w, h } = this.natural;
 		if (!w || !h || !this.box.w || !this.box.h) return 1;
-		return Math.min(1, (this.box.w - 2 * FIT_MARGIN) / w, (this.box.h - this.topInset - 2 * FIT_MARGIN) / h);
+		const fits = Math.min((this.box.w - 2 * FIT_MARGIN) / w, (this.box.h - this.topInset - 2 * FIT_MARGIN) / h);
+		return this.enlarge ? fits : Math.min(1, fits);
 	}
 
 	private get center(): Point {

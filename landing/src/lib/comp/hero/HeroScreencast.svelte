@@ -5,22 +5,32 @@
 	import HeroFormatSwitch from './HeroFormatSwitch.svelte';
 	import HeroSceneGuide from './HeroSceneGuide.svelte';
 	import HeroSceneWindow from './HeroSceneWindow.svelte';
-	import { HERO_SETS, type HeroFormat } from './heroScenes';
+	import { HERO_TAKES, type HeroFormat } from './heroScenes';
 	import { ScenePlayer } from './scenePlayer.svelte';
+	import { formatChoice } from '../formatChoice.svelte';
 
 	type HeroScreencastProps = { formats: HeroFormat[] };
 	const props: HeroScreencastProps = $props();
 	const { formats } = $derived(props);
 
+	const starts = (format: HeroFormat) => HERO_TAKES[format].parts.map((p) => p.at);
+
 	// the first format is the one a page opens on; its first frame is in the HTML
 	const first = untrack(() => props.formats[0]);
-	let format = $state(first);
-	const player = new ScenePlayer([HERO_SETS[first].take]);
+	// a page with both formats follows the shared choice, which the editing stage sets too
+	const format = $derived(formats.length > 1 ? formatChoice.current : first);
+	const take = $derived(HERO_TAKES[format]);
+	const player = new ScenePlayer(starts(first));
+	let playing = first;
+
+	$effect(() => {
+		if (format === playing) return;
+		playing = format;
+		player.setStarts(starts(format));
+	});
 
 	function pick(next: HeroFormat) {
-		if (next === format) return;
-		format = next;
-		player.setScenes([HERO_SETS[next].take]);
+		formatChoice.current = next;
 	}
 </script>
 
@@ -31,10 +41,13 @@
 			<HeroFormatSwitch {formats} current={format} onpick={pick} />
 		</div>
 	{/if}
-	<div class="frame overflow-hidden rounded-lg border border-white/10">
-		<HeroSceneWindow {player} poster={HERO_SETS[first].poster} alt={HERO_SETS[first].alt()} />
+	<div class="frame overflow-hidden">
+		<!-- a new video element per format, so the other take starts from its own poster -->
+		{#key format}
+			<HeroSceneWindow {player} video={take.video} poster={take.poster} alt={take.alt()} />
+		{/key}
 	</div>
-	<HeroSceneGuide {player} parts={HERO_SETS[format].parts} />
+	<HeroSceneGuide {player} parts={take.parts} />
 </section>
 
 <style>
@@ -46,5 +59,13 @@
 	.frame {
 		/* on ink a light shadow is invisible, so a plain deeper one */
 		box-shadow: 0 40px 100px -35px rgb(0 0 0 / 0.85);
+		/* the capture has the macOS window corner baked in over its backdrop, 28 of 2560 px, so the
+		   frame cuts the same corner at any width */
+		border-radius: calc(100% * 28 / 2560) / calc(100% * 28 / 1520);
+	}
+
+	/* the window's edge is antialiased into the backdrop, so the cut goes a little inside it */
+	.frame :global(video) {
+		transform: scale(1.005);
 	}
 </style>

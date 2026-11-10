@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { keyLabel } from '$lib/keybindings/keybindings.svelte';
 	import { tip } from '$lib/components/tooltip.svelte';
 	import { Popover, Portal } from '@skeletonlabs/skeleton-svelte';
 	import { SquareRadical, ChevronDown } from '@lucide/svelte';
@@ -15,13 +16,13 @@
 		{
 			id: 'inline',
 			label: () => m.mathpal_inline_math(),
-			shortcut: 'Mod+M',
+			shortcut: 'editor.inlineMath',
 			command: createMathField(false)
 		},
 		{
 			id: 'block',
 			label: () => m.mathpal_block_math(),
-			shortcut: 'Mod+Shift+M',
+			shortcut: 'editor.displayMath',
 			command: createMathField(true)
 		}
 	];
@@ -61,7 +62,7 @@
 						onclick={() => handleInsert(option)}
 					>
 						<span class="text-sm">{option.label()}</span>
-						<Kbd keys={option.shortcut} />
+						<Kbd raw={keyLabel(option.shortcut)} />
 					</button>
 				{/each}
 			</Popover.Content>

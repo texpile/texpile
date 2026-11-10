@@ -4,10 +4,16 @@ Release notes for Texpile Desktop. Add notes under `## [Unreleased]` as you work
 `pnpm --filter texpile-editor release <patch|minor|major>` to cut a dated, numbered release.
 
 ## [Unreleased]
-
-- feat: the Agent tab shows how much of the context the chat uses (by @anarghya-das)
+- WARNING: 2.0.0 cannot collaborate with any clients on 1.x
+- feat: TikZ and CeTZ editor (by @louisqli)
+- feat: vastly expanded visual editor coverage, including support for beamer and niche classes (by @louisqli)
+- feat: vastly improved LaTeX live mode with the new teleport engine (by @louisqli)
+- feat: custom themes (by @louisqli)
+- feat: keybind manager (by @louisqli)
+- feat: removed the unsaved file indicator, since Texpile fully autosaves (by @louisqli)
+- feat: Agent tab context ring (by @anarghya-das, @louisqli)
 - feat: the Agent tab marks where the agent compacted the chat, with its summary (by @anarghya-das)
-- feat: compact the agent's chat from the context ring (by @anarghya-das)
+- fix: various minor UI changes (by @louisqli)
 
 ## [1.6.2] - 2026-10-24
 

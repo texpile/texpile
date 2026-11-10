@@ -1,7 +1,7 @@
 // go-to-definition: F12 (and Ctrl/Cmd-click) jumps from a \ref{…}/\label, a user-macro
 // invocation, a \cite key, a \gls key, or an \input target to where it's defined — in this
 // buffer when possible, else in the project file projectIntel located it in.
-import { keymap, EditorView } from '@codemirror/view';
+import { EditorView } from '@codemirror/view';
 import type { Extension } from '@codemirror/state';
 import { flashLineEffect } from '$lib/languages/latex/source/synctexFlash';
 import { jumpRevealEffect } from '$lib/editor/source/cmJumpReveal';
@@ -13,6 +13,7 @@ import { definedIn, primitiveDefsIn } from '../userDefinitions';
 import { tokenAtState, findLabelOffset } from './hover';
 import { documentPackagesNow } from './packages/loadedPackages';
 import { scanGlossary } from './completion/glossary';
+import { cmCommandKeys } from '$lib/keybindings/editors/cmCommandKeys';
 
 export function findMacroDefinition(text: string, name: string): number | null {
 	const code = codeOnly(text);
@@ -102,12 +103,7 @@ function definitionAt(view: EditorView, pos: number, hooks: DefinitionHooks): bo
 /** F12 / Ctrl-click go-to-definition for labels, macros, cite keys, glossary keys and includes. */
 export function goToDefinition(hooks: DefinitionHooks = {}): Extension {
 	return [
-		keymap.of([
-			{
-				key: 'F12',
-				run: (view) => definitionAt(view, view.state.selection.main.head, hooks)
-			}
-		]),
+		cmCommandKeys({ 'editor.goToDefinition': (view) => definitionAt(view, view.state.selection.main.head, hooks) }),
 		EditorView.domEventHandlers({
 			mousedown(event, view) {
 				if (!(event.ctrlKey || event.metaKey) || event.button !== 0) return false;

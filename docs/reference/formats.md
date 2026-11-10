@@ -9,13 +9,14 @@ order: 4
 
 ## What opens where
 
-| File                                                 | Opens in                             |
-| ---------------------------------------------------- | ------------------------------------ |
-| `.tex`, `.typ`, `.md`, `.markdown`                   | Visual editor or source editor       |
-| `.bib`                                               | Bibliography editor or source editor |
-| `.sty`, `.cls`, `.bbl` and other text files          | Source editor only                   |
-| Images (PNG, JPEG, GIF, SVG, WebP, BMP, ICO) and PDF | A viewer                             |
-| Other binary files                                   | Read only                            |
+| File                                                             | Opens in                             |
+| ---------------------------------------------------------------- | ------------------------------------ |
+| `.tex`, `.typ`, `.md`, `.markdown`                               | Visual editor or source editor       |
+| `.bib`                                                           | Bibliography editor or source editor |
+| `.sty`, `.cls`, `.bbl` and other text files                      | Source editor only                   |
+| Images (PNG, JPEG, GIF, SVG, WebP, BMP, ICO) and PDF             | A viewer                             |
+| Video (MP4, WebM, MOV, MKV) and audio (MP3, WAV, OGG, FLAC, M4A) | A player                             |
+| Other binary files                                               | Read only                            |
 
 The main file sets the format: a `.typ` main file compiles with Typst, any other with LaTeX. Markdown has no compile step.
 

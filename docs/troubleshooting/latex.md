@@ -21,9 +21,9 @@ order: 1
 
 ## Live preview
 
-| You see                                                   | Fix                                                                                                             |
-| --------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------- |
-| "lualatex was not found, so the live preview cannot run." | Click **Check Toolchain** and install or locate lualatex.                                                       |
-| "Live preview is active in another window."               | Click **Use Live Preview Here**.                                                                                |
-| **preview error**                                         | Open Problems to see the error. The live preview runs lualatex, so a document that needs pdflatex uses Compile. |
-| Live mode cannot be turned on                             | You are hosting a shared session. End it first.                                                                 |
+| You see                                   | Fix                                                                                                             |
+| ----------------------------------------- | --------------------------------------------------------------------------------------------------------------- |
+| "lualatex is not installed."              | Click **Compiler Settings**. Click **Install TeX Live**, or **Locate** for a TeX Texpile does not find.         |
+| "Live mode needs LaTeX 2021-06 or newer." | Update TeX Live, MacTeX or MiKTeX.                                                                              |
+| **preview error**                         | Open Problems to see the error. The live preview runs lualatex, so a document that needs pdflatex uses Compile. |
+| Live mode cannot be turned on             | You are hosting a shared session. End it first.                                                                 |

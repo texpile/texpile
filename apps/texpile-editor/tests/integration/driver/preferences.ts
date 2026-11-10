@@ -9,7 +9,7 @@ export class Preferences {
 	}
 
 	async open(): Promise<void> {
-		await this.page.keyboard.press('Control+Comma');
+		await this.page.keyboard.press('ControlOrMeta+Comma');
 		await expect(this.dialog).toBeVisible();
 	}
 
@@ -86,7 +86,7 @@ export class Preferences {
 
 /** the command palette, opened with its shortcut and run by the label shown */
 export async function runPaletteCommand(page: Page, label: string): Promise<void> {
-	await page.keyboard.press('Control+k');
+	await page.keyboard.press('ControlOrMeta+k');
 	await page.keyboard.type(label, { delay: 15 });
 	const option = page.getByRole('option', { name: label, exact: true });
 	await expect(option, `palette entry ${label}`).toBeVisible();

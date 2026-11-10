@@ -20,6 +20,7 @@ import { createStarterLatex } from './latexRoundtrip';
 import { FileHistory } from './fileHistory.svelte';
 import { toaster } from '$lib/modals/toaster-svelte';
 import { m } from '$lib/paraglide/messages';
+import type { UnwrittenText } from '$lib/buffers/fileWriter';
 
 export type TreeOpsDeps = {
 	create(path: string, type: 'file' | 'dir', content: string): Promise<unknown>;
@@ -50,8 +51,10 @@ export type TreeOpsDeps = {
 	 * review-comment threads ride it. */
 	afterPathMoved?(oldPath: string, newPath: string): void;
 	retargetPendingSave(from: string, to: string): void;
-	/** a path is deleted: the edits held of it, and of what is under it, go with it */
-	forgetBuffers(path: string): void;
+	/** a path is deleted: the edits held of it, and of what is under it, go with it; returns the texts the disk never had */
+	forgetBuffers(path: string): UnwrittenText[];
+	/** texts about to be trashed: written to their files first, and kept in Local History */
+	keepUnwritten?(files: UnwrittenText[]): Promise<void>;
 	/** a drop landed on a name that is taken: replace what is there? */
 	confirmReplace(name: string): Promise<boolean>;
 	/** the main file moved (new path) or was deleted (null): repoint the choice and persist it.
@@ -135,8 +138,7 @@ export class TreeOps {
 			let replaced: { original: string; trashed: string } | null = null;
 			if ((await this.deps.stat(to)).exists) {
 				if (!(await this.deps.confirmReplace(basename(to)))) return null;
-				this.#detach(to);
-				const { backup } = await this.#trash(to);
+				const { backup } = await this.#remove(to);
 				if (backup) replaced = { original: to, trashed: backup };
 			}
 			await this.deps.rename(entry.path, to);
@@ -157,8 +159,7 @@ export class TreeOps {
 		refresh = true
 	): Promise<{ pair: { original: string; trashed: string } | null; recycled: boolean } | null> => {
 		try {
-			this.#detach(entry.path);
-			const { backup, recycled } = await this.#trash(entry.path);
+			const { backup, recycled } = await this.#remove(entry.path);
 			if (refresh) await this.deps.refreshTree();
 			return { pair: backup ? { original: entry.path, trashed: backup } : null, recycled };
 		} catch (e) {
@@ -254,8 +255,7 @@ export class TreeOps {
 					if (!(await this.deps.confirmReplace(basename(dest)))) continue;
 					// a guest's delete and upload race to the host, which overwrites on its own
 					if (this.undoable) {
-						this.#detach(dest);
-						const { backup } = await this.#trash(dest);
+						const { backup } = await this.#remove(dest);
 						if (backup) replaced.push({ original: dest, trashed: backup });
 					}
 				}
@@ -311,13 +311,14 @@ export class TreeOps {
 		return to === entry.path ? null : to;
 	}
 
-	/** a path deleted outside the app */
+	/** a path deleted outside the app or by a collaborator */
 	detachDeleted(path: string): void {
-		this.#detach(path);
+		this.#detach(path, false);
 	}
 
-	/** a path is going away: drop the buffers, tabs and stored caret that pointed at it. */
-	#detach(path: string): void {
+	/** a path is going away: drop the buffers, tabs and stored caret that pointed at it. Returns the texts the disk
+	 *  never had. `neighbour`: the next tab opens in place of a lost open file */
+	#detach(path: string, neighbour: boolean): UnwrittenText[] {
 		const active = activeFilePath.current;
 		const sep = path.includes('\\') ? '\\' : '/';
 		// the open file is gone if it IS this entry, or lives inside this folder
@@ -325,7 +326,7 @@ export class TreeOps {
 		// where its tab sat, so a neighbour can take over once the closing has renumbered the list
 		const at = losingOpenFile ? tabs.list.findIndex((t) => samePath(t.path, active)) : -1;
 		// a queued write must not bring back what was just deleted
-		this.deps.forgetBuffers(path);
+		const unwritten = this.deps.forgetBuffers(path);
 		if (losingOpenFile) openFile(null); // clears the editor buffers via the load effect
 		// deleting the main file clears the choice: a pointer at a deleted path fails every
 		// compile lane silently, while a cleared one brings the pick-a-main flow back
@@ -336,7 +337,9 @@ export class TreeOps {
 		visualDocCache.forget(path);
 		// deleting what you were reading lands on the next open file, the way closing its tab does.
 		// Leaving the pane empty with the other tabs still sitting above it reads as a glitch
-		if (losingOpenFile && tabs.list.length) openFile(tabs.list[Math.min(Math.max(at, 0), tabs.list.length - 1)].path);
+		// (deleted elsewhere it stays empty, or the keys still being typed land in another file)
+		if (neighbour && losingOpenFile && tabs.list.length) openFile(tabs.list[Math.min(Math.max(at, 0), tabs.list.length - 1)].path);
+		return unwritten;
 	}
 
 	/** a path moved: carry the pending save, tab, caret and open-file pointer across with it. */
@@ -358,6 +361,13 @@ export class TreeOps {
 		const main = mainFile.current;
 		if (main && samePath(main, from)) this.deps.retargetMainFile?.(to);
 		else if (main && under(main, from)) this.deps.retargetMainFile?.(to + main.slice(from.length));
+	}
+
+	/** an entry this window deletes: its unwritten text reaches the disk first, so the backup an undo restores has it */
+	async #remove(path: string): Promise<{ backup: string | null; recycled: boolean }> {
+		const unwritten = this.#detach(path, true);
+		if (unwritten.length) await this.deps.keepUnwritten?.(unwritten);
+		return this.#trash(path);
 	}
 
 	/** delete one entry, backing it up first when that is possible. */
@@ -393,8 +403,7 @@ export class TreeOps {
 			},
 			redo: async () => {
 				for (let i = 0; i < live.length; i++) {
-					this.#detach(live[i].original);
-					const { backup } = await this.#trash(live[i].original);
+					const { backup } = await this.#remove(live[i].original);
 					if (backup) live[i] = { ...live[i], trashed: backup };
 				}
 				await this.deps.refreshTree();
@@ -428,8 +437,7 @@ export class TreeOps {
 			redo: async () => {
 				const next: { original: string; trashed: string }[] = [];
 				for (const r of live) {
-					this.#detach(r.original);
-					const { backup } = await this.#trash(r.original);
+					const { backup } = await this.#remove(r.original);
 					next.push(backup ? { original: r.original, trashed: backup } : r);
 				}
 				live = next;
@@ -455,8 +463,7 @@ export class TreeOps {
 			undo: async () => {
 				const next: { original: string; trashed: string }[] = [];
 				for (const p of live) {
-					this.#detach(p.original);
-					const { backup } = await this.#trash(p.original);
+					const { backup } = await this.#remove(p.original);
 					// no backup means this one cannot come back; drop it from the redo set rather than
 					// leave a path that would fail to restore
 					if (backup) next.push({ original: p.original, trashed: backup });
@@ -468,8 +475,7 @@ export class TreeOps {
 			redo: async () => {
 				const again: { original: string; trashed: string }[] = [];
 				for (const r of gone) {
-					this.#detach(r.original);
-					const { backup } = await this.#trash(r.original);
+					const { backup } = await this.#remove(r.original);
 					again.push(backup ? { original: r.original, trashed: backup } : r);
 				}
 				gone = again;

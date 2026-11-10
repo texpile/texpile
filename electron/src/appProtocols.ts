@@ -1,13 +1,16 @@
-// The two custom schemes: app:// serves the packaged renderer bundle (with its CSP), and
-// texfile:// serves workspace files (images, PDFs) confined to the claimed roots.
+// The custom schemes: app:// serves the packaged renderer bundle (with its CSP), texfile:// serves workspace files
+// (images, PDFs) confined to the claimed roots, and texpile-theme:// a custom theme's own files (themes/themeProtocol.ts).
 import { protocol } from 'electron';
 import * as fs from 'node:fs';
 import * as path from 'node:path';
 import { Readable } from 'node:stream';
 import { MIME } from './fs/fsService';
-import { isAllowedFontPath } from './fontT1Map';
+import { isPreviewFile } from './draft/previewFiles';
 import { bundleDir } from './appIdentity';
-import { windowRoots, normRoot } from './windows/windowRegistry';
+import { packedDataFile } from './bundleData';
+import { windowRoots } from './windows/windowRegistry';
+import { normRoot } from './windows/normRoot';
+import { registerThemeProtocol, THEME_SCHEME } from './themes/themeProtocol';
 
 // a `standard` scheme enforces strict MIME checks on module scripts and worker imports,
 // so text/javascript must be exact
@@ -44,12 +47,12 @@ const RENDERER_CSP = [
 	"default-src 'none'",
 	"script-src 'self' 'wasm-unsafe-eval'",
 	"style-src 'self' 'unsafe-inline'",
-	"img-src 'self' texfile: blob: data:",
-	"font-src 'self' data:",
+	"img-src 'self' texfile: texpile-theme: blob: data:",
+	"font-src 'self' texpile-theme: data:",
 	"connect-src 'self' texfile: blob: data: https: wss: ws:",
 	"worker-src 'self' blob:",
 	"child-src 'self' blob:",
-	"media-src 'self' blob: data:",
+	"media-src 'self' texfile: blob: data:",
 	"object-src 'none'",
 	"base-uri 'self'",
 	// The Typst preview page, which we serve ourselves on loopback (see typst:preview:prepare). It
@@ -75,7 +78,8 @@ export function registerPrivilegedSchemes(): void {
 	protocol.registerSchemesAsPrivileged([
 		// codeCache: without it V8 recompiles the whole renderer bundle on every launch
 		{ scheme: 'app', privileges: { standard: true, secure: true, supportFetchAPI: true, stream: true, codeCache: true } },
-		{ scheme: 'texfile', privileges: { standard: true, secure: true, supportFetchAPI: true, stream: true, corsEnabled: true } }
+		{ scheme: 'texfile', privileges: { standard: true, secure: true, supportFetchAPI: true, stream: true, corsEnabled: true } },
+		THEME_SCHEME
 	]);
 }
 
@@ -117,6 +121,7 @@ async function insideClaimedRoot(p: string): Promise<boolean> {
 }
 
 export function registerProtocolHandlers(): void {
+	registerThemeProtocol();
 	protocol.handle('app', async (request) => {
 		const url = new URL(request.url);
 		let rel = decodeURIComponent(url.pathname);
@@ -126,6 +131,12 @@ export function registerProtocolHandlers(): void {
 		// path traversal guard: resolved file must stay inside the bundle
 		if (!file.startsWith(root + path.sep) && file !== root) {
 			return new Response('Forbidden', { status: 403 });
+		}
+		const packed = await packedDataFile(root, rel);
+		if (packed === null) return new Response('Not found', { status: 404 });
+		if (packed) {
+			const headers = { 'Content-Type': 'application/json', 'Content-Length': String(packed.length), 'Cache-Control': 'no-cache' };
+			return new Response(packed, { headers });
 		}
 		try {
 			const st = await fs.promises.stat(file);
@@ -160,10 +171,8 @@ export function registerProtocolHandlers(): void {
 		const cors = { 'Access-Control-Allow-Origin': '*' };
 		// every request must land inside a claimed workspace root (VS Code's localResourceRoots):
 		// nothing renderer-reachable may turn texfile:// into an arbitrary-file read primitive.
-		// Exception: the exact font paths the compile pipeline attached to draft font records
-		// (TeX trees, system fonts) -- outside every root, and the live preview draws nothing
-		// without them.
-		if (!(await insideClaimedRoot(p)) && !isAllowedFontPath(p)) return new Response('Forbidden', { status: 403, headers: cors });
+		// Exception: the exact font and image paths the draft engine read (see previewFiles)
+		if (!(await insideClaimedRoot(p)) && !isPreviewFile(p)) return new Response('Forbidden', { status: 403, headers: cors });
 		try {
 			const st = await fs.promises.stat(p);
 			if (!st.isFile()) return new Response('Not found', { status: 404, headers: cors });

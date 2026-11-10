@@ -92,6 +92,17 @@ export function parseColspec(spec: string, types: ColumnTypes = commonRegistry('
 	return { columns, rules };
 }
 
+/** `spec` with a copy of column `from` put in at `at`; null for a spec this module does not model */
+export function insertColspecColumn(spec: string, at: number, from: number): string | null {
+	const model = parseColspec(spec);
+	if (!model || from < 0 || from >= model.columns.length || at < 0 || at > model.columns.length) return null;
+	const columns = [...model.columns];
+	columns.splice(at, 0, { ...model.columns[from] });
+	const rules = [...model.rules];
+	rules.splice(at, 0, model.rules[at]);
+	return generateColspec({ columns, rules });
+}
+
 export function generateColspec(model: ColspecModel): string {
 	let out = '';
 	model.columns.forEach((col, i) => {

@@ -11,7 +11,7 @@
 </script>
 
 <script lang="ts">
-	import { inChildWindows, windowOf } from '$lib/childWindows/childWindowRegistry.svelte';
+	import { inChildWindows } from '$lib/childWindows/childWindowRegistry.svelte';
 	import { tip } from '$lib/components/tooltip.svelte';
 	import { ChevronDown, BoxSelect } from '@lucide/svelte';
 	import { editorViewStore } from '$lib/stores/editorStore';
@@ -99,8 +99,7 @@
 	function toggleGroup(groupId: string, trigger?: HTMLElement) {
 		if (trigger) {
 			const r = trigger.getBoundingClientRect();
-			// clamped so a group near the right edge does not open off-screen
-			anchor = { top: r.bottom + 4, left: Math.max(4, Math.min(r.left, windowOf(trigger).innerWidth - 340)) };
+			anchor = { top: r.bottom + 4, left: r.left };
 		}
 		// A plain toggle now. The old version captured the mathfield and its caret here because the
 		// popover was about to take focus away; the docked panel never does, so there is nothing to

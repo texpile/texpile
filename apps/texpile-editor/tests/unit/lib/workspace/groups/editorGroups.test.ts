@@ -17,8 +17,7 @@ beforeEach(() => {
 		setMode: () => {},
 		parseFile: async () => null,
 		enter: (t) => (activeFilePath.current = t?.path ?? null),
-		beforeSplit: () => {},
-		placeSplitCaret: () => {}
+		beforeSplit: () => {}
 	});
 	editorGroups.restore(null);
 	tabs.noteOpened('/w/a.tex');

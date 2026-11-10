@@ -9,7 +9,11 @@ import './app.css';
 import '$lib/theme'; // side-effect: applies the saved appearance and watches OS changes
 import '$lib/menus/selectEscape'; // side-effect: Escape in an open select's list closes only the list
 import { loadSettings } from '$lib/settings';
+import { followChildWindows, installKeyDispatch } from '$lib/keybindings/keybindings.svelte';
+import { watchUserKeybindings } from '$lib/keybindings/user/userKeybindingsFile';
+import { registerKeybindingCommands } from '$lib/keybindings/keybindingCommands';
 import { watchWindowGlass } from '$lib/chrome/windowGlass.svelte';
+import { watchEditorTextFont } from '$lib/chrome/editorTextFont.svelte';
 import { adoptBootOpen, bootOpen } from '$lib/workspace/openWorkspace';
 import { focusDoctor } from '$lib/debug/focusDoctor';
 import { mark, startupDoctor } from '$lib/debug/startupDoctor';
@@ -31,6 +35,12 @@ console.log = (...args: unknown[]) => {
 // some pre-bundler libraries probe a Node-style `global`
 (window as unknown as { global: Window }).global = window;
 
+// before any other keydown listener of the window, so the keybindings decide first
+installKeyDispatch(window);
+followChildWindows();
+watchUserKeybindings();
+registerKeybindingCommands();
+
 window.addEventListener('error', (e) => console.error('[client error]', (e.error && e.error.stack) || e.error || e.message));
 window.addEventListener('unhandledrejection', (e) => console.error('[client error]', e.reason));
 
@@ -48,6 +58,7 @@ if (boot) {
 loadSettings().then(() => {
 	mark('settings');
 	void watchWindowGlass();
+	watchEditorTextFont();
 	mount(App, { target: document.getElementById('app')! });
 	if (!bootOpen()) warmEditor(); // a restored folder opens a file at once; EditorPane warms after it
 });

@@ -5,6 +5,9 @@ import { mount, unmount } from 'svelte';
 import TooltipHost from '$lib/components/TooltipHost.svelte';
 import ContextMenuHost from '$lib/menus/ContextMenuHost.svelte';
 import { childWindows } from './childWindowRegistry.svelte';
+import { observe } from '$lib/runes/observe.svelte';
+import { themeEpoch } from '$lib/theme';
+import { customThemeSheetsFor } from '$lib/customThemes/customThemes.svelte';
 
 export type ChildWindow = {
 	win: Window;
@@ -101,8 +104,10 @@ function restoreShadowSheets(win: Window & typeof globalThis): () => void {
 	return () => observer.disconnect();
 }
 
-/** theme lives as attributes on the opener's <html> (theme-init.js) */
-function syncTheme(doc: Document): void {
+/** theme lives as attributes on the opener's <html> (theme-init.js), and a custom theme as its constructed sheet */
+function syncTheme(win: Window & typeof globalThis): void {
+	const doc = win.document;
+	doc.adoptedStyleSheets = customThemeSheetsFor(win);
 	const src = document.documentElement;
 	const dst = doc.documentElement;
 	dst.className = src.className;
@@ -132,9 +137,14 @@ export function openChildWindow(o: ChildWindowOptions): ChildWindow | null {
 	reset.textContent = 'html,body{height:100%;margin:0}';
 	doc.head.appendChild(reset);
 	const stopStyles = mirrorStyles(doc);
-	syncTheme(doc);
-	const themeObserver = new MutationObserver(() => syncTheme(doc));
+	const childWin = win as Window & typeof globalThis;
+	const themeObserver = new MutationObserver(() => syncTheme(childWin));
 	themeObserver.observe(document.documentElement, { attributes: true });
+	// a custom theme can change with no attribute changing: another custom theme, or its file saved
+	const stopThemeEpoch = observe(
+		() => themeEpoch.current,
+		() => syncTheme(childWin)
+	);
 
 	const target = doc.createElement('div');
 	target.style.height = '100%';
@@ -156,6 +166,7 @@ export function openChildWindow(o: ChildWindowOptions): ChildWindow | null {
 		stopStyles();
 		stopShadowSheets();
 		themeObserver.disconnect();
+		stopThemeEpoch();
 		clearInterval(watch);
 		try {
 			unmount(tips);

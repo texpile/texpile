@@ -38,6 +38,13 @@ describe('docPositions', () => {
 		expect(localStorage.getItem('texpile:docPositions')).toBeNull();
 	});
 
+	it('keeps a session guest caret, whose paths are root-relative, across a rename the host made', () => {
+		docPositions.bind('session', false);
+		docPositions.set('notes.md', pos(3, 9));
+		docPositions.rename('notes.md', 'notes4.md');
+		expect(docPositions.get('notes4.md')).toMatchObject({ row: 3, column: 9 });
+	});
+
 	it('follows a renamed file', () => {
 		docPositions.set(at('old.tex'), pos(7, 1, 5));
 		docPositions.rename(at('old.tex'), at('new.tex'));

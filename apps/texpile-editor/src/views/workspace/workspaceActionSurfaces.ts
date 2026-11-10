@@ -305,8 +305,6 @@ export function makeChromeActions(d: ActionSurfaceDeps) {
 		// the main file is a property of the project, so it goes in .texpile/config.json with the rest
 		setMain: (entry: TreeEntry) => void d.files().toggleMainFile(entry.path),
 		revealEntry: (entry: TreeEntry) => void revealItem(entry.path),
-		// the file tree asks before deleting something whose edits exist only here
-		hasUnsaved: (path: string) => d.editFlow().saver.unwrittenUnder(path),
 		refreshGit: () =>
 			void toastAfter(m.wsview_toast_git_refreshed(), async () => {
 				await refreshGitStatus(workspaceRoot.current);
@@ -340,6 +338,8 @@ export function makePaletteActions(d: ActionSurfaceDeps) {
 		hasSidebar: () => !fileMode.current,
 		toggleSidebar: () => d.layout().toggleSidebar(),
 		sidebarOpen: () => d.layout().sidebarOpen,
+		toggleBottomPanel: () => d.termDock().togglePanel(),
+		bottomPanelOpen: () => d.termDock().visible,
 		toggleTerminal: () => d.termDock().toggle(),
 		terminalVisible: () => d.termDock().visible,
 		terminalAvailable: () => d.termDock().available,

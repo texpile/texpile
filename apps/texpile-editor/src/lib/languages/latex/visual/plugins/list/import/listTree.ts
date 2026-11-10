@@ -23,7 +23,11 @@ function listKey(im: TreeImport, env: TreeEnvironment, kind: string): string {
 	for (let i = 0; i < text.length; i++) hash = Math.imul(hash ^ text.charCodeAt(i), 0x01000193);
 	const own = `${kind}.${(hash >>> 0).toString(36)}`;
 	const around = im.lists[im.lists.length - 1];
-	return around ? `${around}/${own}` : own;
+	const key = around ? `${around}/${own}` : own;
+	// byte-identical environments are still separate lists
+	const seen = im.listKeys.get(key) ?? 0;
+	im.listKeys.set(key, seen + 1);
+	return seen ? `${key}~${seen}` : key;
 }
 
 type Item = {

@@ -10,6 +10,7 @@
 	import FigureTabLayout from './FigureTabLayout.svelte';
 	import FigureMissing from './FigureMissing.svelte';
 	import { figureWrites } from './figureWrites';
+	import { followUnwritten } from './unwrittenText.svelte';
 	import { followFigure } from '../anchor/followFigure.svelte';
 	import { closeFigure, publishFigure } from '../anchor/openFigures.svelte';
 	import { selectedRanges } from '../sourceMarks/selectedRanges';
@@ -25,6 +26,10 @@
 		(text) => provider.language.listPictures(text)[index]?.from ?? null
 	);
 	let editor = $state.raw<FigureEditorState | null>(null);
+	followUnwritten(
+		() => props.path,
+		() => editor
+	);
 	const provider = figureProvider(props.path, {
 		root: () => workspaceRoot.current ?? '',
 		// the text as written this moment: a canvas edit that adds a library is drawn under it at once

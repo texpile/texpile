@@ -35,7 +35,6 @@
 		children,
 		layout = $bindable(),
 		termDock = $bindable(),
-		compiler,
 		scm,
 		treeOps,
 		guest,
@@ -51,7 +50,6 @@
 		children: Snippet;
 		layout: PaneLayout;
 		termDock: TerminalDockState;
-		compiler: Any;
 		scm: Any;
 		treeOps: Any;
 		guest: boolean;
@@ -67,7 +65,6 @@
 			hostMode: boolean;
 			canManageTree: boolean;
 			canFormat: boolean;
-			uiZoomPercent: number;
 			/** the compile target is Typst; New-file menus offer .typ instead of .tex/.cls/.sty */
 			typstProject: boolean;
 			/** the open file's spelling language */
@@ -124,14 +121,7 @@
 			onCloseWorkspace={menu.hostMode ? actions.closeWorkspace : undefined}
 			onSave={actions.save}
 			onShareSession={menu.shareable ? actions.openShare : undefined}
-			terminalAvailable={termDock.available}
-			terminalVisible={termDock.visible}
-			onCompile={compiler.runCompile}
-			onConfigureCompile={actions.openCompileModal}
-			onNewTerminal={actions.newTerminal}
-			onToggleTerminal={actions.toggleTerminal}
 			onFormatDocument={menu.canFormat ? actions.openFormatModal : undefined}
-			uiZoomPercent={menu.uiZoomPercent}
 			onZoomIn={actions.uiZoomIn}
 			onZoomOut={actions.uiZoomOut}
 			onZoomReset={actions.uiZoomReset}
@@ -201,7 +191,6 @@
 			typstProject={menu.typstProject}
 			onRename={treeOps.rename}
 			onDelete={treeOps.deleteMany}
-			hasUnsaved={actions.hasUnsaved}
 			onMove={treeOps.moveMany}
 			onImport={treeOps.import}
 			onCopyIn={treeOps.copyIn}

@@ -111,15 +111,32 @@ export function locksOf(doc: Y.Doc) {
 export function metaOf(doc: Y.Doc) {
 	return doc.getMap<number | string>('meta');
 }
+/** the name a file's text is first shared under */
+export function textName(relPath: string): string {
+	return 'f:' + relPath;
+}
+/** a new file's text name: a file moved away from this path keeps the one it had */
+export function freeTextName(relPath: string, taken: Set<string>): string {
+	let name = textName(relPath);
+	for (let n = 1; taken.has(name); n++) name = `${textName(relPath)}#${n}`;
+	return name;
+}
 export function textOf(doc: Y.Doc, relPath: string) {
-	return doc.getText('f:' + relPath);
+	return doc.getText(manifestOf(doc).get(relPath)?.text ?? textName(relPath));
+}
+export function textEntry(relPath: string, name: string, size: number): ManifestEntry {
+	return name === textName(relPath) ? { kind: 'text', size } : { kind: 'text', size, text: name };
 }
 
 export type ManifestEntry = {
 	kind: 'text' | 'binary';
 	size: number;
+	/** the text's name when it is not textName of this path: a move keeps the text */
+	text?: string;
 	/** tombstone: file was deleted on the host. */
 	gone?: boolean;
+	/** on a tombstone: the file moved here */
+	movedTo?: string;
 	/** binaries only: changes when the bytes do (host mtime), so a guest can drop a stale blob.
 	 *  Text needs none, its edits arrive through the CRDT. */
 	rev?: number;

@@ -31,10 +31,11 @@ const TABS = [
 	'LaTeX',
 	'Typst',
 	'Snippets',
+	'Keyboard Shortcuts',
 	'Spelling',
 	'Version Control',
 	'Collaboration',
-	'Toolchain',
+	'Programs & Compiler',
 	'Integrations',
 	'Startup',
 	'AI Assistant'

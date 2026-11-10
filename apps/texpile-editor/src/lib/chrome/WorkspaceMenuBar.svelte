@@ -11,7 +11,7 @@
 	import { setSpellcheckEnabled } from '$lib/editor/spellcheck/config/spellcheckConfig';
 	import { hasVisualMode, isRawTextKind, formatOf, type FileKind } from '$lib/workspace/documentBuffer.svelte';
 	import { editSelect, formatSelect } from './menuBarCommands';
-	import { preferencesOpen, shortcutsOpen, openPreferencesAt } from '$lib/stores/dialogStore';
+	import { preferencesOpen, openPreferencesAt } from '$lib/stores/dialogStore';
 	import { commandPalette } from '$lib/workspace/commandPalette.svelte';
 	import { attachNativeMenu, publishMenuState } from '$lib/workspace/nativeMenu';
 	import { typstExport } from '$lib/languages/typst/export/dialog/typstExportState.svelte';
@@ -22,16 +22,13 @@
 	import { checkUpdates } from './menubar/menuBarUpdates';
 	import FileMenu from './menubar/FileMenu.svelte';
 	import EditMenu from './menubar/EditMenu.svelte';
-	import ViewMenu from './menubar/ViewMenu.svelte';
 	import InsertMenu from './menubar/insert/InsertMenu.svelte';
 	import { nativeInsertParts } from './menubar/insert/insertListSelect';
 	import { GRAPHICX, ensurePackage } from './menubar/insert/packageOnInsert';
 	import { insertItems } from '$lib/editor/visual/insert/insertItems.svelte';
 	import FormatMenu from './menubar/FormatMenu.svelte';
-	import SpellingMenu from './menubar/SpellingMenu.svelte';
 	import { folderLanguageItems } from '$lib/editor/spellcheck/languages/folderLanguageMenu';
 	import type { SpellingChoice } from '$lib/editor/spellcheck/languages/spellingLanguage.svelte';
-	import TerminalMenu from './menubar/TerminalMenu.svelte';
 	import HelpMenu from './menubar/HelpMenu.svelte';
 	import TextPrompt from './menubar/TextPrompt.svelte';
 	import { reportProblemUrl } from './menubar/reportProblemUrl';
@@ -66,21 +63,13 @@
 		onSave?: () => void;
 		/** shared-session dialog (desktop only). */
 		onShareSession?: () => void;
-		/** Terminal menu (shown only in the desktop app). */
-		terminalAvailable?: boolean;
-		terminalVisible?: boolean;
-		onCompile?: () => void;
-		onConfigureCompile?: () => void;
-		onNewTerminal?: () => void;
-		onToggleTerminal?: () => void;
 		/** Reindent the current document via latexindent (opens the confirm-first modal). */
 		onFormatDocument?: () => void;
-		/** whole-window zoom, shown as a percentage in the View menu. */
-		uiZoomPercent?: number;
+		/** whole-window zoom, for the macOS View menu; the others zoom from Layout */
 		onZoomIn?: () => void;
 		onZoomOut?: () => void;
 		onZoomReset?: () => void;
-		/** the open file's spelling language, for Spelling > Folder Language */
+		/** the open file's spelling language, for Edit › Spelling › Folder Language */
 		spelling?: SpellingChoice | null;
 		/** absent for a guest: the folder's language is the host's to choose */
 		onSpellLanguage?: (value: string) => void;
@@ -99,14 +88,7 @@
 		onCloseWorkspace,
 		onSave,
 		onShareSession,
-		terminalAvailable = false,
-		terminalVisible = false,
-		onCompile,
-		onConfigureCompile,
-		onNewTerminal,
-		onToggleTerminal,
 		onFormatDocument,
-		uiZoomPercent = 100,
 		onZoomIn,
 		onZoomOut,
 		onZoomReset,
@@ -117,7 +99,7 @@
 	// What the open file supports, not just whether one is open. A PDF or an image has no text
 	// buffer, so Edit's undo/redo would reach nothing; a .bib edits as raw text, so Insert/Format
 	// have no structured document to write into; and a .typ or .md must never be offered LaTeX.
-	/** there is a text buffer (visual or raw) for Edit/Spelling to act on */
+	/** there is a text buffer (visual or raw) for Edit and its Spelling to act on */
 	const editable = $derived(!disabled && (hasVisualMode(fileKind) || isRawTextKind(fileKind)));
 	/** there is a structured (tex/md/typ) document for Insert/Format to act on */
 	const structured = $derived(!disabled && hasVisualMode(fileKind));
@@ -127,21 +109,18 @@
 
 	/**
 	 * Progressive overflow. The menus render inline left to right for as long as they fit, and the
-	 * rest move into a trailing overflow button - `File Edit View ...` - rather than the whole bar
+	 * rest move into a trailing overflow button - `File Edit Insert ...` - rather than the whole bar
 	 * collapsing at once. Help goes first because it is last and least used; zero visible is the
 	 * degenerate case and looks like the hamburger it used to be.
 	 *
 	 * TitleBar decides how many fit: it is the only place that can measure the row, the menus and the
 	 * window controls together, and the budget comes from keeping the command center centred.
 	 */
-	// file edit view insert format spelling [terminal] help. The count has to follow terminalAvailable
-	// rather than being a constant 8: the fit loop advances one step per resize, so a menu that renders
-	// nothing would be a step that frees no width, produce no resize, and stall the loop one short.
-	const menuCount = $derived(terminalAvailable ? 8 : 7);
-	const helpIndex = $derived(terminalAvailable ? 7 : 6);
+	// file edit insert format help
+	const menuCount = 5;
+	const helpIndex = 4;
 	$effect(() => {
-		const n = menuCount;
-		untrack(() => titleBarLayout.setTotal(n)); // setTotal writes what it reads; see TitleBar's fit()
+		untrack(() => titleBarLayout.setTotal(menuCount)); // setTotal writes what it reads; see TitleBar's fit()
 	});
 	const visible = $derived(titleBarLayout.visibleMenus);
 	const overflowing = $derived(visible < menuCount);
@@ -160,7 +139,7 @@
 	}
 
 	function helpSelect(value: string) {
-		if (value === 'shortcuts') shortcutsOpen.current = true;
+		if (value === 'shortcuts') openPreferencesAt('keybindings');
 		else if (value === 'whatsnew') whatsNewOpen.current = true;
 		else if (value === 'docs') window.open('https://texpile.com/docs', '_blank', 'noopener,noreferrer');
 		else if (value === 'discord') window.open('https://discord.gg/7wanVzCBWf', '_blank', 'noopener,noreferrer');
@@ -209,15 +188,6 @@
 	function spellcheckSelect(value: string) {
 		if (value === 'toggle') setSpellcheckEnabled(!spellcheckOn);
 		else if (value.startsWith('lang:')) onSpellLanguage?.(value.slice(5));
-		// the dictionary is a section of the Spelling tab
-		else if (value === 'dictionary' || value === 'settings') openPreferencesAt('proofing');
-	}
-
-	function terminalSelect(value: string) {
-		if (value === 'compile') onCompile?.();
-		else if (value === 'configure') onConfigureCompile?.();
-		else if (value === 'new') onNewTerminal?.();
-		else if (value === 'toggle') onToggleTerminal?.();
 	}
 
 	// On macOS the menus are drawn by the system menu bar, and a native selection arrives here as the
@@ -234,7 +204,6 @@
 			math: mathSelect,
 			format: formatMenuSelect,
 			spelling: spellcheckSelect,
-			terminal: terminalSelect,
 			help: helpSelect
 		})
 	);
@@ -250,8 +219,6 @@
 			spellcheck: spellcheckOn,
 			spellLanguages,
 			canChooseSpellLanguage: !!onSpellLanguage,
-			terminalAvailable,
-			terminalVisible,
 			canShare: !!onShareSession,
 			canCloseWorkspace: !!onCloseWorkspace,
 			canFormat: !!onFormatDocument,
@@ -306,7 +273,7 @@
 {/if}
 
 <!--
-	The eight top-level menus, once. Rendered straight into the row normally, or into a single
+	The top-level menus, once. Rendered straight into the row normally, or into a single
 	dropdown when the window is too narrow for them (VS Code's compact menu bar). Each menu's
 	MenuBarTrigger switches between the two layouts, so everything underneath is shared -
 	duplicating the item lists per layout would have guaranteed they drift.
@@ -336,31 +303,17 @@
 			select={(v) => (v === 'palette' ? commandPalette.show() : v === 'goToFile' ? commandPalette.show('files') : editSelect(v))}
 			{editable}
 			{findable}
+			spellingSelect={spellcheckSelect}
+			{spellcheckOn}
+			{spellLanguages}
+			spellLanguagesFixed={!onSpellLanguage}
 		/>
 	{/if}
-	<!-- zoom is webContents.setZoomFactor, which the browser has its own of; the color vision check
-	     there is the eye on the preview toolbar -->
-	{#if !__WEB__ && showAt(2, overflow)}
-		<ViewMenu index={2} select={viewSelect} {uiZoomPercent} />
+	{#if showAt(2, overflow)}
+		<InsertMenu index={2} select={(v) => void insertSelect(v)} {mathSelect} {structured} {dialect} canInsertImage={!!imageDir} />
 	{/if}
 	{#if showAt(3, overflow)}
-		<InsertMenu index={3} select={(v) => void insertSelect(v)} {mathSelect} {structured} {dialect} canInsertImage={!!imageDir} />
-	{/if}
-	{#if showAt(4, overflow)}
-		<FormatMenu index={4} select={formatMenuSelect} {structured} {dialect} {fileKind} canFormatDocument={!!onFormatDocument} />
-	{/if}
-	{#if showAt(5, overflow)}
-		<SpellingMenu
-			index={5}
-			select={spellcheckSelect}
-			{editable}
-			{spellcheckOn}
-			languages={spellLanguages}
-			languagesFixed={!onSpellLanguage}
-		/>
-	{/if}
-	{#if terminalAvailable && showAt(6, overflow)}
-		<TerminalMenu index={6} select={terminalSelect} {terminalVisible} />
+		<FormatMenu index={3} select={formatMenuSelect} {structured} {dialect} {fileKind} canFormatDocument={!!onFormatDocument} />
 	{/if}
 	{#if showAt(helpIndex, overflow)}
 		<HelpMenu index={helpIndex} select={helpSelect} />

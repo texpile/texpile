@@ -1,0 +1,150 @@
+// In-app updates via electron-updater. The feed (latest*.yml) is updates.texpile.com, which also
+// counts the check; binaries/blockmaps come from dl.texpile.com per the urls rewritten into the
+// ymls at release time. Nothing downloads without an explicit renderer call (autoDownload off).
+// autoInstallOnAppQuit is set at download start, not later: BaseUpdater registers its quit hook
+// and MacUpdater hands the zip to Squirrel exactly once, at download completion, and both skip it
+// when the flag is off at that moment. So the download click is the install-at-quit consent.
+import { app, BrowserWindow } from 'electron';
+import * as fs from 'node:fs';
+import * as path from 'node:path';
+import { autoUpdater } from 'electron-updater';
+import { portable } from '../appIdentity';
+import { reapplyToolDirs, restoreBaselinePath } from '../shell/toolDirs';
+import { clearInstallMark, markInstallStarted } from './midInstallLaunch';
+
+export type CheckResult =
+	| {
+			status: 'update';
+			version: string;
+			/** latest*.yml releaseNotes (one note per line) or null. */
+			notes: string | null;
+			/** 'package-manager' = linux deb/rpm/pacman: full download + a pkexec password prompt.
+			 *  'portable' = the Windows zip: nothing to install over, the modal offers the download page. */
+			installMode: 'restart' | 'package-manager' | 'portable';
+	  }
+	| { status: 'none' }
+	| { status: 'error'; message: string }
+	| { status: 'unsupported' };
+
+// electron-builder stamps resources/package-type for deb/rpm/pacman installs; the updater
+// factory routes on the same file
+function installMode(): 'restart' | 'package-manager' | 'portable' {
+	if (portable) return 'portable';
+	if (process.platform !== 'linux') return 'restart';
+	try {
+		const t = fs.readFileSync(path.join(process.resourcesPath, 'package-type'), 'utf8').trim();
+		return t === 'deb' || t === 'rpm' || t === 'pacman' ? 'package-manager' : 'restart';
+	} catch {
+		return 'restart';
+	}
+}
+
+// the user-initiated operation in flight; errors outside one are check failures, which are
+// returned as a status instead of emitted
+let op: 'download' | 'install' | null = null;
+let wired = false;
+let downloadedFile: string | null = null;
+let hiddenForInstall: BrowserWindow[] = [];
+
+function showHiddenWindows(): void {
+	for (const w of hiddenForInstall) if (!w.isDestroyed()) w.show();
+	hiddenForInstall = [];
+}
+
+// broadcast, not a pinned webContents: on macOS the window can close and be recreated
+// mid-download, and a stale target would strand the completion event
+function send(channel: string, payload: unknown): void {
+	for (const w of BrowserWindow.getAllWindows()) {
+		if (!w.isDestroyed()) w.webContents.send(channel, payload);
+	}
+}
+
+function handOffToInstaller(): void {
+	markInstallStarted(downloadedFile);
+	restoreBaselinePath();
+}
+
+function wire(): void {
+	if (wired) return;
+	wired = true;
+	autoUpdater.autoDownload = false;
+	autoUpdater.autoInstallOnAppQuit = false;
+	// a quit after the download installs silently through electron-updater's own quit listener, added at download
+	// completion, so this one runs first; no relaunch because the writer quit
+	app.on('quit', (_e, exitCode) => {
+		if (op !== 'install' && downloadedFile && exitCode === 0 && autoUpdater.autoInstallOnAppQuit) handOffToInstaller();
+	});
+	autoUpdater.on('download-progress', (p) => {
+		send('update:progress', { percent: p.percent, transferred: p.transferred, total: p.total });
+	});
+	autoUpdater.on('update-downloaded', (downloaded) => {
+		op = null;
+		downloadedFile = downloaded.downloadedFile;
+		send('update:downloaded', { version: downloaded.version });
+	});
+	autoUpdater.on('error', (err) => {
+		if (!op) return;
+		if (op === 'install') {
+			clearInstallMark();
+			reapplyToolDirs();
+			showHiddenWindows();
+		}
+		op = null;
+		send('update:error', { message: err instanceof Error ? err.message : String(err) });
+	});
+}
+
+export async function check(manual: boolean): Promise<CheckResult> {
+	if (!app.isPackaged) return { status: 'unsupported' };
+	wire();
+	autoUpdater.requestHeaders = {
+		'x-texpile-version': app.getVersion(),
+		...(manual ? { 'x-texpile-check': 'manual' } : {})
+	};
+	try {
+		const res = await autoUpdater.checkForUpdates();
+		if (!res || !res.isUpdateAvailable || !res.updateInfo) return { status: 'none' };
+		const found = res.updateInfo;
+		return {
+			status: 'update',
+			version: found.version,
+			notes: typeof found.releaseNotes === 'string' && found.releaseNotes.trim() ? found.releaseNotes : null,
+			installMode: installMode()
+		};
+	} catch (err) {
+		return { status: 'error', message: err instanceof Error ? err.message : String(err) };
+	}
+}
+
+export async function download(): Promise<void> {
+	wire();
+	op = 'download';
+	autoUpdater.autoInstallOnAppQuit = true;
+	try {
+		await autoUpdater.downloadUpdate();
+	} catch (err) {
+		// the 'error' event usually fires too; `op` gates the renderer to one notification
+		if (op === 'download') {
+			op = null;
+			send('update:error', { message: err instanceof Error ? err.message : String(err) });
+		}
+		throw err;
+	}
+}
+
+export function install(): void {
+	// a second click while the first install runs would hide nothing and lose the windows the first one hid
+	if (op === 'install') return;
+	// a failed install emits 'error' instead of quitting; `op` lets it through to the renderer
+	op = 'install';
+	handOffToInstaller();
+	// windows shows the installer's progress bar: a silent one ran for a minute with no window, and people opened Texpile
+	// again; mac and linux ignore the flags
+	if (installMode() !== 'package-manager') return autoUpdater.quitAndInstall(process.platform !== 'win32', true);
+	// electron-updater runs pkexec + dpkg under spawnSync (a hand-rolled async install, e4a996f, was worse), so the
+	// windows go before it blocks instead of sitting in the not-responding overlay through the password prompt
+	hiddenForInstall = BrowserWindow.getAllWindows().filter((w) => !w.isDestroyed() && w.isVisible());
+	for (const w of hiddenForInstall) w.hide();
+	// time for the window manager to unmap them before the main process stops answering
+	setTimeout(() => autoUpdater.quitAndInstall(true, true), 300);
+}

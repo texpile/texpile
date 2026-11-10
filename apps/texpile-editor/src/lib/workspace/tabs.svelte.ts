@@ -12,11 +12,12 @@ import { restoredFigure } from '$lib/draw/host/anchor/figureAnchors';
 
 const MAX_TABS = 50;
 
-// files outside the folder a tab may still hold, like the global snippet file
-const outsideRoot: { allowed: (path: string) => boolean } = { allowed: () => false };
+// files outside the folder a tab may still hold, by who allows them: the global snippet file, keybindings.json
+const outsideRules = new Map<string, (path: string) => boolean>();
+const outsideRoot = { allowed: (path: string) => [...outsideRules.values()].some((allowed) => allowed(path)) };
 
-export function allowTabsOutsideRoot(allowed: (path: string) => boolean): void {
-	outsideRoot.allowed = allowed;
+export function allowTabsOutsideRoot(owner: string, allowed: (path: string) => boolean): void {
+	outsideRules.set(owner, allowed);
 }
 const REOPEN_DEPTH = 20;
 
@@ -58,6 +59,17 @@ export function restoredTab(root: string, saved: unknown): Tab | null {
 	}
 	const ref = savedCompare(compare);
 	return typeof path === 'string' && ref ? { path: joinPath(root, path), compare: ref } : null;
+}
+
+/** saved tabs back on a strip, once each: two figure tabs can be saved with one picture number */
+export function restoredTabs(root: string, saved: unknown[]): Tab[] {
+	const seen = new Set<string>();
+	return saved.flatMap((s) => {
+		const tab = restoredTab(root, s);
+		if (!tab || seen.has(tabKey(tab))) return [];
+		seen.add(tabKey(tab));
+		return [tab];
+	});
 }
 
 // a path cannot contain NUL, so a comparison key can never collide with a plain file key
@@ -102,7 +114,7 @@ export class TabsStore {
 		this.carried = root ? [] : carried;
 		if (!root) return;
 		const saved = this.persistable ? getFolder(root).tabs : null;
-		if (Array.isArray(saved)) this.list = saved.slice(0, MAX_TABS).flatMap((s) => restoredTab(root, s) ?? []);
+		if (Array.isArray(saved)) this.list = restoredTabs(root, saved.slice(0, MAX_TABS));
 		for (const t of carried) if (!this.list.some((o) => tabKey(o) === tabKey(t))) this.list.push(t);
 	}
 

@@ -6,6 +6,7 @@ import type { Component } from 'svelte';
 import { box } from '$lib/runes/box.svelte';
 import { nativeBridge } from '$lib/workspace/fileSystem';
 import { nativeContextMenus } from '$lib/platformSurfaces';
+import { acceleratorFor } from '$lib/keybindings/keybindings.svelte';
 
 export type ContextMenuItem =
 	| { separator: true }
@@ -17,6 +18,8 @@ export type ContextMenuItem =
 			icon?: Component<{ class?: string }>;
 			/** shortcut hint, Kbd syntax ("Mod+C"); shown, not bound */
 			keys?: string;
+			/** the command whose key the item shows, over `keys` */
+			command?: string;
 			/** a setting the item turns on and off, or one of a set; undefined for an action */
 			checked?: boolean;
 			disabled?: boolean;
@@ -54,7 +57,7 @@ function nativeItems(items: ContextMenuItem[], path = ''): NativeItem[] {
 					enabled: !it.disabled,
 					checked: it.checked,
 					toolTip: it.tip,
-					accelerator: it.keys ? accelerator(it.keys) : undefined,
+					accelerator: it.command ? (acceleratorFor(it.command) ?? undefined) : it.keys ? accelerator(it.keys) : undefined,
 					submenu: it.submenu && nativeItems(it.submenu, path + i + '.')
 				}
 	);

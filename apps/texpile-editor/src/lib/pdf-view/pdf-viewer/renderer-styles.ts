@@ -282,6 +282,21 @@ export const rendererStyles = `
 	user-select: none;
 }
 
+.annotationLayer .annotationContent {
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	pointer-events: none;
+}
+
+.annotationLayer .hasOwnCanvas:not(.sandboxModified) :is(input, textarea) {
+	display: none;
+}
+
+.annotationLayer .hasOwnCanvas.sandboxModified canvas.annotationContent {
+	display: none;
+}
+
 /* Link annotations */
 .annotationLayer .linkAnnotation > a,
 .annotationLayer .buttonWidgetAnnotation.pushButton > a {

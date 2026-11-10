@@ -65,7 +65,8 @@
 		{m.bib_no_references_empty()}
 	</li>
 {:else}
-	{#each refs as ref (ref.key)}
+	<!-- by place, not key: a .bib can hold one key twice, a pasted entry or a collaborator's -->
+	{#each refs as ref, i (i)}
 		{@const problems = problemsOf(ref)}
 		<!-- svelte-ignore a11y_no_noninteractive_element_interactions a11y_click_events_have_key_events -->
 		<li

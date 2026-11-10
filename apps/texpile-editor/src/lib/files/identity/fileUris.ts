@@ -5,6 +5,11 @@ export function fileUriOf(path: string): URI {
 	return URI.file(path.replace(/\\/g, '/'));
 }
 
+/** the path of a file URI as the app writes paths: fsPath lowercases a Windows drive letter */
+export function pathOfFileUri(uri: URI): string {
+	return uri.fsPath.replace(/^([a-z]):/, (_, drive: string) => `${drive.toUpperCase()}:`);
+}
+
 /** separators unified, case folded where the file system folds it; still a path */
 export function fileIdentityKey(path: string): string {
 	const unified = path.replace(/\\/g, '/');

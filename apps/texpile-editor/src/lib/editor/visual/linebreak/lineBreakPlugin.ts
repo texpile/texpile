@@ -8,6 +8,7 @@ import { templateFeaturesStore } from '$lib/stores/editorStore';
 import { isLargeDocument } from '$lib/languages/latex/visual/largeDocument';
 import { hasOldWords, pmSuggestionsKey } from '../extensions/pmSuggestionsState';
 import { contentWidth } from '../lineBoxes';
+import { ColumnWidth } from '$lib/resizing/columnWidth';
 import { compositionWrapPlugin } from './compositionWrap';
 import { hyphenSelectionPlugin } from './hyphenSelection';
 import type { DocumentHyphenation } from './documentHyphenationLanguage';
@@ -28,8 +29,8 @@ type LineBreakState = {
 	decorations: DecorationSet;
 	/** how each paragraph is drawn now. In the state because a swapped in state starts empty yet can bring the same nodes back */
 	shown: WeakMap<PMNode, DrawnAs>;
-	/** every paragraph wraps on its own for now, marks and all (app.css) */
-	native: boolean;
+	/** the width the lines were broken for, held while the column's width moves (app.css) */
+	frozen: string | null;
 	/** a document too large to break carries no decorations, and one rule justifies it when the text is justified */
 	plain: boolean;
 };
@@ -38,8 +39,6 @@ export const lineBreakKey = new PluginKey<LineBreakState>('texpile-line-breaks')
 
 // a line that failed to break where it was told to runs past the edge by far more than rounding does
 const SPILL_ALLOWANCE = 2;
-// how long the width has to hold still before the document is broken again
-const WIDTH_REST_MS = 150;
 // a paragraph whose inline views keep changing size is left to the browser once it has been broken this often in a second
 const MOST_REBREAKS_A_SECOND = 6;
 
@@ -117,16 +116,12 @@ function lineBreaker(view: EditorView): { update(view: EditorView, before: Edito
 	let rebreaks = new WeakMap<PMNode, { since: number; count: number }>();
 	let widths = new WeakMap<HTMLElement, number>();
 	const unchecked = new Set<HTMLElement>();
-	let rootWidth = -1;
+	// the width the lines were broken for, which the editor keeps while its column's width moves
+	let brokenFor = '';
 	let checkFrame = 0;
 	let rebreakFrame = 0;
 	let scratchNextFrame = false;
 	let afterComposition = 0;
-	let widthRest = 0;
-	// a splitter drag or a window resize changes the width every frame, and each change would re-break the whole
-	// document; the browser wraps on its own until the width rests
-	let widthMoving = false;
-	let lastWidthChange = -Infinity;
 	let wanted = '';
 	let language: DocumentHyphenation | undefined;
 	const typing = linesKeptWhileTyping((paragraph) => broken.get(paragraph));
@@ -249,7 +244,7 @@ function lineBreaker(view: EditorView): { update(view: EditorView, before: Edito
 
 	function rebreak(fromScratch = false): void {
 		// a redraw in the middle of a composition can end it; its end comes back here
-		if (view.isDestroyed || view.composing || widthMoving) return;
+		if (view.isDestroyed || view.composing || width.moving) return;
 		const { doc } = view.state;
 		const held = lineBreakKey.getState(view.state)!;
 		context.wholeWord = wordBeingTypedKey.getState(view.state) ?? null;
@@ -311,8 +306,8 @@ function lineBreaker(view: EditorView): { update(view: EditorView, before: Edito
 		const changed = stale.length > 0 || fresh.length > 0;
 		const decorations = large ? DecorationSet.empty : changed ? current.remove(stale).add(doc, fresh) : current;
 		const plain = large && context.justified;
-		if (decorations !== held.decorations || shown !== held.shown || held.native || held.plain !== plain)
-			publish({ decorations, shown, native: false, plain });
+		if (decorations !== held.decorations || shown !== held.shown || held.frozen || held.plain !== plain)
+			publish({ decorations, shown, frozen: null, plain });
 		// after the publish, so the marks land on the spans as they are drawn now
 		for (const [paragraph, pos, block, breaks] of withStruck) {
 			const struck = view.dom.contains(block) ? struckWordsIn(view, paragraph, pos, block) : null;
@@ -322,7 +317,7 @@ function lineBreaker(view: EditorView): { update(view: EditorView, before: Edito
 	}
 
 	function startOver(): void {
-		widthMoving = false;
+		width.breaking();
 		broken = new WeakMap();
 		outdated = new WeakSet();
 		retried = new WeakSet();
@@ -331,48 +326,31 @@ function lineBreaker(view: EditorView): { update(view: EditorView, before: Edito
 		typing.forget();
 		context.styleOf = runStyleReader();
 		if (view.isDestroyed) return;
-		rootWidth = view.dom.clientWidth;
-		rebreak(true);
-		// the rest is counted from here: a drag's next step comes only once a slow break is done, and must still count
-		// as moving
-		lastWidthChange = performance.now();
-	}
-
-	function wrapNatively(): void {
-		if (view.isDestroyed) return;
 		const held = lineBreakKey.getState(view.state)!;
-		if (!held.native) publish({ ...held, native: true });
+		if (held.frozen) publish({ ...held, frozen: null });
+		brokenFor = getComputedStyle(view.dom).width;
+		rebreak(true);
+		width.broken();
 	}
 
-	// from the observer the break waits a frame: new breaks change heights, which an observer may not cause itself
-	function widthChanged(observed = false): void {
-		const width = view.dom.clientWidth;
-		if (width === rootWidth) return;
-		// an editor built before it had a place on the page has nothing drawn yet, so nothing to hold back
-		if (rootWidth <= 0) {
-			rebreakNextFrame(true);
-			return;
-		}
-		rootWidth = width;
-		clearTimeout(widthRest);
-		// a width that changes once (the comment margin opening) is broken for at once; wrapping the browser's way until
-		// it rests would re-wrap every line twice
-		const now = performance.now();
-		const moving = now - lastWidthChange < WIDTH_REST_MS;
-		lastWidthChange = now;
-		if (!moving && !widthMoving) {
-			if (observed) return rebreakNextFrame(true);
+	// read from the editor's parent: a held editor keeps its own width while the column moves
+	const width = new ColumnWidth(view.dom.parentElement ?? view.dom, {
+		// from the observer the break waits a frame: new breaks change heights, which an observer may not cause itself
+		breakNow(nextFrame) {
+			if (nextFrame) return rebreakNextFrame(true);
 			startOver();
 			checkNow();
-			return;
-		}
-		widthRest = window.setTimeout(startOver, WIDTH_REST_MS);
-		if (widthMoving) return;
-		widthMoving = true;
-		requestAnimationFrame(wrapNatively);
+		},
+		hold() {
+			if (view.isDestroyed || !width.moving || !brokenFor.endsWith('px')) return;
+			const held = lineBreakKey.getState(view.state)!;
+			if (held.frozen !== brokenFor) publish({ ...held, frozen: brokenFor });
+		},
+		rest: startOver
+	});
+	function widthChanged(): void {
+		width.changed();
 	}
-	const resized = new ResizeObserver(() => widthChanged(true));
-	resized.observe(view.dom);
 	widthChecks.add(widthChanged);
 
 	// a citation that resolves or a formula that gets typeset changes width without a transaction
@@ -443,8 +421,7 @@ function lineBreaker(view: EditorView): { update(view: EditorView, before: Edito
 			if (checkFrame) cancelAnimationFrame(checkFrame);
 			if (rebreakFrame) cancelAnimationFrame(rebreakFrame);
 			clearTimeout(afterComposition);
-			clearTimeout(widthRest);
-			resized.disconnect();
+			width.destroy();
 			widthChecks.delete(widthChanged);
 			cellSizes.disconnect();
 			inlineBoxes.disconnect();
@@ -460,7 +437,7 @@ function lineBreakPlugin(): Plugin<LineBreakState> {
 	return new Plugin<LineBreakState>({
 		key: lineBreakKey,
 		state: {
-			init: () => ({ decorations: DecorationSet.empty, shown: new WeakMap(), native: false, plain: false }),
+			init: () => ({ decorations: DecorationSet.empty, shown: new WeakMap(), frozen: null, plain: false }),
 			apply(tr, held) {
 				const next = tr.getMeta(lineBreakKey) as LineBreakState | undefined;
 				if (next || !tr.docChanged) return next ?? held;
@@ -471,7 +448,10 @@ function lineBreakPlugin(): Plugin<LineBreakState> {
 			decorations: (state) => lineBreakKey.getState(state)?.decorations,
 			attributes(state): Record<string, string> {
 				const held = lineBreakKey.getState(state);
-				return held?.native ? { class: 'pm-lines-native' } : held?.plain ? { class: 'pm-lines-plain' } : {};
+				const classes = [held?.plain && 'pm-lines-plain', held?.frozen && 'pm-lines-frozen'].filter(Boolean).join(' ');
+				const attributes: Record<string, string> = classes ? { class: classes } : {};
+				if (held?.frozen) attributes.style = `width: ${held.frozen}`;
+				return attributes;
 			}
 		},
 		view: lineBreaker

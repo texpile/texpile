@@ -9,6 +9,10 @@
 import { execFile } from 'node:child_process';
 import { timeSync } from './startupStats';
 import { shellEnvReady } from './shell/shellEnv';
+import { findProgram } from './shell/findProgram';
+
+// a packed program (biber, latexindent on Windows) unpacks itself on its first run, which can take a while
+export const PROBE_TIMEOUT_MS = 30_000;
 
 export type ToolProbe = {
 	id: string;
@@ -17,8 +21,12 @@ export type ToolProbe = {
 	detail?: string;
 	/** there, but its version check failed: a script missing perl modules, a hang */
 	broken?: boolean;
+	/** broken by giving no answer within PROBE_TIMEOUT_MS */
+	timedOut?: boolean;
 	/** the command probed, as spawned (a bare name means it came from PATH) */
 	command: string;
+	/** the file that answered, so a folder in the list can say what it holds */
+	path?: string;
 };
 
 /**
@@ -55,10 +63,11 @@ export function firstInformativeLine(out: string): string | undefined {
 function probeOne(id: string, command: string, args: string[]): Promise<ToolProbe> {
 	return new Promise((resolve) => {
 		timeSync(`probe ${id}`, () =>
-			execFile(command, args, { timeout: 10000, windowsHide: true }, (err, stdout, stderr) => {
+			execFile(command, args, { timeout: PROBE_TIMEOUT_MS, windowsHide: true }, (err, stdout, stderr) => {
 				const code = (err as NodeJS.ErrnoException | null)?.code;
 				if (code === 'ENOENT') return resolve({ id, found: false, command });
-				resolve({ id, found: true, detail: firstInformativeLine(`${stdout}\n${stderr}`), command, ...(err ? { broken: true } : {}) });
+				const detail = firstInformativeLine(`${stdout}\n${stderr}`);
+				resolve({ id, found: true, detail, command, ...(err ? { broken: true } : {}), ...(err?.killed ? { timedOut: true } : {}) });
 			})
 		);
 	});
@@ -88,7 +97,9 @@ export async function probeToolchain(onEach?: (p: ToolProbe) => void): Promise<T
 	await shellEnvReady();
 	return Promise.all(
 		TOOLS.map(async (t) => {
-			const p = await probeOne(t.id, t.command, t.args);
+			const probed = await probeOne(t.id, t.command, t.args);
+			const file = probed.found ? findProgram(t.command) : null;
+			const p = file ? { ...probed, path: file } : probed;
 			onEach?.(p);
 			return p;
 		})

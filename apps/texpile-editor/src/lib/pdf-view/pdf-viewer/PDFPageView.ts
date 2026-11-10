@@ -18,6 +18,7 @@
 import type { PDFPageProxy, PageViewport, TextLayer } from 'pdfjs-dist/legacy/build/pdf.mjs';
 import type { EventBus } from './EventBus';
 import { AnnotationLayerBuilder } from './AnnotationLayerBuilder';
+import { ANNOTATION_MODE_FORMS, type FormScripting } from './PdfScripting';
 import type { SimpleLinkService } from './SimpleLinkService';
 
 let setLayerDimensions: typeof import('pdfjs-dist/legacy/build/pdf.mjs').setLayerDimensions;
@@ -37,6 +38,7 @@ export type PDFPageViewOptions = {
 	scale?: number;
 	rotation?: number;
 	linkService?: SimpleLinkService;
+	forms?: FormScripting;
 };
 
 export const RenderingStates = {
@@ -72,6 +74,9 @@ export class PDFPageView {
 	private linkService: SimpleLinkService | null = null;
 	private annotationLayerBuilder: AnnotationLayerBuilder | null = null;
 	private annotationLayerRendered = false;
+	private readonly forms: FormScripting | null;
+	/** widgets drawn on canvases of their own, which a script can show and hide */
+	private readonly annotationCanvasMap = new Map<string, HTMLCanvasElement>();
 
 	public renderingState: RenderingState = RenderingStates.INITIAL;
 	private renderTask: ReturnType<PDFPageProxy['render']> | null = null;
@@ -93,6 +98,7 @@ export class PDFPageView {
 		this.rotation = options.rotation ?? 0;
 		this.viewport = options.defaultViewport;
 		this.linkService = options.linkService ?? null;
+		this.forms = options.forms ?? null;
 
 		this.div = document.createElement('div');
 		this.div.className = 'page';
@@ -296,7 +302,9 @@ export class PDFPageView {
 			this.renderTask = this.pdfPage.render({
 				canvasContext: ctx,
 				viewport: this.viewport,
-				canvas: this.canvas
+				canvas: this.canvas,
+				annotationCanvasMap: this.annotationCanvasMap,
+				...(this.forms?.enableScripting ? { annotationMode: ANNOTATION_MODE_FORMS } : {})
 			});
 
 			await this.renderTask.promise;
@@ -322,9 +330,8 @@ export class PDFPageView {
 			}
 			if (gone()) return;
 
-			if (!this.annotationLayerRendered) {
-				await this.renderAnnotationLayer();
-			}
+			// also when rendered: it takes this draw's widget canvases
+			await this.renderAnnotationLayer();
 			if (gone()) return;
 
 			this.renderingState = RenderingStates.FINISHED;
@@ -439,6 +446,8 @@ export class PDFPageView {
 				pdfPage: this.pdfPage,
 				linkService: this.linkService,
 				renderForms: true,
+				forms: this.forms,
+				annotationCanvasMap: this.annotationCanvasMap,
 				onAppend: (div) => {
 					this.div.appendChild(div);
 				}

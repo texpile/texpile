@@ -135,7 +135,8 @@
 	}
 </script>
 
-<div class="bg-surface-100-900 text-muted @container flex h-8 shrink-0 items-center gap-2 px-2 text-xs">
+<!-- unselected tabs are muted, the controls full strength, as in the editor's tab bar -->
+<div class="bg-surface-100-900 @container flex h-8 shrink-0 items-center gap-2 px-2 text-xs">
 	<!-- The tabs scroll and the actions never shrink. Both sides used to be shrinkable, so a narrow
 	     dock squeezed each group below its content and the two drew on top of each other - which is
 	     what a dock beside an open PDF preview does routinely. toolbar-hscroll hides the bar; there
@@ -147,7 +148,7 @@
 	<div class="toolbar-hscroll flex min-w-0 flex-1 items-center gap-1 overflow-x-auto">
 		{#if terminalEnabled}
 			<button
-				class="rounded-base shrink-0 px-2 py-1 whitespace-nowrap {view === 'terminal' ? 'preset-tonal' : 'hover:preset-tonal'}"
+				class="rounded-base shrink-0 px-2 py-1 whitespace-nowrap {view === 'terminal' ? 'preset-tonal' : 'text-muted hover:preset-tonal'}"
 				onclick={() => {
 					view = 'terminal';
 					shells.ensure(); // a fresh shell if the last one was killed, so the pane is never empty
@@ -159,7 +160,7 @@
 		<button
 			class="rounded-base flex shrink-0 items-center gap-1 px-2 py-1 whitespace-nowrap {view === 'problems'
 				? 'preset-tonal'
-				: 'hover:preset-tonal'}"
+				: 'text-muted hover:preset-tonal'}"
 			onclick={() => (view = 'problems')}
 		>
 			{m.wsview_problems_label()}
@@ -174,7 +175,7 @@
 		<button
 			class="rounded-base flex shrink-0 items-center gap-1 px-2 py-1 whitespace-nowrap {view === 'comments'
 				? 'preset-tonal'
-				: 'hover:preset-tonal'}"
+				: 'text-muted hover:preset-tonal'}"
 			onclick={() => (view = 'comments')}
 		>
 			{m.wsview_comments_label()}
@@ -185,9 +186,11 @@
 		{#if agentOn}
 			<!-- grayed where it cannot run; it still opens, to say why -->
 			<button
-				class="rounded-base flex shrink-0 items-center gap-1 px-2 py-1 whitespace-nowrap {view === 'agent'
+				class="rounded-base flex shrink-0 items-center gap-1 px-2 py-1 whitespace-nowrap {view === 'agent' && !agentBlocked
 					? 'preset-tonal'
-					: 'hover:preset-tonal'} {agentBlocked ? 'text-muted' : ''}"
+					: view === 'agent'
+						? 'preset-tonal text-muted'
+						: 'text-muted hover:preset-tonal'}"
 				onclick={() => (view = 'agent')}
 			>
 				{m.agent_panel_tab()}

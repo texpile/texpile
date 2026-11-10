@@ -1,7 +1,7 @@
 // The editor layout kept between sittings, in the folder's entry beside its tabs, as VS Code keeps its
 // editor layout. The focused slot's tabs stay in `tabs`, so a folder saved with one editor reads as before
 import { getFolder, updateFolder, type SavedSlot } from '$lib/storage/workspaces';
-import { restoredTab, keptTabs, savedTabs, tabKey, type Tab } from '../tabs.svelte';
+import { restoredTabs, keptTabs, savedTabs, tabKey, type Tab } from '../tabs.svelte';
 import { LAYOUTS, slotCount, type EditorLayout } from './layouts';
 
 type EditMode = 'visual' | 'source';
@@ -38,7 +38,7 @@ function restoredSlot(root: string, g: unknown): RestoredSlot | null {
 	const raw = g as { focused?: unknown; tabs?: unknown; active?: unknown; mode?: unknown };
 	const mode = raw.mode === 'source' ? 'source' : 'visual';
 	if (raw.focused === true) return { focused: true, mode };
-	const tabs = Array.isArray(raw.tabs) ? raw.tabs.flatMap((t) => restoredTab(root, t) ?? []) : [];
+	const tabs = Array.isArray(raw.tabs) ? restoredTabs(root, raw.tabs) : [];
 	const active = typeof raw.active === 'number' ? (tabs[raw.active] ?? tabs[0] ?? null) : (tabs[0] ?? null);
 	return { focused: false, tabs, active, mode };
 }

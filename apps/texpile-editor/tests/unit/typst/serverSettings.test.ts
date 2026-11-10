@@ -39,6 +39,7 @@ beforeEach(() => {
 		},
 		onMessage: (cb: (raw: string) => void) => void (deliver = cb),
 		onExit: () => {},
+		onTinymistFinished: () => () => {},
 		stopLsp: () => {}
 	} as unknown as NonNullable<typeof window.texpileTypst>;
 	mainFile.current = '/p/main.typ';

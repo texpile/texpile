@@ -13,8 +13,9 @@ import { tabs } from './tabs.svelte';
 import { sourceCmView } from '$lib/stores/editorStore';
 import { relativeTo } from './fileSystem';
 import { collabHost } from '$lib/collab/hostStore.svelte';
+import { compileLane, type CompileLane } from './compileLane';
 
-export type ViewMode = 'visual' | 'source' | 'diff';
+export type ViewMode = 'visual' | 'source';
 
 type TabPayload = {
 	path: string;
@@ -32,6 +33,7 @@ export type WindowStatePayload = {
 	/** live preview instead of the shell compile. Changes what compile does, which PDF exists, and
 	 *  where diagnostics come from, so it belongs in the state an agent reads BEFORE any of that. */
 	livePreview: boolean;
+	compileMode: CompileLane;
 };
 
 type NativeMcp = {
@@ -92,6 +94,7 @@ export function buildWindowState(viewMode: ViewMode | null): WindowStatePayload 
 				active: !!active && p === active
 			})),
 			livePreview: compileConfig.current.latex.liveMode,
+			compileMode: compileLane(),
 			...readCursorAndSelection(viewMode)
 		};
 	});

@@ -4,7 +4,8 @@
 // service's change and operation events. Keeping the session manifest sync and the git refresh
 // here means every trigger gets them for free from a single call site.
 import { fileService } from '$lib/files/service/fileService';
-import { workspaceRoot, fileTree, texFiles } from '$lib/workspace/workspaceStore';
+import { workspaceRoot, fileTree, texFiles, activeFilePath } from '$lib/workspace/workspaceStore';
+import { samePath } from '$lib/workspace/fileSystem';
 import { tabs } from '$lib/workspace/tabs.svelte';
 import { refreshGitStatus, takeNoGitHint } from '$lib/workspace/scm/gitStore';
 import { capsOf } from '$lib/workspace/fileMode.svelte';
@@ -19,12 +20,18 @@ export function flatFiles(es: TreeEntry[]): string[] {
 	return es.flatMap((e) => (e.type === 'dir' ? flatFiles(e.children ?? []) : [e.path]));
 }
 
+function listed(paths: string[], path: string): boolean {
+	return paths.some((p) => samePath(p, path));
+}
+
 export type TreeRefreshDeps = {
 	provider: WorkspaceProvider;
 	session: EditSession;
 	/** don't rebuild while the user is typing a name in the tree: a refresh would tear the inline
 	 * input down mid-edit. It rescans once they commit. */
 	isEditingTree(): boolean;
+	/** a file left the folder: its tabs close and the editor moves on */
+	detachGone?(path: string): void;
 };
 
 export async function refreshTree(deps: TreeRefreshDeps): Promise<void> {
@@ -42,9 +49,14 @@ export async function refreshTree(deps: TreeRefreshDeps): Promise<void> {
 
 	try {
 		const { children, files } = await fileService.scanTreeAndFiles(root);
+		const before = flatFiles(fileTree.current);
 		fileTree.current = children;
-		tabs.prune(flatFiles(children)); // tabs for files that vanished (remote deletes, external rm)
+		const live = flatFiles(children);
+		tabs.prune(live); // tabs for files that vanished (remote deletes, external rm)
 		texFiles.current = files;
+		// a guest has no disk sync to close the open file the host deleted or renamed; one it just made or renamed is not listed yet
+		const active = activeFilePath.current;
+		if (session.isGuest && active && listed(before, active) && !listed(live, active)) deps.detachGone?.(active);
 	} catch (e) {
 		console.error('Failed to read folder tree:', e);
 	}

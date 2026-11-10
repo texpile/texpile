@@ -33,7 +33,7 @@ export function spellOutLetters(source: string): string {
 			const name = source.slice(node.from + 1, node.to);
 			if (ACCENT_COMMANDS.has(name)) {
 				const found = matchAt(node.name === 'ControlSymbol' ? SYMBOL_ACCENT_LETTER : WORD_ACCENT_LETTER, source, node.to);
-				if (found) edit(node.from, node.to + found[0].length, (found[1] ?? found[2]).replace('\\', ''));
+				if (found) edit(node.from, node.to + found[0].length, (found[1] ?? found[2]).replace(/^\\/, ''));
 			} else if (node.name === 'ControlWord' && LETTER_COMMANDS.has(name)) {
 				edit(node.from, node.to + matchAt(AFTER_LETTER_COMMAND, source, node.to)![0].length, 'x');
 			}

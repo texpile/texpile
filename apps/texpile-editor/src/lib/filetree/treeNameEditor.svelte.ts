@@ -15,6 +15,7 @@ type EditorHooks = {
 	takenMessage: (name: string) => string;
 	/** what a New Include will actually be called once its extension is appended */
 	includeName: (name: string) => string;
+	refocusTree: () => void;
 };
 
 export class TreeNameEditor {
@@ -81,6 +82,21 @@ export class TreeNameEditor {
 	cancelCreate(): void {
 		this.creatingIn = null;
 		this.createValue = '';
+	}
+
+	// the closed field leaves focus on nothing, and the next Ctrl+Z would undo the open document
+	keydownCreate(e: KeyboardEvent): void {
+		if (e.key === 'Enter') this.commitCreate();
+		else if (e.key === 'Escape') this.cancelCreate();
+		else return;
+		if (this.creatingIn === null) this.hooks.refocusTree();
+	}
+
+	keydownRename(e: KeyboardEvent, entry: TreeEntry): void {
+		if (e.key === 'Enter') this.commitRename(entry);
+		else if (e.key === 'Escape') this.renaming = null;
+		else return;
+		if (this.renaming === null) this.hooks.refocusTree();
 	}
 
 	startRename(e: TreeEntry): void {

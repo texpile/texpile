@@ -29,6 +29,6 @@ A document is checked in the language it names:
 
 A chapter brought in with `\input` or `#include` follows its main file. Any other document is checked in Preferences › Spelling › Default language, which starts as English. Only the languages above have dictionaries, so a document in another language, such as Russian, is skipped.
 
-Spelling › Folder Language, or Preferences › Spelling › This folder, sets one language for every file in the folder, over what the files name. It is saved in the folder's `.texpile/config.json`, so co-authors get it too. Automatic goes back to what each file names, and says where its language comes from: the document, or the default.
+Edit › Spelling › Folder Language, or Preferences › Spelling › This folder, sets one language for every file in the folder, over what the files name. It is saved in the folder's `.texpile/config.json`, so co-authors get it too. Automatic goes back to what each file names, and says where its language comes from: the document, or the default.
 
 Each language has its own dictionary: Add to Dictionary on a German word adds it to the German one. Preferences › Spelling › Custom Dictionary shows one language at a time.

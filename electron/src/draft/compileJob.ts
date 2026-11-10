@@ -1,8 +1,5 @@
-// The compile's TeX-side instrumentation, in ONE place: the job prefix (page-extract
-// setup + hooks + the \pdfoutput shim) and the hooks file it inputs at \begin{document}.
-// Shared by the cold pass (draftService) and the warm-compile wrapper (draftWarmCompile)
-// so the two can never drift -- a warm pass must be the cold pass with the preamble
-// already paid for, nothing else.
+// The job every draft engine runs: page-extract and teleport set up, the hooks, the \pdfoutput shim, then the main
+// file. One job for every process, so a teleport starts from the same base the full compile recorded against.
 import * as path from 'node:path';
 import * as fs from 'node:fs';
 import { skipDir, TREE_IGNORE_DIRS } from '../fs/walkIgnoreRules';
@@ -10,36 +7,30 @@ import { skipDir, TREE_IGNORE_DIRS } from '../fs/walkIgnoreRules';
 export const OUT = '_draft';
 
 // \pdfoutput is a pdfTeX primitive luatex lacks; many arXiv preambles set it unguarded
-// (\pdfoutput=1) and crash lualatex. Define it as a dummy count if absent so the assignment
-// is a harmless no-op. Injected before the preamble runs; a no-op for docs that never touch
-// it (only defines what isn't there). Mirror of PDF_SHIM in draftDaemon.
 export const PDF_SHIM = `\\ifdefined\\pdfoutput\\else\\newcount\\pdfoutput\\fi`;
 
-/** everything that precedes the document in the job: extractor, hooks, shim */
-export function jobPrefix(engineDir: string): string {
-	const setup = `\\directlua{TEXPILE_ENGINE_DIR='${engineDir}'; TEXPILE_DRAFT_OUT='${OUT}'; dofile('${engineDir}/page-extract.lua')}`;
+/** `out` is the process's own folder under _draft; `wait` holds it at the base for GO or a teleport plan */
+export function engineJob(engineDir: string, out: string, mainRel: string, wait: boolean): string {
+	const setup =
+		`\\directlua{TEXPILE_ENGINE_DIR='${engineDir}'; TEXPILE_DRAFT_OUT='${out}'; TEXPILE_TELE_OUT='${out}/tele'; ` +
+		`TEXPILE_TELE_WAIT=${wait}; dofile('${engineDir}/page-extract.lua'); dofile('${engineDir}/teleport/teleport.lua')}`;
+	// \the\inputlineno expands before the input, so begindoc names the main file's \begin{document} line
 	const hooks =
-		`\\AtBeginDocument{\\directlua{texpile_begindoc(\\the\\inputlineno)}\\input{${OUT}/texpile-hooks.tex}` +
-		`\\AddToHook{shipout/before}{\\directlua{page_extract(\\the\\ShipoutBox)}}\\AtEndDocument{\\directlua{page_extract_finish()}}}`;
-	return `${setup}${hooks}${PDF_SHIM}`;
+		`\\AtBeginDocument{\\directlua{texpile_begindoc(\\the\\inputlineno)}\\input{${out}/texpile-hooks.tex}` +
+		`\\AddToHook{shipout/before}{\\directlua{page_extract(\\the\\ShipoutBox)}}\\AddToHook{shipout/after}{\\directlua{texpile_tele_shipped()}}` +
+		`\\AtEndDocument{\\directlua{page_extract_finish()}}}` +
+		`\\AddToHook{begindocument/end}{\\directlua{texpile_tele_begin_end()}}\\AddToHook{enddocument}[texpile]{\\directlua{texpile_tele_bye()}}` +
+		`\\AddToHook{enddocument/afterlastpage}{\\directlua{texpile_tele_end()}}`;
+	// an engine's input carries its commands, and \showoutput (or a stray \errorstopmode) would have TeX wait there
+	const noPrompts = `\\let\\errorstopmode\\nonstopmode\\let\\scrollmode\\nonstopmode`;
+	return `${setup}${hooks}${noPrompts}${PDF_SHIM}\\input{${mainRel}}`;
 }
 
-/** counter-truth wraps live in a FILE, not the job string: their bodies carry #1/#2,
- *  which \AtBeginDocument would need doubled (hook code is stored in a macro), while a
- *  file input at hook time reads them plainly. \the\inputlineno for begindoc expands
- *  BEFORE the input, so it names the main file's \begin{document} line. */
+/** read at \begin{document}: each paragraph stamps its first source line onto what it produces */
 export function writeHooksFile(outAbs: string): void {
 	fs.writeFileSync(
 		path.join(outAbs, 'texpile-hooks.tex'),
-		'\\let\\TexpileOrigStep\\stepcounter\n' +
-			'\\renewcommand\\stepcounter[1]{\\TexpileOrigStep{#1}\\directlua{texpile_counters(\\the\\inputlineno)}}\n' +
-			'\\let\\TexpileOrigSetC\\setcounter\n' +
-			'\\renewcommand\\setcounter[2]{\\TexpileOrigSetC{#1}{#2}\\directlua{texpile_counters(\\the\\inputlineno)}}\n' +
-			// each paragraph stamps its own first source line onto the nodes it produces, and
-			// clears it again so material outside a paragraph reads as unknown rather than
-			// inheriting the last one. The walker reads it back at shipout.
-			'\\AddToHook{para/begin}{\\directlua{texpile_para()}}\n' +
-			'\\AddToHook{para/end}{\\directlua{texpile_para_end()}}\n'
+		'\\AddToHook{para/begin}{\\directlua{texpile_para()}}\n\\AddToHook{para/end}{\\directlua{texpile_para_end()}}\n'
 	);
 }
 

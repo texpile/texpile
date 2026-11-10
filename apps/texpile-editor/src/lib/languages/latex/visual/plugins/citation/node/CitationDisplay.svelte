@@ -28,6 +28,10 @@
 
 	let dropdownOpen = $state(false);
 
+	export function open(): void {
+		dropdownOpen = true;
+	}
+
 	// \cite{a, b, c} is ONE command with a shared note, so it stays one chip; each key resolves
 	// on its own and an unresolved one shows as its raw key (the red state says it's broken)
 	const displayText = $derived.by(() => {
@@ -99,7 +103,7 @@
 	<Portal>
 		<Popover.Positioner class="z-floating-ui">
 			<Popover.Content
-				class="card bg-surface-50-950 border-surface-300-700 z-[200] max-w-[min(90vw,28rem)] min-w-[300px] border p-4 shadow-lg"
+				class="card bg-surface-50-950 border-surface-300-700 z-[200] max-h-[var(--available-height)] max-w-[min(90vw,28rem)] min-w-[300px] overflow-y-auto border p-4 shadow-lg"
 			>
 				<!-- mounted on open only: the form lists the whole bibliography, and a survey with
 				     hundreds of citations kept hundreds of copies of it in the DOM -->

@@ -302,6 +302,28 @@ export function adoptParse(doc: PMNode, parse: ParseOrigins): void {
 	docParses.set(doc, parse);
 }
 
+/** `parse` with block `index` standing for `node` over the same bytes, `leaves` counted from its start;
+ *  unchanged when the runs do not place every byte the parse placed, or misread one */
+export function withBlockRuns(parse: ParseOrigins, index: number, node: PMNode, leaves: Segment[]): ParseOrigins {
+	const was = parse.origins[index];
+	if (!was || was.size !== 1 || was.text === undefined || was.srcFrom === undefined || node.eq(was.node)) return parse;
+	const base = was.srcFrom;
+	const placed = new Uint8Array(was.text.length);
+	for (const s of leaves) {
+		if (s.srcFrom < base || s.srcTo > was.srcTo! || s.pmFrom < 1 || s.pmTo > node.nodeSize - 1) return parse;
+		for (let b = s.srcFrom; b < s.srcTo; b++) if (placed[b - base]++) return parse;
+		const bytes = was.text.slice(s.srcFrom - base, s.srcTo - base);
+		const shown = node.textBetween(s.pmFrom - 1, s.pmTo - 1);
+		if (s.kind === 'text' && shown !== bytes && shown !== bytes.replace(/\r\n/g, '\n')) return parse;
+	}
+	for (const s of was.leaves) for (let b = s.srcFrom; b < s.srcTo; b++) if (!placed[b - base]) return parse;
+	const out: ParseOrigins = { ...parse, origins: [] };
+	for (const o of parse.origins)
+		out.origins.push(o === was ? { ...o, parse: out, node, pmFrom: 0, pmTo: node.nodeSize, leaves } : { ...o, parse: out });
+	blockOrigins.set(node, out.origins[index]);
+	return out;
+}
+
 /** the parse a document came from: recorded on it, else the one any of its blocks remembers */
 export function parseOf(doc: PMNode): ParseOrigins | undefined {
 	const known = docParses.get(doc);

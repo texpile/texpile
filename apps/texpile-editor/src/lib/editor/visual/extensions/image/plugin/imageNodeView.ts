@@ -1,5 +1,5 @@
 /* eslint-disable no-param-reassign -- the node view initializes the img element it is handed */
-import { TextSelection } from 'prosemirror-state';
+import { caretIntoCaption } from './captionCaret';
 import type { Node } from 'prosemirror-model';
 import type { EditorView, NodeView } from 'prosemirror-view';
 import { missingImageNote } from '../missingImagePlaceholder';
@@ -143,15 +143,16 @@ export function imageNodeView(pluginSettings: ImagePluginSettings) {
 		function onFilesChange(e: FileChangesEvent) {
 			const file = shownFile();
 			if (file && e.contains(file, 'updated')) redrawFile();
+			else if (finalSrc?.startsWith('blob:') && e.gotUpdated()) void lookUpAgain();
 		}
 		const offOperations = fileService.onDidRunOperation(onOperation);
 		const offChanges = fileService.onDidFilesChange(onFilesChange);
 		window.addEventListener('focus', onFolderChanged);
-		// a guest's picture comes from the host after the first lookup came up empty
+		// a guest's picture comes from the host after the first lookup came up empty, and again at each new revision
 		async function lookUpAgain(): Promise<void> {
-			if ((!notFound && finalSrc) || !pluginSettings.downloadImage) return;
+			if ((!notFound && finalSrc && !finalSrc.startsWith('blob:')) || !pluginSettings.downloadImage) return;
 			const src = await pluginSettings.downloadImage(node.attrs.src);
-			if (!src) return;
+			if (!src || (src === finalSrc && !notFound)) return;
 			const shown = await shownImageUrl(src, currentNode, pluginSettings.cropFormat);
 			const size = pluginSettings.enableResize ? await getImageDimensions(shown) : undefined;
 			if (size && !size.completed) return;
@@ -171,14 +172,10 @@ export function imageNodeView(pluginSettings: ImagePluginSettings) {
 		const contentEl = pluginSettings.hasTitle && document.createElement('div');
 		if (contentEl) {
 			contentEl.className = 'imagePluginContent';
-			contentEl.addEventListener('click', (e) => {
+			// text and formulas inside the caption take their own clicks
+			contentEl.addEventListener('mousedown', (e) => {
 				const pos = getPos();
-				if (!pos || contentEl.innerText.length > 1) {
-					return;
-				}
-				e.preventDefault();
-				view.dispatch(view.state.tr.setSelection(TextSelection.near(view.state.doc.resolve(pos + 1))));
-				view.focus();
+				if (e.target === contentEl && e.button === 0 && pos !== undefined) caretIntoCaption(view, pos, e);
 			});
 			contentEl.className = 'text';
 			root.appendChild(contentEl);

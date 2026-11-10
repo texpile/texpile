@@ -12,7 +12,8 @@ The compiled PDF beside the editor. **Show PDF** in the title bar opens the pane
 - Pinch on a trackpad, or scroll with Ctrl held, to zoom around the pointer.
 - The "…" menu holds the zoom, **Rotate**, **Invert colors**, **Simulate color vision**, **Presentation** and **Save PDF**.
 - **Invert colors** changes the screen only. The dark and light themes each remember their own choice.
-- In presentation mode, click for the next page and Shift click or right-click for the previous one.
+- In presentation mode, click for the next page and Shift click or right-click for the previous one. Links and buttons in the PDF still work.
+- Animations made with the animate package play in the pane and in presentation mode.
 - The pop-out button at the right end of the bar, or Layout › **Open preview in its own window**, moves the pane to its own window.
 
 ## Two views

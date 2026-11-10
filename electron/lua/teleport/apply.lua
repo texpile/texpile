@@ -1,0 +1,519 @@
+-- Puts a record's state back, each part the way TeX itself makes it, then hands over to `after(fails)`.
+return function(T)
+	local PREFIX = "texpiletele@"
+	local MAXDIMEN = 1073741823
+	local WHATSIT = node.id("whatsit")
+	local COLORSTACK = node.subtype("pdf_colorstack")
+	local GLUE, HLIST, VLIST, RULE, INS = node.id("glue"), node.id("hlist"), node.id("vlist"), node.id("rule"), node.id("ins")
+	local FAMCMD = { "textfont", "scriptfont", "scriptscriptfont" }
+	-- the page rebuild's primitive \par resets these (normal_paragraph), so they go back after it
+	local AFTER_PAR = { looseness = true, hangindent = true, hangafter = true, parshape = true, interlinepenalties = true }
+	local A
+
+	local function G() return token.create("global") end
+
+	local function names_in(r)
+		local seen, list = {}, {}
+		local function add(n)
+			if type(n) == "string" and n ~= "" and not seen[n] then
+				seen[n] = true
+				list[#list + 1] = n
+			end
+		end
+		local function toks(t)
+			for _, x in ipairs(t or {}) do
+				if type(x) == "string" then add(x) elseif x.n then add(x.n) end
+			end
+		end
+		for _, n in ipairs(r.names) do add(n.n) end
+		for _, n in ipairs(r.nfss) do add(n) end
+		for _, m in ipairs(r.macros) do add(m.n); toks(m.p); toks(m.b) end
+		for _, g in ipairs(r.tparams) do toks(g.b) end
+		for _, g in ipairs(r.toks) do toks(g.b) end
+		for _, g in ipairs(r.marks) do toks(g.b) end
+		local function walk(lst)
+			for _, o in ipairs(lst or {}) do
+				for _, v in pairs(o) do
+					if type(v) == "table" and v.list then walk(v.list)
+					elseif type(v) == "table" and v.toks then toks(v.toks) end
+				end
+			end
+		end
+		walk(r.page)
+		walk(r.contrib)
+		for _, b in ipairs(r.boxes) do walk(b.list) end
+		return list
+	end
+
+	-- name@size of every font the process holds, the way records name them
+	local function loaded_fonts()
+		local out = {}
+		for id = 1, font.max() do
+			local key = T.fontkey(id)
+			if key and not out[key] then out[key] = id end
+		end
+		return out
+	end
+
+	-- an edit above a point moved the source lines after it, and the nodes the record holds carry the lines they had
+	local function move_lines(head, moves)
+		local line_a, file_a = TEXPILE_TELE_IGNORE_ATTRS and TEXPILE_TELE_IGNORE_ATTRS[1], TEXPILE_TELE_IGNORE_ATTRS and TEXPILE_TELE_IGNORE_ATTRS[2]
+		if not head or not line_a or not file_a or #moves == 0 then return end
+		for n in node.traverse(head) do
+			local f = node.has_attribute(n, file_a)
+			local l = f and node.has_attribute(n, line_a)
+			if l then
+				for _, mv in ipairs(moves) do
+					if f == mv.id and l > mv.after then l = l + mv.by end
+				end
+				node.set_attribute(n, line_a, l)
+			end
+			if n.head then move_lines(n.head, moves) end
+		end
+	end
+
+	function T.apply(r, after, moves)
+		A = { r = r, after = after, t0 = os.gettimeofday(), fontcs = {}, stages = {}, names0 = status.cs_count, created = 0, moves = {} }
+		-- the moves name files; the record's file table gives the ids its nodes carry
+		local files = r.carry and r.carry.pageextract and r.carry.pageextract.files or {}
+		for _, mv in ipairs(moves or {}) do
+			local base = (mv.f:match("[^/]+$") or mv.f):lower()
+			for id, name in ipairs(files) do
+				if name == base then A.moves[#A.moves + 1] = { id = id, after = mv.after, by = mv.by } end
+			end
+		end
+		T.setfail = {}
+		for _, n in ipairs(names_in(r)) do
+			local tk = token.create(n)
+			if not T.names(tk, n) then
+				A.created = A.created + 1
+				tex.sprint("\\expandafter\\let\\csname ")
+				tex.sprint(-2, n)
+				tex.sprint("\\endcsname")
+				tex.sprint({ token.create(PREFIX .. "undef") })
+			end
+		end
+		if r.needs_glyph0 and not T.glyph0 then
+			tex.sprint("\\begingroup\\setbox0\\hbox{$x$}\\directlua{texpile_tele_proto()}\\endgroup")
+		end
+		-- a font NFSS loaded goes through NFSS again before any macro comes back: the font hooks (microtype's
+		-- protrusion codes, \hyphenchar) set it up as they did, and the record's macros then overwrite their bookkeeping
+		-- the selection macros set directly: \fontshape and \fontseries look up names the recording may never have made
+		local LB, RB = token.new(123, 1), token.new(125, 2)
+		for _, nm in ipairs(r.nfss or {}) do
+			local enc, fam, ser, shp, size = nm:match("^([^/]+)/([^/]+)/([^/]+)/([^/]+)/([^/]+)$")
+			if enc then
+				tex.sprint({ token.create("begingroup") })
+				for _, part in ipairs({ { "f@encoding", enc }, { "f@family", fam }, { "f@series", ser }, { "f@shape", shp } }) do
+					tex.sprint({ token.create("def"), token.create(part[1]), LB })
+					tex.sprint(-2, part[2])
+					tex.sprint({ RB })
+				end
+				tex.sprint({ token.create("fontsize"), LB })
+				tex.sprint(-2, size)
+				tex.sprint({ RB, LB })
+				tex.sprint("0pt")
+				tex.sprint({ RB, token.create("selectfont"), token.create("endgroup") })
+			end
+		end
+		tex.sprint("\\directlua{texpile_tele_apply1b()}")
+	end
+
+	-- the record's fonts by name: the ones the process holds keep their ids, the rest load
+	function texpile_tele_apply1b()
+		A.stages[#A.stages + 1] = string.format("1b=%.0f", (os.gettimeofday() - A.t0) * 1000)
+		local r = A.r
+		local have = loaded_fonts()
+		-- the instance NFSS selected again, which the font hooks set up (microtype's protrusion codes): another font of
+		-- the same file and size can lack them
+		for nm, key in pairs(r.nfss_font or {}) do
+			local tk = token.create(nm)
+			if tk and tk.cmdname == "set_font" and T.fontkey(tk.mode) == key then have[key] = tk.mode end
+		end
+		local keys = {}
+		for key in pairs(r.fonts or {}) do keys[#keys + 1] = key end
+		table.sort(keys)
+		for k, key in ipairs(keys) do
+			local spec = r.fonts[key]
+			local cs = PREFIX .. "f" .. k
+			if not token.create(cs) or token.create(cs).csname ~= cs then A.created = A.created + 1 end
+			A.fontcs[key] = cs
+			if have[key] then tex.definefont(true, cs, have[key])
+			else
+				token.set_macro(cs, "", "global")
+				tex.sprint({ G(), token.create("font"), token.create(cs) })
+				tex.sprint(-2, T.font_name_text(spec[1]))
+				tex.sprint(" at " .. spec[2] .. "sp\\relax")
+			end
+		end
+		tex.sprint("\\directlua{texpile_tele_apply2()}")
+	end
+
+	function texpile_tele_proto()
+		local g = T.find_glyph0(tex.box[0].head)
+		if g then T.glyph0 = node.copy(g) end
+	end
+
+	function T.built(list)
+		local out = {}
+		for _, x in ipairs(list or {}) do
+			if type(x) == "table" and x[1] == -1 then out[#out + 1] = { param = x[2] }
+			elseif type(x) == "table" and x[1] == -2 then out[#out + 1] = { brace = true }
+			else out[#out + 1] = T.token_of(x) end
+		end
+		return out
+	end
+
+	function texpile_tele_apply2()
+		A.stages[#A.stages + 1] = string.format("2=%.0f", (os.gettimeofday() - A.t0) * 1000)
+		local r = A.r
+		for key, cs in pairs(A.fontcs) do T.fontmap[key] = token.create(cs).mode end
+		local L = token.create("let")
+		local LB, RB = token.new(123, 1), token.new(125, 2)
+		local HASH = token.new(35, 6)
+		-- token_of runs TeX for one-character names, which would also run whatever was already printed
+		local B = {}
+		A.built = B
+		for _, m in ipairs(r.macros) do B[m] = { p = T.built(m.p), b = T.built(m.b) } end
+		for _, g in ipairs(r.tparams) do B[g] = { b = T.built(g.b) } end
+		for _, g in ipairs(r.toks) do B[g] = { b = T.built(g.b) } end
+		for _, g in ipairs(r.marks) do B[g] = { b = T.built(g.b) } end
+		-- a substituted shape's name is not always made again by the reselection
+		for nm, key in pairs(r.nfss_font or {}) do
+			local tk = token.create(nm)
+			local cs = A.fontcs[key]
+			if cs and not (tk and tk.cmdname == "set_font" and T.fontref(tk.mode) == key) then
+				tex.sprint({ G(), L, token.create(nm), token.create(cs) })
+			end
+		end
+		for _, n in ipairs(r.names) do
+			local name = token.create(n.n)
+			if n.let then tex.sprint({ G(), L, name, T.prim_token(n.let) or token.create(n.let) })
+			-- \let skips spaces before its target: an equals sign and the one optional space it allows go first
+			elseif n.char then tex.sprint({ G(), L, name, token.new(61, 12), token.new(32, 10), token.new(n.char[2], n.char[1]) })
+			elseif n.font then
+				local cs = A.fontcs[n.font]
+				if cs then tex.sprint({ G(), L, name, token.create(cs) }) else T.setfail["font " .. n.n] = true end
+			elseif n.def then
+				tex.sprint({ G(), token.create(n.def), name })
+				tex.sprint("=" .. n.v .. "\\relax")
+			end
+		end
+		for _, m in ipairs(r.macros) do
+			local seq = { G() }
+			if m.long then seq[#seq + 1] = token.create("long") end
+			if m.outer then seq[#seq + 1] = token.create("outer") end
+			if m.prot then seq[#seq + 1] = token.create("protected") end
+			seq[#seq + 1] = token.create("def")
+			seq[#seq + 1] = token.create(m.n)
+			for _, x in ipairs(B[m].p) do
+				if type(x) == "table" and x.param then
+					seq[#seq + 1] = HASH
+					seq[#seq + 1] = token.new(48 + x.param, 12)
+				elseif type(x) == "table" and x.brace then seq[#seq + 1] = HASH
+				else seq[#seq + 1] = x end
+			end
+			seq[#seq + 1] = LB
+			for _, x in ipairs(B[m].b) do
+				if type(x) == "table" and x.param then
+					seq[#seq + 1] = HASH
+					seq[#seq + 1] = token.new(48 + x.param, 12)
+				else
+					seq[#seq + 1] = x
+					-- a parameter character in a body is doubled in its definition
+					if x.cmdname == "mac_param" then seq[#seq + 1] = x end
+				end
+			end
+			seq[#seq + 1] = RB
+			B[m].seq = seq
+			tex.sprint(seq)
+		end
+		for _, g in ipairs(r.tparams) do
+			local seq = { G(), token.create(g.n), LB }
+			for _, x in ipairs(B[g].b) do seq[#seq + 1] = x end
+			seq[#seq + 1] = RB
+			tex.sprint(seq)
+		end
+		for _, g in ipairs(r.toks) do
+			tex.sprint({ G(), token.create("toks") })
+			tex.sprint(tostring(g.r) .. "=")
+			local seq = { LB }
+			for _, x in ipairs(B[g].b) do seq[#seq + 1] = x end
+			seq[#seq + 1] = RB
+			tex.sprint(seq)
+		end
+		tex.sprint("\\directlua{texpile_tele_apply3()}")
+	end
+
+	local function glue_spec(v)
+		local g = node.new("glue_spec")
+		g.width, g.stretch, g.shrink, g.stretch_order, g.shrink_order = v[1], v[2], v[3], v[4], v[5]
+		return g
+	end
+
+	local function mark_class_max(lst, top)
+		for _, o in ipairs(lst or {}) do
+			if o.id == "mark" and (o.class or 0) > top then top = o.class end
+			for _, v in pairs(o) do if type(v) == "table" and v.list then top = mark_class_max(v.list, top) end end
+		end
+		return top
+	end
+
+	function texpile_tele_apply3()
+		A.stages[#A.stages + 1] = string.format("3=%.0f", (os.gettimeofday() - A.t0) * 1000)
+		local r = A.r
+		-- the line a paragraph stamped stays in the attribute register, and text after a group takes it from there
+		local line_a, file_a = TEXPILE_TELE_IGNORE_ATTRS and TEXPILE_TELE_IGNORE_ATTRS[1], TEXPILE_TELE_IGNORE_ATTRS and TEXPILE_TELE_IGNORE_ATTRS[2]
+		local file_v = file_a and tex.getattribute(file_a)
+		for _, g in ipairs(r.regs) do
+			if g.k == "a" and g.i == file_a then file_v = g.v end
+		end
+		A.after_par = {}
+		for _, p in ipairs(r.params) do
+			if AFTER_PAR[p.p] then A.after_par[#A.after_par + 1] = p
+			elseif p.k == "m" then
+				-- Lua sets no math glue parameter: TeX copies it from a spare \muskip, cleared after
+				local v = p.v
+				tex.setmuglue(65535, v[1], v[2], v[3], v[4], v[5])
+				tex.sprint("\\global\\" .. p.p .. "=\\muskip65535\\global\\muskip65535=0mu\\relax")
+			elseif p.k == "s" then tex.sprint("\\global\\" .. p.p .. " " .. p.v .. "\\relax")
+			elseif p.k == "g" then tex.set("global", p.p, glue_spec(p.v))
+			else tex.set("global", p.p, p.v) end
+		end
+		for _, g in ipairs(r.regs) do
+			local k, i, v = g.k, g.i, g.v
+			if k == "c" then tex.setcount("global", i, v)
+			elseif k == "d" then tex.setdimen("global", i, v)
+			elseif k == "a" then
+				if i == line_a then
+					for _, mv in ipairs(A.moves) do
+						if file_v == mv.id and v > mv.after then v = v + mv.by end
+					end
+				end
+				tex.setattribute("global", i, v)
+			elseif k == "k" then tex.setskip("global", i, glue_spec(v))
+			elseif k == "m" then tex.setmuskip("global", i, glue_spec(v))
+			elseif k == "bvoid" then tex.setbox("global", i, nil)
+			elseif k == "bempty" then
+				local b = node.new(g.t)
+				b.width, b.height, b.depth, b.subtype = g.w, g.h, g.d, g.s
+				tex.setbox("global", i, b)
+			end
+		end
+		for _, c in ipairs(r.codes) do
+			tex.setcatcode("global", c.c, c.cat)
+			tex.setlccode("global", c.c, c.lc)
+			tex.setuccode("global", c.c, c.uc)
+			tex.setsfcode("global", c.c, c.sf)
+			T.set_mathcode(c.c, c.math)
+		end
+		for _, f in ipairs(r.fams) do
+			local cs = A.fontcs[f.f]
+			if cs then
+				tex.sprint({ G(), token.create(FAMCMD[f.k % 3 + 1]) })
+				tex.sprint(tostring(f.k // 3) .. "=")
+				tex.sprint({ token.create(cs) })
+			end
+		end
+		if A.fontcs[r.curfont] then tex.sprint({ token.create(A.fontcs[r.curfont]) }) end
+		A.image_cache = T.apply_images(r)
+		-- the page builder moves marks only up to the highest class \marks has made, and a mark node from Lua makes none
+		local top = mark_class_max(r.page, mark_class_max(r.contrib, 0))
+		for _, b in ipairs(r.boxes) do top = mark_class_max(b.list, top) end
+		if top > 0 then tex.sprint("\\begingroup\\setbox0\\vbox{\\marks" .. top .. "{}}\\endgroup ") end
+		-- object numbers the restored nodes and macros hold must not be handed out again
+		tex.sprint("\\directlua{texpile_tele_reserve(" .. (r.maxobj or 0) .. ")}")
+		tex.sprint("\\directlua{texpile_tele_apply4()}")
+	end
+
+	function texpile_tele_reserve(n)
+		while pdf.getmaxobjnum() < n do pdf.reserveobj() end
+	end
+	function texpile_tele_imgcheck(n)
+		if tex.lastsavedimageresourceindex ~= n then T.setfail["image " .. n .. " loaded as " .. tex.lastsavedimageresourceindex] = true end
+	end
+
+	local function resource_refs(lst, acc)
+		for _, o in ipairs(lst or {}) do
+			if o.id == "rule" and o.st == 2 then acc.img = math.max(acc.img, o.index or 0)
+			elseif o.id == "rule" and o.st == 1 then acc.box = math.max(acc.box, o.index or 0) end
+			for _, v in pairs(o) do if type(v) == "table" and v.list then resource_refs(v.list, acc) end end
+		end
+		return acc
+	end
+
+	local function same_prefix(head, lst, k)
+		local n = head
+		for i = 1, k do
+			if not n or not lst[i] or node.type(n.id) ~= lst[i].id or n.subtype ~= lst[i].st then return false end
+			n = n.next
+		end
+		return true
+	end
+
+	function texpile_tele_apply4()
+		A.stages[#A.stages + 1] = string.format("4=%.0f", (os.gettimeofday() - A.t0) * 1000)
+		local r = A.r
+		-- a node pointing at an image this process does not have crashes the backend at shipout
+		local acc = resource_refs(r.page, resource_refs(r.contrib, { img = 0, box = 0 }))
+		for _, b in ipairs(r.boxes) do resource_refs(b.list, acc) end
+		if acc.img > texpile_images_read() or acc.box > tex.lastsavedboxresourceindex then
+			T.refuse(string.format("the page uses image %d and box resource %d", acc.img, acc.box))
+			return
+		end
+		-- at the base, the base's own page items are still there while no output has run since
+		local b = r.base
+		A.keep = T.at_base and r.fires == b.fires and b.pagelen <= #r.page and same_prefix(tex.lists.page_head, r.page, b.pagelen)
+		-- no setter for a bottom mark, and emptying the page from Lua leaves the page builder mid-page: one page holding
+		-- the marks and whatever the process had on its page goes through an output routine that drops it
+		if #r.marks > 0 or (not A.keep and node.length(tex.lists.page_head) > 0) then
+			A.saved = { outputpenalty = tex.outputpenalty, deadcycles = tex.deadcycles }
+			-- the dropped page's inserts land in their boxes (an earlier record's footnotes), which the routine empties
+			local drop = { "\\setbox0\\box255 " }
+			for n in node.traverse_id(INS, tex.lists.page_head) do
+				if not tex.getbox(n.subtype) then drop[#drop + 1] = "\\setbox0\\box" .. n.subtype .. " " end
+			end
+			tex.sprint("\\begingroup\\output{" .. table.concat(drop) .. "\\deadcycles0 }\\hbox{}")
+			for _, g in ipairs(r.marks) do
+				tex.sprint({ token.create("marks") })
+				tex.sprint(g.c .. " ")
+				-- \marks expands its text, which these tokens already are
+				local seq = { token.new(123, 1), token.create("unexpanded"), token.new(123, 1) }
+				for _, x in ipairs(A.built[g].b) do seq[#seq + 1] = x end
+				seq[#seq + 1] = token.new(125, 2)
+				seq[#seq + 1] = token.new(125, 2)
+				tex.sprint(seq)
+			end
+			tex.sprint("\\penalty-10000 \\endgroup\\directlua{texpile_tele_apply4b()}")
+		else
+			texpile_tele_apply4b()
+		end
+	end
+
+	function texpile_tele_apply4b()
+		A.stages[#A.stages + 1] = string.format("4b=%.0f", (os.gettimeofday() - A.t0) * 1000)
+		local r = A.r
+		for _, b in ipairs(r.boxes) do
+			local list = T.des_list(b.list)
+			move_lines(list, A.moves)
+			tex.setbox("global", b.i, list)
+		end
+		if A.saved then
+			tex.set("global", "outputpenalty", A.saved.outputpenalty)
+			-- Lua has no setter for \deadcycles: an assignment would only hide the real value from later reads
+			tex.sprint({ token.create("deadcycles") })
+			tex.sprint(A.saved.deadcycles .. "\\relax")
+		end
+		local page = r.page
+		if A.keep then
+			page = {}
+			for i = r.base.pagelen + 1, #r.page do page[#page + 1] = r.page[i] end
+		end
+		if node.length(tex.lists.contrib_head) > 0 then
+			local old = tex.lists.contrib_head
+			tex.lists.contrib_head = nil
+			node.flush_list(old)
+		end
+		local head = T.des_list(page)
+		move_lines(head, A.moves)
+		T.push_colors(r.cstacks)
+		-- the page builder drops the recorded topskip glue and makes its own from \topskip and the first box:
+		-- for that moment \topskip is what gives the recorded glue back
+		for n in node.traverse(head) do
+			if n.id == GLUE and n.subtype == 10 then
+				local bx = n.next
+				while bx and not (bx.id == HLIST or bx.id == VLIST or bx.id == RULE) do bx = bx.next end
+				if bx then
+					A.topskip = { tex.getglue("topskip") }
+					tex.setglue("topskip", n.width > 0 and n.width + bx.height or 0, n.stretch, n.shrink, n.stretch_order, n.shrink_order)
+				end
+				break
+			end
+			if n.id == HLIST or n.id == VLIST or n.id == RULE then break end
+		end
+		A.contrib = T.des_list(r.contrib)
+		move_lines(A.contrib, A.moves)
+		-- the goal came from \vsize when the page took its first box, whatever \vsize is now
+		if r.vsize_start then
+			A.vsize = tex.vsize
+			tex.set("vsize", r.vsize_start)
+		end
+		T.rebuilding = true
+		-- TeX's own page builder moves the page's items onto the page again, at TeX's own \par
+		if head then node.write(head) end
+		tex.sprint({ token.create(PREFIX .. "par") })
+		tex.sprint("\\directlua{texpile_tele_apply4c()}")
+	end
+
+	function texpile_tele_apply4c()
+		A.stages[#A.stages + 1] = string.format("4c=%.0f", (os.gettimeofday() - A.t0) * 1000)
+		local r = A.r
+		T.rebuilding = false
+		if A.vsize then tex.set("vsize", A.vsize) end
+		for _, p in ipairs(A.after_par) do
+			if p.k == "s" then tex.sprint("\\global\\" .. p.p .. " " .. p.v .. "\\relax") else tex.set("global", p.p, p.v) end
+		end
+		-- the page builder keeps its best break so far where nothing can set it: a page whose goal a class moved
+		-- after it began (REVTeX's grid) rebuilds differently
+		local ps = r.pagestate
+		if tex.pagegoal ~= ps[1] or tex.pagetotal ~= ps[2] or tex.pagedepth ~= ps[3] then
+			T.setfail[string.format("page state %d/%d/%d against %d/%d/%d", tex.pagegoal, tex.pagetotal, tex.pagedepth, ps[1], ps[2], ps[3])] = true
+		end
+		-- what was still waiting for the page builder goes back unbuilt
+		if A.contrib then node.write(A.contrib) end
+		tex.sprint("\\directlua{texpile_tele_apply5()}")
+	end
+
+	function texpile_tele_apply5()
+		A.stages[#A.stages + 1] = string.format("5=%.0f", (os.gettimeofday() - A.t0) * 1000)
+		local r = A.r
+		-- what the apply itself left behind (NFSS writes \font@name globally) goes back to the base
+		local listed = {}
+		for _, n in ipairs(r.names) do listed[n.n] = true end
+		for _, m in ipairs(r.macros) do listed[m.n] = true end
+		for _, n in ipairs(r.nfss) do listed[n] = true end
+		for _, n in ipairs(A.image_cache or {}) do listed[n] = true end
+		local seq, other = {}, {}
+		local L = token.create("let")
+		-- the hash is walked again only when the apply made names the record does not account for
+		local walk = status.cs_count - A.names0 > A.created
+		for _, nm in ipairs(T.changed_names(walk, listed)) do
+			if not listed[nm] then
+				local back = T.base_back(nm)
+				if back then
+					seq[#seq + 1] = G()
+					seq[#seq + 1] = L
+					seq[#seq + 1] = token.create(nm)
+					seq[#seq + 1] = token.create(back)
+				else other[#other + 1] = nm end
+			end
+		end
+		if #other > 0 then T.setfail["left changed: " .. table.concat(other, ", ", 1, math.min(#other, 6))] = true end
+		tex.sprint(seq)
+		tex.sprint("\\directlua{texpile_tele_apply6()}")
+	end
+
+	function texpile_tele_apply6()
+		A.stages[#A.stages + 1] = string.format("6=%.0f", (os.gettimeofday() - A.t0) * 1000)
+		local r = A.r
+		if A.topskip then tex.setglue("topskip", table.unpack(A.topskip)) end
+		tex.nest[0].prevdepth = r.prevdepth
+		tex.nest[0].prevgraf = r.prevgraf
+		T.shipped, T.fires = r.shipped, r.fires
+		T.page_epoch = T.page_epoch + 1
+		T.carry_set(r.carry)
+		T.at_base = false
+		local fails = {}
+		for k in pairs(T.setfail) do fails[#fails + 1] = k end
+		local bad = {}
+		for _, m in ipairs(r.macros) do
+			if T.meaning_hash(m.n) ~= m.h then bad[#bad + 1] = m.n end
+		end
+		if #bad > 0 then fails[#fails + 1] = "meanings differ: " .. table.concat(bad, ", ", 1, math.min(#bad, 6)) end
+		table.sort(fails)
+		local a = A
+		T.apply_stages = a.stages
+		A = nil
+		a.after(fails, (os.gettimeofday() - a.t0) * 1000)
+	end
+end

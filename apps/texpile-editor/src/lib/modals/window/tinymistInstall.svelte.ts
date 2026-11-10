@@ -2,6 +2,7 @@
 // window started it), how the last one ended, and what is on disk. Held at module scope so the
 // Toolchain tab, the missing-typesetter dialog and the Typst banner all show the same install.
 import { toolchainProbe } from './toolchainProbe.svelte';
+import { toolDirs } from './toolDirs.svelte';
 
 function bridge(): TexpileTypstBridge | undefined {
 	return typeof window !== 'undefined' ? window.texpileTypst : undefined;
@@ -10,15 +11,15 @@ function bridge(): TexpileTypstBridge | undefined {
 class TinymistInstaller {
 	status = $state<ManagedTinymistStatus | null>(null);
 	/** non-null while an install runs */
-	step = $state<TinymistInstallStep | null>(null);
+	step = $state<InstallStep | null>(null);
 	/** how the last install or removal failed; cleared by the next attempt */
 	failure = $state<Extract<TinymistInstallResult, { ok: false }> | null>(null);
 	removing = $state(false);
 	private listening = false;
 
-	/** this main process can install tinymist at all */
+	/** the desktop app, which can install tinymist */
 	get available(): boolean {
-		return !!bridge()?.installTinymist;
+		return !!bridge();
 	}
 
 	get busy(): boolean {
@@ -32,7 +33,7 @@ class TinymistInstaller {
 
 	async refresh(): Promise<void> {
 		const b = bridge();
-		if (!b?.tinymistStatus) return;
+		if (!b) return;
 		this.listen(b);
 		try {
 			const status = await b.tinymistStatus();
@@ -46,29 +47,27 @@ class TinymistInstaller {
 	/** resolves to how it ended, or null without a bridge that installs */
 	async install(): Promise<TinymistInstallResult | null> {
 		const b = bridge();
-		if (!b?.installTinymist) return null;
+		if (!b) return null;
 		this.listen(b);
 		this.failure = null;
 		this.step = { phase: 'download', received: 0, total: 0 };
-		const result = await b.installTinymist();
-		// main's broadcast, which reaches this window too, has already reported it
-		if (!b.onTinymistFinished) this.finish(result);
-		return result;
+		return b.installTinymist();
 	}
 
 	cancel(): void {
-		bridge()?.cancelTinymistInstall?.();
+		bridge()?.cancelTinymistInstall();
 	}
 
 	async remove(): Promise<void> {
 		const b = bridge();
-		if (!b?.removeTinymist) return;
+		if (!b) return;
 		this.listen(b);
 		this.failure = null;
 		this.removing = true;
+		const dir = toolchainProbe.distros.find((d) => d.family === 'typst' && d.managed)?.dir ?? null;
 		try {
 			const result = await b.removeTinymist();
-			if (!b.onTinymistFinished) this.finish(result);
+			if (result.ok && dir) await toolDirs.forget(dir);
 		} finally {
 			this.removing = false;
 		}
@@ -78,8 +77,8 @@ class TinymistInstaller {
 	private listen(b: TexpileTypstBridge): void {
 		if (this.listening) return;
 		this.listening = true;
-		b.onTinymistProgress?.((step) => (this.step = step));
-		b.onTinymistFinished?.((result) => this.finish(result));
+		b.onTinymistProgress((step) => (this.step = step));
+		b.onTinymistFinished((result) => this.finish(result));
 	}
 
 	private finish(result: TinymistInstallResult): void {

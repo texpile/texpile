@@ -94,8 +94,9 @@ describe('the save check', () => {
 				sizes.push(afresh.size);
 				return serializeLatexFileDetailed(parsed, d, afresh);
 			},
-			// a reader that never sees the document: nothing the writer does can satisfy it
-			reparse: () => Promise.resolve(parseLatexFile('\\documentclass{article}\n\\begin{document}\nNothing.\n\\end{document}\n').doc)
+			// a reader that never sees the document, though each rewrite changes what it reads
+			reparse: () =>
+				Promise.resolve(parseLatexFile(`\\documentclass{article}\n\\begin{document}\nNothing ${sizes.length}.\n\\end{document}\n`).doc)
 		});
 		expect(v.rung).toBe(3);
 		expect(sizes).toEqual([1, 3]);
@@ -118,6 +119,33 @@ describe('the save check', () => {
 		expect(v.rung).toBe(0);
 		expect(v.checked).toBe(false);
 		expect(v.text).toBe(first.text);
+	});
+
+	it('rewrites nothing for a chip the file reads as another node, the way Insert puts in \\cite{}', async () => {
+		const parsed = parseLatexFile(
+			'\\documentclass{article}\n\\begin{document}\n\\section{Method}\\label{sec:method}\nWe proceed in three steps.\n\n\\begin{itemize}\n  \\item First.\n  \\item Second.\n\\end{itemize}\n\\end{document}\n'
+		);
+		const state = EditorState.create({ doc: parsed.doc });
+		const { schema } = state;
+		let at = 0;
+		state.doc.descendants((node, pos) => {
+			if (node.isText && node.text!.includes('three')) at = pos + node.text!.indexOf('three') + 'three'.length;
+		});
+		const doc = state.tr.insert(at, schema.nodes.inline_latex.create(null, schema.text('\\cite{}'))).doc;
+		const first = serializeLatexFileDetailed(parsed, doc);
+		const v = await verifiedSerialize({
+			format: 'tex',
+			doc,
+			first,
+			serialize: (d, afresh) => serializeLatexFileDetailed(parsed, d, afresh),
+			reparse: realParse
+		});
+		expect(v.rung).toBe(3);
+		expect(v.rewritten).toBe(0);
+		expect(v.text).toBe(first.text);
+		expect(v.text).toContain(
+			'\\section{Method}\\label{sec:method}\nWe proceed in three\\cite{} steps.\n\n\\begin{itemize}\n  \\item First.'
+		);
 	});
 
 	it('is silent on a description item Shift+Tab took out of its list, its label now plain bold', async () => {

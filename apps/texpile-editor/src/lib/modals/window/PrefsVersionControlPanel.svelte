@@ -12,6 +12,7 @@
 	import PrefsHeading from './rows/PrefsHeading.svelte';
 	import PrefsRow from './rows/PrefsRow.svelte';
 	import PrefsSwitchRow from './rows/PrefsSwitchRow.svelte';
+	import GitProgramRow from './toolchain/GitProgramRow.svelte';
 	import { m } from '$lib/paraglide/messages';
 
 	// what git config says in the open folder: read-only here, set with git config
@@ -55,6 +56,7 @@
 
 <PrefsHeading section="git" />
 <div class="pl-4">
+	{#if isDesktop()}<GitProgramRow />{/if}
 	<PrefsSwitchRow
 		id="check-new-versions"
 		checked={settings.current.checkForNewVersions !== false}

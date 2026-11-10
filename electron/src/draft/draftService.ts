@@ -1,52 +1,22 @@
-// Runs ONE full engine compile of the user's main file and returns its pages -- nothing
-// else. The job string injects the page-extract.lua shipout hook (contained in _draft/,
-// source never touched); the result is the engine's manifest + per-page records, with
-// image filenames (draftImages) and Type1 font paths (fontT1Map) attached, the
-// bibliography cycled between passes (draftBib), and refs exported for the warm daemon
-// (draftRefs). Same engine as the user's own compile, so exact by construction.
-import { execFile } from 'node:child_process';
+// Runs ONE full engine compile of the user's main file and returns its pages. Every pass is an engine from the pool
+// (page-extract and teleport set up through the job string; the source is never touched), the bibliography cycles
+// between passes (draftBib), and the last pass's points become the index edits teleport from.
 import * as path from 'node:path';
 import * as fs from 'node:fs';
 import * as crypto from 'node:crypto';
-import { resolveType1Line } from '../fontT1Map';
 import { seedBbl, auxCycle } from './draftBib';
-import { exportDaemonRefs } from './draftRefs';
-import { readImageUses, attachImageFiles } from './draftImages';
-import { jobPrefix, mirrorSourceFolders, writeHooksFile } from './compileJob';
-import {
-	splitForWarm,
-	takeWarmCompiler,
-	goWarmCompiler,
-	rewarmCompiler,
-	aliasSynctex,
-	WARM_BODY,
-	type ReadBackFiles
-} from './draftWarmCompile';
+import { OUT } from './compileJob';
+import { collectSeeds, promote, publishView, readPage, type DraftPage, type ReadBackFiles } from './draftProducts';
+import { takeEngine, diskPreamble, stampOf, stopPool } from './teleport/enginePool';
+import { PointIndex, readIndexFile } from './teleport/pointIndex';
+import { adoptIndex, stopCount } from './teleport/teleportService';
+import { holdSweep } from './teleport/sweepHold';
+import type { DraftEngine } from './teleport/draftEngine';
 import { shellEnvReady } from '../shell/shellEnv';
 import { findProgram } from '../shell/findProgram';
+import { normRoot } from '../windows/normRoot';
+import { missingTexFile } from '../texlive/texlivePackages';
 
-// ht = the shipout box HEIGHT = distance from box top to the box baseline, which is the
-// FOOTER line's baseline -- the renderer uses it to keep bottom-anchored footers out of
-// patch shifts (h additionally includes the box depth below that baseline)
-// unc = the walker's certification reasons for this page (comma-joined: literal, transform,
-// escape, dir), absent when it is fully record-renderable
-// gs/gsn/go = the shipped vpack's glue_set/sign/order: gsn 1 means the page was stretched
-// to \textheight (flushbottom) and a patch's delta distributes over its vg records
-export type DraftPage = {
-	n: number;
-	w: number;
-	h: number;
-	ht?: number;
-	gs?: number;
-	gsn?: number;
-	go?: number;
-	unc?: string;
-	// the walker's own proof for this page: how far its pen finished from the engine's line
-	// width on the worst justified line. Measured 0.0000 on every page of every fixture, so a
-	// nonzero value is an anomaly worth seeing, not a tolerance to tune.
-	dev?: number;
-	records: string;
-};
 export type DraftResult =
 	| {
 			ok: true;
@@ -55,146 +25,101 @@ export type DraftResult =
 			passes: number;
 			paperW: number;
 			paperH: number;
-			colW: number;
-			textW: number;
-			footSkip: number;
-			// engine registers the renderer used to guess: \columnsep, \baselineskip, \parskip
-			colSep: number;
-			blSkip: number;
-			parSkip: number;
-			// \topskip: where a column's first baseline lands (chain-planner landing rule)
-			topSkip: number;
-			// \lineskiplimit: where TeX switches the interline glue from \baselineskip to \lineskip
-			lsLimit: number;
-			// the files whose paragraphs were stamped, in id order: a line record's "sf" is a
-			// 1-based index into this. Line numbers are file-local, so the id is what makes
-			// "line 45" mean anything in a multi-file project.
+			// the files whose paragraphs were stamped, in id order: a line record's "sf" is a 1-based index into this
 			srcFiles: string[];
 			// the line \begin{document} executed at (in the main file), from the hook itself
 			bodyLine?: number;
-			// per-line counter snapshots (see page-extract.lua): the daemon pins to these
-			counters: { l: number; f?: string; s: Record<string, number> }[];
-			// per-break pruned runs (see page-extract.lua seam capture): the material TeX
-			// discarded at each column/page break, keyed by page + 1-based column index
-			seams: { page: number; col: number; fire?: number; pen: number; run: Record<string, number>[] }[];
-			// every paragraph's parameters at its line break, by the serial its lines carry (see page-extract.lua)
-			paras: Record<string, unknown>[];
 			marginX: number;
 			marginY: number;
 			pages: DraftPage[];
 	  }
-	/** error 'engine-missing' names the program in `tool` */
-	| { ok: false; error: string; ms: number; log?: string; superseded?: true; tool?: string };
+	/** error 'engine-missing' names the program in `tool`; 'latex-too-old' the format's LaTeX version in `found`; 'file-missing' the package file in `file` */
+	| { ok: false; error: string; ms: number; log?: string; superseded?: true; tool?: string; found?: string; file?: string };
 
 type DraftBody = { root: string; mainFile: string; engineDir: string; engine?: string; readBack: ReadBackFiles };
 
-const OUT = '_draft';
-
-// Cancel-on-supersede: a newer compileDraft for the SAME root kills that root's in-flight
-// lualatex so a hung/slow compile can't hold the 120s pass timeout and stick the preview --
-// the editor just fires the fresh compile and the stale one bails. gen is the monotonic run
-// id per root; a run is superseded once its root's gen moves past it. Keyed per root so one
-// window's compile can never cancel another window's.
-type CompileRun = { gen: number; child: import('node:child_process').ChildProcess | null };
+// a newer compile of the same root kills this one's engine, so a slow pass never holds the preview
+type CompileRun = { gen: number; engine: DraftEngine | null };
 const compileRuns = new Map<string, CompileRun>();
 function runFor(root: string): CompileRun {
-	const key = process.platform === 'win32' ? path.resolve(root).toLowerCase() : path.resolve(root);
+	const key = normRoot(root);
 	let r = compileRuns.get(key);
 	if (!r) {
-		r = { gen: 0, child: null };
+		r = { gen: 0, engine: null };
 		compileRuns.set(key, r);
 	}
 	return r;
 }
 
-// TeX places the shipped page's reference point 1in (72.27pt) from the paper's top-left
-// by default; the extracted box coords are relative to that point.
+// TeX places the shipped page's reference point 1in (72.27pt) from the paper's top-left by default
 const ONE_INCH_PT = 72.27;
+const PASS_TIMEOUT_MS = 120000;
+
+// what a compile leaves behind: the last pass's engine, whose folder only an adopted index reads
+type CompileOwned = { last: DraftEngine | null; release: () => void };
 
 export async function compileDraft(body: DraftBody): Promise<DraftResult> {
+	const owned: CompileOwned = { last: null, release: holdSweep(body.root) };
+	const stops = stopCount(body.root);
+	try {
+		return await compilePasses(body, owned, stops);
+	} finally {
+		owned.release();
+		owned.last?.remove();
+		// the preview stopped while this ran: what its passes warmed goes too
+		if (stopCount(body.root) !== stops) stopPool(body.root);
+	}
+}
+
+async function compilePasses(body: DraftBody, owned: CompileOwned, stops: number): Promise<DraftResult> {
 	await shellEnvReady();
-	const { root, mainFile } = body;
+	const { root } = body;
+	const mainRel = body.mainFile.replace(/\\/g, '/');
 	const engineDir = body.engineDir.replace(/\\/g, '/');
 	const engine = body.engine || 'lualatex';
-	// a missing engine says so by name, so the pane can point at the Toolchain folders instead of an empty result
 	if (!findProgram(engine)) return { ok: false, error: 'engine-missing', tool: engine, ms: 0 };
 	const outAbs = path.join(root, OUT);
-	// supersede any in-flight compile of THIS root: kill its lualatex so this fresh run
-	// isn't stuck behind it (other roots' compiles are untouched)
 	const run = runFor(root);
 	const gen = ++run.gen;
-	if (run.child) {
-		try {
-			run.child.kill('SIGKILL');
-		} catch {
-			/* already gone */
-		}
-		run.child = null;
-	}
+	run.engine?.remove();
+	run.engine = null;
 	function superseded(): boolean {
-		return gen !== run.gen;
+		return gen !== run.gen || stopCount(root) !== stops;
 	}
 	fs.mkdirSync(outAbs, { recursive: true });
-	mirrorSourceFolders(root, outAbs);
-	// self-ignoring build dir: users' projects are usually git repos, and the preview's
-	// artifacts must never end up staged in them
+	// users' projects are usually git repositories, and the preview's artifacts must never be staged in them
 	const gi = path.join(outAbs, '.gitignore');
-	if (!fs.existsSync(gi)) {
-		try {
-			fs.writeFileSync(gi, '*\n');
-		} catch {
-			/* ignore */
-		}
-	}
-	// clear stale page files so a shorter document doesn't keep orphaned pages
-	for (const f of fs.readdirSync(outAbs))
-		if (/^page-\d+\.jsonl$/.test(f) || f === 'pages.json' || f === 'counters.jsonl' || f === 'seams.jsonl' || f === 'paras.jsonl') {
-			try {
-				fs.rmSync(path.join(outAbs, f));
-			} catch {
-				/* ignore */
-			}
-		}
+	if (!fs.existsSync(gi)) fs.writeFileSync(gi, '*\n');
 
-	// forward-slash the input path for TeX; keep it relative to the compile cwd (root)
-	const mainRel = mainFile.replace(/\\/g, '/');
-	writeHooksFile(outAbs);
-	const job = `${jobPrefix(engineDir)}\\input{${mainRel}}`;
-	// A pre-warmed engine (preamble loaded, parked before the body) takes the FIRST pass;
-	// extra passes and every fallback go cold. lualatex only: the warm pool spawns that.
-	const split = engine === 'lualatex' ? splitForWarm(path.join(root, mainFile)) : null;
-	let warmLeft = split ? takeWarmCompiler(root, split.preamble) : null;
-	let usedWarm = false;
-	function enginePass(): Promise<void> {
-		if (superseded()) return Promise.resolve(); // a newer compile already took over
-		if (warmLeft && split) {
-			const w = warmLeft;
-			warmLeft = null;
-			usedWarm = true;
-			// adopt: a superseded run's partial products must never be promoted over draft.*
-			const g = goWarmCompiler(w, root, fs.readFileSync(path.join(root, mainFile), 'utf8'), split.beginLine, () => !superseded());
-			run.child = g.child; // a superseding compile of this root kills this to unblock itself
-			return g.done.then(() => {
-				if (run.child === g.child) run.child = null;
-			});
+	let last: { engine: DraftEngine; seedDir: string; preFiles: string[]; preStamp: string } | null = null;
+	let oldLatex: string | null = null;
+	async function enginePass(): Promise<void> {
+		if (superseded()) return;
+		const seedDir = collectSeeds(root, outAbs, body.readBack);
+		const preamble = diskPreamble(root, mainRel) ?? '';
+		const eng = await takeEngine({ root, mainRel, engineDir, engine, seedDir, preamble, preStamp: null }, true);
+		if (superseded()) {
+			eng.remove();
+			return;
 		}
-		return new Promise<void>((resolve) => {
-			const child = execFile(
-				engine,
-				// -synctex=1 so the instant path can map a source line to its page box (draft.synctex.gz)
-				['-no-shell-escape', '-interaction=nonstopmode', '-synctex=1', `-output-directory=${OUT}`, '-jobname=draft', job],
-				{ cwd: root, timeout: 120000, maxBuffer: 32 * 1024 * 1024 },
-				() => {
-					if (run.child === child) run.child = null;
-					resolve();
-				}
-			);
-			run.child = child; // a superseding compile of this root kills this to unblock itself
-			child.on('error', () => {
-				if (run.child === child) run.child = null;
-				resolve();
-			}); // engine not on PATH etc -> handled by the manifest check below
-		});
+		run.engine = eng;
+		const timer = setTimeout(() => eng.kill(), PASS_TIMEOUT_MS);
+		const preFiles = await eng.ready;
+		if (!preFiles && eng.oldLatex) oldLatex = eng.oldLatex;
+		const preStamp = preFiles ? stampOf(root, preFiles) : '';
+		await eng.go();
+		clearTimeout(timer);
+		if (run.engine === eng) run.engine = null;
+		if (superseded()) {
+			eng.remove();
+			return;
+		}
+		promote(eng.abs, outAbs, root, body.readBack);
+		last?.engine.remove();
+		last = preFiles ? { engine: eng, seedDir, preFiles, preStamp } : null;
+		// eslint-disable-next-line no-param-reassign -- the caller removes what the passes left
+		owned.last = last?.engine ?? null;
+		if (!preFiles) eng.remove();
 	}
 
 	// the pass products a rerun would read differently: cross-refs and the contents listings
@@ -214,28 +139,19 @@ export async function compileDraft(body: DraftBody): Promise<DraftResult> {
 	const t0 = Date.now();
 	const auxExisted = fs.existsSync(path.join(outAbs, 'draft.aux'));
 	const refsBefore = refState();
-	seedBbl(root, outAbs, mainFile);
+	seedBbl(root, outAbs, body.mainFile);
 	await enginePass();
-	if (superseded()) return { ok: false, error: 'superseded', ms: Date.now() - t0, superseded: true };
+	if (oldLatex) return { ok: false, error: 'latex-too-old', found: oldLatex, ms: Date.now() - t0 };
 	let passes = 1;
-	// aux cycle: bibliography tools + the classic reruns. A changed .bbl needs up to TWO
-	// extra passes (classic bibtex chain: bbl read in pass 2 writes \bibcite to the aux,
-	// \cite resolves in pass 3); a missing aux (first-ever compile) needs one, so
-	// \cite/\ref/\tableofcontents see the freshly written aux/toc. Ordinary text edits
-	// keep the .bbl stable (bcf-hash + mtime guards) and stay single-pass.
-	const bblChanged = await auxCycle(root, outAbs, mainFile);
+	// a changed .bbl needs up to two extra passes (bbl read, \bibcite written, \cite resolved); a first compile one
+	const bblChanged = superseded() ? false : await auxCycle(root, outAbs, body.mainFile);
 	const extra = bblChanged ? 2 : !auxExisted ? 1 : 0;
 	for (let i = 0; i < extra && !superseded(); i++) {
 		await enginePass();
 		passes++;
 	}
-	if (superseded()) return { ok: false, error: 'superseded', ms: Date.now() - t0, superseded: true };
-	// engine-announced rerun: the last pass complained about products it writes itself (a
-	// \tableofcontents with no .toc yet -- a stale aux from an aborted run skips the
-	// missing-aux pass above -- moved labels, undefined \ref/\cite) AND those files
-	// actually changed. One bounded pass; the changed-guard keeps a genuinely broken
-	// \ref from rerunning forever.
-	{
+	// the engine announced a rerun and the files it reads did change: one bounded pass more
+	if (!superseded()) {
 		let log = '';
 		try {
 			log = fs.readFileSync(path.join(outAbs, 'draft.log'), 'utf8');
@@ -249,30 +165,23 @@ export async function compileDraft(body: DraftBody): Promise<DraftResult> {
 		}
 	}
 	if (superseded()) return { ok: false, error: 'superseded', ms: Date.now() - t0, superseded: true };
-	exportDaemonRefs(outAbs);
 	const ms = Date.now() - t0;
-	// Warm the NEXT pass now: every product this compile reads has been read (aux cycle,
-	// refs, log checks), and the warm process runs under its own jobname so nothing the app
-	// reads after this return is touched. Also on the failure path -- a body typo does not
-	// invalidate the preamble, and the next attempt deserves the same head start.
-	const rewarm = () => {
-		if (engine === 'lualatex') rewarmCompiler(root, mainFile, engineDir, body.readBack);
-	};
 
 	const manifestPath = path.join(outAbs, 'pages.json');
 	if (!fs.existsSync(manifestPath)) {
-		let log = '';
+		let full = '';
 		try {
-			log = fs
-				.readFileSync(path.join(outAbs, 'draft.log'), 'utf8')
-				.split('\n')
-				.filter((l) => /^!|error/i.test(l))
-				.slice(-12)
-				.join('\n');
+			full = fs.readFileSync(path.join(outAbs, 'draft.log'), 'utf8');
 		} catch {
 			/* no log */
 		}
-		rewarm();
+		const file = missingTexFile(full);
+		if (file) return { ok: false, error: 'file-missing', file, ms };
+		const log = full
+			.split('\n')
+			.filter((l) => /^!|error/i.test(l))
+			.slice(-12)
+			.join('\n');
 		return { ok: false, error: 'Draft compile produced no pages (is lualatex on PATH? see _draft/draft.log)', ms, log };
 	}
 
@@ -280,9 +189,11 @@ export async function compileDraft(body: DraftBody): Promise<DraftResult> {
 		count: number;
 		paperW?: number;
 		paperH?: number;
-		colW?: number;
+		hOffset?: number;
+		vOffset?: number;
+		srcFiles?: string[];
 		bodyLine?: number;
-		pages: { n: number; w: number; h: number; ht?: number; gs?: number; gsn?: number; go?: number; unc?: string; dev?: number }[];
+		pages: { n: number; w: number; h: number; unc?: string }[];
 	};
 	try {
 		manifest = JSON.parse(fs.readFileSync(manifestPath, 'utf8'));
@@ -290,90 +201,35 @@ export async function compileDraft(body: DraftBody): Promise<DraftResult> {
 		return { ok: false, error: 'Draft manifest unreadable: ' + (e instanceof Error ? e.message : String(e)), ms };
 	}
 
-	// counter-truth sidecar: per-line snapshots the renderer pins daemon typesets to
-	let counters: { l: number; f?: string; s: Record<string, number> }[] = [];
-	try {
-		counters = fs
-			.readFileSync(path.join(outAbs, 'counters.jsonl'), 'utf8')
-			.split('\n')
-			.filter(Boolean)
-			.map((ln) => JSON.parse(ln));
-	} catch {
-		/* older engine bridge or an empty log: pins fall back to fixed values */
+	const done = last as { engine: DraftEngine; seedDir: string; preFiles: string[]; preStamp: string } | null;
+	if (done) {
+		const index = new PointIndex(
+			readIndexFile(path.join(done.engine.abs, 'tele', 'index.jsonl')),
+			mainRel,
+			manifest.bodyLine ?? 0,
+			done.preFiles,
+			done.preStamp,
+			done.seedDir
+		);
+		index.adoptBasis(path.join(done.engine.abs, 'tele', 'src'));
+		index.fontList = `${done.engine.rel}/tele/fonts.lua`;
+		index.imageList = `${done.engine.rel}/tele/images.lua`;
+		// eslint-disable-next-line no-param-reassign -- the index reads this folder now
+		owned.last = null;
+		owned.release();
+		adoptIndex({ root, mainRel, engineDir, index, count: manifest.count, srcFiles: manifest.srcFiles ?? [] });
 	}
 
-	// A warm first pass read the body from the padded _draft file, so single-pass products
-	// name it where a cold pass names the main file (line numbers already agree -- that is
-	// what the padding buys). Put the main file's name back so nothing downstream can tell
-	// which kind of pass ran. Multi-pass compiles end on a cold pass and alias nothing.
-	if (usedWarm && split && passes === 1) {
-		const mainBase = path.basename(mainRel);
-		// the padded body reads as texd-body.tex, and anything read via \jobname (the seeded
-		// bbl, an .ind) as texd_warm.*; a cold pass names main.tex and draft.* there
-		const alias = (f: string): string => {
-			const lower = f.toLowerCase();
-			if (lower === WARM_BODY.toLowerCase()) return mainBase.toLowerCase();
-			if (lower.startsWith('texd_warm.')) return 'draft.' + f.slice('texd_warm.'.length);
-			return f;
-		};
-		const sf = (manifest as { srcFiles?: string[] }).srcFiles;
-		if (sf) for (let i = 0; i < sf.length; i++) sf[i] = alias(sf[i]);
-		for (const c of counters) if (c.f) c.f = alias(c.f);
-		// begindoc fired inside the warm wrapper, so its line number names the wrong file
-		manifest.bodyLine = split.beginLine;
-		aliasSynctex(outAbs, mainRel);
-	}
-
-	// seam sidecar: per-break pruned runs; absent (older engine, luatexbase missing) means
-	// the chain planner falls back to its guessed junction gap and stays provisional
-	let seams: { page: number; col: number; fire?: number; pen: number; run: Record<string, number>[] }[] = [];
-	try {
-		seams = fs
-			.readFileSync(path.join(outAbs, 'seams.jsonl'), 'utf8')
-			.split('\n')
-			.filter(Boolean)
-			.map((ln) => JSON.parse(ln));
-	} catch {
-		/* no seams: junction gaps stay guessed */
-	}
-
-	let paras: Record<string, unknown>[] = [];
-	try {
-		paras = fs
-			.readFileSync(path.join(outAbs, 'paras.jsonl'), 'utf8')
-			.split('\n')
-			.filter(Boolean)
-			.map((ln) => JSON.parse(ln));
-	} catch {
-		/* none recorded: edits typeset in the document's own defaults and the band proof decides */
-	}
-
-	const imageUses = readImageUses(outAbs);
 	const pages: DraftPage[] = [];
 	for (let n = 1; n <= manifest.count; n++) {
-		const p = path.join(outAbs, `page-${String(n).padStart(3, '0')}.jsonl`);
 		const meta = manifest.pages[n - 1] || { n, w: 0, h: 0 };
-		let records = fs.existsSync(p) ? fs.readFileSync(p, 'utf8') : '';
-		if ((imageUses.length && records.includes('"t":"image"')) || records.includes('"t":"font"')) {
-			const lines = records.split('\n');
-			attachImageFiles(lines, imageUses, root);
-			// font resolution spawns kpsewhich (async; a sync spawn here froze the app's UI)
-			await Promise.all(
-				lines.map(async (ln, i) => {
-					if (ln.startsWith('{"t":"font"')) lines[i] = await resolveType1Line(ln);
-				})
-			);
-			records = lines.join('\n');
-		}
-		pages.push({ n, w: meta.w, h: meta.h, ht: meta.ht, gs: meta.gs, gsn: meta.gsn, go: meta.go, unc: meta.unc, dev: meta.dev, records });
+		pages.push(await readPage(outAbs, root, n, meta.w, meta.h, meta.unc));
 	}
-
-	// some classes never set the engine's page-dimension registers, leaving paperW/H = 0 in the
-	// manifest (the preview would render zero-sized pages): fall back to the shipped page BOX
-	// dims (always known at shipout) plus the 1in reference margins
+	// some classes never set the page dimension registers: the paper is then the widest shipped box plus the margins
 	const maxPageW = manifest.pages.length ? Math.max(...manifest.pages.map((p) => p.w || 0)) : 0;
 	const maxPageH = manifest.pages.length ? Math.max(...manifest.pages.map((p) => p.h || 0)) : 0;
-	rewarm();
+	if (superseded()) return { ok: false, error: 'superseded', ms, superseded: true };
+	publishView(outAbs);
 	return {
 		ok: true,
 		ms,
@@ -381,23 +237,11 @@ export async function compileDraft(body: DraftBody): Promise<DraftResult> {
 		count: manifest.count,
 		paperW: manifest.paperW || (maxPageW ? maxPageW + 2 * ONE_INCH_PT : 0),
 		paperH: manifest.paperH || (maxPageH ? maxPageH + 2 * ONE_INCH_PT : 0),
-		colW: manifest.colW || 0,
-		textW: (manifest as { textW?: number }).textW || 0,
-		footSkip: (manifest as { footSkip?: number }).footSkip || 0,
-		colSep: (manifest as { colSep?: number }).colSep || 0,
-		blSkip: (manifest as { blSkip?: number }).blSkip || 0,
-		parSkip: (manifest as { parSkip?: number }).parSkip || 0,
-		topSkip: (manifest as { topSkip?: number }).topSkip || 0,
-		lsLimit: (manifest as { lsLimit?: number }).lsLimit || 0,
-		srcFiles: (manifest as { srcFiles?: string[] }).srcFiles || [],
+		srcFiles: manifest.srcFiles ?? [],
 		bodyLine: manifest.bodyLine,
-		counters,
-		seams,
-		paras,
-		// the page's reference point: TeX's 1in default MOVED by the document's own
-		// \hoffset/\voffset, instead of assuming every document leaves them at zero
-		marginX: ONE_INCH_PT + ((manifest as { hOffset?: number }).hOffset || 0),
-		marginY: ONE_INCH_PT + ((manifest as { vOffset?: number }).vOffset || 0),
+		// TeX's 1in reference point, moved by the document's own \hoffset/\voffset
+		marginX: ONE_INCH_PT + (manifest.hOffset || 0),
+		marginY: ONE_INCH_PT + (manifest.vOffset || 0),
 		pages
 	};
 }

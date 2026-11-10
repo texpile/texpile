@@ -1,4 +1,4 @@
-// In-app update state over the window.texpileUpdates bridge (electron/src/updates.ts).
+// In-app update state over the window.texpileUpdates bridge (electron/src/updates/updates.ts).
 // One store drives the modal, the Help-menu badge, and the background-download toasts.
 import { browser } from '$lib/runtime';
 import { box } from '$lib/runes/box.svelte';

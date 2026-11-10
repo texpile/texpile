@@ -28,6 +28,7 @@ import { drivesTypst, isTypstCommand } from './typstCommand';
 import { basename, dirname, joinPath, revealItem, samePath } from './fileSystem';
 import { toaster } from '$lib/modals/toaster-svelte';
 import { reportMissingTool } from './toolMissing';
+import { installForCompileLog } from '$lib/modals/window/toolchain/install/texLivePackages';
 import { m } from '$lib/paraglide/messages';
 
 // what the Compile menu asked for besides a plain run: both are latexmk flags spliced into the same command
@@ -405,6 +406,14 @@ export class CompilePipeline {
 			}
 			this.endRun();
 			this.deps.refreshTree();
+			// Texpile's TeX Live fetches a package the document lacks, and the command runs again from scratch: latexmk
+			// sees no change in a file it never read
+			const folder = workspaceRoot.current;
+			if (!toolMissing && logAdvanced && logPath && folder && mode !== 'clean') {
+				const log = await this.deps.readText(logPath).catch(() => '');
+				// an install can take minutes, and the folder open by then may be another one
+				if ((await installForCompileLog(log, folder)) && workspaceRoot.current === folder) void this.startCompile('scratch');
+			}
 		}, 400);
 	}
 

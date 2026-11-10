@@ -55,6 +55,8 @@ function grammarShown(): boolean {
 const STATIC_ROWS = [
 	{ id: 'appearance-mode', tab: 'appearance', label: () => m.prefs_mode(), note: () => m.prefs_appearance_hint() },
 	{ id: 'appearance-theme', tab: 'appearance', label: () => m.prefs_theme() },
+	{ id: 'custom-themes', tab: 'appearance', label: () => m.prefs_custom_themes(), note: () => m.prefs_custom_themes_note() },
+	{ id: 'text-font', tab: 'appearance', label: () => m.prefs_text_font(), note: () => m.prefs_text_font_note() },
 	{ id: 'window-transparency', tab: 'appearance', label: () => m.prefs_window_transparency() },
 	{ id: 'ui-language', tab: 'appearance', label: () => m.prefs_language() },
 
@@ -83,6 +85,13 @@ const STATIC_ROWS = [
 		note: () => m.prefs_auto_fraction_note()
 	},
 	{ id: 'tab-out', tab: 'editor', section: 'source', label: () => m.prefs_tab_out(), note: () => m.prefs_tab_out_note() },
+	{
+		id: 'fold-on-open',
+		tab: 'editor',
+		section: 'source',
+		label: () => m.prefs_fold_on_open(),
+		note: () => m.prefs_fold_on_open_note()
+	},
 	{
 		id: 'matrix-keys',
 		tab: 'editor',
@@ -161,6 +170,8 @@ const STATIC_ROWS = [
 	{ id: 'snippets-folder', tab: 'snippets', label: () => m.prefs_snippets_project(), note: () => m.prefs_snippets_project_note() },
 	{ id: 'snippets-global', tab: 'snippets', label: () => m.prefs_snippets_global(), note: () => m.prefs_snippets_global_note() },
 
+	{ id: 'keybindings', tab: 'keybindings', label: () => m.menubar_keyboard_shortcuts() },
+
 	{ id: 'spellcheck', tab: 'proofing', label: () => m.prefs_spellcheck() },
 	{
 		id: 'folder-language',
@@ -186,6 +197,14 @@ const STATIC_ROWS = [
 	{ id: 'dictionary', tab: 'proofing', section: 'spellAll', label: () => m.spelldict_heading(), note: () => m.prefs_dictionary_note() },
 	{ id: 'grammar-rules', tab: 'proofing', section: 'spellAll', label: () => m.prefs_grammar_rules(), shown: grammarShown },
 
+	{
+		id: 'git-program',
+		tab: 'vcs',
+		section: 'git',
+		label: () => m.prefs_git_program(),
+		note: () => m.prefs_git_program_note(),
+		shown: isDesktop
+	},
 	{
 		id: 'check-new-versions',
 		tab: 'vcs',
@@ -220,6 +239,8 @@ const STATIC_ROWS = [
 
 	{ id: 'collab-name', tab: 'collaboration', label: () => m.prefs_collab_name(), note: () => m.prefs_collab_name_note() },
 
+	{ id: 'compiler-latex', tab: 'toolchain', label: () => m.prefs_group_latex() },
+	{ id: 'compiler-typst', tab: 'toolchain', label: () => m.prefs_group_typst() },
 	{ id: 'toolchain-dirs', tab: 'toolchain', label: () => m.prefs_toolchain_dirs(), note: () => m.prefs_toolchain_dirs_hint() },
 
 	{ id: 'zotero', tab: 'integrations', label: () => m.prefs_zotero(), note: () => m.prefs_zotero_note() },

@@ -18,7 +18,8 @@
 	import { ImageAttachments } from '../../attach/imageAttachments.svelte';
 	import { tip } from '$lib/components/tooltip.svelte';
 	import { m } from '$lib/paraglide/messages';
-	import type { AgentCommand, Attached, ConfigOption, ContextUsage, PastedImage } from '../../agentPanel.types';
+	import AgentQueuedMessages from './AgentQueuedMessages.svelte';
+	import type { AgentCommand, Attached, ConfigOption, ContextUsage, PastedImage, QueuedMessage } from '../../agentPanel.types';
 
 	type Props = {
 		agent: string;
@@ -32,8 +33,12 @@
 		/** the agent takes images, so a pasted, dropped or picked one goes with the message */
 		takesImages: boolean;
 		usage: ContextUsage | null;
+		queued: QueuedMessage[];
+		/** while the agent works this queues the message */
 		onSend: (text: string, attached: Attached | null, images: PastedImage[]) => void;
-		onStop: () => void;
+		/** gives back what was queued */
+		onStop: () => QueuedMessage[];
+		onUnqueue: (index: number) => void;
 		onConfig: (id: string, value: string) => void;
 	};
 	const props: Props = $props();
@@ -48,9 +53,13 @@
 	$effect(() => selected.watch());
 	// what the x took off, which stays off until the file or the selected lines change
 	let detached = $state<string | null>(null);
+	// a message Stop gave back keeps the lines it was going to carry, over what is selected now
+	let restored = $state<Attached | null>(null);
 	const attached = $derived.by((): Attached | null => {
 		// a command goes alone: the agent runs one only when its text comes by itself
-		if (!props.file || runsCommand(text, props.commands)) return null;
+		if (runsCommand(text, props.commands)) return null;
+		if (restored) return attachedKey(restored) === detached ? null : restored;
+		if (!props.file) return null;
 		const lines = props.takesSelection && selected.current?.path === props.file ? selected.current.lines : null;
 		const a = { path: props.file, lines };
 		return attachedKey(a) === detached ? null : a;
@@ -59,10 +68,19 @@
 	const empty = $derived(!text.trim() && !images.list.length);
 
 	function send(): void {
-		if (props.working || empty) return;
+		if (empty) return;
 		props.onSend(text, attached, images.list);
 		text = '';
+		restored = null;
 		images.clear();
+	}
+
+	function stop(): void {
+		const back = props.onStop();
+		if (!back.length) return;
+		text = [...back.map((q) => q.text), text].filter((t) => t.trim()).join('\n\n');
+		restored = back.find((q) => q.attached)?.attached ?? null;
+		images.restore(back.flatMap((q) => q.images));
 	}
 
 	// text on the clipboard beside an image still pastes for an agent that takes no images
@@ -108,10 +126,11 @@
 </script>
 
 <div class="px-3 pb-2">
+	{#if props.queued.length}<AgentQueuedMessages queued={props.queued} onRemove={props.onUnqueue} />{/if}
 	<!-- Skeleton's textarea on the frame, so it reads as the app's other text boxes and lights up while one types in it.
 	     What goes with the message above the text, the + and the agent's settings under it, as chat boxes lay it out -->
 	<div
-		class="textarea relative [--field-size:var(--text-sm)]"
+		class="textarea relative [--field-size:var(--text-base)]"
 		role="group"
 		ondragover={(e) => e.dataTransfer?.types.includes('Files') && e.preventDefault()}
 		ondrop={onDrop}
@@ -128,7 +147,7 @@
 			</div>
 		{/if}
 		<textarea
-			class="block field-sizing-content max-h-32 min-h-5 w-full resize-none bg-transparent text-sm leading-5 outline-none placeholder:text-[var(--field-placeholder)]"
+			class="block field-sizing-content max-h-40 min-h-6 w-full resize-none bg-transparent text-base leading-6 outline-none placeholder:text-[var(--field-placeholder)]"
 			rows="1"
 			placeholder={m.agent_panel_placeholder({ agent: props.agent })}
 			aria-label={m.agent_panel_placeholder({ agent: props.agent })}
@@ -177,16 +196,17 @@
 					class="btn-icon preset-tonal size-6 shrink-0 p-0"
 					use:tip={m.agent_panel_stop()}
 					aria-label={m.agent_panel_stop()}
-					onclick={props.onStop}
+					onclick={stop}
 				>
 					<Square class="size-2.5 fill-current" />
 				</button>
-			{:else}
+			{/if}
+			{#if !props.working || !empty}
 				<button
 					class="btn-icon preset-filled-primary-500 size-6 shrink-0 p-0"
 					disabled={empty}
-					use:tip={m.agent_panel_send()}
-					aria-label={m.agent_panel_send()}
+					use:tip={props.working ? m.agent_panel_queue() : m.agent_panel_send()}
+					aria-label={props.working ? m.agent_panel_queue() : m.agent_panel_send()}
 					onclick={send}
 				>
 					<ArrowUp class="size-3.5" />

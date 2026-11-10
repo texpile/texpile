@@ -12,6 +12,7 @@ import { projectIntelStore } from '$lib/stores/projectIntel';
 import { activeFilePath, mainFile, texFiles } from '$lib/workspace/workspaceStore';
 import { relativeTo } from '$lib/workspace/fileSystem';
 import { drawnChipOf } from '$lib/editor/visual/extensions/drawnChips/DrawnChipView';
+import { openPopoverOf } from '$lib/editor/visual/extensions/popoverFocus/atomPopovers';
 import { sanitizeLabel } from '$lib/editor/visual/label';
 import { renderChildren } from '$lib/languages/latex/serializer/latexSerializer';
 import { typStr } from '$lib/languages/typst/visual/serialize/typstEscapes';
@@ -143,7 +144,8 @@ function openPanelOfSelected(view: EditorView): void {
 	function open(): void {
 		requestAnimationFrame(() => {
 			const { selection } = view.state;
-			if (selection instanceof NodeSelection) drawnChipOf(selection.node)?.openPanel();
+			if (!(selection instanceof NodeSelection) || openPopoverOf(selection.node)) return;
+			drawnChipOf(selection.node)?.openPanel();
 		});
 	}
 	// an in-app menu hands focus back to its trigger a tick after our item ran, and a panel opened before
@@ -187,14 +189,16 @@ export function insertChips(sources: string[], shape: ChipShape, holdsSelection 
 	if (opensPanel) openPanelOfSelected(view);
 }
 
-export function insertOne(node: PMNode, caretInside = false): void {
+export function insertOne(node: PMNode, caretInside = false, opensPopover = false): void {
 	const view = editorViewStore.current;
 	if (!view) return;
 	const { tr, from } = insertAt(view, [node], node.isBlock ? 'after-paragraph' : 'caret');
 	const found = positionOf(tr, node, from, node.nodeSize);
 	if (found !== null && caretInside) tr.setSelection(TextSelection.near(tr.doc.resolve(found + 1)));
+	if (found !== null && opensPopover) tr.setSelection(NodeSelection.create(tr.doc, found));
 	view.dispatch(tr.scrollIntoView());
 	view.focus();
+	if (opensPopover) openPanelOfSelected(view);
 }
 
 /** a Format menu value `style:<name>` as the text either side of the words it styles */
@@ -308,7 +312,7 @@ export function makeDrawnInserts(deps: DrawnInsertDeps): (value: string) => Prom
 			case 'crossref':
 				return insertChips([crossRefSource()], 'inline');
 			case 'citation':
-				return insertChips(['\\cite{}'], 'inline');
+				return insertOne(schema.nodes.citation.create({ variant: 'cite' }), false, true);
 			case 'hyperref': {
 				const words = selectedLatex(view);
 				return insertChips([`\\hyperref[]{${words ?? ''}}`], 'inline', words !== null);

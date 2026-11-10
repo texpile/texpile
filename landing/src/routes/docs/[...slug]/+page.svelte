@@ -30,7 +30,7 @@
 	// a section of several pages has no page of its own to take a blurb from
 	const SECTION_BLURBS: Record<string, string> = {
 		'Editor tips': 'Selecting whole blocks, pasting from Word or Excel, dropping in files, and spell check.',
-		Workflow: 'Projects and files, the PDF and the toolchain, and Git.',
+		Workflow: 'Projects and files, the PDF and the programs that build it, and Git.',
 		'Review and collaboration': 'Comments, suggestions, and editing together live.',
 		'AI and integrations': 'AI agents, MCP, Zotero, and citing by DOI.',
 		Customize: 'Preferences, themes, and keyboard shortcuts.',

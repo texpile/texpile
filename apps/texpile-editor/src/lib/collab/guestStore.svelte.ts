@@ -11,6 +11,7 @@ import { GhostDirs } from './guestGhostDirs';
 import { GuestFileCache } from './guestFileCache';
 import { presenceIdentity } from './identity';
 import { GuestSyncRequests } from './guestSyncRequests';
+import { manifestMoves } from './manifestMoves';
 import { LocalFork } from './localFork';
 import { RelayTransport } from './transport';
 import { forgetJoinCode, rememberJoinCode } from './joinLink.svelte';
@@ -71,6 +72,8 @@ class GuestCollabController {
 	previewPage = $state<string | null>(null);
 	/** the remote preview pane wires this; host-origin preview frames land here */
 	onPreviewFrame: ((p: PreviewPayload) => void) | null = null;
+	/** a file moved on the host, whoever moved it; tabs, text and caret follow it as for a move made here */
+	onMove: ((from: string, to: string) => void) | null = null;
 	/** WorkspaceView wires this: this guest clicked the streamed preview and the host's tinymist
 	 *  resolved it to a source position (manifest-relative file, zero-based line). */
 	onTypstJump: ((p: { file: string; line: number }) => void) | null = null;
@@ -226,6 +229,10 @@ class GuestCollabController {
 	private refreshFromDoc(): void {
 		if (!this.doc) return;
 		this.noteHost();
+		const moves = manifestMoves(
+			this.files.map((f) => f.rel),
+			manifestOf(this.doc)
+		);
 		const locks = locksOf(this.doc);
 		const out: GuestFile[] = [];
 		for (const [rel, entry] of manifestOf(this.doc).entries()) {
@@ -244,6 +251,8 @@ class GuestCollabController {
 			this.lastManifestSig = sig;
 			this.rev++;
 		}
+		// before the watchers: the tree refresh they start closes an open file it no longer lists
+		for (const [from, to] of moves) this.onMove?.(from, to);
 		for (const cb of this.fileWatchers) cb();
 	}
 	private lastManifestSig = '';
@@ -374,8 +383,10 @@ class GuestCollabController {
 		return session && from !== null ? session.authorOf(from) : null;
 	}
 
+	/** null until the host shares the file as text: a file this guest just made or renamed is not there yet */
 	ytextFor(rel: string): Y.Text | null {
-		return this.doc ? textOf(this.doc, rel) : null;
+		const entry = this.doc ? manifestOf(this.doc).get(rel) : undefined;
+		return entry && !entry.gone && entry.kind === 'text' ? textOf(this.doc!, rel) : null;
 	}
 
 	/** object URL for a file the host serves on demand (images); '' until it arrives. */
@@ -432,11 +443,11 @@ class GuestCollabController {
 	}
 
 	leave(): void {
+		// an ended session is torn down already; an effect teardown reads the status from before the end
+		if (!this.session && this.status !== 'joining') return;
 		this.teardown(true);
-		if (this.status !== 'ended') {
-			this.status = 'idle';
-			this.endedReason = '';
-		}
+		this.status = 'idle';
+		this.endedReason = '';
 	}
 
 	refreshIdentity(): void {

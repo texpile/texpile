@@ -4,11 +4,8 @@
 	import EditorPage from '$lib/comp/EditorPage.svelte';
 	import { featureList } from '$lib/features';
 	import { m } from '$lib/paraglide/messages';
-	import visualShot from '$lib/assets/showcase/editor-latex-visual.webp';
-	import sourceShot from '$lib/assets/showcase/editor-latex-source.webp';
 	import diffShot from '$lib/assets/showcase/diff.webp';
 	import commentsShot from '$lib/assets/showcase/review.webp';
-	import themesShot from '$lib/assets/showcase/app/preferences-appearance.png';
 </script>
 
 <EditorPage
@@ -20,20 +17,9 @@
 	format="latex"
 	ways={{
 		sub: m.lx_ways_sub(),
-		visual: {
-			img: visualShot,
-			alt: m.visual_editing_video_aria(),
-			heading: m.visual_editing_heading(),
-			points: [m.editing_point_1(), m.editing_point_2(), m.editing_point_3(), m.editing_point_5()],
-			docs: '/docs/latex/visual-editor'
-		},
-		source: {
-			img: sourceShot,
-			alt: m.intellisense_shot_alt(),
-			heading: m.source_editing_heading(),
-			points: [m.intellisense_point_1(), m.intellisense_point_2(), m.intellisense_point_3(), m.intellisense_point_4()],
-			docs: '/docs/latex/source-editor'
-		}
+		note: { heading: m.lx_know_heading(), body: m.lx_know_body() },
+		visualDocs: '/docs/latex/visual-editor',
+		sourceDocs: '/docs/latex/source-editor'
 	}}
 	reviews={{
 		diff: {
@@ -63,7 +49,6 @@
 		alt: m.collab_heading(),
 		docs: '/docs/collaboration'
 	}}
-	themes={{ heading: m.ed_themes_heading(), body: m.ed_themes_body(), img: themesShot, alt: m.ed_themes_shot_alt(), docs: '/docs/themes' }}
 	alsoSub={m.lx_also_sub()}
 	features={[
 		// version history has a section of its own, so SyncTeX and the math preview take its slot

@@ -70,8 +70,9 @@
 		<!-- column-reverse keeps the view on the newest message as the turn grows, with no scrolling code. The gutter on
 		     both sides keeps the column centered where the box below it is, with the scrollbar or without -->
 		<div class="flex min-h-0 flex-1 [scrollbar-gutter:stable_both-edges] flex-col-reverse overflow-y-auto pt-2 pb-5">
-			<!-- one readable column for the conversation, the question and the box, centered however wide the dock is -->
-			<div class="mx-auto flex w-full max-w-3xl flex-col gap-2 px-3">
+			<!-- one column for the conversation, the question and the box, centered however wide the dock is: the visual
+			     editor's 48rem of text plus this px-3 -->
+			<div class="mx-auto flex w-full max-w-[49.5rem] flex-col gap-2 px-3">
 				{#if !agentSession.items.length}<p class="text-muted text-sm">{m.agent_panel_empty({ agent })}</p>{/if}
 				{#each blocks as block (block.id)}
 					{#if block.kind === 'steps'}
@@ -102,7 +103,7 @@
 		</div>
 	{/if}
 	{#if live}
-		<div class="mx-auto w-full max-w-3xl">
+		<div class="mx-auto w-full max-w-[49.5rem]">
 			{#if agentSession.asks[0]}
 				<AgentQuestion ask={agentSession.asks[0]} {agent} onAnswer={(id, optionId) => agentSession.answer(id, optionId)} />
 			{/if}
@@ -115,14 +116,16 @@
 				takesSelection={agentSession.takesSelection}
 				takesImages={agentSession.takesImages}
 				usage={agentSession.usage}
+				queued={agentSession.queued}
 				onSend={(text, attached, images) => void agentSession.send(text, attached, images)}
 				onStop={() => agentSession.cancel()}
+				onUnqueue={(i) => agentSession.unqueue(i)}
 				onConfig={(id, value) => agentSession.setConfig(id, value)}
 			/>
 		</div>
 	{:else if agentSession.items.length}
 		<!-- under a conversation, a row where the box was rather than a second screen below the first -->
-		<div class="mx-auto w-full max-w-3xl"><AgentNoticeBar {...notice} /></div>
+		<div class="mx-auto w-full max-w-[49.5rem]"><AgentNoticeBar {...notice} /></div>
 	{:else}
 		<AgentNotice {...notice} />
 	{/if}

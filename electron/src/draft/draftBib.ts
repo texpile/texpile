@@ -9,9 +9,41 @@ import { shellEnvReady } from '../shell/shellEnv';
 
 const OUT = '_draft';
 
-// per-root biber control-file hash: biber is slow (~1-3s), so rerun it only when the
-// .bcf actually changed (citation set changed), not on every keystroke's recompile
-const lastBcf = new Map<string, string>();
+// per root, what biber or bibtex last ran on: the citations it was asked for and the .bib files it read. Biber takes 1
+// to 3 s, so it runs only when one of them changed
+const lastInputs = new Map<string, string>();
+
+function stampOf(root: string, rels: string[]): string {
+	return rels
+		.map((r) => {
+			try {
+				const s = fs.statSync(path.resolve(root, r));
+				return `${r}:${s.size}:${s.mtimeMs}`;
+			} catch {
+				return `${r}:-`;
+			}
+		})
+		.join('|');
+}
+
+// the citation lines of the aux and of every chapter aux it inputs
+function citationLines(outAbs: string, auxRel: string, seen = new Set<string>()): string[] {
+	if (seen.has(auxRel)) return [];
+	seen.add(auxRel);
+	let text: string;
+	try {
+		text = fs.readFileSync(path.join(outAbs, auxRel), 'utf8');
+	} catch {
+		return [];
+	}
+	const out: string[] = [];
+	for (const line of text.split('\n')) {
+		if (/^\\(citation|bibdata|bibstyle)\{/.test(line)) out.push(line);
+		const m = /^\\@input\{([^}]+)\}/.exec(line);
+		if (m) out.push(...citationLines(outAbs, m[1], seen));
+	}
+	return out;
+}
 
 function sha1(buf: Buffer | string): string {
 	return crypto.createHash('sha1').update(buf).digest('hex');
@@ -78,26 +110,30 @@ export async function auxCycle(root: string, outAbs: string, mainFile: string): 
 	const bblBefore = mtimeOf(bbl) + ':' + (fs.existsSync(bbl) ? sha1(fs.readFileSync(bbl)) : '');
 	seedBbl(root, outAbs, mainFile);
 	const bcf = path.join(outAbs, 'draft.bcf');
-	const aux = path.join(outAbs, 'draft.aux');
-	const auxText = fs.existsSync(aux) ? fs.readFileSync(aux, 'utf8') : '';
+	const cites = citationLines(outAbs, 'draft.aux');
 	if (fs.existsSync(bcf)) {
-		const h = sha1(fs.readFileSync(bcf));
-		if (lastBcf.get(root) !== h) {
-			// biblatex: biber reads _draft/draft.bcf; datasource paths in the .bcf are as
-			// written in \addbibresource (root-relative), so run from root
+		// biblatex: biber reads _draft/draft.bcf; datasource paths in the .bcf are as
+		// written in \addbibresource (root-relative), so run from root
+		const control = fs.readFileSync(bcf, 'utf8');
+		const sources = [...control.matchAll(/<bcf:datasource[^>]*>([^<]+)<\/bcf:datasource>/g)].map((m) => m[1]);
+		const inputs = `biber ${sha1(control)} ${stampOf(root, sources)}`;
+		if (lastInputs.get(root) !== inputs || !fs.existsSync(bbl)) {
 			await run('biber', ['--input-directory', OUT, '--output-directory', OUT, 'draft'], { cwd: root });
-			lastBcf.set(root, h);
+			lastInputs.set(root, inputs);
 		}
-	} else if (/\\bibdata\{/.test(auxText)) {
+	} else if (cites.some((l) => l.startsWith('\\bibdata{'))) {
 		// classic bibtex: runs inside the output dir (reads draft.aux there); .bib/.bst
 		// live in the project root, reachable via BIBINPUTS/BSTINPUTS (trailing separator
 		// keeps the default search paths)
-		const bibs = fs
-			.readdirSync(root)
-			.filter((f) => f.endsWith('.bib'))
-			.map((f) => mtimeOf(path.join(root, f)));
-		const stale = !fs.existsSync(bbl) || (bibs.length > 0 && Math.max(...bibs) > mtimeOf(bbl));
-		if (stale && bibs.length > 0) {
+		const named = cites
+			.filter((l) => l.startsWith('\\bibdata{'))
+			.flatMap((l) => l.slice(9, l.lastIndexOf('}')).split(','))
+			.map((b) => (b.trim().endsWith('.bib') ? b.trim() : `${b.trim()}.bib`));
+		// an arXiv folder ships the .bbl alone: with none of its .bib files there, the seeded .bbl stands
+		const bibs = named.filter((b) => fs.existsSync(path.resolve(root, b)));
+		const inputs = `bibtex ${sha1(cites.join('\n'))} ${stampOf(root, bibs)}`;
+		if (bibs.length > 0 && (lastInputs.get(root) !== inputs || !fs.existsSync(bbl))) {
+			lastInputs.set(root, inputs);
 			const prev = fs.existsSync(bbl) ? fs.readFileSync(bbl) : null;
 			await run('bibtex', ['draft'], {
 				cwd: outAbs,

@@ -6,7 +6,7 @@
 // A tab is now a file OR a comparison of that file against a version, so the store is keyed by
 // tabKey rather than by path. Everything below is the same behaviour expressed through that key.
 import { describe, expect, it, beforeEach, afterEach, vi } from 'vitest';
-import { tabs, tabKey, allowTabsOutsideRoot, savedTabs, restoredTab } from '$lib/workspace/tabs.svelte';
+import { tabs, tabKey, allowTabsOutsideRoot, savedTabs, restoredTab, restoredTabs } from '$lib/workspace/tabs.svelte';
 import { publishFigure } from '$lib/draw/host/anchor/openFigures.svelte';
 
 const platform = vi.hoisted(() => ({ isMac: false, isWindows: false }));
@@ -195,16 +195,28 @@ describe('reopening closed tabs', () => {
 	});
 
 	it("keeps a tab on Texpile's own file outside the folder, which the tree never lists", () => {
-		allowTabsOutsideRoot((p) => p === '/data/snippets.json');
+		allowTabsOutsideRoot('snippets', (p) => p === '/data/snippets.json');
 		openAndEdit('/data/snippets.json');
 		openAndEdit('/p/main.tex');
 		tabs.prune(['/p/main.tex']);
 		expect(paths()).toEqual(['/data/snippets.json', '/p/main.tex']);
-		allowTabsOutsideRoot(() => false);
+		allowTabsOutsideRoot('snippets', () => false);
+	});
+
+	it('keeps keybindings.json beside the snippet file, each allowed by its own owner', () => {
+		allowTabsOutsideRoot('snippets', (p) => p === '/data/snippets.json');
+		allowTabsOutsideRoot('keybindings', (p) => p === '/data/keybindings.json');
+		openAndEdit('/data/snippets.json');
+		openAndEdit('/data/keybindings.json');
+		openAndEdit('/p/main.tex');
+		tabs.prune(['/p/main.tex']);
+		expect(paths()).toEqual(['/data/snippets.json', '/data/keybindings.json', '/p/main.tex']);
+		allowTabsOutsideRoot('snippets', () => false);
+		allowTabsOutsideRoot('keybindings', () => false);
 	});
 
 	it('keeps that tab open across a switch to another folder, and through the start screen', () => {
-		allowTabsOutsideRoot((p) => p === '/data/snippets.json');
+		allowTabsOutsideRoot('snippets', (p) => p === '/data/snippets.json');
 		tabs.bind('/p', false);
 		openAndEdit('/data/snippets.json');
 		openAndEdit('/p/main.tex');
@@ -213,7 +225,7 @@ describe('reopening closed tabs', () => {
 		tabs.bind(null, false);
 		tabs.bind('/r', false);
 		expect(paths()).toEqual(['/data/snippets.json']);
-		allowTabsOutsideRoot(() => false);
+		allowTabsOutsideRoot('snippets', () => false);
 	});
 });
 
@@ -237,5 +249,13 @@ describe('a figure tab', () => {
 		const back = restoredTab('/w', saved[1]);
 		expect(back?.path).toBe('/w/fig.tex');
 		expect(back?.figure).toMatch(/^r2:/);
+	});
+
+	it('comes back once when two were saved with one picture number, so the strip has no repeated key', () => {
+		const back = restoredTabs('/w', [
+			{ path: 'fig.tex', figure: 1 },
+			{ path: 'fig.tex', figure: 1 }
+		]);
+		expect(back).toHaveLength(1);
 	});
 });

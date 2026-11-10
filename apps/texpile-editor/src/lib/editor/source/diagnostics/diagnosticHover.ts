@@ -2,7 +2,7 @@
 import { hoverTooltip, type EditorView as CMView } from '@codemirror/view';
 import { forEachDiagnostic, setDiagnosticsEffect, type Diagnostic } from '@codemirror/lint';
 
-/** a diagnostic that draws its own card; the language server's plain ones stay with the lint package */
+/** a diagnostic that draws its own card, which the compile log's and tinymist's all do */
 function hasCard(d: Diagnostic): boolean {
 	return !!d.renderMessage;
 }

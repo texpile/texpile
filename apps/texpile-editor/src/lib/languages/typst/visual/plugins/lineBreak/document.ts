@@ -39,7 +39,6 @@ export const lineBreakDocument: TypstDocumentPlugin = {
 	save: {
 		inline: {
 			hard_break(node, run) {
-				if (node.attrs?.lineBreak === false) return null; // legacy no-op break
 				if (typeof node.attrs.typCall === 'string')
 					return { content: run.shadowed(node, '#' + node.attrs.typCall), marks: [], kind: 'other' };
 				return { content: run.shadowed(node, run.singleLine ? '\\ ' : '\\\n'), marks: [], kind: 'break', startsLine: !run.singleLine };

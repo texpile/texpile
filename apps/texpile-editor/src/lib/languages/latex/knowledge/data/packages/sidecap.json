@@ -9,8 +9,8 @@
 		{"name":"sidecaptionvpos","args":[{"kind":"m","placeholder":"float type"},{"kind":"m","placeholder":"position"}],"hidden":true}
 	],
 	"envs": [
-		{"name":"SCfigure","star":{},"args":[{"kind":"o","placeholder":"relwidth"},{"kind":"o","placeholder":"float"}],"doc":"The figure or the table and the caption are put into two minipages that are positioned side by side and centered as a whole."},
-		{"name":"SCtable","star":{},"args":[{"kind":"o","placeholder":"relwidth"},{"kind":"o","placeholder":"float"}],"doc":"The figure or the table and the caption are put into two minipages that are positioned side by side and centered as a whole."},
+		{"name":"SCfigure","star":{},"args":[{"kind":"o","placeholder":"relwidth"},{"kind":"o","placeholder":"float"}],"doc":"The figure or the table and the caption are put into two minipages that are positioned side by side and centered as a whole.","float":"figure"},
+		{"name":"SCtable","star":{},"args":[{"kind":"o","placeholder":"relwidth"},{"kind":"o","placeholder":"float"}],"doc":"The figure or the table and the caption are put into two minipages that are positioned side by side and centered as a whole.","float":"table"},
 		{"name":"wide"}
 	],
 	"keys": {

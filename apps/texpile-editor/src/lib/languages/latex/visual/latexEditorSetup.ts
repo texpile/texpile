@@ -6,8 +6,9 @@ import type { Plugin } from 'prosemirror-state';
 import { EditorState, type Transaction } from 'prosemirror-state';
 import type { EditorProps } from 'prosemirror-view';
 import { schema } from '$lib/languages/latex/schema/latexPMSchema';
-import { isMac } from '$lib/platform';
 import { keymap } from 'prosemirror-keymap';
+import { pmCommandKeys } from '$lib/keybindings/editors/pmCommandKeys';
+import { pmEditorScope } from '$lib/keybindings/editors/editorScopes';
 import { baseKeymap, toggleMark } from 'prosemirror-commands';
 import { history } from 'prosemirror-history';
 import { undoVisual, redoVisual } from '$lib/editor/visual/visualUndo';
@@ -21,6 +22,7 @@ import {
 	selectDocEnd,
 	selectDocStart
 } from '$lib/editor/visual/selectDocBoundary';
+import { lineEdgeKeys } from '$lib/editor/visual/lineEdgeArrows';
 import { gapCursorWithArrows } from '$lib/editor/visual/gapArrows';
 import { createMathField } from '$lib/editor/visual/extensions/mathlivebridge/mlcommands';
 import { createCodeBlock } from '$lib/editor/visual/extensions/codemirrorbridge/cmcommands';
@@ -74,6 +76,7 @@ import { BibliographyNodeView } from '$lib/editor/visual/extensions/bibliography
 import { environmentView } from '$lib/languages/latex/visual/extensions/environment/environmentView.svelte';
 import { createBoundaryClickPlugin } from '$lib/editor/visual/extensions/boundary-click-plugin';
 import { wordSelectionTrim } from '$lib/editor/visual/extensions/wordSelectionTrim';
+import { unfocusedPressCaret } from '$lib/editor/visual/extensions/unfocusedPress';
 import { dragSelectionPlugin } from '$lib/editor/visual/extensions/dragSelection/dragSelectionPlugin';
 import { createBlockHandlePlugin } from '$lib/editor/visual/extensions/block-handle-plugin.svelte';
 import { wholeBlockDragPlugin } from '$lib/editor/visual/extensions/wholeBlockDrag';
@@ -175,6 +178,24 @@ export function latexEditorPlugins(setup: LatexEditorSetup): Plugin[] {
 				ellipsis
 			] as readonly InputRule[]
 		}),
+		pmCommandKeys({
+			'editor.bold': toggleMark(schema.marks.strong),
+			'editor.italic': toggleMark(schema.marks.em),
+			'editor.emphasis': toggleMark(schema.marks.em, { cmd: 'emph' }),
+			'editor.inlineCode': toggleMark(schema.marks.code),
+			'editor.underline': toggleMark(schema.marks.u),
+			'editor.superscript': toggleMark(schema.marks.sup),
+			'editor.subscript': toggleMark(schema.marks.sub),
+			'editor.blockquote': toggleBlockQuote(),
+			'editor.codeBlock': createCodeBlock(),
+			'editor.heading0': toggleHeading(0),
+			'editor.heading1': toggleHeading(1),
+			'editor.heading2': toggleHeading(2),
+			'editor.heading3': toggleHeading(3),
+			'editor.inlineMath': createMathField(),
+			'editor.displayMath': createMathField(true)
+		}),
+		pmEditorScope('latex'),
 		keymap({
 			'Mod-z': undoVisual,
 			'Mod-y': redoVisual,
@@ -186,29 +207,11 @@ export function latexEditorPlugins(setup: LatexEditorSetup): Plugin[] {
 			ArrowLeft: holdAtDocStart,
 			ArrowDown: holdAtDocEnd,
 			ArrowRight: holdAtDocEnd,
+			...lineEdgeKeys,
 			'Mod-End': selectDocEnd,
 			'Shift-Mod-Home': extendToDocStart,
 			'Shift-Mod-End': extendToDocEnd,
-			'Mod-b': toggleMark(schema.marks.strong),
-			'Mod-i': toggleMark(schema.marks.em),
-			'Mod-`': toggleMark(schema.marks.code),
-			'Mod-u': toggleMark(schema.marks.u),
-			'Mod-.': toggleMark(schema.marks.sup),
-			'Mod-Shift-,': toggleMark(schema.marks.sub), // Mod-, is Preferences, as in every desktop app
-			'Mod-Shift-b': toggleBlockQuote(),
-			'Mod-Shift-`': createCodeBlock(),
-			// Word/Docs convention (and source mode's own \section shortcuts): Mod-Alt-N on every
-			// platform, Mod-Alt-0 back to paragraph. On AltGr layouts where Ctrl+Alt+digit types a
-			// character the binding never fires (the key name differs), so Windows keeps the old
-			// Mod-Shift-N as a fallback. Mac never had Shift variants (Cmd+Shift+3/4/5 = screenshots).
-			'Mod-Alt-0': toggleHeading(0),
-			'Mod-Alt-1': toggleHeading(1),
-			'Mod-Alt-2': toggleHeading(2),
-			'Mod-Alt-3': toggleHeading(3),
-			...(isMac ? {} : { 'Mod-Shift-1': toggleHeading(1), 'Mod-Shift-2': toggleHeading(2), 'Mod-Shift-3': toggleHeading(3) }),
 			Enter: splitBlockWithoutDuplicates,
-			'Mod-m': createMathField(),
-			'Mod-Shift-m': createMathField(true),
 			// table cell, then list nesting (as markdown and typst do), and only outside both does Tab
 			// cycle the paragraph indent. Without the list step it wrote \indent into the \item
 			// instead of sinking it. always consume Tab so focus stays in the editor
@@ -252,6 +255,7 @@ export function latexEditorPlugins(setup: LatexEditorSetup): Plugin[] {
 		spellChipPlugin,
 		createBoundaryClickPlugin(),
 		wordSelectionTrim(),
+		unfocusedPressCaret(),
 		dragSelectionPlugin(),
 		createBlockHandlePlugin(),
 		wholeBlockDragPlugin(),

@@ -1,5 +1,5 @@
 <script lang="ts">
-	// the window's arrangement, in one place: which panels show, the editor layout and where the preview sits
+	// the window's arrangement, in one place: which panels show, the editor layout, where the preview sits and the zoom
 	import {
 		ChevronDown,
 		Columns2,
@@ -22,6 +22,7 @@
 	import type { PaneLayout } from '$lib/workspace/paneLayout.svelte';
 	import type { TerminalDockState } from '$lib/workspace/terminalDockState.svelte';
 	import PanelMenuItem from './PanelMenuItem.svelte';
+	import ZoomMenuRow from './ZoomMenuRow.svelte';
 	import { m } from '$lib/paraglide/messages';
 
 	type Props = {
@@ -80,7 +81,7 @@
 		<!-- click-away layer -->
 		<button class="fixed inset-0 z-1200 cursor-default" onclick={close} tabindex="-1" aria-hidden="true"></button>
 		<div class="{menuPanelClass} absolute top-full right-0 z-1300 mt-1 flex min-w-48 flex-col gap-1" role="menu">
-			<span class="text-muted px-1 text-xs">{m.groups_layout_panels()}</span>
+			<span class="text-muted px-2.5 text-xs">{m.groups_layout_panels()}</span>
 			<div class="flex flex-col">
 				<PanelMenuItem
 					icon={PanelLeft}
@@ -92,8 +93,8 @@
 					<PanelMenuItem
 						icon={PanelBottom}
 						open={props.termDock.visible}
-						label={m.wsview_terminal_label()}
-						onclick={() => toggle(() => props.termDock.toggle())}
+						label={m.groups_layout_bottom_panel()}
+						onclick={() => toggle(() => props.termDock.togglePanel())}
 					/>
 				{/if}
 				<PanelMenuItem
@@ -103,8 +104,9 @@
 					onclick={() => toggle(togglePreview)}
 				/>
 			</div>
-			<span class="text-muted px-1 text-xs">{m.groups_layout_editors()}</span>
-			<div class="flex gap-0.5">
+			<span class="text-muted px-2.5 text-xs">{m.groups_layout_editors()}</span>
+			<!-- pl-1 puts these glyphs' centers under the rows' icons -->
+			<div class="flex gap-0.5 pl-1">
 				{#each SHAPES as shape (shape.layout)}
 					<button
 						class="btn-icon btn-icon-sm {on(shape.layout === editorGroups.layout)}"
@@ -118,7 +120,7 @@
 					</button>
 				{/each}
 			</div>
-			<span class="text-muted px-1 text-xs">{m.wsview_preview_label()}</span>
+			<span class="text-muted px-2.5 text-xs">{m.groups_layout_pdf()}</span>
 			<!-- checked rows like the panels: these are switches, and the editors' icon row reads as one choice -->
 			<div class="flex flex-col">
 				<PanelMenuItem
@@ -135,6 +137,11 @@
 					onclick={() => toggle(() => props.panes.setPdfPopout(!props.panes.pdfPopout))}
 				/>
 			</div>
+			<!-- the browser zooms the page itself -->
+			{#if !__WEB__}
+				<span class="text-muted px-2.5 text-xs">{m.groups_layout_zoom()}</span>
+				<ZoomMenuRow />
+			{/if}
 		</div>
 	{/if}
 </div>

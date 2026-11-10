@@ -1,23 +1,14 @@
 // the visual editor's right-click menu entries: clipboard actions for every dialect, and the
 // table block set with its selection-dependent visibility
 import type { Component } from 'svelte';
-import {
-	addColumnBefore,
-	addColumnAfter,
-	deleteColumn,
-	addRowBefore,
-	addRowAfter,
-	deleteRow,
-	deleteTable,
-	mergeCells,
-	splitCell
-} from 'prosemirror-tables';
+import { deleteColumn, addRowBefore, addRowAfter, deleteRow, deleteTable, mergeCells, splitCell } from 'prosemirror-tables';
 import { Copy, Clipboard, Plus, Trash2, Combine, SplitSquareHorizontal } from '@lucide/svelte';
 import { editorViewStore } from '$lib/stores/editorStore';
 import { toaster } from '$lib/modals/toaster-svelte';
 import { pasteFromClipboard, pasteWithoutFormatting } from '$lib/editor/paste/visualClipboardPaste';
 import type { Dialect } from '$lib/editor/visual/dialect';
 import { m } from '$lib/paraglide/messages';
+import { addColumnWithSpec } from './addColumnWithSpec';
 
 export type ContextMenuEntry = {
 	type: 'item' | 'separator';
@@ -97,7 +88,7 @@ export function buildTableMenuItems(deps: TableMenuDeps): ContextMenuEntry[] {
 			action: () => {
 				const view = editorView()!;
 				const { state, dispatch } = view;
-				addColumnBefore(state, dispatch);
+				addColumnWithSpec('before')(state, dispatch);
 			}
 		},
 		{
@@ -108,7 +99,7 @@ export function buildTableMenuItems(deps: TableMenuDeps): ContextMenuEntry[] {
 			action: () => {
 				const view = editorView()!;
 				const { state, dispatch } = view;
-				addColumnAfter(state, dispatch);
+				addColumnWithSpec('after')(state, dispatch);
 			}
 		},
 		{ type: 'separator', showFor: ['cell', 'column'] },

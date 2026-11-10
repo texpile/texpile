@@ -1,12 +1,7 @@
 <script lang="ts">
-	// Shows the engine's output on screen and splices instant patches into it.
-	// Everything painted came from the real engine (page records, the exact PDF at rest,
-	// daemon typesets while typing); a patch applies ONLY where the C1/C2/C3 predicates
-	// prove a real recompile would produce the same page, else nothing is painted and the
-	// full pass runs.
-	// The locate ladder, overflow planning, and patch verification live in ./locate and
-	// ./patch; the caches, painting, patch lifecycle, and compile lifecycle live in the
-	// session pieces (draftSession and what it composes). This file is the view shell.
+	// Shows the engine's output on screen: the compile's pages, and the pages a teleport ships while typing. The
+	// caches, painting and the compile and teleport lifecycles live in the session pieces (draftSession and what
+	// it composes). This file is the view shell.
 	import { tip } from '$lib/components/tooltip.svelte';
 	import { untrack, type Snippet } from 'svelte';
 	import { fade } from 'svelte/transition';
@@ -15,12 +10,13 @@
 	import PageField from '$lib/preview/zoom/PageField.svelte';
 	import ColorVisionMenu from '$lib/preview/colorVision/ColorVisionMenu.svelte';
 	import ColorVisionFilter from '$lib/preview/colorVision/ColorVisionFilter.svelte';
+	import { resizeCover } from '$lib/resizing/resizeCover';
 	import InvertColorsItem from '$lib/preview/invertColors/InvertColorsItem.svelte';
 	import { pagesInverted } from '$lib/preview/invertColors/pagesInverted';
 	import { wheelZoomFactor } from '$lib/preview/zoom/wheelZoom';
 	import ProgressLine from '$lib/components/progress/ProgressLine.svelte';
 	import { DraftSession } from './draftSession.svelte';
-	import type { PatchReq } from './patch/patch.types';
+	import type { TeleportOutcome } from './draftTeleport.svelte';
 	import { openToolchainPrefs } from '$lib/stores/dialogStore';
 	import { askForProgram } from '$lib/modals/window/missingProgram/missingProgram.svelte';
 	import { m } from '$lib/paraglide/messages';
@@ -77,14 +73,9 @@
 	const vp = ctrl.vp;
 	const compiler = ctrl.compiler;
 
-	/** Instant path: re-typeset one edited paragraph on the warm daemon and splice it into its
-	 * page -- only when provably identical to a full recompile. Called on every edit burst. */
-	export async function instantPatch(req: PatchReq) {
-		await ctrl.instantPatch(req);
-	}
-	/** register a structurally-edited paragraph to jump to after the recompile lands. */
-	export function focusAfterCompile(req: { file: string; line: number; endLine: number; text: string; listItem?: boolean }) {
-		ctrl.patcher.setFocus(req);
+	/** an edit: the engine typesets from the last point before it and the changed pages replace the shown ones */
+	export function teleportEdit(file: string, text: string): Promise<TeleportOutcome> {
+		return ctrl.teleport.edit(file, text);
 	}
 	/** forward sync: scroll + flash the box synctex reported for a source line. */
 	export function syncTo(pageNo: number, hBp: number, vBp: number, wBp: number, hgtBp: number) {
@@ -129,8 +120,7 @@
 		el.addEventListener('wheel', onWheel, { passive: false });
 		return () => el.removeEventListener('wheel', onWheel);
 	});
-	// the losing side of a takeover pauses immediately rather than on the next keystroke
-	$effect(() => compiler.attachPreempt());
+	$effect(() => ctrl.teleport.attach());
 </script>
 
 <div class="flex h-full w-full flex-col bg-(--pdf-page-area-bg)">
@@ -243,16 +233,11 @@
 			{ id: 'save', inMenu: true, render: save }
 		]}
 	/>
-	<ProgressLine active={ctrl.savingPdf && compiler.compiling} label={m.draft_status_compiling_export()} />
-	{#if compiler.busyElsewhere}
-		<div
-			class="border-surface-300-700 bg-surface-50-950 rounded-container m-3 flex shrink-0 items-center justify-between gap-3 border p-3 text-sm"
-		>
-			<span class="text-muted">{m.draft_busy_other_window()}</span>
-			<button class="btn btn-xs preset-filled-primary-500 shrink-0" onclick={() => compiler.takeoverEngine()}
-				>{m.draft_busy_takeover()}</button
-			>
-		</div>
+	<ProgressLine active={compiler.compiling && !compiler.quiet} label={compiler.status} />
+	{#if compiler.installing}
+		<p class="text-muted m-3 shrink-0 text-center text-sm">{m.draft_status_installing({ file: compiler.installing })}</p>
+	{:else if compiler.slow}
+		<p class="text-muted m-3 shrink-0 text-center text-sm">{m.draft_first_compile_slow()}</p>
 	{/if}
 	{#if compiler.missingTool}
 		<div class="text-error-ink bg-surface-50-950 rounded-container m-3 flex shrink-0 items-center gap-3 p-3 text-xs">
@@ -271,46 +256,49 @@
 		<pre
 			class="text-error-ink bg-surface-50-950 rounded-container m-3 max-h-40 shrink-0 [scrollbar-gutter:stable] overflow-auto p-3 text-xs whitespace-pre-wrap">{compiler.error}</pre>
 	{/if}
-	<ColorVisionFilter class="flex min-h-0 flex-1 flex-col">
-		<div
-			bind:this={vp.scroller}
-			bind:clientWidth={vp.containerW}
-			onscroll={() => vp.onScroll()}
-			class="flex flex-1 [scrollbar-gutter:stable] flex-col items-center-safe gap-4 overflow-auto p-5"
-		>
-			{#each ctrl.pages as p (p.n)}
-				<div class="relative rounded-[2px] shadow-(--page-shadow)">
-					<canvas
-						bind:this={ctrl.canvasEls[p.n - 1]}
-						class:invert-94={pagesInverted()}
-						class:hue-rotate-180={pagesInverted()}
-						ondblclick={(e) => ctrl.onCanvasDblClick(p.n, e)}
-					></canvas>
-					{#if vp.editBand && vp.editBand.page === p.n}
-						<!-- the located band of the paragraph being edited; fades shortly after typing stops -->
-						<div
-							class="rounded-base bg-draft-band/30 pointer-events-none absolute"
-							transition:fade={{ duration: 300 }}
-							style="left:{(ctrl.paper.mx + vp.editBand.colL) * vp.dispScale}px; top:{(ctrl.paper.my + vp.editBand.top - 2) *
-								vp.dispScale}px; width:{(vp.editBand.colR - vp.editBand.colL) * vp.dispScale}px; height:{(vp.editBand.bottom -
-								vp.editBand.top +
-								4) *
-								vp.dispScale}px"
-						></div>
-					{/if}
-					{#if vp.clickMark && vp.clickMark.page === p.n}
-						<!-- where the sync double-click landed -->
-						<div
-							class="pointer-events-none absolute"
-							transition:fade={{ duration: 200 }}
-							style="left:{vp.clickMark.x * vp.dispScale}px; top:{vp.clickMark.y * vp.dispScale}px"
-						>
-							<span class="border-primary-500 absolute size-6 -translate-x-1/2 -translate-y-1/2 animate-ping rounded-full border-2"></span>
-							<span class="bg-primary-500 absolute size-1.5 -translate-x-1/2 -translate-y-1/2 rounded-full"></span>
-						</div>
-					{/if}
-				</div>
-			{/each}
-		</div>
-	</ColorVisionFilter>
+	<div class="relative flex min-h-0 flex-1 flex-col" data-resize-cover={m.wsview_live_preview_label()} {@attach resizeCover}>
+		<ColorVisionFilter class="flex min-h-0 flex-1 flex-col">
+			<div
+				bind:this={vp.scroller}
+				bind:clientWidth={vp.containerW}
+				onscroll={() => vp.onScroll()}
+				class="flex flex-1 [scrollbar-gutter:stable] flex-col items-center-safe gap-4 overflow-auto p-5"
+			>
+				{#each ctrl.pages as p (p.n)}
+					<div class="relative rounded-[2px] shadow-(--page-shadow)">
+						<canvas
+							bind:this={ctrl.canvasEls[p.n - 1]}
+							class:invert-94={pagesInverted()}
+							class:hue-rotate-180={pagesInverted()}
+							ondblclick={(e) => ctrl.onCanvasDblClick(p.n, e)}
+						></canvas>
+						{#if vp.editBand && vp.editBand.page === p.n}
+							<!-- the lines the edit changed; fades shortly after typing stops -->
+							<div
+								class="rounded-base bg-draft-band/30 pointer-events-none absolute"
+								transition:fade={{ duration: 300 }}
+								style="left:{(ctrl.paper.mx + vp.editBand.colL) * vp.dispScale}px; top:{(ctrl.paper.my + vp.editBand.top - 2) *
+									vp.dispScale}px; width:{(vp.editBand.colR - vp.editBand.colL) * vp.dispScale}px; height:{(vp.editBand.bottom -
+									vp.editBand.top +
+									4) *
+									vp.dispScale}px"
+							></div>
+						{/if}
+						{#if vp.clickMark && vp.clickMark.page === p.n}
+							<!-- where the sync double-click landed -->
+							<div
+								class="pointer-events-none absolute"
+								transition:fade={{ duration: 200 }}
+								style="left:{vp.clickMark.x * vp.dispScale}px; top:{vp.clickMark.y * vp.dispScale}px"
+							>
+								<span class="border-primary-500 absolute size-6 -translate-x-1/2 -translate-y-1/2 animate-ping rounded-full border-2"
+								></span>
+								<span class="bg-primary-500 absolute size-1.5 -translate-x-1/2 -translate-y-1/2 rounded-full"></span>
+							</div>
+						{/if}
+					</div>
+				{/each}
+			</div>
+		</ColorVisionFilter>
+	</div>
 </div>

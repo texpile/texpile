@@ -32,4 +32,6 @@ For Markdown, choose File › New › Markdown File. Markdown has no compile ste
 
 Press Ctrl Alt Enter, or **Compile** at the top of the PDF (**Show PDF** in the title bar opens it). The PDF and build files go into an `output` folder next to the main file.
 
+If Texpile finds no TeX on your computer, **Set Up LaTeX** opens and offers **Install TeX Live**. For Typst, the bar above the file has **Set Up Typst**, which installs tinymist. See [Installation](installation/README.md).
+
 With several documents and no main file set, Texpile asks once which one to compile. To change it, right-click a file and choose **Set as Main File**.

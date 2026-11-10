@@ -1,11 +1,11 @@
 {
 	"name": "texpile-editor",
-	"version": "1.6.2",
+	"version": "2.0.0",
 	"private": true,
 	"scripts": {
 		"dev": "vite dev",
-		"build": "vite build",
-		"build:web": "vite build --mode web --outDir dist-web && node -e \"require('fs').copyFileSync('web/_headers','dist-web/_headers')\"",
+		"build": "pnpm sync && vite build",
+		"build:web": "pnpm sync && vite build --mode web --outDir dist-web && node -e \"require('fs').copyFileSync('web/_headers','dist-web/_headers')\"",
 		"preview": "vite preview",
 		"sync": "paraglide-js compile --project ./project.inlang --outdir ./src/lib/paraglide --emit-ts-declarations && node scripts/sync-themes.mjs",
 		"test": "npm run test:integration && npm run test:unit",
@@ -82,6 +82,7 @@
 		"entities": "^8.1.0",
 		"esm-env": "^1.2.2",
 		"harper.js": "^2.13.0",
+		"jsonc-parser": "^3.3.1",
 		"lib0": "^0.2.119",
 		"linebreak": "^1.1.0",
 		"markdown-it": "^15.0.3",

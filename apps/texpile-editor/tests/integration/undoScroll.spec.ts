@@ -32,11 +32,11 @@ test('undo and redo scroll the change into view', async () => {
 	await v.type(' EDITED');
 	await expect.poll(() => v.text()).toContain('EDITED');
 	await scrollToBottom(v);
-	await v.press('Control+z');
+	await v.press('ControlOrMeta+z');
 	await expect.poll(() => v.text()).not.toContain('EDITED');
 	await expect.poll(() => caretInView(v), { message: 'undo shows the change' }).toBe(true);
 	await scrollToBottom(v);
-	await v.press('Control+y');
+	await v.press('ControlOrMeta+y');
 	await expect.poll(() => v.text()).toContain('EDITED');
 	await expect.poll(() => caretInView(v), { message: 'redo shows the change' }).toBe(true);
 });

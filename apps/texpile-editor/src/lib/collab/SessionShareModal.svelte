@@ -105,11 +105,11 @@
 			<span class="cap-center">{m.share_relay_label()}</span>
 		</button>
 		{#if advancedOpen}
-			<div class="mt-2 flex gap-2">
+			<div class="mt-2 flex items-stretch gap-2">
 				<input class="input flex-1 text-sm" bind:value={relayDraft} oninput={() => (relayTouched = true)} />
 				<button
 					type="button"
-					class="btn-icon btn-icon-xs hover:preset-tonal shrink-0"
+					class="btn preset-tonal shrink-0 px-3"
 					onclick={resetRelay}
 					disabled={relayIsDefault}
 					use:tip={m.collab_relay_reset_title()}
@@ -142,11 +142,15 @@
 		<div class="mb-3">
 			<span class="mb-1 block text-sm font-medium">{linkable ? m.share_link_label() : m.share_code_label()}</span>
 			<div class="flex items-stretch gap-2">
-				<code class="bg-surface-200-800 rounded-base min-w-0 flex-1 truncate px-3 py-2 font-mono text-sm tracking-wide select-all">
-					{linkable ? joinLinkFor(collabHost.shareCode) : collabHost.shareCode}
-				</code>
+				<input
+					class="input min-w-0 flex-1 py-2 font-mono text-sm tracking-wide"
+					readonly
+					value={linkable ? joinLinkFor(collabHost.shareCode) : collabHost.shareCode}
+					aria-label={linkable ? m.share_link_label() : m.share_code_label()}
+					onfocus={(e) => e.currentTarget.select()}
+				/>
 				<button
-					class="preset-tonal rounded-base flex shrink-0 items-center justify-center px-3"
+					class="btn preset-tonal shrink-0 px-3"
 					onclick={linkable ? copyLink : copyCode}
 					use:tip={linkable ? m.share_copy_link() : m.share_copy()}
 					aria-label={linkable ? m.share_copy_link() : m.share_copy()}

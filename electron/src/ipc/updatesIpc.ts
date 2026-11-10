@@ -1,6 +1,6 @@
 // in-app updates; progress/downloaded/error stream back over update:* webContents events
 import { ipcMain } from 'electron';
-import * as updates from '../updates';
+import * as updates from '../updates/updates';
 import { handleFs } from './ipcResult';
 
 export function registerUpdatesIpc(): void {

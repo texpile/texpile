@@ -204,8 +204,14 @@ local fontInfo = {} -- per font id; ids are unique per definition, so this never
 local function infoFor(id)
 	local i = fontInfo[id]
 	if i == nil then
-		local f = font.getfont(id)
-		i = { chars = f and f.characters, harf = f ~= nil and f.hb ~= nil }
+		-- a font a teleport loaded has no Lua table to get, only a copy
+		local f = font.getfont(id) or (font.getcopy and font.getcopy(id))
+		i = {
+			chars = f and f.characters,
+			harf = f ~= nil and f.hb ~= nil,
+			key = f and ((f.name or "") .. "@" .. tostring(f.size)) or tostring(id),
+			face = f and { name = f.name, size = f.size, filename = f.filename },
+		}
 		fontInfo[id] = i
 	end
 	return i
@@ -224,11 +230,8 @@ end
 -- subtree contain an image-type rule anywhere inside? Bounded depth since
 -- graphics-inclusion nesting is shallow (verified: 6 levels for a plain
 -- \includegraphics; generous headroom below).
--- Returns the image rule's INDEX when it finds one (true when the engine gave none), so the
--- record can name which image this is. The index is per distinct FILE -- probed: the same
--- file included twice carries one index, two different files carry two -- which is exactly
--- the distinction the renderer's dimension join could not make. It joined image boxes to the
--- log's inclusion lines by requested size, and two figures at identical sizes could swap.
+-- Returns the image rule's INDEX when it finds one (true when the engine gave none): the image
+-- resource the file was saved as, so the record can name the file.
 local function containsImageRule(head, depthLeft)
 	if depthLeft <= 0 then return nil end
 	for n in node.traverse(head) do
@@ -266,6 +269,25 @@ local function containsLiteral(head, depthLeft)
 end
 
 local M = {}
+
+local virtualFont = dofile((TEXPILE_ENGINE_DIR or ".") .. "/virtualFont.lua")()
+local GLYPH_RECORD = '{"t":"g","c":%d,"f":%d,"x":%.4f,"y":%.4f,"w":%.4f,"ef":%d,"xo":%.4f,"yo":%.4f%s%s}'
+-- what the glyph being expanded shares with each glyph its virtual font draws
+local vfOut = {}
+function vfOut.glyph(fid, c, x, y, w)
+	vfOut.fonts[fid] = true
+	vfOut.emit(string.format(GLYPH_RECORD, c, fid, x / pt, y / pt, w / pt, vfOut.ef, vfOut.xo / pt, vfOut.yo / pt, vfOut.col, ""))
+end
+function vfOut.rule(x, y, w, h)
+	vfOut.emit(string.format('{"t":"rule","x":%.4f,"y":%.4f,"w":%.4f,"h":%.4f,"d":0%s}', x / pt, y / pt, w / pt, h / pt, vfOut.col))
+end
+
+local drawingKey = dofile((TEXPILE_ENGINE_DIR or ".") .. "/drawingKey.lua")(function(id) return infoFor(id).key end,
+	function(ix) return M.imageFile and M.imageFile(ix) end)
+local function litRecord(n, x, y, colorStack)
+	return string.format('{"t":"lit","x":%.4f,"y":%.4f,"w":%.4f,"h":%.4f,"d":%.4f,"k":"%s"}',
+		x / pt, y / pt, n.width / pt, n.height / pt, n.depth / pt, drawingKey(n, colorStack[#colorStack]))
+end
 
 -- Column identity. page-extract stamps every top-level node of the list becoming \box255
 -- with the output firing that built it, so the box holding them at shipout IS a column:
@@ -469,12 +491,14 @@ local function walk(head, parent, x, y, emit, fonts, last_ef, colorStack, rtl, s
 			local ef = n.expansion_factor or 0
 			last_ef = ef
 			local w = n.width * (1 + ef / 1000000.0)
-			fonts[n.font] = true
 			if rtl then x = x - w end
-			emit(string.format(
-				'{"t":"g","c":%d,"f":%d,"x":%.4f,"y":%.4f,"w":%.4f,"ef":%d,"xo":%.4f,"yo":%.4f%s%s}',
-				n.char, n.font, x / pt, y / pt, w / pt, ef, (n.xoffset or 0) / pt, (n.yoffset or 0) / pt,
-				colSuffix(colorStack), glyphIndexSuffix(n)))
+			vfOut.emit, vfOut.fonts, vfOut.ef, vfOut.col = emit, fonts, ef, colSuffix(colorStack)
+			vfOut.xo, vfOut.yo = n.xoffset or 0, n.yoffset or 0
+			if not virtualFont.expand(infoFor(n.font).face, n, x, y, 1 + ef / 1000000.0, vfOut) then
+				fonts[n.font] = true
+				emit(string.format(GLYPH_RECORD, n.char, n.font, x / pt, y / pt, w / pt, ef, vfOut.xo / pt, vfOut.yo / pt,
+					vfOut.col, glyphIndexSuffix(n)))
+			end
 			if not rtl then x = x + w end
 		elseif id == KERN then
 			local k = n.kern
@@ -519,18 +543,16 @@ local function walk(head, parent, x, y, emit, fonts, last_ef, colorStack, rtl, s
 				-- Still uncertifies the block (daemon edits route to full pass; a
 				-- provisional crop from the stale PDF would be garbage).
 				flags.literal = true
-				emit(string.format('{"t":"lit","x":%.4f,"y":%.4f,"w":%.4f,"h":%.4f,"d":%.4f}',
-					x / pt, yy / pt, n.width / pt, n.height / pt, n.depth / pt))
+				emit(litRecord(n, x, yy, colorStack))
 			elseif imgIndex ~= nil then
 				-- this hlist's OWN w/h already reflect \includegraphics's
 				-- requested display size (natural size lives deeper, on the
 				-- inner rule -- verified empirically); no useful glyph content
-				-- inside, so don't recurse. The rule carries no filename, but its
-				-- index names the file: the renderer maps index N to the Nth
-				-- distinct inclusion the log records.
+				-- inside, so don't recurse. The rule carries no filename; its index names the file
+				local file = type(imgIndex) == "number" and M.imageFile and M.imageFile(imgIndex)
 				emit(string.format('{"t":"image","x":%.4f,"y":%.4f,"w":%.4f,"h":%.4f,"d":%.4f%s}',
 					x / pt, yy / pt, n.width / pt, n.height / pt, n.depth / pt,
-					type(imgIndex) == "number" and (',"ix":' .. imgIndex) or ""))
+					file and (',"file":"' .. file:gsub('[%c"\\]', "") .. '"') or ""))
 			else
 				local r = dirOf(n)
 				walk(n.head, n, penIn(n, x, r), yy, emit, fonts, 0, colorStack, r)
@@ -638,8 +660,7 @@ walk_vlist = function(head, parent, x, y, emit, fonts, colorStack)
 			-- so an inline picture doesn't turn the whole line into pixels.
 			if n.subtype ~= HL_LINE and n.width > pt and (n.height + n.depth) > pt and containsLiteral(n.head, 3) then
 				flags.literal = true
-				emit(string.format('{"t":"lit","x":%.4f,"y":%.4f,"w":%.4f,"h":%.4f,"d":%.4f}',
-					(x + (n.shift or 0)) / pt, cy / pt, n.width / pt, n.height / pt, n.depth / pt))
+				emit(litRecord(n, x + (n.shift or 0), cy, colorStack))
 			else
 				local left = x + (n.shift or 0)
 				local r = dirOf(n)
@@ -720,7 +741,7 @@ walk_vlist = function(head, parent, x, y, emit, fonts, colorStack)
 			elseif st == W_SETMATRIX or st == W_SAVE or st == W_RESTORE then flags.transform = true
 			elseif st == W_SPECIAL or st == W_LATE_SPECIAL or st == W_LATE_LUA then flags.escape = true
 			end
-			if in_line_box == 0 then emit(string.format('{"t":"vx","y":%.4f%s}', cy / pt, listSuffix(n))) end
+			if in_line_box == 0 and not (M.skipAttr and node.has_attribute(n, M.skipAttr)) then emit(string.format('{"t":"vx","y":%.4f%s}', cy / pt, listSuffix(n))) end
 		elseif id == MARK or id == ADJUST or id == INS then
 			-- vx: nothing to draw, but glue after it is a place the page may break, as after a box
 			if in_line_box == 0 then emit(string.format('{"t":"vx","y":%.4f%s}', cy / pt, listSuffix(n))) end
@@ -735,7 +756,7 @@ end
 -- HLIST lines; confirmed via probe: without this branch, floats/figures
 -- silently produce zero output). Returns records (array of JSON strings),
 -- stats { lines, glyphs, maxdev }.
-function M.lines(head, y0)
+function M.lines(head, y0, colorSeed)
 	local records, fonts = {}, {}
 	flags = {} -- reset certification flags for this walk
 	in_column = false
@@ -745,6 +766,7 @@ function M.lines(head, y0)
 		if s:find('"t":"g"', 1, true) then nglyphs = nglyphs + 1 end
 	end
 	local colorStack = {}
+	for _, d in ipairs(colorSeed or {}) do colorStack[#colorStack + 1] = parseColorOp(d) or colorStack[#colorStack] end
 	local lineno, y, maxdev = 0, y0 or 0, 0
 	for line in node.traverse(head) do
 		if line.id == HLIST then
@@ -809,7 +831,8 @@ function M.lines(head, y0)
 			y = y + h + d
 		elseif line.id == WHATSIT or line.id == MARK or line.id == ADJUST then
 			if line.id == WHATSIT and line.subtype == COLORSTACK_SUBTYPE then applyColorstack(line, colorStack) end
-			emit(string.format('{"t":"vx","y":%.4f}', y / pt))
+			-- the color a teleport carries over is the engine's, not an item of the page
+			if not (M.skipAttr and node.has_attribute(line, M.skipAttr)) then emit(string.format('{"t":"vx","y":%.4f}', y / pt)) end
 		elseif line.id == INS then
 			-- footnote body: \insert material migrated out of the paragraph into this list.
 			-- Emitted as a note group with n-prefixed record types and LOCAL y from 0, so
@@ -835,8 +858,11 @@ function M.lines(head, y0)
 		-- getfont only knows Lua-defined fonts; format/TeX-loaded ones (classic math:
 		-- cmex10 and friends -- where \int lives) need getcopy, which reads them all.
 		-- Without this their glyph records had no font record and silently drew nothing.
-		local f = font.getfont(id) or (font.getcopy and font.getcopy(id))
-		if f then
+		local face = id < 0 and virtualFont.face(id)
+		local f = not face and (font.getfont(id) or (font.getcopy and font.getcopy(id)))
+		if face then
+			records[#records + 1] = string.format('{"t":"font","id":%d,"size":%.4f,"name":"%s","file":""}', id, face.size / pt, jstr(face.name))
+		elseif f then
 			-- "harfloaded:" prefixes filename whenever luaotfload shaped through HarfBuzz. It is a
 			-- loader tag, not part of the path: passing it through made the renderer fetch a file
 			-- that cannot exist, so every glyph of a Hebrew/Arabic/Indic page silently drew nothing.

@@ -2,7 +2,7 @@
 // the close handshake with the main process.
 import { nativeBridge } from '$lib/workspace/fileSystem';
 import { fileService } from '$lib/files/service/fileService';
-import { fileUriOf } from '$lib/files/identity/fileUris';
+import { fileUriOf, pathOfFileUri } from '$lib/files/identity/fileUris';
 import { ResourceSet } from '$lib/files/identity/resourceMap';
 import { fileAsStamped } from '$lib/files/service/fileStamp';
 import type { FileOperationEvent } from '$lib/files/changes/fileOperations';
@@ -23,6 +23,10 @@ export type WindowWiringDeps = {
 	reloadProjectState(): void;
 	/** show a PDF something other than our Compile wrote (an agent, latexmk -pvc, another editor) */
 	loadExternalPdf(): void;
+	/** the project files an outside write changed, for the Typst server that may have missed them */
+	nudgeTypst(paths: string[]): void;
+	/** files whose bytes changed in place; a session's guests learn of a new image only from its manifest */
+	shareUpdatedFiles(paths: string[]): void;
 };
 
 // a replace across fifty files is one refresh
@@ -62,6 +66,8 @@ export function attachWindowListeners(deps: WindowWiringDeps): () => void {
 		deps.reloadReferences();
 		if (!deps.isHost()) return;
 		deps.syncBuffers((path) => e.contains(fileUriOf(path)));
+		deps.shareUpdatedFiles(e.rawUpdated.map(pathOfFileUri));
+		deps.nudgeTypst([...e.rawUpdated, ...e.rawAdded].map(pathOfFileUri));
 		deps.loadExternalPdf();
 		deps.reloadProjectState();
 	}
@@ -75,7 +81,9 @@ export function attachWindowListeners(deps: WindowWiringDeps): () => void {
 		if (events.some((e) => !e.isOperation('write'))) deps.refreshTree();
 		else deps.refreshScm();
 		deps.reloadReferences();
-		if (deps.isHost()) deps.syncBuffers((path) => written.has(fileUriOf(path)));
+		if (!deps.isHost()) return;
+		deps.syncBuffers((path) => written.has(fileUriOf(path)));
+		deps.shareUpdatedFiles(events.filter((e) => e.isOperation('write')).map((e) => pathOfFileUri(e.resource)));
 	}
 	function onCompile() {
 		return deps.runCompile();
@@ -108,6 +116,8 @@ export type CloseGuardDeps = {
 	/** edits still not on disk: a failed write, or a File Cache Conflict */
 	hasStranded(): boolean;
 	confirmLeaveUnsaved(): Promise<boolean>;
+	/** guests see the session end instead of waiting for a host that is gone */
+	endSession(): Promise<void>;
 };
 
 /** The window close is HELD by the main process until we answer (with a 2s backstop for a hung
@@ -116,12 +126,14 @@ export function attachCloseGuard(deps: CloseGuardDeps): (() => void) | undefined
 	return nativeBridge()?.onBeforeClose?.(async () => {
 		await deps.flushSaves();
 		if (!deps.hasStranded()) {
+			await deps.endSession();
 			nativeBridge()?.closeDecision?.(true);
 			return;
 		}
 		nativeBridge()?.closeDecision?.(false);
 		if (await deps.confirmLeaveUnsaved()) {
 			await deps.flushSaves();
+			await deps.endSession();
 			window.close();
 		}
 	});

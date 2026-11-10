@@ -14,14 +14,14 @@
 	import NewDocumentStart from './NewDocumentStart.svelte';
 	import SourceEditor from '$lib/editor/source/SourceEditor.svelte';
 	import BibManager from '$lib/editor/visual/bib/BibManager.svelte';
-	import PDFViewer from '$lib/preview/PDFViewer.svelte';
 	import VisualLoading from '$lib/editor/visual/VisualLoading.svelte';
 	import { mark } from '$lib/debug/startupDoctor';
 	import { warmEditor } from '$lib/warmup';
 	import { basename } from '$lib/workspace/fileSystem';
 	import { activeFilePath } from '$lib/workspace/workspaceStore';
 	import FigureOverlay from '$lib/draw/host/tab/FigureOverlay.svelte';
-	import ImageViewer from '$lib/images/viewer/ImageViewer.svelte';
+	import FileViewer from './pane/FileViewer.svelte';
+	import { isViewerKind } from '$lib/workspace/documentBuffer.svelte';
 	import { editorViewStore } from '$lib/stores/editorStore';
 	import { restoreVisualPosition } from '$lib/workspace/visualPositions';
 	import { visualMountNote } from '$lib/workspace/visualMountNote.svelte';
@@ -29,6 +29,7 @@
 	import EditorPaneHead from './pane/EditorPaneHead.svelte';
 	import FloatingFormatBar from './pane/FloatingFormatBar.svelte';
 	import { heldVisualDoc } from './pane/heldVisualDoc.svelte';
+	import { visualReady } from './pane/visualReady.svelte';
 	import UnreadableFileNote from './pane/UnreadableFileNote.svelte';
 	import { slotDrag } from '$lib/workspace/groups/slotDrag.svelte';
 	import { formatToolbarOf } from './pane/formatToolbar';
@@ -141,10 +142,11 @@
 	//
 	// Keeping the loading bar rendered until then puts it on screen during that import-await paint,
 	// and whatever was last painted stays up through the block that follows.
-	//
-	// Tracked per path rather than as a plain boolean so opening another file resets it for free.
-	let readyFor = $state<string | null>(null);
-	const editorReady = $derived(!!loadedPath && readyFor === loadedPath);
+	const visual = visualReady(
+		() => ({ path: loadedPath, doc: visualDoc, parked }),
+		() => (parked ? null : editorViewStore.current?.state.doc)
+	);
+	const editorReady = $derived(visual.ready);
 
 	/** Rendered for the whole build, but it holds itself invisible until the wait is real (see
 	 * lateReveal.ts), so a fast build never flashes a bar. Deliberately not a size threshold: that
@@ -200,18 +202,14 @@
 	const mountNote = visualMountNote({
 		doc: () => visualDoc ?? null,
 		path: () => loadedPath,
-		building: () => structured && viewMode === 'visual' && readyFor !== loadedPath
-	});
-	// a parked group's editor already shows its file; going live on it builds nothing, so nothing is noted
-	$effect.pre(() => {
-		if (parked && loadedPath) readyFor = loadedPath;
+		building: () => structured && viewMode === 'visual' && !visual.ready
 	});
 
 	/** a callback, not an effect: it dispatches a selection an effect would re-enter on */
 	function onVisualReady(): void {
 		mark('editor-ready');
 		warmEditor();
-		readyFor = loadedPath;
+		visual.built(loadedPath);
 		mountNote.ready(loadedPath);
 		// a parked group's editor is not the store's, and it keeps where it was
 		if (parked) return;
@@ -273,8 +271,9 @@
 					actions={historyButtons}
 				/>
 			{/if}
-			<!-- relative anchors the floating find bar; it sits outside the scroller so it doesn't scroll away -->
-			<div class="relative min-h-0 min-w-0 flex-1">
+			<!-- relative anchors the floating find bar; it sits outside the scroller so it doesn't scroll away.
+			     data-resize-cover: the file named over a resizing editor (app.css) -->
+			<div class="relative min-h-0 min-w-0 flex-1" data-resize-cover={loadedPath ? basename(loadedPath) : ''}>
 				{#if loadedPath}<FigureOverlay path={loadedPath} {figure} {viewMode} />{/if}
 				{#if loadedPath && structured && viewMode === 'visual' && visualDoc && !comparing && !parked}
 					<SearchBar />
@@ -418,17 +417,8 @@
 						{#key loadedPath}
 							<BibManager value={rawContent} onInput={onRawInput} suggested={bibSuggested} onShowSource={() => onSetViewMode?.('source')} />
 						{/key}
-					{:else if loadedPath && kind === 'pdf'}
-						<!-- a .pdf opened directly: its own src, independent of the compile-output pane -->
-						<div class="h-full w-full">
-							<PDFViewer src={fileUrl(loadedPath)} filename={basename(loadedPath)} placement="file" />
-						</div>
-					{:else if loadedPath && kind === 'image'}
-						{#key loadedPath}<ImageViewer path={loadedPath} url={fileUrl(loadedPath)} />{/key}
-					{:else if loadedPath && kind === 'binary'}
-						<div class="text-muted mt-12 text-center text-sm">
-							{m.wsview_binary_file_note({ name: basename(loadedPath) })}
-						</div>
+					{:else if loadedPath && isViewerKind(kind)}
+						{#key loadedPath}<FileViewer path={loadedPath} {kind} url={fileUrl(loadedPath)} />{/key}
 					{:else if activeFilePath.current && !parked}
 						<!-- shown while the visual parse runs; fades in late so a fast parse never strobes a spinner -->
 						<div class="text-muted reveal-late mt-12 flex items-center justify-center gap-2 text-sm">

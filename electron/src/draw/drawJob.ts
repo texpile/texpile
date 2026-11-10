@@ -73,6 +73,7 @@ export function drawJob(preamble: string, luaDir: string): string {
 		PDFTEX_NAMES +
 		preambleHead(preamble) +
 		'\n\\nofiles\n\\begin{document}\n' +
+		'\\ifdefined\\tikzpicture\\else\\errmessage{The main file preamble needs \\string\\usepackage{tikz}}\\csname @@end\\endcsname\\fi\n' +
 		capture(luaDir) +
 		'\\newcount\\drawrun \\drawrun=1\n' +
 		'\\loop\\directlua{draw_step()}\\ifnum\\drawrun>0 \\repeat\n' +

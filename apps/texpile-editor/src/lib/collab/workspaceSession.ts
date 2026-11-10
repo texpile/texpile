@@ -6,6 +6,8 @@
 import { observe } from '$lib/runes/observe.svelte';
 import { workspaceRoot, isDirty } from '$lib/workspace/workspaceStore';
 import { collabHost } from '$lib/collab/hostStore.svelte';
+import { collabGuest } from '$lib/collab/guestStore.svelte';
+import { fileService } from '$lib/files/service/fileService';
 import { previewRelay } from '$lib/collab/previewRelay.svelte';
 import { isSafeRel } from '$lib/collab/protocol';
 import { noteGuestJumpFreeze } from '$lib/languages/typst/preview/followSignal';
@@ -88,6 +90,10 @@ export function attachSessionHandlers(session: EditSession, deps: SessionHandler
 	// straight onto collabHost, not the EditSession interface: only the host records guests' edits
 	collabHost.onGuestEdit = (rel, before, after, edit) => deps.recordGuestEdit(rel, before, after, edit);
 	collabHost.onGuestMove = (from, to) => deps.followMove(from, to);
+	collabGuest.onMove = (from, to) => {
+		fileService.reportMove(from, to);
+		deps.followMove(from, to);
+	};
 	session.onSyncRequest = async (payload, from) => {
 		const root = workspaceRoot.current;
 		const pdf = deps.expectedPdfPath();
@@ -153,6 +159,7 @@ export function attachSessionHandlers(session: EditSession, deps: SessionHandler
 		session.onFileOp = null;
 		collabHost.onGuestEdit = null;
 		collabHost.onGuestMove = null;
+		collabGuest.onMove = null;
 		collabHost.onTypstScroll = null;
 		collabHost.onLspRequest = null;
 		stopGenWatch();

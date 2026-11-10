@@ -7,6 +7,7 @@ import type { BiblatexReference } from '$lib/languages/bib/biblatex';
 import { referenceStore } from '$lib/stores/editorStore';
 import { argumentAt } from '../../knowledge/calls/commandCalls';
 import { lastListToken } from './shared';
+import { zoteroCompletion } from '$lib/editor/source/extensions/zotero-completion/zoteroCompletion';
 
 // a cite call longer than this is not read for completion
 const READ_BEHIND = 2000;
@@ -50,11 +51,12 @@ function citationOption(r: BiblatexReference): Completion {
 }
 
 export function citationCompletionSource(ctx: CompletionContext): CompletionResult | null {
-	const refs = referenceStore.current ?? [];
-	if (!refs.length) return null;
 	const behind = ctx.state.sliceDoc(Math.max(0, ctx.pos - READ_BEHIND), ctx.pos);
 	const open = argumentAt(behind, ['citekey']);
 	if (!open || open.arg.arg.defines) return null;
+	const zotero = zoteroCompletion(ctx.view);
+	const options = (referenceStore.current ?? []).map(citationOption).concat(zotero ? [zotero] : []);
+	if (!options.length) return null;
 	const from = ctx.pos - behind.length + open.value.at;
-	return lastListToken({ from, text: open.value.value }, refs.map(citationOption));
+	return lastListToken({ from, text: open.value.value }, options);
 }

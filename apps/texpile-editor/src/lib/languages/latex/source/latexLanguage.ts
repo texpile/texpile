@@ -7,6 +7,7 @@ import { latexQuotePair } from './latexQuotePair';
 import { latexHighlighter } from './highlight/latexHighlighter';
 import { parser } from '../syntax/parser';
 import { AT_LETTER, openConstructsFor } from '../syntax/tokens/openConstructs';
+import { lineIndentation } from '$lib/editor/source/extensions/line-indent/lineIndent';
 
 export const latexLanguage = LRLanguage.define({
 	name: 'latex',
@@ -15,8 +16,16 @@ export const latexLanguage = LRLanguage.define({
 	// here: \$ for currency and $$ display math both fight a same-character auto-close
 	languageData: {
 		commentTokens: { line: '%' },
-		closeBrackets: { brackets: ['(', '[', '{'], before: ';:.,={}])>\\` \t$' }
+		closeBrackets: { brackets: ['(', '[', '{'], before: ';:.,={}])>\\` \t$' },
+		indentOnInput: /^\s*(?:[}\])]|\\end\{)$/
 	}
+});
+
+// LaTeX Workshop's rule: every environment but the document indents its body
+const latexIndentation = lineIndentation({
+	trailingComment: /(?<!\\)(?:\\\\)*%.*$/,
+	opensBlock: /\\begin\{(?!document\})([^}]*)\}(?!.*\\end\{\1\})/,
+	closesLine: /^\s*(?:[}\])]|\\end\{(?!document\}))/
 });
 
 // package and class files, where `@` is a letter in command names throughout
@@ -27,6 +36,7 @@ export const latexPackageLanguage = latexLanguage.configure({ contextTracker: op
 export function latex(packageFile = false): LanguageSupport {
 	return new LanguageSupport(packageFile ? latexPackageLanguage : latexLanguage, [
 		latexPackageFile.of(packageFile),
+		latexIndentation,
 		latexHighlighter,
 		latexEscapedBrackets(),
 		latexQuotePair(),

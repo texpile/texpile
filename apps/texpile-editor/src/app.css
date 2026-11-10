@@ -182,6 +182,7 @@ html.window-glass
 		.z-template-picker,
 		.z-fullscreen-modal,
 		.z-pdf-viewer,
+		.z-context-menu,
 		.z-tooltip,
 		.cm-tooltip,
 		.cm-panels
@@ -594,9 +595,33 @@ select.input {
 .ProseMirror.pm-lines-plain > .prosemirror-flat-list p {
 	text-align: justify;
 }
-/* while the column's width is changing the browser wraps on its own, and the marks stay in place for when it rests */
-.ProseMirror.pm-lines-native .pm-line-par {
-	text-wrap-mode: wrap;
+/* while the column's width is changing the editor keeps the width its lines were broken for and its parent clips what
+   runs past a narrower column; the pane is covered until the lines are broken again, as Overleaf does, and names its
+   file so split panes stay told apart. The previews are covered the same way while their width moves (resizeCover).
+   The solid ground: a see-through window clears the usual one */
+.ProseMirror.pm-lines-frozen {
+	flex: none;
+	max-width: none;
+	pointer-events: none;
+}
+:has(> .ProseMirror.pm-lines-frozen) {
+	overflow-x: clip;
+}
+[data-resize-cover]:has(.ProseMirror.pm-lines-frozen)::after,
+[data-resize-cover][data-resizing]::after {
+	content: attr(data-resize-cover);
+	position: absolute;
+	inset: 0;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: 1rem;
+	overflow: hidden;
+	text-align: center;
+	color: var(--muted-text);
+	font-size: var(--text-sm);
+	background-color: light-dark(var(--solid-surface-50, var(--color-surface-50)), var(--solid-surface-950, var(--color-surface-950)));
+	pointer-events: none;
 }
 /* an input method's text grows at the caret and cannot be re-broken until it commits (compositionWrap) */
 .ProseMirror.pm-composing .pm-line-par.pm-line-caret {
@@ -1203,6 +1228,8 @@ html.pm-drop-refused .pm-drop-cursor {
 	--z-index-template-picker: 2000;
 	--z-index-fullscreen-modal: 3000;
 	--z-index-pdf-viewer: 3000;
+	/* opened from whatever is under the pointer, a dialog included */
+	--z-index-context-menu: 3500;
 	/* the one hover hint sits above every layer: it is transient, tiny, and hints controls inside modals too */
 	--z-index-tooltip: 4000;
 }
@@ -1393,6 +1420,10 @@ html.pm-drop-refused .pm-drop-cursor {
 
 @utility z-dropdown {
 	z-index: var(--z-index-dropdown) !important;
+}
+
+@utility z-context-menu {
+	z-index: var(--z-index-context-menu) !important;
 }
 
 @utility z-tooltip {

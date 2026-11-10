@@ -66,5 +66,7 @@ export type MarkdownPlugin = {
 		wholeRun?(node: Node): boolean;
 		interrupts?(node: Node): boolean;
 		spliceChild?(parent: Node, index: number): boolean;
+		/** two top-level neighbors written on consecutive lines, with no blank line between */
+		tight?(prev: Node, next: Node): boolean;
 	};
 };

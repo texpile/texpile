@@ -10,6 +10,7 @@ import type {
 import { tableBlocks, tableWrapperBlocks } from './import/tableTree';
 import { isTableRuleWithoutArguments } from './import/tableRules';
 import { serializeCell, serializeRowCells, serializeTable } from './save/tableSerializer';
+import { tableFrameHolds } from './save/tableFrame';
 
 function grid(im: TreeImport, env: TreeEnvironment): PmNode[] {
 	return tableBlocks(im, env);
@@ -33,6 +34,7 @@ export const tableDocument: LatexDocumentPlugin = {
 	},
 	save: {
 		endsParagraph: ['table_wrapper'],
+		frameHolds: tableFrameHolds,
 		nodes: {
 			table_wrapper: whole,
 			table: whole,

@@ -205,21 +205,24 @@
 			{/if}
 		{:else if body === 'draft'}
 			{#if DraftViewComp}
-				<DraftViewComp
-					bind:this={draftView}
-					asTabStrip={strip}
-					{onPopout}
-					{controls}
-					root={draft.root}
-					mainFile={draft.mainRel}
-					trigger={draft.trigger}
-					quietTrigger={draft.quietTrigger}
-					{onInverseSync}
-					{onSettled}
-					{onDiagnostics}
-					settleEdits={() => draft.settleForSave()}
-					paused={draft.paused}
-				/>
+				<!-- another main file or folder is another document: the old one's pages and teleports go with its view -->
+				{#key `${draft.root}\n${draft.mainRel}`}
+					<DraftViewComp
+						bind:this={draftView}
+						asTabStrip={strip}
+						{onPopout}
+						{controls}
+						root={draft.root}
+						mainFile={draft.mainRel}
+						trigger={draft.trigger}
+						quietTrigger={draft.quietTrigger}
+						{onInverseSync}
+						{onSettled}
+						{onDiagnostics}
+						settleEdits={() => draft.settleForSave()}
+						paused={draft.paused}
+					/>
+				{/key}
 			{/if}
 		{:else}
 			<PDFViewer

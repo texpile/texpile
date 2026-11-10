@@ -1,8 +1,10 @@
-import { beforeEach, describe, expect, it } from 'vitest';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { CompletionContext } from '@codemirror/autocomplete';
 import { EditorState } from '@codemirror/state';
+import type { EditorView } from '@codemirror/view';
 import { citationCompletionSource } from '$lib/languages/latex/intellisense/completion/citations';
-import { referenceStore } from '$lib/stores/editorStore';
+import { referenceStore, sourceCmView } from '$lib/stores/editorStore';
+import { setPaletteActions, type PaletteActions } from '$lib/workspace/commandPalette.svelte';
 
 // the cursor sits at the end of `doc`
 function offered(doc: string): { from: number; labels: string[] } | null {
@@ -25,5 +27,23 @@ describe('citationCompletionSource', () => {
 
 	it('offers nothing in a command that only has cite in its name', () => {
 		expect(offered('\\setcitestyle{kn')).toBeNull();
+	});
+});
+
+describe('the Zotero entry', () => {
+	it('is offered in a \\cite with no references yet, and opens the picker', () => {
+		referenceStore.current = [];
+		const insertZoteroCitation = vi.fn();
+		setPaletteActions({ canZoteroCite: () => true, insertZoteroCitation } as unknown as PaletteActions);
+		const doc = '\\cite{';
+		const view = { state: EditorState.create({ doc }), dispatch: vi.fn() } as unknown as EditorView;
+		sourceCmView.current = view;
+		const result = citationCompletionSource(new CompletionContext(view.state, doc.length, false, view));
+		const entry = result?.options[0];
+		expect(entry?.label).toBe('Insert Citation from Zotero');
+		(entry?.apply as (v: EditorView, c: unknown, from: number, to: number) => void)(view, entry, doc.length, doc.length);
+		expect(insertZoteroCitation).toHaveBeenCalled();
+		setPaletteActions(null);
+		sourceCmView.current = null;
 	});
 });

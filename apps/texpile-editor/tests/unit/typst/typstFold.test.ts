@@ -5,6 +5,7 @@ import { describe, it, expect } from 'vitest';
 import { EditorState } from '@codemirror/state';
 import { foldable } from '@codemirror/language';
 import { typstLanguage } from '$lib/languages/typst/source/typstLanguage';
+import { typstFoldKinds } from '$lib/languages/typst/intellisense/typstFoldKinds';
 
 const state = (doc: string) => EditorState.create({ doc, extensions: [typstLanguage()] });
 
@@ -58,5 +59,17 @@ describe('typst folding', () => {
 	it('offers nothing for an unclosed block', () => {
 		// mid-typing: a fold range here would run to the end of the document
 		expect(foldAt('#{\n  let x = 1\n', '#{')).toBeNull();
+	});
+});
+
+describe('typst folds by kind', () => {
+	it('sorts a figure call, a display equation and another call', () => {
+		const doc = '#figure(\n  image("a.png"),\n  caption: [A],\n)\n\n$ x\n  = 1 $\n\n#box(\n  [b],\n)\n';
+		const st = state(doc);
+		expect(typstFoldKinds(st).map((f) => `${st.doc.lineAt(f.from).text} ${f.kind}`)).toEqual([
+			'#figure( float',
+			'$ x equation',
+			'#box( environment'
+		]);
 	});
 });

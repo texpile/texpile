@@ -14,7 +14,7 @@ import { lineOf, locateQuote } from '$lib/comments/anchorLocate';
 import type { CommentsController } from './commentsController.svelte';
 import type { CommentThread } from '$lib/comments/log';
 import { resolveExactly } from '$lib/comments/anchorSearch';
-import { isSuggestion } from '$lib/comments/suggest';
+import { isOpenSuggestion, isSuggestion } from '$lib/comments/suggest';
 import { agentSession, shownAgent } from '$lib/ai/agentPanel/agentSession.svelte';
 import { runningAgentName } from '$lib/ai/agentPanel/agentNames';
 
@@ -229,8 +229,27 @@ export async function resolveCommentPayload(deps: McpCommentDeps, a: Args) {
 		if (!resolved || thread.resolved) return fail('a decided suggestion cannot be reopened');
 		const src = await textOf(deps, thread.file);
 		if (src && resolveExactly(src.text, thread.anchor))
-			return fail('an open suggestion is accepted or rejected in the editor; only one whose words are gone can be resolved');
+			return fail('an open suggestion is decided with decide_suggestion; only one whose words are gone can be resolved');
 	}
 	await ctl.setResolved(thread, resolved, authorOf(a));
 	return { ok: true, thread: thread.id, resolved };
+}
+
+export async function decideSuggestionPayload(deps: McpCommentDeps, a: Args) {
+	const ctl = deps.comments;
+	if (!ctl.store.writable) return fail(NO_LOG);
+	const thread = threadOf(ctl, a.thread);
+	if (!thread) return fail('no thread with that id; get_comments lists them');
+	if (!isOpenSuggestion(thread))
+		return fail(isSuggestion(thread) ? 'that suggestion is already decided' : 'that thread is a comment, not a suggestion');
+	const by = authorOf(a);
+	if (a.decision === 'accept') {
+		await ctl.suggestions.accept(thread, by);
+		return { ok: true, thread: thread.id, decision: 'accepted' };
+	}
+	if (a.decision !== 'reject') return fail('decision must be accept or reject');
+	// rejecting puts the old words back, which the editor does in the open file only
+	if (!(await ctl.suggestions.reject(thread, by)))
+		return fail(`a suggestion is rejected in the open file: open_file ${thread.file} first, then try again`);
+	return { ok: true, thread: thread.id, decision: 'rejected' };
 }

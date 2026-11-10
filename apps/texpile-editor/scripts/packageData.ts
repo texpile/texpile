@@ -32,14 +32,42 @@ export function packageDataIds(dataDir: string): Plugin {
 	};
 }
 
-/** the files themselves, beside the chunks; the dev server reads them where they are */
-export function packageData(dataDir: string): Plugin {
+// one file for thousands: Windows scans each file an installer writes, and macOS seals each one in the signature.
+// app:// answers assets/data/<id>.json out of it (electron/src/bundleData.ts)
+export const DATA_PACK = 'assets/data.pack';
+export const DATA_PACK_INDEX = 'assets/data.pack.json';
+
+export type DataPackIndex = Record<string, [offset: number, length: number]>;
+
+export function packData(dataDir: string, ids: string[]): { pack: Buffer; index: DataPackIndex } {
+	const parts: Buffer[] = [];
+	const index: DataPackIndex = {};
+	let offset = 0;
+	for (const id of ids) {
+		const bytes = fs.readFileSync(path.join(dataDir, `${id}.json`));
+		index[id] = [offset, bytes.length];
+		parts.push(bytes);
+		offset += bytes.length;
+	}
+	return { pack: Buffer.concat(parts), index };
+}
+
+/** the files themselves beside the chunks: packed for the app, one by one for the web guest, whose host serves
+ *  plain files; the dev server reads them where they are */
+export function packageData(dataDir: string, packed: boolean): Plugin {
 	return {
 		...packageDataIds(dataDir),
 		name: 'package-data',
 		generateBundle() {
-			for (const id of bundledIds(dataDir))
-				this.emitFile({ type: 'asset', fileName: `assets/data/${id}.json`, source: fs.readFileSync(path.join(dataDir, `${id}.json`)) });
+			const ids = bundledIds(dataDir);
+			if (!packed) {
+				for (const id of ids)
+					this.emitFile({ type: 'asset', fileName: `assets/data/${id}.json`, source: fs.readFileSync(path.join(dataDir, `${id}.json`)) });
+				return;
+			}
+			const { pack, index } = packData(dataDir, ids);
+			this.emitFile({ type: 'asset', fileName: DATA_PACK, source: pack });
+			this.emitFile({ type: 'asset', fileName: DATA_PACK_INDEX, source: JSON.stringify(index) });
 		}
 	};
 }

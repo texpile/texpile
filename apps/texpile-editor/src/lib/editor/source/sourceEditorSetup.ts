@@ -13,7 +13,9 @@ import {
 import type { ViewUpdate } from '@codemirror/view';
 import { EditorState, Prec, type Compartment, type Extension } from '@codemirror/state';
 import { defaultKeymap } from '@codemirror/commands';
-import { tabIndentBinding } from './extensions/keybindings/cmTabKey';
+import { tabAcceptsCompletion, tabIndentBinding } from './extensions/keybindings/cmTabKey';
+import { cmCommandKeys } from '$lib/keybindings/editors/cmCommandKeys';
+import { cmEditorScope, languageOfFile } from '$lib/keybindings/editors/editorScopes';
 import { MARKDOWN_LIST_MARKER, TYPST_LIST_MARKER, wrapIndent } from './extensions/wrap-indent/wrapIndent';
 import { sourceMathSearch } from './extensions/math-search/sourceMathSearch';
 import { bracketMatching, codeFolding, indentOnInput, foldGutter, LanguageDescription } from '@codemirror/language';
@@ -58,6 +60,7 @@ import { sourcePaste } from './paste/cmSourcePaste';
 import type { PasteDialect } from '$lib/editor/paste/pastedImages';
 import { dirname } from '$lib/workspace/fileSystem';
 import { foldMemory } from './extensions/fold-memory/foldMemory';
+import { trimAutoIndent } from './extensions/line-indent/trimAutoIndent';
 import { sourceTooltipSpace } from './toolbar/tooltipSpace';
 import { sourceSnippets } from '$lib/editor/snippets/cmSnippets';
 
@@ -106,6 +109,7 @@ export function buildSourceExtensions(deps: SourceSetupDeps): Extension[] {
 	const pasteDialect = pasteDialectOf(fileFor);
 	const snippetOptions = { stopUndoCapture: () => deps.undoManager?.stopCapturing() };
 	return [
+		cmEditorScope(languageOfFile(fileFor)),
 		...(deps.readOnly ? [] : [cmChangeMarkers()]),
 		// gutters render in extension order: lint goes before lineNumbers so it lands on their left
 		// the hover first: hover cards share one box, which opens on the side the first one asks for
@@ -140,7 +144,7 @@ export function buildSourceExtensions(deps: SourceSetupDeps): Extension[] {
 		// covered the toolbar, under the toolbar's own layer
 		tooltips({ tooltipSpace: sourceTooltipSpace }),
 		tooltipCardTheme,
-		// the cards are diagnosticHover's; the lint package's hover keeps the language server's plain ones
+		// the cards are diagnosticHover's, so the lint package's own hover shows none of them a second time
 		linter(null, { tooltipFilter: (ds) => ds.filter((d) => !d.renderMessage) }),
 		// multiple cursors: the keymaps already bind the commands, but every transaction is
 		// normalized down to one range until the state allows extra ones
@@ -149,6 +153,7 @@ export function buildSourceExtensions(deps: SourceSetupDeps): Extension[] {
 		crosshairCursor(),
 		bracketMatching(),
 		indentOnInput(),
+		trimAutoIndent(),
 		deps.langConf.of([]),
 		cmSyntaxHighlight(),
 		// guests included: the sources read stores fed through the workspace provider, so a
@@ -171,6 +176,7 @@ export function buildSourceExtensions(deps: SourceSetupDeps): Extension[] {
 				? // md chords; $-math, spellcheck and project file paths are dialect-free
 					// the fold rail as .tex and .typ have it; lang-markdown already folds a heading's section
 					[
+						tabAcceptsCompletion,
 						mdSourceShortcuts(),
 						mdPathCompletion(),
 						sourceSnippets('markdown', snippetOptions),
@@ -187,6 +193,8 @@ export function buildSourceExtensions(deps: SourceSetupDeps): Extension[] {
 							// RAIL is mounted here rather than with the language, whose parser is a dynamic
 							// import: a gutter arriving a second late shoves the text sideways on every open
 							[
+								// tinymist's list too, which lands later in lspConf
+								tabAcceptsCompletion,
 								typSourceShortcuts(),
 								// ahead of defaultKeymap below, as latexListContinuation is
 								typstEnterContinuation(),
@@ -215,8 +223,8 @@ export function buildSourceExtensions(deps: SourceSetupDeps): Extension[] {
 		synctexFlash(), // flash the line jumped to by SyncTeX inverse search / Find-in-Files
 		// compact find/replace widget, floated top-right (styles in SourceEditor)
 		texpileSearch(),
+		cmCommandKeys({ 'editor.find': toggleSearchPanel }),
 		keymap.of([
-			{ key: 'Mod-f', run: toggleSearchPanel },
 			{ key: 'Escape', run: closeSearchPanelAnimated },
 			...defaultKeymap,
 			// the file's history, which the visual editor and the disk share; a view with no text binding is read-only

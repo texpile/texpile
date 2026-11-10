@@ -27,8 +27,8 @@ Revert covers text files up to 1 MB and works until you close the window.
 
 ## Messages
 
-| You see                  | Fix                                                                                        |
-| ------------------------ | ------------------------------------------------------------------------------------------ |
-| {agent} is not signed in | Run the command shown in a terminal. **Open Terminal** opens one.                          |
-| {agent} was not found    | Install it, or add its folder in `Preferences › Toolchain › Folders`. Click **Try Again**. |
-| {agent} stopped          | The note shows its last message. Click **Try Again**.                                      |
+| You see                  | Fix                                                                                                        |
+| ------------------------ | ---------------------------------------------------------------------------------------------------------- |
+| {agent} is not signed in | Run the command shown in a terminal. **Open Terminal** opens one.                                          |
+| {agent} was not found    | Install it, or add its folder in `Preferences › Programs & Compiler › Other folders`. Click **Try Again**. |
+| {agent} stopped          | The note shows its last message. Click **Try Again**.                                                      |

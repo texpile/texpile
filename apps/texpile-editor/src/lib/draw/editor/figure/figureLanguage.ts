@@ -324,7 +324,6 @@ export type FigureLanguage = {
 	libraryElements: readonly LibraryElement[];
 	addElement(source: string, pictureIndex: number, element: LibraryElement): string | null;
 	addDimension(source: string, pictureIndex: number, dimension: FigureDimension): string | null;
-	upToDate(source: string): string;
 	readDimension(source: string, picture: FigurePicture, st: FigureStatement): FigureDimension | null;
 	trimmable(source: string, st: FigureStatement): TrimmableShape | null;
 	writeTrimmed(source: string, st: FigureStatement, left: TrimmedShape): string | null;

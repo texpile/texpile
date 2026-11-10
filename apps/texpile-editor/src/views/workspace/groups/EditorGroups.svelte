@@ -15,6 +15,7 @@
 	import type { EditorPaneProps } from '../editorPaneProps';
 	import { parkedPaneProps } from './parkedPaneProps';
 	import { clickLanding } from './clickLanding.svelte';
+	import { caretAtPoint } from './caretAtPoint';
 	import { overlayProps } from './overlayProps';
 	import { visualEditorIn } from '$lib/editor/editorsOnScreen.svelte';
 	import { activeFilePath } from '$lib/workspace/workspaceStore';
@@ -23,7 +24,7 @@
 	import { splitTarget, zoneAt, type DropZone } from '$lib/workspace/groups/splitDrop';
 	import { layoutTracks, MIN_COLUMN_PX, MIN_ROW_PX, revealShift, trackSpan, trackTemplate } from '$lib/workspace/groups/groupSizes';
 	import { cellOf, tracksOf } from '$lib/workspace/groups/layouts';
-	import { followSplitScroll } from '../pane/splitScroll.svelte';
+	import { carrySplitViewState } from '../pane/splitViewState.svelte';
 	import { switchParkedMode } from '../pane/parkedModeSwitch';
 	import { rebreakResizedEditors } from '$lib/editor/visual/linebreak/lineBreakPlugin';
 	import { m } from '$lib/paraglide/messages';
@@ -173,7 +174,7 @@
 		cells.set(id, node);
 		return () => cells.delete(id);
 	}
-	followSplitScroll(cells, (id) => editorGroups.activeOf(id)?.path ?? null);
+	carrySplitViewState(cells, (id) => editorGroups.activeOf(id)?.path ?? null);
 	// a layout picked or a divider moved: lines broken for the new widths before the frame shows, not a frame after
 	$effect(() => {
 		void editorGroups.layout;
@@ -215,12 +216,12 @@
 		// under the press, and the click then misses the tab or its close button
 		if (target?.closest('[role=tablist], [data-strip-controls]')) return;
 		const visual = !!target?.closest('.ProseMirror');
-		const inEditor = visual || !!target?.closest('.cm-content');
-		// before the browser handles the press: on the same file the editor takes typing by then, and places
-		// the caret itself
+		const at = visual || target?.closest('.cm-content') ? { x: event.clientX, y: event.clientY, visual } : null;
 		flushSync(() => editorGroups.focus(g.id));
-		const taken = !!target?.closest('[contenteditable="true"]');
-		if (inEditor && !taken) landing.start({ x: event.clientX, y: event.clientY, visual }, g.id);
+		const cell = cells.get(g.id);
+		// on the same file the editor takes typing by now: the press lands before the browser focuses it, which
+		// would put back the caret the editor held
+		if (at && !(cell && caretAtPoint(at, cell))) landing.start(at, g.id);
 		else landing.clear();
 	}
 	// a tab or files from the tree dragged over a slot's editor: the slot takes them in, or on an edge the

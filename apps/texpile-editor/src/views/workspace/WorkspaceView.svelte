@@ -40,19 +40,16 @@
 	import { attachSourceToc, attachVisualProjectToc, tocListOf } from './workspaceToc.svelte';
 	import { startWorkspace } from './workspaceStartup';
 	import { projectConfigSync as projectConfig, compileConfig, latexLiveMode } from '$lib/workspace/projectConfigSync.svelte';
-	import { setPaletteActions } from '$lib/workspace/commandPalette.svelte';
 	import { PaneLayout } from '$lib/workspace/paneLayout.svelte';
 	import { TerminalDockState } from '$lib/workspace/terminalDockState.svelte';
 	import { mark } from '$lib/debug/startupDoctor';
-	import { bindWorkspaceShortcuts } from './workspaceShortcuts.svelte';
+	import { bindPaletteCommands, bindWorkspaceShortcuts } from './workspaceShortcuts.svelte';
 	import { editSelect } from '$lib/chrome/menuBarCommands';
-	import { preferencesOpen } from '$lib/stores/dialogStore';
 	import { workspaceRoot, texFiles, focusedKey, documentMainFile } from '$lib/workspace/workspaceStore';
 	import { onShowLine } from '$lib/workspace/showLine';
 	import { followFigureTabs } from '$lib/draw/host/figureTabs.svelte';
 	import ZoteroCitationDialog from '$lib/zotero/ZoteroCitationDialog.svelte';
 	import CiteByDoiDialog from '$lib/cite/CiteByDoiDialog.svelte';
-	import { settings } from '$lib/settings';
 	import { basename, dirname, isDesktop } from '$lib/workspace/fileSystem';
 	import { fileService } from '$lib/files/service/fileService';
 	import { diskProvider } from '$lib/workspace/diskProvider';
@@ -315,27 +312,13 @@
 	// the Ctrl+K palette. Registered rather than passed down: it reaches roughly a dozen of these
 	// actions, and threading that through WorkspaceChrome and WorkspaceMain to a dialog would touch
 	// four files per command. Cleared on destroy so a keystroke after the workspace closed is inert.
-	onMount(() => {
-		setPaletteActions(makePaletteActions(actionDeps));
-		return () => setPaletteActions(null);
-	});
+	onMount(() => bindPaletteCommands(makePaletteActions(actionDeps)));
 
-	const uiZoomPercent = $derived(Math.round((settings.current.uiZoom ?? 1) * 100));
-	// shortcut table + UI zoom live in lib/workspace/shortcuts.ts
 	bindWorkspaceShortcuts({
 		closeTab: (t) => editFlow.closeTab(t),
 		reopenTab: () => editFlow.reopenTab(),
-		isGuest: () => guest,
-		save: () => wsdoc.save(),
 		toggleGlobalSearch: () => void toggleSearchPanel(searchDeps),
-		terminalAvailable: () => termDock.available,
-		isCompiling: () => compiler.compiling,
-		runCompile: () => compiler.runCompile(),
-		stopCompile: () => compiler.stopCompile(),
-		openPreferences: () => (preferencesOpen.current = true),
-		openFolder: () => void (hostMode && files.folder.open()),
-		stepDocumentHistory: (direction) => editSelect(direction),
-		openSourceControl: () => chromeActions.openSourceControl()
+		stepDocumentHistory: (direction) => editSelect(direction)
 	});
 	followFigureTabs({
 		openTab: (path, figure) => editFlow.activateTab(tabs.find(tabs.openFigure(path, figure)) ?? { path, figure }),
@@ -363,7 +346,6 @@
 	<WorkspaceChrome
 		bind:layout
 		bind:termDock
-		{compiler}
 		{scm}
 		treeOps={files.treeOps}
 		{guest}
@@ -379,7 +361,6 @@
 			hostMode,
 			canManageTree: provider.caps.manageTree,
 			canFormat: fmt.canFormatDoc(),
-			uiZoomPercent,
 			typstProject: cc.typstProject,
 			spelling: spellingFor(doc.path ?? null, hasVisualMode(kind) ? doc.texSource : doc.rawContent)
 		}}
