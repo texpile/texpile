@@ -226,13 +226,14 @@ function entry(type: string, key: string, fields: Record<string, string>): strin
 
 /** registry titles carry markup (<i>, <sub>, MathML) and entities; the list shows words */
 function plain(s: string): string {
+	// &amp; last, or "&amp;lt;" would decode twice
 	return s
 		.replace(/<[^>]+>/g, '')
-		.replace(/&amp;/g, '&')
 		.replace(/&lt;/g, '<')
 		.replace(/&gt;/g, '>')
 		.replace(/&quot;/g, '"')
 		.replace(/&#39;|&apos;/g, "'")
+		.replace(/&amp;/g, '&')
 		.replace(/\s+/g, ' ')
 		.trim();
 }

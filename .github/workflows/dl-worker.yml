@@ -9,6 +9,9 @@ on:
       - 'tools/dl-worker/**'
       - '.github/workflows/dl-worker.yml'
 
+permissions:
+  contents: read
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
