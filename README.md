@@ -28,6 +28,8 @@ A modern, desktop editor for LaTeX, Typst, and Markdown. For Windows, macOS, and
 - Every window has its own preview.
 - Texpile supports Typst's instant live preview.
 
+![The live preview typesetting a paragraph as it is typed](docs/images/live-preview.webp)
+
 ### Visual editor
 
 Texpile has the most complete visual editor coverage for LaTeX and Typst.
