@@ -28,6 +28,11 @@
 	text-align: center;
 }
 
+/* the hover buttons sit over the hover frame (.imageResizeBox, z-index 1) */
+.imagePluginRoot > .image-overlay-container {
+	z-index: 2;
+}
+
 .imagePluginRoot.image-cropping > img,
 .imagePluginRoot.image-cropping > .image-overlay-container,
 .imagePluginRoot.image-cropping > .imageResizeBoxWrapper {
