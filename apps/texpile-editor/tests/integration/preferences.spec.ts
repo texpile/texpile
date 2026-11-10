@@ -35,7 +35,7 @@ const TABS = [
 	'Spelling',
 	'Version Control',
 	'Collaboration',
-	'Compiler',
+	'Programs & Compiler',
 	'Integrations',
 	'Startup',
 	'AI Assistant'

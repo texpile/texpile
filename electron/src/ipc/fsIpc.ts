@@ -1,5 +1,5 @@
 // the fs:* surface: file ops, the folder picker, reveal-in-OS, undoable delete, and synctex
-import { app, BrowserWindow, dialog, ipcMain, shell } from 'electron';
+import { app, BrowserWindow, dialog, ipcMain, shell, type IpcMainInvokeEvent, type OpenDialogOptions } from 'electron';
 import * as path from 'node:path';
 import { createHash } from 'node:crypto';
 import * as fsService from '../fs/fsService';
@@ -39,18 +39,15 @@ export function registerFsIpc(): void {
 		});
 		return res.canceled || res.filePaths.length === 0 ? null : res.filePaths[0];
 	});
-	for (const [channel, properties] of [
-		['dialog:pickFolder', ['openDirectory']],
-		['dialog:pickFile', ['openFile']]
-	] as const) {
-		ipcMain.handle(channel, async (e, title: unknown) => {
-			const res = await dialog.showOpenDialog(BrowserWindow.fromWebContents(e.sender) ?? undefined!, {
-				title: typeof title === 'string' ? title : undefined,
-				properties: [...properties]
-			});
-			return res.canceled || res.filePaths.length === 0 ? null : res.filePaths[0];
+	async function pick(e: IpcMainInvokeEvent, title: unknown, properties: OpenDialogOptions['properties']): Promise<string[]> {
+		const res = await dialog.showOpenDialog(BrowserWindow.fromWebContents(e.sender) ?? undefined!, {
+			title: typeof title === 'string' ? title : undefined,
+			properties
 		});
+		return res.canceled ? [] : res.filePaths;
 	}
+	ipcMain.handle('dialog:pickFolder', (e, title: unknown) => pick(e, title, ['openDirectory', 'multiSelections']));
+	ipcMain.handle('dialog:pickFile', async (e, title: unknown) => (await pick(e, title, ['openFile']))[0] ?? null);
 
 	handleFs('fs:scan', scan);
 	handleFs('fs:read', fsService.read);

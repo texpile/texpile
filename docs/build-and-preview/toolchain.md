@@ -1,13 +1,13 @@
 ---
-description: The Compiler page in Preferences picks the LaTeX and Typst install Texpile uses, installs TeX Live and tinymist, and adds folders to search.
+description: The Programs & Compiler page in Preferences picks the LaTeX and Typst install Texpile uses, installs TeX Live and tinymist, and adds folders to search.
 order: 1
 ---
 
-# Compiler
+# Programs & Compiler
 
-**File › Preferences… › Compiler** has a row for LaTeX, a row for Typst and a row for other folders.
+**File › Preferences… › Programs & Compiler** has a row for LaTeX, a row for Typst and a row for other folders.
 
-![The Compiler page of Preferences with the LaTeX row saying 4 of 8 programs work, four programs marked Not found, the Typst row and Other folders](../../landing/src/lib/assets/showcase/docs/app/preferences-toolchain.png)
+![The Programs & Compiler page of Preferences with the LaTeX row saying 4 of 8 programs work, four programs marked Not found, the Typst row and Other folders](../../landing/src/lib/assets/showcase/docs/app/preferences-toolchain.png)
 
 Each language row has a picker for the install Texpile uses. The line under the language's name says how its programs are doing, for example "7 of 8 programs work." **Show** lists the ones that work with their versions. A program that is missing or does not run gets a line of its own under the row. When Texpile finds none of a language's programs, the row says **Not found.** with a **How to install** link to the install guide. Texpile checks the programs again each time the page opens.
 
@@ -34,7 +34,7 @@ The **LaTeX** picker lists every TeX Live and MiKTeX Texpile finds. The one in u
 
 Add a program missing from your TeX with that distribution's package manager, such as tlmgr or MiKTeX Console.
 
-Texpile searches **Other folders** before PATH, for every program it runs, including your compile command and git. **Add Folder** adds one. Each folder shows what Texpile found in it.
+Texpile searches **Other folders** before PATH, for every program it runs, including your compile command and git. **Add Folder** adds one or more. On Linux it adds one at a time. Each folder shows what Texpile found in it.
 
 ## Install TeX Live
 

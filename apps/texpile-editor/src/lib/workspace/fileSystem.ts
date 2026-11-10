@@ -86,7 +86,7 @@ type TexpileNative = {
 	/** answered synchronously in preload, so the first render already knows what it is opening */
 	bootstrap?: { open: { kind: 'file' | 'folder'; path: string } | null; settings: Record<string, unknown> };
 	openFolder: () => Promise<string | null>;
-	pickFolder?: (title: string) => Promise<string | null>;
+	pickFolders?: (title: string) => Promise<string[]>;
 	pickFile?: (title: string) => Promise<string | null>;
 	onOpenPath?: (cb: (filePath: string) => void) => () => void;
 	onOpenFolder?: (cb: (root: string) => void) => () => void;

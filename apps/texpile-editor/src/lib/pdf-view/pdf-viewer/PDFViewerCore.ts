@@ -19,6 +19,7 @@ import type { PDFDocumentProxy } from 'pdfjs-dist/legacy/build/pdf.mjs';
 import { EventBus } from './EventBus';
 import { PDFPageView, RenderingStates } from './PDFPageView';
 import { SimpleLinkService } from './SimpleLinkService';
+import { PdfScripting } from './PdfScripting';
 import { wheelZoomFactor } from '$lib/preview/zoom/wheelZoom';
 import { keepPointUnder } from '$lib/preview/zoom/zoomAnchor';
 import { jumpScrollShift } from '$lib/editor/jumpPlacement';
@@ -75,6 +76,7 @@ export class PDFViewerCore {
 	private readonly topInset: number;
 
 	private linkService: SimpleLinkService;
+	private readonly scripting: PdfScripting;
 
 	private get firstPageTop(): number {
 		return this.topInset || CONTAINER_PAD;
@@ -95,6 +97,7 @@ export class PDFViewerCore {
 		this.linkService = new SimpleLinkService({
 			eventBus: this.eventBus
 		});
+		this.scripting = new PdfScripting(this.eventBus, this.viewer);
 
 		this.setupScrollListener();
 		this.setupInverseClick();
@@ -190,7 +193,10 @@ export class PDFViewerCore {
 	// a single synchronous pass (no half-built frames, no loading state)
 	async setDocument(pdfDocument: PDFDocumentProxy): Promise<void> {
 		const numPages = pdfDocument.numPages;
-		const pdfPages = await Promise.all(Array.from({ length: numPages }, (_, i) => pdfDocument.getPage(i + 1)));
+		const [pdfPages, forms] = await Promise.all([
+			Promise.all(Array.from({ length: numPages }, (_, i) => pdfDocument.getPage(i + 1))),
+			this.scripting.formsOf(pdfDocument)
+		]);
 
 		this.cleanup();
 
@@ -212,12 +218,14 @@ export class PDFViewerCore {
 				eventBus: this.eventBus,
 				scale: this.currentScale,
 				rotation: this.currentRotation,
-				linkService: this.linkService
+				linkService: this.linkService,
+				forms
 			});
 
 			pageView.setPdfPage(page);
 			this.pages.push(pageView);
 		}
+		void this.scripting.open(pdfDocument, forms);
 
 		this.eventBus.dispatch('pagesloaded', { pagesCount: numPages });
 
@@ -544,6 +552,7 @@ export class PDFViewerCore {
 	}
 
 	cleanup(): void {
+		this.scripting.close();
 		for (const page of this.pages) {
 			page.destroy();
 		}

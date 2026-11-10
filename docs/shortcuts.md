@@ -55,7 +55,7 @@ Keys: `a` to `z`, `0` to `9`, `f1` to `f24`, `enter`, `tab`, `space`, `backspace
 | Ctrl T         | Go to file                                                                    |
 | Ctrl Alt Enter | Compile, or stop a running compile                                            |
 | Ctrl Shift F   | Find in files                                                                 |
-| Alt Z          | Insert a citation from Zotero                                                 |
+| Alt Z          | Insert a citation from Zotero (Cmd Option Z on macOS)                         |
 | Ctrl Shift G   | Source Control, with the cursor in the message box (Control Shift G on macOS) |
 | Ctrl Enter     | Commit, from the Source Control message box                                   |
 | F8             | Next spelling problem                                                         |

@@ -16,7 +16,7 @@ order: 1
 
 ![The Set Up LaTeX dialog saying latexmk is not found, with Close and Install TeX Live](../../../landing/src/lib/assets/showcase/docs/app/set-up-latex-install.png)
 
-You can also find it in **File › Preferences… › Compiler**. Click **Install TeX Live** in the **LaTeX** row.
+You can also find it in **File › Preferences… › Programs & Compiler**. Click **Install TeX Live** in the **LaTeX** row.
 
 For the download size and where the install goes, see [Install TeX Live](../../build-and-preview/toolchain.md#install-tex-live).
 

@@ -18,6 +18,7 @@
 import type { PDFDocumentProxy, PDFPageProxy, PageViewport } from 'pdfjs-dist/legacy/build/pdf.mjs';
 import { EventBus } from './EventBus';
 import { SimpleLinkService } from './SimpleLinkService';
+import { ANNOTATION_MODE_FORMS, PdfScripting, keepScriptedVisibility, type FormScripting } from './PdfScripting';
 
 let AnnotationLayer: typeof import('pdfjs-dist/legacy/build/pdf.mjs').AnnotationLayer;
 
@@ -63,6 +64,9 @@ export class PdfPresentationMode {
 	private annotationLayer: any = null;
 	private linkService: SimpleLinkService | null = null;
 	private eventBus: EventBus | null = null;
+	private scripting: PdfScripting | null = null;
+	private forms: Promise<FormScripting | null> = Promise.resolve(null);
+	private readonly annotationCanvasMap = new Map<string, HTMLCanvasElement>();
 
 	private fullscreenChangeAbortController: AbortController | null = null;
 	private windowAbortController: AbortController | null = null;
@@ -223,6 +227,18 @@ export class PdfPresentationMode {
 		this.container.appendChild(this.pageWrapper);
 		this.shadowRoot.appendChild(this.container);
 		document.body.appendChild(this.hostElement);
+		this.startScripting(this.eventBus, this.container);
+	}
+
+	private startScripting(eventBus: EventBus, root: HTMLElement): void {
+		const doc = this.pdfDocument;
+		if (!doc) return;
+		const scripting = new PdfScripting(eventBus, root);
+		this.scripting = scripting;
+		this.forms = scripting.formsOf(doc).then((forms) => {
+			if (this.scripting === scripting) void scripting.open(doc, forms);
+			return forms;
+		});
 	}
 
 	private getPresentationStyles(): string {
@@ -284,6 +300,13 @@ export class PdfPresentationMode {
 			.annotationLayer .linkAnnotation.hasBorder:hover {
 				background-color: rgb(255 255 0 / 0.2);
 			}
+
+			.annotationLayer .annotationContent {
+				position: absolute;
+				width: 100%;
+				height: 100%;
+				pointer-events: none;
+			}
 		`;
 	}
 
@@ -299,6 +322,9 @@ export class PdfPresentationMode {
 		}
 		this.annotationLayer = null;
 		this.linkService = null;
+		this.scripting?.close();
+		this.scripting = null;
+		this.forms = Promise.resolve(null);
 		this.eventBus?.destroy();
 		this.eventBus = null;
 		this.currentViewport = null;
@@ -340,10 +366,14 @@ export class PdfPresentationMode {
 			context.fillStyle = '#fff';
 			context.fillRect(0, 0, this.canvas.width, this.canvas.height);
 
+			const forms = await this.forms;
+			this.annotationCanvasMap.clear();
 			await page.render({
 				canvasContext: context,
 				viewport: scaledViewport,
-				canvas: this.canvas
+				canvas: this.canvas,
+				annotationCanvasMap: this.annotationCanvasMap,
+				...(forms?.enableScripting ? { annotationMode: ANNOTATION_MODE_FORMS } : {})
 			}).promise;
 
 			if (this.pageWrapper) {
@@ -351,7 +381,8 @@ export class PdfPresentationMode {
 				this.pageWrapper.style.height = `${this.canvas.height}px`;
 			}
 
-			await this.renderAnnotationLayer(page, scaledViewport);
+			await this.renderAnnotationLayer(page, scaledViewport, forms);
+			this.eventBus?.dispatch('pagerendered', { pageNumber: this.currentPageNumber });
 		} catch (e) {
 			console.error('Failed to render presentation page:', e);
 		} finally {
@@ -359,7 +390,7 @@ export class PdfPresentationMode {
 		}
 	}
 
-	private async renderAnnotationLayer(page: PDFPageProxy, viewport: PageViewport): Promise<void> {
+	private async renderAnnotationLayer(page: PDFPageProxy, viewport: PageViewport, forms: FormScripting | null): Promise<void> {
 		if (!this.annotationLayerDiv || !this.linkService) {
 			return;
 		}
@@ -388,14 +419,14 @@ export class PdfPresentationMode {
 			this.annotationLayer = new AnnotationLayer({
 				div: this.annotationLayerDiv,
 				accessibilityManager: null,
-				annotationCanvasMap: null,
+				annotationCanvasMap: this.annotationCanvasMap,
 				annotationEditorUIManager: null,
 				page: page,
 				viewport: viewport.clone({ dontFlip: true }),
 				structTreeLayer: null,
 				commentManager: null,
 				linkService: this.linkService,
-				annotationStorage: null
+				annotationStorage: forms?.annotationStorage ?? null
 				// eslint-disable-next-line @typescript-eslint/no-explicit-any
 			} as any);
 
@@ -405,11 +436,12 @@ export class PdfPresentationMode {
 				renderForms: false, // no forms in presentation mode
 				linkService: this.linkService,
 				downloadManager: undefined,
-				annotationStorage: null,
-				enableScripting: false,
-				hasJSActions: false,
-				fieldObjects: null
+				annotationStorage: forms?.annotationStorage ?? null,
+				enableScripting: forms?.enableScripting ?? false,
+				hasJSActions: forms?.hasJSActions ?? false,
+				fieldObjects: forms?.fieldObjects ?? null
 			});
+			keepScriptedVisibility(this.annotationLayerDiv, forms);
 
 			// override dimensions after render, PDF.js sets CSS variable-based ones
 			this.annotationLayerDiv.style.width = `${width}px`;
@@ -491,9 +523,8 @@ export class PdfPresentationMode {
 	}
 
 	private handleMouseDown = (evt: MouseEvent): void => {
-		// don't interfere with annotation link clicks
-		const target = evt.target as HTMLElement;
-		if (target.closest('.annotationLayer a')) {
+		// a link or a widget (animate's player buttons) takes the click; the slide is in a shadow root, so the target is its host
+		if (evt.composedPath().some((el) => el instanceof Element && el.matches('.annotationLayer section'))) {
 			return;
 		}
 

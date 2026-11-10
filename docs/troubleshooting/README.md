@@ -14,12 +14,12 @@ Find the message you see. [LaTeX](latex.md), [Typst](typst.md), [Git](git.md) an
 
 ## Programs
 
-| You see                                                 | Fix                                                                                   |
-| ------------------------------------------------------- | ------------------------------------------------------------------------------------- |
-| A program shows **Not found** in Preferences › Compiler | Add it with your TeX distribution's package manager, such as tlmgr or MiKTeX Console. |
-| A program shows **Does not run.**                       | Texpile found the program and it fails to start. Reinstall it.                        |
-| "No main file is set."                                  | Click **Set Main File**.                                                              |
-| Git features are missing                                | [Install git](../installation/git.md).                                                |
+| You see                                                            | Fix                                                                                   |
+| ------------------------------------------------------------------ | ------------------------------------------------------------------------------------- |
+| A program shows **Not found** in Preferences › Programs & Compiler | Add it with your TeX distribution's package manager, such as tlmgr or MiKTeX Console. |
+| A program shows **Does not run.**                                  | Texpile found the program and it fails to start. Reinstall it.                        |
+| "No main file is set."                                             | Click **Set Main File**.                                                              |
+| Git features are missing                                           | [Install git](../installation/git.md).                                                |
 
 ## Editing
 
@@ -45,7 +45,7 @@ Find the message you see. [LaTeX](latex.md), [Typst](typst.md), [Git](git.md) an
 
 | You see                           | Fix                                                                                           |
 | --------------------------------- | --------------------------------------------------------------------------------------------- |
-| An agent shows **Not found**      | Install it, or add its folder in Preferences › Compiler › Other folders.                      |
+| An agent shows **Not found**      | Install it, or add its folder in Preferences › Programs & Compiler › Other folders.           |
 | No Agent tab                      | Tick an agent in Preferences › AI Assistant › Agent tab.                                      |
 | "Not running: …" under MCP server | Another program uses the port. See [Change the port](../ai-assistant/mcp.md#change-the-port). |
 | "The text from … was not used"    | The agent's result broke a rule. The note under it says which.                                |

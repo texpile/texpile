@@ -37,7 +37,7 @@ Each window runs its own live preview.
 
 ## What it needs
 
-- **lualatex**, from TeX Live, MacTeX or MiKTeX. With none found, the preview says "lualatex is not installed." and offers the [Compiler](../build-and-preview/toolchain.md) page, where Texpile can install TeX Live.
+- **lualatex**, from TeX Live, MacTeX or MiKTeX. With none found, the preview says "lualatex is not installed." and offers the [Programs & Compiler](../build-and-preview/toolchain.md) page, where Texpile can install TeX Live.
 - **LaTeX 2021-06 or newer.** With an older one the preview says "Live mode needs LaTeX 2021-06 or newer." Update your TeX distribution. This is a theoretical floor. It is highly recommended that you use 2025 or newer.
 
 ## Speed

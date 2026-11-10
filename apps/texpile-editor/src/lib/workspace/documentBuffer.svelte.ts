@@ -35,11 +35,12 @@ import type { Node as PMNode } from 'prosemirror-model';
 import { liveText } from '$lib/buffers/liveText.svelte';
 import { standaloneText, type DocumentText } from '$lib/buffers/documentText';
 
-export type FileKind = 'tex' | 'md' | 'typ' | 'bib' | 'pdf' | 'image' | 'binary' | 'text' | null;
+export type FileKind = 'tex' | 'md' | 'typ' | 'bib' | 'pdf' | 'image' | 'media' | 'binary' | 'text' | null;
 export type DocMeta = Pick<ParsedLatexFile, 'preamble' | 'postamble' | 'hadDocumentEnv' | 'table'> | null;
 
 const IMAGE_EXT = /\.(png|jpe?g|gif|svg|webp|bmp|ico)$/i;
-const BINARY_EXT = /\.(pdf|zip|gz|tar|otf|ttf|woff2?|eot|docx?|pptx?|xlsx?|bin)$/i;
+const MEDIA_EXT = /\.(mp4|m4v|webm|mov|mkv|ogv|mp3|m4a|aac|wav|ogg|oga|opus|flac)$/i;
+const BINARY_EXT = /\.(pdf|zip|gz|tar|otf|ttf|woff2?|eot|docx?|pptx?|xlsx?|bin|avi|wmv|flv)$/i;
 
 export function fileKind(path: string | null): FileKind {
 	if (!path) return null;
@@ -49,6 +50,7 @@ export function fileKind(path: string | null): FileKind {
 	if (/\.bib$/i.test(path)) return 'bib';
 	if (/\.pdf$/i.test(path)) return 'pdf';
 	if (IMAGE_EXT.test(path)) return 'image';
+	if (MEDIA_EXT.test(path)) return 'media';
 	if (BINARY_EXT.test(path)) return 'binary';
 	return 'text';
 }
@@ -64,6 +66,11 @@ export function formatOf(kind: FileKind): 'tex' | 'md' | 'typ' {
 }
 
 /** kinds edited as raw text in the source editor, with no visual representation. */
+/** kinds shown by a viewer, with nothing loaded into a text buffer */
+export function isViewerKind(kind: FileKind): kind is 'pdf' | 'image' | 'media' | 'binary' {
+	return kind === 'pdf' || kind === 'image' || kind === 'media' || kind === 'binary';
+}
+
 export function isRawTextKind(kind: FileKind): kind is 'text' | 'bib' {
 	return kind === 'text' || kind === 'bib';
 }

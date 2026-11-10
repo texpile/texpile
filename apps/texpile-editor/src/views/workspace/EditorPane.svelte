@@ -14,14 +14,14 @@
 	import NewDocumentStart from './NewDocumentStart.svelte';
 	import SourceEditor from '$lib/editor/source/SourceEditor.svelte';
 	import BibManager from '$lib/editor/visual/bib/BibManager.svelte';
-	import PDFViewer from '$lib/preview/PDFViewer.svelte';
 	import VisualLoading from '$lib/editor/visual/VisualLoading.svelte';
 	import { mark } from '$lib/debug/startupDoctor';
 	import { warmEditor } from '$lib/warmup';
 	import { basename } from '$lib/workspace/fileSystem';
 	import { activeFilePath } from '$lib/workspace/workspaceStore';
 	import FigureOverlay from '$lib/draw/host/tab/FigureOverlay.svelte';
-	import ImageViewer from '$lib/images/viewer/ImageViewer.svelte';
+	import FileViewer from './pane/FileViewer.svelte';
+	import { isViewerKind } from '$lib/workspace/documentBuffer.svelte';
 	import { editorViewStore } from '$lib/stores/editorStore';
 	import { restoreVisualPosition } from '$lib/workspace/visualPositions';
 	import { visualMountNote } from '$lib/workspace/visualMountNote.svelte';
@@ -417,17 +417,8 @@
 						{#key loadedPath}
 							<BibManager value={rawContent} onInput={onRawInput} suggested={bibSuggested} onShowSource={() => onSetViewMode?.('source')} />
 						{/key}
-					{:else if loadedPath && kind === 'pdf'}
-						<!-- a .pdf opened directly: its own src, independent of the compile-output pane -->
-						<div class="h-full w-full">
-							<PDFViewer src={fileUrl(loadedPath)} filename={basename(loadedPath)} placement="file" />
-						</div>
-					{:else if loadedPath && kind === 'image'}
-						{#key loadedPath}<ImageViewer path={loadedPath} url={fileUrl(loadedPath)} />{/key}
-					{:else if loadedPath && kind === 'binary'}
-						<div class="text-muted mt-12 text-center text-sm">
-							{m.wsview_binary_file_note({ name: basename(loadedPath) })}
-						</div>
+					{:else if loadedPath && isViewerKind(kind)}
+						{#key loadedPath}<FileViewer path={loadedPath} {kind} url={fileUrl(loadedPath)} />{/key}
 					{:else if activeFilePath.current && !parked}
 						<!-- shown while the visual parse runs; fades in late so a fast parse never strobes a spinner -->
 						<div class="text-muted reveal-late mt-12 flex items-center justify-center gap-2 text-sm">

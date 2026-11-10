@@ -154,7 +154,7 @@
 		bind:this={stage}
 		bind:clientWidth={box.w}
 		bind:clientHeight={box.h}
-		class="bg-surface-100-900 relative min-h-0 flex-1 cursor-grab overflow-hidden outline-none active:cursor-grabbing"
+		class="relative min-h-0 flex-1 cursor-grab overflow-hidden bg-(--pdf-page-area-bg) outline-none active:cursor-grabbing"
 		role="application"
 		aria-label={basename(props.path)}
 		tabindex="0"

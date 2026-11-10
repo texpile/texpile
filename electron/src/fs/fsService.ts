@@ -14,7 +14,21 @@ export const MIME: Record<string, string> = {
 	'.svg': 'image/svg+xml',
 	'.webp': 'image/webp',
 	'.bmp': 'image/bmp',
-	'.pdf': 'application/pdf'
+	'.pdf': 'application/pdf',
+	'.mp4': 'video/mp4',
+	'.m4v': 'video/mp4',
+	'.webm': 'video/webm',
+	'.mov': 'video/quicktime',
+	'.mkv': 'video/x-matroska',
+	'.ogv': 'video/ogg',
+	'.mp3': 'audio/mpeg',
+	'.m4a': 'audio/mp4',
+	'.aac': 'audio/aac',
+	'.wav': 'audio/wav',
+	'.ogg': 'audio/ogg',
+	'.oga': 'audio/ogg',
+	'.opus': 'audio/ogg',
+	'.flac': 'audio/flac'
 };
 
 export async function read(path: string): Promise<{ content: string; encoding: SourceEncoding }> {

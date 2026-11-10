@@ -59,6 +59,6 @@ sudo apt install libfuse2
 
 ## 2. Install what you need
 
-- LaTeX: [a TeX distribution](latex/README.md). Texpile installs TeX Live from Preferences › Compiler, or you install one yourself.
+- LaTeX: [a TeX distribution](latex/README.md). Texpile installs TeX Live from Preferences › Programs & Compiler, or you install one yourself.
 - Typst: [tinymist](typst/README.md). Texpile installs it from the **Set Up Typst** bar above a `.typ` file.
 - Source Control: [git](git.md).

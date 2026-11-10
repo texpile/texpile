@@ -40,13 +40,12 @@ class ToolDirs {
 	}
 
 	async browse(): Promise<void> {
-		const dir = await nativeBridge()?.pickFolder?.(m.prefs_toolchain_dirs_add_title());
-		if (dir) await this.add(dir);
+		await this.add((await nativeBridge()?.pickFolders?.(m.prefs_toolchain_dirs_add_title())) ?? []);
 	}
 
 	async locate(tool: string): Promise<void> {
 		const file = await nativeBridge()?.pickFile?.(m.prefs_toolchain_locate_title({ name: tool }));
-		if (file) await this.add(folderOf(file));
+		if (file) await this.add([folderOf(file)]);
 	}
 
 	/** how a folder is written down: relative to a portable app on its own drive, else absolute */
@@ -55,11 +54,17 @@ class ToolDirs {
 		return f.relative ?? f.absolute;
 	}
 
-	private async add(dir: string): Promise<void> {
-		const entry = await this.spelling(dir);
-		const f = await forms(entry);
-		if (this.rows.some((r) => folderKey(r.real) === folderKey(f.real))) return;
-		await this.write([...settings.current.toolDirs, entry]);
+	private async add(dirs: string[]): Promise<void> {
+		const taken = new Set(this.rows.map((r) => folderKey(r.real)));
+		const entries: string[] = [];
+		for (const dir of dirs) {
+			const entry = await this.spelling(dir);
+			const key = folderKey((await forms(entry)).real);
+			if (taken.has(key)) continue;
+			taken.add(key);
+			entries.push(entry);
+		}
+		if (entries.length) await this.write([...settings.current.toolDirs, ...entries]);
 	}
 
 	async remove(entry: string): Promise<void> {

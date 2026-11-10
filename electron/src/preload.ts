@@ -48,8 +48,8 @@ contextBridge.exposeInMainWorld('texpileNative', {
 	bootstrap,
 	/** native folder picker; resolves to the chosen absolute path or null. */
 	openFolder: () => invokeReady('dialog:openFolder'),
-	/** native pickers with a title of the caller's choosing; the chosen absolute path or null. */
-	pickFolder: (title: string) => invokeReady('dialog:pickFolder', title),
+	/** native pickers with a title of the caller's choosing; every chosen folder, or the one chosen file or null. */
+	pickFolders: (title: string) => invokeReady('dialog:pickFolder', title),
 	pickFile: (title: string) => invokeReady('dialog:pickFile', title),
 	getSettings: () => invokeReady('settings:get'),
 	/** merges a partial update into settings; resolves to the updated settings. */

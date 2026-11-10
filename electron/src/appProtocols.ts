@@ -52,7 +52,7 @@ const RENDERER_CSP = [
 	"connect-src 'self' texfile: blob: data: https: wss: ws:",
 	"worker-src 'self' blob:",
 	"child-src 'self' blob:",
-	"media-src 'self' blob: data:",
+	"media-src 'self' texfile: blob: data:",
 	"object-src 'none'",
 	"base-uri 'self'",
 	// The Typst preview page, which we serve ourselves on loopback (see typst:preview:prepare). It

@@ -8,6 +8,7 @@ import { createRequire } from 'node:module';
 import path from 'node:path';
 import { readChangelog } from './scripts/changelog.mjs';
 import { spellDictionaries } from './scripts/spellDictionaries';
+import { pdfSandbox } from './scripts/pdfSandbox';
 import { packageData, packageDataIds } from './scripts/packageData';
 
 // pre-bundle every runtime dependency up front: lazy discovery re-optimizes mid-session and
@@ -88,7 +89,7 @@ export default defineConfig(({ mode, command }) => ({
 					})
 				]),
 		// the spelling dictionaries for languages other than English
-		...(mode === 'test' ? [] : [spellDictionaries(__dirname)]),
+		...(mode === 'test' ? [] : [spellDictionaries(__dirname), pdfSandbox(__dirname)]),
 		packageData(PACKAGE_DATA, mode !== 'web')
 	],
 
