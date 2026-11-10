@@ -15,6 +15,8 @@ type TeleportHooks = {
 	/** the compile in flight, which lands the index edits teleport from */
 	compileInFlight: () => Promise<unknown> | null;
 	setStatus: (s: string) => void;
+	/** the edit waits for a full compile to show */
+	refused: () => void;
 	emit: (kind: string, detail?: unknown) => void;
 };
 
@@ -68,6 +70,7 @@ export class DraftTeleport {
 		if (r.reason === 'held') return 'held';
 		if (r.reason === 'superseded' || r.reason === 'outside') return 'none';
 		// the preamble changed, or no index yet, or the engine refused: only a full pass shows it
+		this.hooks.refused();
 		return 'compile';
 	}
 }

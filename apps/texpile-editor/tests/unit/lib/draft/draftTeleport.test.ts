@@ -20,6 +20,7 @@ it('sends an edit made during a compile again once the compile lands', async () 
 		moveSourceLines: () => {},
 		compileInFlight: () => compiling,
 		setStatus: () => {},
+		refused: () => {},
 		emit: () => {}
 	});
 	const outcome = teleport.edit('main.tex', 'text');
@@ -46,6 +47,7 @@ it('sends an edit again when a compile replaced the index under it, unless a new
 		moveSourceLines: () => {},
 		compileInFlight: () => null,
 		setStatus: () => {},
+		refused: () => {},
 		emit: () => {}
 	});
 	const older = teleport.edit('main.tex', 'one');
@@ -54,4 +56,24 @@ it('sends an edit again when a compile replaced the index under it, unless a new
 	expect(await older).toBe('none');
 	expect(await newer).toBe('shown');
 	expect(native.draftTeleport).toHaveBeenLastCalledWith(expect.objectContaining({ text: 'two' }));
+});
+
+// the compile that shows a refused edit takes the preview to it
+it('says when an edit waits for a full compile', async () => {
+	native.draftTeleport.mockReset();
+	native.draftTeleport.mockResolvedValueOnce({ ok: false, reason: 'preamble', ms: 0 });
+	const refused = vi.fn();
+	const teleport = new DraftTeleport({
+		root: () => '/proj',
+		mainFile: () => 'main.tex',
+		applyPage: async () => {},
+		landed: async () => {},
+		moveSourceLines: () => {},
+		compileInFlight: () => null,
+		setStatus: () => {},
+		refused,
+		emit: () => {}
+	});
+	expect(await teleport.edit('main.tex', 'text')).toBe('compile');
+	expect(refused).toHaveBeenCalledOnce();
 });

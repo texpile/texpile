@@ -48,12 +48,11 @@ export function textLines(records) {
 	let line = null;
 	let prev = null;
 	for (const r of records) {
-		if (r.t === 'pl') {
+		if (r.t === 'pl' || r.t === 'hb') {
 			line = { text: '', hyphenEnd: false, top: r.y - r.h, bottom: r.y + (r.d ?? 0), left: r.x, right: r.x + r.w };
 			lines.push(line);
 			prev = null;
-		} else if (r.t === 'hb') line = null;
-		else if (line && r.t === 'g') {
+		} else if (line && r.t === 'g') {
 			const size = fonts.get(r.f)?.size || 10;
 			if (prev && r.x - (prev.x + (prev.w ?? 0)) > Math.max(0.9, 0.13 * size)) line.text += ' ';
 			line.text += charOf(r.c).toLowerCase();

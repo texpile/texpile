@@ -16,12 +16,12 @@ function pageLines(records: any[]): PageLine[] {
 	let line: PageLine | null = null;
 	let prev: any = null;
 	for (const r of records) {
-		if (r.t === 'pl') {
+		// hb: a box on the page's list, such as a table row; its words are a line of their own
+		if (r.t === 'pl' || r.t === 'hb') {
 			line = { tokens: [], text: '', hyphenEnd: false, top: r.y - r.h, bottom: r.y + (r.d ?? 0), left: r.x, right: r.x + r.w };
 			lines.push(line);
 			prev = null;
-		} else if (r.t === 'hb') line = null;
-		else if (line && r.t === 'g') {
+		} else if (line && r.t === 'g') {
 			const font = fonts.get(r.f);
 			// a word space, by the gap draftWordAt reads as one
 			if (prev && r.x - (prev.x + (prev.w ?? 0)) > Math.max(0.9, 0.13 * (font?.size || 10))) line.tokens.push(' ');

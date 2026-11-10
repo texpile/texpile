@@ -9,7 +9,7 @@ import type { PaperMetrics } from './draftPaper';
 import { DraftFonts } from './paint/draftFonts';
 import { DraftBitmaps } from './paint/draftBitmaps';
 import { paintRecords, type PaintDeps } from './paint/draftPaint';
-import { DraftViewport } from './draftViewport.svelte';
+import { DraftViewport, type EditBand } from './draftViewport.svelte';
 import { DraftCompiler } from './draftCompiler.svelte';
 import { DraftTeleport, type TeleportLanded } from './draftTeleport.svelte';
 import { editBand, shippedPage, type ShippedPage } from './records/editBand';
@@ -49,6 +49,8 @@ export class DraftSession {
 	private notInPdf = new Set<number>();
 	// the pages the latest teleport shipped, until its highlight is up
 	private shipped: { seq: number; pages: ShippedPage[]; shown: boolean } = { seq: -1, pages: [], shown: false };
+	/** an edit the engine refused shows with the next compile, which then takes the preview to it */
+	private followCompile = false;
 	private drawingsInPdf = new Map<string, PdfDrawing>();
 
 	constructor(private opts: SessionOpts) {
@@ -89,6 +91,7 @@ export class DraftSession {
 			moveSourceLines: (stop, shifts) => this.moveSourceLines(stop, shifts),
 			compileInFlight: () => this.compiler.inFlight(),
 			setStatus: (s) => (this.compiler.status = s),
+			refused: () => (this.followCompile = true),
 			emit: (k, d) => this.ev(k, d)
 		});
 	}
@@ -159,6 +162,8 @@ export class DraftSession {
 	}
 
 	private async applyCompiled(r: Extract<DraftResult, { ok: true }>): Promise<void> {
+		const shown = this.followCompile ? this.pages : [];
+		this.followCompile = false;
 		if (r.paperW > 0) {
 			this.paper = { w: r.paperW, h: r.paperH, mx: r.marginX, my: r.marginY, srcFiles: r.srcFiles ?? [] };
 			if (this.vp.fitMode) this.vp.fitToWidth(); // size to the pane now that the paper dims are known
@@ -184,11 +189,31 @@ export class DraftSession {
 			}
 		}
 		this.vp.updateWindow();
+		if (shown.length) this.followCompiledEdit(shown);
 		for (const k of [...this.vp.prevRecords.keys()]) if (k > this.pages.length) this.vp.prevRecords.delete(k);
 		const secs = (r.ms / 1000).toFixed(1);
 		const passesSuffix = (r.passes ?? 1) > 1 ? ` - ${m.draft_compiled_passes({ passes: r.passes })}` : '';
 		this.compiler.status = `${m.draft_status_compiled({ secs })}${passesSuffix}`;
 		this.ev('compiled', { pages: this.pages.length, passes: r.passes ?? 1, changed, ms: r.ms });
+	}
+
+	/** the first change a compile made to the pages shown before, as a teleport's band */
+	private followCompiledEdit(shown: DraftPage[]): void {
+		const changed = this.pages
+			.filter((p) => shown[p.n - 1]?.records !== p.records)
+			.map((p) => shippedPage(p.n, parseRecords(shown[p.n - 1]?.records ?? '').records, parseRecords(p.records).records));
+		if (changed.length) this.followBand(editBand(changed, true), changed[0].n);
+	}
+
+	/** with no changed words to show, the first page that changed */
+	private followBand(band: EditBand | null, page: number): void {
+		if (!band) {
+			if (this.vp.followEdits) this.vp.goToPage(page);
+			return;
+		}
+		this.ev('edit-band', band);
+		this.vp.showEditBand(band);
+		this.vp.followEdit(band.page, band.top, band.bottom, band.colL, band.colR);
 	}
 
 	/** a page a teleport shipped replaces the one shown; the lines holding the first word the edit changed take the highlight */
@@ -212,11 +237,9 @@ export class DraftSession {
 	private showShippedBand(seq: number, ended: boolean): void {
 		if (seq !== this.shipped.seq || this.shipped.shown) return;
 		const band = editBand(this.shipped.pages, ended);
-		if (!band) return;
+		if (!band && !(ended && this.shipped.pages.length)) return;
 		this.shipped.shown = true;
-		this.ev('edit-band', band);
-		this.vp.showEditBand(band);
-		this.vp.followEdit(band.page, band.top, band.bottom, band.colL, band.colR);
+		this.followBand(band, this.shipped.pages[0]?.n ?? 1);
 	}
 
 	private moveSourceLines(stop: number, shifts: SourceShift[]): void {

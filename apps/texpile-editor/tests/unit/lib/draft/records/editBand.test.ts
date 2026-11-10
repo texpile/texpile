@@ -31,6 +31,15 @@ it('highlights the page holding the typed words, not the page re-broken before i
 	expect(editBand(pages, false)).toEqual({ page: 2, top: 93, bottom: 114, colL: 72, colR: 372 });
 });
 
+// a table row is a box on the page's list, not a paragraph line
+it('highlights the table row an edit changed', () => {
+	const row = (y: number, text: string) => line(y, text).map((r) => ((r as { t: string }).t === 'pl' ? { ...r, t: 'hb' } : r));
+	const table = (...rows: string[]) => [font, ...rows.flatMap((text, i) => row(100 + 12 * i, text))];
+	const before = table('Glue order column box', 'Counter values compiler log');
+	const after = table('Glue order column box', 'Counter values compiler logs');
+	expect(editBand([shippedPage(1, before, after)], true)).toEqual({ page: 1, top: 105, bottom: 114, colL: 72, colR: 372 });
+});
+
 it('waits for the run to end when words were added at the end of what it shipped', () => {
 	const pages = [shippedPage(1, page('one two'), page('one two three'))];
 	expect(editBand(pages, false)).toBeNull();
