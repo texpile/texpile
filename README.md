@@ -49,6 +49,7 @@ Texpile has the most complete visual editor coverage for LaTeX and Typst.
     <td><img alt="The same paper in the source editor" src="landing/src/lib/assets/showcase/editor-latex-source.webp" /></td>
   </tr>
 </table>
+
 > You can see more examples here: https://texpile.com/#editing
 
 ### Figure editor
@@ -101,11 +102,12 @@ For security issues, please email [support@texpile.com](mailto:support@texpile.c
 Texpile would not be possible without our contributors and sponsors. See [CONTRIBUTING.md](CONTRIBUTING.md). To help translate the app, see [Translation.md](Translation.md).
 
 > For people interested in submitting code:
+>
 > You may use generative AI in your work as long as you review the code and take responsibility for it. However, we ask you not to let AI handle your communication with us (unless needed for translation or grammar). We do not use AI to respond to your questions or PRs.
 
 ## Acknowledgements
 
-Texpile builds on other open-source projects.; see [ACKNOWLEDGEMENTS.md](ACKNOWLEDGEMENTS.md).
+Texpile builds on other open-source projects; see [ACKNOWLEDGEMENTS.md](ACKNOWLEDGEMENTS.md).
 
 ## License
 
