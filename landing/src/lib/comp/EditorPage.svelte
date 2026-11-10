@@ -18,6 +18,7 @@
 	import Hero from '$lib/comp/Hero.svelte';
 	import { PREVIEW_LOOP, type HeroFormat } from '$lib/comp/hero/heroScenes';
 	import SceneLoop from '$lib/comp/hero/SceneLoop.svelte';
+	import WindowShot from '$lib/comp/WindowShot.svelte';
 	import IntegrationGrid from '$lib/comp/IntegrationGrid.svelte';
 	import AiSection from '$lib/comp/AiSection.svelte';
 	import { integrationList } from '$lib/integrations';
@@ -62,8 +63,6 @@
 
 	// self-referencing per locale; the alternates in the head say which language each URL is
 	const canonical = $derived(absolute(path));
-
-	const collabShot = $derived(format === 'latex' ? collabLatex : collabTypst);
 </script>
 
 <svelte:head>
@@ -132,9 +131,7 @@
 				{#if format === 'latex'}
 					<SceneLoop video={PREVIEW_LOOP.video} poster={PREVIEW_LOOP.poster} alt={preview.alt} />
 				{:else}
-					<div class="border-surface-200 overflow-hidden rounded-xl border shadow-2xl">
-						<img src={previewTypst} alt={preview.alt} loading="lazy" draggable="false" class="block w-full" />
-					</div>
+					<WindowShot src={previewTypst} alt={preview.alt} />
 				{/if}
 			</div>
 		</div>
@@ -151,9 +148,13 @@
 				<p class="mt-6">{@render docsLink(collab.docs)}</p>
 			</div>
 			<div class="lg:col-span-8" use:reveal={90}>
-				<div class="border-surface-200 overflow-hidden rounded-xl border shadow-2xl">
-					<img src={collabShot} alt={collab.alt} loading="lazy" draggable="false" class="block w-full" />
-				</div>
+				{#if format === 'latex'}
+					<div class="border-surface-200 overflow-hidden rounded-xl border shadow-2xl">
+						<img src={collabLatex} alt={collab.alt} loading="lazy" draggable="false" class="block w-full" />
+					</div>
+				{:else}
+					<WindowShot src={collabTypst} alt={collab.alt} />
+				{/if}
 			</div>
 		</div>
 	</div>

@@ -17,7 +17,7 @@
 	}
 </script>
 
-<div class="border-surface-200 overflow-hidden rounded-xl border shadow-2xl">
+<div class="frame overflow-hidden shadow-2xl">
 	<video
 		{@attach playNear}
 		src={video}
@@ -33,3 +33,13 @@
 		class="block h-auto w-full"
 	></video>
 </div>
+
+<style>
+	.frame {
+		border-radius: calc(100% * 28 / 2560) / calc(100% * 28 / 1520);
+	}
+
+	.frame video {
+		transform: scale(1.005);
+	}
+</style>
