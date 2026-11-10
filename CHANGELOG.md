@@ -4,6 +4,9 @@ Release notes for Texpile Desktop. Add notes under `## [Unreleased]` as you work
 `pnpm --filter texpile-editor release <patch|minor|major>` to cut a dated, numbered release.
 
 ## [Unreleased]
+
+## [2.0.0] - 2026-11-10
+
 - WARNING: 2.0.0 cannot collaborate with any clients on 1.x
 - feat: TikZ and CeTZ editor (by @louisqli)
 - feat: vastly expanded visual editor coverage, including support for beamer and niche classes (by @louisqli)
