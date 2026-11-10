@@ -1,6 +1,6 @@
 import { canvasPoint, sourceDelta, sourcePoint, type Point } from '../../../figure/geometry';
 import type { FigureEditorState } from '../../editorState.svelte';
-import { duplicateSelection, moveSelection } from '../../selection/selectionCommands';
+import { duplicateSelection, movedText, moveSelection } from '../../selection/selectionCommands';
 import type { GestureOffset, PressRelease, SelectionMoveDrag } from '../canvasGesture.types';
 import type { GestureSnap } from '../gestureSnap.svelte';
 import { COPY_THRESHOLD_PX, DRAG_THRESHOLD_PX } from '../gestureThresholds';
@@ -31,6 +31,14 @@ export function draggedSelection(ed: FigureEditorState, snap: GestureSnap, drag:
 	return { delta, by };
 }
 
+/** the selection follows the pointer, and the text it would write goes to `moved` */
+export function carrySelection(ed: FigureEditorState, snap: GestureSnap, drag: SelectionMoveDrag, e: PointerEvent, at: Point) {
+	const dragged = draggedSelection(ed, snap, drag, e, at);
+	// eslint-disable-next-line no-param-reassign -- the editor holds what the drag would write
+	ed.moved = drag.copy ? null : movedText(ed, dragged.by);
+	return dragged;
+}
+
 function releaseSelection(ed: FigureEditorState, release: PressRelease) {
 	if (release.kind === 'only') ed.select(release.i);
 	else if (release.kind === 'clear') ed.select(0);
@@ -38,6 +46,8 @@ function releaseSelection(ed: FigureEditorState, release: PressRelease) {
 }
 
 export function releaseSelectionMove(ed: FigureEditorState, drag: SelectionMoveDrag, offset: GestureOffset | null): GestureOffset | null {
+	// eslint-disable-next-line no-param-reassign -- written below, or the drag went nowhere
+	ed.moved = null;
 	const moved = !!(drag.delta[0] || drag.delta[1]);
 	if (!drag.moving) {
 		releaseSelection(ed, drag.release);

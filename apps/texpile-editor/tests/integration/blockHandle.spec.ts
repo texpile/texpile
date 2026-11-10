@@ -75,7 +75,7 @@ async function dragHandle(v: VisualEditor, from: string, to: { word: string; hal
 const count = (text: string, needle: string) => text.split(needle).length - 1;
 
 async function undoRestores(v: VisualEditor, disk: Disk, rel: string, original: string) {
-	await v.page.keyboard.press('Control+z');
+	await v.page.keyboard.press('ControlOrMeta+z');
 	await v.page.waitForTimeout(2500);
 	expect(disk.read(rel)).toBe(original);
 }

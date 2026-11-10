@@ -3,6 +3,8 @@ return function(T)
 	local CSFLAG = 536870911
 	local ATTRIBUTE = node.id("attribute")
 	local GLYPH = node.id("glyph")
+	local GLUE = node.id("glue")
+	local INS = node.id("ins")
 	local WHATSIT = node.id("whatsit")
 	local WRITE = node.subtype("write")
 	-- node.fields names the color stack's operation cmd, the getter and setter only answer to command
@@ -55,6 +57,10 @@ return function(T)
 		return nil
 	end
 
+	-- the hash keeps an active character under its character after U+FFFF, and its token's csname is the character
+	local ACTIVE = "\239\191\191"
+	function T.names(tk, nm) return tk and (tk.csname == nm or (tk.active and ACTIVE .. tk.csname == nm)) end
+
 	-- names by hash position, for control sequences inside node token lists
 	local ptr2name, ptr2name_count
 	local function cs_names()
@@ -62,9 +68,9 @@ return function(T)
 		ptr2name, ptr2name_count = {}, status.cs_count
 		for k, v in pairs(tex.hashtokens()) do
 			local nm = type(k) == "string" and k or v
-			if type(nm) == "string" and #nm > 1 and nm:sub(1, 12) ~= "texpiletele@" then
+			if type(nm) == "string" and nm ~= "" and nm:sub(1, 12) ~= "texpiletele@" then
 				local tk = token.create(nm)
-				if tk and tk.csname == nm then ptr2name[tk.tok - CSFLAG] = nm end
+				if T.names(tk, nm) then ptr2name[tk.tok - CSFLAG] = nm end
 			end
 		end
 		return ptr2name
@@ -85,6 +91,8 @@ return function(T)
 		local i = info_of(id)
 		return i and (i[1] .. "@" .. i[2]) or nil
 	end
+	-- a name TeX read with its own quotes (fontspec's "name:...") reads back as written; quotes around it would end it
+	function T.font_name_text(name) return name:find('"', 1, true) and name or ('"' .. name .. '"') end
 	local function fontref(id)
 		if not id or id == 0 then return 0 end
 		local i = info_of(id)
@@ -107,6 +115,18 @@ return function(T)
 			else out[#out + 1] = { x[1], x[2] } end
 		end
 		return out
+	end
+
+	-- split_top_ptr in texnodes.h: no getter reaches an insert's \splittopskip, and its glue fields read cost and depth
+	local D = node.direct
+	local function split_top(n)
+		local g = D.getnext(D.todirect(n) + 5)
+		if g and D.getid(g) == GLUE then return { D.getglue(g) } end
+	end
+	local function set_split_top(n, v)
+		local g = D.new(GLUE)
+		D.setglue(g, v[1], v[2], v[3], v[4], v[5])
+		D.setnext(D.todirect(n) + 5, g)
 	end
 
 	local ser_list
@@ -142,6 +162,7 @@ return function(T)
 				end
 			end
 		end
+		if n.id == INS then o.split = split_top(n) end
 		return o
 	end
 	function ser_list(head)
@@ -190,7 +211,7 @@ return function(T)
 			if not (i == 1 and x[1] == 0 and not x.n and not x.p) then
 				if x.n then
 					local tk = token.create(x.n)
-					if tk and tk.csname == x.n then out[#out + 1] = { tk.command, tk.mode, tk.tok - CSFLAG }
+					if T.names(tk, x.n) then out[#out + 1] = { tk.command, tk.mode, tk.tok - CSFLAG }
 					else out[#out + 1] = { 0, 0, 0 } end
 				elseif x.p then out[#out + 1] = { x.c, x.m, x.p }
 				else out[#out + 1] = { x[1], x[2], 0 } end
@@ -240,6 +261,7 @@ return function(T)
 				end
 			end
 		end
+		if o.split then set_split_top(n, o.split) end
 		-- node.new hands out the current attributes; the record's own (or none) replace them
 		pcall(function() n.attr = nil end)
 		for _, a in ipairs(o.attr or {}) do node.set_attribute(n, a[1], a[2]) end

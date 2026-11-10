@@ -42,8 +42,10 @@ export type PoolConfig = {
 /** a main file's text up to and including its \begin{document} line, with line ends as the engine's reader sees them */
 export function preambleOfText(src: string): string | null {
 	const text = src.replace(/\r\n?/g, '\n');
-	const m = /^.*\\begin\{document\}.*$/m.exec(text);
-	return m ? text.slice(0, m.index + m[0].length) : null;
+	// a commented-out \begin{document} left above the real one ends no preamble
+	for (const m of text.matchAll(/^.*\\begin\{document\}.*$/gm))
+		if (/^(?:[^%\\]|\\.)*\\begin\{document\}/.test(m[0])) return text.slice(0, m.index + m[0].length);
+	return null;
 }
 
 export function diskPreamble(root: string, mainRel: string): string | null {
@@ -151,7 +153,7 @@ class EnginePool {
 		const key = keyOf(c, c.preamble);
 		for (const s of this.spares.filter((x) => x.key !== key)) {
 			this.spares = this.spares.filter((x) => x !== s);
-			s.engine.remove();
+			retire(s.engine);
 		}
 		for (const s of this.spares) if (!s.staged) preload(s, c);
 		// disk moved on from what the configuration expects: a spare would hold the wrong base
@@ -200,14 +202,14 @@ class EnginePool {
 	}
 
 	/** one spare applies the chain `key` names ahead of the next edit; `write` puts its plan down for a serve */
-	stage(c: PoolConfig, key: string, write: (engine: DraftEngine) => { planRel: string; serve: number }): void {
+	stage(c: PoolConfig, key: string, write: (engine: DraftEngine) => { plan: string; serve: number }): void {
 		const fit = this.spares.filter((x) => x.key === keyOf(c, c.preamble) && !x.engine.dead);
 		if (fit.some((x) => x.staged === key)) return;
 		const s = fit.find((x) => !x.staged) ?? fit[0];
 		if (!s) return;
 		if (s.staged) this.unstage(s);
-		const { planRel, serve } = write(s.engine);
-		s.engine.stage(planRel, serve);
+		const { plan, serve } = write(s.engine);
+		s.engine.stage(plan, serve);
 		s.staged = key;
 	}
 
@@ -282,7 +284,7 @@ export function takeEngine(c: PoolConfig, unserved = false): Promise<DraftEngine
 }
 
 /** a spare applies the chain `key` names, ahead of an edit that teleports from it */
-export function stageEngine(c: PoolConfig, key: string, write: (engine: DraftEngine) => { planRel: string; serve: number }): void {
+export function stageEngine(c: PoolConfig, key: string, write: (engine: DraftEngine) => { plan: string; serve: number }): void {
 	poolFor(c.root).stage(c, key, write);
 }
 

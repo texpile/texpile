@@ -18,15 +18,24 @@ A modern, desktop editor for LaTeX, Typst, and Markdown. For Windows, macOS, and
 
 ---
 
-![Texpile editing a LaTeX paper: an equation, a citation, the source, a Git commit and a shared session](docs/images/overview.gif)
+![Texpile editing a LaTeX paper: an equation, a TikZ figure, a citation, the source, a Git commit and a shared session](docs/images/overview.gif)
 
 ## Why Texpile
+
+### Live preview
+
+- The PDF updates as you type. Texpile keeps your LuaLaTeX engine running, so most edits show in under 40 ms without a full recompile.
+- Every window has its own preview.
+- Texpile supports Typst's instant live preview.
+
+![The live preview typesetting a paragraph as it is typed](docs/images/live-preview.gif)
 
 ### Visual editor
 
 Texpile has the most complete visual editor coverage for LaTeX and Typst.
 
 - Supports custom macros, multiline equations, commands, cell-merging tables and images.
+- Supports Beamer and complicated documents.
 - Uses Knuth-Plass line breaking.
 - Opens .tex, .typ and .md files directly and stores them in those file formats.
 
@@ -40,19 +49,19 @@ Texpile has the most complete visual editor coverage for LaTeX and Typst.
     <td><img alt="The same paper in the source editor" src="landing/src/lib/assets/showcase/editor-latex-source.webp" /></td>
   </tr>
 </table>
+> You can see more examples here: https://texpile.com/#editing
+
+### Figure editor
+
+- A TikZ or CeTZ picture opens on a canvas. Texpile renders it with real TeX and Typst, so the editor is WYSIWYG.
+
+![The figure editor with a TikZ picture on its canvas and the PDF beside it](landing/src/lib/assets/showcase/figure-editor.webp)
 
 ### IntelliSense
 
 - Texpile's LaTeX IntelliSense data covers ~95% of the LaTeX packages on CTAN (over 5,700 packages and 680 classes), and can suggest and detect certain errors instantly.
 - It is project aware: it parses LaTeX aux files and covers refactoring, custom macro detection and more.
 - For Typst, Texpile uses tinymist for IntelliSense.
-
-### Live preview
-
-- Texpile hooks onto your LuaLaTeX engine directly and can often render LaTeX document changes in under 40ms.
-- Texpile supports Typst's instant live preview.
-
-![The live preview typesetting a paragraph as it is typed](docs/images/live-preview.gif)
 
 ### Shared sessions (real time collaboration)
 
@@ -67,12 +76,13 @@ You can add visual comments and suggestions in Texpile, like in a word processor
 
 ## Installation
 
-Download the installer for your platform from [texpile.com/download](https://texpile.com/download), then install a compiler for the format you write in:
+Download the installer for your platform from [texpile.com/download](https://texpile.com/download).
+Then install a typesetter:
 
-- [LaTeX](https://texpile.com/docs/installation/latex) — a TeX distribution: TeX Live, MacTeX, or MiKTeX
-- [Typst](https://texpile.com/docs/installation/typst) — one program, tinymist, which Texpile can install for you in one click (Preferences › Toolchain)
+- [LaTeX](https://texpile.com/docs/installation/latex)
+- [Typst](https://texpile.com/docs/installation/typst)
 
-Editing works out of the box; the compiler is only needed to produce a PDF. Markdown needs neither.
+You can either install those on your own or you can install them in Texpile with one click (see docs above).
 
 ## Privacy
 
@@ -89,6 +99,9 @@ For security issues, please email [support@texpile.com](mailto:support@texpile.c
 ## Contributing
 
 Texpile would not be possible without our contributors and sponsors. See [CONTRIBUTING.md](CONTRIBUTING.md). To help translate the app, see [Translation.md](Translation.md).
+
+> For people interested in submitting code:
+> You may use generative AI in your work as long as you review the code and take responsibility for it. However, we ask you not to let AI handle your communication with us (unless needed for translation or grammar). We do not use AI to respond to your questions or PRs.
 
 ## Acknowledgements
 

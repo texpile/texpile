@@ -14,6 +14,7 @@ import { DraftCompiler } from './draftCompiler.svelte';
 import { DraftTeleport, type TeleportLanded } from './draftTeleport.svelte';
 import { editBand, shippedPage, type ShippedPage } from './records/editBand';
 import { wordAt } from './records/draftWordAt';
+import { shiftSourceLines, type SourceShift } from './records/sourceShifts';
 import { BP2PT } from './texUnits';
 import { saveDraftPdf } from './save/saveDraftPdf';
 import { basename, nativeBridge, revealItem } from '$lib/workspace/fileSystem';
@@ -85,6 +86,7 @@ export class DraftSession {
 			mainFile: opts.mainFile,
 			applyPage: (p, seq) => this.applyPage(p, seq),
 			landed: (r, seq) => this.landed(r, seq),
+			moveSourceLines: (stop, shifts) => this.moveSourceLines(stop, shifts),
 			compileInFlight: () => this.compiler.inFlight(),
 			setStatus: (s) => (this.compiler.status = s),
 			emit: (k, d) => this.ev(k, d)
@@ -217,28 +219,22 @@ export class DraftSession {
 		this.vp.followEdit(band.page, band.top, band.bottom, band.colL, band.colR);
 	}
 
+	private moveSourceLines(stop: number, shifts: SourceShift[]): void {
+		const pages = [...this.pages];
+		for (let i = stop; i < pages.length; i++) {
+			const records = shiftSourceLines(pages[i].records, shifts);
+			if (records === null) continue;
+			pages[i] = { ...pages[i], records };
+			this.parsedPages.delete(i + 1);
+		}
+		this.pages = pages;
+	}
+
 	/** a teleport finished: the pages past its stop keep their ink and move their source lines, or the count is new */
 	private async landed(r: TeleportLanded, seq: number): Promise<void> {
 		this.showShippedBand(seq, true);
 		if (r.srcFiles.length) this.paper = { ...this.paper, srcFiles: r.srcFiles };
-		if (r.shift) {
-			const { sf, after, by } = r.shift;
-			const pages = [...this.pages];
-			for (let i = r.stop ?? pages.length; i < pages.length; i++) {
-				const pg = pages[i];
-				if (!pg.records.includes('"s":')) continue;
-				const recs = pg.records.split('\n').map((line) => {
-					if (!line.startsWith('{"t":"pl"')) return line;
-					const rec = JSON.parse(line);
-					if (rec.s === undefined || (rec.sf ?? 0) !== sf || rec.s <= after) return line;
-					rec.s += by;
-					return JSON.stringify(rec);
-				});
-				pages[i] = { ...pg, records: recs.join('\n') };
-				this.parsedPages.delete(i + 1);
-			}
-			this.pages = pages;
-		}
+		if (r.shifts) this.moveSourceLines(r.stop ?? this.pages.length, r.shifts);
 		if (r.stop === undefined && this.pages.length > r.count) {
 			this.pages = this.pages.slice(0, r.count);
 			await tick();

@@ -72,6 +72,7 @@ export const list: MarkdownPlugin = {
 			node.textContent.trim() !== '' &&
 			(listFamily(node) !== 'ordered' || Number(node.attrs.order ?? 1) === 1),
 		// a task item's box is written with its marker, so the first block cannot be rendered alone in the item's frame
-		spliceChild: (parent, index) => !(parent.type.name === 'list' && index === 0 && parent.attrs.kind === 'task')
+		spliceChild: (parent, index) => !(parent.type.name === 'list' && index === 0 && parent.attrs.kind === 'task'),
+		tight: (prev, next) => sameList(prev, next) && !prev.attrs.loose
 	}
 };

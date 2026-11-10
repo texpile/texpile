@@ -31,12 +31,12 @@ test('a key in keybindings.json runs its command in the editor, and the key it r
 			{ key: 'mod+b', command: '-editor.bold' }
 		])
 	);
-	await expect.poll(() => keyLabel('editor.bold')).toBe('Ctrl+J');
+	await expect.poll(() => keyLabel('editor.bold')).toBe(process.platform === 'darwin' ? '⌘J' : 'Ctrl+J');
 	const before = await source.text();
 	await source.caretAfter('Speed');
-	await source.press('Control+b');
+	await source.press('ControlOrMeta+b');
 	expect(await source.text()).toBe(before);
-	await source.press('Control+j');
+	await source.press('ControlOrMeta+j');
 	expect(await source.text()).toContain('Speed\\textbf{}');
 	await source.restore(before);
 });
@@ -50,7 +50,7 @@ test('Preferences › Keyboard Shortcuts records a key into keybindings.json', a
 	await prefs.dialog.getByRole('button', { name: 'Change Key…' }).first().click();
 	const recorder = page.getByRole('textbox', { name: 'Press the keys, then Enter.' });
 	await expect(recorder).toBeFocused();
-	await page.keyboard.press('Control+Shift+Y');
+	await page.keyboard.press('ControlOrMeta+Shift+Y');
 	await page.keyboard.press('Enter');
 	await expect.poll(() => (fs.existsSync(keybindingsFile()) ? fs.readFileSync(keybindingsFile(), 'utf8') : '')).toContain('"mod+shift+y"');
 	const entries = JSON.parse(fs.readFileSync(keybindingsFile(), 'utf8').replace(/^\s*\/\/.*$/gm, ''));
@@ -58,6 +58,6 @@ test('Preferences › Keyboard Shortcuts records a key into keybindings.json', a
 		{ key: 'mod+shift+y', command: 'editor.italic' },
 		{ key: 'mod+i', command: '-editor.italic' }
 	]);
-	await expect.poll(() => keyLabel('editor.italic')).toBe('Ctrl+Shift+Y');
+	await expect.poll(() => keyLabel('editor.italic')).toBe(process.platform === 'darwin' ? '⇧⌘Y' : 'Ctrl+Shift+Y');
 	await prefs.close();
 });

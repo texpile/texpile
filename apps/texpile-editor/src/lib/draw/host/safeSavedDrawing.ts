@@ -1,4 +1,4 @@
-// a drawing read from .texpile/figures goes into the page as markup, and a shared folder can hold anything there
+// a saved drawing goes into the page as markup, and one taken over from a project's shared folder can hold anything
 const ELEMENTS = new Set(['svg', 'defs', 'g', 'path', 'rect', 'image', 'clipPath', 'pattern', 'linearGradient', 'radialGradient', 'stop']);
 const ATTRIBUTES = new Set([
 	'xmlns',

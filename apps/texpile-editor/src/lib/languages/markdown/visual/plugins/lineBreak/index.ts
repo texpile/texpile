@@ -26,7 +26,6 @@ export const lineBreak: MarkdownPlugin = {
 	save: {
 		inline: {
 			hard_break(node, core) {
-				if (node.attrs?.lineBreak === false) return null;
 				const br = core.singleLine || core.inTableCell || node.attrs?.command === 'br';
 				return { content: core.shadowed(node, br ? '<br>' : HARD_BREAK), marks: [], isText: false, startsLine: !br };
 			}

@@ -70,7 +70,7 @@
 	// theme's stylesheet has loaded, not when its name does
 	const background = $derived.by(() => {
 		void themeEpoch.current;
-		return themeColour('--solid-pdf-page-area-bg', dark ? '#09090b' : '#f4f4f5');
+		return themeColour('--pdf-page-area-bg', dark ? '#09090b' : '#f4f4f5');
 	});
 	const scrollbarThumb = $derived.by(() => {
 		void themeEpoch.current;

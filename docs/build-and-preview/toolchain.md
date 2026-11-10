@@ -38,7 +38,11 @@ Texpile searches **Other folders** before PATH, for every program it runs, inclu
 
 ## Install TeX Live
 
-Open the **LaTeX** picker and click **Install TeX Live 2026 from Texpile**. With no TeX found, the row has **Locate** and **Install TeX Live** in place of the picker. The **Set Up LaTeX** dialog offers it too. Texpile downloads TeX Live 2026 from dl.texpile.com and checks it against a checksum. The download is 174 MB on Linux, 230 MB on macOS and 287 MB on Windows. It holds lualatex, pdflatex, xelatex, latexmk, biber and the packages most papers load.
+Open the **LaTeX** picker and click **Install TeX Live 2026 from Texpile**. With no TeX found, the row has **Locate** and **Install TeX Live** in place of the picker. The **Set Up LaTeX** dialog offers it too. Texpile downloads TeX Live 2026 from dl.texpile.com and checks it against a checksum. The download is 174 MB on Linux (180 MB on Arm), 230 MB on macOS and 287 MB on Windows. The install needs about 1 GB of free space. It holds lualatex, pdflatex, xelatex, latexmk, biber and the packages most papers load.
+
+Texpile has a build for Windows, macOS, and Linux with glibc on x64 and Arm. On other systems, such as Alpine Linux, [install a TeX distribution yourself](../installation/latex/README.md#install-a-tex-distribution-yourself).
+
+The install goes into Texpile's own data folder, apart from any TeX you already have.
 
 ![The LaTeX picker open with TeX Live 2023/Debian checked, Install TeX Live 2026 from Texpile with its size, and Locate TeX…](../../landing/src/lib/assets/showcase/docs/app/toolchain-tex-picker.png)
 

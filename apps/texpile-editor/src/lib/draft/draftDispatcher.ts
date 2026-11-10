@@ -3,6 +3,7 @@
 // typing rests, a quiet full pass brings the references, the contents and the PDF up to date.
 import { relFromRoot } from '$lib/workspace/compilePipeline.svelte';
 import type { TeleportOutcome } from './draftTeleport.svelte';
+import { REBUILD, TEXT } from './draftInputWatch';
 
 // what a teleport cannot know until a full pass: \ref targets, the contents, citations
 const REST_MS = 2500;
@@ -79,13 +80,21 @@ export class DraftDispatcher {
 		if (!this.deps.isActive()) return;
 		if (src === this.lastSrc.get(path)) return;
 		this.lastSrc.set(path, src);
+		// a teleport only carries a .tex file's text; an open .bib or package is read by the full pass
+		if (!TEXT.test(path)) {
+			if (REBUILD.test(path)) this.rebuild();
+			return;
+		}
 		const root = this.deps.getRoot();
 		const target = this.deps.getTarget();
 		if (!root || !target) return;
+		// an edit the preview drops or holds must not take the pass an earlier edit owed with it
+		const restOwed = this.timer !== null;
 		this.cancel();
 		void target.teleportEdit(relFromRoot(path, root), src).then((outcome) => {
 			if (outcome === 'shown') this.after(REST_MS, () => void this.compileNow(true));
 			else if (outcome === 'compile') this.after(RECOMPILE_DEBOUNCE_MS, () => void this.compileNow(false));
+			else if (restOwed && !this.timer) this.after(REST_MS, () => void this.compileNow(true));
 		});
 	}
 }

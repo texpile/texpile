@@ -18,7 +18,6 @@ export function newline(im: TreeImport): PmNode[] {
 }
 
 export function hardBreakLatex(node: Node, ctx: Ctx): string {
-	if (node.attrs?.lineBreak === false) return '';
 	const suffix = typeof node.attrs?.suffix === 'string' ? node.attrs.suffix : '';
 	// a break with nothing before it in its block stops the compile: an empty box gives it a line
 	const box = opensLine(ctx) ? '\\mbox{}' : '';

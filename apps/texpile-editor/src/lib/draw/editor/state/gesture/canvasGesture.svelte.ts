@@ -13,9 +13,9 @@ import { pressText } from './textPress';
 import { bindsToNodes, drawnPreview, isChainStart, isSideClick, goesOnByClicks, isStartedOver } from './drags/drawDrag';
 import { TypedDraw } from '../typedDraw/typedDraw.svelte';
 import { onAngleStep } from './drags/pointDrag';
-import { editDragSource, endBindsToNodes, isEditDrag, placedArrowEnd } from './drags/editDrags';
+import { editDragSource, endBindsToNodes, isEditDrag, placedArrowEnd, releaseEditDrag } from './drags/editDrags';
 import { enclosedStatements, isMarqueeStarted, marqueeBox } from './drags/marqueeDrag';
-import { draggedSelection, isPastMoveThreshold, releaseSelectionMove } from './drags/selectionMove';
+import { carrySelection, isPastMoveThreshold, releaseSelectionMove } from './drags/selectionMove';
 import { hitStatement, isInSelectionBox } from './canvasHits';
 import { pressToSelect } from './selectPress';
 import { GestureSnap } from './gestureSnap.svelte';
@@ -350,7 +350,7 @@ export class CanvasGesture {
 			if (ed.preview !== null || isPastDragThreshold(this.#pressPx, px)) this.#moveEdit(drag, e, at);
 		} else if (drag.kind === 'move') {
 			if (!drag.moving && !isPastMoveThreshold(drag, px)) return;
-			const { delta, by } = draggedSelection(ed, this.snap, drag, e, at);
+			const { delta, by } = carrySelection(ed, this.snap, drag, e, at);
 			this.#drag = { ...drag, moving: true, delta };
 			this.offset = { ids: drag.ids, by, until: null, copy: drag.copy };
 		} else if (drag.kind === 'branch') {
@@ -369,15 +369,6 @@ export class CanvasGesture {
 			this.preview = drawnPreview(ed, this.snap, drag, this.preview, e, at, (to, exclude) => this.#attachAt(to, exclude));
 	}
 
-	#releaseEdit(drag: EditDrag) {
-		const ed = this.#editor;
-		const done = ed.preview;
-		ed.preview = null;
-		if (drag.kind === 'end' && drag.placed !== undefined) {
-			if (drag.placed) ed.applyPlaced(drag.placed, false);
-		} else if (done !== null && done !== ed.source) ed.applyEdit(done);
-	}
-
 	up() {
 		const ed = this.#editor;
 		this.sizing = null;
@@ -389,7 +380,7 @@ export class CanvasGesture {
 		this.#drag = null;
 		this.panning = false;
 		this.attach = null;
-		if (isEditDrag(drag)) this.#releaseEdit(drag);
+		if (isEditDrag(drag)) releaseEditDrag(ed, drag);
 		else if (drag?.kind === 'move') this.offset = releaseSelectionMove(ed, drag, this.offset);
 		else if (drag?.kind === 'marquee' && !marqueed && drag.locked) {
 			this.lockedShown = ancestry(ed.tree, drag.locked).at(-1) ?? drag.locked;
@@ -425,6 +416,7 @@ export class CanvasGesture {
 		this.carried = null;
 		this.dropOnto = null;
 		if (isEditDrag(this.#drag)) this.#editor.showPreview(null);
+		this.#editor.moved = null;
 		this.#drag = null;
 		this.panning = false;
 		this.preview = null;

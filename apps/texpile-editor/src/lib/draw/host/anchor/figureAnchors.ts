@@ -2,7 +2,7 @@ import * as Y from 'yjs';
 import { finderFor } from './pictureFinders';
 import type { PictureSpan } from './pictureTree';
 
-type Anchored = { path: string; anchor: Y.RelativePosition | null; doc?: Y.Doc | null; shown?: string; number?: number };
+type Anchored = { path: string; anchor: Y.RelativePosition | null; text?: Y.Text | null; shown?: string; number?: number };
 
 export type FigurePlace =
 	{ state: 'shown'; span: PictureSpan; number: number } | { state: 'incomplete'; at: number } | { state: 'deleted'; at: number };
@@ -27,13 +27,13 @@ function anchorDeleted(a: Anchored, ytext: Y.Text): boolean {
 
 export function placeOf(id: string, ytext: Y.Text, text: string): FigurePlace | null {
 	const a = anchored.get(id);
-	// the folder closed and came back: the file's text is new, and the anchor means nothing in it
-	if (a && a.doc !== ytext.doc) a.anchor = null;
+	// the folder closed and came back, or the file was renamed: its text is new, and the anchor means nothing in it
+	if (a && a.text !== ytext) a.anchor = null;
 	if (a && !a.anchor) {
 		const picture = finderFor(a.path).all(text)[(a.number ?? 0) - 1];
 		if (!picture) return { state: 'deleted', at: 0 };
 		a.anchor = Y.createRelativePositionFromTypeIndex(ytext, picture.from, 0);
-		a.doc = ytext.doc;
+		a.text = ytext;
 	}
 	const at = a && offsetOf(a, ytext);
 	if (!a || at === null || at === undefined) return null;
@@ -58,6 +58,8 @@ export function restoredFigure(path: string, number: number): string {
 
 export function figureFor(path: string, ytext: Y.Text, text: string, from: number): string {
 	for (const [id, a] of anchored) {
+		// a file renamed under an open figure
+		if (a.text === ytext) a.path = path;
 		if (a.path !== path) continue;
 		const place = placeOf(id, ytext, text);
 		if (place?.state === 'shown' && place.span.from === from) return id;
@@ -65,7 +67,7 @@ export function figureFor(path: string, ytext: Y.Text, text: string, from: numbe
 	const id = `${next++}`;
 	const span = finderFor(path).at(text, from);
 	const shown = span ? text.slice(span.from, span.to) : undefined;
-	anchored.set(id, { path, anchor: Y.createRelativePositionFromTypeIndex(ytext, from, 0), doc: ytext.doc, shown });
+	anchored.set(id, { path, anchor: Y.createRelativePositionFromTypeIndex(ytext, from, 0), text: ytext, shown });
 	return id;
 }
 

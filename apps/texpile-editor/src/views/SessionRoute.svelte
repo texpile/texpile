@@ -13,16 +13,20 @@
 	// mounting on status alone flashed the whole workspace up and back down on a bad code
 	const joined = $derived(collabGuest.joined);
 
+	// once per join: a file deleted under the guest later must not hand its keys to another one
+	let landed = false;
 	$effect(() => {
 		if (joined) {
 			if (workspaceRoot.current !== GUEST_ROOT) workspaceRoot.current = GUEST_ROOT;
 			fileMode.current = false;
 			// open the first shared text file so the guest lands on something editable
-			if (!activeFilePath.current) {
-				const first = collabGuest.files.find((f) => f.kind === 'text');
+			if (!landed) {
+				const first = activeFilePath.current ? null : collabGuest.files.find((f) => f.kind === 'text');
 				if (first) openFile(first.rel);
+				landed = !!activeFilePath.current;
 			}
 		} else {
+			landed = false;
 			// left/ended: don't leak session state into a later host workspace
 			if (workspaceRoot.current === GUEST_ROOT) {
 				// the LSP client's "server" was this session; fail anything still in flight rather

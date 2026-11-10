@@ -378,7 +378,8 @@ export class CodeBlockView {
 
 	selectNode(): void {
 		this.materialize();
-		if (!visualFind.movingSelection) this.cm?.focus();
+		// a parked editor selects the block again as it follows the file: the focus stays with the writer
+		if (!visualFind.movingSelection && this.view.editable) this.cm?.focus();
 	}
 
 	deselectNode(): void {

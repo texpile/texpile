@@ -59,7 +59,8 @@ class DocPositionsStore {
 
 	private relOf(path: string): string | null {
 		if (!this.root) return null;
-		return relativeInside(this.root, path);
+		// a session guest's paths are root-relative already
+		return relativeInside(this.root, path) ?? (/^([\\/]|[A-Za-z]:)/.test(path) ? null : path);
 	}
 
 	private persist(): void {

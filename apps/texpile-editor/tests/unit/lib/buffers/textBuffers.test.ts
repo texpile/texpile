@@ -4,7 +4,8 @@ import { describe, it, expect, vi } from 'vitest';
 import * as Y from 'yjs';
 import { TextBuffers, type WriteHooks } from '$lib/buffers/textBuffers';
 import { askBeforeDiskUndo } from '$lib/buffers/fileUndo';
-import { manifestOf } from '$lib/collab/session';
+import { manifestOf, textOf } from '$lib/collab/session';
+import { manifestMoves } from '$lib/collab/manifestMoves';
 
 function fakeDisk(files: Record<string, string>) {
 	const disk: Record<string, string> = { ...files };
@@ -162,6 +163,14 @@ describe('TextBuffers taking in the disk', () => {
 		expect([text.toString(), disk['main.tex']]).toEqual(['one', 'one']);
 	});
 
+	it('takes a change on disk word by word, so text the disk left alone keeps its place', async () => {
+		const { buffers, text } = await open({ 'main.tex': 'New top.\n\n\\begin{tikzpicture}\n\\node {Hello};\n\\end{tikzpicture}\n' });
+		const kept = Y.createRelativePositionFromTypeIndex(text, text.toString().indexOf('\\begin'), 0);
+		buffers.adoptDisk('main.tex', 'Agent line.\n\nNew top.\n\n\\begin{tikzpicture}\n\\node {Howdy};\n\\end{tikzpicture}\n');
+		expect(text.toString()).toContain('{Howdy}');
+		expect(Y.getItem(text.doc!.store, kept.item!).deleted).toBe(false);
+	});
+
 	it('asks before an undo takes back a disk change, which is a step of its own; typing undoes without asking', async () => {
 		const { buffers, text } = await open({ 'main.tex': 'one' });
 		const um = buffers.undoOf('main.tex')!;
@@ -240,6 +249,26 @@ describe('TextBuffers and a session', () => {
 		await buffers.sharing.start();
 		const manifest = manifestOf(buffers.shared);
 		expect([manifest.get('main.tex')?.kind, manifest.get('refs.bib')?.kind, manifest.has('.latexmkrc')]).toEqual(['text', 'text', false]);
+	});
+
+	it('moves a shared file as the same text, so what a guest typed before it heard of the rename is written to the new name', async () => {
+		const { buffers, disk } = await open({ 'main.tex': 'one', 'notes.md': 'Some notes.' });
+		await buffers.sharing.start();
+		const guest = new Y.Doc();
+		Y.applyUpdate(guest, Y.encodeStateAsUpdate(buffers.shared));
+		textOf(guest, 'notes.md').insert(11, ' And more');
+		const typed = Y.encodeStateAsUpdate(guest, Y.encodeStateVector(buffers.shared));
+		disk['notes4.md'] = disk['notes.md'];
+		delete disk['notes.md'];
+		buffers.move('notes.md', 'notes4.md');
+		Y.applyUpdate(buffers.shared, typed);
+		Y.applyUpdate(guest, Y.encodeStateAsUpdate(buffers.shared, Y.encodeStateVector(guest)));
+		await buffers.flushAll();
+		expect([disk['notes4.md'], textOf(guest, 'notes4.md').toString(), manifestMoves(['notes.md', 'main.tex'], manifestOf(guest))]).toEqual([
+			'Some notes. And more',
+			'Some notes. And more',
+			[['notes.md', 'notes4.md']]
+		]);
 	});
 });
 

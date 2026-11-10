@@ -41,7 +41,7 @@ Preferences holds the settings for the whole app. Open it with Ctrl , (Cmd , on 
 
 ## Not in Preferences
 
-- The compile command, output paths, and live mode are saved per folder: Terminal › Configure Compile Command….
+- The compile command, output paths, and live mode are saved per folder: **Configure Compile Command…** in the menu next to Compile.
 - Interface zoom: Layout › Zoom.
 - Which panels show, and how the editor and the PDF are split: Layout in the title bar.
 - Dark PDF pages: **Invert colors** in the PDF bar's "…" menu, remembered separately for light and dark mode.

@@ -38,6 +38,8 @@ return function(T)
 		T.stops, T.stage, T.chain, T.files, T.selfcheck, T.report_from = nil, nil, nil, nil, nil, nil
 		T.stop_after_page, T.stop_dumped, T.cutting, T.silent, T.ended, T.no_park, T.cut_path = nil, nil, nil, nil, nil, nil, nil
 		T.staging = nil
+		T.selected = {}
+		T.rearm_writes()
 		T.at_base = true
 		T.want_point = TEXPILE_TELE_DENSE or false
 		T.snapshot_dir = T.OUT .. "src/"
@@ -125,7 +127,7 @@ return function(T)
 			return
 		end
 		if not plan then os.exit(101) end
-		plan = dofile(plan)
+		plan = T.read_plan(plan)
 		T.cut_path = plan.cut
 		for rel, path in pairs(plan.overrides or {}) do
 			if T.overrides[rel] ~= path then
@@ -140,6 +142,14 @@ return function(T)
 		T.adopt_files()
 		T.say("APPLIED 0 staged")
 		if T.selfcheck then selfcheck(c) end
+	end
+
+	-- a plan comes on stdin as one line of Lua: on Windows a file read right after the app wrote it waits for the virus
+	-- scanner
+	function T.read_plan(src)
+		local f = load(src, "=plan")
+		if not f then os.exit(101) end
+		return f()
 	end
 
 	-- serving: apply the plan's chain of records, outer file to inner, then typeset on from the edit

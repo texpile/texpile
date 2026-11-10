@@ -45,6 +45,7 @@ export function treeToProseMirror(latex: string, given: ConversionOptions = {}):
 		}),
 		options,
 		lists: [],
+		listKeys: new Map(),
 		delimited: delimitedPairsIn(codeOnly(`${preamble}\n${latex}`))
 	});
 	const blocks = blocksOf(im, bodyOf(tree.topNode));

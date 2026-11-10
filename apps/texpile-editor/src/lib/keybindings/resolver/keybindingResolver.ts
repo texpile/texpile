@@ -18,6 +18,8 @@ export type KeybindingItem = {
 	late?: boolean;
 	/** a default the editor with the focus runs from its own keymap, never the window */
 	editor?: boolean;
+	/** the user's own entry carries a when clause, as apart from the terminal split added to it */
+	userWhen?: boolean;
 };
 
 export type KeybindingTable = {
@@ -65,7 +67,9 @@ function asUserKey(entry: KeybindingItem, defaults: KeybindingItem[]): Keybindin
 export function buildKeybindingTable(defaults: KeybindingItem[], user: KeybindingItem[]): KeybindingTable {
 	const removals = user.filter((u) => u.command.startsWith('-'));
 	const kept = defaults.filter((d) => !removals.some((r) => removes(r, d)));
-	const added = user.filter((u) => !u.command.startsWith('-') && u.command).flatMap((u) => asUserKey(u, defaults));
+	const added = user
+		.filter((u) => !u.command.startsWith('-') && u.command)
+		.flatMap((u) => asUserKey(u, defaults).map((item) => (u.when ? { ...item, userWhen: true } : item)));
 	const items = [...kept, ...added];
 	const byFirstChord = new Map<string, KeybindingItem[]>();
 	for (const item of items) {
@@ -107,6 +111,16 @@ export function keysOf(table: KeybindingTable, command: string, read?: ContextRe
 	for (let i = table.items.length - 1; i >= 0 && table.items[i].source === 'user'; i--)
 		if (holds(table.items[i])) return table.items[i].keys;
 	return table.items.find((item) => item.source === 'default' && holds(item))?.keys ?? null;
+}
+
+/** the key a native menu item takes as its accelerator; one the user limited with a when clause stays with the window,
+ *  because an accelerator fires wherever the focus is */
+export function menuKeysOf(table: KeybindingTable, command: string): KeySequence | null {
+	for (let i = table.items.length - 1; i >= 0 && table.items[i].source === 'user'; i--) {
+		const item = table.items[i];
+		if (item.command === command && item.keys) return item.userWhen ? null : item.keys;
+	}
+	return keysOf(table, command);
 }
 
 /** every entry on these exact keys, for the define dialog's count and Show Same Keybindings */

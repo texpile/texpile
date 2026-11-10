@@ -55,8 +55,6 @@
 		history?: FileHistory | null;
 		/** allow adding new files by drop-from-OS / paste. */
 		allowImport?: boolean;
-		/** does this path (or anything inside it) hold edits that exist only in the editor? */
-		hasUnsaved?: (path: string) => boolean;
 	};
 	let {
 		tree,
@@ -76,8 +74,7 @@
 		onReveal,
 		localHistory = false,
 		history = null,
-		allowImport = true,
-		hasUnsaved
+		allowImport = true
 	}: Props = $props();
 
 	// samePath, not ===: a restored activePath can arrive mixed-separator on Windows and match no row
@@ -101,7 +98,8 @@
 		onRename: (e, name) => onRename(e, name),
 		nameTaken: (dir, name, selfPath) => nameTaken(tree, dir, rootPath, name, selfPath),
 		takenMessage: (name) => m.filetree_name_exists({ name }),
-		includeName: (name) => includeFileName(name, typstProject)
+		includeName: (name) => includeFileName(name, typstProject),
+		refocusTree: () => refocusTree()
 	});
 	const dnd = new FileTreeDnd({
 		rootPath: () => rootPath,
@@ -190,6 +188,7 @@
 		return queueMicrotask(() => treeEl?.focus({ preventScroll: true }));
 	}
 
+	// on the tree's own element: a window listener comes after the window's Ctrl+Z, the open document's undo
 	function onTreeKeydown(e: KeyboardEvent) {
 		if (!focused || !(e.ctrlKey || e.metaKey) || e.altKey) return;
 		const k = e.key.toLowerCase();
@@ -253,22 +252,9 @@
 		return sel.selected.includes(e.path) && sel.selectedEntries().length > 1 ? sel.selectedEntries() : [e];
 	}
 
-	/**
-	 * What to ask before deleting. Unsaved edits outrank the ordinary question: the recycle bin
-	 * holds the file as it was on disk, so the part that is really being destroyed is the part
-	 * that was never written. Asking about that IS the confirmation; a second "delete?" after it
-	 * says nothing new.
-	 */
 	function deleteQuestion(entries: TreeEntry[]): string {
-		// the count always describes what is being deleted, never how many of them are dirty: a
-		// selection of five with one unsaved is still five files going
-		const dirty = entries.some((x) => hasUnsaved?.(x.path));
-		if (entries.length > 1)
-			return dirty
-				? m.filetree_confirm_delete_dirty_many({ count: entries.length })
-				: m.filetree_confirm_delete_many({ count: entries.length });
+		if (entries.length > 1) return m.filetree_confirm_delete_many({ count: entries.length });
 		const e = entries[0];
-		if (dirty) return m.filetree_confirm_delete_dirty_one({ name: e.name });
 		return e.type === 'dir' ? m.filetree_confirm_delete_dir({ name: e.name }) : m.filetree_confirm_delete_file({ name: e.name });
 	}
 
@@ -287,10 +273,7 @@
 
 <svelte:window
 	onkeydown={(e) => {
-		if (e.key !== 'Escape') {
-			onTreeKeydown(e);
-			return;
-		}
+		if (e.key !== 'Escape') return;
 		// escape hatch even if the inline input lost focus
 		if (contextMenuOpen()) closeContextMenu();
 		else if (editor.creatingIn !== null) editor.cancelCreate();
@@ -332,10 +315,7 @@
 				use:focusSelect
 				draggable="false"
 				onpointerdown={(e) => e.stopPropagation()}
-				onkeydown={(e) => {
-					if (e.key === 'Enter') editor.commitCreate();
-					else if (e.key === 'Escape') editor.cancelCreate();
-				}}
+				onkeydown={(e) => editor.keydownCreate(e)}
 				onblur={(e) => editor.blurCreate(e)}
 			/>
 		</div>
@@ -356,6 +336,7 @@
 	tabindex="-1"
 	class="rounded-container min-h-full min-w-max outline-none {dnd.dropTarget === ROOT ? 'ring-primary-500 ring-2 ring-inset' : ''}"
 	onfocusin={() => (focused = true)}
+	onkeydown={onTreeKeydown}
 	onfocusout={(e) => {
 		// relatedTarget is where focus is HEADING; moving between two rows must not read as leaving
 		if (!treeEl?.contains(e.relatedTarget as Node | null)) focused = false;

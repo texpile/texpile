@@ -143,15 +143,16 @@ export function imageNodeView(pluginSettings: ImagePluginSettings) {
 		function onFilesChange(e: FileChangesEvent) {
 			const file = shownFile();
 			if (file && e.contains(file, 'updated')) redrawFile();
+			else if (finalSrc?.startsWith('blob:') && e.gotUpdated()) void lookUpAgain();
 		}
 		const offOperations = fileService.onDidRunOperation(onOperation);
 		const offChanges = fileService.onDidFilesChange(onFilesChange);
 		window.addEventListener('focus', onFolderChanged);
-		// a guest's picture comes from the host after the first lookup came up empty
+		// a guest's picture comes from the host after the first lookup came up empty, and again at each new revision
 		async function lookUpAgain(): Promise<void> {
-			if ((!notFound && finalSrc) || !pluginSettings.downloadImage) return;
+			if ((!notFound && finalSrc && !finalSrc.startsWith('blob:')) || !pluginSettings.downloadImage) return;
 			const src = await pluginSettings.downloadImage(node.attrs.src);
-			if (!src) return;
+			if (!src || (src === finalSrc && !notFound)) return;
 			const shown = await shownImageUrl(src, currentNode, pluginSettings.cropFormat);
 			const size = pluginSettings.enableResize ? await getImageDimensions(shown) : undefined;
 			if (size && !size.completed) return;

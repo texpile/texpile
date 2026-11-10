@@ -3,7 +3,8 @@
 // offer after a rename.
 import { untrack } from 'svelte';
 import { capsOf } from '$lib/workspace/fileMode.svelte';
-import { moveLocalHistory } from '$lib/workspace/localHistory/localHistory.svelte';
+import { addLocalHistory, moveLocalHistory } from '$lib/workspace/localHistory/localHistory.svelte';
+import { fromLf } from '$lib/workspace/edits/lineEndings';
 import { StarterActions } from '$lib/workspace/starterActions.svelte';
 import { TreeOps } from '$lib/workspace/treeOps';
 import { FolderLifecycle } from '$lib/workspace/folderLifecycle';
@@ -123,6 +124,12 @@ export class WorkspaceFiles {
 				retargetFileStamp(from, to); // the guard's stamp must follow the rename too
 			},
 			forgetBuffers: (path) => d.saver().dropUnder(path),
+			keepUnwritten: async (files) => {
+				for (const f of files) {
+					await addLocalHistory(f.path, f.text, 'deleted');
+					await fileService.writeText(f.path, fromLf(f.text, f.eol));
+				}
+			},
 			confirmReplace: (name) => confirmAsk(m.filetree_confirm_replace({ name }), { confirmLabel: m.filetree_replace(), danger: true }),
 			// the full set-main flow (store + config.json + macros + visual re-derive), so a renamed
 			// main behaves exactly as if the user had starred the new path themselves
@@ -144,6 +151,8 @@ export class WorkspaceFiles {
 			resetTerminals: d.resetTerminals
 		});
 
+		// before the scan below: a guest's 'session' root read through the disk lists nothing
+		$effect(() => fileService.use(provider));
 		// The tree FOLLOWS the root. It used to be rescanned only where a folder was opened through
 		// FolderLifecycle, but the root is also set straight from main's IPC handlers in App.svelte --
 		// session restore, Open Folder in New Window, and an OS "open with" on a .tex file. Those set
@@ -156,7 +165,6 @@ export class WorkspaceFiles {
 			if (!root || root === this.treeRoot) return;
 			void this.refreshTree();
 		});
-		$effect(() => fileService.use(provider));
 		// A main file that IS set answers the question this prompt exists to ask, whoever set it - the
 		// tree, .texpile/config.json, MCP, a starter. Tracking "confirmed" separately let the two drift:
 		// config.json is adopted in its own effect, so on a project whose config names a main it could
@@ -206,7 +214,8 @@ export class WorkspaceFiles {
 		await refreshTreeState({
 			provider: this.d.provider,
 			session: this.d.session(),
-			isEditingTree: () => !!this.fileTreeRef?.isEditing?.()
+			isEditingTree: () => !!this.fileTreeRef?.isEditing?.(),
+			detachGone: (path) => this.treeOps.detachDeleted(path)
 		});
 	}
 

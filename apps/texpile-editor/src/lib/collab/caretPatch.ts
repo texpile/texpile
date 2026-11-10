@@ -3,9 +3,11 @@
 // so nothing a parse reads differently (two spaces typed in a row) moves under the caret
 import type { Node as PMNode } from 'prosemirror-model';
 import type { Transaction } from 'prosemirror-state';
-import { sourceToPm, type SourceMap } from '$lib/editor/visual/sourceSpans';
+import { sourceToPm, type Segment, type SourceMap } from '$lib/editor/visual/sourceSpans';
 import { blockEq } from '$lib/editor/visual/blockPatch';
 import { spliceDiff } from './spliceDiff';
+import { carriedRuns } from './caretRuns';
+import { diffInts } from '$lib/diff/iterables/diffIterableUtil';
 
 /** a change between two texts, where it starts in each */
 type NearChange = { oldIndex: number; remove: number; newIndex: number; insert: string };
@@ -13,7 +15,11 @@ type NearChange = { oldIndex: number; remove: number; newIndex: number; insert: 
 // blocks either side searched for one that came through unchanged
 const NEIGHBOURS = 4;
 
-/** patches `tr` to `parsed`, the parse of `newSource`, around the caret's block; false, leaving `tr`
+/** the caret block after a patch: its place among the top-level blocks, and its runs in the new text
+ *  counted from its start (null when they could not be carried) */
+export type CaretBlockPatched = { index: number; runs: Segment[] | null };
+
+/** patches `tr` to `parsed`, the parse of `newSource`, around the caret's block; null, leaving `tr`
  *  untouched, when the parse does not hold that block where the change left it */
 export function patchAroundCaret(
 	tr: Transaction,
@@ -23,57 +29,65 @@ export function patchAroundCaret(
 	newMap: SourceMap,
 	oldSource: string,
 	newSource: string
-): boolean {
+): CaretBlockPatched | null {
 	const doc = tr.doc;
-	if (oldSource === newSource || head <= 0 || head >= doc.content.size) return false;
+	if (head <= 0 || head >= doc.content.size) return null;
 	const ci = doc.resolve(head).index(0);
 	const caret = doc.child(ci);
 	let from = 0;
 	for (let i = 0; i < ci; i++) from += doc.child(i).nodeSize;
 	const seg = oldMap.blocks.find((b) => b.pmFrom === from && b.pmTo === from + caret.nodeSize);
 	const own = seg ? runsOf(oldMap, seg.pmFrom, seg.pmTo) : null;
-	if (!seg || !own) return false;
+	if (!seg || !own) return null;
 	const [start, stop] = own;
 	const near = changeNear(doc, ci, oldMap, oldSource, newSource);
-	if (!near) return false;
-	const change = near.change;
-	const end = change ? change.oldIndex + change.remove : 0;
+	if (!near) return null;
 	// a change that touches the block's text at all goes into it, never beside it: a block kept as it
 	// was without their words would hand the next keystroke a text that deletes them
-	const inside = !!change && end >= start && change.oldIndex <= stop;
-	if (change && inside && (change.oldIndex < start || end > stop)) return false;
-	const moved = near.shift + (change && end < start ? change.insert.length - change.remove : 0);
+	const inside = widenedToRuns(
+		near.changes.filter((c) => c.oldIndex + c.remove >= start && c.oldIndex <= stop),
+		oldMap,
+		newSource
+	);
+	if (inside.some((c) => c.oldIndex < start || c.oldIndex + c.remove > stop)) return null;
+	let moved = near.shift;
+	for (const c of near.changes) if (c.oldIndex + c.remove < start) moved += c.insert.length - c.remove;
 	const at = newMap.blocks.find((b) => b.srcFrom === seg.srcFrom + moved);
 	const cj = at ? childAt(parsed, at.pmFrom) : -1;
-	if (cj < 0 || parsed.child(cj).type !== caret.type || at!.pmTo !== at!.pmFrom + parsed.child(cj).nodeSize) return false;
+	if (cj < 0 || parsed.child(cj).type !== caret.type || at!.pmTo !== at!.pmFrom + parsed.child(cj).nodeSize) return null;
+	// a re-parse of the same text keeps the block as typed only where the parse reads its spaces differently
+	if (oldSource === newSource && (blockEq(caret, parsed.child(cj)) || inkOf(caret) !== inkOf(parsed.child(cj)))) return null;
 	// kept as it was only when the parse's block is those same bytes: words appended to it are in it
 	const theirs = runsOf(newMap, at!.pmFrom, at!.pmTo);
-	if (!inside && (!theirs || theirs[0] !== start + moved || theirs[1] !== stop + moved)) return false;
-	const stretch = inside ? stretchOf(caret, from, parsed.child(cj), at!.pmFrom, change!, oldMap, newMap, parsed) : null;
-	if (inside && !stretch) return false;
+	if (!inside.length && (!theirs || theirs[0] !== start + moved || theirs[1] !== stop + moved)) return null;
+	const stretches = stretchesOf(caret, from, parsed.child(cj), at!.pmFrom, inside, oldMap, newMap, parsed);
+	if (!stretches) return null;
+	const runs = carriedRuns(from, from + caret.nodeSize, oldMap, at!.pmFrom, at!.pmTo, newMap, stretches, inside, moved);
 	replaceRun(tr, doc, parsed, ci + 1, doc.childCount, cj + 1, parsed.childCount);
-	if (stretch) tr.replace(stretch.a, stretch.b, parsed.slice(stretch.c, stretch.d));
+	for (const s of [...stretches].reverse()) tr.replace(s.a, s.b, parsed.slice(s.c, s.d));
 	replaceRun(tr, doc, parsed, 0, ci, 0, cj);
-	return true;
+	return { index: cj, runs };
 }
 
 /** where `offset`, the caret's place in `oldSource`, stands in `newSource`: before words typed there */
 export function carriedOffset(doc: PMNode, head: number, offset: number, oldMap: SourceMap, oldSource: string, newSource: string): number {
 	const near = changeNear(doc, doc.resolve(head).index(0), oldMap, oldSource, newSource);
 	const whole = spliceDiff(oldSource, newSource);
-	const c =
-		near?.change ?? (near || !whole ? null : { oldIndex: whole.index, remove: whole.remove, newIndex: whole.index, insert: whole.insert });
-	const shift = near?.shift ?? 0;
-	if (!c || offset <= c.oldIndex) return offset + shift;
-	if (offset >= c.oldIndex + c.remove) return offset + shift + c.insert.length - c.remove;
-	return c.newIndex + c.insert.length;
+	const changes =
+		near?.changes ?? (whole ? [{ oldIndex: whole.index, remove: whole.remove, newIndex: whole.index, insert: whole.insert }] : []);
+	let carried = offset + (near?.shift ?? 0);
+	for (const c of changes) {
+		if (offset <= c.oldIndex) break;
+		if (offset < c.oldIndex + c.remove) return c.newIndex + c.insert.length;
+		carried += c.insert.length - c.remove;
+	}
+	return carried;
 }
 
 /**
- * The change between the texts around block `ci`, bounded by the nearest block on either side whose
+ * The changes between the texts in block `ci`, bounded by the nearest block on either side whose
  * bytes came through unchanged: changes elsewhere in the file read as one stretch that covers the
- * block otherwise. `shift` is how far the text before it moved; `change` is null when nothing
- * between the bounds changed
+ * block otherwise. `shift` is how far the text before them moved
  */
 function changeNear(
 	doc: PMNode,
@@ -81,10 +95,10 @@ function changeNear(
 	oldMap: SourceMap,
 	oldSource: string,
 	newSource: string
-): { shift: number; change: NearChange | null } | null {
+): { shift: number; changes: NearChange[] } | null {
 	// a re-parse of the same text (fresh stamps after typing) moves nothing
 	const whole = spliceDiff(oldSource, newSource);
-	if (!whole) return { shift: 0, change: null };
+	if (!whole) return { shift: 0, changes: [] };
 	const wholeEnd = whole.index + whole.remove;
 	let lo: [number, number] = [0, 0];
 	for (let i = ci - 1; i >= Math.max(0, ci - NEIGHBOURS); i--) {
@@ -115,9 +129,85 @@ function changeNear(
 		}
 	}
 	if (lo[0] > hi[0] || lo[1] > hi[1]) return null;
-	const d = spliceDiff(oldSource.slice(lo[0], hi[0]), newSource.slice(lo[1], hi[1]));
+	const before = oldSource.slice(lo[0], hi[0]);
+	const after = newSource.slice(lo[1], hi[1]);
 	const shift = lo[1] - lo[0];
-	return { shift, change: d ? { oldIndex: lo[0] + d.index, remove: d.remove, newIndex: lo[1] + d.index, insert: d.insert } : null };
+	const own = blockRunsAt(doc, oldMap, ci);
+	const split = own ? splitAroundBlock(before, after, own[0] - lo[0], own[1] - lo[0]) : null;
+	if (split) {
+		const changes = split.changes.map((c) => ({ ...c, oldIndex: lo[0] + c.oldIndex, newIndex: lo[1] + c.newIndex }));
+		return { shift: shift + split.shift, changes };
+	}
+	const d = spliceDiff(before, after);
+	return { shift, changes: d ? [{ oldIndex: lo[0] + d.index, remove: d.remove, newIndex: lo[1] + d.index, insert: d.insert }] : [] };
+}
+
+// edits before the block only move it, and each edit in it is its own change: one splice over two people's
+// edits around the caret carried the caret past the second one's words
+function splitAroundBlock(before: string, after: string, start: number, stop: number): { shift: number; changes: NearChange[] } | null {
+	let ranges;
+	try {
+		ranges = diffInts(codesOf(before), codesOf(after)).changes();
+	} catch {
+		return null;
+	}
+	let shift = 0;
+	const changes: NearChange[] = [];
+	for (const r of ranges) {
+		if (r.end1 < start || abovePlaced(before, start, r, after)) shift += r.end2 - r.start2 - (r.end1 - r.start1);
+		else if (r.start1 <= stop)
+			changes.push({ oldIndex: r.start1, remove: r.end1 - r.start1, newIndex: r.start2, insert: after.slice(r.start2, r.end2) });
+	}
+	return { shift, changes };
+}
+
+// paragraphs added right above the block, which the diff reads as typed at its start
+function abovePlaced(
+	before: string,
+	start: number,
+	r: { start1: number; end1: number; start2: number; end2: number },
+	after: string
+): boolean {
+	if (r.start1 !== start || r.end1 !== start) return false;
+	let k = 0;
+	while (k < r.end2 - r.start2 && k < start && after[r.end2 - 1 - k] === before[start - 1 - k]) k++;
+	return /\n[ \t]*\n/.test(after.slice(r.end2 - k, r.end2));
+}
+
+function codesOf(text: string): Int32Array {
+	const out = new Int32Array(text.length);
+	for (let i = 0; i < text.length; i++) out[i] = text.charCodeAt(i);
+	return out;
+}
+
+// a change between the bytes of a run that stands for several (two spaces read as one) takes the whole run,
+// and changes meeting in one run become one
+function widenedToRuns(changes: NearChange[], map: SourceMap, newSource: string): NearChange[] {
+	const out: NearChange[] = [];
+	for (const c of changes) {
+		const end = c.oldIndex + c.remove;
+		let from = c.oldIndex;
+		let to = end;
+		for (const l of map.leaves) {
+			if (l.kind === 'text' && l.pmTo - l.pmFrom === l.srcTo - l.srcFrom) continue;
+			if (l.srcFrom < from && l.srcTo > from) from = l.srcFrom;
+			if (l.srcFrom < to && l.srcTo > to) to = l.srcTo;
+		}
+		const last = out.at(-1);
+		const joined = !!last && from <= last.oldIndex + last.remove;
+		const oldIndex = joined ? last.oldIndex : from;
+		const newIndex = joined ? last.newIndex : c.newIndex - (c.oldIndex - from);
+		const stop = Math.max(to, joined ? last.oldIndex + last.remove : to);
+		const merged = {
+			oldIndex,
+			remove: stop - oldIndex,
+			newIndex,
+			insert: newSource.slice(newIndex, c.newIndex + c.insert.length + (stop - end))
+		};
+		if (joined) out[out.length - 1] = merged;
+		else out.push(merged);
+	}
+	return out;
 }
 
 // the text runs of top-level block `i`
@@ -153,29 +243,36 @@ function childAt(doc: PMNode, pos: number): number {
 }
 
 /**
- * Where the change sits in the caret block and in the parse's: taking that stretch from the parse
- * must leave a block that reads as the parse's, all but its whitespace, or a map did not place the
+ * Where the changes sit in the caret block and in the parse's: taking those stretches from the parse
+ * must leave a block that reads as the parse's, all but its whitespace, or a map did not place a
  * change exactly
  */
-function stretchOf(
+function stretchesOf(
 	caret: PMNode,
 	from: number,
 	target: PMNode,
 	targetFrom: number,
-	change: NearChange,
+	changes: NearChange[],
 	oldMap: SourceMap,
 	newMap: SourceMap,
 	parsed: PMNode
-): { a: number; b: number; c: number; d: number } | null {
-	const a = sourceToPm(oldMap.leaves, change.oldIndex, -1);
-	const b = sourceToPm(oldMap.leaves, change.oldIndex + change.remove, 1);
-	const c = sourceToPm(newMap.leaves, change.newIndex, -1);
-	const d = sourceToPm(newMap.leaves, change.newIndex + change.insert.length, 1);
-	if (a === null || b === null || c === null || d === null || b < a || d < c) return null;
-	if (a <= from || b >= from + caret.nodeSize || c <= targetFrom || d >= targetFrom + target.nodeSize) return null;
+): { a: number; b: number; c: number; d: number }[] | null {
+	const out: { a: number; b: number; c: number; d: number }[] = [];
+	for (const change of changes) {
+		const a = sourceToPm(oldMap.leaves, change.oldIndex, -1);
+		const b = sourceToPm(oldMap.leaves, change.oldIndex + change.remove, 1);
+		const c = sourceToPm(newMap.leaves, change.newIndex, -1);
+		const d = sourceToPm(newMap.leaves, change.newIndex + change.insert.length, 1);
+		if (a === null || b === null || c === null || d === null || b < a || d < c) return null;
+		if (a <= from || b >= from + caret.nodeSize || c <= targetFrom || d >= targetFrom + target.nodeSize) return null;
+		const last = out.at(-1);
+		if (last && (a < last.b || c < last.d)) return null;
+		out.push({ a, b, c, d });
+	}
 	try {
-		const patched = caret.replace(a - from - 1, b - from - 1, parsed.slice(c, d));
-		return inkOf(patched) === inkOf(target) ? { a, b, c, d } : null;
+		let patched = caret;
+		for (const s of [...out].reverse()) patched = patched.replace(s.a - from - 1, s.b - from - 1, parsed.slice(s.c, s.d));
+		return out.length === 0 || inkOf(patched) === inkOf(target) ? out : null;
 	} catch {
 		return null;
 	}

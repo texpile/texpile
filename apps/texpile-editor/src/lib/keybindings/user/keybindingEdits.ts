@@ -1,6 +1,6 @@
 // what Preferences › Keyboard Shortcuts writes into keybindings.json, VS Code's way: changing a default adds an entry
 // and a removal of the old key, reset takes both out again. Edits keep the file's comments and layout
-import { applyEdits, modify, parse, type ParseError } from 'jsonc-parser';
+import { applyEdits, modify, parse, printParseErrorCode, type ParseError } from 'jsonc-parser';
 import { keysText, type KeySequence } from '../keys/keyChord';
 import { printWhen, type WhenExpression } from '../when/whenExpression';
 import type { KeybindingItem } from '../resolver/keybindingResolver';
@@ -15,7 +15,8 @@ const FORMAT = { formattingOptions: { insertSpaces: false, tabSize: 1, eol: '\n'
 export function readEntries(text: string): unknown[] {
 	const errors: ParseError[] = [];
 	const value: unknown = parse(text, errors, { allowTrailingComma: true, disallowComments: false });
-	if (value === undefined && !errors.length) return [];
+	// an emptied file, or one holding only comments, is no changes, as VS Code reads it
+	if (value === undefined && errors.every((e) => printParseErrorCode(e.error) === 'ValueExpected')) return [];
 	if (errors.length || !Array.isArray(value)) throw new UnreadableKeybindingsError();
 	return value;
 }
@@ -78,6 +79,14 @@ export function removeKeys(text: string, item: KeybindingItem): string {
 }
 
 /** every user entry for the command and every removal of its defaults */
+/** every entry out, the file's comments and layout kept */
+export function resetAllCommands(text: string): string {
+	return removeAt(
+		text,
+		readEntries(text).map((_entry, i) => i)
+	);
+}
+
 export function resetCommand(text: string, command: string): string {
 	const entries = readEntries(text);
 	const at = entries.flatMap((e, i) => {

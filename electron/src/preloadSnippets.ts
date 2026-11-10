@@ -1,6 +1,6 @@
 // window.texpileSnippets: snippet and package files outside any workspace
 import { contextBridge, ipcRenderer } from 'electron';
-import { invokeFs } from './preloadIpc';
+import { invokeFs, invokeReady } from './preloadIpc';
 
 contextBridge.exposeInMainWorld('texpileSnippets', {
 	readGlobal: () => invokeFs('snippets:readGlobal'),
@@ -17,6 +17,5 @@ contextBridge.exposeInMainWorld('texpileSnippets', {
 	/** { global, project }, each a name to text map */
 	readPackages: (root: string | null) => invokeFs('snippets:readPackages', root),
 	/** the commands an installed package defines, as the reader's TeX reports them */
-	probePackage: (name: string, options: string, classOptions: string) =>
-		ipcRenderer.invoke('toolchain:probePackage', name, options, classOptions)
+	probePackage: (name: string, options: string, classOptions: string) => invokeReady('toolchain:probePackage', name, options, classOptions)
 });

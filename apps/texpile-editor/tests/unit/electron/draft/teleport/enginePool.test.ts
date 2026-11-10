@@ -17,8 +17,8 @@ vi.mock('../../../../../../../electron/src/draft/teleport/draftEngine', () => ({
 		parked = Promise.resolve(false);
 		stagedWith: string | null = null;
 		dropped = false;
-		stage(planRel: string): void {
-			this.stagedWith = planRel;
+		stage(plan: string): void {
+			this.stagedWith = plan;
 		}
 		drop(): void {
 			this.dropped = true;
@@ -29,7 +29,7 @@ vi.mock('../../../../../../../electron/src/draft/teleport/draftEngine', () => ({
 	}
 }));
 
-const { warmPool, takeEngine, takeStaged, stageEngine, giveBack, stopPool } =
+const { warmPool, takeEngine, takeStaged, stageEngine, giveBack, stopPool, preambleOfText } =
 	await import('../../../../../../../electron/src/draft/teleport/enginePool');
 
 // what the pool did to a mocked engine
@@ -96,16 +96,23 @@ it('hands a staged engine to its own chain, and sends it back to the base for an
 	};
 	warmPool(c);
 	const running = await takeEngine(c);
-	stageEngine(c, 'chain-1', () => ({ planRel: 'plan-1', serve: 1 }));
+	stageEngine(c, 'chain-1', () => ({ plan: 'plan-1', serve: 1 }));
 	expect(takeStaged(c, 'chain-2')).toBeNull();
 	const staged = takeStaged(c, 'chain-1');
 	expect(staged).not.toBe(running);
 	expect(seen(staged).stagedWith).toBe('plan-1');
 	running.parked = Promise.resolve(true);
 	giveBack(running);
-	stageEngine(c, 'chain-3', () => ({ planRel: 'plan-3', serve: 3 }));
+	stageEngine(c, 'chain-3', () => ({ plan: 'plan-3', serve: 3 }));
 	expect(seen(running).stagedWith).toBe('plan-3');
 	expect(await takeEngine(c)).toBe(running);
 	expect(seen(running).dropped).toBe(true);
 	stopPool();
+});
+
+// 0811.3855 keeps an old %\begin{document} above its \title and \author: an edit there must change the spares' key
+it('reads the preamble up to the begin document line that is not commented out', () => {
+	const text = '\\documentclass{article}\n%\\begin{document}\n\\author{A}\n\\begin{document}\nbody\n';
+	expect(preambleOfText(text)).toBe('\\documentclass{article}\n%\\begin{document}\n\\author{A}\n\\begin{document}');
+	expect(preambleOfText('\\def\\x{50\\%}\\begin{document}\n')).toBe('\\def\\x{50\\%}\\begin{document}');
 });

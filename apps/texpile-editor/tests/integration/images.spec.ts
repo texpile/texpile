@@ -78,7 +78,7 @@ test('a crop in the LaTeX paper is written as trim and clip, and undo takes it b
 	expect(cropped).toContain('\\includegraphics[width=0.8\\linewidth, trim=');
 	expect(cropped).toMatch(/trim=[\d.]+ 0 0 0, clip\]\{shot\.png\}/);
 	await visual.editor.click({ position: { x: 5, y: 5 } });
-	await page.keyboard.press('Control+z');
+	await page.keyboard.press('ControlOrMeta+z');
 	await disk.expectFile('crop.tex', (t) => t === LATEX, 'the file after undo');
 });
 

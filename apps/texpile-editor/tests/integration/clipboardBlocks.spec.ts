@@ -27,8 +27,8 @@ test('select all, copy and paste back over itself leaves the file as it was', as
 	await v.open('all.tex');
 	const original = disk().read('all.tex');
 	await v.evalView('view.focus(); return 1;');
-	await v.press('Control+a');
-	await v.press('Control+c');
-	await v.press('Control+v');
+	await v.press('ControlOrMeta+a');
+	await v.press('ControlOrMeta+c');
+	await v.press('ControlOrMeta+v');
 	await disk().expectUnchanged('all.tex', original, 2500);
 });

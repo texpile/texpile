@@ -45,6 +45,22 @@ it('completes the commands of a style file the project ships, without its intern
 	expect(projectIntelStore.current.envs.map((e) => e.name)).toContain('reviewbox');
 });
 
+it("leaves the kernel's commands that a class the project ships redefines to the kernel", async () => {
+	const files: Record<string, string> = {
+		'/w/main.tex': '\\documentclass[conference]{ieeeconf}\n\\begin{document}\n\\end{document}',
+		'/w/ieeeconf.cls':
+			'\\def\\thanks#1{\\if@IEEEWARNthanks\\typeout{** WARNING: \\noexpand\\thanks is locked out}\\fi\\global\\@IEEEWARNthanksfalse}\n\\def\\IEEEauthorblockN#1{#1}'
+	};
+	const read = async (p: string) => {
+		if (!(p in files)) throw new Error('ENOENT');
+		return files[p];
+	};
+	await refreshProjectIntel([{ name: 'main.tex', path: '/w/main.tex', relPath: 'main.tex' }], [], null, '/w/main.tex', read);
+	const names = projectIntelStore.current.macros.map((m) => m.name);
+	expect(names).not.toContain('thanks');
+	expect(names).toContain('IEEEauthorblockN');
+});
+
 it("takes what loads from the open document's tree, not from another document in the folder", async () => {
 	const files: Record<string, string> = {
 		'/w/paper.tex': '\\documentclass{article}\n\\usepackage{amsthm}\n\\begin{document}\n\\input{sec}\n\\end{document}',

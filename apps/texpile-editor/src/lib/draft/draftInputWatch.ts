@@ -1,12 +1,14 @@
 // a file the document reads changed without being the open one: an agent's write, a pull, an edit in another editor
-// group. Live mode followed only the open file, so the preview kept the old text until the next keystroke there
+// group, a figure tab's drag before it is written. Live mode followed only the open file, so the preview kept the old
+// text until the next keystroke there
 import { fileService } from '$lib/files/service/fileService';
 import { isSameFile, pathBelow, pathOfFileUri } from '$lib/files/identity/fileUris';
 import { textNow } from '$lib/buffers/textNow';
+import { onUnwrittenText } from '$lib/draw/host/tab/unwrittenText.svelte';
 
-const TEXT = /\.tex$/i;
+export const TEXT = /\.tex$/i;
 // read whole by a compile: a teleport only carries a .tex file's text
-const REBUILD = /\.(sty|cls|bib|bbl|png|jpe?g)$/i;
+export const REBUILD = /\.(sty|cls|bib|bbl|png|jpe?g)$/i;
 
 export type DraftInputDeps = {
 	root(): string;
@@ -35,8 +37,14 @@ export function watchDraftInputs(deps: DraftInputDeps): () => void {
 	const offWrites = fileService.onDidRunOperation((e) => {
 		if (e.isOperation('write')) changed([pathOfFileUri(e.resource)], (path) => textNow(path));
 	});
+	// the open file too: its buffer only takes the drag on release
+	const offCanvas = onUnwrittenText((path, text) => {
+		const root = deps.root();
+		if (deps.isActive() && root && pathBelow(root, path) && TEXT.test(path)) deps.edit(path, text);
+	});
 	return () => {
 		offChanges();
 		offWrites();
+		offCanvas();
 	};
 }

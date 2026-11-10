@@ -22,6 +22,7 @@ import {
 	selectDocEnd,
 	selectDocStart
 } from '$lib/editor/visual/selectDocBoundary';
+import { lineEdgeKeys } from '$lib/editor/visual/lineEdgeArrows';
 import { gapCursorWithArrows } from '$lib/editor/visual/gapArrows';
 import { createMathField } from '$lib/editor/visual/extensions/mathlivebridge/mlcommands';
 import { createCodeBlock } from '$lib/editor/visual/extensions/codemirrorbridge/cmcommands';
@@ -75,6 +76,7 @@ import { BibliographyNodeView } from '$lib/editor/visual/extensions/bibliography
 import { environmentView } from '$lib/languages/latex/visual/extensions/environment/environmentView.svelte';
 import { createBoundaryClickPlugin } from '$lib/editor/visual/extensions/boundary-click-plugin';
 import { wordSelectionTrim } from '$lib/editor/visual/extensions/wordSelectionTrim';
+import { unfocusedPressCaret } from '$lib/editor/visual/extensions/unfocusedPress';
 import { dragSelectionPlugin } from '$lib/editor/visual/extensions/dragSelection/dragSelectionPlugin';
 import { createBlockHandlePlugin } from '$lib/editor/visual/extensions/block-handle-plugin.svelte';
 import { wholeBlockDragPlugin } from '$lib/editor/visual/extensions/wholeBlockDrag';
@@ -205,6 +207,7 @@ export function latexEditorPlugins(setup: LatexEditorSetup): Plugin[] {
 			ArrowLeft: holdAtDocStart,
 			ArrowDown: holdAtDocEnd,
 			ArrowRight: holdAtDocEnd,
+			...lineEdgeKeys,
 			'Mod-End': selectDocEnd,
 			'Shift-Mod-Home': extendToDocStart,
 			'Shift-Mod-End': extendToDocEnd,
@@ -252,6 +255,7 @@ export function latexEditorPlugins(setup: LatexEditorSetup): Plugin[] {
 		spellChipPlugin,
 		createBoundaryClickPlugin(),
 		wordSelectionTrim(),
+		unfocusedPressCaret(),
 		dragSelectionPlugin(),
 		createBlockHandlePlugin(),
 		wholeBlockDragPlugin(),

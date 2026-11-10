@@ -26,7 +26,7 @@ export function bundledIds(): string[] {
 export function loadBundled(id: string): Promise<PackageFile | null> {
 	let file = cache.get(id);
 	if (!file) {
-		// at assets/data/ beside the built chunk (scripts/packageData.ts); not a template literal, which Vite turns into a glob
+		// at assets/data/ beside the built chunk, served out of the data pack (scripts/packageData.ts); not a template literal, which Vite turns into a glob
 		file = IDS.has(id)
 			? fetch(new URL('./data/' + id + '.json', import.meta.url))
 					.then((r) => (r.ok ? (r.json() as Promise<PackageFile>) : null))

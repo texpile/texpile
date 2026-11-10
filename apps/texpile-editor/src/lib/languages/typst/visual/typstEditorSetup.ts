@@ -17,6 +17,7 @@ import {
 	selectDocEnd,
 	selectDocStart
 } from '$lib/editor/visual/selectDocBoundary';
+import { lineEdgeKeys } from '$lib/editor/visual/lineEdgeArrows';
 import { TypstBibliographyView, isTypstBibliography } from './extensions/typstBibliographyView.svelte';
 import { keymap } from 'prosemirror-keymap';
 import { pmCommandKeys } from '$lib/keybindings/editors/pmCommandKeys';
@@ -78,6 +79,7 @@ import { proofreadPlugin, spellClickBoundaryPlugin, spellProblemKeymap } from '$
 import type { SpellLanguage } from '$lib/editor/spellcheck/languages/spellLanguages';
 import { createBoundaryClickPlugin } from '$lib/editor/visual/extensions/boundary-click-plugin';
 import { wordSelectionTrim } from '$lib/editor/visual/extensions/wordSelectionTrim';
+import { unfocusedPressCaret } from '$lib/editor/visual/extensions/unfocusedPress';
 import { dragSelectionPlugin } from '$lib/editor/visual/extensions/dragSelection/dragSelectionPlugin';
 import { createBlockHandlePlugin } from '$lib/editor/visual/extensions/block-handle-plugin.svelte';
 import { wholeBlockDragPlugin } from '$lib/editor/visual/extensions/wholeBlockDrag';
@@ -243,6 +245,7 @@ export function typstEditorPlugins(setup: TypstEditorSetup): Plugin[] {
 			ArrowLeft: holdAtDocStart,
 			ArrowDown: holdAtDocEnd,
 			ArrowRight: holdAtDocEnd,
+			...lineEdgeKeys,
 			'Mod-End': selectDocEnd,
 			'Shift-Mod-Home': extendToDocStart,
 			'Shift-Mod-End': extendToDocEnd,
@@ -273,6 +276,7 @@ export function typstEditorPlugins(setup: TypstEditorSetup): Plugin[] {
 		spellProblemKeymap,
 		createBoundaryClickPlugin(),
 		wordSelectionTrim(),
+		unfocusedPressCaret(),
 		dragSelectionPlugin(),
 		// the Notion-style + / drag / delete gutter, with the typst insert set
 		createBlockHandlePlugin(),

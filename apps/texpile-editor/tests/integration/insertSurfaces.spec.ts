@@ -27,6 +27,7 @@ const inCell = (v: VisualEditor) =>
 		`const { $head } = view.state.selection; for (let d = $head.depth; d > 0; d--) if ($head.node(d).type.name === 'table_cell') return true; return false;`
 	);
 
+test.skip(process.platform === 'darwin', 'macOS menus are native');
 test('Insert > Table leaves the caret in the first cell', async () => {
 	const { v, page, disk } = await setup('menu-table.tex', 'First paragraph alpha beta gamma.');
 	await page
@@ -63,6 +64,6 @@ test('Ctrl+Z typed in a chip panel steps the file history', async () => {
 	await expect(page.locator('.drawn-chip-panel')).toHaveCount(1);
 	await disk.expectFile('vspace.tex', (t) => t.includes('\\medskip'), 'the space is saved');
 	await page.locator('.drawn-chip-panel').click();
-	await page.keyboard.press('Control+z');
+	await page.keyboard.press('ControlOrMeta+z');
 	await disk.expectFile('vspace.tex', (t) => t === ARTICLE, 'undo restores the file');
 });

@@ -51,15 +51,6 @@ describe('\\vspace round-trips verbatim; blank lines are semantic no-ops', () =>
 		expect(out).not.toContain('\\vspace');
 		expect(out).toBe('a\n\nb \\par');
 	});
-
-	it('serializes a legacy lineBreak:false hard_break to nothing', () => {
-		const doc = schema.nodes.doc.create(null, [
-			schema.nodes.paragraph.create(null, [schema.text('a'), schema.nodes.hard_break.create({ lineBreak: false }), schema.text('b')])
-		]);
-		const out = serializeToLatex(doc);
-		expect(out).not.toContain('\\vspace');
-		expect(out).toContain('ab');
-	});
 });
 
 describe('\\\\ line break round-trips as \\\\', () => {

@@ -56,16 +56,23 @@ export function collectSeeds(root: string, outAbs: string, readBack: ReadBackFil
 	return dir;
 }
 
-/** a finished pass's products become _draft's: the PDF, log, synctex, aux files and the page records */
+// the pages on screen read these, so they wait in LAST_PASS until a compile's pages land
+const VIEW_FILES = ['draft.pdf', 'draft.synctex.gz'];
+const LAST_PASS = 'last-pass';
+
+/** a finished pass's products become _draft's: the log, aux files and the page records; the PDF and synctex wait in LAST_PASS */
 export function promote(engineAbs: string, outAbs: string, root: string, readBack: ReadBackFiles): void {
 	for (const f of fs.readdirSync(outAbs))
 		if (/^page-\d+\.jsonl$/.test(f) || f === 'pages.json') fs.rmSync(path.join(outAbs, f), { force: true });
+	const held = path.join(outAbs, LAST_PASS);
+	fs.rmSync(held, { recursive: true, force: true });
+	fs.mkdirSync(held);
 	const appOwned = new Set(readBack.byTools.map((ext) => `draft.${ext}`));
 	for (const f of fs.readdirSync(engineAbs)) {
 		if (appOwned.has(f)) continue;
 		if (f.startsWith('draft.') || /^page-\d+\.jsonl$/.test(f) || f === 'pages.json') {
 			try {
-				fs.copyFileSync(path.join(engineAbs, f), path.join(outAbs, f));
+				fs.copyFileSync(path.join(engineAbs, f), path.join(VIEW_FILES.includes(f) ? held : outAbs, f));
 			} catch {
 				/* a locked file costs that one product, not the compile */
 			}
@@ -77,14 +84,29 @@ export function promote(engineAbs: string, outAbs: string, root: string, readBac
 	}
 }
 
-/** a page's records with each image's file made absolute and each Type1 font's sources found */
-export async function readPage(dirAbs: string, root: string, n: number, w: number, h: number, unc?: string): Promise<DraftPage> {
+/** the last pass's PDF and synctex replace the ones the screen reads */
+export function publishView(outAbs: string): void {
+	for (const f of VIEW_FILES) {
+		const from = path.join(outAbs, LAST_PASS, f);
+		if (fs.existsSync(from)) fs.copyFileSync(from, path.join(outAbs, f));
+		else fs.rmSync(path.join(outAbs, f), { force: true });
+	}
+}
+
+/** a compile's page, from the records file the engine wrote */
+export function readPage(dirAbs: string, root: string, n: number, w: number, h: number, unc?: string): Promise<DraftPage> {
 	let records = '';
 	try {
 		records = fs.readFileSync(path.join(dirAbs, `page-${String(n).padStart(3, '0')}.jsonl`), 'utf8');
 	} catch {
 		/* a page the engine could not write draws empty */
 	}
+	return pageOfRecords(records, root, n, w, h, unc);
+}
+
+/** a page's records with each image's file made absolute and each Type1 font's sources found */
+export async function pageOfRecords(written: string, root: string, n: number, w: number, h: number, unc?: string): Promise<DraftPage> {
+	let records = written;
 	if (records.includes('"t":"image"') || records.includes('"t":"font"')) {
 		const lines = records.split('\n');
 		await Promise.all(

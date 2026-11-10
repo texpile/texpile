@@ -5,7 +5,15 @@ import { keybindingTable, keyPlatform, userKeybindings } from '$lib/keybindings/
 import { itemsOnKeys, type KeybindingItem } from '$lib/keybindings/resolver/keybindingResolver';
 import { keysText, type KeySequence } from '$lib/keybindings/keys/keyChord';
 import { type WhenExpression } from '$lib/keybindings/when/whenExpression';
-import { addKeys, changeKeys, removeKeys, resetCommand, UnreadableKeybindingsError } from '$lib/keybindings/user/keybindingEdits';
+import {
+	addKeys,
+	changeKeys,
+	removeKeys,
+	resetAllCommands,
+	resetCommand,
+	UnreadableKeybindingsError
+} from '$lib/keybindings/user/keybindingEdits';
+import { confirmAsk } from '$lib/modals/confirm.svelte';
 import { editUserKeybindings } from '$lib/keybindings/user/userKeybindingsFile';
 import type { ContextMenuItem } from '$lib/menus/contextMenu.svelte';
 import { toaster } from '$lib/modals/toaster-svelte';
@@ -16,7 +24,7 @@ import { buildKeybindingRows, filterKeybindingRows, keybindingEntryText, type Ke
 export type DefineKeys = { row: KeybindingRow; add: boolean; keys: KeySequence };
 
 /** VS Code's columns: the row's pencil, Command, Key, When, Source */
-export const KEYBINDING_GRID = 'grid grid-cols-[1.75rem_minmax(0,1.4fr)_minmax(0,1fr)_minmax(0,1fr)_4rem] items-center gap-2';
+export const KEYBINDING_GRID = 'grid grid-cols-[minmax(0,1.4fr)_minmax(0,1fr)_minmax(0,1fr)_4rem] items-center gap-2 px-2';
 
 function copyText(text: string): () => void {
 	return () => void navigator.clipboard.writeText(text);
@@ -39,6 +47,14 @@ export class KeybindingsPanel {
 		if (!d?.keys.length) return 0;
 		return itemsOnKeys(keybindingTable(), d.keys).filter((i) => i.command !== d.row.command).length;
 	});
+
+	readonly changed = $derived(userKeybindings().items.length > 0);
+
+	async resetAll(): Promise<void> {
+		if (!(await confirmAsk(m.keybindings_reset_all_confirm(), { confirmLabel: m.keybindings_reset_all_confirm_label(), danger: true })))
+			return;
+		await this.#write(resetAllCommands);
+	}
 
 	hasUserEntries(command: string): boolean {
 		return userKeybindings().items.some((i) => i.command === command || i.command === `-${command}`);

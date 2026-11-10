@@ -204,4 +204,6 @@ nsis:
   license: build/license.txt
   oneClick: false
   allowToChangeInstallationDirectory: true
+  installerSidebar: build/installerSidebar.bmp
+  uninstallerSidebar: build/uninstallerSidebar.bmp
   artifactName: ${productName}-Setup-${version}.${ext}

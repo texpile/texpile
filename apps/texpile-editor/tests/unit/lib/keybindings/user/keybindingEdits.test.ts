@@ -6,6 +6,7 @@ import {
 	changeKeys,
 	readEntries,
 	removeKeys,
+	resetAllCommands,
 	resetCommand,
 	UnreadableKeybindingsError
 } from '$lib/keybindings/user/keybindingEdits';
@@ -25,6 +26,20 @@ describe('keybindings.json edits', () => {
 		expect(changed).toContain('// mine');
 		expect(changed).toContain('// keep');
 		expect(readEntries(resetCommand(changed, 'file.save'))).toEqual([{ key: 'mod+j', command: 'x' }]);
+	});
+
+	it('reads an emptied file, or one with only comments, as no changes, and a broken one as invalid', () => {
+		expect(readEntries('')).toEqual([]);
+		expect(readEntries('// my keys\n')).toEqual([]);
+		expect(() => readEntries('[')).toThrow(UnreadableKeybindingsError);
+		expect(() => readEntries('x')).toThrow(UnreadableKeybindingsError);
+	});
+
+	it('resets every entry and keeps the comments the writer left', () => {
+		const text = '// my keys\n[\n\t{ "key": "mod+j", "command": "x" },\n\t{ "key": "mod+s", "command": "-file.save" }\n]\n';
+		const reset = resetAllCommands(text);
+		expect(readEntries(reset)).toEqual([]);
+		expect(reset).toContain('// my keys');
 	});
 
 	it('rewrites a user entry in place and removes it outright', () => {

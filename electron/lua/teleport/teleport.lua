@@ -33,6 +33,7 @@ dofile(DIR .. "/serial.lua")(T)
 dofile(DIR .. "/scan.lua")(T)
 dofile(DIR .. "/apply.lua")(T)
 dofile(DIR .. "/reader.lua")(T)
+dofile(DIR .. "/writes.lua")(T)
 dofile(DIR .. "/reset.lua")(T)
 dofile(DIR .. "/serve.lua")(T)
 dofile(DIR .. "/images.lua")(T)
@@ -153,11 +154,20 @@ function TEXPILE_TELE_PREPAGE(box)
 	for i, d in ipairs(stacks[0] and stacks[0].items or {}) do seed[i] = d end
 	return seed
 end
-function TEXPILE_TELE_PAGE(box, n, meta)
+function TEXPILE_TELE_PAGE(box, n, meta, records)
 	if box then follow_colors(box.head) end
 	T.shipped = n
 	T.want_point = true
-	if T.serving and not T.silent and n >= T.report_from then say(string.format("PAGE %d %.4f %.4f%s", n, meta.w, meta.h, meta.unc and (" " .. meta.unc) or "")) end
+	if T.serving and not T.silent and n >= T.report_from then
+		local text = table.concat(records, "\n")
+		local lines = text == "" and 0 or select(2, text:gsub("\n", "")) + 1
+		-- the page's record lines follow the header
+		say(string.format("PAGE %d %.4f %.4f %d%s", n, meta.w, meta.h, lines, meta.unc and (" " .. meta.unc) or ""))
+		if lines > 0 then
+			io.write(text, "\n")
+			io.flush()
+		end
+	end
 	if T.stop_after_page then
 		say("STOP " .. n .. " " .. T.stop_after_page)
 		T.stop_after_page = nil
@@ -329,7 +339,7 @@ function texpile_tele_next()
 			if not have[spec[1] .. "@" .. spec[2]] then
 				token.set_macro(PREFIX .. "pre" .. i, "", "global")
 				tex.sprint({ token.create("global"), token.create("font"), token.create(PREFIX .. "pre" .. i) })
-				tex.sprint(-2, '"' .. spec[1] .. '"')
+				tex.sprint(-2, T.font_name_text(spec[1]))
 				tex.sprint(" at " .. spec[2] .. "sp\\relax")
 			end
 		end
@@ -341,7 +351,7 @@ function texpile_tele_next()
 	if pre ~= "TELE" and pre ~= "PRE" then os.exit(101) end
 	T.serves = (T.serves or 0) + 1
 	T.staging = pre == "PRE"
-	T.serve(dofile(plan))
+	T.serve(T.read_plan(plan))
 end
 
 -- a clean point: the main vertical list, nothing open since the base, and this line not yet read

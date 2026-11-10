@@ -7,6 +7,7 @@ import { Readable } from 'node:stream';
 import { MIME } from './fs/fsService';
 import { isPreviewFile } from './draft/previewFiles';
 import { bundleDir } from './appIdentity';
+import { packedDataFile } from './bundleData';
 import { windowRoots } from './windows/windowRegistry';
 import { normRoot } from './windows/normRoot';
 import { registerThemeProtocol, THEME_SCHEME } from './themes/themeProtocol';
@@ -130,6 +131,12 @@ export function registerProtocolHandlers(): void {
 		// path traversal guard: resolved file must stay inside the bundle
 		if (!file.startsWith(root + path.sep) && file !== root) {
 			return new Response('Forbidden', { status: 403 });
+		}
+		const packed = await packedDataFile(root, rel);
+		if (packed === null) return new Response('Not found', { status: 404 });
+		if (packed) {
+			const headers = { 'Content-Type': 'application/json', 'Content-Length': String(packed.length), 'Cache-Control': 'no-cache' };
+			return new Response(packed, { headers });
 		}
 		try {
 			const st = await fs.promises.stat(file);

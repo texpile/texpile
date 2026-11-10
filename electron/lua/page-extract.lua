@@ -72,14 +72,16 @@ TEXPILE_TELE_CARRY.pageextract = {
 -- \item, whose paragraph starts after \inputlineno has moved on.
 function texpile_para()
 	if not src_line_attr then return end
-	local f = ((status and status.filename or ""):gsub("\\", "/"):match("[^/]+$") or ""):lower()
+	local at, line
+	if TEXPILE_SRC_AT then at, line = TEXPILE_SRC_AT() end
+	local f = ((at or status and status.filename or ""):gsub("\\", "/"):match("[^/]+$") or ""):lower()
 	local id = src_files[f]
 	if not id then
 		src_filen = src_filen + 1
 		src_files[f] = src_filen
 		id = src_filen
 	end
-	tex.setattribute(src_line_attr, tex.inputlineno)
+	tex.setattribute(src_line_attr, line or tex.inputlineno)
 	tex.setattribute(src_file_attr, id)
 end
 
@@ -130,7 +132,10 @@ function page_extract(boxnum)
 	local seed = TEXPILE_TELE_PREPAGE and TEXPILE_TELE_PREPAGE(b) or nil
 	local ok, records, stats = pcall(walker.lines, b.head, nil, seed)
 	pages[pageno] = { w = (b.width or 0) / 65536, h = ((b.height or 0) + (b.depth or 0)) / 65536, unc = ok and stats and stats.uncertified or nil }
-	if ok then
+	-- a served page goes to the app on stdout: on Windows a file the app reads right after it was written waits for
+	-- the virus scanner
+	local served = TEXPILE_TELE_SERVING
+	if ok and not served then
 		local f = io.open(string.format("%spage-%03d.jsonl", OUT, pageno), "w")
 		if f then
 			f:write(table.concat(records, "\n"))
@@ -140,7 +145,7 @@ function page_extract(boxnum)
 	-- \AtEndDocument fires before the final \clearpage ships the last pages, so every shipout after it rewrites
 	-- the manifest and the last one leaves it complete
 	if doc_ended or TEXPILE_TELE_SERVING then write_manifest() end
-	if TEXPILE_TELE_PAGE then TEXPILE_TELE_PAGE(b, pageno, pages[pageno]) end
+	if TEXPILE_TELE_PAGE then TEXPILE_TELE_PAGE(b, pageno, pages[pageno], served and ok and records or {}) end
 end
 
 function page_extract_finish()

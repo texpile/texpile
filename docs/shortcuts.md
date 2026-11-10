@@ -9,17 +9,18 @@ section: Customize
 
 # Keyboard shortcuts
 
-On macOS, use Cmd for Ctrl and Option for Alt, unless a row says otherwise.
+On macOS, use Cmd for Ctrl and Option for Alt unless stated otherwise.
 
 ## Change a shortcut
 
-Preferences › Keyboard Shortcuts lists every command and its keys. Double-click a command or click its pencil, press the new keys, then Enter. Right-click a command to copy its entry, add a second key, remove a key, reset it, or change where it works. Record Keys in the search field finds the commands on the keys you press. Sort by Precedence puts the entry that wins a shared key first.
+Preferences › Keyboard Shortcuts lists every command and its keys. You can modify them visually.
 
-The keys you set go into `keybindings.json` in Texpile's own data folder and win over the defaults. The file uses VS Code's format. The file button beside the search field opens it, and so does Command palette › Open Keyboard Shortcuts (JSON).
+## Edit directly
+
+In many cases it is probably easier to edit the JSON directly: Command palette › Open Keyboard Shortcuts (JSON).
 
 ```jsonc
 [
-	// Ctrl J for bold, and Ctrl B free
 	{ "key": "mod+j", "command": "editor.bold" },
 	{ "key": "mod+b", "command": "-editor.bold" }
 ]
@@ -102,5 +103,3 @@ Keys: `a` to `z`, `0` to `9`, `f1` to `f24`, `enter`, `tab`, `space`, `backspace
 | Esc              | Hide the math preview until the cursor leaves the math                          |
 | Alt F5           | Next change since the last commit                                               |
 | Shift Alt F5     | Previous change since the last commit                                           |
-
-The command palette has Fold All Equations and Fold All Figures and Tables, each with an Unfold command. Give them keys in Preferences › Keyboard Shortcuts. Preferences › Editor › Fold when a file opens folds them for you. A file keeps the folds you leave it with.

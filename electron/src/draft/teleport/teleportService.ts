@@ -20,12 +20,21 @@ export function adoptIndex(c: {
 	srcFiles: string[];
 }): void {
 	const key = normRoot(c.root);
-	lives.get(key)?.close();
+	lives.get(key)?.close(true);
 	lives.set(key, new LiveDraft(c.root, c.mainRel, c.engineDir, c.index, c.count, c.srcFiles));
+}
+
+let stopsAll = 0;
+const stops = new Map<string, number>();
+/** counts the folder's stops: a compile that outlives one must not bring the engines back */
+export function stopCount(root: string): number {
+	return stopsAll + (stops.get(normRoot(root)) ?? 0);
 }
 
 /** the folder's live preview and engines stop; with no folder, every folder's */
 export function stopTeleports(root?: string): void {
+	if (root === undefined) stopsAll++;
+	else stops.set(normRoot(root), (stops.get(normRoot(root)) ?? 0) + 1);
 	for (const [key, live] of [...lives])
 		if (root === undefined || key === normRoot(root)) {
 			live.close();

@@ -80,7 +80,7 @@
 				     the mark sits in one column instead of trailing a name of whatever length -->
 				<span class="flex w-3.5 shrink-0 items-center justify-center">
 					{#if isMain(entry)}
-						<Star class="fill-primary-500 text-primary-ink size-3" aria-label={m.filetree_main_file_label()} />
+						<Star class="fill-primary-500 text-primary-500 size-3" aria-label={m.filetree_main_file_label()} />
 					{/if}
 				</span>
 				<FileIcon name={entry.name} class="size-4 shrink-0" />
@@ -101,10 +101,7 @@
 					draggable="false"
 					onpointerdown={(e) => e.stopPropagation()}
 					onclick={(e) => e.stopPropagation()}
-					onkeydown={(e) => {
-						if (e.key === 'Enter') editor.commitRename(entry);
-						else if (e.key === 'Escape') editor.renaming = null;
-					}}
+					onkeydown={(e) => editor.keydownRename(e, entry)}
 					onblur={(e) => editor.blurRename(e, entry)}
 				/>
 			{:else}

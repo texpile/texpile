@@ -6,10 +6,11 @@ import * as fs from 'node:fs';
 import * as crypto from 'node:crypto';
 import { seedBbl, auxCycle } from './draftBib';
 import { OUT } from './compileJob';
-import { collectSeeds, promote, readPage, type DraftPage, type ReadBackFiles } from './draftProducts';
-import { takeEngine, diskPreamble, stampOf } from './teleport/enginePool';
+import { collectSeeds, promote, publishView, readPage, type DraftPage, type ReadBackFiles } from './draftProducts';
+import { takeEngine, diskPreamble, stampOf, stopPool } from './teleport/enginePool';
 import { PointIndex, readIndexFile } from './teleport/pointIndex';
-import { adoptIndex } from './teleport/teleportService';
+import { adoptIndex, stopCount } from './teleport/teleportService';
+import { holdSweep } from './teleport/sweepHold';
 import type { DraftEngine } from './teleport/draftEngine';
 import { shellEnvReady } from '../shell/shellEnv';
 import { findProgram } from '../shell/findProgram';
@@ -54,7 +55,23 @@ function runFor(root: string): CompileRun {
 const ONE_INCH_PT = 72.27;
 const PASS_TIMEOUT_MS = 120000;
 
+// what a compile leaves behind: the last pass's engine, whose folder only an adopted index reads
+type CompileOwned = { last: DraftEngine | null; release: () => void };
+
 export async function compileDraft(body: DraftBody): Promise<DraftResult> {
+	const owned: CompileOwned = { last: null, release: holdSweep(body.root) };
+	const stops = stopCount(body.root);
+	try {
+		return await compilePasses(body, owned, stops);
+	} finally {
+		owned.release();
+		owned.last?.remove();
+		// the preview stopped while this ran: what its passes warmed goes too
+		if (stopCount(body.root) !== stops) stopPool(body.root);
+	}
+}
+
+async function compilePasses(body: DraftBody, owned: CompileOwned, stops: number): Promise<DraftResult> {
 	await shellEnvReady();
 	const { root } = body;
 	const mainRel = body.mainFile.replace(/\\/g, '/');
@@ -67,7 +84,7 @@ export async function compileDraft(body: DraftBody): Promise<DraftResult> {
 	run.engine?.remove();
 	run.engine = null;
 	function superseded(): boolean {
-		return gen !== run.gen;
+		return gen !== run.gen || stopCount(root) !== stops;
 	}
 	fs.mkdirSync(outAbs, { recursive: true });
 	// users' projects are usually git repositories, and the preview's artifacts must never be staged in them
@@ -100,6 +117,8 @@ export async function compileDraft(body: DraftBody): Promise<DraftResult> {
 		promote(eng.abs, outAbs, root, body.readBack);
 		last?.engine.remove();
 		last = preFiles ? { engine: eng, seedDir, preFiles, preStamp } : null;
+		// eslint-disable-next-line no-param-reassign -- the caller removes what the passes left
+		owned.last = last?.engine ?? null;
 		if (!preFiles) eng.remove();
 	}
 
@@ -195,6 +214,9 @@ export async function compileDraft(body: DraftBody): Promise<DraftResult> {
 		index.adoptBasis(path.join(done.engine.abs, 'tele', 'src'));
 		index.fontList = `${done.engine.rel}/tele/fonts.lua`;
 		index.imageList = `${done.engine.rel}/tele/images.lua`;
+		// eslint-disable-next-line no-param-reassign -- the index reads this folder now
+		owned.last = null;
+		owned.release();
 		adoptIndex({ root, mainRel, engineDir, index, count: manifest.count, srcFiles: manifest.srcFiles ?? [] });
 	}
 
@@ -206,6 +228,8 @@ export async function compileDraft(body: DraftBody): Promise<DraftResult> {
 	// some classes never set the page dimension registers: the paper is then the widest shipped box plus the margins
 	const maxPageW = manifest.pages.length ? Math.max(...manifest.pages.map((p) => p.w || 0)) : 0;
 	const maxPageH = manifest.pages.length ? Math.max(...manifest.pages.map((p) => p.h || 0)) : 0;
+	if (superseded()) return { ok: false, error: 'superseded', ms, superseded: true };
+	publishView(outAbs);
 	return {
 		ok: true,
 		ms,

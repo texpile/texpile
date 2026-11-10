@@ -21,7 +21,6 @@ import { CIRCUIT_PARTS } from './source/circuits/circuitParts';
 import { attachConnectorEnd, readConnector, writeConnector } from './source/connectors';
 import { arcRadii, arcStretchEdits, mirroredBendEdits } from './source/arcs';
 import { addDimension, readDimension, relabelDimension } from './source/dimensions/dimensionStatements';
-import { upgradeDimensions } from './source/dimensions/dimensionUpgrade';
 import { trimmable, writeTrimmed } from './source/trim/trimShapes';
 import { movePoint, pathPoints, radii, stretchPoints } from './source/coordinates';
 import { readFrame, writeFrame } from './source/frame';
@@ -176,7 +175,6 @@ export const tikzLanguage: FigureLanguage = {
 	appendStatements: appendPastedStatements,
 	isStatements: (text) => /;/.test(text),
 	addDimension,
-	upToDate: upgradeDimensions,
 	readDimension: (source, picture, st) => readDimension(source, picture as Picture, st as Statement),
 	relabelDimension,
 	trimmable: (source, st) => trimmable(source, st as Statement),

@@ -1,5 +1,4 @@
-// The click that brought a parked group into focus fell on an editor that took no typing yet; it
-// lands now, where it was made
+// The click that brought a parked group into focus lands where it was made, in the editor that now takes typing
 import { TextSelection } from 'prosemirror-state';
 import { editorViewStore, sourceCmView } from '$lib/stores/editorStore';
 

@@ -5,7 +5,9 @@
 // electron-updater with ajv and js-yaml. None of it is reachable until there is a UI to reach it
 // from, so it loads in the idle gap between creating the window and Chromium asking for the first
 // asset.
+import { ipcMain } from 'electron';
 import { readSettings } from '../appSettings';
+import { DEFERRED_STEP_CHANNELS, type DeferredStep } from './deferredChannels';
 
 type Terminal = typeof import('./terminalIpc.js');
 type McpServer = typeof import('../mcp/server.js');
@@ -23,41 +25,61 @@ export function registerDeferredIpc(): Promise<void> {
 	return (started ??= load());
 }
 
+/** a window that asked for a handler before it existed waits for the last step registering its channel, which also
+ *  starts the load */
+export function registerDeferredReadyIpc(): void {
+	ipcMain.handle('deferred:ready', async (_e, channel: string) => {
+		void registerDeferredIpc();
+		const last = steps.findLastIndex(([name]) => DEFERRED_STEP_CHANNELS[name].some((c) => channel.startsWith(c)));
+		await (last < 0 ? registerDeferredIpc() : loaded[last].promise);
+	});
+}
+
 // cheapest and most likely to be wanted first; the MCP server last, as nothing in the UI waits on it.
 // Templates lead: an empty folder opens on the starter picker, which lists the saved ones at once.
-const steps: Array<() => Promise<void>> = [
-	async () => (await import('./templatesIpc.js')).registerTemplatesIpc(),
-	async () => (await import('./snippetsIpc.js')).registerSnippetsIpc(),
-	async () => (await import('./gitIpc.js')).registerGitIpc(),
-	async () => (await import('./localHistoryIpc.js')).registerLocalHistoryIpc(),
-	async () => (await import('./pdfSaveIpc.js')).registerPdfSaveIpc(),
-	async () => (await import('./exportTargetIpc.js')).registerExportTargetIpc(),
-	async () => (await import('./typstIpc.js')).registerTypstIpc(),
-	async () => (await import('./toolchain/toolchainIpc.js')).registerToolchainIpc(),
-	async () => (await import('./toolchain/tinymistIpc.js')).registerTinymistIpc(),
-	async () => (await import('./toolchain/texliveIpc.js')).registerTexLiveIpc(),
-	async () => (await import('./typstPreviewIpc.js')).registerTypstPreviewIpc(),
-	async () => (await import('../zotero.js')).registerZotero(),
-	async () => (await import('./doiIpc.js')).registerDoiIpc(),
-	async () => (await import('./agentIpc.js')).registerAgentIpc(),
-	async () => {
-		acpIpc = await import('../ai/acp/acpIpc.js');
-		acpIpc.registerAcpIpc();
-	},
-	async () => {
-		terminal = await import('./terminalIpc.js');
-		terminal.registerTerminalIpc();
-	},
-	async () => (await import('./updatesIpc.js')).registerUpdatesIpc(),
-	async () => {
-		const mcpIpc = await import('./mcpIpc.js');
-		mcpIpc.registerMcpIpc();
-		mcpServer = await import('../mcp/server.js');
-		// A client is configured once and expects us to be listening; making this a per-launch button
-		// would surface the failure as a connection error inside the client, not here. So once granted,
-		// it starts with the app. A failure to bind must not stop the editor from opening.
-		if (readSettings().mcpEnabled) mcpServer.start(mcpIpc.mcpHost()).catch((e: unknown) => console.error('mcp: failed to start', e));
-	}
+const steps: Array<[DeferredStep, () => Promise<void>]> = [
+	['templates', async () => (await import('./templatesIpc.js')).registerTemplatesIpc()],
+	['snippets', async () => (await import('./snippetsIpc.js')).registerSnippetsIpc()],
+	['fonts', async () => (await import('./fontsIpc.js')).registerFontsIpc()],
+	['git', async () => (await import('./gitIpc.js')).registerGitIpc()],
+	['localHistory', async () => (await import('./localHistoryIpc.js')).registerLocalHistoryIpc()],
+	['pdfSave', async () => (await import('./pdfSaveIpc.js')).registerPdfSaveIpc()],
+	['exportTarget', async () => (await import('./exportTargetIpc.js')).registerExportTargetIpc()],
+	['typst', async () => (await import('./typstIpc.js')).registerTypstIpc()],
+	['toolchain', async () => (await import('./toolchain/toolchainIpc.js')).registerToolchainIpc()],
+	['tinymist', async () => (await import('./toolchain/tinymistIpc.js')).registerTinymistIpc()],
+	['texLive', async () => (await import('./toolchain/texliveIpc.js')).registerTexLiveIpc()],
+	['typstPreview', async () => (await import('./typstPreviewIpc.js')).registerTypstPreviewIpc()],
+	['zotero', async () => (await import('../zotero.js')).registerZotero()],
+	['doi', async () => (await import('./doiIpc.js')).registerDoiIpc()],
+	['agent', async () => (await import('./agentIpc.js')).registerAgentIpc()],
+	[
+		'acp',
+		async () => {
+			acpIpc = await import('../ai/acp/acpIpc.js');
+			acpIpc.registerAcpIpc();
+		}
+	],
+	[
+		'terminal',
+		async () => {
+			terminal = await import('./terminalIpc.js');
+			terminal.registerTerminalIpc();
+		}
+	],
+	['updates', async () => (await import('./updatesIpc.js')).registerUpdatesIpc()],
+	[
+		'mcp',
+		async () => {
+			const mcpIpc = await import('./mcpIpc.js');
+			mcpIpc.registerMcpIpc();
+			mcpServer = await import('../mcp/server.js');
+			// A client is configured once and expects us to be listening; making this a per-launch button
+			// would surface the failure as a connection error inside the client, not here. So once granted,
+			// it starts with the app. A failure to bind must not stop the editor from opening.
+			if (readSettings().mcpEnabled) mcpServer.start(mcpIpc.mcpHost()).catch((e: unknown) => console.error('mcp: failed to start', e));
+		}
+	]
 ];
 
 // Long enough that the thread is idle for most of it. The renderer spends this stretch scanning the
@@ -65,9 +87,12 @@ const steps: Array<() => Promise<void>> = [
 // answer; loading back to back cost the opening document 34ms.
 const STEP_GAP_MS = 25;
 
+const loaded = steps.map(() => Promise.withResolvers<void>());
+
 async function load(): Promise<void> {
-	for (const step of steps) {
+	for (const [i, [, step]] of steps.entries()) {
 		await step();
+		loaded[i].resolve();
 		await new Promise<void>((r) => setTimeout(r, STEP_GAP_MS));
 	}
 }

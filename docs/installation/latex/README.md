@@ -8,16 +8,20 @@ order: 1
 
 # LaTeX
 
-Texpile recommends using TeX Live and MacTeX. However, other distros such as MiKTeX will work fine.
+## From Texpile (recommended)
 
-## From Texpile
+1. Open any folder with a .tex file.
+2. Open the .tex file and click **Compile**.
+3. Click **Install TeX Live** in the **Set Up LaTeX** dialog.
 
-Open **File › Preferences… › Compiler**, open the **LaTeX** picker and click **Install TeX Live 2026 from Texpile**. A compile or live preview that finds no TeX offers the same install. See [Install TeX Live](../../build-and-preview/toolchain.md#install-tex-live).
+![The Set Up LaTeX dialog saying latexmk is not found, with Close and Install TeX Live](../../../landing/src/lib/assets/showcase/docs/app/set-up-latex-install.png)
+
+You can also find it in **File › Preferences… › Compiler**. Click **Install TeX Live** in the **LaTeX** row.
+
+For the download size and where the install goes, see [Install TeX Live](../../build-and-preview/toolchain.md#install-tex-live).
+
+> This is not a full TeX distribution. Texpile will install a ~300 MB distribution and leave the rest of the packages to be installed on demand (requires an internet connection).
 
 ## Install a TeX distribution yourself
 
-Install a full TeX distribution to compile LaTeX:
-
-- [Windows](windows.md): TeX Live or MiKTeX.
-- [macOS](macos.md): MacTeX, or BasicTeX for a smaller install.
-- [Linux](linux.md): TeX Live from apt, or from upstream.
+On [Windows](windows.md), [macOS](macos.md), or [Linux](linux.md).

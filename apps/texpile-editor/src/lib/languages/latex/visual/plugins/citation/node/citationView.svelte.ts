@@ -1,4 +1,4 @@
-import { chipHost, quietTemplateSpaces } from '$lib/languages/latex/visual/core';
+import { chipHost, offerPopover, quietTemplateSpaces } from '$lib/languages/latex/visual/core';
 import type { EditorView, NodeView } from 'prosemirror-view';
 import type { Node as PMNode } from 'prosemirror-model';
 import { mount, unmount } from 'svelte';
@@ -15,7 +15,7 @@ type CitationDisplayProps = {
 
 export class CitationView implements NodeView {
 	dom: HTMLElement;
-	private svelteComponent: ReturnType<typeof mount>;
+	private svelteComponent: { open(): void };
 	// all props in one $state object: svelte 5 only tracks node changes when it lives
 	// in the same reactive object as the static props. cast: always assigned in the constructor
 	private componentProps = $state<CitationDisplayProps>() as CitationDisplayProps;
@@ -47,6 +47,7 @@ export class CitationView implements NodeView {
 			props: this.componentProps
 		});
 		quietTemplateSpaces(this.dom);
+		offerPopover(node, () => this.svelteComponent.open());
 	}
 
 	forwardUpdate(newAttrs: { prenote?: string; postnote?: string; variant?: string }) {
@@ -89,6 +90,7 @@ export class CitationView implements NodeView {
 	update(node: PMNode) {
 		if (node.type !== this.node.type) return false;
 		this.node = node;
+		offerPopover(node, () => this.svelteComponent.open());
 
 		// don't re-render while a UI-driven update is in flight
 		if (this.updating) return true;

@@ -70,6 +70,7 @@
 	import type { SpellLanguage } from '$lib/editor/spellcheck/languages/spellLanguages';
 	import { createBoundaryClickPlugin } from '$lib/editor/visual/extensions/boundary-click-plugin';
 	import { wordSelectionTrim } from '$lib/editor/visual/extensions/wordSelectionTrim';
+	import { unfocusedPressCaret } from '$lib/editor/visual/extensions/unfocusedPress';
 	import { dragSelectionPlugin } from '$lib/editor/visual/extensions/dragSelection/dragSelectionPlugin';
 	import { createBlockHandlePlugin } from '$lib/editor/visual/extensions/block-handle-plugin.svelte';
 	import { wholeBlockDragPlugin } from '$lib/editor/visual/extensions/wholeBlockDrag';
@@ -266,6 +267,7 @@
 			spellProblemKeymap,
 			createBoundaryClickPlugin(),
 			wordSelectionTrim(),
+			unfocusedPressCaret(),
 			dragSelectionPlugin(),
 			// the Notion-style + / drag / delete gutter, with the markdown insert set
 			createBlockHandlePlugin({ items: markdownInsertItems }),

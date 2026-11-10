@@ -22,7 +22,3 @@ Write LaTeX in the visual editor or as source, and compile it to a PDF.
 ## The main file
 
 The main file is the one with `\documentclass` and `\begin{document}`. In a folder with several `.tex` files, Texpile asks once which one it is. To change it, right-click a file and choose **Set as Main File**.
-
-## Folders Texpile adds
-
-The PDF and the build files go in an `output` folder. Your comments and compile settings are in `.texpile`: keep it with the project.

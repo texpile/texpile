@@ -55,6 +55,7 @@ function installBridge(): void {
 			deliver = cb;
 		},
 		onExit() {},
+		onTinymistFinished: () => () => {},
 		stopLsp() {}
 	};
 	(window as unknown as { texpileTypst: unknown }).texpileTypst = bridge;

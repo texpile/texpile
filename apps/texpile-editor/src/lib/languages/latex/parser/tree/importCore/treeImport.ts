@@ -10,6 +10,7 @@ export type TreeImport = {
 	readings: ImportReadings;
 	options: ConversionOptions;
 	lists: string[];
+	listKeys: Map<string, number>;
 	delimited: Map<string, string>;
 	core: LatexImportCore;
 };

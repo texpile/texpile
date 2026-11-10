@@ -41,7 +41,7 @@ test('a macro in a formula opens as its LaTeX, and an edit rewrites that call on
 	await expect(source).toHaveText('\\den\\phi');
 	await expect(source).toBeFocused();
 	await expect(panel).toContainText('|#1\\rangle\\langle#1|');
-	await v.page.keyboard.press('Control+a');
+	await v.page.keyboard.press('ControlOrMeta+a');
 	await v.page.keyboard.insertText('\\den{x}');
 	await expect.poll(() => formula(v)).toBe(before.replace('\\den\\phi', '\\den{x}'));
 	// back in the formula on the call it edited, as Escape leaves a text chip

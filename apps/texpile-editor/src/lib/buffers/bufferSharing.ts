@@ -108,10 +108,28 @@ export class BufferSharing {
 		for (const [rel, entry] of manifest.entries()) {
 			if (seen.has(rel) || entry.gone) continue;
 			if (b.has(rel) && (b.hasPending(rel) || b.isDirty(rel))) continue;
-			if (b.has(rel)) b.drop(rel);
-			else manifest.set(rel, { ...entry, gone: true });
+			if (b.has(rel)) {
+				// the disk sync would have closed its tabs, but it no longer finds the file once dropped
+				b.hooks.deleted?.(b.abs(rel));
+				b.drop(rel);
+			} else manifest.set(rel, { ...entry, gone: true });
 		}
 		return manifestSignature(manifest) !== sigBefore;
+	}
+
+	/** the buffers moved the files they hold; the rest of what moved goes to guests as a move too */
+	moveListed(fromRel: string, toRel: string): void {
+		function moved(rel: string): string | null {
+			return rel === fromRel || rel.startsWith(fromRel + '/') ? toRel + rel.slice(fromRel.length) : null;
+		}
+		const manifest = manifestOf(this.buffers.shared);
+		for (const [rel, entry] of [...manifest.entries()]) {
+			const next = moved(rel);
+			if (!next || entry.gone) continue;
+			manifest.set(next, entry);
+			manifest.set(rel, { ...entry, gone: true, movedTo: next });
+		}
+		this.listed = new Set([...this.listed].map((rel) => moved(rel) ?? rel));
 	}
 
 	/** whether this host shares the file at rel */

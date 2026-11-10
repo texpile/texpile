@@ -28,6 +28,7 @@ import { blankComments, codeOnly } from '$lib/languages/latex/texCode';
 import { documentWrapperOf } from '$lib/languages/latex/syntax/documentWrapper';
 import { packageUsesIn, type PackageUse } from '$lib/languages/latex/intellisense/packages/packageUses';
 import { isBundled } from '$lib/languages/latex/knowledge/bundledFiles';
+import { kernelDefines } from '$lib/languages/latex/knowledge/commands/kernelCommands';
 import type { LoadedFile } from '$lib/languages/latex/knowledge/loadedFiles';
 import { loadedPackages } from '$lib/languages/latex/intellisense/packages/loadedPackages';
 import { fileIdOf } from '$lib/languages/latex/knowledge/fileIds';
@@ -65,7 +66,8 @@ function lineIn(lineStarts: number[], pos: number): number {
 	return lo + 1;
 }
 
-// a package file leaves out its internals, the names with an @
+// a package file leaves out its internals, the names with an @, and what it redefines of the kernel's (ieeeconf's
+// conference \thanks only warns in the log): those draw and complete as the kernel's
 function scanDefinitions(
 	code: string,
 	file: string,
@@ -77,10 +79,12 @@ function scanDefinitions(
 	function lineOf(pos: number): number {
 		return lineIn(lineStarts, pos);
 	}
+	function packageOwn(name: string): boolean {
+		return !packageFile || (!name.includes('@') && !kernelDefines(`\\${name}`));
+	}
 	const firstMacro = draft.macros.length;
 	for (const d of definedIn(code, 'macro'))
-		if (!packageFile || !d.name.includes('@'))
-			draft.macros.push({ name: d.name, signature: signatureOf(d.args), file, line: lineOf(d.at) });
+		if (packageOwn(d.name)) draft.macros.push({ name: d.name, signature: signatureOf(d.args), file, line: lineOf(d.at) });
 	// replacement bodies for this file's macros, so math previews can expand them cross-file
 	const bodies = scanMacroBodies(code, text);
 	for (let i = firstMacro; i < draft.macros.length; i++) {
@@ -94,7 +98,7 @@ function scanDefinitions(
 	const named = new Set(draft.macros.slice(firstMacro).map((m) => m.name));
 	for (const d of primitiveDefsIn(code)) {
 		const body = bodies[d.name];
-		if (!body || named.has(d.name) || (packageFile && d.name.includes('@'))) continue;
+		if (!body || named.has(d.name) || !packageOwn(d.name)) continue;
 		named.add(d.name);
 		draft.macros.push({
 			name: d.name,

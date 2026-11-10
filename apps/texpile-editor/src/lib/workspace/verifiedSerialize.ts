@@ -4,7 +4,8 @@
 // lies in a block that was written from the document, since every other block is the file's own
 // bytes, or in one whose bytes read otherwise now that the edit took out what they referred to
 // (a link's definition): those blocks are written out whole instead of patched inside, then their
-// neighbours with them, and the file checked again. What still reads as it did is never regenerated.
+// neighbours with them, and the file checked again. What still reads as it did is never regenerated,
+// and a rewrite that reads back as the file before it did is dropped, since it fixed nothing.
 import { Fragment, type Node as PMNode } from 'prosemirror-model';
 import { type SourceMap } from '$lib/editor/visual/sourceSpans';
 import { forgetBlock, originsOf } from '$lib/editor/visual/parseOrigins';
@@ -15,7 +16,7 @@ export type Serialized = { text: string; map: SourceMap };
 
 export type Verified = Serialized & {
 	/** how far the fallback went: 0 the file as first written, 1 the changed blocks written whole,
-	 *  2 their neighbours too, 3 still not agreeing, saved as rung 2 wrote it */
+	 *  2 their neighbours too, 3 still not agreeing, saved as the last rewrite that changed the reading wrote it */
 	rung: 0 | 1 | 2 | 3;
 	/** how many top-level blocks were written whole */
 	rewritten: number;
@@ -63,9 +64,9 @@ function withAfresh(doc: PMNode, indices: number[]): { doc: PMNode; afresh: Set<
 const UNPARSED = Symbol('unparsed');
 
 export async function verifiedSerialize(o: VerifyOptions): Promise<Verified> {
-	async function differs(out: Serialized): Promise<string | null | typeof UNPARSED> {
+	async function readBack(out: Serialized): Promise<PMNode | typeof UNPARSED> {
 		const again = await o.reparse(out.text);
-		return again ? reopenDifference(o.doc, padTables(again), o.format) : UNPARSED;
+		return again ? padTables(again) : UNPARSED;
 	}
 	const reread = await o.reparse(o.first.text);
 	if (!reread) return { ...o.first, rung: 0, rewritten: 0, difference: null, checked: false };
@@ -80,16 +81,21 @@ export async function verifiedSerialize(o: VerifyOptions): Promise<Verified> {
 		return o.serialize(doc, afresh);
 	}
 	const first = attempt(changed);
-	const d1 = await differs(first);
-	if (d1 === UNPARSED) return { ...first, rung: 1, rewritten: changed.length, difference: null, checked: false };
+	const read1 = await readBack(first);
+	if (read1 === UNPARSED) return { ...first, rung: 1, rewritten: changed.length, difference: null, checked: false };
+	const d1 = reopenDifference(o.doc, read1, o.format);
 	if (!d1) return { ...first, rung: 1, rewritten: changed.length, difference: null, checked: true };
+	// no writing gives what the editor holds (a \cite chip the file reads as a citation): neighbours are not the cause
+	if (!reopenDifference(again, read1, o.format)) return { ...o.first, rung: 3, rewritten: 0, difference: d0, checked: true };
 	const wider = new Set<number>();
 	for (const i of changed) for (const k of [i - 1, i, i + 1]) if (k >= 0 && k < o.doc.childCount) wider.add(k);
 	const widened = [...wider].sort((a, b) => a - b);
 	if (widened.length === changed.length) return { ...first, rung: 3, rewritten: changed.length, difference: d1, checked: true };
 	const second = attempt(widened);
-	const d2 = await differs(second);
-	if (d2 === UNPARSED) return { ...second, rung: 2, rewritten: widened.length, difference: null, checked: false };
+	const read2 = await readBack(second);
+	if (read2 === UNPARSED) return { ...second, rung: 2, rewritten: widened.length, difference: null, checked: false };
+	const d2 = reopenDifference(o.doc, read2, o.format);
 	if (!d2) return { ...second, rung: 2, rewritten: widened.length, difference: null, checked: true };
+	if (!reopenDifference(read1, read2, o.format)) return { ...first, rung: 3, rewritten: changed.length, difference: d1, checked: true };
 	return { ...second, rung: 3, rewritten: widened.length, difference: d2, checked: true };
 }

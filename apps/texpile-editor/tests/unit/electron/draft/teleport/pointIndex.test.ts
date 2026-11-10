@@ -51,7 +51,7 @@ it('never lists a point at the start as a stop', () => {
 it('moves the points past the stop by the lines the edit added', () => {
 	const ix = index([point('a', [['main.tex', 5]]), point('b', [['main.tex', 12]]), point('c', [['main.tex', 40]])]);
 	const plan = ix.planFor('main.tex', { from: 8, oldTo: 8, newTo: 10 })!;
-	ix.merge(plan, 'main.tex', { from: 8, oldTo: 8, newTo: 10 }, [point('n', [['main.tex', 11]])], 'c');
+	ix.merge(plan, 'main.tex', { from: 8, oldTo: 8, newTo: 10 }, [{ after: 8, by: 2 }], [point('n', [['main.tex', 11]])], 'c');
 	expect(ix.entries.map((e) => ('point' in e ? `${e.point.rec}@${e.point.stack[0][1]}` : 'enter'))).toEqual(['a@5', 'n@11', 'c@42']);
 });
 
@@ -60,4 +60,30 @@ it('keeps the folder that holds the image list', () => {
 	const ix = index([point('_draft/pserved/tele/r-00001.lua', [['main.tex', 9]])]);
 	ix.imageList = '_draft/pcompile/tele/images.lua';
 	expect(ix.folders().has('pcompile')).toBe(true);
+});
+
+// an agent took back the first hunk of a write: the cut run had shipped its page, and the next run started below it
+it('starts before and stops past the pages a cut run left', () => {
+	const at = (rec: string, line: number, shipped: number): IndexEntry => ({
+		point: { rec, stack: [['main.tex', line]], shipped, open: false }
+	});
+	const ix = index([at('p1', 5, 0), at('p2', 10, 1), at('p3', 20, 2), at('p4', 30, 3)]);
+	const plan = ix.planFor('main.tex', { from: 15, oldTo: 15, newTo: 15 }, { from: 1, to: 4 })!;
+	expect(recs(plan.chain)).toEqual(['p1']);
+	expect(recs(plan.stops)).toEqual(['p4']);
+});
+
+// a cut run's points went in ahead of the old entry into the file they sit in, and an edit above them found the file
+// never entered: 'outside', and the preview kept the old page
+it('keeps the file a cut run entered readable', () => {
+	const intro = (rec: string, line: number) =>
+		point(rec, [
+			['main.tex', 5],
+			['intro.tex', line]
+		]);
+	const ix = index([point('m3', [['main.tex', 3]]), point('m5', [['main.tex', 5]], true), { enter: 'intro.tex' }, intro('i30', 30)]);
+	const edit = { from: 20, oldTo: 20, newTo: 20 };
+	ix.keepBefore(ix.planFor('intro.tex', edit)!, 'intro.tex', edit, [{ enter: 'intro.tex' }, intro('i18', 18), intro('i25', 25)]);
+	const above = ix.planFor('intro.tex', { from: 4, oldTo: 4, newTo: 4 });
+	expect(above && recs(above.stops)).toEqual(['i18', 'i30']);
 });

@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { m } from '$lib/paraglide/messages';
-	import { HERO_SETS, type HeroFormat } from './heroScenes';
+	import { HERO_TAKES, type HeroFormat } from './heroScenes';
 
 	type HeroFormatSwitchProps = { formats: HeroFormat[]; current: HeroFormat; onpick: (format: HeroFormat) => void };
 	const props: HeroFormatSwitchProps = $props();
@@ -18,7 +18,7 @@
 				? 'bg-white/15 text-white'
 				: 'text-surface-400 hover:text-white'}"
 		>
-			{HERO_SETS[format].label}
+			{HERO_TAKES[format].label}
 		</button>
 	{/each}
 </div>

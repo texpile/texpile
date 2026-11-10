@@ -178,6 +178,11 @@ export class FileService {
 		this.ran(from, 'move', to);
 	}
 
+	/** a session's host moved the file; this window follows it as a move of its own */
+	reportMove(from: string, to: string): void {
+		this.ran(from, 'move', to);
+	}
+
 	async copy(from: string, to: string): Promise<void> {
 		await this.providerFor(to).copy(from, to);
 		this.ran(to, 'copy');

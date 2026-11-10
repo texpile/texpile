@@ -24,6 +24,14 @@ describe('paintRange', () => {
 		expect(painted).toEqual(['pm-range pm-range-text', 'pm-range pm-range-node']);
 	});
 
+	it("shades a citation in a peer's selection, which the browser paints only in our own", () => {
+		const cite = schema.nodes.citation.create({ variant: 'cite' }, schema.text('fourier1822'));
+		const cited = doc(para(schema.text('bulk material '), cite, schema.text('. Earlier')));
+		const range = { from: 1, to: cited.content.size, tint: 'red', key: 'k', reach: 'line' as const };
+		expect(classesOf(cited, range)).toEqual(['pm-range pm-range-text', 'pm-range pm-range-node']);
+		expect(classesOf(cited, { ...range, nativeText: true })).toEqual([]);
+	});
+
 	it('hugs the words when the range is a thread rather than a selection', () => {
 		const painted = classesOf(passage, { from: 1, to: passage.content.size, tint: 'red', key: 'k', reach: 'text', class: 'pm-comment' });
 		expect(painted).toEqual(['pm-range pm-comment', 'pm-range pm-range-node pm-comment']);

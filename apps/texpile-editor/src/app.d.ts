@@ -112,7 +112,7 @@ declare global {
 	type PackageInstallResult =
 		{ ok: true; package: string } | { ok: false; reason: 'offline' | 'unknown' | 'failed' | 'not-managed'; detail: string };
 
-	/** Texpile's own TeX Live (absent from an older main process) */
+	/** Texpile's own TeX Live */
 	type TexpileTexLiveBridge = {
 		status(): Promise<ManagedTexLiveStatus>;
 		/** download, check and install the pinned build; joins an install already under way */
@@ -132,16 +132,16 @@ declare global {
 	type TexpileTypstBridge = {
 		/** Locate tinymist; null when it isn't installed. */
 		resolve(): Promise<TinymistInfo | null>;
-		/** Texpile's own copy of tinymist (absent from an older main process). */
-		tinymistStatus?(): Promise<ManagedTinymistStatus>;
+		/** Texpile's own copy of tinymist. */
+		tinymistStatus(): Promise<ManagedTinymistStatus>;
 		/** Download, check and install the pinned tinymist; joins an install already under way. */
-		installTinymist?(): Promise<TinymistInstallResult>;
-		cancelTinymistInstall?(): void;
-		removeTinymist?(): Promise<TinymistInstallResult>;
+		installTinymist(): Promise<TinymistInstallResult>;
+		cancelTinymistInstall(): void;
+		removeTinymist(): Promise<TinymistInstallResult>;
 		/** An install's progress, whichever window started it; returns an unsubscribe fn. */
-		onTinymistProgress?(cb: (step: InstallStep) => void): () => void;
+		onTinymistProgress(cb: (step: InstallStep) => void): () => void;
 		/** An install or removal ended, in any window; returns an unsubscribe fn. */
-		onTinymistFinished?(cb: (result: TinymistInstallResult) => void): () => void;
+		onTinymistFinished(cb: (result: TinymistInstallResult) => void): () => void;
 		/** Probe every external program the app shells out to. */
 		probeToolchain(): Promise<ToolProbe[]>;
 		/** each result as it lands, ahead of probeToolchain resolving; returns an unsubscribe fn */

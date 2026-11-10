@@ -6,14 +6,41 @@ return function(T)
 	local CODES = 1023
 	local PREFIX = "texpiletele@"
 
-	local PARAM_CMDS = { assign_int = "i", assign_dimen = "d", assign_glue = "g", assign_mu_glue = "m", assign_toks = "t" }
+	-- "s": \parshape and the penalty arrays, held as the text that sets them again
+	local PARAM_CMDS = { assign_int = "i", assign_dimen = "d", assign_glue = "g", assign_mu_glue = "m", assign_toks = "t",
+		set_tex_shape = "s", set_etex_shape = "s" }
 	local params = {}
 	for _, p in ipairs(tex.primitives()) do
 		local tk = token.create(p)
 		if tk and PARAM_CMDS[tk.cmdname] and tk.csname == p then params[#params + 1] = { p, PARAM_CMDS[tk.cmdname] } end
 	end
 	table.sort(params, function(a, b) return a[1] < b[1] end)
+	-- tex.get miscounts the penalty arrays: TeX reads each entry itself
+	local function read_internal(scan, cs, i)
+		local tks = { token.create(cs) }
+		if i then
+			for d in tostring(i):gmatch("%d") do tks[#tks + 1] = token.new(d:byte(), 12) end
+			tks[#tks + 1] = token.new(32, 10)
+		end
+		token.put_next(tks)
+		return scan()
+	end
+	local function shape_value(p)
+		local n = read_internal(token.scan_int, p, p ~= "parshape" and 0 or nil)
+		local out = { n }
+		for i = 1, n do
+			if p == "parshape" then
+				out[#out + 1] = read_internal(token.scan_dimen, "parshapeindent", i) .. "sp"
+				out[#out + 1] = read_internal(token.scan_dimen, "parshapelength", i) .. "sp"
+			else out[#out + 1] = read_internal(token.scan_int, p, i) end
+		end
+		return table.concat(out, " ")
+	end
 	local function param_value(p, k)
+		if k == "s" then
+			local ok, v = pcall(shape_value, p)
+			return ok and v or nil
+		end
 		if k == "g" or k == "m" then
 			local ok, w, st, sh, sto, sho = pcall(k == "m" and tex.getmuglue or tex.getglue, p)
 			if not ok then return nil end
@@ -32,7 +59,33 @@ return function(T)
 		return v
 	end
 
+	-- each primitive under a name of its own: a document can redefine \over and later \let it back
+	local PRIM = PREFIX .. "prim@"
+	tex.enableprimitives(PRIM, tex.primitives())
+	local prim_tokens = {}
+	function T.prim_token(p)
+		local tk = prim_tokens[p]
+		if tk == nil then
+			tk = token.create(PRIM .. p)
+			if not (tk and tk.csname == PRIM .. p) then tk = false end
+			prim_tokens[p] = tk
+		end
+		return tk or nil
+	end
+
 	function T.meaning_hash(name) return md5.sumhexa(token.get_meaning(name) or "") end
+
+	-- every font NFSS selected since the base goes in the record: the apply selects it again, so the font hooks set up a
+	-- font loaded before the base that they first met after it (microtype's expansion and protrusion of footnote sizes)
+	T.selected = {}
+	local NFSS_PARTS = { "f@encoding", "f@family", "f@series", "f@shape", "f@size" }
+	function texpile_tele_selected()
+		if not T.base then return end
+		local parts = {}
+		for i, m in ipairs(NFSS_PARTS) do parts[i] = token.get_macro(m) or "" end
+		T.selected[table.concat(parts, "/")] = true
+	end
+	tex.sprint("\\AddToHook{selectfont}{\\directlua{texpile_tele_selected()}}")
 
 	-- token objects read eqtb live, so the hash is walked again only when it grew
 	local name_cache, name_count, name_seen, name_entry = {}, -1, {}, {}
@@ -42,9 +95,9 @@ return function(T)
 			local nm = type(k) == "string" and k or v
 			if not name_seen[nm] then
 				name_seen[nm] = true
-				if type(nm) == "string" and #nm > 1 and nm:sub(1, #PREFIX) ~= PREFIX then
+				if type(nm) == "string" and nm ~= "" and nm:sub(1, #PREFIX) ~= PREFIX then
 					local tk = token.create(nm)
-					if tk and tk.csname == nm then
+					if T.names(tk, nm) then
 					local e = { nm, tk }
 					name_cache[#name_cache + 1] = e
 					name_entry[nm] = e
@@ -132,6 +185,14 @@ return function(T)
 		return s
 	end
 
+	-- Lua takes math classes 0 to 7 only, and class 8 is "8000, a character active in math (the kernel's ')
+	function T.set_mathcode(c, m)
+		if m[1] == 8 then
+			tex.sprint({ token.create("global"), token.create("mathcode") })
+			tex.sprint(c .. "=32768\\relax")
+		else tex.setmathcode("global", c, m) end
+	end
+
 	-- a \countdef'd name means its register's place in eqtb: the kernel's \count@ (255) and friends give the bases
 	local REG_DEF = { assign_int = "countdef", assign_dimen = "dimendef", assign_glue = "skipdef", assign_toks = "toksdef" }
 	local REG_BASE = {
@@ -156,6 +217,7 @@ return function(T)
 	end
 
 	function T.take_base()
+		T.selected = {}
 		refresh_names()
 		-- a token list freed by a redefinition can come back at the same address for a later one, which would read
 		-- as the base's: an alias holds every base macro, so its address stays taken. The alias of any other meaning
@@ -232,7 +294,7 @@ return function(T)
 				else
 					local ch = rest:match("^[%z\1-\127\194-\244][\128-\191]*")
 					if not ch then return nil end
-					items[#items + 1] = { 1, ch }
+					items[#items + 1] = ch
 					i = i + 1 + #ch
 					if ch:match("^%a$") and rest:sub(#ch + 1, #ch + 1) == " " then i = i + 1 end
 				end
@@ -240,7 +302,9 @@ return function(T)
 				local ch = ptxt:match("^[%z\1-\127\194-\244][\128-\191]*", i)
 				-- a meaning shows no catcodes: a letter here is 11 when written and 12 out of \tl_to_str
 				if ch:match("^%a$") then return nil, true end
-				items[#items + 1] = { ch == " " and 10 or 12, utf8.codepoint(ch) }
+				-- a brace ending the parameter text is TeX's #{
+				if ch == "{" and i + #ch > #ptxt then items[#items + 1] = { -2 }
+				else items[#items + 1] = { ch == " " and 10 or 12, utf8.codepoint(ch) } end
 				i = i + #ch
 			end
 		end
@@ -332,8 +396,8 @@ return function(T)
 			else
 				local alias
 				for _, p in ipairs(tex.primitives()) do
-					local pt = token.create(p)
-					if pt and pt.command == tk.command and pt.mode == tk.mode and pt.csname == p then
+					local pt = T.prim_token(p)
+					if pt and pt.command == tk.command and pt.mode == tk.mode then
 						alias = p
 						break
 					end
@@ -341,6 +405,18 @@ return function(T)
 				if alias then rec.names[#rec.names + 1] = { n = nm, let = alias }
 				else rec.unsupported[#rec.unsupported + 1] = nm .. " (" .. cmd .. ")" end
 			end
+		end
+		local listed_nfss = {}
+		for _, nm in ipairs(rec.nfss) do listed_nfss[nm] = true end
+		local sel = {}
+		for nm in pairs(T.selected) do
+			local tk = not listed_nfss[nm] and token.create(nm)
+			if tk and tk.cmdname == "set_font" then sel[#sel + 1] = nm end
+		end
+		table.sort(sel)
+		for _, nm in ipairs(sel) do
+			rec.nfss[#rec.nfss + 1] = nm
+			rec.nfss_font[nm] = T.fontref(token.create(nm).mode)
 		end
 		if #refuse > 0 then rec.refuse = table.concat(refuse, "; ") end
 		tp = lap("names", tp)
@@ -353,6 +429,7 @@ return function(T)
 					rec.tparams[#rec.tparams + 1] = tp
 					grabs[#grabs + 1] = { kind = "tparam", into = tp }
 				elseif k == "g" or k == "m" then rec.params[#rec.params + 1] = { p = p, k = k, v = glue_of(v) }
+				elseif k == "s" then rec.params[#rec.params + 1] = { p = p, k = k, v = v }
 				else rec.params[#rec.params + 1] = { p = p, k = k, v = tonumber(v) } end
 			end
 		end
@@ -467,7 +544,7 @@ return function(T)
 			if pm then out[#out + 1] = { -1, pm }
 			elseif x.active then out[#out + 1] = { 2, x.csname }
 			elseif x.csname then
-				if x.csname == "" or utf8.len(x.csname) == 1 then out[#out + 1] = { 1, x.csname }
+				if x.csname == "" then out[#out + 1] = { 1, x.csname }
 				else out[#out + 1] = x.csname end
 			else out[#out + 1] = { x.command, x.mode } end
 		end
@@ -502,6 +579,12 @@ return function(T)
 	function texpile_tele_got(i)
 		local g = pending.grabs[i]
 		g.into.b = tokens_of(grabbed)
+		local p = g.into.p
+		-- the brace TeX puts back after the body, closed by the grab: the definition puts it back again
+		if g.kind == "macro" and p[#p] and p[#p][1] == -2 then
+			g.into.b[#g.into.b] = nil
+			g.into.b[#g.into.b] = nil
+		end
 		if g.kind == "macro" then captured[g.into.n] = { h = g.into.h, b = g.into.b } end
 	end
 	function texpile_tele_captured()
@@ -520,10 +603,16 @@ return function(T)
 		for gi, g in ipairs(grabs) do
 			if g.kind == "macro" then
 				local seq = { EA, GRAB, EA, LB, token.create(g.into.n) }
-				for _, it in ipairs(g.into.p) do
+				for k, it in ipairs(g.into.p) do
+					local nxt = g.into.p[k + 1]
 					if type(it) == "table" and it[1] == -1 then
-						seq[#seq + 1] = LB
+						-- an argument in braces would end at its own brace before a #{
+						local braced = not (type(nxt) == "table" and nxt[1] == -2)
+						if braced then seq[#seq + 1] = LB end
 						seq[#seq + 1] = token.create(PREFIX .. "p" .. it[2])
+						if braced then seq[#seq + 1] = RB end
+					elseif type(it) == "table" and it[1] == -2 then
+						seq[#seq + 1] = LB
 						seq[#seq + 1] = RB
 					else seq[#seq + 1] = T.token_of(it) end
 				end

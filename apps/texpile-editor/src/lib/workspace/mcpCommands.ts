@@ -379,7 +379,9 @@ export function attachMcpCommands(deps: McpCommandDeps): () => void {
 				deps.openFile(abs);
 				// the tab opens at once and its document later: diffing now compared the file open before
 				return void loadedNow(deps, abs)
-					.then((open) => (open ? viewModePayload(deps, 'diff') : { ok: false, reason: 'the file did not open' }))
+					.then((open) =>
+						open ? viewModePayload(deps, 'diff') : { ok: false, reason: 'the file did not open', viewMode: deps.getViewMode() }
+					)
 					.then(reply);
 			}
 			return void viewModePayload(deps, 'diff').then(reply);

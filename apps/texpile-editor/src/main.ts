@@ -13,6 +13,7 @@ import { followChildWindows, installKeyDispatch } from '$lib/keybindings/keybind
 import { watchUserKeybindings } from '$lib/keybindings/user/userKeybindingsFile';
 import { registerKeybindingCommands } from '$lib/keybindings/keybindingCommands';
 import { watchWindowGlass } from '$lib/chrome/windowGlass.svelte';
+import { watchEditorTextFont } from '$lib/chrome/editorTextFont.svelte';
 import { adoptBootOpen, bootOpen } from '$lib/workspace/openWorkspace';
 import { focusDoctor } from '$lib/debug/focusDoctor';
 import { mark, startupDoctor } from '$lib/debug/startupDoctor';
@@ -57,6 +58,7 @@ if (boot) {
 loadSettings().then(() => {
 	mark('settings');
 	void watchWindowGlass();
+	watchEditorTextFont();
 	mount(App, { target: document.getElementById('app')! });
 	if (!bootOpen()) warmEditor(); // a restored folder opens a file at once; EditorPane warms after it
 });

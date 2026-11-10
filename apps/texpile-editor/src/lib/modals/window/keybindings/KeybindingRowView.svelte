@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { Pencil, Plus } from '@lucide/svelte';
+	import { Lock, Pencil, Plus } from '@lucide/svelte';
 	import Kbd from '$lib/components/Kbd.svelte';
 	import { tip, unavailableTip } from '$lib/components/tooltip.svelte';
 	import { showContextMenu } from '$lib/menus/contextMenu.svelte';
@@ -47,25 +47,31 @@
 	ondblclick={open}
 	onkeydown={(e) => panel.onRowKeydown(e, row, editable)}
 >
-	<span role="cell">
-		{#if !row.builtin}<span use:unavailableTip={why} data-tip-anchor>
-				<button
-					type="button"
-					class="btn-icon btn-icon-xs hover:preset-tonal opacity-0 group-focus-within:opacity-100 group-hover:opacity-100 focus-visible:opacity-100"
-					disabled={!editable}
-					aria-label={item ? m.keybindings_change() : m.keybindings_add()}
-					use:tip={item ? m.keybindings_change() : m.keybindings_add()}
-					onclick={() => panel.define(row)}
-				>
-					{#if item}<Pencil class="size-3.5" />{:else}<Plus class="size-3.5" />{/if}
-				</button>
-			</span>{/if}
-	</span>
 	<span role="cell" class="min-w-0 truncate" use:tip={row.command ? `${row.title} (${row.command})` : row.title}>
 		{row.title}{#if searchMatchesId(row, panel.query)}<span class="text-faint ml-2 font-mono text-xs">{row.command}</span>{/if}
 	</span>
-	<span role="cell" class="flex min-w-0 items-center gap-1 overflow-hidden">
-		{#each keys ?? [] as chord, i (i)}<Kbd cap raw={chordLabel(chord)} />{/each}
+	<span role="cell" class="min-w-0">
+		{#if row.builtin}
+			<span class="flex min-w-0 items-center gap-1 overflow-hidden">
+				{#each keys ?? [] as chord, i (i)}<Kbd cap raw={chordLabel(chord)} />{/each}
+				<span class="text-faint shrink-0" use:tip={m.keybindings_builtin_note()}><Lock class="size-3.5" /></span>
+			</span>
+		{:else}
+			<span class="flex min-w-0" use:unavailableTip={why} data-tip-anchor>
+				<button
+					type="button"
+					class="rounded-base hover:preset-tonal -mx-1 flex min-w-0 items-center gap-1 overflow-hidden px-1 py-0.5 disabled:hover:bg-transparent"
+					disabled={!editable}
+					aria-label={item ? m.keybindings_change() : m.keybindings_add()}
+					onclick={() => panel.define(row)}
+				>
+					{#each keys ?? [] as chord, i (i)}<Kbd cap raw={chordLabel(chord)} />{/each}
+					<span class="shrink-0 opacity-0 group-focus-within:opacity-100 group-hover:opacity-100">
+						{#if item}<Pencil class="size-3.5" />{:else}<Plus class="size-3.5" />{/if}
+					</span>
+				</button>
+			</span>
+		{/if}
 	</span>
 	<span role="cell" class={editingWhen ? 'col-span-2 min-w-0' : 'min-w-0'}>
 		{#if editingWhen && item}

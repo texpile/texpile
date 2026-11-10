@@ -16,6 +16,8 @@ order: 2
 
 ![The bar over a Typst file saying tinymist is not installed, with a Set Up Typst button](../../../landing/src/lib/assets/showcase/docs/app/typst-missing-bar.png)
 
+You can also find it in **File › Preferences… › Compiler**. Click **Install tinymist** in the **Typst** row.
+
 ## Install Typst yourself
 
 On [Windows](windows.md), [macOS](macos.md), or [Linux](linux.md).

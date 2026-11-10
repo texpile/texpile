@@ -170,7 +170,7 @@ function hookExit(): void {
 	});
 	// a server running the copy that changed hears about it as an exit (main stops it); one that
 	// never started for want of tinymist only hears this, and tries again
-	b.onTinymistFinished?.((result) => {
+	b.onTinymistFinished((result) => {
 		if (result.ok) retryUnstartedSession();
 	});
 }

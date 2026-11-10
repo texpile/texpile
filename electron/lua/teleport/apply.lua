@@ -4,8 +4,10 @@ return function(T)
 	local MAXDIMEN = 1073741823
 	local WHATSIT = node.id("whatsit")
 	local COLORSTACK = node.subtype("pdf_colorstack")
-	local GLUE, HLIST, VLIST, RULE = node.id("glue"), node.id("hlist"), node.id("vlist"), node.id("rule")
+	local GLUE, HLIST, VLIST, RULE, INS = node.id("glue"), node.id("hlist"), node.id("vlist"), node.id("rule"), node.id("ins")
 	local FAMCMD = { "textfont", "scriptfont", "scriptscriptfont" }
+	-- the page rebuild's primitive \par resets these (normal_paragraph), so they go back after it
+	local AFTER_PAR = { looseness = true, hangindent = true, hangafter = true, parshape = true, interlinepenalties = true }
 	local A
 
 	local function G() return token.create("global") end
@@ -83,7 +85,7 @@ return function(T)
 		T.setfail = {}
 		for _, n in ipairs(names_in(r)) do
 			local tk = token.create(n)
-			if not tk or tk.csname ~= n then
+			if not T.names(tk, n) then
 				A.created = A.created + 1
 				tex.sprint("\\expandafter\\let\\csname ")
 				tex.sprint(-2, n)
@@ -122,6 +124,12 @@ return function(T)
 		A.stages[#A.stages + 1] = string.format("1b=%.0f", (os.gettimeofday() - A.t0) * 1000)
 		local r = A.r
 		local have = loaded_fonts()
+		-- the instance NFSS selected again, which the font hooks set up (microtype's protrusion codes): another font of
+		-- the same file and size can lack them
+		for nm, key in pairs(r.nfss_font or {}) do
+			local tk = token.create(nm)
+			if tk and tk.cmdname == "set_font" and T.fontkey(tk.mode) == key then have[key] = tk.mode end
+		end
 		local keys = {}
 		for key in pairs(r.fonts or {}) do keys[#keys + 1] = key end
 		table.sort(keys)
@@ -134,7 +142,7 @@ return function(T)
 			else
 				token.set_macro(cs, "", "global")
 				tex.sprint({ G(), token.create("font"), token.create(cs) })
-				tex.sprint(-2, '"' .. spec[1] .. '"')
+				tex.sprint(-2, T.font_name_text(spec[1]))
 				tex.sprint(" at " .. spec[2] .. "sp\\relax")
 			end
 		end
@@ -150,6 +158,7 @@ return function(T)
 		local out = {}
 		for _, x in ipairs(list or {}) do
 			if type(x) == "table" and x[1] == -1 then out[#out + 1] = { param = x[2] }
+			elseif type(x) == "table" and x[1] == -2 then out[#out + 1] = { brace = true }
 			else out[#out + 1] = T.token_of(x) end
 		end
 		return out
@@ -179,7 +188,7 @@ return function(T)
 		end
 		for _, n in ipairs(r.names) do
 			local name = token.create(n.n)
-			if n.let then tex.sprint({ G(), L, name, token.create(n.let) })
+			if n.let then tex.sprint({ G(), L, name, T.prim_token(n.let) or token.create(n.let) })
 			-- \let skips spaces before its target: an equals sign and the one optional space it allows go first
 			elseif n.char then tex.sprint({ G(), L, name, token.new(61, 12), token.new(32, 10), token.new(n.char[2], n.char[1]) })
 			elseif n.font then
@@ -201,6 +210,7 @@ return function(T)
 				if type(x) == "table" and x.param then
 					seq[#seq + 1] = HASH
 					seq[#seq + 1] = token.new(48 + x.param, 12)
+				elseif type(x) == "table" and x.brace then seq[#seq + 1] = HASH
 				else seq[#seq + 1] = x end
 			end
 			seq[#seq + 1] = LB
@@ -241,6 +251,14 @@ return function(T)
 		return g
 	end
 
+	local function mark_class_max(lst, top)
+		for _, o in ipairs(lst or {}) do
+			if o.id == "mark" and (o.class or 0) > top then top = o.class end
+			for _, v in pairs(o) do if type(v) == "table" and v.list then top = mark_class_max(v.list, top) end end
+		end
+		return top
+	end
+
 	function texpile_tele_apply3()
 		A.stages[#A.stages + 1] = string.format("3=%.0f", (os.gettimeofday() - A.t0) * 1000)
 		local r = A.r
@@ -250,12 +268,15 @@ return function(T)
 		for _, g in ipairs(r.regs) do
 			if g.k == "a" and g.i == file_a then file_v = g.v end
 		end
+		A.after_par = {}
 		for _, p in ipairs(r.params) do
-			if p.k == "m" then
+			if AFTER_PAR[p.p] then A.after_par[#A.after_par + 1] = p
+			elseif p.k == "m" then
 				-- Lua sets no math glue parameter: TeX copies it from a spare \muskip, cleared after
 				local v = p.v
 				tex.setmuglue(65535, v[1], v[2], v[3], v[4], v[5])
 				tex.sprint("\\global\\" .. p.p .. "=\\muskip65535\\global\\muskip65535=0mu\\relax")
+			elseif p.k == "s" then tex.sprint("\\global\\" .. p.p .. " " .. p.v .. "\\relax")
 			elseif p.k == "g" then tex.set("global", p.p, glue_spec(p.v))
 			else tex.set("global", p.p, p.v) end
 		end
@@ -284,7 +305,7 @@ return function(T)
 			tex.setlccode("global", c.c, c.lc)
 			tex.setuccode("global", c.c, c.uc)
 			tex.setsfcode("global", c.c, c.sf)
-			tex.setmathcode("global", c.c, #c.math == 1 and c.math[1] or c.math)
+			T.set_mathcode(c.c, c.math)
 		end
 		for _, f in ipairs(r.fams) do
 			local cs = A.fontcs[f.f]
@@ -296,6 +317,10 @@ return function(T)
 		end
 		if A.fontcs[r.curfont] then tex.sprint({ token.create(A.fontcs[r.curfont]) }) end
 		A.image_cache = T.apply_images(r)
+		-- the page builder moves marks only up to the highest class \marks has made, and a mark node from Lua makes none
+		local top = mark_class_max(r.page, mark_class_max(r.contrib, 0))
+		for _, b in ipairs(r.boxes) do top = mark_class_max(b.list, top) end
+		if top > 0 then tex.sprint("\\begingroup\\setbox0\\vbox{\\marks" .. top .. "{}}\\endgroup ") end
 		-- object numbers the restored nodes and macros hold must not be handed out again
 		tex.sprint("\\directlua{texpile_tele_reserve(" .. (r.maxobj or 0) .. ")}")
 		tex.sprint("\\directlua{texpile_tele_apply4()}")
@@ -336,11 +361,6 @@ return function(T)
 			T.refuse(string.format("the page uses image %d and box resource %d", acc.img, acc.box))
 			return
 		end
-		for _, b in ipairs(r.boxes) do
-			local list = T.des_list(b.list)
-			move_lines(list, A.moves)
-			tex.setbox("global", b.i, list)
-		end
 		-- at the base, the base's own page items are still there while no output has run since
 		local b = r.base
 		A.keep = T.at_base and r.fires == b.fires and b.pagelen <= #r.page and same_prefix(tex.lists.page_head, r.page, b.pagelen)
@@ -348,7 +368,12 @@ return function(T)
 		-- the marks and whatever the process had on its page goes through an output routine that drops it
 		if #r.marks > 0 or (not A.keep and node.length(tex.lists.page_head) > 0) then
 			A.saved = { outputpenalty = tex.outputpenalty, deadcycles = tex.deadcycles }
-			tex.sprint("\\begingroup\\output{\\setbox0\\box255 \\deadcycles0 }\\hbox{}")
+			-- the dropped page's inserts land in their boxes (an earlier record's footnotes), which the routine empties
+			local drop = { "\\setbox0\\box255 " }
+			for n in node.traverse_id(INS, tex.lists.page_head) do
+				if not tex.getbox(n.subtype) then drop[#drop + 1] = "\\setbox0\\box" .. n.subtype .. " " end
+			end
+			tex.sprint("\\begingroup\\output{" .. table.concat(drop) .. "\\deadcycles0 }\\hbox{}")
 			for _, g in ipairs(r.marks) do
 				tex.sprint({ token.create("marks") })
 				tex.sprint(g.c .. " ")
@@ -368,6 +393,11 @@ return function(T)
 	function texpile_tele_apply4b()
 		A.stages[#A.stages + 1] = string.format("4b=%.0f", (os.gettimeofday() - A.t0) * 1000)
 		local r = A.r
+		for _, b in ipairs(r.boxes) do
+			local list = T.des_list(b.list)
+			move_lines(list, A.moves)
+			tex.setbox("global", b.i, list)
+		end
 		if A.saved then
 			tex.set("global", "outputpenalty", A.saved.outputpenalty)
 			-- Lua has no setter for \deadcycles: an assignment would only hide the real value from later reads
@@ -420,6 +450,9 @@ return function(T)
 		local r = A.r
 		T.rebuilding = false
 		if A.vsize then tex.set("vsize", A.vsize) end
+		for _, p in ipairs(A.after_par) do
+			if p.k == "s" then tex.sprint("\\global\\" .. p.p .. " " .. p.v .. "\\relax") else tex.set("global", p.p, p.v) end
+		end
 		-- the page builder keeps its best break so far where nothing can set it: a page whose goal a class moved
 		-- after it began (REVTeX's grid) rebuilds differently
 		local ps = r.pagestate

@@ -41,8 +41,7 @@ describe('a drop that splits', () => {
 				// drawn at once: no editor to wait for here
 				queueMicrotask(() => editorGroups.markDrawn(activeFilePath.current));
 			},
-			beforeSplit: () => {},
-			placeSplitCaret: () => {}
+			beforeSplit: () => {}
 		});
 		editorGroups.restore(null);
 		tabs.noteOpened('/w/a.tex');

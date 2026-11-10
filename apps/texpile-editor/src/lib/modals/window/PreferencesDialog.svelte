@@ -19,6 +19,7 @@
 	import PrefsIntegrationsPanel from './integrations/PrefsIntegrationsPanel.svelte';
 	import PrefsStartupPanel from './startup/PrefsStartupPanel.svelte';
 	import PrefsAiPanel from './PrefsAiPanel.svelte';
+	import PrefsDonateLink from './PrefsDonateLink.svelte';
 	import { PrefsNavigation } from './search/prefsNavigation.svelte';
 	import PrefsSearchField from './search/PrefsSearchField.svelte';
 	import PrefsSearchResults from './search/PrefsSearchResults.svelte';
@@ -56,45 +57,48 @@
 <!-- overflow-clip, not hidden: a hidden box can still be scrolled by a script, and under the see-through window's
      sheet blur a switch that keeps focus while a setting changes scrolled the whole card off its content -->
 <Modal bind:open card="flex h-[36rem] max-h-full max-w-3xl overflow-clip p-0">
-	<nav class="border-surface-300-700 bg-surface-100-900 w-52 shrink-0 overflow-y-auto border-r p-2">
-		<div class="mb-2 px-3 pt-2 pb-3">
-			<button
-				type="button"
-				class="block h-6 cursor-default select-none"
-				style:transform="rotate({logoSpin.angle}deg)"
-				onclick={logoSpin.kick}
-				aria-label="Texpile"
-			>
-				<img src={logoOnLight} alt="" class="h-6 w-auto dark:hidden" />
-				<img src={logoOnDark} alt="" class="hidden h-6 w-auto dark:block" />
-			</button>
+	<nav class="border-surface-300-700 bg-surface-100-900 flex w-52 shrink-0 flex-col border-r">
+		<div class="min-h-0 flex-1 overflow-y-auto p-2">
+			<div class="mb-2 px-3 pt-2 pb-3">
+				<button
+					type="button"
+					class="block h-6 cursor-default select-none"
+					style:transform="rotate({logoSpin.angle}deg)"
+					onclick={logoSpin.kick}
+					aria-label="Texpile"
+				>
+					<img src={logoOnLight} alt="" class="h-6 w-auto dark:hidden" />
+					<img src={logoOnDark} alt="" class="hidden h-6 w-auto dark:block" />
+				</button>
+			</div>
+			<PrefsSearchField {navigation} />
+			{#each PREFS_TABS as tab (tab.id)}
+				{@const current = !navigation.searching && navigation.tab === tab.id}
+				{@const sections = (tab.sections ?? []).filter((id) => sectionShown(tab.id, id))}
+				{@const expanded = navigation.expanded.includes(tab.id) && !navigation.searching}
+				<PrefsSidebarTab
+					label={tab.label()}
+					{current}
+					active={current && navigation.section === null}
+					expanded={sections.length && !tabUnavailable(tab) ? expanded : undefined}
+					unavailable={tabUnavailable(tab)}
+					matches={navigation.counts.get(tab.id)}
+					dimmed={navigation.searching && !navigation.counts.has(tab.id)}
+					onclick={() => pick(tab.id)}
+					ontoggle={() => navigation.toggle(tab.id)}
+				/>
+				{#if expanded}
+					{#each sections as section (section)}
+						<PrefsSidebarSubTab
+							label={sectionLabel(section)}
+							active={current && navigation.section === section}
+							onclick={() => void navigation.showSection(tab.id, section)}
+						/>
+					{/each}
+				{/if}
+			{/each}
 		</div>
-		<PrefsSearchField {navigation} />
-		{#each PREFS_TABS as tab (tab.id)}
-			{@const current = !navigation.searching && navigation.tab === tab.id}
-			{@const sections = (tab.sections ?? []).filter((id) => sectionShown(tab.id, id))}
-			{@const expanded = navigation.expanded.includes(tab.id) && !navigation.searching}
-			<PrefsSidebarTab
-				label={tab.label()}
-				{current}
-				active={current && navigation.section === null}
-				expanded={sections.length && !tabUnavailable(tab) ? expanded : undefined}
-				unavailable={tabUnavailable(tab)}
-				matches={navigation.counts.get(tab.id)}
-				dimmed={navigation.searching && !navigation.counts.has(tab.id)}
-				onclick={() => pick(tab.id)}
-				ontoggle={() => navigation.toggle(tab.id)}
-			/>
-			{#if expanded}
-				{#each sections as section (section)}
-					<PrefsSidebarSubTab
-						label={sectionLabel(section)}
-						active={current && navigation.section === section}
-						onclick={() => void navigation.showSection(tab.id, section)}
-					/>
-				{/each}
-			{/if}
-		{/each}
+		<PrefsDonateLink />
 	</nav>
 
 	<div class="flex min-w-0 flex-1 flex-col">

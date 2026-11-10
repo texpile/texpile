@@ -48,7 +48,7 @@ test('Ctrl+F after a click in the PDF preview finds in the PDF, not in the sourc
 	await expect(page.locator('.pdf-loading')).toHaveCount(0);
 	await page.locator('.cm-content').first().click();
 	await pages.click();
-	await page.keyboard.press('Control+f');
+	await page.keyboard.press('ControlOrMeta+f');
 	await expect(page.locator('.pdf-find')).toBeVisible();
 	await expect(page.locator('.cm-editor .cm-panel')).toHaveCount(0);
 });

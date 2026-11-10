@@ -62,14 +62,17 @@ export type TeleportResult =
 			stop?: number;
 			count: number;
 			srcFiles: string[];
-			// a line record past `after` in file `sf`, on a page past `stop`, moves by `by`
-			shift?: { sf: number; after: number; by: number };
+			// a line record past `after` in file `sf`, on a page past `stop`, moves by `by`, one shift after the other
+			shifts?: { sf: number; after: number; by: number }[];
 	  }
 	| {
 			ok: false;
-			reason: 'no-index' | 'preamble' | 'outside' | 'held' | 'refused' | 'failed' | 'superseded';
+			reason: 'no-index' | 'preamble' | 'outside' | 'held' | 'refused' | 'failed' | 'superseded' | 'replaced';
 			detail?: string;
 			ms: number;
+			// a cut run's pages stay on screen, and the pages past `stop` take its source lines
+			stop?: number;
+			shifts?: { sf: number; after: number; by: number }[];
 	  };
 
 /** a held main thread or a timed spawn, epoch ms; see electron/src/startupStats.ts */
@@ -104,6 +107,7 @@ type TexpileNative = {
 	/** where the pointer is on the screen */
 	cursorScreenPoint?: () => Promise<{ x: number; y: number }>;
 	windowGlassWorks?: () => Promise<boolean>;
+	installedFonts?: () => Promise<string[]>;
 	setWindowGlass?: (on: boolean) => Promise<boolean>;
 	setNativeAppearance?: (choice: 'light' | 'dark' | 'system') => void;
 	// optional: an older preload predates the native surfaces, and the renderer draws its own
@@ -153,6 +157,8 @@ type TexpileNative = {
 	imageOriginalAt?: (path: string) => Promise<number | null>;
 	imageRestoreOriginal?: (path: string) => Promise<void>;
 	drawFile?: (reported: string) => Promise<Uint8Array>;
+	figureRead?: (name: string) => Promise<{ svg: string; mtimeMs: number } | null>;
+	figureWrite?: (name: string, svg: string) => Promise<void>;
 	draftSavePdf: (body: { root: string; defaultName: string; to?: string }) => Promise<{ saved: boolean; path?: string }>;
 	savePdfBytes?: (body: { bytes: Uint8Array; defaultName: string; to?: string }) => Promise<{ saved: boolean; path?: string }>;
 	gitStatus: (root: string) => Promise<GitStatusResult>;

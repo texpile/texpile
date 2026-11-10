@@ -103,6 +103,10 @@ export function startWorkspace(d: StartupDeps): (() => void) | undefined {
 		runCompile: () => d.compiler.runCompile(),
 		loadExternalPdf: () => void d.compiler.loadExternalPdf(),
 		nudgeTypst: (paths) => nudgeTypstDisk(workspaceRoot.current, paths),
+		// a text file the buffers hold reaches guests through its own text
+		shareUpdatedFiles: (paths) => {
+			if (paths.some((p) => collabHost.loadedText(p) === null)) void collabHost.syncTree();
+		},
 		onWindowResize: () => {
 			layout.reclampPdf();
 			termDock.reclamp();
@@ -119,7 +123,8 @@ export function startWorkspace(d: StartupDeps): (() => void) | undefined {
 	const offBeforeClose = attachCloseGuard({
 		flushSaves: () => saver.flushAndWait(),
 		hasStranded: () => saver.stranded().length > 0,
-		confirmLeaveUnsaved: () => editFlow.confirmLeaveUnsaved()
+		confirmLeaveUnsaved: () => editFlow.confirmLeaveUnsaved(),
+		endSession: () => collabHost.end()
 	});
 	return () => {
 		offBeforeClose?.();

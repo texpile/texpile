@@ -301,6 +301,8 @@ export class InlineLatexView {
 
 	selectNode(): void {
 		this.materialize();
+		// a parked editor selects the chip again as it follows the file: the focus stays with the writer
+		if (!this.view.editable) return;
 		this.setEditable(true);
 		if (!visualFind.movingSelection) this.cm?.focus();
 	}

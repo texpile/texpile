@@ -1,11 +1,7 @@
-import { fileService } from '$lib/files/service/fileService';
-import { workspaceRoot } from '$lib/workspace/workspaceStore';
-import { ensureTexpileIgnore, texpilePath } from '$lib/workspace/texpileDir';
+// The pictures the figure cards show: drawn in this session, or kept by the desktop app in its own data folder
+// under a name made from the picture's source, so a project that is moved or renamed still finds them.
+import { nativeBridge } from '$lib/workspace/fileSystem';
 import { safeSavedDrawing } from './safeSavedDrawing';
-
-// the drawings kept, the most recently drawn; a picture edited a hundred times leaves one each
-const KEPT = 200;
-const INDEX = 'figures/index.json';
 
 const drawings = new Map<string, string>();
 const drawnAt = new Map<string, number>();
@@ -43,31 +39,16 @@ export function drawingTime(key: string): number {
 }
 
 export async function loadSavedDrawing(key: string): Promise<void> {
-	const path = texpilePath(workspaceRoot.current ?? '', `figures/${drawingName(key)}.svg`);
-	if (!path || drawings.has(key) || looked.has(path)) return;
-	looked.add(path);
-	const file = await fileService.stat(path);
-	if (!file.exists) return;
-	const saved = safeSavedDrawing(await fileService.readText(path));
-	if (!saved) return;
+	const read = nativeBridge()?.figureRead;
+	if (!read || drawings.has(key) || looked.has(key)) return;
+	looked.add(key);
+	const file = await read(drawingName(key)).catch(() => null);
+	const saved = file && safeSavedDrawing(file.svg);
+	// drawn while the file was being read: that one is newer
+	if (!file || !saved || drawings.has(key)) return;
 	drawings.set(key, saved);
 	drawnAt.set(key, file.mtimeMs);
 	changed();
-}
-
-async function keep(root: string, name: string, svg: string): Promise<void> {
-	const file = texpilePath(root, `figures/${name}.svg`);
-	const index = texpilePath(root, INDEX);
-	if (!file || !index) return;
-	await ensureTexpileIgnore(root);
-	await fileService.writeText(file, svg);
-	const names: string[] = (await fileService.exists(index)) ? JSON.parse(await fileService.readText(index)) : [];
-	const kept = [...names.filter((n) => n !== name), name];
-	for (const old of kept.splice(0, Math.max(0, kept.length - KEPT))) {
-		const path = texpilePath(root, `figures/${old}.svg`);
-		if (path) await fileService.remove(path).catch(() => {});
-	}
-	await fileService.writeText(index, JSON.stringify(kept));
 }
 
 export function saveDrawing(key: string, svg: string): void {
@@ -75,8 +56,8 @@ export function saveDrawing(key: string, svg: string): void {
 	drawings.set(key, svg);
 	drawnAt.set(key, Date.now());
 	changed();
-	const root = workspaceRoot.current;
-	if (root) writing = writing.then(() => keep(root, drawingName(key), svg)).catch(() => {});
+	const write = nativeBridge()?.figureWrite;
+	if (write) writing = writing.then(() => write(drawingName(key), svg)).catch(() => {});
 }
 
 export function onDrawingsChange(run: () => void): () => void {

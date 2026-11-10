@@ -2,6 +2,7 @@
 
 .TexpileEditor {
 	@apply m-1 max-w-full leading-relaxed outline-none;
+	font-family: var(--editor-text-font, var(--typo-base--font-family));
 }
 
 /* off-screen blocks of a large document skip style, layout and hit-testing (see largeDocument.ts) */
@@ -70,6 +71,7 @@ math-field::part(menu-toggle) {
 .TexpileEditor h5,
 .TexpileEditor h6 {
 	@apply mb-2 leading-snug;
+	font-family: var(--editor-text-font, var(--typo-heading--font-family));
 }
 
 .TexpileEditor p {

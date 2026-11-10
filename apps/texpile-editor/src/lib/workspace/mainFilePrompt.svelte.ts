@@ -13,7 +13,7 @@ import { workspaceRoot, texFiles, mainFile, savedMainFile, setMainFile } from '$
 import { detectMainFile, findDocRoots, gatherProjectMacros } from '$lib/workspace/project';
 import { MAX_MAIN_CANDIDATES } from '$lib/workspace/mainCandidates';
 import { samePath, type TexFile } from '$lib/workspace/fileSystem';
-import { compileConfig } from '$lib/workspace/projectConfigSync.svelte';
+import { compileConfig, projectConfigSync } from '$lib/workspace/projectConfigSync.svelte';
 
 export type MainFileDeps = {
 	/** the compile pipeline picks up the PDF that matches the newly chosen main file */
@@ -85,6 +85,7 @@ export class MainFilePrompt {
 			return;
 		}
 		setMainFile(root, chosen);
+		void projectConfigSync.save(root);
 		this.deps.loadExistingPdf();
 		this.finish();
 		this.deps.setProjectMacros(await gatherProjectMacros(chosen, root));

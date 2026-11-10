@@ -1,6 +1,8 @@
 import { expect, test, type Page } from '@playwright/test';
 import { useTexpile } from './driver/useTexpile';
 
+test.skip(process.platform === 'darwin', 'the menu bar is native on macOS');
+
 const texpile = useTexpile();
 
 const STORE = `(await import('/src/lib/stores/editorStore.ts'))`;

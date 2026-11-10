@@ -20,6 +20,9 @@ const saveCalls: string[] = [];
 function makeFs(tooBigFor: (p: string) => boolean = () => false, hasRecycleBin = true) {
 	const files = new Set<string>();
 	const backups = new Set<string>();
+	// a file's bytes, where a test cares, and the text its buffer holds that the disk does not
+	const texts = new Map<string, string>();
+	const unwritten = new Map<string, string>();
 	let slot = 0;
 	const under = (p: string) => [...files].filter((f) => f === p || f.startsWith(p + '/'));
 	const move = (from: string, to: string) => {
@@ -28,7 +31,11 @@ function makeFs(tooBigFor: (p: string) => boolean = () => false, hasRecycleBin =
 			files.add(to + f.slice(from.length));
 		}
 	};
-	const copy = (from: string, to: string) => under(from).forEach((f) => files.add(to + f.slice(from.length)));
+	const copy = (from: string, to: string) =>
+		under(from).forEach((f) => {
+			files.add(to + f.slice(from.length));
+			if (texts.has(f)) texts.set(to + f.slice(from.length), texts.get(f)!);
+		});
 	const base = (p: string) => p.slice(p.lastIndexOf('/') + 1);
 
 	const deps: TreeOpsDeps = {
@@ -64,10 +71,16 @@ function makeFs(tooBigFor: (p: string) => boolean = () => false, hasRecycleBin =
 		insertIncludeAtCursor: () => true,
 		afterRename: () => {},
 		retargetPendingSave: (from, to) => void saveCalls.push(`retarget ${from} -> ${to}`),
-		forgetBuffers: (path) => void saveCalls.push(`forget ${path}`),
+		forgetBuffers: (path) => {
+			saveCalls.push(`forget ${path}`);
+			const held = [...unwritten].filter(([p]) => p === path || p.startsWith(path + '/'));
+			for (const [p] of held) unwritten.delete(p);
+			return held.map(([p, text]) => ({ path: p, text, eol: '\n' as const }));
+		},
+		keepUnwritten: async (kept) => kept.forEach((f) => texts.set(f.path, f.text)),
 		confirmReplace: async () => replaceAnswer.ok
 	};
-	return { files, backups, deps };
+	return { files, backups, texts, unwritten, deps };
 }
 
 const fileEntry = (path: string): TreeEntry => ({ name: path.slice(path.lastIndexOf('/') + 1), path, type: 'file' });
@@ -88,6 +101,7 @@ describe('tree undo/redo', () => {
 	beforeEach(() => {
 		workspaceRoot.current = '/proj';
 		activeFilePath.current = null;
+		tabs.bind(null, false);
 		fs = makeFs();
 		ops = new TreeOps(fs.deps);
 	});
@@ -254,6 +268,25 @@ describe('tree undo/redo', () => {
 		expect([...plain.files]).toEqual([]); // gone for good, as before
 		expect(noUndo.undoable).toBe(false);
 		expect(noUndo.history.canUndo).toBe(false);
+	});
+
+	it('keeps the words a guest typed into a file not saved yet in the copy an undo restores', async () => {
+		fs.files.add('/proj/tmp.tex');
+		fs.texts.set('/proj/tmp.tex', 'on disk');
+		fs.unwritten.set('/proj/tmp.tex', 'on disk and a guest still typing');
+		await ops.deleteMany([fileEntry('/proj/tmp.tex')]);
+		await ops.history.undo();
+		expect(fs.texts.get('/proj/tmp.tex')).toBe('on disk and a guest still typing');
+	});
+
+	it('leaves the pane empty when someone else deletes the open file, so the keys being typed land nowhere', () => {
+		for (const p of ['/proj/notes.md', '/proj/main.tex']) {
+			tabs.noteOpened(p);
+			tabs.keep(p);
+		}
+		activeFilePath.current = '/proj/notes.md';
+		ops.detachDeleted('/proj/notes.md');
+		expect([activeFilePath.current, tabs.list.map((t) => t.path)]).toEqual([null, ['/proj/main.tex']]);
 	});
 
 	it('closing the file being deleted clears the open path', async () => {

@@ -93,6 +93,13 @@ describe('a reference in the editor', () => {
 		expect(document.querySelector('.typ-ref-known')).not.toBeNull();
 	});
 
+	it('leaves no whitespace beside the chip for justified text to stretch', () => {
+		open('Bulk material @fourier1822. Earlier.\n');
+		const host = document.querySelector('.typ-ref')!.closest('span[style]')!;
+		const stray = [...host.childNodes].filter((n) => n.nodeType === Node.TEXT_NODE && n.textContent !== '');
+		expect(stray.map((n) => n.textContent)).toEqual([]);
+	});
+
 	it('opens the citation editor on a click, and writes what it sets', async () => {
 		const { parsed, view } = open(SRC);
 		(document.querySelector('.typ-ref') as HTMLElement).click();

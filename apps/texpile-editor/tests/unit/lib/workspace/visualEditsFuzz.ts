@@ -6,6 +6,7 @@ import { canSplit } from 'prosemirror-transform';
 import { bodyOffsetOf, parseLatexFile, parseLatexRegion, serializeLatexFile, type ParsedLatexFile } from '$lib/workspace/latexRoundtrip';
 import { parseMarkdownFile, parseMarkdownRegion, serializeMarkdownFile } from '$lib/languages/markdown/visual/roundtrip';
 import { parseTypstFile, parseTypstRegion, serializeTypstFile } from '$lib/languages/typst/visual/roundtrip';
+import { chipLetters } from '$lib/editor/spellcheck/blockSpellText';
 import type { RegionParser } from '$lib/editor/visual/sourceSpans';
 import type { OldRun, PmSuggestionRange, SuggestionSource } from '$lib/editor/visual/extensions/pmSuggestionsPlace';
 
@@ -184,7 +185,10 @@ export function proseBlocks(doc: PMNode): Block[] {
 export function spotIn(doc: PMNode, b: Block, rnd: () => number): number | null {
 	for (let tries = 0; tries < 6; tries++) {
 		const p = b.pos + 1 + Math.floor(rnd() * (b.node.content.size + 1));
-		if (doc.resolve(p).parent === b.node) return p;
+		const $p = doc.resolve(p);
+		// a caret never sits between the two halves of an emoji
+		const split = /[\ud800-\udbff]$/.test($p.nodeBefore?.text ?? '') && /^[\udc00-\udfff]/.test($p.nodeAfter?.text ?? '');
+		if ($p.parent === b.node && !split) return p;
 	}
 	return b.node.content.size === 0 ? b.pos + 1 : null;
 }
@@ -195,7 +199,8 @@ export function renderedText(doc: PMNode, drawn: { from: number; to: number; wor
 	doc.descendants((node, pos) => {
 		if (node.isTextblock) chars.push({ ch: '\n', pos: pos + 0.5 });
 		else if (node.isText) for (let i = 0; i < node.text!.length; i++) chars.push({ ch: node.text![i], pos: pos + i });
-		else if (node.isInline) chars.push({ ch: '#', pos });
+		// an accent chip draws as its letter, so it reads as one
+		else if (node.isInline) for (const ch of chipLetters(node) ?? '#') chars.push({ ch, pos });
 		return !node.isInline;
 	});
 	for (const r of [...drawn].sort((a, b) => b.from - a.from)) {

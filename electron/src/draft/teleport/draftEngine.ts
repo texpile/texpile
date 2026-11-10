@@ -7,7 +7,7 @@ import * as path from 'node:path';
 import readline from 'node:readline';
 import { engineJob, mirrorSourceFolders, writeHooksFile, OUT } from '../compileJob';
 
-export type EnginePage = { n: number; w: number; h: number; unc?: string };
+export type EnginePage = { n: number; w: number; h: number; unc?: string; records: string };
 export type TeleportOutcome = {
 	applyMs?: number;
 	// when each step of the apply finished, for profiling
@@ -16,6 +16,8 @@ export type TeleportOutcome = {
 	stop?: { shipped: number; rec: string };
 	// the run ended where it was asked to
 	cut?: boolean;
+	// the run read the document to its end
+	ended?: boolean;
 	refused?: string;
 	pages: EnginePage[];
 	code: number | null;
@@ -112,7 +114,16 @@ export class DraftEngine {
 		const settle: { ready?: (files: string[] | null) => void } = {};
 		this.ready = new Promise((resolve) => (settle.ready = resolve));
 		void this.exited.then(() => settle.ready?.(null));
+		// a served page's record lines follow its PAGE line
+		let page: { head: string; left: number; lines: string[] } | null = null;
 		readline.createInterface({ input: this.#child.stdout! }).on('line', (line) => {
+			if (page) {
+				page.lines.push(line);
+				if (--page.left > 0) return;
+				this.#listener?.('PAGE', `${page.head}\n${page.lines.join('\n')}`);
+				page = null;
+				return;
+			}
 			const m = /^@@TELE (\w+) ?(.*)$/.exec(line);
 			if (!m) return;
 			if (m[1] === 'READY') {
@@ -125,6 +136,7 @@ export class DraftEngine {
 				settle.ready?.(files);
 			} else if (m[1] === 'OLDLATEX') this.oldLatex = m[2];
 			else if (m[1] === 'PARKED') this.#parkWaiters.shift()?.(true);
+			else if (m[1] === 'PAGE' && Number(m[2].split(' ')[3]) > 0) page = { head: m[2], left: Number(m[2].split(' ')[3]), lines: [] };
 			else this.#listener?.(m[1], m[2]);
 		});
 		void this.exited.then(() => {
@@ -148,9 +160,9 @@ export class DraftEngine {
 		return this.exited;
 	}
 
-	/** `planRel` is the plan file, relative to the root; each page is reported as it ships. The outcome is in once the
-	 * run is over; the process then goes back to its base on its own (`parked`) */
-	teleport(planRel: string, onPage: (p: EnginePage) => void): Promise<TeleportOutcome> {
+	/** `plan` is the plan's Lua source (`planLua`); each page is reported as it ships. The outcome is in once the run is
+	 * over; the process then goes back to its base on its own (`parked`) */
+	teleport(plan: string, onPage: (p: EnginePage) => void): Promise<TeleportOutcome> {
 		const out: TeleportOutcome = { pages: [], code: null };
 		this.parked = this.#waitForPark();
 		return new Promise((resolve) => {
@@ -160,8 +172,10 @@ export class DraftEngine {
 					out.applyMs = Number(sp < 0 ? rest : rest.slice(0, sp));
 					if (sp >= 0) out.applyStages = rest.slice(sp + 1);
 				} else if (kind === 'PAGE') {
-					const [n, w, h, unc] = rest.split(' ');
-					const p: EnginePage = { n: Number(n), w: Number(w), h: Number(h), ...(unc ? { unc } : {}) };
+					const nl = rest.indexOf('\n');
+					const [n, w, h, , unc] = (nl < 0 ? rest : rest.slice(0, nl)).split(' ');
+					const records = nl < 0 ? '' : rest.slice(nl + 1);
+					const p: EnginePage = { n: Number(n), w: Number(w), h: Number(h), ...(unc ? { unc } : {}), records };
 					out.pages.push(p);
 					onPage(p);
 				} else if (kind === 'STOP') {
@@ -170,10 +184,11 @@ export class DraftEngine {
 					resolve(out);
 				} else if (kind === 'CUT' || kind === 'END') {
 					if (kind === 'CUT') out.cut = true;
+					else out.ended = true;
 					resolve(out);
 				} else if (kind === 'REFUSED') out.refused = rest;
 			};
-			this.#child.stdin?.write(`TELE ${planRel}\n`);
+			this.#child.stdin?.write(`TELE ${plan}\n`);
 			void this.exited.then((code) => resolve({ ...out, code }));
 		});
 	}
@@ -183,11 +198,10 @@ export class DraftEngine {
 		return new Promise((resolve) => this.#parkWaiters.push(resolve));
 	}
 
-	/** applies the chain of the plan at `planRel`, for serve `serve`, and waits at its last point: the next teleport
-	 * goes on from there */
-	stage(planRel: string, serve: number): void {
+	/** applies the chain of `plan`, for serve `serve`, and waits at its last point: the next teleport goes on from there */
+	stage(plan: string, serve: number): void {
 		this.#stagedServe = serve;
-		this.#child.stdin?.write(`PRE ${planRel}\n`);
+		this.#child.stdin?.write(`PRE ${plan}\n`);
 	}
 
 	/** the serve a stage opened, once: the run that goes on from it writes its files there */

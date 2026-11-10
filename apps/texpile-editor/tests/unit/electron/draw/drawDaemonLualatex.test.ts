@@ -14,6 +14,10 @@ describe.skipIf(!hasLualatex)('the warm lualatex', () => {
 		expect((await drawWithLualatex(PREAMBLE, PICTURE)).recs).toEqual(first.recs);
 	});
 
+	it('says what is missing when the preamble does not load tikz', async () => {
+		await expect(drawWithLualatex('\\documentclass{article}', PICTURE)).rejects.toThrow('needs \\usepackage{tikz}');
+	});
+
 	it('keeps each preamble apart', async () => {
 		const own = '\\documentclass{article}\\usepackage{tikz}\\newcommand{\\half}{0.5}';
 		const picture = '\\begin{tikzpicture}\\draw (0,0) -- (\\half,1);\\end{tikzpicture}';

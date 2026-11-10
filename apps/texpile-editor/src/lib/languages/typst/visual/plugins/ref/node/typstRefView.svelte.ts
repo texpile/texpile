@@ -4,6 +4,7 @@
 import type { EditorView, NodeView } from 'prosemirror-view';
 import type { Node as PMNode } from 'prosemirror-model';
 import { mount, unmount } from 'svelte';
+import { quietTemplateSpaces } from '$lib/languages/typst/visual/core';
 import TypstRefDisplay from './TypstRefDisplay.svelte';
 import { refNumbersOf, type RefNumbers } from './refNumbers.svelte';
 
@@ -40,6 +41,7 @@ export class TypstRefView implements NodeView {
 			parse
 		};
 		this.component = mount(TypstRefDisplay, { target: this.dom, props: this.componentProps });
+		quietTemplateSpaces(this.dom);
 	}
 
 	private updateAttrs(attrs: Record<string, unknown>): void {

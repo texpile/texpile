@@ -475,7 +475,8 @@ export class MathLiveView implements NodeView {
 		// the caret is arriving, so build the field regardless of where the viewport is
 		this.materialize();
 		const field = this.mathField;
-		if (!field || visualFind.movingSelection || this.following) return;
+		// a parked editor selects the formula again as it follows the file: the focus stays with the writer
+		if (!field || visualFind.movingSelection || this.following || !this.view.editable) return;
 
 		const cameFrom = this.mlpluginkey.getState(this.view.state)?.prevCursorPos;
 		enterField(field, cameFrom === undefined || cameFrom <= this.getPos(), this.view.editable);

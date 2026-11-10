@@ -7,7 +7,6 @@ import FileTree from '../../../../src/lib/filetree/FileTree.svelte';
 // the tree's right-click menu is drawn by the app-wide host now, so the tests mount that too
 import ContextMenuHost from '../../../../src/lib/menus/ContextMenuHost.svelte';
 import { closeContextMenu } from '../../../../src/lib/menus/contextMenu.svelte';
-import { promptDialog, answerPrompt } from '../../../../src/lib/modals/confirm.svelte';
 import type { TreeEntry } from '../../../../src/lib/workspace/fileSystem';
 
 const ROOT = '/ws';
@@ -127,7 +126,7 @@ describe('FileTree inline create', () => {
 // Ctrl+Z is where focus is. That makes the negative cases here the important ones.
 describe('FileTree keyboard shortcuts', () => {
 	const key = (k: string, opts: KeyboardEventInit = {}) =>
-		window.dispatchEvent(new KeyboardEvent('keydown', { key: k, bubbles: true, ...opts }));
+		(document.activeElement ?? window).dispatchEvent(new KeyboardEvent('keydown', { key: k, bubbles: true, ...opts }));
 	/** focus a row button, i.e. the tree genuinely owns the keyboard */
 	const focusTree = () => host.querySelector('button')!.focus();
 
@@ -295,52 +294,5 @@ describe('FileTree refuses a name that is taken', () => {
 		const input = nameInput()!;
 		type(input, 'CHAPTERS');
 		expect(input.getAttribute('aria-invalid')).toBe('true');
-	});
-});
-
-// The recycle bin holds the file as it was on disk, so what a delete really destroys is whatever
-// was never written. The count must always describe what is going, not how much of it is dirty.
-describe('FileTree delete prompt', () => {
-	function mountWith(props: Record<string, unknown>) {
-		if (app) void unmount(app);
-		app = mount(FileTree, {
-			target: host,
-			props: {
-				tree,
-				rootPath: ROOT,
-				activePath: null,
-				onOpen: vi.fn(),
-				onCreate,
-				onRename: vi.fn(),
-				onDelete: vi.fn(),
-				onMove: vi.fn(),
-				onCopyIn,
-				history: history as unknown as never,
-				...props
-			}
-		});
-		flushSync();
-	}
-
-	function askedWhenDeleting(): string {
-		host.querySelector('button')!.dispatchEvent(new MouseEvent('contextmenu', { bubbles: true }));
-		flushSync();
-		byText('Delete')!.click();
-		flushSync();
-		const asked = promptDialog.state?.message ?? '';
-		answerPrompt(null);
-		return asked;
-	}
-
-	it('says the edits are at stake when the file has unsaved changes', () => {
-		mountWith({ hasUnsaved: (p: string) => p === '/ws/main.tex' });
-		expect(askedWhenDeleting()).toContain('unsaved changes');
-	});
-
-	it('asks the plain question when nothing is unsaved', () => {
-		mountWith({ hasUnsaved: () => false });
-		const asked = askedWhenDeleting();
-		expect(asked).toContain('main.tex');
-		expect(asked).not.toContain('unsaved changes');
 	});
 });

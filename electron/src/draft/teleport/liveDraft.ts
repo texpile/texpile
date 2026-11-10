@@ -3,10 +3,10 @@
 import * as fs from 'node:fs';
 import * as path from 'node:path';
 import { OUT } from '../compileJob';
-import { readPage, type DraftPage } from '../draftProducts';
-import { linesOf, lineEdit, type LineEdit } from './lineEdit';
+import { pageOfRecords, type DraftPage } from '../draftProducts';
+import { linesOf, lineEdit, lineShifts, type LineEdit, type LineShift } from './lineEdit';
 import { readIndexFile, type PointIndex, type TeleportPlan } from './pointIndex';
-import { planLua } from './planLua';
+import { planLua, type PlanOverride } from './planLua';
 import { paragraphOpen, paragraphStart } from './heldEdit';
 import {
 	takeEngine,
@@ -20,8 +20,10 @@ import {
 	type PoolConfig
 } from './enginePool';
 import { engineFolders, type DraftEngine } from './draftEngine';
+import { sweepHeld } from './sweepHold';
 
 export type TeleportRequest = { file: string; text: string };
+export type SourceShift = { sf: number; after: number; by: number };
 export type TeleportResult =
 	| {
 			ok: true;
@@ -30,14 +32,22 @@ export type TeleportResult =
 			from?: number;
 			stop?: number;
 			// the lines the edit added or removed move the source lines on the pages past `stop`: a line record
-			// whose file id is `sf` and whose line is past `after` moves by `by`
-			shift?: { sf: number; after: number; by: number };
+			// whose file id is `sf` and whose line is past `after` moves by `by`, one shift after the other
+			shifts?: SourceShift[];
 			count: number;
 			srcFiles: string[];
 	  }
 	// preamble: the edit changes what every run reads before the base, so only a compile shows it; held: the
-	// edit leaves its paragraph open, and the next keystroke decides
-	| { ok: false; reason: 'no-index' | 'preamble' | 'outside' | 'held' | 'refused' | 'failed' | 'superseded'; detail?: string; ms: number };
+	// edit leaves its paragraph open, and the next keystroke decides; replaced: a compile's index took over first
+	| {
+			ok: false;
+			reason: 'no-index' | 'preamble' | 'outside' | 'held' | 'refused' | 'failed' | 'superseded' | 'replaced';
+			detail?: string;
+			ms: number;
+			// a cut run's pages stay on screen, and the pages past `stop` take its source lines
+			stop?: number;
+			shifts?: SourceShift[];
+	  };
 
 type Queued = { req: TeleportRequest; onPage: (p: DraftPage) => void; done: (r: TeleportResult) => void };
 
@@ -49,7 +59,6 @@ function norm(p: string): string {
 function stageKey(plan: TeleportPlan, basis: Map<string, string>, file: string): string {
 	return JSON.stringify([plan.chain, [...basis].filter(([rel]) => rel !== file).sort()]);
 }
-let overrideSeq = 0;
 // a run that ships no page this long is in a loop: the compile shows the text instead
 const STALL_MS = 10000;
 // a cut unanswered this long: the run is busy inside one line, and the newer edit takes over
@@ -65,6 +74,10 @@ export class LiveDraft {
 	// page is out
 	#cut: { file: string; now: () => void } | null = null;
 	#closed = false;
+	#closedAs: 'superseded' | 'replaced' = 'superseded';
+	// pages cut runs left on screen with their text, until a run ships them again; texts: what the source lines on
+	// the pages past them follow, for each file a cut run edited
+	#reship: { from: number; to: number; texts: Map<string, string> } | null = null;
 
 	constructor(
 		readonly root: string,
@@ -79,10 +92,12 @@ export class LiveDraft {
 		this.#collectGarbage();
 	}
 
-	close(): void {
+	/** replaced: a compile's index takes over, and the edits waiting or running here are the app's to send again */
+	close(replaced = false): void {
 		this.#closed = true;
+		if (replaced) this.#closedAs = 'replaced';
 		this.#running?.kill();
-		for (const q of this.#queued.values()) q.done({ ok: false, reason: 'superseded', ms: 0 });
+		for (const q of this.#queued.values()) q.done({ ok: false, reason: this.#closedAs, ms: 0 });
 		this.#queued.clear();
 	}
 
@@ -94,23 +109,34 @@ export class LiveDraft {
 				this.#queued.get(file)?.done({ ok: false, reason: 'superseded', ms: 0 });
 				this.#queued.delete(file);
 				this.#queued.set(file, { req, onPage, done });
-				// what is left of the run only looks for where to stop; the newer text matters more
-				if (this.#cut?.file === file) this.#cut.now();
+				// what is left of the run only looks for where to stop; the newer text matters more, unless it waits for the
+				// next keystroke and would leave the cut run's pages on screen
+				if (this.#cut?.file === file && !this.#holds(req)) this.#cut.now();
 				return;
 			}
 			void this.#run(req, onPage).then(done);
 		});
 	}
 
+	#holds(req: TeleportRequest): boolean {
+		const old = this.index.text(norm(req.file));
+		if (old === null) return false;
+		const before = linesOf(old);
+		const after = linesOf(req.text);
+		const edit = lineEdit(before, after);
+		return !!edit && paragraphOpen(before, after, edit);
+	}
+
 	async #run(req: TeleportRequest, onPage: (p: DraftPage) => void): Promise<TeleportResult> {
 		this.#busy = true;
 		const t0 = Date.now();
-		const result = await this.#runOnce(req, onPage, t0).catch((e: unknown): TeleportResult => ({
+		let result = await this.#runOnce(req, onPage, t0).catch((e: unknown): TeleportResult => ({
 			ok: false,
 			reason: 'failed',
 			detail: e instanceof Error ? e.message : String(e),
 			ms: Date.now() - t0
 		}));
+		if (!result.ok && this.#closedAs === 'replaced') result = { ok: false, reason: 'replaced', ms: result.ms };
 		this.#running = null;
 		this.#busy = false;
 		if (!this.#closed) this.#collectGarbage();
@@ -147,9 +173,12 @@ export class LiveDraft {
 		const old = this.index.text(file);
 		if (old === null) return { ok: false, reason: 'outside', ms: ms() };
 		const lines = linesOf(req.text);
-		const edit = lineEdit(linesOf(old), lines);
+		const oldLines = linesOf(old);
+		const edit = lineEdit(oldLines, lines);
+		// the text went back to what the index holds, and a cut run's pages show the one in between
+		if (!edit && this.#reship) return { ok: false, reason: 'refused', detail: 'a cut run left its pages', ms: ms() };
 		if (!edit) return { ok: true, ms: ms(), stop: 0, count: this.count, srcFiles: this.srcFiles };
-		if (paragraphOpen(lines, edit)) return { ok: false, reason: 'held', ms: ms() };
+		if (paragraphOpen(oldLines, lines, edit)) return { ok: false, reason: 'held', ms: ms() };
 		const pool = this.#pool();
 		// what every engine reads before the base moved on from what the points were recorded against
 		if (
@@ -160,7 +189,7 @@ export class LiveDraft {
 			stampOf(this.root, this.index.preFiles) !== this.index.preStamp
 		)
 			return { ok: false, reason: 'preamble', ms: ms() };
-		const plan = this.index.planFor(file, edit);
+		const plan = this.index.planFor(file, edit, this.#reship ?? undefined);
 		if (!plan) return { ok: false, reason: 'outside', ms: ms() };
 
 		// typing goes on in one paragraph, so the edit before this one staged a spare at the same chain
@@ -175,7 +204,7 @@ export class LiveDraft {
 			engine.remove();
 			return { ok: false, reason: 'failed', detail: 'the engine stopped in the preamble', ms: ms() };
 		}
-		const result = await this.#serve(engine, req, onPage, { file, lines, edit, plan, pool, key }, ms);
+		const result = await this.#serve(engine, req, onPage, { file, lines, oldLines, edit, plan, pool, key }, ms);
 		if (this.#closed) engine.remove();
 		else giveBack(engine);
 		return result;
@@ -185,31 +214,21 @@ export class LiveDraft {
 		engine: DraftEngine,
 		req: TeleportRequest,
 		onPage: (p: DraftPage) => void,
-		at: { file: string; lines: string[]; edit: LineEdit; plan: TeleportPlan; pool: PoolConfig; key: string | null },
+		at: { file: string; lines: string[]; oldLines: string[]; edit: LineEdit; plan: TeleportPlan; pool: PoolConfig; key: string | null },
 		ms: () => number
 	): Promise<TeleportResult> {
-		const { file, lines, edit, plan, pool, key } = at;
+		const { file, lines, oldLines, edit, plan, pool, key } = at;
 		// every file reads as the index holds it, whatever disk has by now; the edited one as the edit left it
-		const overDir = path.join(engine.abs, 'over');
-		fs.mkdirSync(overDir, { recursive: true });
-		const edited = path.join(overDir, `${++overrideSeq}.tex`);
-		fs.writeFileSync(edited, req.text);
-		const overrides = new Map<string, string>();
+		const overrides = new Map<string, PlanOverride>();
 		for (const [rel, snap] of this.index.basis) overrides.set(rel, norm(path.relative(this.root, snap)));
-		overrides.set(file, norm(path.relative(this.root, edited)));
+		overrides.set(file, { text: req.text });
 		// each serve of an engine has its own files: the index reads the snapshots of earlier ones; a staged engine goes
 		// on with the serve its stage opened
-		const writePlan = (to: DraftEngine, n: number): string => {
-			const planRel = `${to.rel}/tele/plan-${n}.lua`;
+		const planText = (to: DraftEngine, n: number): string => {
 			const serve = { src: `${to.rel}/tele/s${n}`, cut: `${to.rel}/tele/cut-${n}` };
-			fs.writeFileSync(
-				path.join(this.root, planRel),
-				planLua(plan, overrides, file, edit, paragraphStart(lines, edit), this.srcFiles, serve, this.index.imageList)
-			);
-			return planRel;
+			return planLua(plan, overrides, file, edit, paragraphStart(lines, edit), this.srcFiles, serve, this.index.imageList);
 		};
 		const n = engine.takeStagedServe() ?? engine.nextServe();
-		const planRel = writePlan(engine, n);
 		const serve = { src: `${engine.rel}/tele/s${n}`, cut: `${engine.rel}/tele/cut-${n}` };
 
 		let killed: 'stalled' | 'cut' | null = null;
@@ -233,12 +252,15 @@ export class LiveDraft {
 				if (paged) killAfter('cut', CUT_MS);
 			}
 		};
-		if (this.#queued.has(file)) this.#cut.now();
+		const waiting = this.#queued.get(file);
+		if (waiting && !this.#holds(waiting.req)) this.#cut.now();
 		// pages read in order, each as soon as the engine reports it
 		let pages = Promise.resolve();
-		const running = engine.teleport(planRel, (p) => {
+		const shipped: number[] = [];
+		const running = engine.teleport(planText(engine, n), (p) => {
+			shipped.push(p.n);
 			pages = pages.then(async () => {
-				const page = await readPage(engine.abs, this.root, p.n, p.w, p.h, p.unc);
+				const page = await pageOfRecords(p.records, this.root, p.n, p.w, p.h, p.unc);
 				if (!this.#closed) onPage(page);
 			});
 			if (cutAsked && !paged) killAfter('cut', CUT_MS);
@@ -248,22 +270,36 @@ export class LiveDraft {
 		if (key)
 			stageEngine(pool, key, (other) => {
 				const m = other.nextServe();
-				return { planRel: writePlan(other, m), serve: m };
+				return { plan: planText(other, m), serve: m };
 			});
 		const outcome = await running;
 		clearTimeout(watch);
 		this.#cut = null;
 		await pages;
-		if (killed === 'cut') return { ok: false, reason: 'superseded', ms: ms() };
+		// the pages a cut run shipped show its text, which the next run's diff may not hold
+		let cutMoved: { stop?: number; shifts?: SourceShift[] } = {};
+		if ((killed === 'cut' || outcome.cut) && shipped.length) {
+			const from = Math.min(...shipped, this.#reship?.from ?? Infinity);
+			const texts = this.#reship?.texts ?? new Map<string, string>();
+			const was = texts.get(file);
+			const shifts = this.#sourceShifts(file, lineShifts(was === undefined ? oldLines : linesOf(was), lines));
+			texts.set(file, req.text);
+			this.#reship = { from, to: Math.max(...shipped, this.#reship?.to ?? 0), texts };
+			if (shifts.length) cutMoved = { stop: Math.max(...shipped), shifts };
+		}
+		if (killed === 'cut') return { ok: false, reason: 'superseded', ms: ms(), ...cutMoved };
 		if (killed) return { ok: false, reason: 'failed', detail: `no page for ${STALL_MS / 1000} s`, ms: ms() };
 		if (outcome.cut) {
 			this.index.keepBefore(plan, file, edit, readIndexFile(path.join(engine.abs, 'tele', 'index.jsonl')));
-			return { ok: false, reason: 'superseded', ms: ms() };
+			return { ok: false, reason: 'superseded', ms: ms(), ...cutMoved };
 		}
 		if (this.#closed) return { ok: false, reason: 'superseded', ms: ms() };
 		if (outcome.refused) return { ok: false, reason: 'refused', detail: outcome.refused, ms: ms() };
 		// only a run that never applied failed
 		if (outcome.applyMs === undefined) return { ok: false, reason: 'failed', detail: `engine exit ${outcome.code}`, ms: ms() };
+		// a fatal error ended the job: its pages.json is an earlier serve's
+		if (!outcome.stop && !outcome.ended)
+			return { ok: false, reason: 'failed', detail: `engine exit ${outcome.code} after the apply`, ms: ms() };
 
 		let manifest: { count?: number; srcFiles?: string[] } = {};
 		try {
@@ -271,25 +307,44 @@ export class LiveDraft {
 		} catch {
 			/* no page shipped: the count and file table stand */
 		}
-		this.index.merge(plan, file, edit, readIndexFile(path.join(engine.abs, 'tele', 'index.jsonl')), outcome.stop?.rec ?? null);
+		const shifts = lineShifts(oldLines, lines);
+		this.index.merge(plan, file, edit, shifts, readIndexFile(path.join(engine.abs, 'tele', 'index.jsonl')), outcome.stop?.rec ?? null);
+		const cutTexts = this.#reship?.texts;
+		this.#reship = null;
 		this.index.adoptBasis(path.join(this.root, serve.src));
 		if (manifest.srcFiles && manifest.srcFiles.length >= this.srcFiles.length) this.srcFiles = manifest.srcFiles;
 		if (!outcome.stop && manifest.count !== undefined) this.count = manifest.count;
-		const by = edit.newTo - edit.oldTo;
-		// page-extract names a file by its lowercased base name
-		const sf = this.srcFiles.indexOf(path.basename(file).toLowerCase()) + 1;
+		const moved = this.#screenShifts(file, lines, shifts, cutTexts);
 		return {
 			ok: true,
 			ms: ms(),
 			...(outcome.pages.length ? { from: outcome.pages[0].n } : {}),
 			...(outcome.stop ? { stop: outcome.stop.shipped } : {}),
-			...(outcome.stop && by && sf ? { shift: { sf, after: edit.oldTo, by } } : {}),
+			...(outcome.stop && moved.length ? { shifts: moved } : {}),
 			count: this.count,
 			srcFiles: this.srcFiles
 		};
 	}
 
+	#sourceShifts(file: string, shifts: LineShift[]): SourceShift[] {
+		// page-extract names a file by its lowercased base name
+		const sf = this.srcFiles.indexOf(path.basename(file).toLowerCase()) + 1;
+		return sf ? shifts.map((s) => ({ sf, ...s })) : [];
+	}
+
+	/** past a run's stop the source lines follow the index, or the text a cut run left; they go to what the run read */
+	#screenShifts(file: string, lines: string[], shifts: LineShift[], cutTexts?: Map<string, string>): SourceShift[] {
+		const own = cutTexts?.get(file);
+		const out = this.#sourceShifts(file, own === undefined ? shifts : lineShifts(linesOf(own), lines));
+		for (const [f, text] of cutTexts ?? []) {
+			const read = f === file ? null : this.index.text(f);
+			if (read !== null) out.push(...this.#sourceShifts(f, lineShifts(linesOf(text), linesOf(read))));
+		}
+		return out;
+	}
+
 	#collectGarbage(): void {
+		if (sweepHeld(this.root)) return;
 		const keep = this.index.folders();
 		const outAbs = path.join(this.root, OUT);
 		function sweep(p: string): void {

@@ -40,6 +40,7 @@ export const markSaves = mapOf('mark', (p) => p.save?.marks);
 const wholeRuns = all((p) => p.save?.wholeRun);
 const interrupting = all((p) => p.save?.interrupts);
 const splicing = all((p) => p.save?.spliceChild);
+const tights = all((p) => p.save?.tight);
 
 export function wholeRun(node: Node): boolean {
 	return wholeRuns.some((is) => is(node));
@@ -51,4 +52,8 @@ export function interrupts(next: Node): boolean {
 
 export function spliceChild(parent: Node, index: number): boolean {
 	return splicing.every((may) => may(parent, index));
+}
+
+export function tightPair(prev: Node, next: Node): boolean {
+	return tights.some((tight) => tight(prev, next));
 }

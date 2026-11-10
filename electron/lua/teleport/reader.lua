@@ -51,6 +51,22 @@ return function(T)
 		f:close()
 		return lines
 	end
+	-- an override is a file, or the text itself ({ text = ... }), split as a file's lines are: LuaTeX's readline ends a
+	-- line at a CR of its own too
+	local function override_lines(src)
+		if type(src) ~= "table" then return lines_of(src) end
+		local text, lines, i = src.text, {}, 1
+		while i <= #text do
+			local j = text:find("[\r\n]", i)
+			if not j then
+				lines[#lines + 1] = text:sub(i)
+				break
+			end
+			lines[#lines + 1] = text:sub(i, j - 1)
+			i = text:sub(j, j + 1) == "\r\n" and j + 2 or j + 1
+		end
+		return lines
+	end
 
 	-- every source file as TeX read it, for the edits that come later to be measured against; a served run writes
 	-- its own folder, since the index still reads what earlier runs wrote
@@ -106,7 +122,7 @@ return function(T)
 
 	-- `input`: the file opens for \input; LaTeX before 2023 opens it on an \openin stream first to see that it exists
 	local function source_reader(name, rel, input)
-		local lines = lines_of(T.overrides[rel] or name)
+		local lines = override_lines(T.overrides[rel] or name)
 		if not lines then return nil end
 		snapshot(rel, lines)
 		local r = { rel = rel, path = name, source = true, pos = 0, depth = 0, injected = {}, lines = lines }
@@ -194,7 +210,7 @@ return function(T)
 	function T.reload(rel)
 		for _, r in ipairs(T.stack) do
 			if r.source and r.rel == rel then
-				local lines = lines_of(T.overrides[rel])
+				local lines = override_lines(T.overrides[rel])
 				if lines then
 					r.lines = lines
 					snapped[rel] = nil
@@ -216,13 +232,33 @@ return function(T)
 		end
 	end
 
-	local function plain_reader(name)
+	local DRAFT = (TEXPILE_DRAFT_OUT or "") .. "/"
+
+	-- a file the run wrote from the lines just read (comment.sty's comment.cut) is those lines of the source file
+	local function copied_from(name)
+		local s = T.stack[#T.stack]
+		if not (s and s.source) then return nil end
+		local lines = lines_of(name)
+		local n = lines and #lines or 0
+		local at = s.pos - n - 1
+		if n == 0 or at < 0 then return nil end
+		for k = 1, n do
+			if (lines[k]:gsub("%s+$", "")) ~= ((s.lines[at + k] or ""):gsub("%s+$", "")) then return nil end
+		end
+		return { f = s.rel, at = at }
+	end
+
+	local function plain_reader(name, rel, input)
 		local fh = io.open(name, "rb")
 		if not fh then return nil end
-		local r = { source = false }
+		local r = { source = false, line = 0 }
+		if input and TEXPILE_DRAFT_OUT and rel:sub(1, #DRAFT) == DRAFT then r.copied = copied_from(name) end
 		function r.reader()
 			local l = fh:read("*l")
-			if l then l = l:gsub("\r$", "") end
+			if l then
+				l = l:gsub("\r$", "")
+				r.line = r.line + 1
+			end
 			return l
 		end
 		function r.close()
@@ -239,7 +275,6 @@ return function(T)
 
 	-- the seed files (the .toc, the .bbl) as the engine got them: a served run rewrites some (\tableofcontents opens
 	-- the .toc for writing), and the next run reads what it was given
-	local DRAFT = (TEXPILE_DRAFT_OUT or "") .. "/"
 	local function seed_of(rel)
 		local leaf = rel:sub(1, #DRAFT) == DRAFT and rel:sub(#DRAFT + 1)
 		if not leaf or leaf:find("/", 1, true) then return nil end
@@ -253,6 +288,8 @@ return function(T)
 	-- LuaTeX looks in -output-directory only while no callback answers for it, and kpathsea does from TeX Live 2023
 	luatexbase.add_to_callback("find_read_file", function(id, name)
 		stream = id
+		local stale = T.serving and not T.silent and T.stale_read(name)
+		if stale and not seed_of(DRAFT .. stale) then T.refuse("the run reads back " .. stale .. ", written before it") end
 		if TEXPILE_DRAFT_OUT and not name:match("^/") and not name:match("^%a:") and lfs.attributes(DRAFT .. name, "mode") == "file" then
 			return DRAFT .. name
 		end
@@ -268,10 +305,18 @@ return function(T)
 			pre_seen[rel] = true
 			T.pre_files[#T.pre_files + 1] = rel
 		end
-		local r = is_source(rel) and source_reader(name, rel, input) or plain_reader(name)
+		local r = is_source(rel) and source_reader(name, rel, input) or plain_reader(name, rel, input)
 		if not r then return nil end
 		if T.base and r.source and input then T.entered(rel) end
 		if input then T.stack[#T.stack + 1] = r end
 		return { reader = r.reader, close = r.close }
 	end, "texpile.tele.reader")
+
+	-- where the paragraph being read was written: TeX keeps the outer file's line in a file read through a callback
+	function TEXPILE_SRC_AT()
+		local r = T.stack[#T.stack]
+		if not r or r.source then return nil end
+		if r.copied then return r.copied.f, r.copied.at + r.line end
+		return nil, r.line
+	end
 end

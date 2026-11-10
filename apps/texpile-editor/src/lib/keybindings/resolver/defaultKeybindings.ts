@@ -92,9 +92,10 @@ export const DEFAULT_KEYBINDINGS: DefaultKeybinding[] = [
 	{ command: 'view.zoomIn', key: 'mod+shift+=', late: true },
 	{ command: 'view.zoomOut', key: 'mod+-', late: true },
 	{ command: 'view.zoomReset', key: 'mod+0', late: true },
-	// was Mod+Alt+B, LaTeX Workshop's build chord, but Option+B is a dead key on macOS
-	{ command: 'compile.run', key: 'mod+alt+enter', late: true },
-	{ command: 'compile.stop', key: 'mod+alt+enter', late: true },
+	// was Mod+Alt+B, LaTeX Workshop's build chord, but Option+B is a dead key on macOS. Not late: ProseMirror cancels
+	// every Enter it does not bind
+	{ command: 'compile.run', key: 'mod+alt+enter' },
+	{ command: 'compile.stop', key: 'mod+alt+enter' },
 	// Option+Z types a character on macOS
 	{ command: 'editor.zoteroCitation', key: 'alt+z', mac: 'mod+alt+z', when: '!inputFocus && !terminalFocus', late: true },
 	...EDITOR_KEYBINDINGS

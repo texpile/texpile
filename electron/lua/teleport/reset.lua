@@ -200,6 +200,7 @@ return function(T)
 			local v, bv = T.param_value(p, k), b.params[p]
 			if bv ~= nil and v ~= bv then
 				if k == "t" then lists[#lists + 1] = { pre = { G(), token.create(p) }, b = T.built(b.tparam_toks[p] or {}) }
+				elseif k == "s" then lists[#lists + 1] = { text = "\\global\\" .. p .. " " .. bv .. "\\relax" }
 				elseif k == "m" then
 					local g = T.glue_of(bv)
 					tex.setmuglue(65535, g[1], g[2], g[3], g[4], g[5])
@@ -234,7 +235,7 @@ return function(T)
 				tex.setlccode("global", c, tonumber(f[2]))
 				tex.setuccode("global", c, tonumber(f[3]))
 				tex.setsfcode("global", c, tonumber(f[4]))
-				tex.setmathcode("global", c, #m == 1 and m[1] or m)
+				T.set_mathcode(c, m)
 			end
 		end
 		local fam = T.fams_now()
@@ -289,6 +290,8 @@ return function(T)
 			while i <= #x and x:sub(i, i) == y:sub(i, i) do i = i + 1 end
 			return x:sub(math.max(1, i - 80), i + 40):gsub("%s+", " ")
 		end
+		-- the fonts the run selected are set up in this process for good, and the base selected none
+		T.selected = {}
 		local got = T.canon(T.diff())
 		local done = R.done
 		R = nil

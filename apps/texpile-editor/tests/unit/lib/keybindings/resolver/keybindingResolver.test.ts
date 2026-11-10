@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { parseKeys } from '$lib/keybindings/keys/keyChord';
-import { buildKeybindingTable, keysOf, resolveKeys } from '$lib/keybindings/resolver/keybindingResolver';
+import { buildKeybindingTable, keysOf, menuKeysOf, resolveKeys } from '$lib/keybindings/resolver/keybindingResolver';
 import { defaultItems, userItems } from '$lib/keybindings/resolver/keybindingRules';
 
 const defaults = defaultItems(
@@ -58,6 +58,20 @@ describe('keybinding resolution', () => {
 		const table = buildKeybindingTable(defaults, items);
 		expect(resolveKeys(table, press('mod+s'), () => undefined, all).kind).toBe('none');
 		expect(keysOf(table, 'file.save')).toEqual(press('mod+shift+s'));
+	});
+
+	it('gives a native menu item no accelerator for a key the user limited with a when clause', () => {
+		const items = userItems(
+			[
+				{ key: 'ctrl+alt+k', command: 'file.save', when: 'terminalFocus' },
+				{ key: 'ctrl+alt+j', command: 'editor.indent' }
+			],
+			false
+		).items;
+		const table = buildKeybindingTable(defaults, items);
+		expect(menuKeysOf(table, 'file.save')).toBeNull();
+		expect(menuKeysOf(table, 'editor.indent')).toEqual(press('ctrl+alt+j'));
+		expect(menuKeysOf(table, 'view.sidebar')).toEqual(press('mod+k mod+b'));
 	});
 
 	// as VS Code: a user key wins over the editors, and in the terminal the command decides (commandsToSkipShell)

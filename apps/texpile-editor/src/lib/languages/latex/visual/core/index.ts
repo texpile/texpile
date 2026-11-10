@@ -37,6 +37,7 @@ export { horizontalSpaceFace, verticalSpaceFace } from '$lib/editor/visual/exten
 export { citationGroupsText, citedWorks, type CitedGroup } from '$lib/editor/visual/extensions/citation/citationText';
 export { tip } from '$lib/components/tooltip.svelte';
 export { returnFocusToText } from '$lib/editor/visual/extensions/popoverFocus/returnFocus';
+export { offerPopover } from '$lib/editor/visual/extensions/popoverFocus/atomPopovers';
 
 export {
 	HORIZONTAL_SPACES,
@@ -89,8 +90,8 @@ export { citationText } from '$lib/editor/visual/extensions/citation/citationTex
 export { citationVariantKind } from '$lib/languages/latex/visual/extensions/citation/citationVariantKind';
 export { default as CitationReferenceField } from '$lib/editor/visual/extensions/citation/CitationReferenceField.svelte';
 export { default as CitationPagesField } from '$lib/editor/visual/extensions/citation/CitationPagesField.svelte';
-export { chipHost } from '$lib/languages/latex/visual/extensions/chipHost';
-export { quietTemplateSpaces } from '$lib/languages/latex/visual/extensions/chipHost';
+export { chipHost } from '$lib/editor/visual/extensions/chipHost';
+export { quietTemplateSpaces } from '$lib/editor/visual/extensions/chipHost';
 export { jumpToLabel } from '$lib/languages/latex/visual/extensions/ref/jumpToLabel';
 export { sanitizeLabel } from '$lib/editor/visual/label';
 export { liveRefProblems } from '$lib/workspace/document/liveRefChecks.svelte';

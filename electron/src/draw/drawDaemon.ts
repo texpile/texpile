@@ -129,7 +129,8 @@ async function drawOne(d: Daemon, picture: string): Promise<unknown> {
 	if (d.failure) throw d.failure;
 	const t0 = performance.now();
 	fs.writeFileSync(path.join(d.dir, 'work', 'picture.tex'), picture);
-	d.out = '';
+	// a process still loading has its preamble's errors in out
+	if (d.warm) d.out = '';
 	const out = await new Promise<string>((resolve, reject) => {
 		function stuck(message: string): void {
 			d.failure = new Error(message);

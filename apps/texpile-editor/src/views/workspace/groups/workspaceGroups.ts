@@ -4,8 +4,6 @@ import { visualDocCache } from '$lib/workspace/visualDocCache';
 import { noParse, parseOf } from '$lib/editor/visual/parseOrigins';
 import type { EditorPaneProps } from '../editorPaneProps';
 import { focusedTab, showTab } from '$lib/workspace/workspaceStore';
-import { editorViewStore } from '$lib/stores/editorStore';
-import { saveVisualPosition, restoreVisualPosition } from '$lib/workspace/visualPositions';
 import type { WorkspaceDoc } from '../workspaceDoc.svelte';
 import type { WorkspaceEditFlow } from '../workspaceEditFlow.svelte';
 import type { WorkspaceProvider } from '$lib/workspace/workspaceProvider';
@@ -85,16 +83,9 @@ export function groupHostOf(d: GroupDeps): Omit<GroupHost, 'capture'> {
 			else if (same && modeChanged && mode === 'visual') d.wsdoc.rebuildVisualFromSource();
 		},
 		beforeSplit() {
-			const { doc, modes } = d.wsdoc;
-			const view = editorViewStore.current;
-			if (modes.mode === 'visual' && view && doc.path) saveVisualPosition(view, doc.path, doc.texSource, doc.sourceMap);
+			const { doc } = d.wsdoc;
 			// the new group's editor is built from visualDoc, which a visual edit does not move on
 			if (doc.lastDoc && doc.lastDocSource === doc.texSource) doc.visualDoc = doc.lastDoc;
-		},
-		placeSplitCaret() {
-			const { doc, modes } = d.wsdoc;
-			const view = editorViewStore.current;
-			if (modes.mode === 'visual' && view && doc.path) restoreVisualPosition(view, doc.path, doc.texSource, doc.sourceMap);
 		}
 	};
 }

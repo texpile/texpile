@@ -51,11 +51,11 @@ const { schema } = await import('$lib/languages/latex/schema/latexPMSchema');
 const { PLACEHOLDER_CLASS } = await import('$lib/editor/visual/extensions/mathlivebridge/mathStatic');
 const { MathLiveView } = await import('$lib/editor/visual/extensions/mathlivebridge/mlview.svelte');
 
-function makeView(latex = 'x^2', isBlock = false) {
+function makeView(latex = 'x^2', isBlock = false, editable = true) {
 	const type = isBlock ? schema.nodes.block_math : schema.nodes.inline_math;
 	const node = type.create(isBlock ? { numbered: false, lineLabels: [] } : null, schema.text(latex));
 	const pmView = {
-		editable: true,
+		editable,
 		state: { doc: { descendants() {} }, tr: {}, selection: { from: 0, to: 0 } },
 		dispatch() {},
 		focus() {}
@@ -131,6 +131,19 @@ describe('math node view materialization', () => {
 		view.selectNode();
 		expect(built).toBe(1);
 		expect(view.mathField).toBeDefined();
+	});
+
+	it('takes no focus when a parked editor selects the formula again as it follows the file', () => {
+		const parked = makeView('E=mc^2', true, false);
+		pointTo(parked.dom);
+		const focus = vi.spyOn(parked.mathField!, 'focus');
+		parked.selectNode();
+		expect(focus).not.toHaveBeenCalled();
+		const live = makeView('E=mc^2', true);
+		pointTo(live.dom);
+		const entered = vi.spyOn(live.mathField!, 'focus');
+		live.selectNode();
+		expect(entered).toHaveBeenCalled();
 	});
 
 	it('builds only once however it is triggered', () => {

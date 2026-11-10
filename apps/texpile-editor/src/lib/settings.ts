@@ -72,6 +72,8 @@ export type AppSettings = {
 	visualJustify: boolean;
 	/** long words may split at line ends in justified text. The hyphens are drawn, never written to the file. */
 	visualHyphenate: boolean;
+	/** family of the visual editor's text; '' follows the theme */
+	textFont: string;
 	/** formatting, tables and Markdown from other apps are converted on paste; off pastes their plain text */
 	smartPaste: boolean;
 	/** the Typst preview scrolls to follow the caret. Off by default, as in tinymist. A pane
@@ -156,6 +158,7 @@ const DEFAULTS: AppSettings = {
 	sourceLineWrap: true,
 	visualJustify: true,
 	visualHyphenate: true,
+	textFont: '',
 	smartPaste: true,
 	typstPreviewFollow: false,
 	zoteroEnabled: true,

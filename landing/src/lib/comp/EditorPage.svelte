@@ -8,15 +8,15 @@
 
 <script lang="ts">
 	// One editor page (/latex-editor, /typst-editor). Both target one search intent and share the
-	// same shape: the home hero playing the format's own scenes, two panels for the two ways to write,
-	// two panels for reviews (visual diff, comments), the live preview, collaboration, AI, themes,
+	// same shape: the home hero playing the format's own scenes, the editing stage for the two ways to write,
+	// two panels for reviews (visual diff, comments), the live preview, collaboration, AI,
 	// integrations, the feature grid, and the download band with the toolchain line. The route
 	// supplies every word and image; what is Texpile-wide (the download band) lives here.
 	import ArrowRight from '@lucide/svelte/icons/arrow-right';
 	import Check from '@lucide/svelte/icons/check';
 	import Download from '@lucide/svelte/icons/download';
 	import Hero from '$lib/comp/Hero.svelte';
-	import { COLLAB_SCENES, PREVIEW_SCENES, type HeroFormat } from '$lib/comp/hero/heroScenes';
+	import { PREVIEW_LOOP, type HeroFormat } from '$lib/comp/hero/heroScenes';
 	import SceneLoop from '$lib/comp/hero/SceneLoop.svelte';
 	import IntegrationGrid from '$lib/comp/IntegrationGrid.svelte';
 	import AiSection from '$lib/comp/AiSection.svelte';
@@ -24,6 +24,10 @@
 	import { m } from '$lib/paraglide/messages';
 	import Alternates, { absolute } from '$lib/comp/Alternates.svelte';
 	import { reveal } from '$lib/reveal';
+	import collabLatex from '$lib/assets/showcase/collab.webp';
+	import collabTypst from '$lib/assets/showcase/collab-typst.webp';
+	import EditorStage from '$lib/comp/EditorStage.svelte';
+	import previewTypst from '$lib/assets/showcase/preview-typst.webp';
 
 	let {
 		title,
@@ -36,7 +40,6 @@
 		reviews,
 		preview,
 		collab,
-		themes,
 		alsoSub,
 		features,
 		needsLine
@@ -48,11 +51,10 @@
 		heading: string;
 		lead: string;
 		format: HeroFormat;
-		ways: { sub: string; visual: Panel; source: Panel };
+		ways: { sub: string; note?: { heading: string; body: string }; visualDocs: string; sourceDocs: string };
 		reviews: { diff: Panel; comments: Panel };
 		preview: Omit<Section, 'img'>;
 		collab: Omit<Section, 'img'>;
-		themes: Section;
 		alsoSub: string;
 		features: Feature[];
 		needsLine: string;
@@ -60,6 +62,8 @@
 
 	// self-referencing per locale; the alternates in the head say which language each URL is
 	const canonical = $derived(absolute(path));
+
+	const collabShot = $derived(format === 'latex' ? collabLatex : collabTypst);
 </script>
 
 <svelte:head>
@@ -86,10 +90,20 @@
 			<h2 class="display text-surface-950 text-[clamp(2rem,3.4vw,3rem)]">{m.ed_ways_heading()}</h2>
 			<p class="text-surface-600 mt-4 text-lg leading-relaxed">{ways.sub}</p>
 		</div>
-		<div class="mt-12 grid gap-10 lg:grid-cols-2 lg:gap-16">
-			{@render panel(ways.visual, 0)}
-			{@render panel(ways.source, 90)}
-		</div>
+
+		<EditorStage only={format} />
+
+		<!-- a fact about the format's tooling that no still shows -->
+		{#if ways.note}
+			<div class="border-surface-200 mt-12 max-w-3xl border-l-2 pl-5" use:reveal>
+				<h3 class="text-surface-900 font-semibold">{ways.note.heading}</h3>
+				<p class="text-surface-600 mt-2 leading-relaxed">{ways.note.body}</p>
+			</div>
+		{/if}
+		<p class="mt-8 flex flex-wrap gap-x-8 gap-y-2">
+			{@render docsLink(ways.visualDocs, m.visual_editing_heading())}
+			{@render docsLink(ways.sourceDocs, m.source_editing_heading())}
+		</p>
 	</div>
 </section>
 
@@ -115,7 +129,13 @@
 				<p class="mt-6">{@render docsLink(preview.docs)}</p>
 			</div>
 			<div class="lg:col-span-8" use:reveal={90}>
-				<SceneLoop scene={PREVIEW_SCENES[format].scene} poster={PREVIEW_SCENES[format].poster} alt={preview.alt} />
+				{#if format === 'latex'}
+					<SceneLoop video={PREVIEW_LOOP.video} poster={PREVIEW_LOOP.poster} alt={preview.alt} />
+				{:else}
+					<div class="border-surface-200 overflow-hidden rounded-xl border shadow-2xl">
+						<img src={previewTypst} alt={preview.alt} loading="lazy" draggable="false" class="block w-full" />
+					</div>
+				{/if}
 			</div>
 		</div>
 	</div>
@@ -131,7 +151,9 @@
 				<p class="mt-6">{@render docsLink(collab.docs)}</p>
 			</div>
 			<div class="lg:col-span-8" use:reveal={90}>
-				<SceneLoop scene={COLLAB_SCENES[format].scene} poster={COLLAB_SCENES[format].poster} alt={collab.alt} />
+				<div class="border-surface-200 overflow-hidden rounded-xl border shadow-2xl">
+					<img src={collabShot} alt={collab.alt} loading="lazy" draggable="false" class="block w-full" />
+				</div>
 			</div>
 		</div>
 	</div>
@@ -139,24 +161,6 @@
 
 <!-- after collaboration, whose picture is on the left: this one goes right -->
 <AiSection {format} alternate={false} />
-
-<section id="themes" class="border-surface-200 border-t bg-white py-20 md:py-28">
-	<div class="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-		<div class="grid items-center gap-8 lg:grid-cols-12 lg:gap-12">
-			<!-- media left, after the AI picture sat right -->
-			<div class="lg:order-2 lg:col-span-4" use:reveal>
-				<h2 class="display text-surface-950 text-[clamp(2rem,3.4vw,3rem)]">{themes.heading}</h2>
-				<p class="text-surface-600 mt-5 leading-relaxed">{themes.body}</p>
-				<p class="mt-6">{@render docsLink(themes.docs)}</p>
-			</div>
-			<div class="lg:col-span-8" use:reveal={90}>
-				<div class="border-surface-200 overflow-hidden rounded-xl border shadow-2xl">
-					<img src={themes.img} alt={themes.alt} loading="lazy" draggable="false" class="block w-full" />
-				</div>
-			</div>
-		</div>
-	</div>
-</section>
 
 <IntegrationGrid items={integrationList(format)} />
 
@@ -197,7 +201,6 @@
 				{m.word_download()}
 			</a>
 			<p class="text-surface-400 max-w-xl text-sm">{needsLine}</p>
-			<p class="text-surface-400 font-mono text-xs">{m.hero_tagline()}</p>
 		</div>
 	</div>
 </section>
@@ -226,12 +229,12 @@
 	</div>
 {/snippet}
 
-{#snippet docsLink(href: string)}
+{#snippet docsLink(href: string, label = m.docs_link_label())}
 	<a
 		href={localizeHref(href)}
 		class="text-primary-600 hover:text-primary-700 inline-flex items-center gap-1.5 font-medium transition-colors"
 	>
-		{m.docs_link_label()}
+		{label}
 		<ArrowRight class="h-4 w-4" />
 	</a>
 {/snippet}

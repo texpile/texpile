@@ -11,11 +11,12 @@ import { m } from '$lib/paraglide/messages';
 
 // Full renderer reload, VS Code's "Reload Window": the recovery move when something is stuck. Through the main process,
 // not location.reload(): the workspace root is memory-only, so a bare reload forgets the folder and lands on Start
-async function reloadWorkspace(): Promise<void> {
+export async function reloadWorkspace(): Promise<void> {
 	// hosting outranks a dirty buffer: the reload drops every guest (session keys are memory-only), and that is the
 	// surprise worth one dialog. Never both dialogs
 	if (collabHost.active) {
 		if (!(await confirmAsk(m.palette_reload_sharing_confirm(), { danger: true }))) return;
+		await collabHost.end();
 	} else if (isDirty.current && !(await confirmAsk(m.palette_reload_unsaved_confirm(), { danger: true }))) return;
 	nativeBridge()?.reloadWorkspace?.();
 }

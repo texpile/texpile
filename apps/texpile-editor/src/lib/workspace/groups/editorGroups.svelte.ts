@@ -27,10 +27,8 @@ export type GroupHost = {
 	enter(tab: Tab | null, mode: EditMode, own: GroupOwnDoc | null): void;
 	/** another file's text as a visual document, put up nowhere while it parses */
 	parseFile: FileParser;
-	/** before a slot opens the focused file: the caret saved and the document up to date, so it opens where this one is */
+	/** before a slot opens the focused file: the document up to date, so it opens as this one is */
 	beforeSplit(): void;
-	/** the caret beforeSplit saved, put back in the focused editor */
-	placeSplitCaret(): void;
 };
 
 /** a parked slot's own editor document, and the props it is drawn with, whose text and map are of it */
@@ -48,8 +46,6 @@ export type EditorGroup = {
 	unseen?: boolean;
 	/** in a window of its own, with its one file and no strip; where on the screen it opened */
 	window?: { x: number; y: number };
-	/** opened by a split on the focused file and not focused since: it takes that one's caret when it first is */
-	split?: boolean;
 };
 
 class EditorGroups {
@@ -183,7 +179,7 @@ class EditorGroups {
 		const store = new TabsStore();
 		store.list = tab ? [tab] : [];
 		tabs.others.add(store);
-		return { id: this.nextId++, tabs: store, frozen, active: tab, mode, split: !!tab };
+		return { id: this.nextId++, tabs: store, frozen, active: tab, mode };
 	}
 
 	private storeOf(id: number): TabsStore | null {
@@ -209,14 +205,13 @@ class EditorGroups {
 		this.list = this.list.map((g) => {
 			if (g === from) return { ...g, ...left, tabs: store, unseen: false };
 			// its snapshot stays until its file is open and drawn: the pane shows it in the meantime
-			if (g === to) return { ...g, tabs: null, active, split: false };
+			if (g === to) return { ...g, tabs: null, active };
 			return g;
 		});
 		this.focusedId = id;
 		if (!to.window) this.homeId = id;
 		tabs.persist();
 		host.enter(active, to.mode, own);
-		if (to.split && !tab) void this.whenDrawn().then(() => this.focusedId === id && host.placeSplitCaret());
 	}
 
 	/** a slot in a window of its own, showing `tab`; the tab is still on its strip, to be taken off by whoever moves it */
@@ -305,7 +300,7 @@ class EditorGroups {
 		const store = this.list.find((g) => g.id === id && !this.isFocused(g))?.tabs;
 		if (!store) return;
 		store.list = [];
-		this.list = this.list.map((g) => (g.id === id ? { ...g, frozen: null, active: null, split: false } : g));
+		this.list = this.list.map((g) => (g.id === id ? { ...g, frozen: null, active: null } : g));
 	}
 
 	/** the slot's last tab went: the slot closes when the slots left fit a smaller layout */

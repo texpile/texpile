@@ -1,5 +1,6 @@
 <script lang="ts">
-	import { ArrowDownWideNarrow, Keyboard, Search } from '@lucide/svelte';
+	import type { Snippet } from 'svelte';
+	import { ArrowDownWideNarrow, Keyboard, ListX } from '@lucide/svelte';
 	import { tip } from '$lib/components/tooltip.svelte';
 	import { isMac } from '$lib/platform';
 	import { keysText, type KeySequence } from '$lib/keybindings/keys/keyChord';
@@ -8,13 +9,18 @@
 	import type { KeybindingsPanel } from './keybindingsPanel.svelte';
 	import { m } from '$lib/paraglide/messages';
 
-	const props: { panel: KeybindingsPanel } = $props();
+	const props: { panel: KeybindingsPanel; actions?: Snippet } = $props();
 	let input = $state<HTMLInputElement | null>(null);
 	let recorded: KeySequence = [];
 
 	function toggleRecording(): void {
 		props.panel.recording = !props.panel.recording;
 		recorded = [];
+		input?.focus();
+	}
+
+	function clear(): void {
+		props.panel.query = '';
 		input?.focus();
 	}
 
@@ -37,8 +43,7 @@
 	}
 </script>
 
-<div class="input flex min-w-0 flex-1 items-center gap-1.5 text-sm">
-	<Search class="text-faint size-3.5 shrink-0" />
+<div class="input flex min-w-0 flex-1 items-center gap-0.5 py-1 pr-1 text-sm">
 	<input
 		bind:this={input}
 		bind:value={props.panel.query}
@@ -51,21 +56,30 @@
 		{onkeydown}
 		onblur={() => (props.panel.recording = false)}
 	/>
+	<button
+		type="button"
+		class="btn-icon btn-icon-sm shrink-0 {props.panel.recording ? 'preset-tonal-primary' : 'hover:preset-tonal'}"
+		aria-pressed={props.panel.recording}
+		aria-label={m.keybindings_record_keys()}
+		use:tip={m.keybindings_record_keys()}
+		onmousedown={(e) => e.preventDefault()}
+		onclick={toggleRecording}><Keyboard class="size-4" /></button
+	>
+	<button
+		type="button"
+		class="btn-icon btn-icon-sm shrink-0 {props.panel.byPrecedence ? 'preset-tonal-primary' : 'hover:preset-tonal'}"
+		aria-pressed={props.panel.byPrecedence}
+		aria-label={m.keybindings_sort_precedence()}
+		use:tip={m.keybindings_sort_precedence()}
+		onclick={() => (props.panel.byPrecedence = !props.panel.byPrecedence)}><ArrowDownWideNarrow class="size-4" /></button
+	>
+	<button
+		type="button"
+		class="btn-icon btn-icon-sm hover:preset-tonal shrink-0"
+		disabled={!props.panel.query}
+		aria-label={m.keybindings_clear_search()}
+		use:tip={m.keybindings_clear_search()}
+		onclick={clear}><ListX class="size-4" /></button
+	>
+	{@render props.actions?.()}
 </div>
-<button
-	type="button"
-	class="btn shrink-0 px-3 {props.panel.recording ? 'preset-tonal-primary' : 'preset-tonal'}"
-	aria-pressed={props.panel.recording}
-	aria-label={m.keybindings_record_keys()}
-	use:tip={m.keybindings_record_keys()}
-	onmousedown={(e) => e.preventDefault()}
-	onclick={toggleRecording}><Keyboard class="size-4" /></button
->
-<button
-	type="button"
-	class="btn shrink-0 px-3 {props.panel.byPrecedence ? 'preset-tonal-primary' : 'preset-tonal'}"
-	aria-pressed={props.panel.byPrecedence}
-	aria-label={m.keybindings_sort_precedence()}
-	use:tip={m.keybindings_sort_precedence()}
-	onclick={() => (props.panel.byPrecedence = !props.panel.byPrecedence)}><ArrowDownWideNarrow class="size-4" /></button
->

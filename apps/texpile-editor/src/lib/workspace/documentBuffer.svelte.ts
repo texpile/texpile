@@ -136,6 +136,8 @@ export class DocumentBuffer {
 	private model = $state.raw<DocumentText | null>(null);
 	private visualKind = $state(false);
 	private standalone = false;
+	/** the path the model was made for, which a rename moves ahead of a guest's shared text */
+	private modelPath: string | null = null;
 	/** the text the file opened with, the baseline of a file no buffer holds */
 	private opened = '';
 	docMeta = $state<DocMeta>(null);
@@ -269,6 +271,7 @@ export class DocumentBuffer {
 		this.sourceMap = emptyMap();
 		this.visualStale = false;
 		this.model = null;
+		this.modelPath = null;
 		this.standalone = false;
 		this.opened = '';
 		this.path = null;
@@ -300,6 +303,7 @@ export class DocumentBuffer {
 		// a read-only file is never written, so it never shares the buffers' text
 		const model = issue ? null : this.deps.textModel?.(path);
 		this.model = model || standaloneText(text);
+		this.modelPath = path;
 		this.standalone = !model;
 		this.visualKind = visual;
 		this.encodingIssue = issue;
@@ -330,20 +334,24 @@ export class DocumentBuffer {
 		const model = this.encodingIssue ? null : this.deps.textModel?.(to);
 		if (model) {
 			this.model = model;
+			this.modelPath = to;
 			this.standalone = false;
 		}
 		return true;
 	}
 
-	/** a file opened before its shared text existed (a guest's new file) takes it once it does, with what was typed meanwhile */
+	/** the open file takes its shared text once the session has it: a guest's new file with what was typed meanwhile, or
+	 *  a file the guest renamed, written under its old name until the host has moved it */
 	bindModel(): void {
-		if (!this.standalone || !this.path || this.encodingIssue || !this.model) return;
+		if (!this.path || this.encodingIssue || !this.model || (!this.standalone && this.modelPath === this.path)) return;
 		const model = this.deps.textModel?.(this.path);
-		if (!model) return;
+		if (!model || (!this.standalone && model.text !== this.model.text)) return;
 		const typed = this.model.text.toString();
+		const standalone = this.standalone;
 		this.model = model;
+		this.modelPath = this.path;
 		this.standalone = false;
-		if (typed !== this.opened) model.write(typed, this.opened);
+		if (standalone && typed !== this.opened) model.write(typed, this.opened);
 	}
 
 	/** an edit goes into the file's text, which writes it on its own; `before` is the text the change was made to */
@@ -448,10 +456,10 @@ export class DocumentBuffer {
 		// reference handshake: the editor sees its own live doc and skips the state swap
 		this.visualDoc = liveDoc;
 		this.lastDoc = liveDoc;
-		if (liveDoc.eq(parsed.doc)) {
-			this.sourceMap = parsed.map;
-			this.lastDocSource = text;
-		} else this.restate(liveDoc);
+		// the patched doc was made from `text`, so what it writes differently is a change to that text
+		this.lastDocSource = text;
+		if (liveDoc.eq(parsed.doc)) this.sourceMap = parsed.map;
+		else this.restate(liveDoc);
 		this.offerInserts();
 	}
 

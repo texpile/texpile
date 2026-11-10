@@ -144,7 +144,7 @@ export function buildSourceExtensions(deps: SourceSetupDeps): Extension[] {
 		// covered the toolbar, under the toolbar's own layer
 		tooltips({ tooltipSpace: sourceTooltipSpace }),
 		tooltipCardTheme,
-		// the cards are diagnosticHover's; the lint package's hover keeps the language server's plain ones
+		// the cards are diagnosticHover's, so the lint package's own hover shows none of them a second time
 		linter(null, { tooltipFilter: (ds) => ds.filter((d) => !d.renderMessage) }),
 		// multiple cursors: the keymaps already bind the commands, but every transaction is
 		// normalized down to one range until the state allows extra ones

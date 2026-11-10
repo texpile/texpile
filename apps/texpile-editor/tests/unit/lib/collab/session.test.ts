@@ -348,6 +348,24 @@ describe('collab session end-to-end', () => {
 		guest.session.destroy();
 	});
 
+	// a guest's delete reaches the disk and then this rescan, which used to drop the host's open file without closing it
+	it('reports a held file the rescan finds gone as deleted', async () => {
+		const key = (await deriveSessionKeys(generateShareCode())).contentKey;
+		const { disk, fs } = fakeFs({ 'main.tex': 'Hello\n', 'x.tex': 'X\n' });
+		const host = await makeHost(new FakeHub(), key, fs);
+		await host.buffers.ensure('x.tex');
+		const deleted: string[] = [];
+		host.buffers.hooks = { deleted: (p) => deleted.push(p) };
+
+		disk.delete('x.tex');
+		await host.buffers.sharing.syncFromTree();
+		expect(deleted).toEqual(['root/x.tex']);
+		expect(host.buffers.has('x.tex')).toBe(false);
+
+		host.buffers.destroy();
+		host.session.destroy();
+	});
+
 	// a replaced image keeps its path, so only the manifest rev can tell a guest its cached blob
 	// is stale. Without it the guest caches by path and never refetches for the whole session.
 	it('bumps a binary rev when the host replaces the file, so a guest can drop its cached copy', async () => {

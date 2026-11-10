@@ -10,9 +10,9 @@ section: Get started
 
 # Installation
 
-You will need to 1. install Texpile and 2. install your typesetter (LaTeX, Typst, etc.), and optionally (but heavily recommended) git.
+Install Texpile first, then a compiler for the format you write in. Texpile can install TeX Live for LaTeX and tinymist for Typst from inside the app. Git is optional and recommended.
 
-If you have already installed Texpile, go directly to the typesetter installation guides here:
+If Texpile is already installed, go to the guides:
 
 - LaTeX: [a TeX distribution](latex/README.md).
 - Typst: [tinymist](typst/README.md).
@@ -23,7 +23,7 @@ If you have already installed Texpile, go directly to the typesetter installatio
 Visit the [downloads page](/download) for the installer for your platform:
 
 - **Windows:** After downloading, double-click the file to install.
-- **Windows Portable:** We do not recommend using Windows Portable over the Windows installer since it does not have auto update and may have certain features disabled. After downloading the zip, extract it and click Texpile.exe.
+- **Windows Portable:** The Windows installer is recommended over Windows Portable, which does not have auto update and may have certain features disabled. After downloading the zip, extract it and click Texpile.exe.
 - **macOS:** Open the .dmg and drag Texpile to Applications.
 - **Debian and Ubuntu:** Install the .deb with apt using `sudo apt install ./texpile.deb`.
 - **Other Linux:** Download the AppImage build and run `chmod +x Texpile.AppImage`, then double-click the AppImage to start it.
@@ -45,7 +45,7 @@ chmod +x Texpile.AppImage
 ./Texpile.AppImage
 ```
 
-Some distros will require you to manually install FUSE 2. We heavily recommend you refer to your distro for FUSE 2 installation guides. The following are provided for Debian-based systems:
+Some distros require you to install FUSE 2 yourself. Refer to your distro's guide for FUSE 2. On Debian-based systems:
 
 ```bash
 sudo apt install libfuse2t64
@@ -59,6 +59,6 @@ sudo apt install libfuse2
 
 ## 2. Install what you need
 
-- LaTeX: [a TeX distribution](latex/README.md).
-- Typst: [tinymist](typst/README.md).
+- LaTeX: [a TeX distribution](latex/README.md). Texpile installs TeX Live from Preferences › Compiler, or you install one yourself.
+- Typst: [tinymist](typst/README.md). Texpile installs it from the **Set Up Typst** bar above a `.typ` file.
 - Source Control: [git](git.md).

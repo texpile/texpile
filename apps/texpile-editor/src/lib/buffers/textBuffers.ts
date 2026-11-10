@@ -3,7 +3,7 @@ import * as Y from 'yjs';
 import { Awareness } from 'y-protocols/awareness';
 import { LocalFork, splice } from '$lib/collab/localFork';
 import { spliceDiff } from '$lib/collab/spliceDiff';
-import { manifestOf, textOf } from '$lib/collab/session';
+import { freeTextName, manifestOf, textEntry } from '$lib/collab/session';
 import {
 	DISK_ORIGIN,
 	EDIT_ORIGIN,
@@ -19,15 +19,15 @@ import { createFileUndo, forgetDeleted, joinLastStep } from './fileUndo';
 import { BufferSharing } from './bufferSharing';
 import { BufferKeys } from './bufferKeys';
 import { decodeEditableText } from '$lib/files/service/textLimit';
-import type { MergeEdit } from '$lib/files/sync/diskMerge';
+import { diskEdits, takeDiskEdits, type MergeEdit } from '$lib/files/sync/diskMerge';
 import { DiskSync } from './diskSync';
+import { WriteSchedule } from './writeSchedule';
 import type { TextBuffersFs, WriteHooks } from './writeHooks';
 
 export type { TextBuffersFs, WriteHooks } from './writeHooks';
 
-export const AUTOSAVE_MS = 1500;
-
-type Seeded = { doc: Y.Doc; eol: Eol };
+/** `name`: the text's name in its doc, which a move keeps */
+type Seeded = { doc: Y.Doc; eol: Eol; name: string };
 
 function outside(key: string): boolean {
 	return /^([\\/]|[A-Za-z]:)/.test(key);
@@ -56,11 +56,10 @@ export class TextBuffers {
 	private readonly loading = new Map<string, Promise<Y.Text | null>>();
 	/** rel -> LF content last synced with disk */
 	private readonly baseline = new Map<string, string>();
-	/** changed since the last write and not yet handed to the chain */
-	private readonly pending = new Set<string>();
-	private readonly timers = new Map<string, ReturnType<typeof setTimeout>>();
-	/** writes that failed in a row, per file: the next try waits longer each time */
-	private readonly failures = new Map<string, number>();
+	private readonly writes = new WriteSchedule(
+		(rel) => void this.flush(rel),
+		(rel) => this.destroyed || this.disk.inConflict(rel)
+	);
 	private readonly observers = new Map<string, () => void>();
 	private readonly undo = new Map<string, Y.UndoManager>();
 	/** rel -> LF content as of the last transaction, kept only while a session runs */
@@ -88,7 +87,7 @@ export class TextBuffers {
 
 	text(rel: string): Y.Text | null {
 		const s = this.seeded.get(rel);
-		return s ? textOf(s.doc, rel) : null;
+		return s ? s.doc.getText(s.name) : null;
 	}
 
 	awarenessOf(rel: string): Awareness | null {
@@ -118,12 +117,12 @@ export class TextBuffers {
 	}
 
 	hasPending(rel: string): boolean {
-		return this.pending.has(rel);
+		return this.writes.pending.has(rel);
 	}
 
 	/** files whose edits are not on disk: still waiting to be written, held back, or a write failed */
 	get unwrittenFiles(): string[] {
-		return [...this.seeded.keys()].filter((rel) => this.pending.has(rel) || this.isDirty(rel));
+		return [...this.seeded.keys()].filter((rel) => this.writes.pending.has(rel) || this.isDirty(rel));
 	}
 
 	/** files waiting on the File Cache Conflict choice */
@@ -170,13 +169,14 @@ export class TextBuffers {
 	}
 
 	private seed(rel: string, text: string, eol: Eol, doc: Y.Doc, size: number): void {
+		const name = freeTextName(rel, new Set([...this.seeded.values()].filter((s) => s.doc === doc).map((s) => s.name)));
 		doc.transact(() => {
-			if (doc === this.shared) manifestOf(doc).set(rel, { kind: 'text', size });
-			const t = textOf(doc, rel);
+			if (doc === this.shared) manifestOf(doc).set(rel, textEntry(rel, name, size));
+			const t = doc.getText(name);
 			if (t.length > 0) t.delete(0, t.length);
 			t.insert(0, text);
 		}, SEED_ORIGIN);
-		this.seeded.set(rel, { doc, eol });
+		this.seeded.set(rel, { doc, eol, name });
 		this.keys.remember(rel);
 		this.baseline.set(rel, text);
 		if (this.tracking && doc === this.shared) this.running.set(rel, text);
@@ -201,33 +201,17 @@ export class TextBuffers {
 			if (origin === SEED_ORIGIN) return;
 			this.onChange?.(rel, origin);
 			if (origin === DISK_ORIGIN) return;
-			this.pending.add(rel);
-			this.schedule(rel);
+			this.writes.pending.add(rel);
+			this.writes.schedule(rel);
 		};
 		t.observe(handler);
 		this.observers.set(rel, () => t.unobserve(handler));
 	}
 
-	/** debounce the next write; a file in conflict waits for the choice */
-	private schedule(rel: string, delay = AUTOSAVE_MS): void {
-		if (this.destroyed) return;
-		const prev = this.timers.get(rel);
-		if (prev) clearTimeout(prev);
-		this.timers.delete(rel);
-		if (this.disk.inConflict(rel)) return;
-		this.timers.set(
-			rel,
-			setTimeout(() => {
-				this.timers.delete(rel);
-				void this.flush(rel);
-			}, delay)
-		);
-	}
-
 	/** the write waits: a conflict or a deleted file */
 	hold(rel: string): void {
-		this.cancel(rel);
-		this.pending.add(rel);
+		this.writes.cancel(rel);
+		this.writes.pending.add(rel);
 	}
 
 	/** Keep Memory Changes: the disk's text becomes what the editor's is written over */
@@ -235,30 +219,24 @@ export class TextBuffers {
 		this.baseline.set(rel, disk);
 	}
 
-	private cancel(rel: string): void {
-		const timer = this.timers.get(rel);
-		if (timer) clearTimeout(timer);
-		this.timers.delete(rel);
-	}
-
 	/** write a file's pending change now; resolves true once it is on disk (or nothing was pending) */
 	flush(rel: string): Promise<boolean> {
-		this.cancel(rel);
-		if (!this.pending.has(rel)) return this.chain.then(() => true);
-		this.pending.delete(rel);
+		this.writes.cancel(rel);
+		if (!this.writes.pending.has(rel)) return this.chain.then(() => true);
+		this.writes.pending.delete(rel);
 		return this.enqueue(rel, false, false);
 	}
 
 	/** write every pending change and wait for the writes to land */
 	async flushAll(): Promise<void> {
-		for (const rel of [...this.pending]) void this.flush(rel);
+		for (const rel of [...this.writes.pending]) void this.flush(rel);
 		await this.chain;
 	}
 
 	/** Ctrl+S: write now; `force` writes over the disk, for Keep Memory Changes */
 	save(rel: string, force = false): Promise<boolean> {
-		this.cancel(rel);
-		this.pending.delete(rel);
+		this.writes.cancel(rel);
+		this.writes.pending.delete(rel);
 		return this.enqueue(rel, true, force);
 	}
 
@@ -269,8 +247,8 @@ export class TextBuffers {
 
 	/** stop the pending write of a file; its text keeps the change */
 	discard(rel: string): void {
-		this.cancel(rel);
-		this.pending.delete(rel);
+		this.writes.cancel(rel);
+		this.writes.pending.delete(rel);
 	}
 
 	private enqueue(rel: string, notify: boolean, force: boolean): Promise<boolean> {
@@ -310,20 +288,13 @@ export class TextBuffers {
 			await this.fs.writeText(abs, fromLf(content, this.eolOf(rel)));
 			await this.hooks.recordStamp?.(abs);
 			this.baseline.set(rel, content);
-			if (t.toString() === content) this.pending.delete(rel);
+			if (t.toString() === content) this.writes.pending.delete(rel);
 			this.disk.forget(rel);
-			this.failures.delete(rel);
+			this.writes.landed(rel);
 			this.hooks.afterWrite?.(abs, content);
 			return true;
 		} catch (e) {
-			// a write that did not land keeps the change pending and tries again on its own: a file a sync client or a
-			// virus scanner holds for a moment would otherwise wait for the next keystroke
-			if (stillHere()) {
-				this.pending.add(rel);
-				const tries = (this.failures.get(rel) ?? 0) + 1;
-				this.failures.set(rel, tries);
-				this.schedule(rel, Math.min(60_000, AUTOSAVE_MS * 2 ** tries));
-			}
+			if (stillHere()) this.writes.failed(rel);
 			this.hooks.failed?.(abs, e);
 			return false;
 		}
@@ -332,16 +303,11 @@ export class TextBuffers {
 	/** hunk by hunk in one undoable step, so carets, collaborators and the edits between hunks stay put */
 	applyMerge(rel: string, disk: string, edits: MergeEdit[]): void {
 		const s = this.seeded.get(rel)!;
-		const t = textOf(s.doc, rel);
+		const t = s.doc.getText(s.name);
 		this.baseline.set(rel, disk);
 		this.undo.get(rel)?.stopCapturing();
-		s.doc.transact(() => {
-			for (const e of [...edits].reverse()) {
-				if (e.to > e.from) t.delete(e.from, e.to - e.from);
-				if (e.insert) t.insert(e.from, e.insert);
-			}
-		}, DISK_ORIGIN);
-		this.pending.add(rel);
+		takeDiskEdits(t, edits);
+		this.writes.pending.add(rel);
 		void this.hooks.recordStamp?.(this.abs(rel));
 		this.hooks.diskTaken?.(this.abs(rel), disk);
 	}
@@ -355,7 +321,7 @@ export class TextBuffers {
 	fold(rel: string, content: string, before?: string, origin: unknown = EDIT_ORIGIN): void {
 		const s = this.seeded.get(rel);
 		if (!s) return;
-		const t = textOf(s.doc, rel);
+		const t = s.doc.getText(s.name);
 		if (s.doc === this.shared) return this.fork.fold(t, content, before, origin);
 		// nothing merges into the local doc: the editor's text goes in as it differs from the file's
 		const change = spliceDiff(t.toString(), content);
@@ -371,7 +337,11 @@ export class TextBuffers {
 		if (eol) s.eol = eol;
 		this.baseline.set(rel, text);
 		this.undo.get(rel)?.stopCapturing();
-		this.fold(rel, text, undefined, DISK_ORIGIN);
+		const t = s.doc.getText(s.name);
+		const edits = diskEdits(t.toString(), text);
+		// the same text: fold still lets a shared session's held updates in
+		if (edits.length) takeDiskEdits(t, edits);
+		else this.fold(rel, text, undefined, DISK_ORIGIN);
 		void this.hooks.recordStamp?.(this.abs(rel));
 	}
 
@@ -396,26 +366,53 @@ export class TextBuffers {
 		return this.disk.resolve(rel, choice);
 	}
 
-	/** a rename moved a file or a folder: its text, unwritten edits included, goes with it */
+	/** a rename moved a file or a folder: its text, history and unwritten edits go with it, and a session sees a move */
 	move(fromRel: string, toRel: string): void {
 		const moved = [...this.seeded.keys()].filter((rel) => rel === fromRel || rel.startsWith(fromRel + '/'));
-		for (const rel of moved) {
-			const next = toRel + rel.slice(fromRel.length);
-			const t = this.text(rel)!;
-			const content = t.toString();
-			const base = this.baseline.get(rel) ?? content;
-			const eol = this.eolOf(rel);
-			const unwritten = this.pending.has(rel) || content !== base;
-			this.drop(rel);
-			// a buffer left at the new name (a file deleted there earlier) has nothing to do with this one
-			this.drop(next);
-			const size = new TextEncoder().encode(content).byteLength;
-			this.seed(next, content, eol, this.shareable(next, size) ? this.shared : this.local, size);
-			this.baseline.set(next, base);
-			if (unwritten) {
-				this.pending.add(next);
-				this.schedule(next);
+		this.shared.transact(() => {
+			for (const rel of moved) {
+				const next = toRel + rel.slice(fromRel.length);
+				if (next !== rel) this.moveOne(rel, next);
 			}
+			this.sharing.moveListed(fromRel, toRel);
+		}, SEED_ORIGIN);
+	}
+
+	private moveOne(rel: string, next: string): void {
+		const s = this.seeded.get(rel)!;
+		const content = s.doc.getText(s.name).toString();
+		const base = this.baseline.get(rel) ?? content;
+		const unwritten = this.writes.pending.has(rel) || content !== base;
+		const size = new TextEncoder().encode(content).byteLength;
+		// a buffer left at the new name (a file deleted there earlier) has nothing to do with this one
+		this.drop(next);
+		if (this.shareable(next, size) !== (s.doc === this.shared)) {
+			this.drop(rel);
+			this.seed(next, content, s.eol, this.shareable(next, size) ? this.shared : this.local, size);
+		} else {
+			this.writes.forget(rel);
+			this.disk.forget(rel);
+			this.observers.get(rel)?.();
+			this.observers.delete(rel);
+			for (const map of [this.baseline, this.running, this.undo] as Map<string, unknown>[]) {
+				if (map.has(rel)) map.set(next, map.get(rel));
+				map.delete(rel);
+			}
+			this.seeded.delete(rel);
+			this.seeded.set(next, s);
+			this.keys.forget(rel);
+			this.keys.remember(next);
+			if (s.doc === this.shared) {
+				const manifest = manifestOf(s.doc);
+				manifest.set(rel, { ...(manifest.get(rel) ?? { kind: 'text', size }), gone: true, movedTo: next });
+				manifest.set(next, textEntry(next, s.name, size));
+			}
+			this.observe(next);
+		}
+		this.baseline.set(next, base);
+		if (unwritten) {
+			this.writes.pending.add(next);
+			this.writes.schedule(next);
 		}
 	}
 
@@ -423,10 +420,8 @@ export class TextBuffers {
 	drop(rel: string): void {
 		const s = this.seeded.get(rel);
 		if (!s) return;
-		this.cancel(rel);
-		this.pending.delete(rel);
+		this.writes.forget(rel);
 		this.disk.forget(rel);
-		this.failures.delete(rel);
 		this.baseline.delete(rel);
 		this.running.delete(rel);
 		this.observers.get(rel)?.();
@@ -440,7 +435,7 @@ export class TextBuffers {
 				const entry = manifestOf(s.doc).get(rel);
 				if (entry) manifestOf(s.doc).set(rel, { ...entry, gone: true });
 			}
-			const t = textOf(s.doc, rel);
+			const t = s.doc.getText(s.name);
 			if (t.length > 0) t.delete(0, t.length);
 		}, SEED_ORIGIN);
 	}
@@ -461,7 +456,7 @@ export class TextBuffers {
 	track(on: boolean): void {
 		this.tracking = on;
 		this.running.clear();
-		if (on) for (const [rel, s] of this.seeded) if (s.doc === this.shared) this.running.set(rel, textOf(s.doc, rel).toString());
+		if (on) for (const [rel, s] of this.seeded) if (s.doc === this.shared) this.running.set(rel, s.doc.getText(s.name).toString());
 	}
 
 	/** a session starts: the shared files' histories start over, and the text they kept deleted stays here */
@@ -483,8 +478,7 @@ export class TextBuffers {
 
 	destroy(): void {
 		this.destroyed = true;
-		for (const timer of this.timers.values()) clearTimeout(timer);
-		this.timers.clear();
+		this.writes.stop();
 		for (const un of this.observers.values()) un();
 		this.observers.clear();
 		for (const um of this.undo.values()) um.destroy();

@@ -28,6 +28,10 @@
 
 	let dropdownOpen = $state(false);
 
+	export function open(): void {
+		dropdownOpen = true;
+	}
+
 	// \cite{a, b, c} is ONE command with a shared note, so it stays one chip; each key resolves
 	// on its own and an unresolved one shows as its raw key (the red state says it's broken)
 	const displayText = $derived.by(() => {

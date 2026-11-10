@@ -69,7 +69,7 @@ const noRunesInWorkers: Plugin = {
 	}
 };
 
-export default defineConfig(({ mode }) => ({
+export default defineConfig(({ mode, command }) => ({
 	plugins: [
 		tailwindcss(),
 		...(mode === 'test' ? [wasmHelperInTests, wasmUrlInTests] : []),
@@ -77,14 +77,19 @@ export default defineConfig(({ mode }) => ({
 		// .wasm as an ES module, which Vite cannot do unaided
 		wasm(),
 		svelte(),
-		paraglideVitePlugin({
-			project: './project.inlang',
-			outdir: './src/lib/paraglide',
-			emitTsDeclarations: true
-		}),
+		// a build reads the output `pnpm sync` compiled first; compiling inside it raced the worker build on Windows
+		...(command === 'build'
+			? []
+			: [
+					paraglideVitePlugin({
+						project: './project.inlang',
+						outdir: './src/lib/paraglide',
+						emitTsDeclarations: true
+					})
+				]),
 		// the spelling dictionaries for languages other than English
 		...(mode === 'test' ? [] : [spellDictionaries(__dirname)]),
-		packageData(PACKAGE_DATA)
+		packageData(PACKAGE_DATA, mode !== 'web')
 	],
 
 	// relative asset URLs: the packaged app is served from the app:// scheme (electron/src/main.ts),

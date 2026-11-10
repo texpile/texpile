@@ -9,7 +9,7 @@ import type { KeySequence } from './keys/keyChord';
 import { electronAccelerator, keysLabel } from './keys/keyLabels';
 import { commandEnabled, runCommand } from './commands/commandRegistry';
 import { createKeyDispatcher } from './dispatch/keyDispatcher';
-import { buildKeybindingTable, keysOf, type KeybindingItem, type KeybindingTable } from './resolver/keybindingResolver';
+import { buildKeybindingTable, keysOf, menuKeysOf, type KeybindingItem, type KeybindingTable } from './resolver/keybindingResolver';
 import { defaultItems, userItems, type KeyPlatform, type KeybindingProblem } from './resolver/keybindingRules';
 import { DEFAULT_KEYBINDINGS } from './resolver/defaultKeybindings';
 import { windowContext } from './context/contextKeys';
@@ -71,7 +71,7 @@ export function withKeyLabel(message: (combo: string) => string, command: string
 }
 
 export function acceleratorFor(command: string): string | null {
-	const keys = keysFor(command);
+	const keys = menuKeysOf(keybindingTable(), command);
 	return keys ? electronAccelerator(keys) : null;
 }
 

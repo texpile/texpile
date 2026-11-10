@@ -105,6 +105,15 @@ describe('the default keys', () => {
 		expect(run).toHaveBeenCalledTimes(1);
 	});
 
+	it('compile on Ctrl+Alt+Enter in the visual editor, which cancels every Enter', () => {
+		const run = vi.fn();
+		commands([{ id: 'compile.run', run }]);
+		const editor = document.body.appendChild(document.createElement('div'));
+		editor.contentEditable = 'true';
+		press('Enter', 'Enter', { ctrlKey: true, altKey: true }, editor, true);
+		expect(run).toHaveBeenCalledTimes(1);
+	});
+
 	it('leave every Option and letter press to typing on macOS', () => {
 		const optionLetters = defaultItems(DEFAULT_KEYBINDINGS, 'mac').filter(({ keys }) =>
 			keys?.some((c) => c.alt && !c.ctrl && !c.meta && /^[a-z0-9]$/.test(c.key))
