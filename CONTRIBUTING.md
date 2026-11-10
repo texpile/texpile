@@ -50,6 +50,9 @@ pnpm --filter texpile-editor testonce          # vitest, single pass
 
 ## Contributing and the CLA
 
+> For people interested in submitting code:
+You may use generative AI in your work as long as you review the code and take responsibility for it. However, we ask you not to let AI handle your communication with us (unless needed for translation or grammar). We do not use AI to respond to your questions or PRs.
+
 Texpile is licensed under [AGPL-3.0](LICENSE).
 
 Before we can merge your first pull request, you'll need to sign our
