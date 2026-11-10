@@ -43,7 +43,7 @@
 	onOpenChange={(e) => (dropdownOpen = e.open)}
 	positioning={inEditorPane({ placement: 'bottom-start', offset: { mainAxis: 4 } })}
 >
-	<Popover.Trigger class="inline-flex cursor-pointer items-center" style="font-size: 1rem;">
+	<Popover.Trigger class="inline-flex cursor-pointer items-center">
 		<span
 			class="typ-ref rounded-base cursor-pointer transition-colors"
 			class:py-0.5={face.kind === 'label'}

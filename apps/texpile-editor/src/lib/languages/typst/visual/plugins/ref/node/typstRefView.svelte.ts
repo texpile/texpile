@@ -4,7 +4,7 @@
 import type { EditorView, NodeView } from 'prosemirror-view';
 import type { Node as PMNode } from 'prosemirror-model';
 import { mount, unmount } from 'svelte';
-import { quietTemplateSpaces } from '$lib/languages/typst/visual/core';
+import { chipHost, quietTemplateSpaces } from '$lib/languages/typst/visual/core';
 import TypstRefDisplay from './TypstRefDisplay.svelte';
 import { refNumbersOf, type RefNumbers } from './refNumbers.svelte';
 
@@ -30,9 +30,7 @@ export class TypstRefView implements NodeView {
 		this.node = node;
 		this.view = view;
 		this.getPos = getPos;
-		this.dom = document.createElement('span');
-		// font-size 0 kills stray whitespace from the svelte template; the display sets its own
-		this.dom.style.fontSize = '0';
+		this.dom = chipHost();
 		this.componentProps = {
 			node,
 			numbers: refNumbersOf(view),

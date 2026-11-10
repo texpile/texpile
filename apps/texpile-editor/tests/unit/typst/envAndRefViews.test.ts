@@ -98,7 +98,7 @@ describe('a reference in the editor', () => {
 
 	it('leaves no whitespace beside the chip for justified text to stretch', () => {
 		open('Bulk material @fourier1822. Earlier.\n');
-		const host = document.querySelector('.typ-ref')!.closest('span[style]')!;
+		const host = document.querySelector('.typ-ref')!.closest('.chip-host')!;
 		const stray = [...host.childNodes].filter((n) => n.nodeType === Node.TEXT_NODE && n.textContent !== '');
 		expect(stray.map((n) => n.textContent)).toEqual([]);
 	});

@@ -14,7 +14,7 @@ export type { BlockInsertItem, InsertItem } from '$lib/editor/visual/insert/inse
 export { typGridNode, typTableNode } from '../typstTableNodes';
 
 export { faceElement, sourceHint, tippedFace, type ChipFace } from '$lib/editor/visual/extensions/drawnChips/chipFace';
-export { quietTemplateSpaces } from '$lib/editor/visual/extensions/chipHost';
+export { chipHost, quietTemplateSpaces } from '$lib/editor/visual/extensions/chipHost';
 export type { ChipSettingsProps } from '$lib/editor/visual/extensions/drawnChips/chipPanel.svelte';
 export * as Panel from '$lib/editor/visual/extensions/drawnChips/panel';
 export { dividerFace } from '$lib/editor/visual/extensions/drawnChips/dividerFace';
