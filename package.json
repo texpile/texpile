@@ -34,7 +34,7 @@
 		"@agentclientprotocol/sdk": "^1.9.0",
 		"@eslint/js": "^10.0.1",
 		"@modelcontextprotocol/sdk": "^1.32.2",
-		"@types/node": "^24.13.3",
+		"@types/node": "^26.6.5",
 		"chokidar": "^5.0.0",
 		"concurrently": "^9.2.4",
 		"cross-env": "^10.1.0",
