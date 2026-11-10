@@ -47,15 +47,16 @@ async function insertFrom(page: Page, path: string[]) {
 		.or(page.getByRole('button', { name: 'Insert', exact: true }))
 		.first()
 		.click();
-	for (const name of path.slice(0, -1))
+	for (const name of path.slice(0, -1)) {
 		await page
 			.getByRole('menuitem', { name: new RegExp(`^${name}`) })
 			.first()
 			.hover();
-	await page
-		.getByRole('menuitem', { name: new RegExp(`^${path[path.length - 1]}`) })
-		.last()
-		.click();
+		await page.keyboard.press('ArrowRight');
+	}
+	const item = page.getByRole('menuitem', { name: new RegExp(`^${path[path.length - 1]}`) }).last();
+	await expect(item).toBeVisible();
+	await item.click();
 }
 
 test('Ctrl+Z typed in a chip panel steps the file history', async () => {
