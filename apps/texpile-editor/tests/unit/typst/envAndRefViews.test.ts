@@ -90,7 +90,10 @@ describe('a reference in the editor', () => {
 		referenceStore.current = [{ key: 'knuth84', entrytype: 'book', author: 'Knuth, Donald E.', year: '1984' }];
 		flushSync();
 		expect(chips()).toEqual(['(Knuth 1984, p. 7)', '@lem:zorn']);
-		expect(document.querySelector('.typ-ref-known')).not.toBeNull();
+		// resolved reads in the reference color like a LaTeX citation, unresolved in the broken one
+		const known = [...document.querySelectorAll('.typ-ref')].map((c) => c.classList.contains('text-ref-fg'));
+		expect(known).toEqual([true, false]);
+		expect(document.querySelector('.typ-ref.text-ref-broken-fg')?.textContent).toBe('@lem:zorn');
 	});
 
 	it('leaves no whitespace beside the chip for justified text to stretch', () => {

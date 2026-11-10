@@ -45,11 +45,13 @@
 >
 	<Popover.Trigger class="inline-flex cursor-pointer items-center" style="font-size: 1rem;">
 		<span
-			class={face.kind === 'label'
-				? 'text-ref-fg hover:bg-ref-bg rounded-base cursor-pointer py-0.5 transition-colors'
-				: face.known
-					? 'typ-ref typ-ref-known'
-					: 'typ-ref'}
+			class="typ-ref rounded-base cursor-pointer transition-colors"
+			class:py-0.5={face.kind === 'label'}
+			class:text-ref-fg={face.known}
+			class:bg-ref-bg={face.known && dropdownOpen}
+			class:hover:bg-ref-bg={face.known}
+			class:text-ref-broken-fg={!face.known}
+			class:hover:bg-ref-broken-bg={!face.known}
 			use:tip={face.title}
 			role="button"
 			tabindex="0"
