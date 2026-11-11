@@ -43,6 +43,11 @@ export function macroKey(macros: Record<string, GuardedMacro>): string {
 
 let currentKey = '';
 
+/** names the published dictionary, for what is kept by the macros it was made with */
+export function mathMacrosKey(): string {
+	return currentKey;
+}
+
 /** publishes the dictionary; true when it actually changed, which is when renders are stale */
 export function setMathMacros(macros: Record<string, MacroDef>): boolean {
 	const guarded = guardMacros(macros);

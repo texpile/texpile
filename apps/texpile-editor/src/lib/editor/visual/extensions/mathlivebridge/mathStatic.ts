@@ -20,7 +20,7 @@
 // is not incidental: give one of them a \newcommand the other lacks and every equation using it
 // would visibly change as it went live, which is the twitch stage 3 exists to avoid.
 import { convertLatexToMarkup, convertTypstToMarkup } from 'mathlive';
-import { mathMacros } from './mathMacros.svelte';
+import { mathMacros, mathMacrosKey } from './mathMacros.svelte';
 import { themeStaticMarkup } from './themeBlack';
 import type { MathSyntax } from './mathFieldFactory';
 import 'mathlive/static.css';
@@ -33,8 +33,48 @@ const SLICE_MS = 5;
 const BLOCK_LINE_EM = 2.2;
 
 const latexOf = new WeakMap<HTMLElement, string>();
+// the macros a placeholder's markup was made with, so a change of macros leaves what is already right alone
+const madeWith = new WeakMap<HTMLElement, string>();
 const pending = new Set<HTMLElement>();
 let draining = false;
+
+// What each formula was typeset to, under the macros it was typeset with. A document drawn again (a tab or a mode
+// switched back to) takes its formulas whole and at their real size, so its lines are broken once: an estimate
+// corrected a moment later broke every paragraph with a formula a second time
+const KEPT_DICTIONARIES = 3;
+const KEPT_FORMULAS = 4000;
+const keptByMacros = new Map<string, Map<string, string>>();
+let keptKey: string | null = null;
+let kept = new Map<string, string>();
+
+function keptMarkup(): Map<string, string> {
+	const key = mathMacrosKey();
+	if (key === keptKey) return kept;
+	keptKey = key;
+	kept = keptByMacros.get(key) ?? new Map();
+	// the dictionary in use goes last, and the one unused longest goes
+	keptByMacros.delete(key);
+	keptByMacros.set(key, kept);
+	if (keptByMacros.size > KEPT_DICTIONARIES) keptByMacros.delete(keptByMacros.keys().next().value!);
+	return kept;
+}
+
+function markupOf(syntax: MathSyntax, latex: string): string {
+	const store = keptMarkup();
+	const key = `${syntax}\0${latex}`;
+	let markup = store.get(key);
+	if (markup === undefined) {
+		// 'math' matches MathfieldElement's own default mode; anything else would resize on upgrade
+		markup = themeStaticMarkup(
+			syntax === 'typst'
+				? convertTypstToMarkup(latex, { defaultMode: 'math' })
+				: convertLatexToMarkup(latex, { defaultMode: 'math', macros: mathMacros.current })
+		);
+		if (store.size >= KEPT_FORMULAS) store.delete(store.keys().next().value!);
+		store.set(key, markup);
+	}
+	return markup;
+}
 
 /** Rendered width of a math fragment in `ch`, roughly: commands and names collapse to about one
  * glyph, and braces and sub/superscript markers vanish. It only has to be close: the idle typeset
@@ -106,12 +146,8 @@ export function typesetNow(budgetMs: number): void {
 
 function typeset(el: HTMLElement, latex: string): void {
 	try {
-		// 'math' matches MathfieldElement's own default mode; anything else would resize on upgrade
-		const markup =
-			el.dataset.syntax === 'typst'
-				? convertTypstToMarkup(latex, { defaultMode: 'math' })
-				: convertLatexToMarkup(latex, { defaultMode: 'math', macros: mathMacros.current });
-		el.innerHTML = themeStaticMarkup(markup);
+		el.innerHTML = markupOf(el.dataset.syntax === 'typst' ? 'typst' : 'latex', latex);
+		madeWith.set(el, mathMacrosKey());
 	} catch {
 		// mathlive throws outright on some malformed input. Fall back to the source text so the node
 		// still occupies roughly the right space instead of collapsing to nothing.
@@ -136,6 +172,14 @@ export function renderStaticMath(latex: string, isBlock: boolean, syntax: MathSy
 	el.setAttribute('aria-label', latex);
 	el.dataset.block = String(isBlock);
 	latexOf.set(el, latex);
+	const known = keptMarkup().get(`${syntax}\0${latex}`);
+	if (known !== undefined) {
+		// as a typeset placeholder stands: the estimate's inline box, and no size of its own
+		if (!isBlock) el.style.display = 'inline-block';
+		el.innerHTML = known;
+		madeWith.set(el, mathMacrosKey());
+		return el;
+	}
 	applyEstimate(el, latex, isBlock);
 	pending.add(el);
 	scheduleDrain();
@@ -168,6 +212,6 @@ export function retypesetStaticMath(): void {
 	for (const el of document.querySelectorAll<HTMLElement>(`.${PLACEHOLDER_CLASS}`)) {
 		const latex = latexOf.get(el);
 		// still queued: the drain will pick up the new dictionary on its own
-		if (latex !== undefined && !pending.has(el)) typeset(el, latex);
+		if (latex !== undefined && !pending.has(el) && madeWith.get(el) !== mathMacrosKey()) typeset(el, latex);
 	}
 }

@@ -100,6 +100,15 @@ describe('math node view materialization', () => {
 		expect(built).toBe(0); // still no mathfield: this stage is rendering only
 	});
 
+	// a tab switched back to broke its lines twice: once for the estimates, again as each formula was typeset
+	it('draws a formula it has typeset before whole, with no estimate, when its view is made again', async () => {
+		makeView('\\kappa^2');
+		await flushIdle();
+		const again = placeholderOf(makeView('\\kappa^2')) as HTMLElement;
+		expect(again.querySelector('.typeset')?.textContent).toBe('\\kappa^2');
+		expect(again.style.width).toBe('');
+	});
+
 	// a Select All over a long paper typeset every formula in it again
 	it('keeps what it typeset when the view is updated for the same formula', async () => {
 		const view = makeView('\\alpha_{ij}');
