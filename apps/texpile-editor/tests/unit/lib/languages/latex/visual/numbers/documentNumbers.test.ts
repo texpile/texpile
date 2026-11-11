@@ -1,4 +1,4 @@
-import { beforeAll, describe, expect, it } from 'vitest';
+import { beforeAll, describe, expect, it, vi } from 'vitest';
 import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { parseLatexFile } from '$lib/workspace/latexRoundtrip';
@@ -11,6 +11,7 @@ import { loadedPackages } from '$lib/languages/latex/intellisense/packages/loade
 import { packageUsesIn } from '$lib/languages/latex/intellisense/packages/packageUses';
 import { loadedRegistry } from '$lib/languages/latex/knowledge/registries/registries';
 import { chipCounts } from '$lib/languages/latex/visual/core/plugin/chipCounts';
+import { eventsBefore } from '$lib/languages/latex/visual/extensions/numbers/readInEvents';
 import { numberedFilesOf } from '$lib/workspace/document/numberedFiles';
 import { pathKey } from '$lib/workspace/fileSystem';
 
@@ -193,6 +194,23 @@ describe('documentNumbers', () => {
 		expect(numbersOf(main, '/p/main.tex', true)).toEqual(['heading 1', 'heading 3']);
 		expect(numbersOf(chapter, '/p/chapter.tex', false)).toEqual(['heading 2', 'block_math (1)']);
 		expect(numbersOf(main, '/p/main.tex', true, false)).toEqual(['heading 1']);
+	});
+
+	// on the way back to a long main file edited since, the file still shown asked for it and waited a second
+	it('leaves the start file unread for the start itself and for a file the document never reads in', () => {
+		const texts = {
+			[pathKey('/p/main.tex')]: { path: '/p/main.tex', text: '\\begin{document}\n\\input{chapter}\n\\end{document}\n' },
+			[pathKey('/p/chapter.tex')]: { path: '/p/chapter.tex', text: '\\section{B}\n' }
+		};
+		const files = numberedFilesOf(
+			{ start: '/p/main.tex', root: '/p', texts },
+			{ mathOpeners: { macros: [], environments: [] }, theorems: {} }
+		);
+		const start = vi.spyOn(files, 'start');
+		expect(eventsBefore('/p/other.tex', files)).toBeNull();
+		expect(eventsBefore('/p/main.tex', files)).toBeNull();
+		expect(start).not.toHaveBeenCalled();
+		expect(eventsBefore('/p/chapter.tex', files)).not.toBeNull();
 	});
 
 	it('numbers no chapter of the front matter, and prints what the folder class sets as it loads', async () => {
