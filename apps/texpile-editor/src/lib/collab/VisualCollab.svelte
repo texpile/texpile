@@ -254,6 +254,11 @@
 	// update still bumps clocks, which reads as caret flicker on some consumers)
 	let lastPublishedCursor: string | null = null;
 
+	function othersIn(awareness: { clientID: number; getStates(): Map<number, unknown> }): boolean {
+		for (const id of awareness.getStates().keys()) if (id !== awareness.clientID) return true;
+		return false;
+	}
+
 	/** WorkspaceView wires this to the visual editor's selection-change callback. */
 	export function publishCursor(): void {
 		if (visualCursorTimer) return;
@@ -269,6 +274,11 @@
 					deferredRestamp = false;
 					scheduleRemotePatch(150);
 				}
+			}
+			// nobody else in the file reads the caret: it is published when someone arrives (onAwareness)
+			if (!othersIn(binding.awareness)) {
+				lastPublishedCursor = null;
+				return;
 			}
 			// the map describes texSource as it is now, local edits included
 			const sel = v.state.selection;
@@ -324,6 +334,7 @@
 		const self = binding.awareness.clientID;
 		function onAwareness(changes: { added: number[]; updated: number[]; removed: number[] }) {
 			if ([...changes.added, ...changes.updated, ...changes.removed].every((id) => id === self)) return;
+			if (changes.added.some((id) => id !== self)) publishCursor();
 			return scheduleRemoteCursorRender();
 		}
 		binding.awareness.on('change', onAwareness);
