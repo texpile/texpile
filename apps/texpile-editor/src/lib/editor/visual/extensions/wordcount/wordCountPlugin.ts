@@ -15,35 +15,41 @@ const SKIPPED = new Set(['inline_math', 'block_math', 'code_block', 'citation', 
 const RAW = new Set(['raw_latex', 'inline_latex']);
 
 function extractText(doc: Node, from: number, to: number, prose?: RawProse): string {
-	let text = '';
+	// pieces joined once: asking a string grown piece by piece how it ends flattens it every time
+	const pieces: string[] = [];
+	let spaced = true;
+	function add(piece: string): void {
+		pieces.push(piece);
+		spaced = piece.endsWith(' ');
+	}
 
 	doc.nodesBetween(from, to, (node, pos) => {
 		if (SKIPPED.has(node.type.name)) return false;
 		if (prose && RAW.has(node.type.name)) {
 			const start = Math.max(0, from - pos - 1);
 			const end = Math.min(node.content.size, to - pos - 1);
-			if (start < end) text += ` ${prose(node.textBetween(start, end))} `;
+			if (start < end) add(` ${prose(node.textBetween(start, end))} `);
 			return false;
 		}
 		if (!prose && node.type.name === 'raw_latex') return false;
 		if (node.type.name === 'hard_break') {
-			text += ' ';
+			add(' ');
 			return false;
 		}
 
 		if (node.type.name === 'text' && node.text) {
 			const start = Math.max(0, from - pos);
 			const end = Math.min(node.text.length, to - pos);
-			if (start < end) text += node.text.slice(start, end);
+			if (start < end) add(node.text.slice(start, end));
 		}
 
 		// space between blocks so words don't merge
-		if (node.isBlock && text && !text.endsWith(' ')) text += ' ';
+		if (node.isBlock && !spaced) add(' ');
 
 		return true;
 	});
 
-	return text.trim();
+	return pieces.join('').trim();
 }
 
 function updateSelectionCount(doc: Node, from: number, to: number, prose?: RawProse, node = false): void {
