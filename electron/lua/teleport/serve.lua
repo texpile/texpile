@@ -36,6 +36,7 @@ return function(T)
 		T.serving, TEXPILE_TELE_SERVING = false, false
 		T.overrides, T.entries = {}, {}
 		T.stops, T.stage, T.chain, T.files, T.selfcheck, T.report_from = nil, nil, nil, nil, nil, nil
+		T.edit, T.edit_read, T.edit_page, T.reached = nil, nil, nil, nil
 		T.stop_after_page, T.stop_dumped, T.cutting, T.silent, T.ended, T.no_park, T.cut_path = nil, nil, nil, nil, nil, nil, nil
 		T.staging = nil
 		T.selected = {}
@@ -111,6 +112,21 @@ return function(T)
 		end)
 	end
 
+	-- A point can sit pages before the edit: the pages up to the edited paragraph are the ones on screen, so the run
+	-- reports from the page under way when that paragraph is first read. A cut waits for the page under way when the
+	-- paragraph ends (`edit_page`, set by the reader), which is the one a word typed at its end lands on. `start`: the
+	-- page after the point, for a plan that names no paragraph. `reship`: the first page a cut run left on screen
+	local function report_pages(plan, start)
+		local named = plan.stage and plan.edit
+		T.edit, T.edit_read, T.reached = plan.edit, nil, nil
+		T.edit_page = not named and start or nil
+		T.report_from = named and (plan.reship or math.huge) or start
+	end
+	function T.reach_edit()
+		T.reached = true
+		T.report_from = math.min(T.report_from, T.shipped + 1)
+	end
+
 	-- staged at the chain's last point, ahead of the edit: TELE goes on from here with its own plan, DROP goes back to
 	-- the base. The chain is the next edit's only when the main process says so
 	function T.await_edit(c)
@@ -138,6 +154,7 @@ return function(T)
 		T.stops = stops_of(plan)
 		T.selfcheck = plan.selfcheck
 		T.stage = plan.stage
+		report_pages(plan, c.rec.shipped + 1)
 		T.files = plan.files
 		T.adopt_files()
 		T.say("APPLIED 0 staged")
@@ -184,13 +201,13 @@ return function(T)
 		if #T.chain == 0 then
 			T.apply_images({ macros = {} })
 			T.stack[1].jump = T.base_line
-			T.report_from = T.shipped + 1
+			report_pages(plan, T.shipped + 1)
 			T.adopt_files()
 			T.applying = false
 			T.say("APPLIED 0")
 			return
 		end
-		T.report_from = T.chain[#T.chain].rec.shipped + 1
+		report_pages(plan, T.chain[#T.chain].rec.shipped + 1)
 		texpile_tele_enter(1)
 	end
 

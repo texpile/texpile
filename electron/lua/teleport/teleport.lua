@@ -183,7 +183,7 @@ end
 -- the next edit of the same file asks for the run to end, which it does once its first page is out
 local last_poll = 0
 function T.poll_cut(now)
-	if not T.cut_path or T.cutting or not T.report_from or T.shipped < T.report_from then return end
+	if not T.cut_path or T.cutting or not T.edit_page or T.shipped < T.edit_page then return end
 	local t = os.gettimeofday()
 	if not now and t - last_poll < 0.02 then return end
 	last_poll = t

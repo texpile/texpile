@@ -138,6 +138,8 @@ return function(T)
 					return "\\directlua{texpile_tele_park()}%"
 				end
 			end
+			-- back on the main vertical list after the edited lines: the edited paragraph is on its pages
+			if T.edit_read and not T.edit_page and tex.nest.ptr == 0 then T.edit_page = T.shipped + 1 end
 			T.poll_cut()
 			if r.jump then
 				r.pos, r.depth = r.jump - 1, 0
@@ -187,6 +189,10 @@ return function(T)
 				r.end_tried = true
 				tex.inputlineno = nextl - 1
 				return "\\par\\directlua{texpile_tele_settle_end()}%"
+			end
+			if T.serving and T.edit and T.stage and r.rel == T.stage.f then
+				if not T.reached and nextl >= T.stage.l then T.reach_edit() end
+				if nextl > T.edit.newTo then T.edit_read = true end
 			end
 			r.pos = nextl
 			if l == nil then return nil end

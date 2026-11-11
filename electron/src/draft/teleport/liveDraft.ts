@@ -225,7 +225,7 @@ export class LiveDraft {
 		// each serve of an engine has its own files: the index reads the snapshots of earlier ones; a staged engine goes
 		// on with the serve its stage opened
 		const planText = (to: DraftEngine, n: number): string => {
-			const serve = { src: `${to.rel}/tele/s${n}`, cut: `${to.rel}/tele/cut-${n}` };
+			const serve = { src: `${to.rel}/tele/s${n}`, cut: `${to.rel}/tele/cut-${n}`, reship: this.#reship?.from };
 			return planLua(plan, overrides, file, edit, paragraphStart(lines, edit), this.srcFiles, serve, this.index.imageList);
 		};
 		const n = engine.takeStagedServe() ?? engine.nextServe();

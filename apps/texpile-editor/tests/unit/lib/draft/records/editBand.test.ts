@@ -45,3 +45,9 @@ it('waits for the run to end when words were added at the end of what it shipped
 	expect(editBand(pages, false)).toBeNull();
 	expect(editBand(pages, true)).toEqual({ page: 1, top: 93, bottom: 102, colL: 72, colR: 372 });
 });
+
+// the lines under a paragraph's end are as they were, so nothing can flow on to a page still to come
+it('highlights words added at the end of a paragraph while the run goes on', () => {
+	const pages = [shippedPage(1, page('one two', 'Next para.'), page('one two three', 'Next para.'))];
+	expect(editBand(pages, false)).toEqual({ page: 1, top: 93, bottom: 102, colL: 72, colR: 372 });
+});

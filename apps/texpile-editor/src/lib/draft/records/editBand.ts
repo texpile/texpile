@@ -91,13 +91,20 @@ function bandOf(page: ShippedPage, from: number, to: number): EditBand {
 	};
 }
 
+// the changed lines reach the bottom of the last page shipped
+function flowsOn(pages: ShippedPage[]): boolean {
+	const last = pages[pages.length - 1];
+	return !!last && last.tail === 0 && (last.head < last.before.length || last.head < last.after.length);
+}
+
 // null until the run ended while the difference may be words flowing on to a page not shipped yet
 export function editBand(pages: ShippedPage[], ended: boolean): EditBand | null {
 	const b = changedTokens(pages, 'before');
 	const a = changedTokens(pages, 'after');
 	const { i, j } = firstDifference(b, a);
-	if (!ended && (i === b.length || j === a.length)) return null;
-	const at = i === b.length && j === a.length ? undefined : a[Math.min(j, a.length - 1)];
+	const none = i === b.length && j === a.length;
+	if (!ended && (none || ((i === b.length || j === a.length) && flowsOn(pages)))) return null;
+	const at = none ? undefined : a[Math.min(j, a.length - 1)];
 	if (at) return bandOf(pages[at.page], at.line, pages[at.page].after.length - pages[at.page].tail);
 	const page = pages.find((p) => p.after.length - p.tail > p.head);
 	return page ? bandOf(page, page.head, page.after.length - page.tail) : null;
