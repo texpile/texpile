@@ -1,0 +1,17 @@
+/* A caret straight in the page, or in the block a gap cursor stands in, is never the text's: the gap cursor draws
+   its own. The blocks inside name theirs, so a hidden caret restyles one level of elements and stops. ProseMirror's
+   own way is a class on the page that restyled every element of the document: 80 ms a click on a 20-page paper */
+.ProseMirror.pm-block-carets,
+.ProseMirror .pm-selection-hidden {
+	caret-color: transparent;
+}
+.ProseMirror.pm-block-carets > *,
+.ProseMirror .pm-selection-hidden > * {
+	caret-color: auto;
+}
+
+/* the browser's own highlight over a selected node or a table's selected cells, which show as selected themselves */
+.ProseMirror .pm-selection-hidden::selection,
+.ProseMirror .pm-selection-hidden ::selection {
+	background-color: transparent;
+}

@@ -206,11 +206,6 @@
 		outline: 2px solid var(--selected-node-outline) !important;
 	}
 
-	:global(.ProseMirror.ProseMirror-hideselection *::selection),
-	:global(.ProseMirror.ProseMirror-hideselection *::-moz-selection) {
-		background: transparent !important;
-	}
-
 	:global(.ProseMirror *::selection),
 	:global(.ProseMirror *::-moz-selection) {
 		/* the shared selection colour (app.css), not its own grey: this rule exists to keep the

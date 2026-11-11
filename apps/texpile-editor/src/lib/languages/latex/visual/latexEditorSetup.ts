@@ -24,6 +24,7 @@ import {
 } from '$lib/editor/visual/selectDocBoundary';
 import { lineEdgeKeys } from '$lib/editor/visual/lineEdgeArrows';
 import { gapCursorWithArrows } from '$lib/editor/visual/gapArrows';
+import { hiddenSelectionPlugin } from '$lib/editor/visual/highlight/hiddenSelection';
 import { createMathField } from '$lib/editor/visual/extensions/mathlivebridge/mlcommands';
 import { createCodeBlock } from '$lib/editor/visual/extensions/codemirrorbridge/cmcommands';
 import { cmarrowHandlers } from '$lib/editor/visual/extensions/codemirrorbridge/cmarrowhandler';
@@ -143,6 +144,7 @@ export function latexEditorPlugins(setup: LatexEditorSetup): Plugin[] {
 		macroJumpPlugin(jumpToDefinition),
 		labelRenameUndo,
 		gapCursorWithArrows(),
+		hiddenSelectionPlugin(),
 		// drop cursor is inline-styled (not CSS-targetable) and its default black vanishes on dark
 		dropCursor({ color: 'var(--color-primary-500)', width: 2, class: 'pm-drop-cursor' }),
 		// TableView without the drag: a LaTeX column width lives in the colspec and only exists

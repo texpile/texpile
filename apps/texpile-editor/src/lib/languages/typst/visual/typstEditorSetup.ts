@@ -26,6 +26,7 @@ import { baseKeymap, toggleMark } from 'prosemirror-commands';
 import { history } from 'prosemirror-history';
 import { undoVisual, redoVisual } from '$lib/editor/visual/visualUndo';
 import { gapCursorWithArrows } from '$lib/editor/visual/gapArrows';
+import { hiddenSelectionPlugin } from '$lib/editor/visual/highlight/hiddenSelection';
 import { dropCursor } from 'prosemirror-dropcursor';
 import { tableEditing, goToNextCell } from 'prosemirror-tables';
 import { wholeTableEdits } from '$lib/editor/visual/extensions/table/wholeTableEdits';
@@ -190,6 +191,7 @@ export function typstEditorPlugins(setup: TypstEditorSetup): Plugin[] {
 		...pluginEditorPlugins('atStart'),
 		typstCopyPlugin,
 		gapCursorWithArrows(),
+		hiddenSelectionPlugin(),
 		dropCursor({ color: 'var(--color-primary-500)', width: 2, class: 'pm-drop-cursor' }),
 		// Typst is the one dialect where a drag can be saved: `columns:` takes real lengths and
 		// fr. The drag snaps to that same grid (vendored columnResizing + snapWidthToFr);

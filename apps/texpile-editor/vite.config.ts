@@ -12,6 +12,7 @@ import { pdfSandbox } from './scripts/pdfSandbox';
 import { packageData, packageDataIds } from './scripts/packageData';
 import { noUniversalSiblings } from './scripts/universalSiblings';
 import { eagerCompile } from './scripts/eagerCompile';
+import { noRootHiddenSelection } from './scripts/rootHiddenSelection';
 
 // pre-bundle every runtime dependency up front: lazy discovery re-optimizes mid-session and
 // forces a full page reload (mathlive and the CodeMirror language modes are the usual offenders)
@@ -181,7 +182,7 @@ export default defineConfig(({ mode, command }) => ({
 
 	assetsInclude: ['**/*.wasm'],
 
-	css: { postcss: { plugins: [noUniversalSiblings] } },
+	css: { postcss: { plugins: [noUniversalSiblings, noRootHiddenSelection] } },
 
 	worker: {
 		format: 'es',
