@@ -2,7 +2,7 @@
 import { expect, it } from 'vitest';
 import fs from 'node:fs';
 import path from 'node:path';
-import { DEFERRED_STEP_CHANNELS, type DeferredStep } from '../../../../../../electron/src/ipc/deferredChannels';
+import { DEFERRED_STEP_CHANNELS, waitsForFirstCall, type DeferredStep } from '../../../../../../electron/src/ipc/deferredChannels';
 
 const IPC_DIR = path.resolve(import.meta.dirname, '../../../../../../electron/src/ipc');
 const REGISTERED = /(?:ipcMain\.handle|handleFsE?)\(\s*'([^']+)'/g;
@@ -36,4 +36,11 @@ it("lists every channel a deferred step registers under that step's own name", (
 	);
 	expect(unlisted).toEqual([]);
 	expect(channelsOf(steps.find((s) => s.name === 'git')!.file)).toContain('github:account');
+});
+
+// a server a client was set up against listens from launch; the rest of what no window asks for stays unloaded
+it('holds the agent protocol and the terminal for their first call, and MCP unless it is switched on', () => {
+	const steps = Object.keys(DEFERRED_STEP_CHANNELS) as DeferredStep[];
+	expect(steps.filter((s) => waitsForFirstCall(s, false))).toEqual(['acp', 'terminal', 'mcp']);
+	expect(steps.filter((s) => waitsForFirstCall(s, true))).toEqual(['acp', 'terminal']);
 });
