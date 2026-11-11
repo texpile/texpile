@@ -11,6 +11,7 @@ import { spellDictionaries } from './scripts/spellDictionaries';
 import { pdfSandbox } from './scripts/pdfSandbox';
 import { packageData, packageDataIds } from './scripts/packageData';
 import { noUniversalSiblings } from './scripts/universalSiblings';
+import { eagerCompile } from './scripts/eagerCompile';
 
 // pre-bundle every runtime dependency up front: lazy discovery re-optimizes mid-session and
 // forces a full page reload (mathlive and the CodeMirror language modes are the usual offenders)
@@ -91,7 +92,9 @@ export default defineConfig(({ mode, command }) => ({
 				]),
 		// the spelling dictionaries for languages other than English
 		...(mode === 'test' ? [] : [spellDictionaries(__dirname), pdfSandbox(__dirname)]),
-		packageData(PACKAGE_DATA, mode !== 'web')
+		packageData(PACKAGE_DATA, mode !== 'web'),
+		// a launch runs 43% of the workspace chunk and 73% of ProseMirror; the next largest shares cost more memory than they save
+		eagerCompile(['/src/views/workspace/WorkspaceView.svelte', '/prosemirror-view/'])
 	],
 
 	// relative asset URLs: the packaged app is served from the app:// scheme (electron/src/main.ts),
