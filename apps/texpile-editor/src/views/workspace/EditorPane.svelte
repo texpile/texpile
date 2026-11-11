@@ -271,9 +271,8 @@
 					actions={historyButtons}
 				/>
 			{/if}
-			<!-- relative anchors the floating find bar; it sits outside the scroller so it doesn't scroll away.
-			     data-resize-cover: the file named over a resizing editor (app.css) -->
-			<div class="relative min-h-0 min-w-0 flex-1" data-resize-cover={loadedPath ? basename(loadedPath) : ''}>
+			<!-- relative anchors the floating find bar; it sits outside the scroller so it doesn't scroll away -->
+			<div class="relative min-h-0 min-w-0 flex-1">
 				{#if loadedPath}<FigureOverlay path={loadedPath} {figure} {viewMode} />{/if}
 				{#if loadedPath && structured && viewMode === 'visual' && visualDoc && !comparing && !parked}
 					<SearchBar />

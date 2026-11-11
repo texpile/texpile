@@ -1,4 +1,5 @@
 // the width of a pane's column: one change, or a stream of them that comes to rest
+import { dividerDragging, onDividerRelease, windowResizedAt } from './edgeDrag';
 
 // how long the width has to hold still before the pane redraws for it
 const WIDTH_REST_MS = 150;
@@ -12,15 +13,17 @@ type ColumnWidthHooks = {
 	rest(): void;
 };
 
-/** a width that changes once (the comment margin opening) is redrawn for at once. A splitter drag or a window resize
+/** a width that changes once (the comment margin opening) is redrawn for at once. A divider drag or a window resize
  *  changes it every frame, and re-breaking a long document every frame is what made dragging slow; the pane holds
- *  what it drew until the width rests */
+ *  from the drag's first step until the divider is let go or the width rests */
 export class ColumnWidth {
 	moving = false;
 	private width = -1;
 	private lastChange = -Infinity;
 	private restTimer = 0;
+	private drawnFrame = 0;
 	private readonly observer = new ResizeObserver(() => this.changed(true));
+	private readonly unwatchRelease = onDividerRelease(() => this.released());
 
 	constructor(
 		private readonly column: HTMLElement,
@@ -37,10 +40,12 @@ export class ColumnWidth {
 		this.width = width;
 		clearTimeout(this.restTimer);
 		const now = performance.now();
-		const moving = now - this.lastChange < WIDTH_REST_MS;
+		const dragged = dividerDragging();
+		const moving = dragged || now - Math.max(this.lastChange, windowResizedAt()) < WIDTH_REST_MS;
 		this.lastChange = now;
 		if (!moving && !this.moving) return this.hooks.breakNow(observed);
-		this.restTimer = window.setTimeout(() => this.hooks.rest(), WIDTH_REST_MS);
+		// a divider held still is still held: its pane rests on the release
+		if (!dragged) this.restTimer = window.setTimeout(() => this.hooks.rest(), WIDTH_REST_MS);
 		if (this.moving) return;
 		this.moving = true;
 		requestAnimationFrame(() => this.hooks.hold());
@@ -52,14 +57,24 @@ export class ColumnWidth {
 		this.width = this.column.clientWidth;
 	}
 
-	/** the rest is counted from here: a drag's next step comes only once a slow break is done, and must still count as
-	 *  moving */
+	/** the rest is counted from the frame after the break: a resize's next step comes only once a slow break is done
+	 *  and drawn, and must still count as moving */
 	broken(): void {
 		this.lastChange = performance.now();
+		cancelAnimationFrame(this.drawnFrame);
+		this.drawnFrame = requestAnimationFrame(() => (this.lastChange = performance.now()));
+	}
+
+	private released(): void {
+		if (!this.moving) return;
+		clearTimeout(this.restTimer);
+		this.hooks.rest();
 	}
 
 	destroy(): void {
 		clearTimeout(this.restTimer);
+		cancelAnimationFrame(this.drawnFrame);
 		this.observer.disconnect();
+		this.unwatchRelease();
 	}
 }

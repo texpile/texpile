@@ -29,8 +29,8 @@ type LineBreakState = {
 	decorations: DecorationSet;
 	/** how each paragraph is drawn now. In the state because a swapped in state starts empty yet can bring the same nodes back */
 	shown: WeakMap<PMNode, DrawnAs>;
-	/** the width the lines were broken for, held while the column's width moves (app.css) */
-	frozen: string | null;
+	/** the column's width keeps moving: the paragraphs wrap the browser's way until it rests (app.css) */
+	moving: boolean;
 	/** a document too large to break carries no decorations, and one rule justifies it when the text is justified */
 	plain: boolean;
 };
@@ -116,8 +116,6 @@ function lineBreaker(view: EditorView): { update(view: EditorView, before: Edito
 	let rebreaks = new WeakMap<PMNode, { since: number; count: number }>();
 	let widths = new WeakMap<HTMLElement, number>();
 	const unchecked = new Set<HTMLElement>();
-	// the width the lines were broken for, which the editor keeps while its column's width moves
-	let brokenFor = '';
 	let checkFrame = 0;
 	let rebreakFrame = 0;
 	let scratchNextFrame = false;
@@ -306,8 +304,8 @@ function lineBreaker(view: EditorView): { update(view: EditorView, before: Edito
 		const changed = stale.length > 0 || fresh.length > 0;
 		const decorations = large ? DecorationSet.empty : changed ? current.remove(stale).add(doc, fresh) : current;
 		const plain = large && context.justified;
-		if (decorations !== held.decorations || shown !== held.shown || held.frozen || held.plain !== plain)
-			publish({ decorations, shown, frozen: null, plain });
+		if (decorations !== held.decorations || shown !== held.shown || held.moving || held.plain !== plain)
+			publish({ decorations, shown, moving: false, plain });
 		// after the publish, so the marks land on the spans as they are drawn now
 		for (const [paragraph, pos, block, breaks] of withStruck) {
 			const struck = view.dom.contains(block) ? struckWordsIn(view, paragraph, pos, block) : null;
@@ -326,14 +324,10 @@ function lineBreaker(view: EditorView): { update(view: EditorView, before: Edito
 		typing.forget();
 		context.styleOf = runStyleReader();
 		if (view.isDestroyed) return;
-		const held = lineBreakKey.getState(view.state)!;
-		if (held.frozen) publish({ ...held, frozen: null });
-		brokenFor = getComputedStyle(view.dom).width;
 		rebreak(true);
 		width.broken();
 	}
 
-	// read from the editor's parent: a held editor keeps its own width while the column moves
 	const width = new ColumnWidth(view.dom.parentElement ?? view.dom, {
 		// from the observer the break waits a frame: new breaks change heights, which an observer may not cause itself
 		breakNow(nextFrame) {
@@ -342,9 +336,9 @@ function lineBreaker(view: EditorView): { update(view: EditorView, before: Edito
 			checkNow();
 		},
 		hold() {
-			if (view.isDestroyed || !width.moving || !brokenFor.endsWith('px')) return;
+			if (view.isDestroyed || !width.moving) return;
 			const held = lineBreakKey.getState(view.state)!;
-			if (held.frozen !== brokenFor) publish({ ...held, frozen: brokenFor });
+			if (!held.moving) publish({ ...held, moving: true });
 		},
 		rest: startOver
 	});
@@ -437,7 +431,7 @@ function lineBreakPlugin(): Plugin<LineBreakState> {
 	return new Plugin<LineBreakState>({
 		key: lineBreakKey,
 		state: {
-			init: () => ({ decorations: DecorationSet.empty, shown: new WeakMap(), frozen: null, plain: false }),
+			init: () => ({ decorations: DecorationSet.empty, shown: new WeakMap(), moving: false, plain: false }),
 			apply(tr, held) {
 				const next = tr.getMeta(lineBreakKey) as LineBreakState | undefined;
 				if (next || !tr.docChanged) return next ?? held;
@@ -448,10 +442,8 @@ function lineBreakPlugin(): Plugin<LineBreakState> {
 			decorations: (state) => lineBreakKey.getState(state)?.decorations,
 			attributes(state): Record<string, string> {
 				const held = lineBreakKey.getState(state);
-				const classes = [held?.plain && 'pm-lines-plain', held?.frozen && 'pm-lines-frozen'].filter(Boolean).join(' ');
-				const attributes: Record<string, string> = classes ? { class: classes } : {};
-				if (held?.frozen) attributes.style = `width: ${held.frozen}`;
-				return attributes;
+				const classes = [held?.plain && 'pm-lines-plain', held?.moving && 'pm-lines-moving'].filter(Boolean).join(' ');
+				return classes ? { class: classes } : {};
 			}
 		},
 		view: lineBreaker

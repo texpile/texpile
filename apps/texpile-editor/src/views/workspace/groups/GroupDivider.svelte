@@ -4,6 +4,7 @@
 	import { untrack } from 'svelte';
 	import { editorGroups } from '$lib/workspace/groups/editorGroups.svelte';
 	import { movedDivider } from '$lib/workspace/groups/groupSizes';
+	import { beginDividerDrag } from '$lib/resizing/edgeDrag';
 	import { m } from '$lib/paraglide/messages';
 
 	type Props = {
@@ -33,6 +34,7 @@
 		const handle = event.currentTarget as HTMLElement;
 		handle.setPointerCapture(event.pointerId);
 		if (!across) editorGroups.rowDivider = 'drag';
+		const endDrag = beginDividerDrag();
 		const start = across ? event.clientX : event.clientY;
 		const from = props.sizes;
 		function move(e: PointerEvent): void {
@@ -43,6 +45,7 @@
 			if (!across) editorGroups.rowDivider = 'idle';
 			handle.removeEventListener('pointermove', move);
 			handle.removeEventListener('lostpointercapture', up);
+			endDrag();
 		}
 		handle.addEventListener('pointermove', move);
 		handle.addEventListener('lostpointercapture', up);

@@ -597,19 +597,13 @@ select.input {
 .ProseMirror.pm-lines-plain > .prosemirror-flat-list p {
 	text-align: justify;
 }
-/* while the column's width is changing the editor keeps the width its lines were broken for and its parent clips what
-   runs past a narrower column; the pane is covered until the lines are broken again, as Overleaf does, and names its
-   file so split panes stay told apart. The previews are covered the same way while their width moves (resizeCover).
+/* while a divider or the window's edge is dragged the paragraphs wrap the browser's way, a layout a frame and no
+   script, so the text follows the edge; the breaker's lines come back when the width rests */
+.ProseMirror.pm-lines-moving .pm-line-par {
+	text-wrap-mode: wrap;
+}
+/* a preview is covered while its width moves and names itself, so split panes stay told apart (resizeCover).
    The solid ground: a see-through window clears the usual one */
-.ProseMirror.pm-lines-frozen {
-	flex: none;
-	max-width: none;
-	pointer-events: none;
-}
-:has(> .ProseMirror.pm-lines-frozen) {
-	overflow-x: clip;
-}
-[data-resize-cover]:has(.ProseMirror.pm-lines-frozen)::after,
 [data-resize-cover][data-resizing]::after {
 	content: attr(data-resize-cover);
 	position: absolute;
