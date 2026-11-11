@@ -18,23 +18,35 @@ const LINK_ATTRS_SET = 'link-attrs-set';
 
 type LinkRange = { mark: Mark; from: number; to: number; text: string };
 
-/** every run of adjacent text carrying one link mark, with the text it shows */
-function linkRanges(doc: Node, linkType: MarkType): LinkRange[] {
-	const pieces: LinkRange[] = [];
-	doc.descendants((node, pos) => {
+// what a top-level block holds, kept while it is the same node: an edit reads one block again
+const inBlock = new WeakMap<Node, LinkRange[]>();
+
+function linkRangesIn(block: Node, linkType: MarkType): LinkRange[] {
+	let found = inBlock.get(block);
+	if (found) return found;
+	found = [];
+	const out = found;
+	block.descendants((node, pos) => {
 		if (!node.isText) return true;
 		const mark = node.marks.find((mk) => mk.type === linkType);
-		if (mark) pieces.push({ mark, from: pos, to: pos + node.nodeSize, text: node.text ?? '' });
+		if (!mark) return true;
+		const last = out[out.length - 1];
+		if (last && last.to === pos && last.mark.eq(mark)) {
+			last.to = pos + node.nodeSize;
+			last.text += node.text ?? '';
+		} else out.push({ mark, from: pos, to: pos + node.nodeSize, text: node.text ?? '' });
 		return true;
 	});
+	inBlock.set(block, found);
+	return found;
+}
+
+/** every run of adjacent text carrying one link mark, with the text it shows */
+function linkRanges(doc: Node, linkType: MarkType): LinkRange[] {
 	const out: LinkRange[] = [];
-	for (const piece of pieces) {
-		const last = out[out.length - 1];
-		if (last && last.to === piece.from && last.mark.eq(piece.mark)) {
-			last.to = piece.to;
-			last.text += piece.text;
-		} else out.push(piece);
-	}
+	doc.forEach((block, offset) => {
+		for (const r of linkRangesIn(block, linkType)) out.push({ ...r, from: offset + 1 + r.from, to: offset + 1 + r.to });
+	});
 	return out;
 }
 
