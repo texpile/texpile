@@ -112,14 +112,10 @@ export class PointIndex {
 		}
 	}
 
-	/** a compile's index `fresh` read the same preamble, seed files, texts and images as this one stands on */
-	standsOn(fresh: PointIndex, root: string): boolean {
+	/** a compile's index `fresh` read the same preamble, seed files and images as this one stands on */
+	sameGround(fresh: PointIndex, root: string): boolean {
 		if (this.seedDir !== fresh.seedDir || this.preStamp !== fresh.preStamp || this.bodyLine !== fresh.bodyLine) return false;
-		if (this.preFiles.join('\n') !== fresh.preFiles.join('\n') || this.basis.size !== fresh.basis.size) return false;
-		for (const rel of fresh.basis.keys()) {
-			const text = this.text(rel);
-			if (text === null || text !== fresh.text(rel)) return false;
-		}
+		if (this.preFiles.join('\n') !== fresh.preFiles.join('\n')) return false;
 		function images(list?: string): string | null {
 			try {
 				return list ? fs.readFileSync(path.join(root, list), 'utf8') : null;
@@ -128,6 +124,16 @@ export class PointIndex {
 			}
 		}
 		return images(this.imageList) === images(fresh.imageList);
+	}
+
+	/** the same ground, and the same text of every file */
+	standsOn(fresh: PointIndex, root: string): boolean {
+		if (this.basis.size !== fresh.basis.size) return false;
+		for (const rel of fresh.basis.keys()) {
+			const text = this.text(rel);
+			if (text === null || text !== fresh.text(rel)) return false;
+		}
+		return this.sameGround(fresh, root);
 	}
 
 	/** the source snapshots a run wrote become the basis of the files it read */

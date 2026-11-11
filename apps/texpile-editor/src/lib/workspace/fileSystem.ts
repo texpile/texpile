@@ -144,7 +144,12 @@ type TexpileNative = {
 	fsRealRelative: (root: string, rel: string) => Promise<string | null>;
 	fsFormatLatex: (path: string, text: string) => Promise<{ formatted: string }>;
 	synctex: (body: Record<string, unknown>) => Promise<Record<string, unknown>>;
-	draftCompile: (body: { root: string; mainFile: string; readBack: { byTex: string[]; byTools: string[] } }) => Promise<DraftResult>;
+	draftCompile: (body: {
+		root: string;
+		mainFile: string;
+		readBack: { byTex: string[]; byTools: string[] };
+		rest?: boolean;
+	}) => Promise<DraftResult>;
 	draftTeleport?: (body: { root: string; mainFile: string; file: string; text: string; seq: number }) => Promise<TeleportResult>;
 	/** the caret rests on a line the preview shows: an engine reads on to its paragraph ahead of the first key there */
 	draftStage?: (body: { root: string; mainFile: string; file: string; text: string; line: number }) => Promise<unknown>;

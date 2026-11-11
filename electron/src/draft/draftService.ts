@@ -9,7 +9,7 @@ import { OUT } from './compileJob';
 import { collectSeeds, promote, publishView, readPage, type DraftPage, type ReadBackFiles } from './draftProducts';
 import { takeEngine, diskPreamble, stampOf, stopPool } from './teleport/enginePool';
 import { PointIndex, readIndexFile } from './teleport/pointIndex';
-import { adoptIndex, keepsIndex, stopCount, sweepLive } from './teleport/teleportService';
+import { adoptIndex, keepsIndex, liveMark, livePassed, stopCount, sweepLive } from './teleport/teleportService';
 import { holdSweep } from './teleport/sweepHold';
 import type { DraftEngine } from './teleport/draftEngine';
 import { shellEnvReady } from '../shell/shellEnv';
@@ -36,7 +36,8 @@ export type DraftResult =
 	/** error 'engine-missing' names the program in `tool`; 'latex-too-old' the format's LaTeX version in `found`; 'file-missing' the package file in `file` */
 	| { ok: false; error: string; ms: number; log?: string; superseded?: true; tool?: string; found?: string; file?: string };
 
-type DraftBody = { root: string; mainFile: string; engineDir: string; engine?: string; readBack: ReadBackFiles };
+// rest: the pass the window asks for by itself once typing stops, which a preview that went on can do without
+type DraftBody = { root: string; mainFile: string; engineDir: string; engine?: string; readBack: ReadBackFiles; rest?: boolean };
 
 // a newer compile of the same root kills this one's engine, so a slow pass never holds the preview
 type CompileRun = { gen: number; engine: DraftEngine | null };
@@ -82,6 +83,7 @@ async function compilePasses(body: DraftBody, owned: CompileOwned, stops: number
 	const outAbs = path.join(root, OUT);
 	const run = runFor(root);
 	const gen = ++run.gen;
+	const stood = liveMark(root);
 	run.engine?.remove();
 	run.engine = null;
 	function superseded(): boolean {
@@ -216,7 +218,10 @@ async function compilePasses(body: DraftBody, owned: CompileOwned, stops: number
 		index.fontList = `${done.engine.rel}/tele/fonts.lua`;
 		index.imageList = `${done.engine.rel}/tele/images.lua`;
 		// a pass over the text, seeds and images the live preview already stands on changes nothing a teleport reads
-		if (!keepsIndex({ root, mainRel, engineDir, index })) {
+		const at = { root, mainRel, engineDir, index };
+		// typing went on while a rest pass ran: its pages are of older text, and the next rest compiles again
+		if (body.rest && !keepsIndex(at) && livePassed(at, stood)) return { ok: false, error: 'superseded', ms, superseded: true };
+		if (!keepsIndex(at)) {
 			// eslint-disable-next-line no-param-reassign -- the index reads this folder now
 			owned.last = null;
 			owned.release();

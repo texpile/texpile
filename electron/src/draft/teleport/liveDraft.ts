@@ -102,6 +102,9 @@ export class LiveDraft {
 		return !this.#closed && !this.#reship && this.index.standsOn(fresh, this.root);
 	}
 
+	/** edits shown so far: a compile reads it before the files, to tell whether the preview went on meanwhile */
+	edits = 0;
+
 	/** the engine folders and seeds nothing reads any more go */
 	sweep(): void {
 		if (!this.#closed) this.#collectGarbage();
@@ -396,6 +399,7 @@ export class LiveDraft {
 		if (outcome.cut) {
 			this.index.keepBefore(plan, file, edit, readIndexFile(path.join(engine.abs, 'tele', 'index.jsonl')));
 			this.#epoch++;
+			this.edits++;
 			this.#staged = this.#stagedAt(file, edit);
 			return { ok: false, reason: 'superseded', ms: ms(), ...cutMoved };
 		}
@@ -416,6 +420,7 @@ export class LiveDraft {
 		const shifts = lineShifts(oldLines, lines);
 		this.index.merge(plan, file, edit, shifts, readIndexFile(path.join(engine.abs, 'tele', 'index.jsonl')), outcome.stop?.rec ?? null);
 		this.#epoch++;
+		this.edits++;
 		const cutTexts = this.#reship?.texts;
 		this.#reship = null;
 		this.index.adoptBasis(path.join(this.root, serve.src));

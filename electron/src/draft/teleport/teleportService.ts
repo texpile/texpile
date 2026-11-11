@@ -16,6 +16,20 @@ export function keepsIndex(c: { root: string; mainRel: string; engineDir: string
 	return !!live && live.mainRel === c.mainRel && live.engineDir === c.engineDir && live.standsOn(c.index);
 }
 
+/** where the live preview stands before a compile reads the files */
+export type LiveMark = { live: LiveDraft | undefined; edits: number };
+export function liveMark(root: string): LiveMark {
+	const live = lives.get(normRoot(root));
+	return { live, edits: live?.edits ?? 0 };
+}
+
+/** the live preview showed edits while a compile ran: it is past the text the compile read, and its index and engines stay */
+export function livePassed(c: { root: string; mainRel: string; engineDir: string; index: PointIndex }, mark: LiveMark): boolean {
+	const live = lives.get(normRoot(c.root));
+	if (!live || live !== mark.live || live.mainRel !== c.mainRel || live.engineDir !== c.engineDir) return false;
+	return live.edits !== mark.edits && live.index.sameGround(c.index, c.root);
+}
+
 /** a compile's index replaces whatever the teleports built: its text is what disk held when it ran */
 export function adoptIndex(c: {
 	root: string;

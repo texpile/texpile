@@ -26,7 +26,7 @@ function previewIn(wcId: number, root: string): void {
 }
 
 export function registerDraftIpc(): void {
-	handleFsE('draft:compile', async (e, body: { root: string; mainFile: string; readBack: ReadBackFiles }) => {
+	handleFsE('draft:compile', async (e, body: { root: string; mainFile: string; readBack: ReadBackFiles; rest?: boolean }) => {
 		previewIn(e.sender.id, body.root);
 		return draftService.compileDraft({ ...body, engineDir: luaDir() });
 	});
