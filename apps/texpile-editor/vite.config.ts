@@ -186,7 +186,8 @@ export default defineConfig(({ mode, command }) => ({
 
 	worker: {
 		format: 'es',
-		plugins: () => [noRunesInWorkers, packageDataIds(PACKAGE_DATA)]
+		plugins: () => [noRunesInWorkers, packageDataIds(PACKAGE_DATA)],
+		rollupOptions: { output: { charset: 'ascii' } }
 	},
 
 	build: {
@@ -207,6 +208,9 @@ export default defineConfig(({ mode, command }) => ({
 		modulePreload: { polyfill: false },
 		rollupOptions: {
 			output: {
+				// V8 keeps a script's whole source at two bytes a character once it holds one character past
+				// Latin-1, and every chunk held a few (a dash, an arrow, a message in Chinese): 33 MB of the page
+				charset: 'ascii',
 				// the big editor deps go into their own chunks so the workspace payload streams as
 				// parallel, independently-cacheable pieces instead of one blob
 				manualChunks(id: string) {
