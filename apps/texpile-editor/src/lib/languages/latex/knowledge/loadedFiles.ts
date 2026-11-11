@@ -53,12 +53,18 @@ export async function loadFiles(uses: FileUse[], classOptions: string[], engine:
 		const deps = depsOf(layers).filter(
 			(d) => (!d.if || conditionHolds(d.if, all)) && (!d.engines || (engine !== null && d.engines.includes(engine)))
 		);
-		const names = deps.map((d) => useNameOf(d.id));
-		await Promise.all(names.map(layersOf));
-		for (const n of names) await load(n, []);
+		for (const d of deps) await load(useNameOf(d.id), []);
 		loaded.set(name, { id: fileIdOf(name), name, layers, options: all });
 	}
-	await Promise.all(uses.map((u) => layersOf(u.name)));
+	// every file reachable is asked for before the walk, each as soon as the one that loads it is in. The walk goes
+	// one file after another to keep LaTeX's order, and asking that way took a paper's packages eight rounds
+	const asked = new Set<string>();
+	async function ask(name: string): Promise<void> {
+		if (asked.has(name)) return;
+		asked.add(name);
+		await Promise.all(depsOf(await layersOf(name)).map((d) => ask(useNameOf(d.id))));
+	}
+	await Promise.all(uses.map((u) => ask(u.name)));
 	for (const use of uses) await load(use.name, use.options);
 	return [...loaded.values()];
 }
