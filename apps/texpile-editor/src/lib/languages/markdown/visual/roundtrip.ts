@@ -6,7 +6,7 @@
 import { markdownToProseMirror } from './converter';
 import { serializeToMarkdownDetailed } from './serialize/serializer';
 import { padTables } from '$lib/editor/visual/padTables';
-import { collectMap, mapToCrlf, shiftMap, type RegionParse, type SourceMap } from '$lib/editor/visual/sourceSpans';
+import { collectMap, lazyMap, mapToCrlf, shiftMap, type RegionParse, type SourceMap } from '$lib/editor/visual/sourceSpans';
 import { rememberParseMap, warnMapDefects } from '$lib/editor/visual/parseOrigins';
 import type { Node } from 'prosemirror-model';
 import { parseBodyOf, type ParsedLatexFile, type ParsePhase } from '$lib/workspace/latexRoundtrip';
@@ -74,7 +74,7 @@ export function serializeMarkdownFileDetailed(
 		prefix = `${parsed.preamble}${leadProtected ? '' : '\n\n'}`;
 		out = `${prefix}${body}${tail}`;
 	}
-	const shifted = shiftMap(map, prefix.length, prefix.length + body.length);
+	const shifted = lazyMap(() => shiftMap(map, prefix.length, prefix.length + body.length));
 	if (doc.attrs.eol !== '\r\n') return { text: out, map: shifted };
-	return { text: out.replace(/\r?\n/g, '\r\n'), map: mapToCrlf(shifted, out) };
+	return { text: out.replace(/\r?\n/g, '\r\n'), map: lazyMap(() => mapToCrlf(shifted, out)) };
 }

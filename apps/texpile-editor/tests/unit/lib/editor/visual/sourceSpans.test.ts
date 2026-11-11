@@ -7,6 +7,7 @@ import {
 	alignedSpans,
 	charsOf,
 	concatSpans,
+	lazyMap,
 	nearestPm,
 	nearestSource,
 	pmToSource,
@@ -185,5 +186,20 @@ describe('parse origins', () => {
 		const again = parse();
 		adoptParse(typed.doc, again.origins);
 		expect(parseOf(typed.doc)).toBe(again.origins);
+	});
+});
+
+describe('lazyMap', () => {
+	// a visual edit makes a map on every key; its lists cost a pass over the document each
+	it('makes its lists on the first read, once', () => {
+		let made = 0;
+		const map = lazyMap(() => {
+			made++;
+			return { leaves: [{ pmFrom: 1, pmTo: 2, srcFrom: 3, srcTo: 4, kind: 'text' }], blocks: [], inner: [] };
+		});
+		expect(made).toBe(0);
+		expect(map.leaves).toHaveLength(1);
+		expect({ ...map }.blocks).toEqual([]);
+		expect(made).toBe(1);
 	});
 });

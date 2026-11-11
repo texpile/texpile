@@ -1,7 +1,7 @@
 // the walk over a document's top-level blocks
 import type { Node } from 'prosemirror-model';
 import type { Ctx } from './types';
-import { shiftSegment, type Segment, type SourceMap } from '$lib/editor/visual/sourceSpans';
+import { lazyMap, shiftSegment, type Segment, type SourceMap } from '$lib/editor/visual/sourceSpans';
 import { originsOf, parseOf, type BlockOrigin, type ParseOrigins } from '$lib/editor/visual/parseOrigins';
 import type { BlockAssemblyOptions, DocSerializeResult, Neighbour } from './blockAssembly';
 import {
@@ -452,11 +452,11 @@ export function createDocAssembly(serializeNode: (node: Node, ctx: Ctx) => strin
 			cutTo(out.length);
 		}
 		// runs land block by block in position order, so no sort is needed
-		const map: SourceMap = {
+		const map: SourceMap = lazyMap(() => ({
 			leaves: leaves.filter((s) => s.srcTo > s.srcFrom && s.pmTo > s.pmFrom),
 			blocks: blocks.filter((s) => s.srcTo > s.srcFrom),
 			inner: inner.filter((s) => s.pmTo > s.pmFrom)
-		};
+		}));
 		return {
 			text: out,
 			leadProtected,

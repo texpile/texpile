@@ -262,6 +262,19 @@ export function shiftSegment(s: Segment, dpm: number, dsrc: number): Segment {
 	return { pmFrom: s.pmFrom + dpm, pmTo: s.pmTo + dpm, srcFrom: s.srcFrom + dsrc, srcTo: s.srcTo + dsrc, kind: s.kind };
 }
 
+/** a map whose lists are made when one is first read: a visual edit makes a map on every key, and typing reads none */
+export function lazyMap(make: () => SourceMap): SourceMap {
+	let made: SourceMap | undefined;
+	function lists(): SourceMap {
+		return (made ??= make());
+	}
+	return Object.defineProperties({} as SourceMap, {
+		leaves: { enumerable: true, get: () => lists().leaves },
+		blocks: { enumerable: true, get: () => lists().blocks },
+		inner: { enumerable: true, get: () => lists().inner }
+	});
+}
+
 /** the map with its source side moved by `dsrc` and cut to `[0, srcLength)`; runs left empty by the cut go */
 export function shiftMap(map: SourceMap, dsrc: number, srcLength: number): SourceMap {
 	function move(list: Segment[]): Segment[] {
