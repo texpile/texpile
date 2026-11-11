@@ -75,15 +75,24 @@ async function restWrong() {
 
 // a keystroke is on screen once a run for it or a later one shipped its first page
 if (keys) {
-	const file = files[rand(files.length)];
-	const lines = texts.get(file).split('\n');
-	const begin = file === mainFile ? lines.findIndex((l) => l.includes('\\begin{document}')) + 1 : 0;
-	const prose = [];
-	for (let i = begin; i < lines.length; i++) if (lines[i].trim().length > 20 && !/[\\%$]/.test(lines[i])) prose.push(i);
-	if (!prose.length) {
+	// a paper's sentences hold citations and math, so a line of text that ends a sentence or a word counts too
+	const sentence = (l) => l.trim().length > 40 && !/[%&]|\\\\|^\s*\\/.test(l) && /[A-Za-z.,;]$/.test(l.trim());
+	const proseOf = (f) => {
+		const all = texts.get(f).split('\n');
+		const begin = f === mainFile ? all.findIndex((l) => l.includes('\\begin{document}')) + 1 : 0;
+		const found = [];
+		for (let i = begin; i < all.length; i++) if ((all[i].trim().length > 20 && !/[\\%$]/.test(all[i])) || sentence(all[i])) found.push(i);
+		return found;
+	};
+	// the next file in the list when the one drawn holds no text to type into
+	const start = rand(files.length);
+	const file = files.map((_, k) => files[(start + k) % files.length]).find((f) => proseOf(f).length);
+	if (!file) {
 		console.log(JSON.stringify({ folder: srcDir, keys: 0 }));
 		process.exit(0);
 	}
+	const lines = texts.get(file).split('\n');
+	const prose = proseOf(file);
 	const line = prose[rand(prose.length)];
 	const typed = WORDS.map((w) => ` ${w}`)
 		.join('')

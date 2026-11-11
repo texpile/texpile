@@ -261,6 +261,15 @@ return function(T)
 		local seq = {}
 		local function let(tk, back) T.let_global(seq, tk, token.create(back)) end
 		local changed = T.changed_names(true, nil, b.over)
+		-- a served process holds graphics' cache of the compile's images at every point: without it the next run
+		-- reads a figure again, at an object the compile never had
+		if R.kept then
+			local own = {}
+			for _, nm in ipairs(changed) do
+				if b.over[nm] or not T.is_image_cache(nm) then own[#own + 1] = nm end
+			end
+			changed = own
+		end
 		R.names = changed
 		for _, nm in ipairs(changed) do
 			local o = b.over and b.over[nm]
