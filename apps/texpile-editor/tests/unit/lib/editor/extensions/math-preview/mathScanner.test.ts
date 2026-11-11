@@ -4,6 +4,7 @@ import {
 	mathRegionAt,
 	type MathRegion
 } from '../../../../../../src/lib/editor/source/extensions/math-preview/mathScanner';
+import { latexMathRegionAt } from '../../../../../../src/lib/editor/source/extensions/math-preview/latexMathRegions';
 
 const outer = (text: string, regions: MathRegion[]) => regions.map((r) => text.slice(r.from, r.to));
 const inner = (text: string, regions: MathRegion[]) => regions.map((r) => text.slice(r.innerFrom, r.innerTo));
@@ -164,5 +165,26 @@ describe('mathRegionAt', () => {
 	it('returns null outside any region', () => {
 		expect(mathRegionAt(regions, 0)).toBeNull();
 		expect(mathRegionAt(regions, text.length)).toBeNull();
+	});
+});
+
+describe('latexMathRegionAt', () => {
+	// the preview asks on every key, and listing a long file's math to answer cost 5 ms each
+	it('finds at every position the region the whole list holds there', () => {
+		const text = [
+			'Inline $a+b$ and \\(c\\) with \\[ d \\] then $$e$$.',
+			'\\begin{align}',
+			'  x &= \\text{if $y$} \\\\',
+			'\\end{align}',
+			'\\begin{itemize}\\item $z$\\end{itemize}',
+			'% $not math$',
+			'',
+			'An open $f + g',
+			'',
+			'\\begin{equation} h'
+		].join('\n');
+		const all = findMathRegions(text);
+		expect(all.length).toBeGreaterThan(6);
+		for (let pos = 0; pos <= text.length; pos++) expect(latexMathRegionAt(text, pos), `at ${pos}`).toEqual(mathRegionAt(all, pos));
 	});
 });
