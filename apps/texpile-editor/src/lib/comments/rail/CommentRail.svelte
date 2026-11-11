@@ -132,6 +132,11 @@
 	const heights = new Map<string, number>();
 	let positions = $state.raw<Map<string, number>>(new Map());
 	function relayout() {
+		// a pane with no cards is resized as often as any other
+		if (placed.length === 0 && !composing) {
+			if (positions.size > 0) positions = new Map();
+			return;
+		}
 		const items: RailItem[] = placed.map((t) => ({ id: t.id, anchor: anchors.get(t.id)!, height: heights.get(t.id) ?? 120 }));
 		if (composing) items.push({ id: PENDING_ANCHOR, anchor: anchors.get(PENDING_ANCHOR)!, height: heights.get(PENDING_ANCHOR) ?? 110 });
 		positions = stackRailItems(items, composing ? PENDING_ANCHOR : ctl.selected, GAP, bounds());
