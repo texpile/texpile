@@ -2,6 +2,9 @@
 // its raw text (doc.texSource), the whole file. The visual editor is a view over it: entry
 // parses into doc.visualDoc + doc.docMeta, every visual edit serializes straight back into
 // doc.texSource, and source mode binds to it directly. No rival copy can drift.
+import { mathMacrosFor } from '$lib/editor/source/extensions/math-preview/userMacros';
+import { setMathMacros } from '$lib/editor/visual/extensions/mathlivebridge/mathMacros.svelte';
+import { retypesetStaticMath } from '$lib/editor/visual/extensions/mathlivebridge/mathStatic';
 import { fileService } from '$lib/files/service/fileService';
 import { mark } from '$lib/debug/startupDoctor';
 import { untrack } from 'svelte';
@@ -71,6 +74,11 @@ export class WorkspaceDoc {
 			beforeLocalEdit: () => d.visualCollab()?.beforeLocalEdit(),
 			clearPendingAnchor: () => (this.modes.pendingVisualAnchor = null),
 			projectMacros: () => this.projectMacros,
+			// before the swap, so the file's formulas are made with its own macros: made with the last file's, each was
+			// typeset twice and its paragraph broken twice. What the swap leaves on the page is typeset again after it
+			adoptingText: (source) => {
+				if (setMathMacros(mathMacrosFor(source))) queueMicrotask(retypesetStaticMath);
+			},
 			offerInserts: offerFileInserts,
 			reparse: (text, format) => this.parser.reparse(text, format),
 			// once per file: a file too slow to parse twice is slow on every save
