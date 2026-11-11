@@ -70,8 +70,10 @@ function headingsOf(state: EditorState, tree: Tree): Heading[] {
 	let found = headingLists.get(tree);
 	if (found) return found;
 	const list: Heading[] = [];
+	// off the flat text: every command name read through the editor's rope cost 4 ms a key in a long file
+	const text = docText(state.doc);
 	function read(from: number, to: number): string {
-		return state.sliceDoc(from, to);
+		return text.slice(from, to);
 	}
 	tree.iterate({
 		enter(ref) {
