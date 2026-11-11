@@ -2,9 +2,9 @@
 // the dominant figure format in papers, and the image node view is <img>-based, so PDF figures
 // showed the not-found placeholder even when the file existed. Uses the pdf pane's shared
 // worker; each document is destroyed after its one render, which the singleton's non-adopting
-// getPdfDocument makes safe. Rendered once per URL for the session - the blob is a snapshot,
+// getPdfDocumentForPicture makes safe. Rendered once per URL for the session - the blob is a snapshot,
 // a regenerated figure shows after the file is reopened.
-import { getPdfDocument } from '$lib/pdf-view';
+import { getPdfDocumentForPicture } from '$lib/pdf-view';
 import { figureRasterScale } from './pdfRasterScale';
 
 const cache = new Map<string, Promise<string | null>>();
@@ -28,7 +28,7 @@ export function pdfPageImageUrl(url: string): Promise<string | null> {
 }
 
 async function render(url: string): Promise<string | null> {
-	const task = await getPdfDocument(url);
+	const task = await getPdfDocumentForPicture(url);
 	if (!task) return null;
 	const doc = await task.promise;
 	try {

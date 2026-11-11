@@ -4,7 +4,7 @@
 // landed bitmap repaints its page through the hook.
 import { fileService } from '$lib/files/service/fileService';
 import type { PDFDocumentProxy } from 'pdfjs-dist/legacy/build/pdf.mjs';
-import { getPdfDocument } from '$lib/pdf-view';
+import { getPdfDocument, getPdfDocumentForPicture } from '$lib/pdf-view';
 import type { PaperMetrics } from '../draftPaper';
 
 type BitmapHooks = {
@@ -83,7 +83,7 @@ export class DraftBitmaps {
 				if (/\.pdf$/i.test(file)) {
 					// getPdfDocument, not getDocument: task.destroy() below would otherwise take the shared
 					// worker down with it, out from under the PDF viewer
-					const task = await getPdfDocument({ url: fileService.fileUrl(file) });
+					const task = await getPdfDocumentForPicture(fileService.fileUrl(file));
 					if (!task) throw new Error('no pdfjs');
 					const doc = await task.promise;
 					const pg = await doc.getPage(1);

@@ -77,6 +77,16 @@ export async function getPdfDocument(src: DocumentSource, ownerDocument?: Docume
 	return pdfjs.getDocument({ ...params, worker: pdfWorker, ...(ownerDocument ? { ownerDocument } : {}) });
 }
 
+/**
+ * A document opened to be drawn off screen and thrown away: a figure's picture, a crop. Its fonts are drawn as
+ * outlines. Left to pdf.js, each embedded font is added to the page's own font set and taken out again when the
+ * document goes, and every change of that set makes the browser lay out all the text in the window: a paper with nine
+ * PDF figures laid its whole editor out thirty times in the two seconds after it opened.
+ */
+export function getPdfDocumentForPicture(src: string | URL): Promise<LoadingTask | null> {
+	return getPdfDocument({ url: src, disableFontFace: true });
+}
+
 /** destroys the PDF.js worker; the next getPdfJs() call creates a new one. */
 export function destroyPdfJs(): void {
 	// before pdfjsLib goes: otherwise the reference is lost and workerPort keeps pointing at a

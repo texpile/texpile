@@ -1,4 +1,4 @@
-import { getPdfDocument } from '$lib/pdf-view';
+import { getPdfDocumentForPicture } from '$lib/pdf-view';
 import { clampRegion, compiledPictureKey, type PageRegion } from './pictureRegion';
 
 export type PictureCrop = { url: string; width: number; height: number };
@@ -7,7 +7,7 @@ export type PictureCrop = { url: string; width: number; height: number };
 const CSS_PER_BP = 96 / 72;
 const KEPT = 80;
 
-type OpenPdf = { url: string; task: ReturnType<typeof getPdfDocument> };
+type OpenPdf = { url: string; task: ReturnType<typeof getPdfDocumentForPicture> };
 
 const crops = new Map<string, Promise<PictureCrop | null>>();
 const users = new Map<OpenPdf, number>();
@@ -20,7 +20,7 @@ async function destroy(pdf: OpenPdf): Promise<void> {
 function acquire(url: string): OpenPdf {
 	if (current?.url !== url) {
 		const old = current;
-		current = { url, task: getPdfDocument(url) };
+		current = { url, task: getPdfDocumentForPicture(url) };
 		if (old && !users.get(old)) void destroy(old);
 	}
 	users.set(current, (users.get(current) ?? 0) + 1);

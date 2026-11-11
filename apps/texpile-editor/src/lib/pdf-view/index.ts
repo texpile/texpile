@@ -12,4 +12,4 @@ export {
 	type PdfView
 } from './pdf-viewer/context';
 
-export { getPdfJs, getPdfDocument, destroyPdfJs } from './pdf-viewer/pdfjs-singleton';
+export { getPdfJs, getPdfDocument, getPdfDocumentForPicture, destroyPdfJs } from './pdf-viewer/pdfjs-singleton';
