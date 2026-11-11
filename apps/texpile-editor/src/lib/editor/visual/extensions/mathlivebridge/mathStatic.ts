@@ -144,6 +144,8 @@ export function renderStaticMath(latex: string, isBlock: boolean, syntax: MathSy
 
 /** re-render a placeholder for an edit that landed while it was still offscreen */
 export function setStaticMath(el: HTMLElement, latex: string): void {
+	// a node view is updated for every decoration over it, a selection among them
+	if (latexOf.get(el) === latex) return;
 	el.setAttribute('aria-label', latex);
 	latexOf.set(el, latex);
 	if (pending.has(el)) {

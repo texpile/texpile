@@ -100,6 +100,15 @@ describe('math node view materialization', () => {
 		expect(built).toBe(0); // still no mathfield: this stage is rendering only
 	});
 
+	// a Select All over a long paper typeset every formula in it again
+	it('keeps what it typeset when the view is updated for the same formula', async () => {
+		const view = makeView('\\alpha_{ij}');
+		await flushIdle();
+		const typeset = placeholderOf(view)!.querySelector('.typeset');
+		view.update(view.node, []);
+		expect(placeholderOf(view)!.querySelector('.typeset')).toBe(typeset);
+	});
+
 	it('builds the field when a pointer reaches the formula, replacing the placeholder', () => {
 		const view = makeView();
 		pointTo(view.dom);
