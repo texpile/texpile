@@ -384,9 +384,11 @@ math-field {
 	color: var(--muted-text);
 }
 /* the PM gap cursor defaults to solid black, invisible on dark; !important so the
-   override wins regardless of stylesheet order */
+   override wins regardless of stylesheet order. Its own blink animates visibility, which the
+   main thread restyles on every frame for as long as the cursor shows; opacity runs off it */
 .ProseMirror-gapcursor:after {
 	border-top: var(--default-border-width) solid var(--color-surface-950-50) !important;
+	animation: pm-caret-blink 1.1s step-end infinite !important;
 }
 /* dropPastNodeViews.ts. mathlive turns pointer events back on inside its shadow root */
 .ProseMirror.pm-own-drag [contenteditable='false'],
