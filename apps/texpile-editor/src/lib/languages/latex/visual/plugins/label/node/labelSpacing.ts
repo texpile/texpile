@@ -8,15 +8,30 @@ function touches(text: string | undefined): boolean {
 	return !!text && /\S/.test(text);
 }
 
-export function gluedLabels(doc: PMNode): Map<number, string> {
-	const out = new Map<number, string>();
-	doc.descendants((node, pos, parent, index) => {
+// what a top-level block holds, kept while it is the same node: an edit reads one block again
+const inBlock = new WeakMap<PMNode, [number, string][]>();
+
+function gluedIn(block: PMNode): [number, string][] {
+	let found = inBlock.get(block);
+	if (found) return found;
+	found = [];
+	const list = found;
+	block.descendants((node, pos, parent, index) => {
 		if (node.type.name !== 'label' || !parent) return true;
 		const before = index > 0 ? parent.child(index - 1) : null;
 		const after = index + 1 < parent.childCount ? parent.child(index + 1) : null;
 		const sides = [touches(before?.text?.at(-1)) && 'before', touches(after?.text?.[0]) && 'after'].filter(Boolean).join(' ');
-		if (sides) out.set(pos, sides);
+		if (sides) list.push([pos, sides]);
 		return false;
+	});
+	inBlock.set(block, found);
+	return found;
+}
+
+export function gluedLabels(doc: PMNode): Map<number, string> {
+	const out = new Map<number, string>();
+	doc.forEach((block, offset) => {
+		for (const [pos, sides] of gluedIn(block)) out.set(offset + 1 + pos, sides);
 	});
 	return out;
 }
