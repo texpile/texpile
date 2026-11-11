@@ -251,7 +251,7 @@ class EnginePool {
 		});
 	}
 
-	takeStaged(c: PoolConfig, key: string): DraftEngine | null {
+	async takeStaged(c: PoolConfig, key: string): Promise<DraftEngine | null> {
 		const fit = this.spares.filter((x) => x.staged === key && x.key === keyOf(c, c.preamble) && !x.engine.dead);
 		// one already waiting at the point goes first, then the one that should get there soonest
 		const s = fit.find((x) => x.engine.waitingAt) ?? [...fit].sort((x, y) => (x.due ?? 0) - (y.due ?? 0))[0];
@@ -260,7 +260,11 @@ class EnginePool {
 		s.staged = undefined;
 		this.out.set(s.engine, s);
 		this.warm(c);
-		return s.engine;
+		// an engine handed back after its run exits where it finds it cannot park
+		if (await s.at) return s.engine;
+		this.out.delete(s.engine);
+		retire(s.engine);
+		return this.takeStaged(c, key);
 	}
 
 	/** `staged`: the chain the engine waits at once its run is over, when it goes back to the point `rec` */
@@ -351,7 +355,7 @@ export function stageAhead(
 }
 
 /** the spare staged at `key`, taken; null when none is */
-export function takeStaged(c: PoolConfig, key: string): DraftEngine | null {
+export function takeStaged(c: PoolConfig, key: string): Promise<DraftEngine | null> {
 	return poolFor(c.root).takeStaged(c, key);
 }
 

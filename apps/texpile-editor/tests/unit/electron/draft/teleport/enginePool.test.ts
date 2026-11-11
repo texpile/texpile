@@ -97,8 +97,8 @@ it('hands a staged engine to its own chain, and sends it back to the base for an
 	warmPool(c);
 	const running = await takeEngine(c);
 	stageEngine(c, 'chain-1', () => ({ plan: 'plan-1', serve: 1 }));
-	expect(takeStaged(c, 'chain-2')).toBeNull();
-	const staged = takeStaged(c, 'chain-1');
+	expect(await takeStaged(c, 'chain-2')).toBeNull();
+	const staged = await takeStaged(c, 'chain-1');
 	expect(staged).not.toBe(running);
 	expect(seen(staged).stagedWith).toBe('plan-1');
 	running.parked = Promise.resolve(true);
@@ -107,6 +107,26 @@ it('hands a staged engine to its own chain, and sends it back to the base for an
 	expect(seen(running).stagedWith).toBe('plan-3');
 	expect(await takeEngine(c)).toBe(running);
 	expect(seen(running).dropped).toBe(true);
+	stopPool();
+});
+
+// an engine ends its run with an exit when it cannot park: it served its count, or the run wrote PDF objects
+it('passes over a staged engine that exited where it should have parked', async () => {
+	const c = {
+		root,
+		mainRel: 'main.tex',
+		engineDir: '/e',
+		engine: 'lualatex',
+		seedDir: '/s',
+		preamble: 'pre\n\\begin{document}',
+		preStamp: null
+	};
+	warmPool(c);
+	const served = await takeEngine(c);
+	served.serves = 1;
+	served.parked = Promise.resolve(false);
+	giveBack(served, { key: 'chain-1', rec: 'rec-1' });
+	expect(await takeStaged(c, 'chain-1')).toBeNull();
 	stopPool();
 });
 

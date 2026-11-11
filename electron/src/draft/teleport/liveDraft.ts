@@ -280,7 +280,7 @@ export class LiveDraft {
 
 		// typing goes on in one paragraph, so the edit before this one staged a spare at the same chain
 		const key = plan.chain.length ? stageKey(plan, this.index.basis, file) : null;
-		const engine = (key && takeStaged(pool, key)) || (await takeEngine(pool));
+		const engine = (key && (await takeStaged(pool, key))) || (await takeEngine(pool));
 		if (this.#closed) {
 			engine.remove();
 			return { ok: false, reason: 'superseded', ms: ms() };
