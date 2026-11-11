@@ -10,6 +10,7 @@ import { readChangelog } from './scripts/changelog.mjs';
 import { spellDictionaries } from './scripts/spellDictionaries';
 import { pdfSandbox } from './scripts/pdfSandbox';
 import { packageData, packageDataIds } from './scripts/packageData';
+import { noUniversalSiblings } from './scripts/universalSiblings';
 
 // pre-bundle every runtime dependency up front: lazy discovery re-optimizes mid-session and
 // forces a full page reload (mathlive and the CodeMirror language modes are the usual offenders)
@@ -176,6 +177,8 @@ export default defineConfig(({ mode, command }) => ({
 	},
 
 	assetsInclude: ['**/*.wasm'],
+
+	css: { postcss: { plugins: [noUniversalSiblings] } },
 
 	worker: {
 		format: 'es',
