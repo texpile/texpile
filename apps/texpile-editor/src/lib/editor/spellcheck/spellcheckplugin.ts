@@ -164,6 +164,8 @@ export function proofreadPlugin(language: () => SpellLanguage | null): Plugin {
 		},
 		props: {
 			...libraryPlugin.spec.props,
+			// the library searches the whole page for its own suggestion box on every key; the box here is Texpile's
+			handleKeyDown: undefined,
 			handleClick(view, pos, event) {
 				return !onOldWords(event) && !!libraryPlugin.spec.props?.handleClick?.call(this, view, pos, event);
 			}
