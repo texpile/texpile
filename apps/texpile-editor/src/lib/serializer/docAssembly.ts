@@ -1,7 +1,7 @@
 // the walk over a document's top-level blocks
 import type { Node } from 'prosemirror-model';
 import type { Ctx } from './types';
-import { lazyMap, shiftSegment, type Segment, type SourceMap } from '$lib/editor/visual/sourceSpans';
+import { shiftSegment, type Segment } from '$lib/editor/visual/sourceSpans';
 import { originsOf, parseOf, type BlockOrigin, type ParseOrigins } from '$lib/editor/visual/parseOrigins';
 import type { BlockAssemblyOptions, DocSerializeResult, Neighbour } from './blockAssembly';
 import {
@@ -21,6 +21,7 @@ import {
 	type Entry,
 	type Splice
 } from './blockAssemblyUtils';
+import { createLandedRuns } from './landedRuns';
 import type { createMemberSplice } from './memberSplice';
 import type { createVerbatimParts } from './verbatimParts';
 
@@ -179,29 +180,10 @@ export function createDocAssembly(serializeNode: (node: Node, ctx: Ctx) => strin
 			}
 			return s;
 		}
-		const leaves: Segment[] = [];
-		const blocks: Segment[] = [];
-		// leaves land block by block: leafFrom[b] is where block segment b's leaves begin
-		const leafFrom: number[] = [];
-		const inner: Segment[] = [];
-		const innerFrom: number[] = [];
-		function cut(s: Segment, len: number): Segment {
-			if (s.srcTo <= len) return s;
-			const pmTo = s.kind === 'text' ? s.pmFrom + Math.max(0, len - s.srcFrom) : s.pmTo;
-			return { pmFrom: s.pmFrom, pmTo, srcFrom: Math.min(s.srcFrom, len), srcTo: len, kind: s.kind };
-		}
-		// `out` is cut back before a separator goes on: nothing recorded may point past the cut, and a
-		// text run loses as many characters as bytes. Blocks land in output order, so only the last
-		// ones can reach past a cut
+		const runs = createLandedRuns();
+		// `out` is cut back before a separator goes on
 		function cutTo(len: number) {
-			if (len >= outLen) return;
-			for (let b = blocks.length - 1; b >= 0 && blocks[b].srcTo > len; b--) {
-				blocks[b] = cut(blocks[b], len);
-				const end = b + 1 < blocks.length ? leafFrom[b + 1] : leaves.length;
-				for (let k = leafFrom[b]; k < end; k++) leaves[k] = cut(leaves[k], len);
-				const innerEnd = b + 1 < blocks.length ? innerFrom[b + 1] : inner.length;
-				for (let k = innerFrom[b]; k < innerEnd; k++) inner[k] = cut(inner[k], len);
-			}
+			if (len < outLen) runs.cutTo(len);
 		}
 		// the last verbatim-emitted child's origin; null once anything regenerated lands in between.
 		// blocks serializing to '' (empty paragraphs) don't break the chain, so pristine neighbours
@@ -301,25 +283,25 @@ export function createDocAssembly(serializeNode: (node: Node, ctx: Ctx) => strin
 				push(text);
 				ownEnd = outLen;
 				// the block's runs are where they were at parse time, moved to where the slice landed
-				let pmEnd = pmStarts[i];
-				for (let k = 0; k < run; k++) pmEnd += doc.child(i + k).nodeSize;
+				const first = i;
+				const pmStart = pmStarts[i];
+				let pmEnd = pmStart;
 				const members: Node[] = [];
-				for (let k = 0; k < run; k++) members.push(doc.child(i + k));
-				const placed = placedRuns(placedEntry(i), `v:${pmStarts[i]}:${at}:${run}`, members, () => {
-					const block: Segment = { pmFrom: pmStarts[i], pmTo: pmEnd, srcFrom: at, srcTo: at + text.length, kind: 'sub' };
-					const carried = origin.srcTo! - origin.srcFrom! === text.length && origin.pmTo - origin.pmFrom === pmEnd - pmStarts[i];
-					const runs = carried ? origin.leaves.map((s) => shiftSegment(s, pmStarts[i] - origin.pmFrom, at - origin.srcFrom!)) : [];
-					const nodes = members;
-					const within = carried
-						? nestedOf(nodes, origin.pmFrom).map((s) => shiftSegment(s, pmStarts[i] - origin.pmFrom, at - origin.srcFrom!))
-						: [];
-					return { block, leaves: runs, inner: within };
-				});
-				blocks.push(placed.block);
-				leafFrom.push(leaves.length);
-				for (const s of placed.leaves) leaves.push(s);
-				innerFrom.push(inner.length);
-				for (const s of placed.inner) inner.push(s);
+				for (let k = 0; k < run; k++) {
+					members.push(doc.child(i + k));
+					pmEnd += members[k].nodeSize;
+				}
+				const pmTo = pmEnd;
+				runs.land({ pmFrom: pmStart, pmTo, srcFrom: at, srcTo: at + text.length, kind: 'sub' }, () =>
+					placedRuns(placedEntry(first), `v:${pmStart}:${at}:${run}`, members, () => {
+						const carried = origin.srcTo! - origin.srcFrom! === text.length && origin.pmTo - origin.pmFrom === pmTo - pmStart;
+						if (!carried) return { leaves: [], inner: [] };
+						return {
+							leaves: origin.leaves.map((s) => shiftSegment(s, pmStart - origin.pmFrom, at - origin.srcFrom!)),
+							inner: nestedOf(members, origin.pmFrom).map((s) => shiftSegment(s, pmStart - origin.pmFrom, at - origin.srcFrom!))
+						};
+					})
+				);
 				prevOrigin = origins[i + run - 1];
 				last = neighbours[i + run - 1];
 				lastRegenerated = null;
@@ -374,43 +356,44 @@ export function createDocAssembly(serializeNode: (node: Node, ctx: Ctx) => strin
 					push(between);
 					push(body);
 					const dropped = part.length - body.length;
-					let pmEnd = pmStarts[i];
-					for (let k = 0; k < count; k++) pmEnd += doc.child(i + k).nodeSize;
+					const first = i;
+					const pmStart = pmStarts[i];
+					let pmEnd = pmStart;
 					const members: Node[] = [];
-					for (let k = 0; k < count; k++) members.push(doc.child(i + k));
-					const placed = placedRuns(entryAt(i), `r:${pmStarts[i]}:${at}:${dropped}:${count}`, members, () => {
-						const block: Segment = { pmFrom: pmStarts[i], pmTo: pmEnd, srcFrom: at, srcTo: at + body.length, kind: 'sub' };
-						const runs: Segment[] = [];
-						for (const s of partLeaves ?? leavesOf(doc, i, n, entryAt(i))) {
-							const srcTo = s.srcTo - dropped;
-							if (srcTo <= 0) continue;
-							runs.push({
-								pmFrom: pmStarts[i] + s.pmFrom,
-								pmTo: pmStarts[i] + s.pmTo,
-								srcFrom: at + Math.max(0, s.srcFrom - dropped),
-								srcTo: at + srcTo,
-								kind: s.kind
-							});
-						}
-						// the blocks inside: where a splice put them, else where their runs landed
-						let within: Segment[];
-						if (construct || entryAt(i).inner) {
-							const known = construct ? construct.inner : entryAt(i).inner!;
-							within = known.map((s) => ({
-								pmFrom: pmStarts[i] + s.pmFrom,
-								pmTo: pmStarts[i] + s.pmTo,
-								srcFrom: at + Math.max(0, s.srcFrom + (construct ? lead.length : 0) - dropped),
-								srcTo: at + Math.max(0, s.srcTo + (construct ? lead.length : 0) - dropped),
-								kind: 'sub'
-							}));
-						} else within = derivedInner(doc.child(i), pmStarts[i], runs, at);
-						return { block, leaves: runs, inner: within };
-					});
-					blocks.push(placed.block);
-					leafFrom.push(leaves.length);
-					for (const s of placed.leaves) leaves.push(s);
-					innerFrom.push(inner.length);
-					for (const s of placed.inner) inner.push(s);
+					for (let k = 0; k < count; k++) {
+						members.push(doc.child(i + k));
+						pmEnd += members[k].nodeSize;
+					}
+					const fromSplice = partLeaves;
+					runs.land({ pmFrom: pmStart, pmTo: pmEnd, srcFrom: at, srcTo: at + body.length, kind: 'sub' }, () =>
+						placedRuns(entryAt(first), `r:${pmStart}:${at}:${dropped}:${count}`, members, () => {
+							const leaves: Segment[] = [];
+							for (const s of fromSplice ?? leavesOf(doc, first, n, entryAt(first))) {
+								const srcTo = s.srcTo - dropped;
+								if (srcTo <= 0) continue;
+								leaves.push({
+									pmFrom: pmStart + s.pmFrom,
+									pmTo: pmStart + s.pmTo,
+									srcFrom: at + Math.max(0, s.srcFrom - dropped),
+									srcTo: at + srcTo,
+									kind: s.kind
+								});
+							}
+							// the blocks inside: where a splice put them, else where their runs landed
+							let within: Segment[];
+							if (construct || entryAt(first).inner) {
+								const known = construct ? construct.inner : entryAt(first).inner!;
+								within = known.map((s) => ({
+									pmFrom: pmStart + s.pmFrom,
+									pmTo: pmStart + s.pmTo,
+									srcFrom: at + Math.max(0, s.srcFrom + (construct ? lead.length : 0) - dropped),
+									srcTo: at + Math.max(0, s.srcTo + (construct ? lead.length : 0) - dropped),
+									kind: 'sub'
+								}));
+							} else within = derivedInner(members[0], pmStart, leaves, at);
+							return { leaves, inner: within };
+						})
+					);
 					prevOrigin = null;
 					last = neighbours[i + count - 1];
 					lastRegenerated = last;
@@ -433,30 +416,15 @@ export function createDocAssembly(serializeNode: (node: Node, ctx: Ctx) => strin
 		// no-break space is content, not a gap
 		if (!leadProtected) {
 			const trimmed = out.replace(/^[ \t\r\n]+/, '');
-			const cut = out.length - trimmed.length;
-			if (cut > 0) {
-				function shift(s: Segment): Segment {
-					if (s.srcFrom >= cut) return { ...s, srcFrom: s.srcFrom - cut, srcTo: s.srcTo - cut };
-					// the run began inside the trimmed lead
-					const pmFrom = s.kind === 'text' ? s.pmFrom + Math.min(cut, s.srcTo) - s.srcFrom : s.pmFrom;
-					return { ...s, pmFrom, srcFrom: 0, srcTo: Math.max(0, s.srcTo - cut) };
-				}
-				for (let k = 0; k < leaves.length; k++) leaves[k] = shift(leaves[k]);
-				for (let k = 0; k < blocks.length; k++) blocks[k] = shift(blocks[k]);
-			}
+			runs.leadTrimmed(out.length - trimmed.length);
 			out = trimmed;
 			outLen = out.length;
-		}
+		} else runs.leadTrimmed(0);
 		if (!tailProtected) {
 			out = out.replace(/[ \t\r\n]+$/, '');
 			cutTo(out.length);
 		}
-		// runs land block by block in position order, so no sort is needed
-		const map: SourceMap = lazyMap(() => ({
-			leaves: leaves.filter((s) => s.srcTo > s.srcFrom && s.pmTo > s.pmFrom),
-			blocks: blocks.filter((s) => s.srcTo > s.srcFrom),
-			inner: inner.filter((s) => s.pmTo > s.pmFrom)
-		}));
+		const map = runs.map();
 		return {
 			text: out,
 			leadProtected,
