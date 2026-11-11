@@ -1,5 +1,6 @@
 // latest-wins client for labels.worker.ts. results are advisory (completion registries), so a
 // superseded or failed request resolves null and the caller just keeps its previous state.
+import { idleRelease } from '$lib/idleRelease';
 import type { BibItemSlice } from './labels';
 
 export type DocRefs = {
@@ -20,7 +21,18 @@ function settleAll(value: null) {
 	pending.clear();
 }
 
+// the worker holds the package knowledge, 12 MB of a window nobody is typing in; the next pause in typing starts it again
+const restWhenIdle = idleRelease(
+	30_000,
+	() => pending.size > 0,
+	() => {
+		worker?.terminate();
+		worker = null;
+	}
+);
+
 function ensureWorker(): Worker {
+	restWhenIdle();
 	if (worker) return worker;
 	const w = new Worker(new URL('./labels.worker.ts', import.meta.url), { type: 'module' });
 	w.onmessage = (event: MessageEvent<{ id: number; refs: DocRefs }>) => {

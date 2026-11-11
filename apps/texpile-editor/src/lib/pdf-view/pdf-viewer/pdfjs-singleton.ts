@@ -1,4 +1,5 @@
 import { BROWSER } from 'esm-env';
+import { idleRelease } from '$lib/idleRelease';
 
 type PdfLib = typeof import('pdfjs-dist/legacy/build/pdf.mjs');
 type DocumentInit = NonNullable<Parameters<PdfLib['getDocument']>[0]>;
@@ -91,13 +92,41 @@ export function pdfCanvas(width: number, height: number, host: Document = docume
 	return canvas;
 }
 
+// documents opened and not yet destroyed
+let openDocuments = 0;
+
+// pdf.js and its worker go once no document has been open for half a minute: a paper's figures are drawn once and
+// kept as pictures, and the worker held 10 MB after them
+const restWhenIdle = idleRelease(
+	30_000,
+	() => openDocuments > 0,
+	() => destroyPdfJs()
+);
+
+function documentClosed(): void {
+	openDocuments--;
+	restWhenIdle();
+}
+
 /** `host` is the document of the window the PDF shows in: the popped-out preview has its own */
 export async function getPdfDocument(src: DocumentSource, host: Document = document): Promise<LoadingTask | null> {
+	openDocuments++;
 	const pdfjs = await getPdfJs();
-	if (!pdfjs || !pdfWorker) return null;
+	if (!pdfjs || !pdfWorker) {
+		documentClosed();
+		return null;
+	}
 	// a bare url goes into the init parameters, which is also where the worker has to go
 	const params = typeof src === 'string' || src instanceof URL ? { url: src } : src;
-	return pdfjs.getDocument({ ...params, worker: pdfWorker, ownerDocument: pdfFontDocument(host) });
+	const task = pdfjs.getDocument({ ...params, worker: pdfWorker, ownerDocument: pdfFontDocument(host) });
+	const destroy = task.destroy.bind(task);
+	let closed = false;
+	task.destroy = () => {
+		if (!closed) documentClosed();
+		closed = true;
+		return destroy();
+	};
+	return task;
 }
 
 /** destroys the PDF.js worker; the next getPdfJs() call creates a new one. */

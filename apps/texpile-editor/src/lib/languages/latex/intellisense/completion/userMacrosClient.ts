@@ -1,5 +1,6 @@
 // latest-wins client for userMacros.worker.ts. results are advisory (completion cache refills), so
 // a superseded or failed request resolves null and the caller just keeps its previous state.
+import { idleRelease } from '$lib/idleRelease';
 import type { UserDefinitions } from './userMacroScan';
 
 let worker: Worker | null = null;
@@ -15,7 +16,18 @@ function settleAll(value: null) {
 	pending.clear();
 }
 
+// the worker holds the package knowledge; the next completion starts it again
+const restWhenIdle = idleRelease(
+	30_000,
+	() => pending.size > 0,
+	() => {
+		worker?.terminate();
+		worker = null;
+	}
+);
+
 function ensureWorker(): Worker {
+	restWhenIdle();
 	if (worker) return worker;
 	const w = new Worker(new URL('./userMacros.worker.ts', import.meta.url), { type: 'module' });
 	w.onmessage = (event: MessageEvent<{ id: number; definitions: UserDefinitions }>) => {
