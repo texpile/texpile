@@ -9,6 +9,7 @@ import ImageOverlay from './ImageOverlay.svelte';
 import { joinPath, relativeInside, pathOfPickedFile } from '$lib/workspace/fileSystem';
 import { fileService } from '$lib/files/service/fileService';
 import { knownLocalImageUrl, localImageUrl } from './localImageUrl';
+import { observeImageFit } from './plugin/resize/imageFitObserver';
 
 export const defaultExtraAttributes = {
 	width: null,
@@ -53,14 +54,6 @@ export function defaultUpdateOverlay(overlay: Node, getPos: () => number | undef
 			overlayHost.__svelteComponentProps = componentProps;
 		}
 	}
-}
-
-export function defaultResizeCallback(el: Element, updateCallback: () => void) {
-	const observer = new ResizeObserver(() => updateCallback());
-	observer.observe(el);
-	return () => {
-		observer.unobserve(el);
-	};
 }
 
 export function defaultCreateDecorations(state: EditorState) {
@@ -112,7 +105,7 @@ const sharedImageSettings = {
 	defaultAlt: 'Image',
 	enableResize: true,
 	isBlock: true,
-	resizeCallback: defaultResizeCallback,
+	resizeCallback: observeImageFit,
 	imageMargin: 15,
 	minSize: 50,
 	maxSize: 2000,
