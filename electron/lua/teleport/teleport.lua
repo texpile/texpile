@@ -299,7 +299,7 @@ function texpile_tele_base()
 		end
 		say("READY [" .. table.concat(pre, ",") .. "]")
 		T.applying = true
-		texpile_tele_next()
+		T.wait = { base = true }
 	end)
 end
 
@@ -318,55 +318,66 @@ local function write_fonts()
 end
 
 -- at the base: GO compiles on, TELE <plan> teleports, PRE <plan> applies the plan's chain and waits there for the edit,
--- FONTS <list> loads fonts and IMAGES <list> images, and waits again
-function texpile_tele_next()
-	local l = io.stdin:read("*l")
-	if l then l = l:gsub("\r$", "") end
-	if l == "GO" then
-		T.applying = false
-		T.serving, TEXPILE_TELE_SERVING = false, false
-		T.reload_disk()
-		index_file = io.open(OUT .. "index.jsonl", "w")
-		luatexbase.add_to_callback("stop_run", write_fonts, "texpile.tele.fonts")
-		luatexbase.add_to_callback("stop_run", function() T.write_images(OUT .. "images.lua") end, "texpile.tele.images")
-		return
-	end
-	local images = l and l:match("^IMAGES (.+)$")
-	if images then
-		T.preload_images(images)
-		tex.sprint("\\directlua{texpile_tele_next()}")
-		return
-	end
-	local fonts = l and l:match("^FONTS (.+)$")
-	if fonts then
-		local have = {}
-		for id = 1, font.max() do
-			local key = T.fontkey(id)
-			if key then have[key] = true end
+-- FONTS <list> loads fonts and IMAGES <list> images, and waits again. The line TeX runs for the command, or nil for GO
+local function next_command()
+	while true do
+		local l = io.stdin:read("*l")
+		if l then l = l:gsub("\r$", "") end
+		if l == "GO" then
+			T.applying = false
+			T.serving, TEXPILE_TELE_SERVING = false, false
+			T.reload_disk()
+			index_file = io.open(OUT .. "index.jsonl", "w")
+			luatexbase.add_to_callback("stop_run", write_fonts, "texpile.tele.fonts")
+			luatexbase.add_to_callback("stop_run", function() T.write_images(OUT .. "images.lua") end, "texpile.tele.images")
+			return nil
 		end
-		for i, spec in ipairs(T.read_record(fonts) or {}) do
-			if not have[spec[1] .. "@" .. spec[2]] then
-				token.set_macro(PREFIX .. "pre" .. i, "", "global")
-				tex.sprint({ token.create("global"), token.create("font"), token.create(PREFIX .. "pre" .. i) })
-				tex.sprint(-2, T.font_name_text(spec[1]))
-				tex.sprint(" at " .. spec[2] .. "sp\\relax")
+		local images = l and l:match("^IMAGES (.+)$")
+		local fonts = l and l:match("^FONTS (.+)$")
+		-- the main process took this one for staged
+		if l == "DROP" then say("PARKED")
+		elseif images then
+			T.todo = function()
+				T.preload_images(images)
+				T.wait = { base = true }
 			end
+			return "\\directlua{texpile_tele_do()}%"
+		elseif fonts then
+			T.todo = function()
+				local have = {}
+				for id = 1, font.max() do
+					local key = T.fontkey(id)
+					if key then have[key] = true end
+				end
+				for i, spec in ipairs(T.read_record(fonts) or {}) do
+					if not have[spec[1] .. "@" .. spec[2]] then
+						token.set_macro(PREFIX .. "pre" .. i, "", "global")
+						tex.sprint({ token.create("global"), token.create("font"), token.create(PREFIX .. "pre" .. i) })
+						tex.sprint(-2, T.font_name_text(spec[1]))
+						tex.sprint(" at " .. spec[2] .. "sp\\relax")
+					end
+				end
+				T.wait = { base = true }
+			end
+			return "\\directlua{texpile_tele_do()}%"
+		else
+			local pre, plan
+			if l then pre, plan = l:match("^(%u+) (.+)$") end
+			if pre ~= "TELE" and pre ~= "PRE" then os.exit(101) end
+			T.todo = function()
+				T.serves = (T.serves or 0) + 1
+				T.staging = pre == "PRE"
+				T.serve(T.read_plan(plan))
+			end
+			return "\\directlua{texpile_tele_do()}%"
 		end
-		tex.sprint("\\directlua{texpile_tele_next()}")
-		return
 	end
-	-- the main process took this one for staged
-	if l == "DROP" then
-		say("PARKED")
-		tex.sprint("\\directlua{texpile_tele_next()}")
-		return
-	end
-	local pre, plan
-	if l then pre, plan = l:match("^(%u+) (.+)$") end
-	if pre ~= "TELE" and pre ~= "PRE" then os.exit(101) end
-	T.serves = (T.serves or 0) + 1
-	T.staging = pre == "PRE"
-	T.serve(T.read_plan(plan))
+end
+T.next_command = next_command
+function texpile_tele_do()
+	local run = T.todo
+	T.todo = nil
+	run()
 end
 
 -- how long a run whose edit is on screen waits for the next key before it looks for its stop: a key every 250 ms is

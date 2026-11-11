@@ -129,6 +129,16 @@ return function(T)
 		local entry = input and T.entries[rel]
 		if entry then T.entries[rel] = nil end
 		function r.reader()
+			-- the process waits here for its next command, with every printed level closed (serve.lua)
+			if T.wait and T.stack[#T.stack] == r then
+				local w = T.wait
+				T.wait = nil
+				local line = T.take_command(w)
+				if line then
+					tex.inputlineno = r.pos
+					return line
+				end
+			end
 			if r.drain then return nil end
 			-- past \end{document} a served run parks; a file still open there ends
 			if T.ended then

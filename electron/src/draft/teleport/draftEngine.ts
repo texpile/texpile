@@ -25,7 +25,8 @@ export type TeleportOutcome = {
 };
 
 let seq = 0;
-// gets every report an engine makes but its pages; the live gates count the points that did not come back
+// gets every report an engine makes but its pages, and TeX's errors; the live gates count the points that did not
+// come back
 let follow: ((engine: string, kind: string, rest: string) => void) | null = null;
 export function followEngines(to: typeof follow): void {
 	follow = to;
@@ -139,7 +140,10 @@ export class DraftEngine {
 				return;
 			}
 			const m = /^@@TELE (\w+) ?(.*)$/.exec(line);
-			if (!m) return;
+			if (!m) {
+				if (line.startsWith('! ')) follow?.(path.basename(this.rel), 'TEX', line);
+				return;
+			}
 			if (m[1] !== 'PAGE') follow?.(path.basename(this.rel), m[1], m[2]);
 			if (m[1] === 'READY') {
 				let files: string[] = [];

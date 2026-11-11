@@ -40,7 +40,7 @@ return function(T)
 					return T.serve(plan)
 				end
 				T.say("PARKED " .. (T.reset_laps or ""))
-				texpile_tele_next()
+				T.wait = { base = true }
 			end)
 			return
 		end
@@ -179,50 +179,70 @@ return function(T)
 		return k and st and st.l == k.line and st.f == T.stack[#T.stack].rel and k or nil
 	end
 
-	-- Waiting at the chain's last point, ahead of the edit: TELE goes on from here with its own plan, DROP goes back to
-	-- the base. The chain is the next edit's only when the main process says so, and a plan that starts anywhere else
-	-- is served from the base. `open`: a stage's plan brought the process here and counted the serve
+	-- The process waits for its next command where TeX asks for the next line of the file it stands in (reader.lua).
+	-- Every level a reset or an apply printed has closed by then, where a wait inside them kept each one open until
+	-- TeX had no more to give. `T.wait`: at the base, or at a point (`at`) with a stage's serve open (`open`)
 	function T.await_edit(c, open)
 		T.staging = nil
 		if open then T.say("AT " .. c.file) end
-		local l
-		repeat
-			l = io.stdin:read("*l")
-			if l then l = l:gsub("\r$", "") end
-		until not (l and (l:match("^FONTS ") or l:match("^IMAGES ")))
-		if l == "DROP" then
-			T.wind_down()
-			T.settle()
-			return
+		T.wait = { at = c, open = open }
+	end
+
+	local LEAVE = "\\directlua{texpile_tele_leave()}%"
+	function texpile_tele_leave()
+		T.wind_down()
+		T.settle()
+	end
+	function texpile_tele_selfcheck()
+		local c = T.checking
+		T.checking = nil
+		selfcheck(c)
+	end
+
+	-- Waiting at the chain's last point, ahead of the edit: TELE goes on from here with its own plan, DROP goes back to
+	-- the base. The chain is the next edit's only when the main process says so, and a plan that starts anywhere else
+	-- is served from the base. The line TeX runs for the command, or nil to read on
+	local function edit_command(c, open)
+		while true do
+			local l
+			repeat
+				l = io.stdin:read("*l")
+				if l then l = l:gsub("\r$", "") end
+			until not (l and (l:match("^FONTS ") or l:match("^IMAGES ")))
+			if l == "DROP" then return LEAVE end
+			local kind, plan
+			if l then kind, plan = l:match("^(%u+) (.+)$") end
+			if kind ~= "TELE" and kind ~= "PRE" then os.exit(101) end
+			plan = T.read_plan(plan)
+			local last = plan.chain[#plan.chain]
+			if not last or last.rec ~= c.file or (last.moves and #last.moves > 0) then
+				T.then_serve, T.then_stage = plan, kind == "PRE"
+				return LEAVE
+			end
+			-- a stage for the point the process already waits at
+			if kind == "PRE" then T.say("AT " .. c.file)
+			else
+				-- the edit's own serve: a stage's is the same one, opened again with the texts as they are now
+				if not open then T.serves = T.serves + 1 end
+				open_serve(plan)
+				-- the files the process stands in, as a serve lists them on its way in
+				for i = 2, #T.stack do T.entered(T.stack[i].rel) end
+				T.plan = plan
+				report_pages(plan, (c.rec or c.kept).shipped + 1)
+				T.back_to, T.started_at = back_to(c), c.kept
+				T.adopt_files()
+				T.applying = false
+				T.say("APPLIED 0 staged")
+				if not T.selfcheck then return nil end
+				T.checking = c
+				return "\\directlua{texpile_tele_selfcheck()}%"
+			end
 		end
-		local kind, plan
-		if l then kind, plan = l:match("^(%u+) (.+)$") end
-		if kind ~= "TELE" and kind ~= "PRE" then os.exit(101) end
-		plan = T.read_plan(plan)
-		local last = plan.chain[#plan.chain]
-		if not last or last.rec ~= c.file or (last.moves and #last.moves > 0) then
-			T.then_serve, T.then_stage = plan, kind == "PRE"
-			T.wind_down()
-			T.settle()
-			return
-		end
-		-- a stage for the point the process already waits at
-		if kind == "PRE" then
-			if not open then T.say("AT " .. c.file) end
-			return T.await_edit(c, open)
-		end
-		-- the edit's own serve: a stage's is the same one, opened again with the texts as they are now
-		if not open then T.serves = T.serves + 1 end
-		open_serve(plan)
-		-- the files the process stands in, as a serve lists them on its way in
-		for i = 2, #T.stack do T.entered(T.stack[i].rel) end
-		T.plan = plan
-		report_pages(plan, (c.rec or c.kept).shipped + 1)
-		T.back_to, T.started_at = back_to(c), c.kept
-		T.adopt_files()
-		T.applying = false
-		T.say("APPLIED 0 staged")
-		if T.selfcheck then selfcheck(c) end
+	end
+
+	function T.take_command(w)
+		if w.base then return T.next_command() end
+		return edit_command(w.at, w.open)
 	end
 
 	-- a plan comes on stdin as one line of Lua: on Windows a file read right after the app wrote it waits for the virus
@@ -247,7 +267,7 @@ return function(T)
 				-- a stage read late, after the index let this record go, has no point to wait at but the base
 				if T.staging then
 					T.rearm()
-					tex.sprint("\\directlua{texpile_tele_next()}")
+					T.wait = { base = true }
 					return
 				end
 				T.refuse("unreadable record " .. c.rec)
