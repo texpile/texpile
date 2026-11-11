@@ -3,12 +3,12 @@ import { selectAllThenDocument } from '$lib/editor/visual/extensions/codemirrorb
 import {
 	EditorView as CodeMirrorView,
 	keymap as cmKeymap,
-	drawSelection,
 	rectangularSelection,
 	crosshairCursor,
 	type KeyBinding,
 	type ViewUpdate
 } from '@codemirror/view';
+import { cmDrawnSelection } from '$lib/editor/cmDrawnSelection';
 import { Compartment as CodeMirrorCompartment, EditorState as CodeMirrorState } from '@codemirror/state';
 import { cmCommentHighlights, cmCommentClicks, syncCmCommentHighlights } from './cmComments';
 import { defaultKeymap } from '@codemirror/commands';
@@ -136,7 +136,7 @@ export class CodeBlockView {
 			extensions: [
 				cmKeymap.of([...this.codeMirrorKeymap(), ...defaultKeymap]),
 				cmKeymap.of([tabIndentBinding]),
-				drawSelection(),
+				cmDrawnSelection(),
 				// Multiple cursors, same as the source editor. forwardUpdate only mirrors the MAIN range
 				// back to ProseMirror - a PM selection cannot hold more than one range - but the edits
 				// themselves all arrive through iterChanges, so typing at several carets is applied in full.

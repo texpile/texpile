@@ -1,15 +1,7 @@
 // Assembles the CodeMirror extension stack for SourceEditor, and routes the language mode
 // by file extension once the view exists.
-import {
-	EditorView,
-	keymap,
-	drawSelection,
-	tooltips,
-	lineNumbers,
-	highlightActiveLine,
-	rectangularSelection,
-	crosshairCursor
-} from '@codemirror/view';
+import { EditorView, keymap, tooltips, lineNumbers, highlightActiveLine, rectangularSelection, crosshairCursor } from '@codemirror/view';
+import { cmDrawnSelection } from '$lib/editor/cmDrawnSelection';
 import type { ViewUpdate } from '@codemirror/view';
 import { EditorState, Prec, type Compartment, type Extension } from '@codemirror/state';
 import { defaultKeymap } from '@codemirror/commands';
@@ -139,7 +131,7 @@ export function buildSourceExtensions(deps: SourceSetupDeps): Extension[] {
 		// what a merge left marked, with a choice at each place; a read-only view has no choice to offer
 		...(deps.readOnly || collab?.readOnly ? [] : [cmConflicts()]),
 		deps.keymapConf.of([]),
-		drawSelection(),
+		cmDrawnSelection(),
 		// tooltips fit in the editor, not the window: tinymist's hover sits above its line and otherwise
 		// covered the toolbar, under the toolbar's own layer
 		tooltips({ tooltipSpace: sourceTooltipSpace }),

@@ -1,4 +1,5 @@
-import { EditorView as CodeMirrorView, keymap as cmKeymap, drawSelection, type ViewUpdate, type KeyBinding } from '@codemirror/view';
+import { EditorView as CodeMirrorView, keymap as cmKeymap, type ViewUpdate, type KeyBinding } from '@codemirror/view';
+import { cmDrawnSelection } from '$lib/editor/cmDrawnSelection';
 import { selectAllThenDocument } from '$lib/editor/visual/extensions/codemirrorbridge/cmSelectAll';
 import { Compartment as CodeMirrorCompartment } from '@codemirror/state';
 import { defaultKeymap } from '@codemirror/commands';
@@ -43,7 +44,7 @@ export class RawLatexView {
 			extensions: [
 				cmKeymap.of([...this.codeMirrorKeymap(), ...defaultKeymap]),
 				cmKeymap.of([tabIndentBinding]),
-				drawSelection(),
+				cmDrawnSelection(),
 				// wrap long lines instead of scrolling horizontally
 				CodeMirrorView.lineWrapping,
 				this.languageConf.of([]), // lang loads async below

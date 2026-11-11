@@ -3,16 +3,8 @@ import { cmFolding } from '../code/cmFolding';
 import { jumpRevealEffect } from '$lib/editor/source/cmJumpReveal';
 import { defaultKeymap, history, historyKeymap, indentWithTab, isolateHistory, redo, undo } from '@codemirror/commands';
 import { Annotation, EditorState, RangeSet, StateEffect, StateField, Transaction, type Extension, type Text } from '@codemirror/state';
-import {
-	Decoration,
-	EditorView,
-	GutterMarker,
-	drawSelection,
-	gutterLineClass,
-	keymap,
-	lineNumbers,
-	type DecorationSet
-} from '@codemirror/view';
+import { Decoration, EditorView, GutterMarker, gutterLineClass, keymap, lineNumbers, type DecorationSet } from '@codemirror/view';
+import { cmDrawnSelection } from '$lib/editor/cmDrawnSelection';
 import { cmSyntaxHighlight } from '../code/cmHighlight';
 import { CM_THEME } from '../code/cmTheme';
 
@@ -72,7 +64,7 @@ export function createCodeDocument(
 	const extensions: Extension[] = [
 		lineNumbers(),
 		// the cursor and selection colors reach only the drawn layer
-		drawSelection(),
+		cmDrawnSelection(),
 		hostHistory ? [] : history({ joinToEvent: (tr, adjacent) => tr.annotation(JOINED) ?? adjacent }),
 		keymap.of([...undoKeys, ...defaultKeymap, indentWithTab]),
 		...language,

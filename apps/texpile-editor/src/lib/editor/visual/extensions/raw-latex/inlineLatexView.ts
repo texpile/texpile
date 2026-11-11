@@ -1,4 +1,5 @@
-import { EditorView as CodeMirrorView, keymap as cmKeymap, drawSelection, type ViewUpdate, type KeyBinding } from '@codemirror/view';
+import { EditorView as CodeMirrorView, keymap as cmKeymap, type ViewUpdate, type KeyBinding } from '@codemirror/view';
+import { cmDrawnSelection } from '$lib/editor/cmDrawnSelection';
 import { selectAllThenDocument } from '$lib/editor/visual/extensions/codemirrorbridge/cmSelectAll';
 import { Compartment as CodeMirrorCompartment, EditorState } from '@codemirror/state';
 import { cmSyntaxHighlight } from '$lib/editor/source/cmHighlight';
@@ -80,7 +81,7 @@ export class InlineLatexView {
 			extensions: [
 				cmKeymap.of(this.codeMirrorKeymap()),
 				this.editableConf.of(CodeMirrorView.editable.of(false)),
-				drawSelection(),
+				cmDrawnSelection(),
 				this.languageConf.of([]),
 				cmSyntaxHighlight(),
 				cmCommentHighlights,
