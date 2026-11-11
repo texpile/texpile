@@ -138,6 +138,7 @@ if (keys) {
 		last: lat.at(-1),
 		never: lat.filter((v) => v === null).length,
 		noInk: g.noInkTotal(),
+		forgot: g.forgot,
 		...(g.band ? { band: g.band.stats } : {})
 	};
 	if (jsonOut) fs.writeFileSync(jsonOut, JSON.stringify({ ...summary, lat, reasons }, null, 1));
@@ -176,7 +177,8 @@ for (let k = 0; k < edits; k++) {
 	let compileFor = !res.ok && !['held', 'outside', 'superseded'].includes(res.reason);
 	// the earlier edits of the burst in the order they came: a later edit of the same file holds an earlier one
 	for (const x of await Promise.all(inFlight.splice(0))) {
-		if (x.r.ok || x.r.reason !== 'superseded') console.error(`   earlier edit of the burst, ${x.what}: ${x.r.ok ? 'shown' : x.r.reason}`);
+		if (x.r.ok || x.r.reason !== 'superseded')
+			console.error(`   earlier edit of the burst, ${x.what}: ${x.r.ok ? 'shown' : `${x.r.reason} ${x.r.detail ?? ''}`.trim()}`);
 		// a shown edit stays on screen while a later one in its file is held, as do the pages a superseded run shipped
 		const shipped = x.r.ok || (x.r.reason === 'superseded' && x.got.length > 0);
 		if (shipped || (x.file !== file && !['held', 'superseded'].includes(x.r.reason))) shownTexts.set(x.file, x.text);
@@ -222,6 +224,7 @@ const summary = {
 	held: results.filter((r) => r.reason === 'held').length,
 	firstPageMedian: firsts[Math.floor(firsts.length / 2)] ?? null,
 	noInk: g.noInkTotal(),
+	forgot: g.forgot,
 	...(g.band ? { band: g.band.stats } : {}),
 	results
 };

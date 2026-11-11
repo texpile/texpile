@@ -1,6 +1,7 @@
 // One lualatex in its own folder under _draft. It reads the preamble and waits at the base, then either compiles
 // the whole document (GO) or teleports to a plan's point and typesets on from there (TELE), after which it goes back
-// to the base for the next teleport. Staged (PRE), it applies a plan's chain ahead of the edit and waits there.
+// to the edited paragraph's first line when it kept that point, else to the base. Staged (PRE), it applies a plan's
+// chain ahead of the edit and waits there.
 import { spawn, type ChildProcess } from 'node:child_process';
 import * as fs from 'node:fs';
 import * as path from 'node:path';
@@ -24,6 +25,11 @@ export type TeleportOutcome = {
 };
 
 let seq = 0;
+// gets every report an engine makes but its pages; the live gates count the points that did not come back
+let follow: ((engine: string, kind: string, rest: string) => void) | null = null;
+export function followEngines(to: typeof follow): void {
+	follow = to;
+}
 /** folders of engines still running, which nothing may sweep */
 export const engineFolders = new Set<string>();
 
@@ -56,8 +62,10 @@ export class DraftEngine {
 	oldLatex: string | null = null;
 	/** teleports served, which also numbers each serve's files */
 	serves = 0;
-	/** after a teleport: true once the process waits at its base again, false when it exited instead */
+	/** after a teleport: true once the process waits again, at its base or at `stagedAt`; false when it exited instead */
 	parked: Promise<boolean> = Promise.resolve(false);
+	// the record of the point the process last said it waits at: a stage's, or the one it went back to after its run
+	#at: string | null = null;
 	#child: ChildProcess;
 	#listener: ((kind: string, rest: string) => void) | null = null;
 	// each command that ends at the base (TELE, DROP) waits for its PARKED in turn: a stage can be sent while the
@@ -65,6 +73,12 @@ export class DraftEngine {
 	#parkWaiters: ((ok: boolean) => void)[] = [];
 	// the serve a stage opened, whose files the edit's run goes on with
 	#stagedServe: number | null = null;
+	// ends the teleport under way for its caller, as cut
+	#release: (() => void) | null = null;
+	// a released run still reports until it parks: none of that is the next teleport's
+	#muted = false;
+	// told once where a stage that read on to its paragraph waits
+	#onAt: ((rec: string) => void) | null = null;
 
 	constructor(
 		readonly root: string,
@@ -120,12 +134,13 @@ export class DraftEngine {
 			if (page) {
 				page.lines.push(line);
 				if (--page.left > 0) return;
-				this.#listener?.('PAGE', `${page.head}\n${page.lines.join('\n')}`);
+				if (!this.#muted) this.#listener?.('PAGE', `${page.head}\n${page.lines.join('\n')}`);
 				page = null;
 				return;
 			}
 			const m = /^@@TELE (\w+) ?(.*)$/.exec(line);
 			if (!m) return;
+			if (m[1] !== 'PAGE') follow?.(path.basename(this.rel), m[1], m[2]);
 			if (m[1] === 'READY') {
 				let files: string[] = [];
 				try {
@@ -135,14 +150,27 @@ export class DraftEngine {
 				}
 				settle.ready?.(files);
 			} else if (m[1] === 'OLDLATEX') this.oldLatex = m[2];
-			else if (m[1] === 'PARKED') this.#parkWaiters.shift()?.(true);
-			else if (m[1] === 'PAGE' && Number(m[2].split(' ')[3]) > 0) page = { head: m[2], left: Number(m[2].split(' ')[3]), lines: [] };
-			else this.#listener?.(m[1], m[2]);
+			else if (m[1] === 'AT') {
+				this.#at = m[2];
+				const told = this.#onAt;
+				this.#onAt = null;
+				told?.(m[2]);
+			} else if (m[1] === 'PARKED' || m[1] === 'STAGED') {
+				this.#at = m[1] === 'STAGED' ? m[2].split(' ')[0] : null;
+				this.#muted = false;
+				this.#parkWaiters.shift()?.(true);
+			} else if (m[1] === 'PAGE' && Number(m[2].split(' ')[3]) > 0) page = { head: m[2], left: Number(m[2].split(' ')[3]), lines: [] };
+			else if (!this.#muted) this.#listener?.(m[1], m[2]);
 		});
 		void this.exited.then(() => {
 			for (const w of this.#parkWaiters.splice(0)) w(false);
 		});
 		this.#child.stdout!.resume();
+	}
+
+	/** the record of the point the process waits at, ready for an edit; null at the base or on its way */
+	get waitingAt(): string | null {
+		return this.#parkWaiters.length ? null : this.#at;
 	}
 
 	/** loads the fonts a list names while it waits at the base (the list a recording wrote, root-relative) */
@@ -160,13 +188,22 @@ export class DraftEngine {
 		return this.exited;
 	}
 
-	/** `plan` is the plan's Lua source (`planLua`); each page is reported as it ships. The outcome is in once the run is
-	 * over; the process then goes back to its base on its own (`parked`) */
-	teleport(plan: string, onPage: (p: EnginePage) => void): Promise<TeleportOutcome> {
+	/** `plan` is the plan's Lua source (`planLua`); each page is reported as it ships, and `onEdit` once the page the
+	 * edit ends on is out. The outcome is in once the run is over; the process then waits again on its own (`parked`) */
+	teleport(plan: string, onPage: (p: EnginePage) => void, onEdit?: () => void): Promise<TeleportOutcome> {
 		const out: TeleportOutcome = { pages: [], code: null };
+		this.#at = null;
+		this.#onAt = null;
 		this.parked = this.#waitForPark();
 		return new Promise((resolve) => {
+			this.#release = () => {
+				this.#listener = null;
+				this.#release = null;
+				this.#muted = true;
+				resolve({ ...out, cut: true });
+			};
 			this.#listener = (kind, rest) => {
+				if (kind === 'EDIT') onEdit?.();
 				if (kind === 'APPLIED') {
 					const sp = rest.indexOf(' ');
 					out.applyMs = Number(sp < 0 ? rest : rest.slice(0, sp));
@@ -181,10 +218,12 @@ export class DraftEngine {
 				} else if (kind === 'STOP') {
 					const sp = rest.indexOf(' ');
 					out.stop = { shipped: Number(rest.slice(0, sp)), rec: rest.slice(sp + 1) };
+					this.#release = null;
 					resolve(out);
 				} else if (kind === 'CUT' || kind === 'END') {
 					if (kind === 'CUT') out.cut = true;
 					else out.ended = true;
+					this.#release = null;
 					resolve(out);
 				} else if (kind === 'REFUSED') out.refused = rest;
 			};
@@ -198,8 +237,11 @@ export class DraftEngine {
 		return new Promise((resolve) => this.#parkWaiters.push(resolve));
 	}
 
-	/** applies the chain of `plan`, for serve `serve`, and waits at its last point: the next teleport goes on from there */
-	stage(plan: string, serve: number): void {
+	/** applies the chain of `plan`, for serve `serve`, reads on to the paragraph the plan stages at and waits at the
+	 * point there: the next teleport goes on from it. `onAt` gets that point's record */
+	stage(plan: string, serve: number, onAt?: (rec: string) => void): void {
+		this.#at = null;
+		this.#onAt = onAt ?? null;
 		this.#stagedServe = serve;
 		this.#child.stdin?.write(`PRE ${plan}\n`);
 	}
@@ -213,6 +255,8 @@ export class DraftEngine {
 
 	/** a staged process goes back to its base unused */
 	drop(): void {
+		this.#at = null;
+		this.#onAt = null;
 		this.#stagedServe = null;
 		this.parked = this.#waitForPark();
 		this.#child.stdin?.write('DROP\n');
@@ -226,6 +270,11 @@ export class DraftEngine {
 	/** the run under way ends at its next clean point, where the process parks */
 	cut(cutRel: string): void {
 		fs.writeFileSync(path.join(this.root, cutRel), '');
+	}
+
+	/** the cut run's caller goes on now: what the run still reports is dropped */
+	release(): void {
+		this.#release?.();
 	}
 
 	kill(): void {

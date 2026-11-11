@@ -75,6 +75,14 @@ return function(T)
 
 	function T.meaning_hash(name) return md5.sumhexa(token.get_meaning(name) or "") end
 
+	-- \global\let name=to. \let skips spaces before its target, and a name that means a space counts as one: the
+	-- equals sign and the one optional space \let allows go first
+	local GLOBAL, LET, EQUALS, SPACE = token.create("global"), token.create("let"), token.new(61, 12), token.new(32, 10)
+	function T.let_global(seq, name, to)
+		local n = #seq
+		seq[n + 1], seq[n + 2], seq[n + 3], seq[n + 4], seq[n + 5], seq[n + 6] = GLOBAL, LET, name, EQUALS, SPACE, to
+	end
+
 	-- every font NFSS selected since the base goes in the record: the apply selects it again, so the font hooks set up a
 	-- font loaded before the base that they first met after it (microtype's expansion and protrusion of footnote sizes)
 	T.selected = {}
@@ -112,24 +120,29 @@ return function(T)
 	-- e = { name, token, base command, base mode, base meaning hash (macros) }
 	-- a macro defined again with the same text has a new pointer and is still the base's macro
 	-- `skip`: names the caller handles anyway, so their meanings are not hashed
-	local function changed_names(refresh, skip)
+	-- `over`: a kept point's names, { command, mode, meaning hash }, which stand in for the base's
+	local function changed(e, was, skip)
+		local tk = e[2]
+		local cmd = get_command(tk)
+		if (cmd == was[3] and get_mode(tk) == was[4]) or (skip and skip[e[1]]) then return false end
+		-- a name made after the base and still undefined behaves as no name at all
+		if was[3] == nil and tk.cmdname == "undefined_cs" then return false end
+		return not (was[5] and cmd == was[3] and T.meaning_hash(e[1]) == was[5])
+	end
+	local function changed_names(refresh, skip, over)
 		if refresh ~= false then refresh_names() end
 		local out = {}
 		for _, e in ipairs(name_cache) do
-			local tk = e[2]
-			local cmd = get_command(tk)
-			if (cmd ~= e[3] or get_mode(tk) ~= e[4]) and not (skip and skip[e[1]]) then
-				-- a name made after the base and still undefined behaves as no name at all
-				local fresh_undefined = e[3] == nil and tk.cmdname == "undefined_cs"
-				if not fresh_undefined and not (e[5] and cmd == e[3] and T.meaning_hash(e[1]) == e[5]) then
-					out[#out + 1] = e[1]
-				end
-			end
+			if changed(e, over and over[e[1]] or e, skip) then out[#out + 1] = e[1] end
 		end
 		table.sort(out)
 		return out
 	end
 	T.changed_names = changed_names
+	function T.name_changed(nm, over)
+		local e = name_entry[nm]
+		return not e or changed(e, over and over[nm] or e)
+	end
 
 
 	-- what a name is \let to for its base meaning: its pin, or undefined and \relax, which need none
@@ -222,45 +235,49 @@ return function(T)
 		-- a token list freed by a redefinition can come back at the same address for a later one, which would read
 		-- as the base's: an alias holds every base macro, so its address stays taken. The alias of any other meaning
 		-- is how a served process puts the name back
-		local G, L = token.create("global"), token.create("let")
-		local pins = {}
+		local pins, n = {}, 0
 		T.pin_of = {}
 		for _, e in ipairs(name_cache) do
 			e[3], e[4] = get_command(e[2]), get_mode(e[2])
 			e[5] = CALLS[e[2].cmdname] and T.meaning_hash(e[1]) or nil
 			if e[3] ~= UNDEF_CMD and not (e[3] == RELAX_TK.command and e[4] == RELAX_TK.mode) then
-				local alias = PREFIX .. "b" .. (#pins // 4 + 1)
+				n = n + 1
+				local alias = PREFIX .. "b" .. n
 				token.set_macro(alias, "", "global")
 				T.pin_of[e[1]] = alias
-				pins[#pins + 1] = G
-				pins[#pins + 1] = L
-				pins[#pins + 1] = token.create(alias)
-				pins[#pins + 1] = e[2]
+				T.let_global(pins, token.create(alias), e[2])
 			end
 		end
 		tex.sprint(pins)
-		local b = { params = {}, level = tex.currentgrouplevel, iflevel = tex.currentiflevel }
-		for _, pk in ipairs(params) do b.params[pk[1]] = param_value(pk[1], pk[2]) end
-		b.regs = regs_now(math.min(REGS, reg_bound() + 256))
-		b.boxdump, b.boxcopy = {}, {}
-		for i, p in pairs(b.regs.box) do
-			if p ~= 0 then
-				b.boxdump[i] = box_dump(tex.getbox(i))
-				b.boxcopy[i] = node.copy(tex.getbox(i))
-			end
-		end
-		b.fam = fams_now()
-		b.codes = codes_now()
-		b.shipped, b.fires = T.shipped, T.fires
+		local b = T.values_now()
+		b.level, b.iflevel = tex.currentgrouplevel, tex.currentiflevel
 		b.pagelen = node.length(tex.lists.page_head)
 		b.contriblen = node.length(tex.lists.contrib_head)
-		b.pagecopy, b.contribcopy = node.copy_list(tex.lists.page_head), node.copy_list(tex.lists.contrib_head)
-		b.deadcycles, b.insertpenalties = tex.deadcycles, tex.insertpenalties
 		b.maxobj = pdf.getmaxobjnum()
-		b.prevdepth, b.prevgraf, b.curfont = tex.nest[0].prevdepth, tex.nest[0].prevgraf, font.current()
 		T.base = b
 	end
 	T.param_list, T.param_value, T.glue_of = params, param_value, glue_of
+
+	-- what a reset puts back value by value, as it stands now. `dumps`: a box's dump when the caller already has it
+	function T.values_now(dumps)
+		local v = { params = {} }
+		for _, pk in ipairs(params) do v.params[pk[1]] = param_value(pk[1], pk[2]) end
+		v.regs = regs_now(math.min(REGS, reg_bound() + 256))
+		v.boxdump, v.boxcopy = {}, {}
+		for i, p in pairs(v.regs.box) do
+			if p ~= 0 then
+				v.boxdump[i] = dumps and dumps[i] or box_dump(tex.getbox(i))
+				v.boxcopy[i] = node.copy(tex.getbox(i))
+			end
+		end
+		v.fam = fams_now()
+		v.codes = codes_now()
+		v.shipped, v.fires = T.shipped, T.fires
+		v.pagecopy, v.contribcopy = node.copy_list(tex.lists.page_head), node.copy_list(tex.lists.contrib_head)
+		v.deadcycles, v.insertpenalties = tex.deadcycles, tex.insertpenalties
+		v.prevdepth, v.prevgraf, v.curfont = tex.nest[0].prevdepth, tex.nest[0].prevgraf, font.current()
+		return v
+	end
 	T.reg_bound, T.regs_now, T.fams_now, T.codes_now, T.box_dump = reg_bound, regs_now, fams_now, codes_now, box_dump
 
 	-- a parameter text read back from its meaning: a space as 10 and anything else 12; letters are refused

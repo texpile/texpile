@@ -20,8 +20,13 @@ export type DraftControllerDeps = {
 	openCompileModal(): void;
 	getSource(): string;
 	getLoadedPath(): string | null;
+	/** the caret's line in the loaded file's source, 1-based; null when it has none */
+	getCaretLine(): number | null;
 	flushSaves(): Promise<void>;
 };
+
+// the caret has come to rest once it stays this long
+const CARET_REST_MS = 250;
 
 export class DraftController {
 	// bump to run a full draft compile; the quiet variant announces nothing (boundary edits)
@@ -83,6 +88,25 @@ export class DraftController {
 		// synchronous call
 		$effect(() => {
 			this.runDecision();
+		});
+
+		// the caret at rest in a paragraph sends an engine there, ahead of the first key
+		$effect(() => {
+			let timer: ReturnType<typeof setTimeout> | undefined;
+			const rested = () => {
+				const path = deps.getLoadedPath();
+				const line = isActive() ? deps.getCaretLine() : null;
+				if (path && line !== null) this.dispatcher.caretAt(path, deps.getSource(), line);
+			};
+			function moved(): void {
+				clearTimeout(timer);
+				timer = setTimeout(rested, CARET_REST_MS);
+			}
+			document.addEventListener('selectionchange', moved);
+			return () => {
+				clearTimeout(timer);
+				document.removeEventListener('selectionchange', moved);
+			};
 		});
 
 		$effect(() =>

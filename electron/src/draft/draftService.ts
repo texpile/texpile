@@ -9,7 +9,7 @@ import { OUT } from './compileJob';
 import { collectSeeds, promote, publishView, readPage, type DraftPage, type ReadBackFiles } from './draftProducts';
 import { takeEngine, diskPreamble, stampOf, stopPool } from './teleport/enginePool';
 import { PointIndex, readIndexFile } from './teleport/pointIndex';
-import { adoptIndex, stopCount } from './teleport/teleportService';
+import { adoptIndex, keepsIndex, stopCount, sweepLive } from './teleport/teleportService';
 import { holdSweep } from './teleport/sweepHold';
 import type { DraftEngine } from './teleport/draftEngine';
 import { shellEnvReady } from '../shell/shellEnv';
@@ -66,6 +66,7 @@ export async function compileDraft(body: DraftBody): Promise<DraftResult> {
 	} finally {
 		owned.release();
 		owned.last?.remove();
+		sweepLive(body.root);
 		// the preview stopped while this ran: what its passes warmed goes too
 		if (stopCount(body.root) !== stops) stopPool(body.root);
 	}
@@ -214,10 +215,13 @@ async function compilePasses(body: DraftBody, owned: CompileOwned, stops: number
 		index.adoptBasis(path.join(done.engine.abs, 'tele', 'src'));
 		index.fontList = `${done.engine.rel}/tele/fonts.lua`;
 		index.imageList = `${done.engine.rel}/tele/images.lua`;
-		// eslint-disable-next-line no-param-reassign -- the index reads this folder now
-		owned.last = null;
-		owned.release();
-		adoptIndex({ root, mainRel, engineDir, index, count: manifest.count, srcFiles: manifest.srcFiles ?? [] });
+		// a pass over the text, seeds and images the live preview already stands on changes nothing a teleport reads
+		if (!keepsIndex({ root, mainRel, engineDir, index })) {
+			// eslint-disable-next-line no-param-reassign -- the index reads this folder now
+			owned.last = null;
+			owned.release();
+			adoptIndex({ root, mainRel, engineDir, index, count: manifest.count, srcFiles: manifest.srcFiles ?? [] });
+		}
 	}
 
 	const pages: DraftPage[] = [];

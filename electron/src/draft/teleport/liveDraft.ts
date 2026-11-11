@@ -7,11 +7,12 @@ import { pageOfRecords, type DraftPage } from '../draftProducts';
 import { linesOf, lineEdit, lineShifts, type LineEdit, type LineShift } from './lineEdit';
 import { readIndexFile, type PointIndex, type TeleportPlan } from './pointIndex';
 import { planLua, type PlanOverride } from './planLua';
-import { paragraphOpen, paragraphStart } from './heldEdit';
+import { paragraphOpen, paragraphStart, stageLine } from './heldEdit';
 import {
 	takeEngine,
 	takeStaged,
 	stageEngine,
+	stageAhead,
 	giveBack,
 	warmPool,
 	diskPreamble,
@@ -78,6 +79,10 @@ export class LiveDraft {
 	// pages cut runs left on screen with their text, until a run ships them again; texts: what the source lines on
 	// the pages past them follow, for each file a cut run edited
 	#reship: { from: number; to: number; texts: Map<string, string> } | null = null;
+	// where the engine of the run just over waits: the chain the next edit of the same paragraph takes
+	#staged: { key: string; rec: string } | undefined;
+	// counts the changes to the index: a stage that read ahead holds a plan made against one of them
+	#epoch = 0;
 
 	constructor(
 		readonly root: string,
@@ -90,6 +95,16 @@ export class LiveDraft {
 		const pool = this.#pool();
 		if (pool) warmPool(pool);
 		this.#collectGarbage();
+	}
+
+	/** a compile read what this preview's index stands on: its points are these points again, and the engines stay */
+	standsOn(fresh: PointIndex): boolean {
+		return !this.#closed && !this.#reship && this.index.standsOn(fresh, this.root);
+	}
+
+	/** the engine folders and seeds nothing reads any more go */
+	sweep(): void {
+		if (!this.#closed) this.#collectGarbage();
 	}
 
 	/** replaced: a compile's index takes over, and the edits waiting or running here are the app's to send again */
@@ -116,6 +131,82 @@ export class LiveDraft {
 			}
 			void this.#run(req, onPage).then(done);
 		});
+	}
+
+	/** The caret rests on `line` of a file the preview shows as it is: an engine reads on to that paragraph's first
+	 * line, records the point there and waits, so the first key typed there starts from it */
+	stageAt(req: { file: string; text: string; line: number }): void {
+		if (this.#busy || this.#closed || this.#reship) return;
+		const file = norm(req.file);
+		const old = this.index.text(file);
+		const lines = linesOf(req.text);
+		// another text is on its way to the preview, and its edit stages its own paragraph
+		if (old === null || lineEdit(linesOf(old), lines)) return;
+		const line = Math.min(Math.max(1, Math.floor(req.line)), lines.length);
+		const edit: LineEdit = { from: line, oldTo: line, newTo: line };
+		const pool = this.#pool();
+		if (!pool || this.#preambleMoved(pool, file, edit)) return;
+		const plan = this.index.planFor(file, edit);
+		if (!plan) return;
+		const stage = stageLine(lines, edit);
+		const at = { line: stage, paragraph: paragraphStart(lines, edit) };
+		const overrides = new Map<string, PlanOverride>();
+		for (const [rel, snap] of this.index.basis) overrides.set(rel, norm(path.relative(this.root, snap)));
+		const planText = (to: DraftEngine, n: number, ahead = false): string => {
+			const serve = { src: `${to.rel}/tele/s${n}`, cut: `${to.rel}/tele/cut-${n}`, ahead };
+			return planLua(plan, overrides, file, edit, at, this.srcFiles, serve, this.index.imageList);
+		};
+		function write(to: DraftEngine): { plan: string; serve: number } {
+			const m = to.nextServe();
+			return { plan: planText(to, m), serve: m };
+		}
+		const top = plan.chain.at(-1)?.stack.at(-1);
+		// the point is there already: the spares go to it as one does between keys
+		if (top && top[0] === file && top[1] === stage) {
+			stageEngine(pool, stageKey(plan, this.index.basis, file), write, true);
+			return;
+		}
+		const epoch = this.#epoch;
+		stageAhead(
+			pool,
+			(engine) => {
+				const m = engine.nextServe();
+				return { plan: planText(engine, m, true), serve: m, cut: `${engine.rel}/tele/cut-${m}` };
+			},
+			(rec, engine) => {
+				if (this.#closed || this.#busy || this.#epoch !== epoch) return undefined;
+				this.index.keepBefore(plan, file, edit, readIndexFile(path.join(engine.abs, 'tele', 'index.jsonl')));
+				this.#epoch++;
+				const waits = this.#stagedAt(file, edit);
+				if (waits?.rec !== rec) return undefined;
+				// the other spare goes to the point as well, from its record: fast typing takes both in turn
+				const next = this.index.planFor(file, edit);
+				if (next)
+					queueMicrotask(() =>
+						stageEngine(
+							pool,
+							waits.key,
+							(to) => {
+								const m = to.nextServe();
+								const serve = { src: `${to.rel}/tele/s${m}`, cut: `${to.rel}/tele/cut-${m}` };
+								return { plan: planLua(next, overrides, file, edit, at, this.srcFiles, serve, this.index.imageList), serve: m };
+							},
+							true
+						)
+					);
+				return waits.key;
+			}
+		);
+	}
+
+	// what every engine reads before the base moved on from what the points were recorded against
+	#preambleMoved(pool: PoolConfig, file: string, edit: LineEdit): boolean {
+		return (
+			(file === this.mainRel && edit.from <= this.index.bodyLine) ||
+			this.index.preFiles.includes(file) ||
+			diskPreamble(this.root, this.mainRel) !== pool.preamble ||
+			stampOf(this.root, this.index.preFiles) !== this.index.preStamp
+		);
 	}
 
 	#holds(req: TeleportRequest): boolean {
@@ -180,15 +271,7 @@ export class LiveDraft {
 		if (!edit) return { ok: true, ms: ms(), stop: 0, count: this.count, srcFiles: this.srcFiles };
 		if (paragraphOpen(oldLines, lines, edit)) return { ok: false, reason: 'held', ms: ms() };
 		const pool = this.#pool();
-		// what every engine reads before the base moved on from what the points were recorded against
-		if (
-			!pool ||
-			(file === this.mainRel && edit.from <= this.index.bodyLine) ||
-			this.index.preFiles.includes(file) ||
-			diskPreamble(this.root, this.mainRel) !== pool.preamble ||
-			stampOf(this.root, this.index.preFiles) !== this.index.preStamp
-		)
-			return { ok: false, reason: 'preamble', ms: ms() };
+		if (!pool || this.#preambleMoved(pool, file, edit)) return { ok: false, reason: 'preamble', ms: ms() };
 		const plan = this.index.planFor(file, edit, this.#reship ?? undefined);
 		if (!plan) return { ok: false, reason: 'outside', ms: ms() };
 
@@ -204,10 +287,20 @@ export class LiveDraft {
 			engine.remove();
 			return { ok: false, reason: 'failed', detail: 'the engine stopped in the preamble', ms: ms() };
 		}
+		this.#staged = undefined;
 		const result = await this.#serve(engine, req, onPage, { file, lines, oldLines, edit, plan, pool, key }, ms);
 		if (this.#closed) engine.remove();
-		else giveBack(engine);
+		else giveBack(engine, this.#staged);
 		return result;
+	}
+
+	/** the chain the next edit of the same paragraph takes and its last point, where the engine of the run just over
+	 * waits when it kept that point */
+	#stagedAt(file: string, edit: LineEdit): { key: string; rec: string } | undefined {
+		const plan = this.index.planFor(file, edit, this.#reship ?? undefined);
+		const last = plan?.chain.at(-1);
+		if (!plan || !last || last.moves?.length) return undefined;
+		return { key: stageKey(plan, this.index.basis, file), rec: last.rec };
 	}
 
 	async #serve(
@@ -226,7 +319,8 @@ export class LiveDraft {
 		// on with the serve its stage opened
 		const planText = (to: DraftEngine, n: number): string => {
 			const serve = { src: `${to.rel}/tele/s${n}`, cut: `${to.rel}/tele/cut-${n}`, reship: this.#reship?.from };
-			return planLua(plan, overrides, file, edit, paragraphStart(lines, edit), this.srcFiles, serve, this.index.imageList);
+			const at = { line: stageLine(lines, edit), paragraph: paragraphStart(lines, edit) };
+			return planLua(plan, overrides, file, edit, at, this.srcFiles, serve, this.index.imageList);
 		};
 		const n = engine.takeStagedServe() ?? engine.nextServe();
 		const serve = { src: `${engine.rel}/tele/s${n}`, cut: `${engine.rel}/tele/cut-${n}` };
@@ -243,13 +337,16 @@ export class LiveDraft {
 		killAfter('stalled', STALL_MS);
 		let cutAsked = false;
 		let paged = false;
+		// the page the edit ends on is out: a cut run has nothing more to show, and the newer edit starts at once
+		let edited = false;
 		this.#cut = {
 			file,
 			now: () => {
 				if (cutAsked) return;
 				cutAsked = true;
 				engine.cut(serve.cut);
-				if (paged) killAfter('cut', CUT_MS);
+				if (edited) engine.release();
+				else if (paged) killAfter('cut', CUT_MS);
 			}
 		};
 		const waiting = this.#queued.get(file);
@@ -257,16 +354,23 @@ export class LiveDraft {
 		// pages read in order, each as soon as the engine reports it
 		let pages = Promise.resolve();
 		const shipped: number[] = [];
-		const running = engine.teleport(planText(engine, n), (p) => {
-			shipped.push(p.n);
-			pages = pages.then(async () => {
-				const page = await pageOfRecords(p.records, this.root, p.n, p.w, p.h, p.unc);
-				if (!this.#closed) onPage(page);
-			});
-			if (cutAsked && !paged) killAfter('cut', CUT_MS);
-			else if (!cutAsked) killAfter('stalled', STALL_MS);
-			paged = true;
-		});
+		const running = engine.teleport(
+			planText(engine, n),
+			(p) => {
+				shipped.push(p.n);
+				pages = pages.then(async () => {
+					const page = await pageOfRecords(p.records, this.root, p.n, p.w, p.h, p.unc);
+					if (!this.#closed) onPage(page);
+				});
+				if (cutAsked && !paged) killAfter('cut', CUT_MS);
+				else if (!cutAsked) killAfter('stalled', STALL_MS);
+				paged = true;
+			},
+			() => {
+				edited = true;
+				if (cutAsked) engine.release();
+			}
+		);
 		if (key)
 			stageEngine(pool, key, (other) => {
 				const m = other.nextServe();
@@ -291,6 +395,8 @@ export class LiveDraft {
 		if (killed) return { ok: false, reason: 'failed', detail: `no page for ${STALL_MS / 1000} s`, ms: ms() };
 		if (outcome.cut) {
 			this.index.keepBefore(plan, file, edit, readIndexFile(path.join(engine.abs, 'tele', 'index.jsonl')));
+			this.#epoch++;
+			this.#staged = this.#stagedAt(file, edit);
 			return { ok: false, reason: 'superseded', ms: ms(), ...cutMoved };
 		}
 		if (this.#closed) return { ok: false, reason: 'superseded', ms: ms() };
@@ -309,9 +415,11 @@ export class LiveDraft {
 		}
 		const shifts = lineShifts(oldLines, lines);
 		this.index.merge(plan, file, edit, shifts, readIndexFile(path.join(engine.abs, 'tele', 'index.jsonl')), outcome.stop?.rec ?? null);
+		this.#epoch++;
 		const cutTexts = this.#reship?.texts;
 		this.#reship = null;
 		this.index.adoptBasis(path.join(this.root, serve.src));
+		this.#staged = this.#stagedAt(file, { from: edit.from, oldTo: edit.newTo, newTo: edit.newTo });
 		if (manifest.srcFiles && manifest.srcFiles.length >= this.srcFiles.length) this.srcFiles = manifest.srcFiles;
 		if (!outcome.stop && manifest.count !== undefined) this.count = manifest.count;
 		const moved = this.#screenShifts(file, lines, shifts, cutTexts);

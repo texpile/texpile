@@ -112,6 +112,24 @@ export class PointIndex {
 		}
 	}
 
+	/** a compile's index `fresh` read the same preamble, seed files, texts and images as this one stands on */
+	standsOn(fresh: PointIndex, root: string): boolean {
+		if (this.seedDir !== fresh.seedDir || this.preStamp !== fresh.preStamp || this.bodyLine !== fresh.bodyLine) return false;
+		if (this.preFiles.join('\n') !== fresh.preFiles.join('\n') || this.basis.size !== fresh.basis.size) return false;
+		for (const rel of fresh.basis.keys()) {
+			const text = this.text(rel);
+			if (text === null || text !== fresh.text(rel)) return false;
+		}
+		function images(list?: string): string | null {
+			try {
+				return list ? fs.readFileSync(path.join(root, list), 'utf8') : null;
+			} catch {
+				return null;
+			}
+		}
+		return images(this.imageList) === images(fresh.imageList);
+	}
+
 	/** the source snapshots a run wrote become the basis of the files it read */
 	adoptBasis(src: string): void {
 		const walk = (dir: string, rel: string): void => {

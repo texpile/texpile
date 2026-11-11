@@ -12,7 +12,16 @@ const RECOMPILE_DEBOUNCE_MS = 500;
 /** the slice of DraftView this dispatcher drives (structural, to avoid importing the component) */
 export type DraftTarget = {
 	teleportEdit(file: string, text: string): Promise<TeleportOutcome>;
+	stageAt(file: string, text: string, line: number): void;
 };
+
+/** the first line of the paragraph holding `line` (1-based), as the engine counts it */
+export function paragraphStartLine(src: string, line: number): number {
+	const lines = src.split(/\r\n|\n|\r/);
+	let from = Math.min(Math.max(1, line), lines.length) - 1;
+	while (from > 0 && lines[from - 1].trim() !== '') from--;
+	return from + 1;
+}
 
 export type DraftDispatchDeps = {
 	/** where the engine runs: the workspace root, or the main file's folder under `-cd` */
@@ -33,6 +42,8 @@ export class DraftDispatcher {
 	private timer: ReturnType<typeof setTimeout> | null = null;
 	// per file, the text the preview last showed or was asked to show
 	private lastSrc = new Map<string, string>();
+	// the paragraph an engine was last sent to, and the text it had
+	private staged: { path: string; src: string; from: number } | null = null;
 
 	constructor(private deps: DraftDispatchDeps) {}
 
@@ -66,6 +77,20 @@ export class DraftDispatcher {
 	adoptCurrentAsBaseline(): void {
 		const path = this.deps.getLoadedPath();
 		if (path) this.lastSrc.set(path, this.deps.getSource());
+	}
+
+	/** the caret rests on `line` of the open file: an engine reads on to that paragraph before the first key there.
+	 * Only while the preview shows the file's text as it is, since an edit stages its own paragraph */
+	caretAt(path: string, src: string, line: number): void {
+		if (!this.deps.isActive() || !TEXT.test(path) || src !== this.lastSrc.get(path)) return;
+		const from = paragraphStartLine(src, line);
+		const was = this.staged;
+		if (was && was.path === path && was.src === src && was.from === from) return;
+		const root = this.deps.getRoot();
+		const target = this.deps.getTarget();
+		if (!root || !target) return;
+		this.staged = { path, src, from };
+		target.stageAt(relFromRoot(path, root), src, line);
 	}
 
 	/** one decision point per edit; also re-invoked when a compile settles */

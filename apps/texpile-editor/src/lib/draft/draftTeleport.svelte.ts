@@ -40,6 +40,11 @@ export class DraftTeleport {
 		});
 	}
 
+	/** the caret rests on `line` of a file the preview shows as `text` */
+	stage(file: string, text: string, line: number): void {
+		void nativeBridge()?.draftStage?.({ root: this.hooks.root(), mainFile: this.hooks.mainFile(), file, text, line });
+	}
+
 	async edit(file: string, text: string): Promise<TeleportOutcome> {
 		const n = nativeBridge();
 		if (!n?.draftTeleport) return 'none';
