@@ -13,7 +13,7 @@ import { compositionWrapPlugin } from './compositionWrap';
 import { hyphenSelectionPlugin } from './hyphenSelection';
 import type { DocumentHyphenation } from './documentHyphenationLanguage';
 import { isHeldBlock } from './heldBlocks';
-import { loadHyphenator } from './hyphenationLanguages';
+import { loadHyphenator, readyHyphenator } from './hyphenationLanguages';
 import { inlineBoxWatch } from './inlineBoxWatch';
 import { linesKeptWhileTyping } from './linesKeptWhileTyping';
 import { paragraphBreaks, sameBreaks, type BreakingContext, type ChosenBreaks, type ParagraphBreaks } from './paragraphBreaks';
@@ -116,6 +116,7 @@ function lineBreaker(view: EditorView): { update(view: EditorView, before: Edito
 	let rebreaks = new WeakMap<PMNode, { since: number; count: number }>();
 	let widths = new WeakMap<HTMLElement, number>();
 	const unchecked = new Set<HTMLElement>();
+	let begun = false;
 	let checkFrame = 0;
 	let rebreakFrame = 0;
 	let scratchNextFrame = false;
@@ -243,6 +244,9 @@ function lineBreaker(view: EditorView): { update(view: EditorView, before: Edito
 	function rebreak(fromScratch = false): void {
 		// a redraw in the middle of a composition can end it; its end comes back here
 		if (view.isDestroyed || view.composing || width.moving) return;
+		// the first break is startOver's, a microtask after the view is built: a transaction that lands before it would
+		// break the whole document, and startOver would break it again
+		if (!begun && !fromScratch) return;
 		const { doc } = view.state;
 		const held = lineBreakKey.getState(view.state)!;
 		context.wholeWord = wordBeingTypedKey.getState(view.state) ?? null;
@@ -315,6 +319,7 @@ function lineBreaker(view: EditorView): { update(view: EditorView, before: Edito
 	}
 
 	function startOver(): void {
+		begun = true;
 		width.breaking();
 		broken = new WeakMap();
 		outdated = new WeakSet();
@@ -386,8 +391,9 @@ function lineBreaker(view: EditorView): { update(view: EditorView, before: Edito
 			context.justified = now.justified;
 			if (now.language !== language) {
 				language = now.language;
-				context.hyphenator = null;
-				if (now.language !== 'none')
+				// a document swap builds this view again, with the patterns long in: taken at once, its lines are broken once
+				context.hyphenator = now.language === 'none' ? null : (readyHyphenator(now.language) ?? null);
+				if (now.language !== 'none' && !context.hyphenator)
 					void loadHyphenator(now.language).then((hyphenator) => {
 						if (language !== now.language) return;
 						context.hyphenator = hyphenator;
