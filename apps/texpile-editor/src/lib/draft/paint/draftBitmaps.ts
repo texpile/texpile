@@ -4,7 +4,7 @@
 // landed bitmap repaints its page through the hook.
 import { fileService } from '$lib/files/service/fileService';
 import type { PDFDocumentProxy } from 'pdfjs-dist/legacy/build/pdf.mjs';
-import { getPdfDocument, getPdfDocumentForPicture } from '$lib/pdf-view';
+import { getPdfDocument, pdfCanvas } from '$lib/pdf-view';
 import type { PaperMetrics } from '../draftPaper';
 
 type BitmapHooks = {
@@ -83,16 +83,14 @@ export class DraftBitmaps {
 				if (/\.pdf$/i.test(file)) {
 					// getPdfDocument, not getDocument: task.destroy() below would otherwise take the shared
 					// worker down with it, out from under the PDF viewer
-					const task = await getPdfDocumentForPicture(fileService.fileUrl(file));
+					const task = await getPdfDocument(fileService.fileUrl(file));
 					if (!task) throw new Error('no pdfjs');
 					const doc = await task.promise;
 					const pg = await doc.getPage(1);
 					const base = pg.getViewport({ scale: 1 });
 					// rasterize at ~2x the display size so zooming stays crisp, capped for huge figures
 					const vp = pg.getViewport({ scale: Math.min(6, Math.max(1, (wpx * 2) / base.width)) });
-					const c = document.createElement('canvas');
-					c.width = Math.ceil(vp.width);
-					c.height = Math.ceil(vp.height);
+					const c = pdfCanvas(Math.ceil(vp.width), Math.ceil(vp.height));
 					await pg.render({ canvas: c, canvasContext: c.getContext('2d')!, viewport: vp }).promise;
 					bmp = await createImageBitmap(c);
 					void task.destroy();
@@ -128,9 +126,7 @@ export class DraftBitmaps {
 				const s = Math.min(8, Math.max(1, this.hooks.dispScale() * 2)); // ~2x display size so zooming stays crisp
 				const cx = (paper.mx + r.x) * PT2BP * s;
 				const cy = (paper.my + r.y - r.h) * PT2BP * s;
-				const c = document.createElement('canvas');
-				c.width = Math.max(1, Math.ceil(r.w * PT2BP * s));
-				c.height = Math.max(1, Math.ceil((r.h + r.d) * PT2BP * s));
+				const c = pdfCanvas(Math.max(1, Math.ceil(r.w * PT2BP * s)), Math.max(1, Math.ceil((r.h + r.d) * PT2BP * s)));
 				const vp = pg.getViewport({ scale: s });
 				// transparent background so the crop's edge can't erase a neighbour's overhang
 				await pg.render({
@@ -175,9 +171,7 @@ export class DraftBitmaps {
 				// pdf space is bp; we want basePxPt pixels per TeX pt
 				const scale = this.basePxPt(Math.min(2, window.devicePixelRatio || 1)) * (72.27 / 72);
 				const vp = pg.getViewport({ scale });
-				const c = document.createElement('canvas');
-				c.width = Math.ceil(vp.width);
-				c.height = Math.ceil(vp.height);
+				const c = pdfCanvas(Math.ceil(vp.width), Math.ceil(vp.height));
 				await pg.render({ canvas: c, canvasContext: c.getContext('2d')!, viewport: vp } as any).promise;
 				const bmp = await createImageBitmap(c);
 				if (gen !== this.pixGen) return;

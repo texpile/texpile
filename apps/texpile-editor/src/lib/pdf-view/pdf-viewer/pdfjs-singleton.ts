@@ -62,29 +62,42 @@ export async function getPdfJs(): Promise<typeof import('pdfjs-dist/legacy/build
  * Passing `worker` takes the branch above out of play: `src.worker instanceof PDFWorker` leaves
  * task._worker null, so no document destroy can reach the worker. It lives until destroyPdfJs().
  */
+const fontFrames = new WeakMap<Document, HTMLIFrameElement>();
+
 /**
- * `ownerDocument` is which document's font registry the render uses. pdf.js registers the PDF's
- * embedded fonts via the FontLoader of this document (defaults to the global one), and canvases
- * living in a DIFFERENT document cannot see them - which is exactly what a viewer mounted in the
- * popped-out preview window is, and every glyph came out as a box there. Pass the document the
- * viewer's canvases live in.
+ * The document the fonts of every PDF drawn in `host`'s window go to: an empty frame's. pdf.js adds each embedded
+ * font to a document's font set, and a change of the window's own set makes the browser lay out all the text in the
+ * window again: the compiled paper loading and scrolling beside the editor laid the editor out 28 times. Only a
+ * canvas of this document draws those fonts, so a page is drawn on one (`pdfCanvas`) and copied to where it shows.
  */
-export async function getPdfDocument(src: DocumentSource, ownerDocument?: Document): Promise<LoadingTask | null> {
+export function pdfFontDocument(host: Document = document): Document {
+	let frame = fontFrames.get(host);
+	if (!frame?.isConnected || !frame.contentDocument) {
+		frame = host.createElement('iframe');
+		frame.hidden = true;
+		frame.tabIndex = -1;
+		frame.setAttribute('aria-hidden', 'true');
+		host.body.append(frame);
+		fontFrames.set(host, frame);
+	}
+	return frame.contentDocument!;
+}
+
+/** a canvas a PDF opened in `host`'s window can be drawn on with its own fonts */
+export function pdfCanvas(width: number, height: number, host: Document = document): HTMLCanvasElement {
+	const canvas = pdfFontDocument(host).createElement('canvas');
+	canvas.width = width;
+	canvas.height = height;
+	return canvas;
+}
+
+/** `host` is the document of the window the PDF shows in: the popped-out preview has its own */
+export async function getPdfDocument(src: DocumentSource, host: Document = document): Promise<LoadingTask | null> {
 	const pdfjs = await getPdfJs();
 	if (!pdfjs || !pdfWorker) return null;
 	// a bare url goes into the init parameters, which is also where the worker has to go
 	const params = typeof src === 'string' || src instanceof URL ? { url: src } : src;
-	return pdfjs.getDocument({ ...params, worker: pdfWorker, ...(ownerDocument ? { ownerDocument } : {}) });
-}
-
-/**
- * A document opened to be drawn off screen and thrown away: a figure's picture, a crop. Its fonts are drawn as
- * outlines. Left to pdf.js, each embedded font is added to the page's own font set and taken out again when the
- * document goes, and every change of that set makes the browser lay out all the text in the window: a paper with nine
- * PDF figures laid its whole editor out thirty times in the two seconds after it opened.
- */
-export function getPdfDocumentForPicture(src: string | URL): Promise<LoadingTask | null> {
-	return getPdfDocument({ url: src, disableFontFace: true });
+	return pdfjs.getDocument({ ...params, worker: pdfWorker, ownerDocument: pdfFontDocument(host) });
 }
 
 /** destroys the PDF.js worker; the next getPdfJs() call creates a new one. */

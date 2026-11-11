@@ -196,8 +196,7 @@
 
 			// getPdfDocument, not pdfjs.getDocument: the task must not adopt the shared worker, or the
 			// destroy below (and every other document's) would tear it down for the whole app.
-			// ownerDocument is where THIS viewer's canvases live - the popped-out preview window's
-			// document when detached - so the PDF's fonts register where they will be drawn.
+			// the document of the window this viewer shows in: the popped-out preview has its own
 			const loadingTask = await getPdfDocument(documentSource, scrollContainerEl.ownerDocument);
 			if (!loadingTask) return;
 			toDestroy = loadingTask; // if the parse rejects, the task itself still needs freeing
@@ -226,7 +225,7 @@
 			}
 			toDestroy = null; // the live viewer now owns it; a later load's cleanup() will destroy it
 			findController?.setDocument(loadedPdfDocument);
-			presentationMode.setDocument(loadedPdfDocument);
+			presentationMode.setDocument(loadedPdfDocument, scrollContainerEl.ownerDocument);
 			v.restoreScrollAnchor(anchor ?? { page: 1, fraction: 0 });
 
 			if (overlay) {
