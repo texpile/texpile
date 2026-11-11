@@ -116,6 +116,8 @@
 	const folderEmpty = $derived(texFiles.current.length === 0);
 
 	const kind = $derived(doc.kind);
+	// its own value, so the menus hear of it when the choice changes and stay out of every key
+	const spelling = $derived(spellingFor(doc.path ?? null, hasVisualMode(kind) ? doc.texSource : doc.rawContent));
 	// a guest opening a text-looking file the host shares as name only (too large / extension the
 	// session doesn't sync): say so instead of rendering a silently empty editor
 	const nameOnly = $derived(guest && (hasVisualMode(kind) || isRawTextKind(kind)) && session.sharedKindOf(doc.path) === 'binary');
@@ -362,7 +364,7 @@
 			canManageTree: provider.caps.manageTree,
 			canFormat: fmt.canFormatDoc(),
 			typstProject: cc.typstProject,
-			spelling: spellingFor(doc.path ?? null, hasVisualMode(kind) ? doc.texSource : doc.rawContent)
+			spelling
 		}}
 		actions={chromeActions}
 		pendingCommand={projectConfig.pending}
