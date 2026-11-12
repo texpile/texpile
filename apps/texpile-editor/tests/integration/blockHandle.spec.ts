@@ -125,3 +125,24 @@ test("the handle's gear sets a centered figure's alignment and opens an equation
 	const [g, s2] = [(await gear.boundingBox())!, (await settings.boundingBox())!];
 	expect(Math.abs(s2.x + s2.width - (g.x + g.width)), "the settings hang from the gear's right edge").toBeLessThan(4);
 });
+
+test('the handle waits for the pointer in the margin beside a tall block', async () => {
+	const { page, root } = texpile();
+	const v = new VisualEditor(page, root);
+	await v.open('centered.tex');
+	const card = page.locator('.figure-card').first();
+	await card.scrollIntoViewIfNeeded();
+	const block = (await page.locator('.ProseMirror > .tex-environment').first().boundingBox())!;
+	const middle = block.y + block.height / 2;
+	await page.mouse.move(block.x + block.width / 2, middle, { steps: 4 });
+	const remove = page.locator('.block-handle-btn-danger');
+	await expect(remove).toBeVisible();
+	// sideways into the margin, level with the block's middle and well under the button, then up to it
+	await page.mouse.move(block.x + block.width + 19, middle, { steps: 8 });
+	await page.waitForTimeout(400);
+	await expect(remove).toBeVisible();
+	await page.mouse.move(block.x + block.width + 19, block.y + 11, { steps: 8 });
+	await page.waitForTimeout(200);
+	const button = (await remove.boundingBox())!;
+	expect(Math.abs(button.y - block.y)).toBeLessThan(3);
+});

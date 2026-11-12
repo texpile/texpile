@@ -116,9 +116,11 @@
      so comment cards start just past it); on narrow windows the mx-auto centering margin collapses and this padding
      keeps them from clipping.
      The \noindent marker has to fit this 48px too, which is why it is abbreviated (app.css).
+     data-handle-lane: the block handle follows the pointer over these gutters too (block-handle-plugin).
      No bottom padding: the editor itself runs to the foot of the pane (app.css), so a drop or a
      click below the last block lands in it -->
 <div
+	data-handle-lane
 	class="flex min-h-full flex-col pt-8 pr-7.5 pl-12 group-data-[gutter-stacked]/pane:pr-1 group-data-[gutter-stacked]/pane:pl-7.5"
 	onmousedown={(event) => live && caretFromMargin(event, editorViewStore.current)}
 	role="presentation"

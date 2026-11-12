@@ -13,6 +13,7 @@ import { returnFocusToText } from './popoverFocus/returnFocus';
 import { handleUnitAt } from './blockHandle/handleUnit';
 import { positionOf } from './blockHandle/nodePosition';
 import { blockSettingsOf } from './blockHandle/blockSettings';
+import { pointerStaysWithBlock } from './blockHandle/handleReach';
 import { blockHandlePluginKey, handleDropEvents, handleDropLine, handleDropState, setHandleDragActive } from './blockHandle/handleDrop';
 
 type ItemsOf = () => readonly InsertItem[];
@@ -25,6 +26,7 @@ const GUTTER_OFFSET_RIGHT = 8;
 const GUTTER_OFFSET_LEFT_STACKED = 30;
 // one handle button (app.css .block-handle-btn); the side by side gutter is two and a 2px gap
 const HANDLE_W = 22;
+const HANDLE_GAP = 2;
 
 // a \noindent paragraph prints its own label in this same left margin, at the block's top edge
 // (app.css). Drop the gutter clear of it rather than have the two draw over each other.
@@ -38,6 +40,8 @@ function dropsForLabel(dom: HTMLElement) {
 class BlockHandleView {
 	private view: EditorView;
 	private host: HTMLElement;
+	// the editor with its gutters: the pointer beside a block is still at that block (VisualEditorHost)
+	private lane: HTMLElement;
 	private component: Record<string, unknown> | null = null;
 	private state = $state<{
 		visible: boolean;
@@ -84,8 +88,9 @@ class BlockHandleView {
 			}
 		});
 
-		view.dom.addEventListener('mousemove', this.onMouseMove);
-		view.dom.addEventListener('mouseleave', this.onMouseLeave);
+		this.lane = view.dom.closest<HTMLElement>('[data-handle-lane]') ?? view.dom;
+		this.lane.addEventListener('mousemove', this.onMouseMove);
+		this.lane.addEventListener('mouseleave', this.onMouseLeave);
 		this.host.addEventListener('mouseenter', this.cancelHide);
 		this.host.addEventListener('mouseleave', this.scheduleHide);
 		// capture, because scroll does not bubble: this has to catch the editor's scroller and any
@@ -98,8 +103,19 @@ class BlockHandleView {
 		this.pointerInside = true;
 		this.lastPointerY = event.clientY;
 		if (this.state.popoverOpen) return; // frozen while the insert menu is open
-		this.queueUpdate(event.clientY);
+		if (this.staysWithBlock(event.clientX, event.clientY)) this.cancelHide();
+		else this.queueUpdate(event.clientY);
 	};
+
+	private staysWithBlock(x: number, y: number): boolean {
+		if (!this.state.visible || this.hoveredPos == null) return false;
+		const dom = this.view.nodeDOM(this.hoveredPos);
+		if (!(dom instanceof HTMLElement)) return false;
+		const settings = this.state.settings ? 1 : 0;
+		const buttons = this.state.stacked ? 3 + settings : 1 + settings;
+		const buttonsBottom = this.state.top + buttons * HANDLE_W + (buttons - 1) * HANDLE_GAP;
+		return pointerStaysWithBlock({ x, y }, this.view.dom.getBoundingClientRect(), dom.getBoundingClientRect(), buttonsBottom);
+	}
 
 	private onMouseLeave = () => {
 		this.pointerInside = false;
@@ -260,8 +276,8 @@ class BlockHandleView {
 	}
 
 	destroy() {
-		this.view.dom.removeEventListener('mousemove', this.onMouseMove);
-		this.view.dom.removeEventListener('mouseleave', this.onMouseLeave);
+		this.lane.removeEventListener('mousemove', this.onMouseMove);
+		this.lane.removeEventListener('mouseleave', this.onMouseLeave);
 		this.host.removeEventListener('mouseenter', this.cancelHide);
 		this.host.removeEventListener('mouseleave', this.scheduleHide);
 		this.view.dom.ownerDocument.removeEventListener('dragend', this.onDragEnd, true);
