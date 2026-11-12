@@ -1,7 +1,7 @@
 import { describe, it, expect } from 'vitest';
 import { typstToProseMirror } from '$lib/languages/typst/visual/convert/converter';
 import { numberedElementsOf } from '$lib/languages/typst/visual/extensions/numbers/numberedElements';
-import { matchPrintedNumbers } from '$lib/languages/typst/visual/extensions/numbers/matchPrinted';
+import { matchPrinted } from '$lib/languages/typst/visual/extensions/numbers/matchPrinted';
 import type { TypstPrintedNumber } from '$lib/stores/typstPrintedNumbers';
 
 type Given = Partial<TypstPrintedNumber> & Pick<TypstPrintedNumber, 'kind' | 'number'>;
@@ -25,8 +25,8 @@ const figure = (number: string | null, text: string, figureKind = 'image', label
 function numbersOf(src: string, list: TypstPrintedNumber[], whole = true): [string, string | null][] {
 	const { doc } = typstToProseMirror(src);
 	const elements = numberedElementsOf(doc);
-	const numbers = matchPrintedNumbers(elements, list, whole);
-	return elements.map((e, i) => [e.label ?? (e.text || e.kind), numbers[i]]);
+	const found = matchPrinted(elements, list, whole);
+	return elements.map((e, i) => [e.label ?? (e.text || e.kind), found[i]?.number ?? null]);
 }
 
 describe('which printed number an element takes', () => {
@@ -71,7 +71,7 @@ describe('which printed number an element takes', () => {
 		).toEqual(['1', '(1)', '(2)', '2', '(3)', '3']);
 	});
 
-	it('numbers an included chapter from the middle of a longer list by what is unique, and leaves the stretches past its neighbors', () => {
+	it('numbers an included chapter from the middle of a longer list by what is unique, then by what stands right beside it', () => {
 		const src = '= Methods\n\n$ x $\n\n= Setup <setup>\n\n$ y $\n';
 		const list = printed(
 			heading('1', 'Introduction'),
@@ -83,10 +83,25 @@ describe('which printed number an element takes', () => {
 			heading('4', 'Results'),
 			equation('(4)')
 		);
-		expect(numbersOf(src, list, false).map(([, n]) => n)).toEqual(['2', '(2)', '3', null]);
+		expect(numbersOf(src, list, false).map(([, n]) => n)).toEqual(['2', '(2)', '3', '(3)']);
 		// the same title in two files is not told apart
 		const twice = printed(heading('1', 'Methods'), heading('4', 'Methods'));
 		expect(numbersOf('= Methods\n', twice, false)).toEqual([['Methods', null]]);
+	});
+
+	it('numbers what stands on either side of an included file and leaves the included file its own', () => {
+		const src = '= Intro <i>\n\n$ a $\n\n#include "chapter.typ"\n\n$ b $\n\n= End <e>\n\n$ c $\n';
+		const list = printed(
+			heading('1', 'Intro', 'i'),
+			equation('(1)'),
+			heading('2', 'Chapter'),
+			equation('(2)'),
+			equation('(3)'),
+			equation('(4)'),
+			heading('3', 'End', 'e'),
+			equation('(5)')
+		);
+		expect(numbersOf(src, list, false).map(([, n]) => n)).toEqual(['1', '(1)', null, '(4)', '3', '(5)']);
 	});
 
 	it('shows no number for an element printed without one, and reads a custom figure kind', () => {

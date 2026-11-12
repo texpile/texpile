@@ -13,6 +13,8 @@ export type TypstPrintedNumber = {
 	level?: number;
 	/** figures only: 'image', 'table', 'raw' or a custom kind's name */
 	figureKind?: string;
+	/** figures only: the word printed before the number, 'Figure', 'Table', 'Listing' or the document's own */
+	supplement?: string;
 	page: number;
 };
 
@@ -22,6 +24,7 @@ type CompiledDocument = { main: string; files: Set<string>; items: readonly Typs
 
 const documents = new Map<string, CompiledDocument>();
 const listeners = new Set<() => void>();
+const firstShownListeners = new Set<() => void>();
 
 /** `items` is every heading, block equation, figure and footnote of the document in the order Typst laid them out; `files` the files it is made of */
 export function setTypstPrintedNumbers(mainPath: string, files: readonly string[], items: readonly TypstPrintedNumber[]): void {
@@ -43,8 +46,20 @@ export function printedNumbersOfFile(path: string | null): PrintedNumbersOfFile 
 	return null;
 }
 
-/** calls `fn` whenever a document's numbers are set or forgotten; returns the unsubscribe */
+/** calls `fn` whenever a document's numbers are set or forgotten; returns the unsubscribe. The caller is an editor showing them */
 export function onTypstPrintedNumbers(fn: () => void): () => void {
 	listeners.add(fn);
+	if (listeners.size === 1) firstShownListeners.forEach((shown) => shown());
 	return () => void listeners.delete(fn);
+}
+
+/** an editor is showing the numbers, so reading them is worth a compile */
+export function typstPrintedNumbersShown(): boolean {
+	return listeners.size > 0;
+}
+
+/** calls `fn` when the first editor starts showing the numbers; returns the unsubscribe */
+export function onTypstPrintedNumbersShown(fn: () => void): () => void {
+	firstShownListeners.add(fn);
+	return () => void firstShownListeners.delete(fn);
 }

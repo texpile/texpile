@@ -4,7 +4,8 @@ import { matchedNumbers, plainTitle } from '$lib/editor/visual/extensions/tableo
 import type { TypstPrintedNumber } from '$lib/stores/typstPrintedNumbers';
 
 export type NumberedElement = {
-	kind: TypstPrintedNumber['kind'];
+	/** 'include': the place another file is read in, which prints nothing itself */
+	kind: TypstPrintedNumber['kind'] | 'include';
 	label: string | null;
 	/** a heading's title or a figure's caption */
 	text: string;
@@ -85,11 +86,11 @@ class Matching {
 		this.taken = printed.map(() => false);
 	}
 
-	run(): (string | null)[] {
+	run(): (TypstPrintedNumber | null)[] {
 		this.byLabel();
 		this.byTitle();
 		this.byOrder();
-		return this.given.map((p) => (p < 0 ? null : this.printed[p].number));
+		return this.given.map((p) => (p < 0 ? null : this.printed[p]));
 	}
 
 	private give(element: number, printed: number): void {
@@ -155,9 +156,20 @@ class Matching {
 			{ element: this.elements.length, printed: this.printed.length }
 		];
 		for (let i = 0; i + 1 < bounds.length; i++) {
-			// the stretch before the first neighbor and after the last goes on into other files unless this one is all of the document
-			if ((i === 0 || i + 2 === bounds.length) && !this.whole) continue;
-			for (const kind of KINDS) this.fillBetween(bounds[i], bounds[i + 1], kind);
+			const [from, to] = [bounds[i], bounds[i + 1]];
+			// a file's own edge is a neighbor only when the file is all of the document
+			const fromKnown = i > 0 || this.whole;
+			const toKnown = i + 2 < bounds.length || this.whole;
+			const includes = this.indices(this.elements, (e, k) => k > from.element && k < to.element && e.kind === 'include');
+			for (const kind of KINDS) {
+				if (!includes.length && fromKnown && toKnown) this.fillBetween(from, to, kind);
+				else
+					this.fillBeside(
+						{ from, to, kind },
+						fromKnown ? (includes[0] ?? to.element) : from.element,
+						toKnown ? (includes[includes.length - 1] ?? from.element) : to.element
+					);
+			}
 		}
 	}
 
@@ -168,14 +180,28 @@ class Matching {
 		if (elements.every((e, k) => compatible(this.elements[e], this.printed[printed[k]])))
 			elements.forEach((e, k) => this.give(e, printed[k]));
 	}
+
+	// a stretch that goes on into another file: the elements up to `headEnd` take the printed ones right after the first
+	// neighbor, those after `tailStart` the ones right before the second. What lies between is the other file's
+	private fillBeside(stretch: { from: Anchor; to: Anchor; kind: TypstPrintedNumber['kind'] }, headEnd: number, tailStart: number): void {
+		const { from, to, kind } = stretch;
+		const inside = this.indices(this.elements, (e, i) => i > from.element && i < to.element && e.kind === kind);
+		const printed = this.indices(this.printed, (p, i) => i > from.printed && i < to.printed && p.kind === kind);
+		if (!inside.every((e) => this.free(e)) || printed.some((p) => this.taken[p])) return;
+		const head = inside.filter((e) => e < headEnd);
+		const tail = inside.filter((e) => e > tailStart && e >= headEnd);
+		if (head.length + tail.length > printed.length) return;
+		const pairs = [...head.map((e, k) => [e, printed[k]]), ...tail.map((e, k) => [e, printed[printed.length - tail.length + k]])];
+		if (pairs.every(([e, p]) => compatible(this.elements[e], this.printed[p]))) pairs.forEach(([e, p]) => this.give(e, p));
+	}
 }
 
-/** for each element the number Typst printed for it; null when it prints none or the editor cannot tell which printed one is its.
+/** for each element what Typst printed for it; null when the editor cannot tell which printed one is its.
  *  `whole`: the file is the document's main file and brings in no other, so the printed list is its own */
-export function matchPrintedNumbers(
+export function matchPrinted(
 	elements: readonly NumberedElement[],
 	printed: readonly TypstPrintedNumber[],
 	whole: boolean
-): (string | null)[] {
+): (TypstPrintedNumber | null)[] {
 	return new Matching(elements, printed, whole).run();
 }

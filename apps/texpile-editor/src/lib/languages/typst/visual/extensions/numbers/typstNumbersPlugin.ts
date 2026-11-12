@@ -6,8 +6,8 @@ import { Decoration, DecorationSet } from 'prosemirror-view';
 import { typedInParagraph } from '$lib/editor/visual/extensions/nodeNumbers';
 import { samePath } from '$lib/workspace/fileSystem';
 import { onTypstPrintedNumbers, printedNumbersOfFile } from '$lib/stores/typstPrintedNumbers';
-import { matchPrintedNumbers } from './matchPrinted';
-import { figureSupplement, numberedElementsOf, readsInOtherFiles, type FoundElement } from './numberedElements';
+import { matchPrinted } from './matchPrinted';
+import { figureSupplement, numberedElementsOf, type FoundElement } from './numberedElements';
 
 export type TypstNumbersSetup = { filePath: () => string | null };
 
@@ -32,16 +32,18 @@ function decorate(doc: PMNode, path: string | null): NumbersState {
 	const known = printedNumbersOfFile(path);
 	if (!known) return NONE;
 	const elements = numberedElementsOf(doc);
-	const whole = !!path && samePath(known.main, path) && !readsInOtherFiles(doc);
-	const numbers = matchPrintedNumbers(elements, known.items, whole);
+	const whole = !!path && samePath(known.main, path) && !elements.some((e) => e.kind === 'include');
+	const printed = matchPrinted(elements, known.items, whole);
 	const decorations: Decoration[] = [];
 	const notes = new Map<number, string[]>();
 	elements.forEach((element, i) => {
-		if (element.kind === 'footnote') notes.set(element.pos, [...(notes.get(element.pos) ?? []), numbers[i] ?? '']);
+		const number = printed[i]?.number ?? null;
+		if (element.kind === 'include') return;
+		if (element.kind === 'footnote') notes.set(element.pos, [...(notes.get(element.pos) ?? []), number ?? '']);
 		else {
 			const node = doc.nodeAt(element.pos)!;
-			const number = numbers[i];
-			const supplement = element.figureKind && node.type.name === 'typ_figure' ? figureSupplement(node.attrs.typFigure) : '';
+			// the word the figure itself writes outranks the printed one: it may have changed since the compile
+			const supplement = (node.type.name === 'typ_figure' && figureSupplement(node.attrs.typFigure)) || printed[i]?.supplement || '';
 			decorations.push(nodeDecoration(doc, element, number, number === null ? '' : `${supplement ? `${supplement} ` : ''}${number}: `));
 		}
 	});

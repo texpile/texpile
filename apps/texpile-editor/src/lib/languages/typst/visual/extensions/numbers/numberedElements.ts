@@ -63,23 +63,15 @@ export function numberedElementsOf(doc: PMNode): FoundElement[] {
 		else if (name === 'block_math') found.push({ kind: 'equation', pos, slot: 0, label, text: '' });
 		else if (name === 'table_wrapper' || name === 'typ_figure' || (name === 'image' && node.attrs.numbered === true))
 			found.push({ kind: 'figure', pos, slot: 0, label, text: figureCaption(node), figureKind: figureKindOf(node) });
+		else if (name === 'includedoc') found.push({ kind: 'include', pos, slot: 0, label: null, text: '' });
 		else if (name === 'inline_latex' || name === 'raw_latex') {
-			const notes = typstChipCounts(node.textContent).footnote?.length ?? 0;
+			const source = node.textContent;
+			const notes = typstChipCounts(source).footnote?.length ?? 0;
 			for (let slot = 0; slot < notes; slot++) found.push({ kind: 'footnote', pos, slot, label: null, text: '' });
+			if (source.includes('include')) found.push({ kind: 'include', pos, slot: 0, label: null, text: '' });
 			return false;
 		}
 		return true;
 	});
 	return found;
-}
-
-/** the file brings in other files, so the printed list goes on past what the editor holds */
-export function readsInOtherFiles(doc: PMNode): boolean {
-	let reads = false;
-	doc.descendants((node) => {
-		if (node.type.name === 'includedoc') reads = true;
-		else if (node.type.name === 'inline_latex' || node.type.name === 'raw_latex') reads ||= node.textContent.includes('include');
-		return !reads && node.type.name !== 'inline_latex' && node.type.name !== 'raw_latex';
-	});
-	return reads;
 }
