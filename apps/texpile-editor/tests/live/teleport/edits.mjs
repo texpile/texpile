@@ -75,15 +75,24 @@ async function restWrong() {
 
 // a keystroke is on screen once a run for it or a later one shipped its first page
 if (keys) {
-	const file = files[rand(files.length)];
-	const lines = texts.get(file).split('\n');
-	const begin = file === mainFile ? lines.findIndex((l) => l.includes('\\begin{document}')) + 1 : 0;
-	const prose = [];
-	for (let i = begin; i < lines.length; i++) if (lines[i].trim().length > 20 && !/[\\%$]/.test(lines[i])) prose.push(i);
-	if (!prose.length) {
+	// a paper's sentences hold citations and math, so a line of text that ends a sentence or a word counts too
+	const sentence = (l) => l.trim().length > 40 && !/[%&]|\\\\|^\s*\\/.test(l) && /[A-Za-z.,;]$/.test(l.trim());
+	const proseOf = (f) => {
+		const all = texts.get(f).split('\n');
+		const begin = f === mainFile ? all.findIndex((l) => l.includes('\\begin{document}')) + 1 : 0;
+		const found = [];
+		for (let i = begin; i < all.length; i++) if ((all[i].trim().length > 20 && !/[\\%$]/.test(all[i])) || sentence(all[i])) found.push(i);
+		return found;
+	};
+	// the next file in the list when the one drawn holds no text to type into
+	const start = rand(files.length);
+	const file = files.map((_, k) => files[(start + k) % files.length]).find((f) => proseOf(f).length);
+	if (!file) {
 		console.log(JSON.stringify({ folder: srcDir, keys: 0 }));
 		process.exit(0);
 	}
+	const lines = texts.get(file).split('\n');
+	const prose = proseOf(file);
 	const line = prose[rand(prose.length)];
 	const typed = WORDS.map((w) => ` ${w}`)
 		.join('')
@@ -138,6 +147,7 @@ if (keys) {
 		last: lat.at(-1),
 		never: lat.filter((v) => v === null).length,
 		noInk: g.noInkTotal(),
+		forgot: g.forgot,
 		...(g.band ? { band: g.band.stats } : {})
 	};
 	if (jsonOut) fs.writeFileSync(jsonOut, JSON.stringify({ ...summary, lat, reasons }, null, 1));
@@ -176,7 +186,8 @@ for (let k = 0; k < edits; k++) {
 	let compileFor = !res.ok && !['held', 'outside', 'superseded'].includes(res.reason);
 	// the earlier edits of the burst in the order they came: a later edit of the same file holds an earlier one
 	for (const x of await Promise.all(inFlight.splice(0))) {
-		if (x.r.ok || x.r.reason !== 'superseded') console.error(`   earlier edit of the burst, ${x.what}: ${x.r.ok ? 'shown' : x.r.reason}`);
+		if (x.r.ok || x.r.reason !== 'superseded')
+			console.error(`   earlier edit of the burst, ${x.what}: ${x.r.ok ? 'shown' : `${x.r.reason} ${x.r.detail ?? ''}`.trim()}`);
 		// a shown edit stays on screen while a later one in its file is held, as do the pages a superseded run shipped
 		const shipped = x.r.ok || (x.r.reason === 'superseded' && x.got.length > 0);
 		if (shipped || (x.file !== file && !['held', 'superseded'].includes(x.r.reason))) shownTexts.set(x.file, x.text);
@@ -222,6 +233,7 @@ const summary = {
 	held: results.filter((r) => r.reason === 'held').length,
 	firstPageMedian: firsts[Math.floor(firsts.length / 2)] ?? null,
 	noInk: g.noInkTotal(),
+	forgot: g.forgot,
 	...(g.band ? { band: g.band.stats } : {}),
 	results
 };

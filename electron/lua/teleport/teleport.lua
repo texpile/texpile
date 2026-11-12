@@ -35,6 +35,7 @@ dofile(DIR .. "/apply.lua")(T)
 dofile(DIR .. "/reader.lua")(T)
 dofile(DIR .. "/writes.lua")(T)
 dofile(DIR .. "/reset.lua")(T)
+dofile(DIR .. "/keep.lua")(T)
 dofile(DIR .. "/serve.lua")(T)
 dofile(DIR .. "/images.lua")(T)
 
@@ -168,6 +169,11 @@ function TEXPILE_TELE_PAGE(box, n, meta, records)
 			io.flush()
 		end
 	end
+	-- the page the edited paragraph ends on: the edit is on screen, and the next edit need not wait for this run
+	if T.serving and not T.silent and not T.edit_out and T.edit_page and n >= T.edit_page then
+		T.edit_out = true
+		say("EDIT")
+	end
 	if T.stop_after_page then
 		say("STOP " .. n .. " " .. T.stop_after_page)
 		T.stop_after_page = nil
@@ -183,12 +189,14 @@ end
 -- the next edit of the same file asks for the run to end, which it does once its first page is out
 local last_poll = 0
 function T.poll_cut(now)
-	if not T.cut_path or T.cutting or not T.report_from or T.shipped < T.report_from then return end
+	if not T.cut_path or T.cutting then return end
+	-- a stage on its way gives up for the asking
+	if not T.to_stage and not (T.edit_page and T.shipped >= T.edit_page) then return end
 	local t = os.gettimeofday()
 	if not now and t - last_poll < 0.02 then return end
 	last_poll = t
 	if lfs.attributes(T.cut_path, "mode") then
-		say("CUT")
+		if T.to_stage then T.to_stage = nil else say("CUT") end
 		T.wind_down()
 	end
 end
@@ -248,6 +256,7 @@ end
 function texpile_tele_base()
 	if TEXPILE_TELE_WAIT then T.char_tokens() end
 	T.take_base()
+	T.base_split_marks()
 	T.base_font_max = font.max()
 	T.at_base = true
 	T.want_point = TEXPILE_TELE_DENSE or false
@@ -290,7 +299,7 @@ function texpile_tele_base()
 		end
 		say("READY [" .. table.concat(pre, ",") .. "]")
 		T.applying = true
-		texpile_tele_next()
+		T.wait = { base = true }
 	end)
 end
 
@@ -309,50 +318,71 @@ local function write_fonts()
 end
 
 -- at the base: GO compiles on, TELE <plan> teleports, PRE <plan> applies the plan's chain and waits there for the edit,
--- FONTS <list> loads fonts and IMAGES <list> images, and waits again
-function texpile_tele_next()
-	local l = io.stdin:read("*l")
-	if l then l = l:gsub("\r$", "") end
-	if l == "GO" then
-		T.applying = false
-		T.serving, TEXPILE_TELE_SERVING = false, false
-		T.reload_disk()
-		index_file = io.open(OUT .. "index.jsonl", "w")
-		luatexbase.add_to_callback("stop_run", write_fonts, "texpile.tele.fonts")
-		luatexbase.add_to_callback("stop_run", function() T.write_images(OUT .. "images.lua") end, "texpile.tele.images")
-		return
-	end
-	local images = l and l:match("^IMAGES (.+)$")
-	if images then
-		T.preload_images(images)
-		tex.sprint("\\directlua{texpile_tele_next()}")
-		return
-	end
-	local fonts = l and l:match("^FONTS (.+)$")
-	if fonts then
-		local have = {}
-		for id = 1, font.max() do
-			local key = T.fontkey(id)
-			if key then have[key] = true end
+-- FONTS <list> loads fonts and IMAGES <list> images, and waits again. The line TeX runs for the command, or nil for GO
+local function next_command()
+	while true do
+		local l = io.stdin:read("*l")
+		if l then l = l:gsub("\r$", "") end
+		if l == "GO" then
+			T.applying = false
+			T.serving, TEXPILE_TELE_SERVING = false, false
+			T.reload_disk()
+			index_file = io.open(OUT .. "index.jsonl", "w")
+			luatexbase.add_to_callback("stop_run", write_fonts, "texpile.tele.fonts")
+			luatexbase.add_to_callback("stop_run", function() T.write_images(OUT .. "images.lua") end, "texpile.tele.images")
+			return nil
 		end
-		for i, spec in ipairs(T.read_record(fonts) or {}) do
-			if not have[spec[1] .. "@" .. spec[2]] then
-				token.set_macro(PREFIX .. "pre" .. i, "", "global")
-				tex.sprint({ token.create("global"), token.create("font"), token.create(PREFIX .. "pre" .. i) })
-				tex.sprint(-2, T.font_name_text(spec[1]))
-				tex.sprint(" at " .. spec[2] .. "sp\\relax")
+		local images = l and l:match("^IMAGES (.+)$")
+		local fonts = l and l:match("^FONTS (.+)$")
+		-- the main process took this one for staged
+		if l == "DROP" then say("PARKED")
+		elseif images then
+			T.todo = function()
+				T.preload_images(images)
+				T.wait = { base = true }
 			end
+			return "\\directlua{texpile_tele_do()}%"
+		elseif fonts then
+			T.todo = function()
+				local have = {}
+				for id = 1, font.max() do
+					local key = T.fontkey(id)
+					if key then have[key] = true end
+				end
+				for i, spec in ipairs(T.read_record(fonts) or {}) do
+					if not have[spec[1] .. "@" .. spec[2]] then
+						token.set_macro(PREFIX .. "pre" .. i, "", "global")
+						tex.sprint({ token.create("global"), token.create("font"), token.create(PREFIX .. "pre" .. i) })
+						tex.sprint(-2, T.font_name_text(spec[1]))
+						tex.sprint(" at " .. spec[2] .. "sp\\relax")
+					end
+				end
+				T.wait = { base = true }
+			end
+			return "\\directlua{texpile_tele_do()}%"
+		else
+			local pre, plan
+			if l then pre, plan = l:match("^(%u+) (.+)$") end
+			if pre ~= "TELE" and pre ~= "PRE" then os.exit(101) end
+			T.todo = function()
+				T.serves = (T.serves or 0) + 1
+				T.staging = pre == "PRE"
+				T.serve(T.read_plan(plan))
+			end
+			return "\\directlua{texpile_tele_do()}%"
 		end
-		tex.sprint("\\directlua{texpile_tele_next()}")
-		return
 	end
-	local pre, plan
-	if l then pre, plan = l:match("^(%u+) (.+)$") end
-	if pre ~= "TELE" and pre ~= "PRE" then os.exit(101) end
-	T.serves = (T.serves or 0) + 1
-	T.staging = pre == "PRE"
-	T.serve(T.read_plan(plan))
 end
+T.next_command = next_command
+function texpile_tele_do()
+	local run = T.todo
+	T.todo = nil
+	run()
+end
+
+-- how long a run whose edit is on screen waits for the next key before it looks for its stop: a key every 250 ms is
+-- 48 words a minute
+local LINGER = 0.25
 
 -- a clean point: the main vertical list, nothing open since the base, and this line not yet read
 local function clean(line)
@@ -429,6 +459,7 @@ local function write_point(rec, opening)
 			rec.refuse and ',"refuse":true' or ""))
 		index_file:flush()
 	end
+	return file
 end
 
 function texpile_tele_opened()
@@ -469,9 +500,28 @@ function T.point(line, opening)
 	if stop and stop.q and table.concat(stop.q, ",") ~= table.concat(quick_state(), ",") then stop = nil end
 	-- the edited paragraph's first line: the next edit there starts from this point
 	local staged = T.stage and st[#st].f == T.stage.f and line == T.stage.l
-	-- until the edit's first page is out, a teleport only looks for its stop and records what later edits enter
-	-- through: the line that opens a file, and the edited paragraph's first line
-	if not stop and not staged and not opening and T.serving and T.shipped < T.report_from then return end
+	-- Until the page the edited paragraph ends on is out, the page under way holds the edit and no old point can
+	-- match. A point recorded there would also hold that page back, by the time its record takes, from the edit the
+	-- run is for. A teleport records only what later edits enter through: the line that opens a file, and the edited
+	-- paragraph's first line
+	if T.serving and not (T.edit_page and T.shipped >= T.edit_page) then
+		if not staged and not opening then return end
+		stop = nil
+	end
+	-- The page with the edit is out. Someone typing sends the next key within a moment, and would wait out a stop's
+	-- diff or a point's record: the run waits for that key first
+	if T.serving and T.edit and T.cut_path and not T.lingered and not staged and not opening then
+		T.lingered = true
+		local till = os.gettimeofday() + LINGER
+		repeat
+			T.poll_cut(true)
+			if not T.cutting then os.sleep(5, 1000) end
+		until T.cutting or os.gettimeofday() >= till
+		if T.cutting then
+			if clean(line) then T.settle() end
+			return
+		end
+	end
 	if not stop and not opening and not staged then
 		-- spacing: a point after a page only while recording stays under its share of the body's time
 		local body_ms = (os.gettimeofday() - base_clock) * 1000
@@ -514,7 +564,17 @@ function T.point(line, opening)
 				f = io.open(OUT .. "stop-got.lua", "w"); f:write(canon(rec)); f:close()
 			end
 		end
-		write_point(rec, opening)
+		local file = write_point(rec, opening)
+		-- the run goes back to the edited paragraph's first line, where the next edit of it starts; inside a file, by
+		-- way of the lines that opened it
+		if staged and file then
+			T.back_to = T.keep_point(file, rec, line)
+			-- a stage that read on to this line waits here
+			if T.to_stage then
+				T.to_stage = nil
+				return T.await_edit({ kept = T.back_to, rec = rec, file = file }, true)
+			end
+		elseif opening and file and T.serving and T.stage and not T.back_to then T.keep_opening(file, rec, line) end
 	end)
 end
 

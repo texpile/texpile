@@ -80,7 +80,7 @@ export class DraftCompiler {
 		this.error = null;
 		this.missingTool = null;
 		try {
-			const body = { root: this.hooks.root(), mainFile: this.hooks.mainFile(), readBack: readBackExtensions() };
+			const body = { root: this.hooks.root(), mainFile: this.hooks.mainFile(), readBack: readBackExtensions(), rest: this.quiet };
 			let r = await n.draftCompile(body);
 			// Texpile's TeX Live installs each package file the document lacks, once, and compiles again
 			const tried = new Set<string>();

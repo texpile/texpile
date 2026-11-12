@@ -9,6 +9,8 @@ return function(T)
 	-- the page rebuild's primitive \par resets these (normal_paragraph), so they go back after it
 	local AFTER_PAR = { looseness = true, hangindent = true, hangafter = true, parshape = true, interlinepenalties = true }
 	local A
+	-- the font NFSS selected under each name in this process: the font hooks set it up, and their codes stay on the font
+	local reselected = {}
 
 	local function G() return token.create("global") end
 
@@ -102,7 +104,11 @@ return function(T)
 		local LB, RB = token.new(123, 1), token.new(125, 2)
 		for _, nm in ipairs(r.nfss or {}) do
 			local enc, fam, ser, shp, size = nm:match("^([^/]+)/([^/]+)/([^/]+)/([^/]+)/([^/]+)$")
-			if enc then
+			local id = reselected[nm]
+			if id and T.fontkey(id) == r.nfss_font[nm] then
+				-- as the selection's hook does: later records name it too
+				T.selected[nm] = true
+			elseif enc then
 				tex.sprint({ token.create("begingroup") })
 				for _, part in ipairs({ { "f@encoding", enc }, { "f@family", fam }, { "f@series", ser }, { "f@shape", shp } }) do
 					tex.sprint({ token.create("def"), token.create(part[1]), LB })
@@ -128,7 +134,9 @@ return function(T)
 		-- the same file and size can lack them
 		for nm, key in pairs(r.nfss_font or {}) do
 			local tk = token.create(nm)
-			if tk and tk.cmdname == "set_font" and T.fontkey(tk.mode) == key then have[key] = tk.mode end
+			if tk and tk.cmdname == "set_font" and T.fontkey(tk.mode) == key then reselected[nm] = tk.mode end
+			local id = reselected[nm]
+			if id and T.fontkey(id) == key then have[key] = id end
 		end
 		local keys = {}
 		for key in pairs(r.fonts or {}) do keys[#keys + 1] = key end
@@ -474,17 +482,12 @@ return function(T)
 		for _, n in ipairs(r.nfss) do listed[n] = true end
 		for _, n in ipairs(A.image_cache or {}) do listed[n] = true end
 		local seq, other = {}, {}
-		local L = token.create("let")
 		-- the hash is walked again only when the apply made names the record does not account for
 		local walk = status.cs_count - A.names0 > A.created
 		for _, nm in ipairs(T.changed_names(walk, listed)) do
 			if not listed[nm] then
 				local back = T.base_back(nm)
-				if back then
-					seq[#seq + 1] = G()
-					seq[#seq + 1] = L
-					seq[#seq + 1] = token.create(nm)
-					seq[#seq + 1] = token.create(back)
+				if back then T.let_global(seq, token.create(nm), token.create(back))
 				else other[#other + 1] = nm end
 			end
 		end

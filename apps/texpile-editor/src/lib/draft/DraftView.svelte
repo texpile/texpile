@@ -77,6 +77,10 @@
 	export function teleportEdit(file: string, text: string): Promise<TeleportOutcome> {
 		return ctrl.teleport.edit(file, text);
 	}
+	/** the caret rests in a paragraph: an engine reads on to it, so the first key typed there shows at once */
+	export function stageAt(file: string, text: string, line: number): void {
+		ctrl.teleport.stage(file, text, line);
+	}
 	/** forward sync: scroll + flash the box synctex reported for a source line. */
 	export function syncTo(pageNo: number, hBp: number, vBp: number, wBp: number, hgtBp: number) {
 		ctrl.syncTo(pageNo, hBp, vBp, wBp, hgtBp);

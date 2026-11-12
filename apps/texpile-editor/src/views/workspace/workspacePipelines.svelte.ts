@@ -3,6 +3,7 @@
 import { fileService } from '$lib/files/service/fileService';
 import { fileMode } from '$lib/workspace/fileMode.svelte';
 import { DraftController } from '$lib/draft/draftController.svelte';
+import { caretSourceLine } from '$lib/draft/caretSourceLine';
 import { TypstPreviewController } from '$lib/languages/typst/preview/previewController.svelte';
 import { TypstDocumentStream } from '$lib/languages/typst/intellisense/typstDocumentStream';
 import { typstExport } from '$lib/languages/typst/export/dialog/typstExportState.svelte';
@@ -58,6 +59,7 @@ export function createWorkspacePipelines(d: PipelineDeps) {
 		openCompileModal: d.openCompileModal,
 		getSource: () => doc.fileText,
 		getLoadedPath: () => doc.path,
+		getCaretLine: () => caretSourceLine(modes.mode, () => nav.visualCaretSourcePos()),
 		flushSaves: () => d.editFlow().saver.flushAndWait()
 	});
 	// the Typst live preview, whole: task lifecycle, caret follow, forward sync, the guest

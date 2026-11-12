@@ -29,7 +29,7 @@ function bundle(tmp) {
 	const out = path.join(tmp, 'executor.cjs');
 	buildSync({
 		stdin: {
-			contents: `export * as service from './draft/draftService'; export * as teleport from './draft/teleport/teleportService'; export * as job from './draft/compileJob';`,
+			contents: `export * as service from './draft/draftService'; export * as teleport from './draft/teleport/teleportService'; export * as job from './draft/compileJob'; export * as engine from './draft/teleport/draftEngine';`,
 			resolveDir: src,
 			loader: 'ts'
 		},
@@ -103,6 +103,12 @@ export class Gate {
 		this.mainFile = mainFile;
 		this.tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'tele-edits-'));
 		Object.assign(this, bundle(this.tmp));
+		// FORGOT: a point an engine kept did not come back, and the edit took the long way from the base
+		this.forgot = 0;
+		this.engine.followEngines((name, kind, rest) => {
+			if (kind === 'FORGOT') this.forgot++;
+			if (process.env.TELE_TRACE) console.error(`[${name}] ${kind} ${rest.slice(0, 400)}`);
+		});
 		this.root = path.join(this.tmp, 'doc');
 		fs.cpSync(srcDir, this.root, { recursive: true });
 		this.files = [];
@@ -131,7 +137,7 @@ export class Gate {
 
 	close() {
 		this.teleport.stopTeleports();
-		setTimeout(() => fs.rmSync(this.tmp, { recursive: true, force: true }), 500);
+		if (!process.env.TELE_KEEP) setTimeout(() => fs.rmSync(this.tmp, { recursive: true, force: true }), 500);
 	}
 
 	// the folder of seeds the last compile read: the sweep after a compile leaves only that one

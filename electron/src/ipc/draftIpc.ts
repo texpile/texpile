@@ -1,7 +1,7 @@
 // Draft-mode IPC. Every window runs its own live preview; windows on the same folder share its engines, which stop
 // once no window's preview wants them.
 import * as draftService from '../draft/draftService';
-import { teleport, stopTeleports } from '../draft/teleport/teleportService';
+import { teleport, stageAt, stopTeleports } from '../draft/teleport/teleportService';
 import type { ReadBackFiles } from '../draft/draftProducts';
 import { luaDir } from '../appIdentity';
 import { normRoot } from '../windows/normRoot';
@@ -26,7 +26,7 @@ function previewIn(wcId: number, root: string): void {
 }
 
 export function registerDraftIpc(): void {
-	handleFsE('draft:compile', async (e, body: { root: string; mainFile: string; readBack: ReadBackFiles }) => {
+	handleFsE('draft:compile', async (e, body: { root: string; mainFile: string; readBack: ReadBackFiles; rest?: boolean }) => {
 		previewIn(e.sender.id, body.root);
 		return draftService.compileDraft({ ...body, engineDir: luaDir() });
 	});
@@ -37,6 +37,10 @@ export function registerDraftIpc(): void {
 		return teleport(body, (page) => {
 			if (!sender.isDestroyed()) sender.send('draft:page', { root: body.root, seq: body.seq, page });
 		});
+	});
+	handleFsE('draft:stage', async (_e, body: { root: string; mainFile: string; file: string; text: string; line: number }) => {
+		stageAt(body);
+		return { ok: true };
 	});
 	// draft mode off or the preview closed: no idle lualatex holds memory for the rest of the session
 	handleFsE('draft:stop', async (e) => {

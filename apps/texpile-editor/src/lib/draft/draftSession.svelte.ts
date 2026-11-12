@@ -202,15 +202,11 @@ export class DraftSession {
 		const changed = this.pages
 			.filter((p) => shown[p.n - 1]?.records !== p.records)
 			.map((p) => shippedPage(p.n, parseRecords(shown[p.n - 1]?.records ?? '').records, parseRecords(p.records).records));
-		if (changed.length) this.followBand(editBand(changed, true), changed[0].n);
+		this.followBand(editBand(changed, true));
 	}
 
-	/** with no changed words to show, the first page that changed */
-	private followBand(band: EditBand | null, page: number): void {
-		if (!band) {
-			if (this.vp.followEdits) this.vp.goToPage(page);
-			return;
-		}
+	private followBand(band: EditBand | null): void {
+		if (!band) return;
 		this.ev('edit-band', band);
 		this.vp.showEditBand(band);
 		this.vp.followEdit(band.page, band.top, band.bottom, band.colL, band.colR);
@@ -237,9 +233,9 @@ export class DraftSession {
 	private showShippedBand(seq: number, ended: boolean): void {
 		if (seq !== this.shipped.seq || this.shipped.shown) return;
 		const band = editBand(this.shipped.pages, ended);
-		if (!band && !(ended && this.shipped.pages.length)) return;
+		if (!band) return;
 		this.shipped.shown = true;
-		this.followBand(band, this.shipped.pages[0]?.n ?? 1);
+		this.followBand(band);
 	}
 
 	private moveSourceLines(stop: number, shifts: SourceShift[]): void {

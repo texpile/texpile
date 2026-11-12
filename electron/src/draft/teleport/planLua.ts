@@ -24,16 +24,17 @@ function luaPoint(p: Point): string {
 }
 
 /** `overrides` maps a source file to the root-relative file its text is read from, or to the text; `stage` is the line
- * where the run records a point for the next edit. `src` is the folder for the run's source snapshots, `cut` the file
- * whose appearance ends the run. One line, sent on the engine's stdin */
+ * where the run records a point for the next edit, and the edited paragraph's first line. `src` is the folder for the run's source snapshots, `cut` the file
+ * whose appearance ends the run, `reship` the first page a cut run left on screen, `ahead` a stage that reads on to the
+ * stage line. One line, sent on the engine's stdin */
 export function planLua(
 	plan: TeleportPlan,
 	overrides: Map<string, PlanOverride>,
 	file: string,
 	edit: LineEdit,
-	stage: number,
+	stage: { line: number; paragraph: number },
 	srcFiles: string[],
-	serve: { src: string; cut: string },
+	serve: { src: string; cut: string; reship?: number; ahead?: boolean },
 	images?: string
 ): string {
 	const over = [...overrides].map(
@@ -42,7 +43,9 @@ export function planLua(
 	return (
 		`return {chain={${plan.chain.map(luaPoint).join(',')}},stops={${plan.stops.map(luaPoint).join(',')}},` +
 		`overrides={${over.join(',')}},edit={f=${luaString(file)},from=${edit.from},oldTo=${edit.oldTo},newTo=${edit.newTo}},` +
-		`stage={f=${luaString(file)},l=${stage}},files={${srcFiles.map(luaString).join(',')}},` +
-		`src=${luaString(serve.src + '/')},cut=${luaString(serve.cut)}${images ? `,images=${luaString(images)}` : ''}}`
+		`stage={f=${luaString(file)},l=${stage.line},p=${stage.paragraph}},files={${srcFiles.map(luaString).join(',')}},` +
+		`src=${luaString(serve.src + '/')},cut=${luaString(serve.cut)}${serve.reship === undefined ? '' : `,reship=${serve.reship}`}` +
+		`${serve.ahead ? ',ahead=true' : ''}` +
+		`${images ? `,images=${luaString(images)}` : ''}}`
 	);
 }
