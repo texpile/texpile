@@ -41,7 +41,7 @@
 		{/if}
 		<button
 			type="button"
-			class="btn-icon btn-icon-sm hover:preset-tonal text-muted"
+			class="typ-layout-settings btn-icon btn-icon-sm hover:preset-tonal text-muted"
 			aria-label={m.typ_layout_settings()}
 			use:tip={m.typ_layout_settings()}
 			onmousedown={(event) => event.preventDefault()}

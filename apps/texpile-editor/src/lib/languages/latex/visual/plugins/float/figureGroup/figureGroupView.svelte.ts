@@ -1,4 +1,5 @@
-import { compiledNumbersOf } from '$lib/languages/latex/visual/core';
+import { compiledNumbersOf, offerBlockSettings, settingsPlace, type GearPlace } from '$lib/languages/latex/visual/core';
+import { m } from '$lib/paraglide/messages';
 import type { Node } from 'prosemirror-model';
 import type { Decoration, EditorView, NodeView } from 'prosemirror-view';
 import { mount, unmount } from 'svelte';
@@ -32,6 +33,10 @@ export function figureGroupView(
 
 	const props = $state({ node: currentNode, view, getPos });
 	const component = mount(FigureGroupSettings, { target: settings, props });
+	const withdrawSettings = offerBlockSettings(dom, {
+		label: () => m.imageoverlay_settings_title(),
+		open: (gear) => (component as { openAt?: (at: GearPlace | null) => void }).openAt?.(settingsPlace(dom, gear))
+	});
 
 	return {
 		dom,
@@ -46,6 +51,7 @@ export function figureGroupView(
 		ignoreMutation: (mutation) => settings.contains(mutation.target),
 		stopEvent: (event) => event.target instanceof globalThis.Node && settings.contains(event.target),
 		destroy() {
+			withdrawSettings();
 			void unmount(component);
 		}
 	};

@@ -2,7 +2,7 @@
 	import { tip } from '$lib/components/tooltip.svelte';
 	import { inEditorPane } from '$lib/editor/visual/editorPanePositioning';
 	import { Popover, Portal } from '@skeletonlabs/skeleton-svelte';
-	import { Plus, GripVertical, Trash2 } from '@lucide/svelte';
+	import { Plus, GripVertical, Settings, Trash2 } from '@lucide/svelte';
 	import BlockInsertMenu from '$lib/editor/visual/insert/BlockInsertMenu.svelte';
 	import type { BlockInsertItem } from '$lib/editor/visual/insert/insertItem';
 	import { m } from '$lib/paraglide/messages';
@@ -15,12 +15,15 @@
 		/** comments crowd the pane: one column on the left, delete included, and no right gutter */
 		stacked: boolean;
 		popoverOpen: boolean;
+		/** the hint of the gear, for a block that has settings */
+		settings: string | null;
 	};
 	let {
 		state,
 		onInsert,
 		onDragStart,
 		onDelete,
+		onSettings,
 		focusEditor,
 		items
 	}: {
@@ -28,6 +31,7 @@
 		onInsert: (item: BlockInsertItem) => void;
 		onDragStart: (event: DragEvent) => void;
 		onDelete: () => void;
+		onSettings: (gear: HTMLElement) => void;
 		focusEditor: () => void;
 		items: () => readonly BlockInsertItem[];
 	} = $props();
@@ -76,18 +80,19 @@
 	>
 		<GripVertical class="size-4" />
 	</button>
-	{#if state.stacked}{@render deleteButton()}{/if}
+	{#if state.stacked}{@render deleteButton()}{@render settingsButton()}{/if}
 </div>
 
-<!-- right gutter (delete), same visibility rules as the left; with the gutters stacked it is in the left one -->
+<!-- right gutter (delete, and the block's settings under it: the gutter is one button wide), same visibility rules
+     as the left; with the gutters stacked both are in the left one -->
 {#if !state.stacked}
 	<div
-		class="block-handle-gutter fixed z-10 flex items-center"
+		class="block-handle-gutter fixed z-10 flex flex-col gap-0.5"
 		style="visibility: {state.visible ? 'visible' : 'hidden'}; pointer-events: {state.visible
 			? 'auto'
 			: 'none'}; top: {state.top}px; left: {state.right}px;"
 	>
-		{@render deleteButton()}
+		{@render deleteButton()}{@render settingsButton()}
 	</div>
 {/if}
 
@@ -105,4 +110,18 @@
 	>
 		<Trash2 class="size-4" />
 	</button>
+{/snippet}
+
+{#snippet settingsButton()}
+	{#if state.settings}
+		<button
+			type="button"
+			class="block-handle-btn block-handle-settings"
+			aria-label={state.settings}
+			use:tip={state.settings}
+			onclick={(e) => onSettings(e.currentTarget)}
+		>
+			<Settings class="size-4" />
+		</button>
+	{/if}
 {/snippet}

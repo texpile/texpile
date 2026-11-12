@@ -49,6 +49,14 @@
 .tex-environment:has(> .env-header [data-align='right']) > .tex-environment-body {
 	text-align: right;
 }
+.env-gear-place {
+	position: absolute;
+	pointer-events: none;
+}
+/* directly in an editor with a block handle, the handle's gear opens the alignment */
+.ProseMirror[data-block-handle] > .tex-environment:has(> .env-header [data-look='align']) > .env-header {
+	display: none;
+}
 .env-gear {
 	display: flex;
 	padding: calc(var(--spacing) * 0.5);

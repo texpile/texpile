@@ -86,6 +86,7 @@ export { default as FigureCard } from '$lib/draw/host/card/FigureCard.svelte';
 export { default as FigurePlaceholder } from '$lib/draw/host/card/FigurePlaceholder.svelte';
 export { tikzLanguage } from '$lib/draw/tikz/tikzLanguage';
 export { inEditorPane } from '$lib/editor/visual/editorPanePositioning';
+export { offerBlockSettings, settingsPlace, type GearPlace } from '$lib/editor/visual/extensions/blockHandle/blockSettings';
 export { citationText } from '$lib/editor/visual/extensions/citation/citationText';
 export { citationVariantKind } from '$lib/languages/latex/visual/extensions/citation/citationVariantKind';
 export { default as CitationReferenceField } from '$lib/editor/visual/extensions/citation/CitationReferenceField.svelte';

@@ -7,6 +7,7 @@
 	// opacity, so ProseMirror re-rendering under the cursor cannot restart a fade or eat an enter
 	// event, and the only thing overlaying the editor is one small icon in the card's padding.
 	import { tip } from '$lib/components/tooltip.svelte';
+	import type { GearPlace } from '$lib/editor/visual/extensions/blockHandle/blockSettings';
 	import { Popover, Portal } from '@skeletonlabs/skeleton-svelte';
 	import { Settings } from '@lucide/svelte';
 	import type { EditorView } from 'prosemirror-view';
@@ -27,6 +28,16 @@
 
 	let settingsOpen = $state(false);
 	let search = $state('');
+	let place = $state.raw<GearPlace | null>(null);
+	const positioning = $derived(
+		inEditorPane({ placement: 'bottom-end', offset: { mainAxis: 4 }, ...(place ? { getAnchorRect: place } : {}) })
+	);
+
+	/** `at`: the block handle's gear, when that is what opened them */
+	export function open(at: GearPlace | null = null): void {
+		place = at;
+		settingsOpen = true;
+	}
 
 	const env = $derived(String(node.attrs.env ?? ''));
 	const canSet = $derived(canSetListingLanguage(env));
@@ -60,11 +71,7 @@
 </script>
 
 <div class="codeblock-settings-container">
-	<Popover
-		open={settingsOpen}
-		onOpenChange={(details) => (settingsOpen = details.open)}
-		positioning={inEditorPane({ placement: 'bottom-end', offset: { mainAxis: 4 } })}
-	>
+	<Popover open={settingsOpen} onOpenChange={(details) => (settingsOpen = details.open)} {positioning}>
 		<!-- the Trigger renders the <button>; we take it over to hang the hint on it -->
 		<Popover.Trigger class="codeblock-settings-btn" aria-label={m.codeblock_settings_button_label()} disabled={isReadOnly.current}>
 			{#snippet element(attrs)}
@@ -121,6 +128,14 @@
 		top: calc(var(--spacing) * 1);
 		display: flex;
 		align-items: center;
+	}
+
+	/* directly in an editor with a block handle, the handle's gear opens these and the code takes the column */
+	:global(.ProseMirror[data-block-handle] > .cm-wrapper .codeblock-settings-btn) {
+		display: none;
+	}
+	:global(.ProseMirror[data-block-handle] > .cm-wrapper) {
+		padding-right: calc(var(--spacing) * 2);
 	}
 
 	:global(.codeblock-settings-btn) {

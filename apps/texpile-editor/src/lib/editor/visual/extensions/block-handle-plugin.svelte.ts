@@ -12,6 +12,7 @@ import { insertBlockAfter } from '$lib/editor/visual/insert/insertRun';
 import { returnFocusToText } from './popoverFocus/returnFocus';
 import { handleUnitAt } from './blockHandle/handleUnit';
 import { positionOf } from './blockHandle/nodePosition';
+import { blockSettingsOf } from './blockHandle/blockSettings';
 import { blockHandlePluginKey, handleDropEvents, handleDropLine, handleDropState, setHandleDragActive } from './blockHandle/handleDrop';
 
 type ItemsOf = () => readonly InsertItem[];
@@ -45,13 +46,15 @@ class BlockHandleView {
 		right: number;
 		stacked: boolean;
 		popoverOpen: boolean;
+		settings: string | null;
 	}>({
 		visible: false,
 		top: 0,
 		left: 0,
 		right: 0,
 		stacked: false,
-		popoverOpen: false
+		popoverOpen: false,
+		settings: null
 	});
 	private hoveredPos: number | null = null;
 	private hoveredNode: PMNode | null = null;
@@ -75,6 +78,7 @@ class BlockHandleView {
 				onInsert: (item: BlockInsertItem) => this.runInsert(item),
 				onDragStart: this.onDragStart,
 				onDelete: this.runDelete,
+				onSettings: this.openSettings,
 				focusEditor: () => returnFocusToText(view),
 				items: () => items().filter((item): item is BlockInsertItem => item.shape === 'block')
 			}
@@ -169,6 +173,7 @@ class BlockHandleView {
 		this.state.stacked = stacked;
 		this.state.left = pinned;
 		this.state.right = containerRect.right + GUTTER_OFFSET_RIGHT;
+		this.state.settings = (this.view.editable && blockSettingsOf(dom)?.label()) || null;
 	}
 
 	private cancelHide = () => {
@@ -234,6 +239,12 @@ class BlockHandleView {
 		this.hoveredNode = null;
 	};
 
+	private openSettings = (gear: HTMLElement) => {
+		if (this.hoveredPos == null) return;
+		const dom = this.view.nodeDOM(this.hoveredPos);
+		if (dom instanceof HTMLElement) blockSettingsOf(dom)?.open(gear);
+	};
+
 	private onDragEnd = () => setHandleDragActive(this.view, false);
 
 	update(view: EditorView, prevState: EditorState) {
@@ -269,7 +280,9 @@ export function createBlockHandlePlugin(opts: { items?: ItemsOf } = {}) {
 		state: handleDropState,
 		props: {
 			decorations: (state) => handleDropLine(blockHandlePluginKey.getState(state), state.doc),
-			handleDOMEvents: handleDropEvents
+			handleDOMEvents: handleDropEvents,
+			// a block directly in an editor with a handle leaves its gear to the handle (app.css)
+			attributes: { 'data-block-handle': 'true' }
 		},
 		view: (view) => new BlockHandleView(view, opts.items ?? (() => insertItems.current))
 	});

@@ -25,6 +25,8 @@ import type { EditorView as ProseMirrorView, ViewMutationRecord } from 'prosemir
 import { languages as cmlangdata } from '@codemirror/language-data';
 import { mount, unmount } from 'svelte';
 import CodeBlockSettings from './CodeBlockSettings.svelte';
+import { offerBlockSettings, settingsPlace, type GearPlace } from '$lib/editor/visual/extensions/blockHandle/blockSettings';
+import { m } from '$lib/paraglide/messages';
 
 import { markdown } from '@codemirror/lang-markdown';
 import { renderStaticCodeBlock, setStaticCode } from './cmStatic';
@@ -65,6 +67,7 @@ export class CodeBlockView {
 	private placeholder?: HTMLElement;
 	private settingsContainer: HTMLElement;
 	private settingsComponent?: ReturnType<typeof mount>;
+	private withdrawSettings: () => void = () => {};
 
 	constructor(node: Node, view: ProseMirrorView, getPos: () => number) {
 		this.node = node;
@@ -100,6 +103,11 @@ export class CodeBlockView {
 		this.settingsContainer.setAttribute('contenteditable', 'false');
 		wrapper.appendChild(this.settingsContainer);
 		this.mountSettings();
+		this.withdrawSettings = offerBlockSettings(this.dom, {
+			label: () => m.codeblock_settings_button_label(),
+			open: (gear) =>
+				(this.settingsComponent as { open?: (at: GearPlace | null) => void } | undefined)?.open?.(settingsPlace(this.dom, gear))
+		});
 
 		this.handleFocus = this.handleFocus.bind(this);
 		this.handleBlur = this.handleBlur.bind(this);
@@ -415,6 +423,7 @@ export class CodeBlockView {
 	// ProseMirror calls destroy(); this used to be spelled `destory`, so it never ran and every
 	// removed code block leaked its CodeMirror instance and both capture listeners.
 	destroy() {
+		this.withdrawSettings();
 		cancelUpgrade(this.dom);
 		if (this.settingsComponent) unmount(this.settingsComponent);
 		if (!this.cm) return;

@@ -61,3 +61,11 @@
 	color: var(--muted-text);
 	background: var(--surface-wash);
 }
+/* directly in an editor with a block handle, the handle's gear opens the settings; the cell buttons stay */
+.ProseMirror[data-block-handle] > .typ-layout > .typ-layout-gear .typ-layout-settings {
+	display: none;
+}
+.typ-layout-gear-place {
+	position: absolute;
+	pointer-events: none;
+}

@@ -1,6 +1,7 @@
 <script lang="ts">
 	// MathSettings popover for equation numbering, labels, and multi-line environments
 	import { inEditorPane } from '$lib/editor/visual/editorPanePositioning';
+	import type { GearPlace } from '$lib/editor/visual/extensions/blockHandle/blockSettings';
 	import { tip } from '$lib/components/tooltip.svelte';
 	import { Popover, Portal } from '@skeletonlabs/skeleton-svelte';
 	import { Settings } from '@lucide/svelte';
@@ -19,18 +20,20 @@
 	let { node, view, getPos }: Props = $props();
 
 	let settingsOpen = $state(false);
+	let place = $state.raw<GearPlace | null>(null);
+	const positioning = $derived(
+		inEditorPane({ placement: 'bottom-end', offset: { mainAxis: 4 }, ...(place ? { getAnchorRect: place } : {}) })
+	);
 
-	export function open(): void {
+	/** `at`: the block handle's gear, when that is what opened them */
+	export function open(at: GearPlace | null = null): void {
+		place = at;
 		settingsOpen = true;
 	}
 </script>
 
 <div class="math-settings-container">
-	<Popover
-		open={settingsOpen}
-		onOpenChange={(details) => (settingsOpen = details.open)}
-		positioning={inEditorPane({ placement: 'bottom-end', offset: { mainAxis: 4 } })}
-	>
+	<Popover open={settingsOpen} onOpenChange={(details) => (settingsOpen = details.open)} {positioning}>
 		<Popover.Trigger class="math-settings-btn">
 			<button
 				type="button"
@@ -69,6 +72,11 @@
 	/* when numbered, push further left to avoid the equation number */
 	:global(.block-math-container[data-numbered='true']) .math-settings-container {
 		right: calc(var(--spacing) * 16);
+	}
+
+	/* directly in an editor with a block handle, the handle's gear opens these */
+	:global(.ProseMirror[data-block-handle] > .block-math-container .math-settings-btn) {
+		display: none;
 	}
 
 	/* match table wrapper styling */

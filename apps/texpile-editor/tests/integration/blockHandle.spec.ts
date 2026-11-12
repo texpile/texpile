@@ -26,7 +26,7 @@ Delta paragraph.
 \\end{document}
 `;
 
-const CENTERED = `\\documentclass{article}\n\\usepackage{tikz}\n\\begin{document}\n\nBefore.\n\n\\begin{center}\n\\begin{tikzpicture}\n  \\node[draw] (a) at (0,0) {A};\n\\end{tikzpicture}\n\\end{center}\n\nAfter.\n\n\\end{document}\n`;
+const CENTERED = `\\documentclass{article}\n\\usepackage{tikz}\n\\begin{document}\n\nBefore.\n\n\\begin{center}\n\\begin{tikzpicture}\n  \\node[draw] (a) at (0,0) {A};\n\\end{tikzpicture}\n\\end{center}\n\nAfter.\n\n\\begin{equation}\nE = mc^2\n\\end{equation}\n\n\\end{document}\n`;
 
 const texpile = useTexpile({ files: { 'unit.tex': TEX, 'centered.tex': CENTERED } });
 
@@ -95,25 +95,33 @@ test('the handle over a theorem moves the whole theorem', async () => {
 	await undoRestores(v, disk, 'unit.tex', TEX);
 });
 
-test('the settings gear of a centered figure sits clear of the handle', async () => {
+test("the handle's gear sets a centered figure's alignment and opens an equation's settings", async () => {
 	const { page, root } = texpile();
 	const v = new VisualEditor(page, root);
+	const disk = new Disk(root);
 	await v.open('centered.tex');
+	const gear = page.locator('.block-handle-settings');
+
 	const card = page.locator('.figure-card').first();
 	await card.scrollIntoViewIfNeeded();
 	const c = (await card.boundingBox())!;
 	await page.mouse.move(c.x + c.width / 2, c.y + c.height / 2, { steps: 4 });
-	const gear = page.locator('.env-gear');
-	await expect(gear).toHaveCSS('opacity', '1', { timeout: 5000 });
-	const handle = page.locator('.block-handle-btn');
-	await expect(handle.first()).toBeVisible();
-	const gearBox = (await gear.boundingBox())!;
-	for (const button of await handle.all()) {
-		const b = (await button.boundingBox())!;
-		const apart =
-			b.x + b.width <= gearBox.x || gearBox.x + gearBox.width <= b.x || b.y + b.height <= gearBox.y || gearBox.y + gearBox.height <= b.y;
-		expect(apart, 'a handle button and the gear share no pixels').toBe(true);
-	}
 	await gear.click();
-	await expect(page.locator('.drawn-chip-panel')).toBeVisible();
+	const panel = page.locator('.drawn-chip-panel');
+	await expect(panel.getByRole('radio', { name: 'Center' })).toHaveAttribute('aria-checked', 'true');
+	await panel.getByRole('radio', { name: 'Right' }).click();
+	await expect.poll(() => disk.read('centered.tex')).toContain('\\begin{flushright}\n\\begin{tikzpicture}');
+	await page.keyboard.press('Escape');
+	await page.locator('.ProseMirror p', { hasText: 'After.' }).click();
+
+	const equation = page.locator('.ProseMirror > .block-math-container');
+	const e = (await equation.boundingBox())!;
+	await page.mouse.move(e.x + e.width / 2, e.y + e.height / 2, { steps: 4 });
+	// the equation's own gear is the handle's now
+	await expect(equation.locator('.math-settings-btn')).toBeHidden();
+	await gear.click();
+	const settings = page.locator('[data-scope="popover"][data-part="content"][data-state="open"]');
+	await expect(settings).toBeVisible();
+	const [g, s2] = [(await gear.boundingBox())!, (await settings.boundingBox())!];
+	expect(Math.abs(s2.x + s2.width - (g.x + g.width)), "the settings hang from the gear's right edge").toBeLessThan(4);
 });

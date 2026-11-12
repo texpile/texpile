@@ -7,6 +7,8 @@ import 'mathlive/fonts.css';
 import { browser } from '$lib/runtime';
 import { mount, unmount } from 'svelte';
 import MathSettings from './MathSettings.svelte';
+import { m } from '$lib/paraglide/messages';
+import { offerBlockSettings, settingsPlace, type GearPlace } from '$lib/editor/visual/extensions/blockHandle/blockSettings';
 import { configureMathVirtualKeyboard } from './virtualKeyboardConfig';
 import { installSuggestionPopoverFlashFix } from './suggestionPopoverFlashFix';
 import { syncBlockMathAttrs, isMathLatexEmpty, emptyMathBlockLike } from './mathEnvironments';
@@ -55,6 +57,7 @@ export class MathLiveView implements NodeView {
 	private origFocus?: (options?: FocusOptions) => void;
 	private settingsContainer?: HTMLElement;
 	private settingsComponent?: ReturnType<typeof mount>;
+	private withdrawSettings?: () => void;
 	private unwatchMacros?: () => void;
 	private unwatchSnippets?: () => void;
 	private unwatchMacroCalls?: () => void;
@@ -120,6 +123,10 @@ export class MathLiveView implements NodeView {
 			// at load and pays for exactly the ones the user reaches for.
 			this.dom.addEventListener('pointerenter', this.mountSettings);
 			this.dom.addEventListener('focusin', this.mountSettings);
+			this.withdrawSettings = offerBlockSettings(this.dom, {
+				label: () => m.mathsettings_settings_button_label(),
+				open: (gear) => this.openSettings(gear)
+			});
 		}
 
 		this.updating = false;
@@ -270,14 +277,14 @@ export class MathLiveView implements NodeView {
 			pos: this.getPos(),
 			syntax: this.syntax,
 			editable: this.view.editable && !field.readOnly,
-			openSettings: this.openSettings
+			openSettings: () => this.openSettings()
 		};
 		showMathMenu(field, equation, event);
 	};
 
-	private openSettings = (): void => {
+	private openSettings = (gear?: HTMLElement): void => {
 		this.mountSettings();
-		(this.settingsComponent as { open?: () => void } | undefined)?.open?.();
+		(this.settingsComponent as { open?: (at: GearPlace | null) => void } | undefined)?.open?.(settingsPlace(this.dom, gear));
 	};
 
 	private updateEquationNumbers() {
@@ -496,6 +503,7 @@ export class MathLiveView implements NodeView {
 		this.updateOutline(false);
 	}
 	destroy() {
+		this.withdrawSettings?.();
 		this.unwatchMacros?.();
 		this.unwatchSnippets?.();
 		this.unwatchMacroCalls?.();

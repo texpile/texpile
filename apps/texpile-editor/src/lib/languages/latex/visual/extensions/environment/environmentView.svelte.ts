@@ -8,8 +8,12 @@ import {
 	openChipPanel,
 	syncChipPanel
 } from '$lib/editor/visual/extensions/drawnChips/chipPanel.svelte';
+import { markGearPlace, offerBlockSettings } from '$lib/editor/visual/extensions/blockHandle/blockSettings';
+import { m } from '$lib/paraglide/messages';
 import EnvironmentHead from './EnvironmentHead.svelte';
+import EnvironmentAlignSetting from './EnvironmentAlignSetting.svelte';
 import { environmentHeadSource, readEnvironmentHead } from './environmentHeadSource';
+import { environmentLook } from './environmentLook';
 import './environment.css';
 
 function numberOf(decorations: readonly Decoration[]): string | null {
@@ -38,6 +42,13 @@ export function environmentView(
 	contentDom.className = 'tex-environment-body';
 	dom.appendChild(contentDom);
 
+	// where the handle's gear stood, for the panel it opens to keep to
+	const gearPlace = document.createElement('span');
+	gearPlace.className = 'env-gear-place';
+	gearPlace.contentEditable = 'false';
+	dom.appendChild(gearPlace);
+	let panelAnchor: HTMLElement = header;
+
 	function writeHead(next: string) {
 		const pos = getPos();
 		const head = readEnvironmentHead(next);
@@ -46,14 +57,21 @@ export function environmentView(
 		view.dispatch(view.state.tr.setNodeMarkup(pos, undefined, { ...currentNode.attrs, ...head }));
 	}
 
-	function openSettings() {
-		if (chipPanelOpenFor(header)) return;
+	// an alignment is chosen, any other environment's first line is retyped
+	function settingsFor(source: string) {
+		const head = readEnvironmentHead(source);
+		return head && environmentLook(head.name, head.args, undefined).kind === 'align' ? EnvironmentAlignSetting : null;
+	}
+
+	function openSettings(anchor: HTMLElement = header) {
+		if (chipPanelOpenFor(anchor)) return;
+		panelAnchor = anchor;
 		openChipPanel({
-			anchor: header,
+			anchor,
 			source: environmentHeadSource(currentNode),
 			language: 'latex',
 			inline: false,
-			settingsFor: () => null,
+			settingsFor,
 			write: writeHead,
 			writeSetting: writeHead,
 			jump: () => {},
@@ -67,8 +85,15 @@ export function environmentView(
 		});
 	}
 
-	const props = $state({ node: currentNode, onopen: openSettings, number: numberOf(decorations) });
+	const props = $state({ node: currentNode, onopen: () => openSettings(), number: numberOf(decorations) });
 	const component = mount(EnvironmentHead, { target: header, props });
+	const withdrawSettings = offerBlockSettings(dom, {
+		label: () => m.env_settings_button_label(),
+		open(gear) {
+			markGearPlace(gearPlace, dom, gear);
+			openSettings(gearPlace);
+		}
+	});
 
 	return {
 		dom,
@@ -78,20 +103,21 @@ export function environmentView(
 			currentNode = newNode;
 			props.node = newNode;
 			props.number = numberOf(newDecorations);
-			if (chipPanelOpenFor(header)) syncChipPanel(header, environmentHeadSource(newNode));
+			if (chipPanelOpenFor(panelAnchor)) syncChipPanel(panelAnchor, environmentHeadSource(newNode));
 			dom.setAttribute('data-env', String(newNode.attrs.name ?? 'environment'));
 			return true;
 		},
 		// ignore mutations inside the svelte header, PM owns the body
 		ignoreMutation(mutation) {
-			return header.contains(mutation.target as HTMLElement) || mutation.target === header;
+			return header.contains(mutation.target as HTMLElement) || mutation.target === header || mutation.target === gearPlace;
 		},
 		stopEvent(event) {
 			const t = event.target;
 			return t instanceof HTMLElement && header.contains(t);
 		},
 		destroy() {
-			dismissChipPanel(header);
+			withdrawSettings();
+			dismissChipPanel(panelAnchor);
 			unmount(component);
 		}
 	};

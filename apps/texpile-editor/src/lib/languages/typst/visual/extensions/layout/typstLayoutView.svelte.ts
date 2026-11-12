@@ -14,6 +14,8 @@ import { layoutAttrsFor, layoutDrawing, layoutHeadSource, layoutKindOf, type Lay
 import { layoutSettings } from './layoutSettings';
 import { addGridCell, removeGridCell } from './gridCells';
 import TypstLayoutGear from './TypstLayoutGear.svelte';
+import { markGearPlace, offerBlockSettings } from '$lib/editor/visual/extensions/blockHandle/blockSettings';
+import { m } from '$lib/paraglide/messages';
 import './typstLayout.css';
 
 function readHead(head: string): { name: string; args: string | null } | null {
@@ -38,6 +40,10 @@ export class TypstLayoutView implements NodeView {
 	private node: Node;
 	private kind: LayoutKind;
 	private gear: HTMLElement;
+	// where the handle's gear stood, for the panel it opens to keep to
+	private gearPlace: HTMLElement;
+	private panelAnchor: HTMLElement;
+	private withdrawSettings: () => void;
 	private attribution: HTMLElement | null = null;
 	private component: ReturnType<typeof mount>;
 	// one $state object: svelte tracks the cell count only while it lives beside the static props
@@ -57,6 +63,17 @@ export class TypstLayoutView implements NodeView {
 		this.gear.contentEditable = 'false';
 		this.contentDOM = this.dom.appendChild(document.createElement('div'));
 		this.contentDOM.className = 'typ-layout-body';
+		this.gearPlace = this.dom.appendChild(document.createElement('span'));
+		this.gearPlace.className = 'typ-layout-gear-place';
+		this.gearPlace.contentEditable = 'false';
+		this.panelAnchor = this.gear;
+		this.withdrawSettings = offerBlockSettings(this.dom, {
+			label: () => m.typ_layout_settings(),
+			open: (gear) => {
+				markGearPlace(this.gearPlace, this.dom, gear);
+				this.openSettings(this.gearPlace);
+			}
+		});
 		this.component = mount(TypstLayoutGear, {
 			target: this.gear,
 			props: {
@@ -91,11 +108,12 @@ export class TypstLayoutView implements NodeView {
 		}
 	}
 
-	private openSettings(): void {
-		if (chipPanelOpenFor(this.gear)) return;
+	private openSettings(anchor: HTMLElement = this.gear): void {
+		if (chipPanelOpenFor(anchor)) return;
+		this.panelAnchor = anchor;
 		this.gear.setAttribute('data-open', '');
 		openChipPanel({
-			anchor: this.gear,
+			anchor,
 			source: layoutHeadSource(this.node),
 			language: 'typst',
 			inline: false,
@@ -130,7 +148,7 @@ export class TypstLayoutView implements NodeView {
 		if (node.type !== this.node.type || layoutKindOf(node) !== this.kind) return false;
 		this.node = node;
 		this.draw();
-		if (chipPanelOpenFor(this.gear)) syncChipPanel(this.gear, layoutHeadSource(node));
+		if (chipPanelOpenFor(this.panelAnchor)) syncChipPanel(this.panelAnchor, layoutHeadSource(node));
 		return true;
 	}
 
@@ -145,7 +163,8 @@ export class TypstLayoutView implements NodeView {
 	}
 
 	destroy(): void {
-		dismissChipPanel(this.gear);
+		this.withdrawSettings();
+		dismissChipPanel(this.panelAnchor);
 		void unmount(this.component);
 	}
 }

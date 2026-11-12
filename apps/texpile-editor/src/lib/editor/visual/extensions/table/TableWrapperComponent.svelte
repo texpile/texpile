@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { tip } from '$lib/components/tooltip.svelte';
 	import { inEditorPane } from '$lib/editor/visual/editorPanePositioning';
+	import type { GearPlace } from '$lib/editor/visual/extensions/blockHandle/blockSettings';
 	import { Popover, Portal } from '@skeletonlabs/skeleton-svelte';
 	import { Settings, AlertCircle } from '@lucide/svelte';
 	import type { Node } from 'prosemirror-model';
@@ -45,6 +46,16 @@
 	const tableCaptionEnabled = $derived(templateFeaturesStore.current?.tableCaption ?? true);
 
 	let settingsOpen = $state(false);
+	let place = $state.raw<GearPlace | null>(null);
+	const positioning = $derived(
+		inEditorPane({ placement: 'bottom-end', offset: { mainAxis: 4 }, ...(place ? { getAnchorRect: place } : {}) })
+	);
+
+	/** `at`: the block handle's gear, when that is what opened them */
+	export function open(at: GearPlace | null = null): void {
+		place = at;
+		settingsOpen = true;
+	}
 
 	// display number is calculated (updates when the table moves); the label is only for \ref
 	let tableDisplay = $derived(m.tablewrap_table_display({ number: tableNumber ?? '' }).trim());
@@ -84,11 +95,7 @@
 			{/if}
 		</div>
 
-		<Popover
-			open={settingsOpen}
-			onOpenChange={(e) => (settingsOpen = e.open)}
-			positioning={inEditorPane({ placement: 'bottom-end', offset: { mainAxis: 4 } })}
-		>
+		<Popover open={settingsOpen} onOpenChange={(e) => (settingsOpen = e.open)} {positioning}>
 			<Popover.Trigger class="table-settings-btn">
 				<button
 					aria-label={m.tablewrap_settings_button()}
@@ -125,6 +132,11 @@
 </div>
 
 <style>
+	/* directly in an editor with a block handle, the handle's gear opens these */
+	:global(.ProseMirror[data-block-handle] > .table-wrapper .table-settings-btn) {
+		display: none;
+	}
+
 	/* flex container makes whitespace between children irrelevant */
 	.table-header-container {
 		display: flex;

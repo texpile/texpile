@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { tip } from '$lib/components/tooltip.svelte';
 	import { inEditorPane } from '$lib/editor/visual/editorPanePositioning';
+	import { offerBlockSettings, settingsPlace, type GearPlace } from '$lib/editor/visual/extensions/blockHandle/blockSettings';
 	import { Popover, Portal } from '@skeletonlabs/skeleton-svelte';
 	import { Crop, Settings } from '@lucide/svelte';
 	import { START_IMAGE_CROP } from './crop/paperCrop';
@@ -23,6 +24,22 @@
 	let { node, view, getPos, dialect = 'latex' }: Props = $props();
 
 	let settingsOpen = $state(false);
+	let place = $state.raw<GearPlace | null>(null);
+	const positioning = $derived(
+		inEditorPane({ placement: 'bottom-end', offset: { mainAxis: 4 }, ...(place ? { getAnchorRect: place } : {}) })
+	);
+
+	function offerSettings(overlay: HTMLElement) {
+		const root = overlay.closest('.imagePluginRoot');
+		if (!root) return;
+		return offerBlockSettings(root, {
+			label: () => m.imageoverlay_settings_title(),
+			open(gear) {
+				place = settingsPlace(root, gear);
+				settingsOpen = true;
+			}
+		});
+	}
 	const cropReadable = $derived(
 		dialect !== 'latex' || graphicsCropReadable(typeof node.attrs.options === 'string' ? node.attrs.options : null)
 	);
@@ -49,7 +66,7 @@
 	});
 </script>
 
-<div class="image-overlay-wrapper" bind:this={overlayElement}>
+<div class="image-overlay-wrapper" bind:this={overlayElement} {@attach offerSettings}>
 	<div class="pointer-events-auto absolute top-2 right-2 flex gap-1">
 		{#if dialect !== 'markdown'}
 			<button
@@ -65,8 +82,11 @@
 		{/if}
 		<Popover
 			open={settingsOpen}
-			onOpenChange={(e) => (settingsOpen = e.open)}
-			positioning={inEditorPane({ placement: 'bottom-end', offset: { mainAxis: 4 } })}
+			onOpenChange={(e) => {
+				settingsOpen = e.open;
+				if (!e.open) place = null;
+			}}
+			{positioning}
 		>
 			<Popover.Trigger class="image-settings-btn">
 				<button
@@ -102,6 +122,11 @@
 		pointer-events: none;
 		/* no bottom: 0; the height calc stops the overlay above the caption */
 		height: calc(100% - var(--caption-height, 0px));
+	}
+
+	/* directly in an editor with a block handle, the handle's gear opens the settings */
+	:global(.ProseMirror[data-block-handle] > .imagePluginRoot .image-settings-btn) {
+		display: none;
 	}
 
 	:global(.imagePluginRoot:not(:hover)) .image-overlay-wrapper {

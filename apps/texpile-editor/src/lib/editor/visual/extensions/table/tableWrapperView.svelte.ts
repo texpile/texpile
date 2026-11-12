@@ -2,6 +2,8 @@ import type { Node } from 'prosemirror-model';
 import type { Decoration, EditorView, NodeView } from 'prosemirror-view';
 import { mount, unmount } from 'svelte';
 import TableWrapperComponent from './TableWrapperComponent.svelte';
+import { m } from '$lib/paraglide/messages';
+import { offerBlockSettings, settingsPlace, type GearPlace } from '$lib/editor/visual/extensions/blockHandle/blockSettings';
 import { labelTaken } from '$lib/editor/visual/labelTaken';
 import { compiledNumbersOf } from '$lib/editor/visual/extensions/nodeNumbers';
 import { announceLabelRenamed, repointRefs } from '$lib/editor/visual/repointRefs';
@@ -232,6 +234,10 @@ function buildTableWrapperView(
 		target: componentContainer,
 		props: componentProps
 	});
+	const withdrawSettings = offerBlockSettings(dom, {
+		label: () => m.tablewrap_settings_button(),
+		open: (gear) => (component as { open?: (at: GearPlace | null) => void }).open?.(settingsPlace(dom, gear))
+	});
 
 	let lastTableData = initialData;
 
@@ -269,6 +275,7 @@ function buildTableWrapperView(
 			return true;
 		},
 		destroy() {
+			withdrawSettings();
 			unmount(component);
 		},
 		// ignore DOM mutations from the svelte component (popover portals, etc.); PM still
