@@ -1,4 +1,7 @@
 // the settings a block opens from the handle's gear, kept by the element the editor draws the block as
+import { Plugin } from 'prosemirror-state';
+import type { EditorView } from 'prosemirror-view';
+
 export type BlockSettings = {
 	/** the gear's hint, such as Table settings */
 	label(): string;
@@ -25,6 +28,32 @@ export function offerBlockSettings(dom: Element, settings: BlockSettings): () =>
 
 export function blockSettingsOf(dom: Element | null): BlockSettings | null {
 	return (dom && offered.get(dom)) ?? null;
+}
+
+/** the settings of the block at `pos`, for a block whose drawing is not its own to offer them by, such as a plain table */
+export type BlockSettingsProvider = (view: EditorView, pos: number) => BlockSettings | null;
+
+const providers = new WeakMap<EditorView, Set<BlockSettingsProvider>>();
+
+export function blockSettingsPlugin(provider: BlockSettingsProvider): Plugin {
+	return new Plugin({
+		view(view) {
+			const set = providers.get(view) ?? new Set<BlockSettingsProvider>();
+			providers.set(view, set);
+			set.add(provider);
+			return { destroy: () => void set.delete(provider) };
+		}
+	});
+}
+
+export function blockSettingsAt(view: EditorView, pos: number, dom: Element | null): BlockSettings | null {
+	const own = blockSettingsOf(dom);
+	if (own) return own;
+	for (const provider of providers.get(view) ?? []) {
+		const found = provider(view, pos);
+		if (found) return found;
+	}
+	return null;
 }
 
 /** where the gear stood beside `dom`, kept in step with the block: the handle moves on to other blocks while the settings are open */

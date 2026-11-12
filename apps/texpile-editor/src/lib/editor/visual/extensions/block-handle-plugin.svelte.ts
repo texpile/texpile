@@ -12,7 +12,7 @@ import { insertBlockAfter } from '$lib/editor/visual/insert/insertRun';
 import { returnFocusToText } from './popoverFocus/returnFocus';
 import { handleUnitAt } from './blockHandle/handleUnit';
 import { positionOf } from './blockHandle/nodePosition';
-import { blockSettingsOf } from './blockHandle/blockSettings';
+import { blockSettingsAt } from './blockHandle/blockSettings';
 import { pointerStaysWithBlock } from './blockHandle/handleReach';
 import { blockHandlePluginKey, handleDropEvents, handleDropLine, handleDropState, setHandleDragActive } from './blockHandle/handleDrop';
 
@@ -189,7 +189,7 @@ class BlockHandleView {
 		this.state.stacked = stacked;
 		this.state.left = pinned;
 		this.state.right = containerRect.right + GUTTER_OFFSET_RIGHT;
-		this.state.settings = (this.view.editable && blockSettingsOf(dom)?.label()) || null;
+		this.state.settings = (this.view.editable && blockSettingsAt(this.view, blockPos, dom)?.label()) || null;
 	}
 
 	private cancelHide = () => {
@@ -258,7 +258,7 @@ class BlockHandleView {
 	private openSettings = (gear: HTMLElement) => {
 		if (this.hoveredPos == null) return;
 		const dom = this.view.nodeDOM(this.hoveredPos);
-		if (dom instanceof HTMLElement) blockSettingsOf(dom)?.open(gear);
+		if (dom instanceof HTMLElement) blockSettingsAt(this.view, this.hoveredPos, dom)?.open(gear);
 	};
 
 	private onDragEnd = () => setHandleDragActive(this.view, false);

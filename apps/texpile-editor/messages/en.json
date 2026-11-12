@@ -1468,6 +1468,7 @@
 	"tablewrap_columns_heading": "Columns",
 	"tablewrap_column_width_aria": "Column {index} width",
 	"tablewrap_vertical_lines": "Vertical lines",
+	"tablewrap_caption_and_number": "Caption and number",
 	"tablewrap_column_spec": "Column spec",
 	"tablewrap_column_spec_hint": "Too complex to edit visually. Edit the spec directly.",
 	"tablewrap_show_notes": "Show notes section",

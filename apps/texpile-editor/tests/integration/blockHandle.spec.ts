@@ -28,7 +28,9 @@ Delta paragraph.
 
 const CENTERED = `\\documentclass{article}\n\\usepackage{tikz}\n\\begin{document}\n\nBefore.\n\n\\begin{center}\n\\begin{tikzpicture}\n  \\node[draw] (a) at (0,0) {A};\n\\end{tikzpicture}\n\\end{center}\n\nAfter.\n\n\\begin{equation}\nE = mc^2\n\\end{equation}\n\n\\end{document}\n`;
 
-const texpile = useTexpile({ files: { 'unit.tex': TEX, 'centered.tex': CENTERED } });
+const BARE_TABLE = `\\documentclass{article}\n\\begin{document}\n\nBefore.\n\n\\begin{center}\n\\begin{tabular}{|l|r|}\n\\hline\nName & Value \\\\\n\\hline\n\\end{tabular}\n\\end{center}\n\nAfter.\n\n\\end{document}\n`;
+
+const texpile = useTexpile({ files: { 'unit.tex': TEX, 'centered.tex': CENTERED, 'bare.tex': BARE_TABLE } });
 
 type Box = { left: number; right: number; top: number; bottom: number };
 
@@ -145,4 +147,22 @@ test('the handle waits for the pointer in the margin beside a tall block', async
 	await page.waitForTimeout(200);
 	const button = (await remove.boundingBox())!;
 	expect(Math.abs(button.y - block.y)).toBeLessThan(3);
+});
+
+test("a table in center gets a caption and a number from the handle's gear", async () => {
+	const { page, root } = texpile();
+	const v = new VisualEditor(page, root);
+	const disk = new Disk(root);
+	await v.open('bare.tex');
+	const table = (await page.locator('.ProseMirror > .tex-environment').first().boundingBox())!;
+	await page.mouse.move(table.x + table.width / 2, table.y + table.height / 2, { steps: 4 });
+	await page.locator('.block-handle-settings').click();
+	const settings = page.locator('.bare-table-settings');
+	await expect(settings.getByRole('radio', { name: 'Center' })).toHaveAttribute('aria-checked', 'true');
+	await settings.getByText('Caption and number').click();
+	await expect(page.locator('.ProseMirror > .table-wrapper')).toHaveCount(1);
+	await expect.poll(() => disk.read('bare.tex')).toContain('\\begin{table}');
+	const saved = disk.read('bare.tex');
+	expect(saved).not.toContain('\\begin{center}');
+	expect(saved).toContain('\\begin{tabular}{|l|r|}');
 });

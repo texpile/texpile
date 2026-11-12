@@ -118,6 +118,7 @@ export {
 	type RuleWeight,
 	type TableLook
 } from '$lib/editor/visual/extensions/table/rules/tableRules';
+export { bareTableSettingsPlugin, openBareTableSettings } from '$lib/editor/visual/extensions/table/bare/bareTableSettings.svelte';
 export { adoptParse } from '$lib/editor/visual/parseOrigins';
 export { containerOriginsOf } from '$lib/editor/visual/parseOrigins';
 export { containerRecordAround } from '$lib/editor/visual/parseOrigins';

@@ -40,6 +40,7 @@ export {
 	type RuleWeight,
 	type TableLook
 } from '$lib/editor/visual/extensions/table/rules/tableRules';
+export { bareTableSettingsPlugin, openBareTableSettings } from '$lib/editor/visual/extensions/table/bare/bareTableSettings.svelte';
 export { CodeBlockView } from '$lib/editor/visual/extensions/codemirrorbridge/cmview.svelte';
 export { default as FigurePlaceholder } from '$lib/draw/host/card/FigurePlaceholder.svelte';
 

@@ -8,7 +8,8 @@ import {
 	openChipPanel,
 	syncChipPanel
 } from '$lib/editor/visual/extensions/drawnChips/chipPanel.svelte';
-import { markGearPlace, offerBlockSettings } from '$lib/editor/visual/extensions/blockHandle/blockSettings';
+import { gearPlaceBeside, markGearPlace, offerBlockSettings } from '$lib/editor/visual/extensions/blockHandle/blockSettings';
+import { openBareTableSettings } from '$lib/editor/visual/extensions/table/bare/bareTableSettings.svelte';
 import { m } from '$lib/paraglide/messages';
 import EnvironmentHead from './EnvironmentHead.svelte';
 import EnvironmentAlignSetting from './EnvironmentAlignSetting.svelte';
@@ -87,9 +88,19 @@ export function environmentView(
 
 	const props = $state({ node: currentNode, onopen: () => openSettings(), number: numberOf(decorations) });
 	const component = mount(EnvironmentHead, { target: header, props });
+	// a table alone in center is a table to its writer: its settings open, with the alignment among them
+	function holdsOnlyTable(): boolean {
+		const look = environmentLook(String(currentNode.attrs.name ?? ''), String(currentNode.attrs.args ?? ''), undefined);
+		return look.kind === 'align' && currentNode.childCount === 1 && currentNode.firstChild!.type.name === 'table';
+	}
 	const withdrawSettings = offerBlockSettings(dom, {
-		label: () => m.env_settings_button_label(),
+		label: () => (holdsOnlyTable() ? m.tablewrap_settings_button() : m.env_settings_button_label()),
 		open(gear) {
+			const pos = getPos();
+			if (holdsOnlyTable() && pos !== undefined) {
+				openBareTableSettings({ view, pos: pos + 1, dialect: 'latex', place: gearPlaceBeside(dom, gear), around: pos });
+				return;
+			}
 			markGearPlace(gearPlace, dom, gear);
 			openSettings(gearPlace);
 		}

@@ -1468,6 +1468,7 @@
 	"tablewrap_columns_heading": "Spalten",
 	"tablewrap_column_width_aria": "Breite von Spalte {index}",
 	"tablewrap_vertical_lines": "Vertikale Linien",
+	"tablewrap_caption_and_number": "Beschriftung und Nummer",
 	"tablewrap_column_spec": "Spaltenspezifikation",
 	"tablewrap_column_spec_hint": "Zu komplex für die visuelle Bearbeitung. Bearbeiten Sie die Spezifikation direkt.",
 	"tablewrap_show_notes": "Anmerkungsbereich anzeigen",
