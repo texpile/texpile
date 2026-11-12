@@ -58,23 +58,30 @@ function unreadSpans(tex: string, tree: Tree, { masked, openings }: UnreadMask):
 	return spans;
 }
 
+// by tree: the checks, the word count and the outline ask for the same readings of a file after each change
+const readings = new WeakMap<Tree, Map<string, string>>();
+
+function readingOf(tex: string, key: string, make: (tree: Tree) => string): string {
+	const tree = latexTreeOf(tex);
+	const kept = readings.get(tree) ?? new Map<string, string>();
+	readings.set(tree, kept);
+	let read = kept.get(key);
+	if (read === undefined) kept.set(key, (read = make(tree)));
+	return read;
+}
+
 /** comments, verbatim and skipped bodies blanked, so a commented \begin opens nothing and a % in a URL stays a character */
 export function blankUnread(tex: string, mask: UnreadMask = { masked: 'all', openings: false }): string {
-	return blankSpans(tex, unreadSpans(tex, latexTreeOf(tex), mask));
+	return readingOf(tex, `${mask.masked}:${mask.openings}`, (tree) => blankSpans(tex, unreadSpans(tex, tree, mask)));
 }
 
 export function blankComments(tex: string): string {
 	return blankUnread(tex, { masked: 'comments', openings: false });
 }
 
-let lastRead: { tex: string; code: string } | null = null;
-
 /** blanked with spaces, so offsets hold; the checks that run on one text share the work */
 export function codeOnly(tex: string): string {
-	if (lastRead?.tex === tex) return lastRead.code;
-	const code = blankFalse(blankUnread(tex), tex);
-	lastRead = { tex, code };
-	return code;
+	return readingOf(tex, 'code', () => blankFalse(blankUnread(tex), tex));
 }
 
 /** the same, with the \begin line and options of a verbatim environment left readable (\begin{lstlisting}[label=a]) */
