@@ -54,6 +54,8 @@ type WorkerMessage = ResultMessage | ErrorMessage | ProgressMessage | TooComplex
 
 /** timeout errors carry this exact message so callers can pick them out. */
 export const PARSE_TIMEOUT = 'parse-timeout';
+/** a parse its caller gave up on, whose result is not rebuilt here */
+export const PARSE_ABANDONED = 'parse-abandoned';
 /** the doc parsed fine but is too big for the view layer to render; message is `too-complex:<n>`. */
 export const PARSE_TOO_COMPLEX = 'too-complex';
 
@@ -122,7 +124,8 @@ export function parseLatexFileAsync(
 	onProgress?: (phase: ParsePhase) => void,
 	maxNodes = 0,
 	format: 'tex' | 'md' = 'tex',
-	table?: PackageTable
+	table?: PackageTable,
+	abandon?: AbortSignal
 ): Promise<ParsedLatexFile> {
 	return new Promise((resolve, reject) => {
 		const w = ensureWorker();
@@ -135,6 +138,15 @@ export function parseLatexFileAsync(
 			reject(new Error(PARSE_TIMEOUT));
 		}, timeoutMs);
 		pending.set(id, { resolve, reject, timeoutId, onProgress, format, source, table });
+		abandon?.addEventListener(
+			'abort',
+			() => {
+				if (!pending.delete(id)) return;
+				clearTimeout(timeoutId);
+				reject(new Error(PARSE_ABANDONED));
+			},
+			{ once: true }
+		);
 		w.postMessage({ id, source, projectMacros, maxNodes, format, table });
 	});
 }

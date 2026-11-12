@@ -30,8 +30,8 @@
 		lastParsedSource: string | null;
 		/** where every run of the live doc sits in texSource */
 		readonly sourceMap: SourceMap;
-		/** parse in the worker; null on failure/timeout (the next change retries). */
-		parse(text: string): Promise<ParsedLatexFile | null>;
+		/** parse in the worker; null on failure/timeout (the next change retries), or once `abandon` fires */
+		parse(text: string, abandon?: AbortSignal): Promise<ParsedLatexFile | null>;
 		/** adopt a remote parse of `text`: new docMeta + the live doc reference (visualDoc/lastDoc handshake). */
 		adopt(parsed: ParsedLatexFile, liveDoc: PMNode, text: string): void;
 		/** the merged content changed: the open file is saved or not */
@@ -67,6 +67,8 @@
 	let remotePatchTimer: ReturnType<typeof setTimeout> | null = null;
 	let remoteParseMs = 0;
 	let remoteParsedAt = 0;
+	// the parse on its way: a change to the text makes it one nobody can use
+	let parsing: AbortController | null = null;
 	// set by a local visual edit: the doc's parse predates it, so the next quiet moment
 	// re-parses purely to refresh them (content usually identical, attrs-only patch)
 	let origStale = false;
@@ -108,13 +110,15 @@
 		const snapshot = binding.ytext.toString();
 		if (snapshot === api.texSource && !origStale) return;
 		const t0 = performance.now();
-		const parsed = await api.parse(snapshot);
+		const mine = (parsing = new AbortController());
+		const parsed = await api.parse(snapshot, mine.signal);
+		if (parsing === mine) parsing = null;
 		remoteParsedAt = performance.now();
-		remoteParseMs = remoteParsedAt - t0;
+		if (!mine.signal.aborted) remoteParseMs = remoteParsedAt - t0;
 		// superseded: the file/mode/view moved on, or more edits landed while parsing
 		if (path !== p || !active() || editorViewStore.current !== v) return;
 		if (session.collabFor(p)?.ytext !== binding.ytext) return;
-		if (binding.ytext.toString() !== snapshot) return scheduleRemotePatch();
+		if (mine.signal.aborted || binding.ytext.toString() !== snapshot) return scheduleRemotePatch();
 		if (!parsed) return; // unparsable mid-edit state; the next change retries
 		const oldSource = api.texSource;
 		const oldMap = api.sourceMap;
@@ -210,6 +214,7 @@
 		if (!binding) return;
 		const t = binding.ytext;
 		function onRemote(ev: Y.YTextEvent) {
+			parsing?.abort();
 			const origin = ev.transaction.origin;
 			if (origin === EDIT_ORIGIN || origin === SEED_ORIGIN) return;
 			scheduleRemotePatch();

@@ -214,7 +214,7 @@
 	const visualCollabApi = visualCollabBridge({
 		doc,
 		parser,
-		parse: (text) => wsdoc.tryParseVisual(text)
+		parse: (text, abandon) => wsdoc.tryParseVisual(text, abandon)
 	});
 	onDestroy(() => {
 		typstPreview.dispose(); // leaving the workspace must not leave a preview compiling in the server

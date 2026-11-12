@@ -256,8 +256,8 @@ export class WorkspaceDoc {
 		if (this.doc.path && this.doc.kind === 'tex' && this.modes.mode === 'visual') this.rebuildVisualFromSource(true);
 	}
 
-	tryParseVisual(text: string) {
-		return this.parser.parse(text, formatOf(this.doc.kind));
+	tryParseVisual(text: string, abandon?: AbortSignal) {
+		return this.parser.parse(text, formatOf(this.doc.kind), true, abandon);
 	}
 
 	/**
