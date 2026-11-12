@@ -35,6 +35,20 @@ describe('markdown paste', () => {
 		expect(looksLikeMarkdown('A footnote* in prose, and a 5 * 3 product.', 'latex')).toBe(false);
 	});
 
+	it('reads text whose only Markdown is math, and keeps prices and shell as text', () => {
+		const display = 'Angle:\n\n$$\\tan(2\\theta) = \\frac{a}{b}$$\n\nand $\\sigma_1$ here';
+		expect(looksLikeMarkdown(display, 'markdown')).toBe(true);
+		expect(looksLikeMarkdown('Then\n\\[\nx^2 + y^2\n\\]\nholds', 'markdown')).toBe(true);
+		expect(looksLikeMarkdown('So \\(x_1\\) is small', 'markdown')).toBe(true);
+		// Typst writes `$x$` itself, so only the display forms count there
+		expect(looksLikeMarkdown(display, 'typst')).toBe(true);
+		expect(looksLikeMarkdown('So $x_1$ is small', 'typst')).toBe(false);
+		expect(looksLikeMarkdown('So $x_1$ is small', 'latex')).toBe(false);
+		for (const text of ['It costs $5 and $10 in total', 'cd $HOME/$USER && echo $(a); b=$(c)', 'kill $$ now']) {
+			expect(looksLikeMarkdown(text, 'markdown'), text).toBe(false);
+		}
+	});
+
 	it('leaves code and TeX quotes as text', () => {
 		const texts = [
 			'Override __init__ and __repr__',

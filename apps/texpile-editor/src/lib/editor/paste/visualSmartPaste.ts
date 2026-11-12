@@ -15,7 +15,8 @@ import { keepSavableImages, leavesOutImages, pastedImageSaving, warnImagesLeftOu
 import { looksLikeMarkdown, markdownSlice } from './markdownPaste';
 import { pasteWithoutFormatting } from './visualClipboardPaste';
 import { pasteReadingOfText } from './pasteReadingOfText';
-import { convertDollarMathHtml, convertPastedMathHtml, schemaMathSyntax } from './pastedMath';
+import { convertPastedMathHtml, schemaMathSyntax } from './pastedMath';
+import { convertDollarMathHtml } from './pastedDollarMath';
 import { convertPastedRawBlocksHtml } from './pastedRawBlocks';
 import { selectionAfterBlockCut } from './block/blockCutSelection';
 import { blockMathClipboard } from './block/blockMathClipboard';
@@ -86,7 +87,7 @@ export function visualSmartPaste(dialect: PasteDialect, schema: Schema, pasteSou
 				fromTexpile = isTexpileCopy(html);
 				const cleaned = fromTexpile ? html : cleanPastedHtml(html);
 				// a Texpile copy holds its math as math already, and a dollar in its text is a dollar
-				const own = dialect === 'latex' && !fromTexpile ? convertDollarMathHtml(cleaned) : cleaned;
+				const own = fromTexpile ? cleaned : convertDollarMathHtml(cleaned);
 				return convertPastedMathHtml(dialect === 'markdown' ? own : convertPastedRawBlocksHtml(own, dialect), schemaMathSyntax(schema));
 			},
 			transformPasted(slice, view, plain) {

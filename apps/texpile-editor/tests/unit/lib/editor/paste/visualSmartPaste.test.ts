@@ -158,3 +158,71 @@ describe('a copy of one block pasted into another', () => {
 		expect(serializeToLatex(inCaption.state.doc)).toContain('\\caption{Caption words$x^2$}');
 	});
 });
+
+describe('math pasted from a chat answer', () => {
+	const PROSE = String.raw`Angle. From notes_principal.png:`;
+	const FIRST = String.raw`$$\tan(2\theta_{p1}) = \frac{2\tau_{xy}}{\sigma_x - \sigma_y} \quad\Rightarrow\quad \theta_{p1} = 30.9^\circ, \qquad \theta_{p2} = \theta_{p1} + 90^\circ$$`;
+	const SECOND = String.raw`$$\sigma_{1,2} = \frac{\sigma_x + \sigma_y}{2} \pm \sqrt{\tau_{xy}^2}$$`;
+	const BOXED = String.raw`$$\boxed{\sigma_1 = +7.44\ \text{MPa}} \qquad \boxed{\sigma_2 = -20.8\ \text{MPa}}$$`;
+	const LAST = String.raw`Which angle goes with $\sigma_1$? The $\tan$ formula gives both angles but doesn’t say which one carries $\sigma_1$. To find out, plug $\theta_{p1}$ into`;
+	const SAMPLE = [PROSE, '', FIRST, '', 'Values. From notes_principal.png:', '', SECOND, BOXED, '', LAST].join('\n');
+
+	function mathOf(view: EditorView): { block: string[]; inline: string[] } {
+		const out = { block: [] as string[], inline: [] as string[] };
+		view.state.doc.descendants((node) => {
+			if (node.type.name === 'block_math') out.block.push(node.textContent);
+			if (node.type.name === 'inline_math') out.inline.push(node.textContent);
+		});
+		return out;
+	}
+
+	async function latexEditor(): Promise<EditorView> {
+		const { schema } = await import('$lib/languages/latex/schema/latexPMSchema');
+		const doc = schema.node('doc', null, [schema.node('paragraph', null, [schema.text('x')])]);
+		return new EditorView(document.createElement('div'), {
+			state: EditorState.create({ doc, plugins: [visualSmartPaste('latex', schema, () => false)], selection: TextSelection.atEnd(doc) })
+		});
+	}
+
+	it('plain text that holds only prose and math pastes into the Markdown editor as math', () => {
+		const view = markdownEditor();
+		const clipboardData = { getData: (type: string) => (type === 'text/plain' ? SAMPLE : '') };
+		view.pasteText(SAMPLE, Object.assign(new Event('paste'), { clipboardData }) as unknown as ClipboardEvent);
+		const { block, inline } = mathOf(view);
+		expect(block).toHaveLength(3);
+		expect(inline).toEqual(['\\sigma_1', '\\tan', '\\sigma_1', '\\theta_{p1}']);
+		expect(view.state.doc.textContent).toContain('notes_principal.png');
+	});
+
+	// the chat app drew each underscore pair between two formulas, and one starting in the prose, as emphasis
+	const DAMAGED = String.raw`<p>Angle. From notes<em>principal.png:<br>$$\tan(2\theta</em>{p1}) = \frac{2\tau_{xy}}{\sigma_x - \sigma<em>y} \quad\Rightarrow\quad \theta</em>{p1} = 30.9^\circ, \qquad \theta<em>{p2} = \theta</em>{p1} + 90^\circ$$</p>
+<p>It is <em>very</em> small: costs $5 and $10.</p>
+<p>Which goes with $\sigma_1$? Also $\sigma<em>1$ and $\theta</em>{p1}$ here.</p>`;
+
+	it('reads display math and underscores back from the page of an app that did not typeset it', async () => {
+		for (const view of [markdownEditor(), await latexEditor()]) {
+			paste(view, DAMAGED, 'plain');
+			const math: string[] = [];
+			view.state.doc.descendants((node) => void (/math/.test(node.type.name) && math.push(node.textContent)));
+			expect(math).toEqual([
+				String.raw`\tan(2\theta_{p1}) = \frac{2\tau_{xy}}{\sigma_x - \sigma_y} \quad\Rightarrow\quad \theta_{p1} = 30.9^\circ, \qquad \theta_{p2} = \theta_{p1} + 90^\circ`,
+				'\\sigma_1',
+				'\\sigma_1',
+				'\\theta_{p1}'
+			]);
+			expect(view.state.doc.textContent).toContain('notes_principal.png:');
+			expect(view.state.doc.textContent).toContain('It is very small: costs $5 and $10.');
+			let emphasis = '';
+			view.state.doc.descendants((node) => void (node.marks.some((m) => /^(em|italic)/.test(m.type.name)) && (emphasis += node.text)));
+			expect(emphasis).toBe('very');
+		}
+	});
+
+	it('does not read a Texpile copy or a paste with Smart Paste off as math', () => {
+		settings.current = { ...settings.current, smartPaste: false };
+		const view = markdownEditor();
+		paste(view, '<p>Cost $\\alpha$ here</p>', 'Cost $\\alpha$ here');
+		expect(mathOf(view).inline).toEqual([]);
+		expect(view.state.doc.textContent).toContain('$\\alpha$');
+	});
+});

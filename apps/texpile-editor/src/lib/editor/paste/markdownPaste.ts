@@ -1,6 +1,7 @@
 // Markdown text, what an AI chat's copy button gives, pastes as the formatting it spells out. The
-// gate is conservative: prose with a stray asterisk stays prose.
+// gate is conservative: prose with a stray asterisk or a price stays prose.
 import { DOMParser as PMDOMParser, DOMSerializer, Slice, type Schema } from 'prosemirror-model';
+import { closesInOneLine, escapedAt, inlineMathEnd } from '$lib/languages/markdown/syntax/mathSyntax';
 import { markdownToProseMirror } from '$lib/languages/markdown/visual/converter';
 import { mdSchema } from '$lib/languages/markdown/visual/schema';
 import type { PasteDialect } from './pastedImages';
@@ -26,6 +27,37 @@ const TYPST_ONLY = [/^\s*=+\s+\S/m, /#[a-zA-Z][\w-]*[([]/, /^\s*\+\s+\S/m, /^\s*
 // math and code are where a Markdown answer holds its backslashes
 const MATH_AND_CODE = /```[\s\S]*?```|`[^`\n]*`|\$\$[\s\S]*?\$\$|\$[^$\n]+\$|\\\[[\s\S]*?\\\]|\\\([\s\S]*?\\\)/g;
 
+const DISPLAY_FENCE = /^\s{0,3}(\$\$|\\\[)/;
+const CODE_SPANS = /```[\s\S]*?```|`[^`\n]*`/g;
+// a formula says so by a command, a script or a simple relation: `$HOME/$USER` and `$(a); b=$(c)` are shell
+const MATH_LIKE = /\\[a-zA-Z]|[\^_]|^[A-Za-z]$|^[A-Za-z0-9.]+ [=<>] [A-Za-z0-9.]+$/;
+
+function hasDisplayMath(text: string): boolean {
+	const lines = text.split('\n');
+	return lines.some((line, i) => {
+		const open = DISPLAY_FENCE.exec(line)?.[1];
+		if (!open) return false;
+		const rest = line.trim().slice(2);
+		const close = open === '$$' ? '$$' : '\\]';
+		if (open === '$$' ? closesInOneLine(rest) : rest.length > 2 && rest.endsWith(close)) return true;
+		for (const next of lines.slice(i + 1)) {
+			if (!next.trim()) return false;
+			if (next.trimEnd().endsWith(close)) return true;
+		}
+		return false;
+	});
+}
+
+function hasInlineMath(text: string): boolean {
+	if (/(?<!\\)\\\([^\n]+?\\\)/.test(text)) return true;
+	for (let at = text.indexOf('$'); at >= 0; at = text.indexOf('$', at + 1)) {
+		if (escapedAt(text, at)) continue;
+		const end = inlineMathEnd(text, at);
+		if (end > 0 && MATH_LIKE.test(text.slice(at, end).replace(/^\$+|\$+$/g, ''))) return true;
+	}
+	return false;
+}
+
 function hasListRun(text: string): boolean {
 	const lines = text.split('\n');
 	return lines.some((line, i) => LIST_LINE.test(line) && LIST_LINE.test(lines[i + 1] ?? ''));
@@ -41,6 +73,9 @@ export function looksLikeMarkdown(text: string, dialect: PasteDialect): boolean 
 	if (dialect === 'typst' && TYPST_ONLY.some((re) => re.test(text))) return false;
 	if (dialect === 'latex' && /\\[a-zA-Z]{2,}/.test(text.replace(MATH_AND_CODE, ''))) return false;
 	if (hasHeading(text) || MARKDOWN_ONLY.some((re) => re.test(text))) return true;
+	// Typst writes `$x$` itself; `$$` and `\[` lines are what a chat answer writes
+	const prose = text.replace(CODE_SPANS, '');
+	if (dialect !== 'latex' && (hasDisplayMath(prose) || (dialect === 'markdown' && hasInlineMath(prose)))) return true;
 	const code = text.replace(TEX_QUOTES, '');
 	return dialect !== 'typst' && (SHARED_WITH_TYPST.some((re) => re.test(code)) || hasListRun(text));
 }
