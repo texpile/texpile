@@ -347,7 +347,8 @@ export async function refreshProjectIntel(
 	function readIndexed(p: string): Promise<string> {
 		return indexedText(p, read);
 	}
-	const active = activePath ? await readIndexed(activePath).catch(() => null) : null;
+	// only a .tex file can be a document of its own: a PDF open in a tab was read as text and parsed, 1.2 s for 12 MB
+	const active = activePath && /\.tex$/i.test(activePath) ? await readIndexed(activePath).catch(() => null) : null;
 	const start = activePath && active !== null && hasDocumentEnv(active) ? activePath : mainPath;
 	const root = texFiles[0] ? texFiles[0].path.slice(0, texFiles[0].path.length - texFiles[0].relPath.length) : '';
 	const { uses, shipped, readIn, preamble } = start
