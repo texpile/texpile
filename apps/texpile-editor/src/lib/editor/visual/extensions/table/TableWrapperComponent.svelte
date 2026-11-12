@@ -13,7 +13,6 @@
 	type Props = {
 		/** typst hides every LaTeX-only control; see tableWrapperView's TableDialect */
 		dialect?: 'latex' | 'typst';
-		tableNumber: string | null;
 		node: Node;
 		updateAttrs: (attrs: Partial<typeof node.attrs>) => void;
 		checkDuplicate: (label: string) => boolean;
@@ -30,7 +29,6 @@
 
 	let {
 		dialect = 'latex',
-		tableNumber,
 		node,
 		updateAttrs,
 		checkDuplicate,
@@ -57,9 +55,6 @@
 		settingsOpen = true;
 	}
 
-	// display number is calculated (updates when the table moves); the label is only for \ref
-	let tableDisplay = $derived(m.tablewrap_table_display({ number: tableNumber ?? '' }).trim());
-
 	let hasPlaceholderCaption = $derived.by(() => {
 		if (!node.content || node.content.childCount === 0) return false;
 		const captionNode = node.content.child(0); // table_caption is first child
@@ -74,27 +69,23 @@
 	});
 </script>
 
-<div class="table-header-container">
+<div class="table-chrome">
 	{#if !tableCaptionEnabled}
 		<div class="table-caption-warning">
 			<AlertCircle class="h-4 w-4" />
 			<span>{m.tablewrap_caption_unsupported_warning()}</span>
 		</div>
 	{/if}
-	<div class="table-header">
-		<div class="table-number-row">
-			<div class="table-number">{tableDisplay}</div>
-			{#if hasPlaceholderCaption}
-				<button
-					type="button"
-					class="flex items-center"
-					use:tip={dialect === 'typst' ? m.tablewrap_caption_placeholder_tooltip() : m.tablewrap_caption_required_tooltip()}
-				>
-					<AlertCircle class="text-warning-ink h-4 w-4" />
-				</button>
-			{/if}
-		</div>
-
+	<div class="table-tools">
+		{#if hasPlaceholderCaption}
+			<button
+				type="button"
+				class="flex items-center"
+				use:tip={dialect === 'typst' ? m.tablewrap_caption_placeholder_tooltip() : m.tablewrap_caption_required_tooltip()}
+			>
+				<AlertCircle class="text-warning-ink h-4 w-4" />
+			</button>
+		{/if}
 		<Popover open={settingsOpen} onOpenChange={(e) => (settingsOpen = e.open)} {positioning}>
 			<Popover.Trigger class="table-settings-btn">
 				<button
@@ -137,17 +128,27 @@
 		display: none;
 	}
 
-	/* flex container makes whitespace between children irrelevant */
-	.table-header-container {
+	/* a table as a paper sets it: the caption line over the cells, no box around them */
+	:global(.table-wrapper) {
+		position: relative;
+		margin: calc(var(--spacing) * 4) 0;
+	}
+
+	/* flex: the editor keeps white space, and a space between the parts would stand as a line of its own */
+	.table-chrome {
 		display: flex;
 		flex-direction: column;
 	}
 
-	:global(.table-wrapper) {
-		margin: calc(var(--spacing) * 4) 0;
-		border: var(--default-border-width) solid var(--color-surface-200-800);
-		border-radius: calc(var(--radius-base) * 2);
-		padding: calc(var(--spacing) * 4);
+	/* over the caption line's right end: the missing-caption mark, and the gear of a table inside another block */
+	.table-tools {
+		position: absolute;
+		top: 0;
+		right: 0;
+		z-index: 1;
+		display: flex;
+		align-items: center;
+		gap: calc(var(--spacing) * 1);
 	}
 
 	/* the tableWrapper boundary breaks drag selection (posAtCoords fails there and the selection
@@ -187,27 +188,6 @@
 		flex-shrink: 0;
 	}
 
-	.table-header {
-		display: flex;
-		align-items: center;
-		justify-content: space-between;
-		margin-bottom: calc(var(--spacing) * 3);
-		padding-bottom: calc(var(--spacing) * 2);
-		border-bottom: var(--default-border-width) solid var(--color-surface-200);
-	}
-
-	.table-number-row {
-		display: flex;
-		align-items: center;
-		gap: calc(var(--spacing) * 2);
-	}
-
-	.table-number {
-		font-size: 0.875rem;
-		font-weight: 700;
-		color: var(--color-surface-900);
-	}
-
 	:global(.table-settings-btn) button {
 		padding: calc(var(--spacing) * 1) calc(var(--spacing) * 2);
 		border-radius: var(--radius-base);
@@ -230,13 +210,24 @@
 		gap: calc(var(--spacing) * 2);
 	}
 
+	/* the number stands before the caption as it prints, drawn from the wrapper (tableWrapperView) */
 	:global(.table-caption) {
-		font-size: 0.875rem;
-		margin-bottom: calc(var(--spacing) * 2);
-		padding: calc(var(--spacing) * 1) calc(var(--spacing) * 2);
-		border-radius: var(--radius-base);
+		text-align: center;
+		padding: 0 calc(var(--spacing) * 8);
 		cursor: text;
 		min-height: calc(var(--spacing) * 6);
+	}
+	:global(.table-caption::before) {
+		content: var(--table-prefix, '');
+		font-weight: 600;
+		color: var(--muted-text);
+		margin-right: 0.25em;
+	}
+	:global(.table-caption[data-starred='true']::before) {
+		content: none;
+	}
+	:global(.TexpileEditor .table-wrapper-content table) {
+		margin: 0;
 	}
 
 	:global(.table-notes) {
@@ -264,12 +255,6 @@
 	}
 	:global([data-mode='dark'] .table-settings-btn button:hover) {
 		background: var(--color-surface-700);
-	}
-	:global([data-mode='dark']) .table-header {
-		border-bottom-color: var(--color-surface-700);
-	}
-	:global([data-mode='dark']) .table-number {
-		color: var(--color-surface-100);
 	}
 	:global([data-mode='dark']) .table-caption-warning {
 		background: var(--color-warning-950);

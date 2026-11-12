@@ -211,13 +211,18 @@ function buildTableWrapperView(
 		return isLabelDuplicate(view, label, pos);
 	}
 
+	// the caption's prefix, Table 1: as it prints (TableWrapperComponent's styles draw it)
+	function showNumber(number: string | null) {
+		dom.style.setProperty('--table-prefix', JSON.stringify(`${m.tablewrap_table_display({ number: number ?? '' }).trim()}: `));
+	}
+
 	const initialData = calculateTableData();
+	showNumber(initialData.tableNumber);
 
 	// $state so prop mutations reach the component (svelte 5)
 	const initialRules = collectRowRules(currentNode);
 	const componentProps = $state({
 		dialect,
-		tableNumber: initialData.tableNumber,
 		node: currentNode,
 		updateAttrs,
 		checkDuplicate,
@@ -258,7 +263,7 @@ function buildTableWrapperView(
 			const newTableData = calculateTableData();
 			if (newTableData.tableNumber !== lastTableData.tableNumber) {
 				lastTableData = newTableData;
-				componentProps.tableNumber = newTableData.tableNumber;
+				showNumber(newTableData.tableNumber);
 			}
 
 			// always update node so caption validation stays reactive

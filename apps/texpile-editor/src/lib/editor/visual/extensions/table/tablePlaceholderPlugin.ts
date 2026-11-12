@@ -7,7 +7,7 @@ const key = new PluginKey<DecorationSet>('table-placeholder');
 type EmptyPart = { at: number; text: string; normalWeight: boolean };
 
 const TEXT: Record<string, { text: string; normalWeight: boolean }> = {
-	table_caption: { text: 'Caption: Click to edit', normalWeight: true },
+	table_caption: { text: 'Caption', normalWeight: true },
 	table_notes: { text: 'Notes: Click to add notes', normalWeight: false }
 };
 

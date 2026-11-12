@@ -119,7 +119,7 @@ html.window-glass
 		.fieldset
 	),
 /* the editor's own boxes draw their borders through @apply, not a utility class, so the rule above misses them */
-html.window-glass .TexpileEditor :is(hr, div.abstract, .table-wrapper, .table-header, td, th, .settings-button) {
+html.window-glass .TexpileEditor :is(hr, div.abstract, td, th, .settings-button) {
 	border-color: var(--glass-line);
 }
 /* a bar's line drawn as a shadow, which the border rule above does not reach */
