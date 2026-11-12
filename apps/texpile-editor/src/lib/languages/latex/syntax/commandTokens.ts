@@ -12,15 +12,15 @@ export type CommandTokens = {
 	closes: Int32Array;
 };
 
-const KEPT = 4;
-const kept = new Map<string, { tree: Tree; tokens: CommandTokens }>();
+// by tree: the tokens of a text stay for as long as its tree is kept
+const kept = new WeakMap<Tree, { text: string; tokens: CommandTokens }>();
 
 const BEGIN_NAME = /^\\begin\s*\{\s*([^}]*?)\s*\}$/;
 
 export function commandTokensOf(text: string): CommandTokens {
 	const tree = latexTreeOf(text);
-	const found = kept.get(text);
-	if (found?.tree === tree) return found.tokens;
+	const found = kept.get(tree);
+	if (found?.text === text) return found.tokens;
 	const tokens: CommandTokens = { byOffset: new Map(), list: [], begins: [], closes: new Int32Array(text.length).fill(-1) };
 	// \begin and \end are commands with arguments too (\begin{lstlisting}[label=a])
 	function commandOf(at: number, name: string) {
@@ -43,9 +43,7 @@ export function commandTokensOf(text: string): CommandTokens {
 			} else if (node.name === 'UrlArgument') tokens.closes[node.from] = node.to - 1;
 		}
 	});
-	kept.delete(text);
-	kept.set(text, { tree, tokens });
-	if (kept.size > KEPT) kept.delete(kept.keys().next().value!);
+	kept.set(tree, { text, tokens });
 	return tokens;
 }
 
