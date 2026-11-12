@@ -114,4 +114,6 @@ test('the settings gear of a centered figure sits clear of the handle', async ()
 			b.x + b.width <= gearBox.x || gearBox.x + gearBox.width <= b.x || b.y + b.height <= gearBox.y || gearBox.y + gearBox.height <= b.y;
 		expect(apart, 'a handle button and the gear share no pixels').toBe(true);
 	}
+	await gear.click();
+	await expect(page.locator('.drawn-chip-panel')).toBeVisible();
 });

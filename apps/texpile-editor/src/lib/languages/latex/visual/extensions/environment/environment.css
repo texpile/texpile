@@ -35,6 +35,8 @@
 	position: absolute;
 	right: 0;
 	top: 0;
+	/* over a figure card or an image that fills the body */
+	z-index: 1;
 	float: none;
 	opacity: 0;
 }
