@@ -11,6 +11,7 @@ const texpile = useTexpile({
 		'popover.tex': doc('Alpha words \\cite{knuth84} and \\label{sec:a} beta.'),
 		'math.tex': doc('Before the formula.\n\n\\[ x+y \\]\n\nAfter the formula.'),
 		'paste.tex': doc('Some text \\textbf{\\emph{nested}} words and \\url{http://x.org} end.'),
+		'figure.tex': `\\documentclass{article}\n\\usepackage{tikz}\n\\begin{document}\n\n${Array.from({ length: 60 }, (_, i) => `word${i}`).join(' ')}\n\n\\begin{tikzpicture}\n  \\node[draw] (a) at (0,0) {A};\n\\end{tikzpicture}\n\nAfter the figure.\n\n\\end{document}\n`,
 		'color.tex': `\\documentclass{article}\n\\usepackage{xcolor}\n\\begin{document}\n\n\\textcolor{red}{We know that $(a+b)^2$ can be evaluated as $a^2+b^2+2ab$.}\n\n\\end{document}\n`
 	}
 });
@@ -106,4 +107,29 @@ test('editing a formula in colored text keeps it in the color, as one \\textcolo
 		(t) => t.includes('\\textcolor{red}{We know that $(a+b)^2+1$ can be evaluated as') && t.split('\\textcolor').length === 2,
 		'the edited formula stays inside the one color run'
 	);
+});
+
+test('arrows select a figure card from the paragraphs around it, and Backspace removes it', async () => {
+	const v = visual();
+	await v.open('figure.tex');
+	const selected = () =>
+		v.evalView<string>(
+			`const s = view.state.selection; return s.node ? s.node.type.name : s.constructor.name + ':' + s.$head.parent.textContent.slice(0, 5);`
+		);
+	// the caret mid-line in a wrapped paragraph passes its lines first, then the card is selected
+	await v.caretAfter('word3 ');
+	await v.press('ArrowDown');
+	expect(await selected(), 'one line down is still the paragraph').toBe('TextSelection:word0');
+	for (let i = 0; i < 8 && (await selected()) !== 'raw_latex'; i++) await v.press('ArrowDown');
+	expect(await selected()).toBe('raw_latex');
+	await v.press('ArrowDown');
+	expect(await selected()).toBe('TextSelection:After');
+	await v.press('ArrowUp');
+	expect(await selected()).toBe('raw_latex');
+	await v.press('ArrowUp');
+	expect(await selected()).toMatch(/^TextSelection:word/);
+	await v.press('ArrowDown');
+	expect(await selected()).toBe('raw_latex');
+	await v.press('Backspace');
+	expect(await v.blockTypes()).toEqual(['paragraph', 'paragraph']);
 });

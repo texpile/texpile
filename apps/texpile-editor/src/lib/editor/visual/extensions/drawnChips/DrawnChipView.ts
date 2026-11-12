@@ -40,11 +40,22 @@ export type DrawnChipKind = {
 	actionFor?(source: string, pos: number): ChipPanelAction | null;
 };
 
-// by node, for the keys: a chip drawn now, as ProseMirror holds it
-const drawnChips = new WeakMap<Node, DrawnChipView>();
+/** what the keys need of a node drawn in place of its source */
+export type ChipNodeView = { readonly ownLine: boolean; readonly character: boolean; openPanel(): void };
 
-export function drawnChipOf(node: Node | null | undefined): DrawnChipView | null {
+// by node, for the keys: a chip drawn now, as ProseMirror holds it
+const drawnChips = new WeakMap<Node, ChipNodeView>();
+
+export function drawnChipOf(node: Node | null | undefined): ChipNodeView | null {
 	return (node && drawnChips.get(node)) ?? null;
+}
+
+export function drawChipNode(node: Node, view: ChipNodeView): void {
+	drawnChips.set(node, view);
+}
+
+export function undrawChipNode(node: Node, view: ChipNodeView): void {
+	if (drawnChips.get(node) === view) drawnChips.delete(node);
 }
 
 /** a drawn chip when the source draws, else the chip's ordinary editor */

@@ -90,6 +90,10 @@ function blockAcross(view: EditorView, side: Side): { pos: number } | 'end' | nu
 		if (lineBeyond) return null;
 		$edge = doc.resolve(side > 0 ? $head.after() : $head.before());
 	} else return null;
+	// a block ending its container (a chip in \begin{center}) is left toward what the container is beside
+	while (!(side > 0 ? $edge.nodeAfter : $edge.nodeBefore) && $edge.depth > 0) {
+		$edge = doc.resolve(side > 0 ? $edge.after() : $edge.before());
+	}
 	const node = side > 0 ? $edge.nodeAfter : $edge.nodeBefore;
 	if (!node) return selection instanceof NodeSelection && selection.node.isBlock ? 'end' : null;
 	return drawnChipOf(node)?.ownLine ? { pos: side > 0 ? $edge.pos : $edge.pos - node.nodeSize } : null;
