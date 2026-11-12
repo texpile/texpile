@@ -85,6 +85,30 @@ describe('a file read again after an edit', () => {
 	}
 });
 
+// twelve readings were kept whatever they were: every change to one file left another reading of it, and those pushed
+// out the other files of the project, each then read from nothing after the next change
+describe('the files kept', () => {
+	const file = (name: string) => `\\section{${name}}\n${`Words of the file ${name}. `.repeat(200)}`;
+
+	it('keeps a file that is still asked for while another one changes', () => {
+		const other = file('other');
+		const tree = latexTreeOf(other);
+		let typed = file('typed');
+		for (let n = 0; n < 30; n++) {
+			typed += ' x';
+			latexTreeOf(typed);
+		}
+		expect(latexTreeOf(other)).toBe(tree);
+	});
+
+	it('keeps a tree of each file of a project of many short files', () => {
+		const texts = Array.from({ length: 30 }, (_, n) => file(`chapter ${n}`));
+		const trees = texts.map((text) => latexTreeOf(text));
+		expect(texts.map((text) => latexTreeOf(text))).toEqual(trees);
+		expect(latexTreeOf(texts[0])).toBe(trees[0]);
+	});
+});
+
 describe('the import of a document verbatim environment', () => {
 	it('keeps the braces of its body', () => {
 		const text = `\\documentclass{article}\n\\usepackage{listings}\n\\lstnewenvironment{code}{}{}\n\\begin{document}\n\\begin{code}\n${BODY}\n\\end{code}\n\\end{document}\n`;

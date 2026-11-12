@@ -10,6 +10,10 @@ import { ownLiteralsIn } from '../userDefinitions';
 // arguments cut from it, kept apart so that a file's own readings stay
 const FILE_CHARS = 4096;
 const KEPT_FILES = 12;
+// past twelve files the kept ones may hold this many characters: a project of many short files keeps a tree of each
+const KEPT_FILE_CHARS = 6_000_000;
+// the files a newer text was read on from: the last few stay for an undo
+const KEPT_REPLACED = 6;
 const KEPT_SHORT = 64;
 // a change longer than this is a paste or another file, read whole; one this short is typing
 const NEAR_CHARS = 2000;
@@ -21,24 +25,41 @@ type Reading = { tree: Tree; by: LRParser | null };
 type Kept = Reading & { plain?: Reading };
 const files = new Map<string, Kept>();
 const short = new Map<string, Kept>();
+let fileChars = 0;
+// oldest first; a file asked for again is no longer one of them
+const replaced = new Set<string>();
 
 function kept(text: string): Kept | undefined {
 	return (text.length < FILE_CHARS ? short : files).get(text);
 }
 
 function keep(text: string, reading: Kept): Tree {
-	const held = text.length < FILE_CHARS ? short : files;
-	held.delete(text);
-	held.set(text, reading);
-	if (held.size > (held === short ? KEPT_SHORT : KEPT_FILES)) held.delete(held.keys().next().value!);
+	if (text.length < FILE_CHARS) {
+		short.delete(text);
+		short.set(text, reading);
+		if (short.size > KEPT_SHORT) short.delete(short.keys().next().value!);
+		return reading.tree;
+	}
+	if (!files.delete(text)) fileChars += text.length;
+	files.set(text, reading);
 	return reading.tree;
+}
+
+function dropFile(text: string): void {
+	if (files.delete(text)) fileChars -= text.length;
+	replaced.delete(text);
+}
+
+function trimFiles(): void {
+	while (replaced.size > KEPT_REPLACED) dropFile(replaced.values().next().value!);
+	while (files.size > KEPT_FILES && fileChars > KEPT_FILE_CHARS) dropFile((replaced.size ? replaced : files).keys().next().value!);
 }
 
 /** `text` as `by` reads it. A file goes on from the tree of the kept file nearest to it, so a typed character rereads
  *  the nodes around it and the rest of the tree is the old one */
 function read(by: LRParser, text: string): Tree {
 	if (text.length < FILE_CHARS) return by.parse(text);
-	let near: { tree: Tree; from: number; toA: number; toB: number } | null = null;
+	let near: { old: string; tree: Tree; from: number; toA: number; toB: number } | null = null;
 	// the newest first: the reading of the text one key ago is the nearest there is, and the search ends on it
 	for (const [old, reading] of [...files].reverse()) {
 		if (near && Math.max(near.toA, near.toB) - near.from <= TYPED_CHARS) break;
@@ -53,9 +74,11 @@ function read(by: LRParser, text: string): Tree {
 			toA--;
 			toB--;
 		}
-		if (!near || Math.max(toA, toB) - from < Math.max(near.toA, near.toB) - near.from) near = { tree, from, toA, toB };
+		if (!near || Math.max(toA, toB) - from < Math.max(near.toA, near.toB) - near.from) near = { old, tree, from, toA, toB };
 	}
 	if (!near || Math.max(near.toA, near.toB) - near.from > NEAR_CHARS) return by.parse(text);
+	replaced.delete(near.old);
+	replaced.add(near.old);
 	const change = { fromA: near.from, toA: near.toA, fromB: near.from, toB: near.toB };
 	return by.parse(text, TreeFragment.applyChanges(TreeFragment.addTree(near.tree), [change]));
 }
@@ -90,18 +113,24 @@ export function latexTreeAtLetter(text: string): Tree {
 /** the tree of `text`, read with the verbatim environments and commands it defines itself */
 export function latexTreeOf(text: string): Tree {
 	const found = kept(text);
-	if (found) return keep(text, found);
+	if (found) {
+		replaced.delete(text);
+		return keep(text, found);
+	}
 	const packageFile = PACKAGE_FILE.test(text.slice(0, 4000));
 	const plain = latexParserFor(packageFile);
 	const first: Reading = { tree: read(plain, text), by: plain };
 	keep(text, first);
 	const own: OwnSyntax = { math: NO_OWN_SYNTAX.math, literals: ownLiteralsIn(text) };
-	if (ownSyntaxTokensKey(own) === noLiterals()) return first.tree;
-	const by = latexParserFor(packageFile, own);
-	return keep(text, { tree: read(by, text), by, plain: first });
+	const by = ownSyntaxTokensKey(own) === noLiterals() ? null : latexParserFor(packageFile, own);
+	const tree = by ? keep(text, { tree: read(by, text), by, plain: first }) : first.tree;
+	trimFiles();
+	return tree;
 }
 
 /** an editor's finished parse, so readers of the same text skip parsing it again */
 export function rememberLatexTree(text: string, tree: Tree): void {
-	if (tree.length === text.length && !kept(text)) keep(text, { tree, by: null });
+	if (tree.length !== text.length || kept(text)) return;
+	keep(text, { tree, by: null });
+	trimFiles();
 }
