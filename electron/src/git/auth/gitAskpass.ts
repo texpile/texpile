@@ -187,7 +187,7 @@ function dropQuestions(session: Session): void {
 
 /**
  * Run a git operation that may need to sign in, with its questions routed to `sender`'s window.
- * `op` gets the environment that points git at the bridge; it is passed to the helper process with
+ * `op` gets the environment that points git at the bridge; it is passed to the helper thread with
  * the call. A result that failed after the author closed the prompt comes back as 'cancelled'.
  */
 export async function withAskpass<T extends { ok: boolean; failure?: string; error?: string }>(

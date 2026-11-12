@@ -1,6 +1,6 @@
 // The Source Control panel's remote half: publishing a branch, uploading, syncing, and the
 // credentials all three sign in with. Split from gitService.ts, whose repo-root resolution and
-// command factory it shares; the helper process serves both (helper/helperWorker.ts).
+// command factory it shares; the helper thread serves both (helper/helperWorker.ts).
 import { simpleGit, type SimpleGit, type SimpleGitOptions } from 'simple-git';
 import { spawn } from 'node:child_process';
 import { git, isMissingGit, errMsg, resolveRepoRoot, retryLocked, upstreamExists, type GitOpResult } from '../gitService';

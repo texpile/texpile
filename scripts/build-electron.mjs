@@ -28,7 +28,7 @@ buildSync({
 	entryPoints: {
 		app: join(ROOT, 'electron', 'src', 'main.ts'),
 		preload: join(ROOT, 'electron', 'src', 'preload.ts'),
-		// the helper utility process (git, workspace watcher); utilityProcess.fork loads it by path
+		// the helper thread (git, workspace watcher); the Worker loads it by path
 		helperWorker: join(ROOT, 'electron', 'src', 'helper', 'helperWorker.ts')
 	},
 	outdir: DIST,
