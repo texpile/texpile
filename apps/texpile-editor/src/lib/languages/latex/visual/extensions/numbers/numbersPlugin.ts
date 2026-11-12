@@ -1,9 +1,9 @@
 // the numbers on the nodes that print one
 import type { Node as PMNode } from 'prosemirror-model';
-import { Plugin, PluginKey, type Transaction } from 'prosemirror-state';
-import { ReplaceStep } from 'prosemirror-transform';
+import { Plugin, PluginKey } from 'prosemirror-state';
 import { Decoration, DecorationSet } from 'prosemirror-view';
 import type { ChipCountsOf } from '$lib/editor/visual/extensions/drawnChips/footnoteNumbers';
+import { typedInParagraph } from '$lib/editor/visual/extensions/nodeNumbers';
 import { documentNumbers, type NumberingContext } from './documentNumbers';
 
 export type NumbersSetup = {
@@ -29,21 +29,6 @@ function decorate(doc: PMNode, setup: NumbersSetup): DecorationSet {
 		else decorations.push(Decoration.node(pos, end, {}, { numbers }));
 	}
 	return DecorationSet.create(doc, decorations);
-}
-
-function onlyText(fragment: PMNode['content']): boolean {
-	return fragment.content.every((n) => n.isText);
-}
-
-function typedInParagraph(tr: Transaction): boolean {
-	return tr.steps.every((step, i) => {
-		if (!(step instanceof ReplaceStep) || !onlyText(step.slice.content)) return false;
-		const doc = tr.docs[i];
-		const $from = doc.resolve(step.from);
-		return (
-			$from.parent.type.name === 'paragraph' && $from.sameParent(doc.resolve(step.to)) && onlyText(doc.slice(step.from, step.to).content)
-		);
-	});
 }
 
 export function numbersPlugin(setup: NumbersSetup): Plugin<DecorationSet> {

@@ -14,7 +14,9 @@ export const table: TypstPlugin = {
 	},
 	face: (core) => tableFace(core.source, core),
 	document: tableDocument,
-	views: () => ({ table_wrapper: (node, view, getPos) => typstTableWrapperView(node, view, getPos as () => number) }),
+	views: () => ({
+		table_wrapper: (node, view, getPos, decorations) => typstTableWrapperView(node, view, getPos as () => number, decorations)
+	}),
 	editorPlugins: { atStart: tableKeys, afterTableEditing: () => [typstHeaderRows] },
 	insert: tableInserts
 };

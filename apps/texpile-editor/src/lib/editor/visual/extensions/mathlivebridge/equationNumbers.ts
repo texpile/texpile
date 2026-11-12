@@ -54,6 +54,9 @@ export function renderEquationNumbers(
 	// CSS ::after reads this for single-line equations
 	if (numberOf(0)) dom.setAttribute('data-equation-number', numberOf(0));
 	else dom.removeAttribute('data-equation-number');
+	// what Typst printed, for a number its own rule writes, as an equation without an environment has none of LaTeX's
+	if (compiled?.[0]) dom.setAttribute('data-printed-number', compiled[0]);
+	else dom.removeAttribute('data-printed-number');
 
 	const isSingleLabelEnv = isSingleLabelEnvironment(environment || '');
 

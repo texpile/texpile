@@ -95,6 +95,7 @@ import { shiftArrowsPlugin } from '$lib/editor/visual/extensions/shiftArrows/shi
 import { typstChipKind } from './extensions/typstChipKind';
 import { footnoteNumbersPlugin } from '$lib/editor/visual/extensions/drawnChips/footnoteNumbers';
 import { typstChipCounts } from './core/plugin/chipCounts';
+import { typstNumbersPlugin } from './extensions/numbers/typstNumbersPlugin';
 import { IncludeDocView } from '$lib/editor/visual/extensions/includedoc/includeDocView.svelte';
 import { pmComments } from '$lib/editor/visual/extensions/pmComments';
 import type { CommentAnchor } from '$lib/comments/anchor';
@@ -170,6 +171,8 @@ export type TypstEditorSetup = {
 	addCommentLabel: string;
 	/** read at each check: the editor's file can change its language */
 	spellLanguage: () => SpellLanguage | null;
+	/** the open file, whose document's printed numbers it shows */
+	filePath?: () => string | null;
 };
 
 export function typstEditorPlugins(setup: TypstEditorSetup): Plugin[] {
@@ -183,7 +186,8 @@ export function typstEditorPlugins(setup: TypstEditorSetup): Plugin[] {
 		onAddComment,
 		sourceAnchor,
 		addCommentLabel,
-		spellLanguage
+		spellLanguage,
+		filePath
 	} = setup;
 	return [
 		parseCarryPlugin,
@@ -284,6 +288,8 @@ export function typstEditorPlugins(setup: TypstEditorSetup): Plugin[] {
 		createBlockHandlePlugin(),
 		wholeBlockDragPlugin(),
 		dropPastNodeViewsPlugin(),
+		// before the footnote counter: a chip reads the first numbers it is handed
+		typstNumbersPlugin({ filePath: filePath ?? (() => null) }),
 		footnoteNumbersPlugin(typstChipCounts),
 		createNodeFlashPlugin(),
 		// collaborators' carets; VisualCollab feeds it, and is inert outside a shared session

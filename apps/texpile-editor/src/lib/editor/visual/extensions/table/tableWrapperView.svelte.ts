@@ -60,8 +60,13 @@ export function tableWrapperView(
 }
 
 /** same view over typSchema's table_wrapper: shared header/caption/label UI, tex-only controls hidden. */
-export function typstTableWrapperView(node: Node, view: EditorView, getPos: () => number | undefined): NodeView {
-	return buildTableWrapperView('typst', node, view, getPos, []);
+export function typstTableWrapperView(
+	node: Node,
+	view: EditorView,
+	getPos: () => number | undefined,
+	decorations: readonly Decoration[] = []
+): NodeView {
+	return buildTableWrapperView('typst', node, view, getPos, decorations);
 }
 
 function buildTableWrapperView(
@@ -190,9 +195,10 @@ function buildTableWrapperView(
 		if (updated) componentProps.colspec = colspecOf(updated);
 	}
 
-	// LaTeX takes its number from numbersPlugin, Typst counts its own
+	// a number handed on the decorations is drawn as given, none included; Typst counts its own until a compile hands them
 	function calculateTableData(): { tableNumber: string | null } {
-		if (dialect === 'latex') return { tableNumber: compiledNumbersOf(decorations)?.[0] ?? null };
+		const handed = compiledNumbersOf(decorations);
+		if (handed || dialect === 'latex') return { tableNumber: handed?.[0] ?? null };
 		const pos = getPos();
 		return { tableNumber: String(pos === undefined ? 1 : getTableNumber(view, pos)) };
 	}
