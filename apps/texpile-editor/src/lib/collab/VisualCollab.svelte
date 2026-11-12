@@ -66,6 +66,7 @@
 	// remote edits -> block patch
 	let remotePatchTimer: ReturnType<typeof setTimeout> | null = null;
 	let remoteParseMs = 0;
+	let remoteParsedAt = 0;
 	// set by a local visual edit: the doc's parse predates it, so the next quiet moment
 	// re-parses purely to refresh them (content usually identical, attrs-only patch)
 	let origStale = false;
@@ -88,7 +89,8 @@
 		deferredRestamp = false;
 	}
 
-	function scheduleRemotePatch(delay = Math.max(60, remoteParseMs * 2)) {
+	// parses start twice their own length after the last one came back, so the first after a rest starts at once
+	function scheduleRemotePatch(delay = Math.max(60, remoteParsedAt + remoteParseMs * 2 - performance.now())) {
 		if (remotePatchTimer && delay > 0) return;
 		if (remotePatchTimer) clearTimeout(remotePatchTimer);
 		remotePatchTimer = setTimeout(() => {
@@ -107,7 +109,8 @@
 		if (snapshot === api.texSource && !origStale) return;
 		const t0 = performance.now();
 		const parsed = await api.parse(snapshot);
-		remoteParseMs = performance.now() - t0;
+		remoteParsedAt = performance.now();
+		remoteParseMs = remoteParsedAt - t0;
 		// superseded: the file/mode/view moved on, or more edits landed while parsing
 		if (path !== p || !active() || editorViewStore.current !== v) return;
 		if (session.collabFor(p)?.ytext !== binding.ytext) return;
