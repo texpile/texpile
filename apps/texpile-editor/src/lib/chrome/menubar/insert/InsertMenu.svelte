@@ -79,6 +79,11 @@
 					{@render item('image', m.menubar_insert_image())}
 				{/if}
 				{@render item('table', m.menubar_insert_table())}
+				{#if dialect === 'tex'}
+					{@render item('figure', m.figure_card_tikz())}
+				{:else if dialect === 'typ'}
+					{@render item('figure', m.figure_card_cetz())}
+				{/if}
 				{@render item('link', m.menubar_insert_link())}
 				{@render item('code', m.menubar_insert_code_block())}
 				{@render item('hrule', m.menubar_insert_hrule())}

@@ -10,6 +10,7 @@ const ARTICLE =
 const texpile = useTexpile({
 	files: {
 		'menu-table.tex': ARTICLE,
+		'menu-figure.tex': ARTICLE,
 		'vspace.tex': ARTICLE
 	}
 });
@@ -39,6 +40,22 @@ test('Insert > Table leaves the caret in the first cell', async () => {
 	await expect.poll(() => inCell(v)).toBe(true);
 	await v.type('cellword');
 	await disk.expectFile('menu-table.tex', (t) => /\\begin\{tabular\}[^]*cellword[^]*\\end\{tabular\}/.test(t), 'the word is in the table');
+});
+
+test('Insert > TikZ figure writes an empty picture with tikz and opens its figure tab', async () => {
+	const { page, disk } = await setup('menu-figure.tex', 'First paragraph alpha beta gamma.');
+	await page
+		.getByRole('menuitem', { name: 'Insert' })
+		.or(page.getByRole('button', { name: 'Insert', exact: true }))
+		.first()
+		.click();
+	await page.getByRole('menuitem', { name: 'TikZ figure', exact: true }).click();
+	await disk.expectFile(
+		'menu-figure.tex',
+		(t) => t.includes('\\usepackage{tikz}') && /alpha beta gamma\.\s+\\begin\{tikzpicture\}[^]*\\end\{tikzpicture\}/.test(t),
+		'the picture and the package are saved'
+	);
+	await expect(page.getByText('Figure 1 - menu-figure.tex')).toBeVisible();
 });
 
 async function insertFrom(page: Page, path: string[]) {

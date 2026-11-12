@@ -31,6 +31,7 @@ import {
 import { runVisualCommand, insertNode, activeCm, cmReplace, cmApply } from '$lib/chrome/menuBarCommands';
 import { makeDrawnInserts } from './menuBarInsertDrawn';
 import { makeTypstInserts } from './menuBarInsertTypst';
+import { makeFigureInsert } from './menuBarInsertFigure';
 import { ITEM_VALUE, makeListInserts } from './insertListSelect';
 import { amsmathFor, GRAPHICX, ensurePackage } from './packageOnInsert';
 import type { formatOf } from '$lib/workspace/documentBuffer.svelte';
@@ -110,9 +111,11 @@ export function makeInsertHandlers(deps: InsertDeps): {
 	const insertDrawn = makeDrawnInserts(deps);
 	const insertTypst = makeTypstInserts(deps);
 	const insertFromList = makeListInserts(deps);
+	const insertFigure = makeFigureInsert(deps);
 
 	async function insertSelect(value: string) {
 		if (await insertFromList(value)) return;
+		if (insertFigure(value)) return;
 		if (deps.dialect() === 'typ' && (await insertTypst(value))) return;
 		// Symbol…: the picker inserts where the caret is, in either mode
 		if (deps.dialect() === 'tex' && value === 'symbolpicker') return void (await symbolPicker.show(latexSymbolSet));

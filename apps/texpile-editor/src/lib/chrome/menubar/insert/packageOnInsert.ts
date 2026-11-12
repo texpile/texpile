@@ -11,6 +11,7 @@ export function amsmathFor(environment: string): PackageNeed {
 	return { name: 'amsmath', environment };
 }
 export const GRAPHICX: PackageNeed = { name: 'graphicx', command: 'includegraphics' };
+export const TIKZ: PackageNeed = { name: 'tikz', environment: 'tikzpicture' };
 
 function loads(preamble: string, need: PackageNeed): boolean {
 	const loaded = documentPackagesNow(preamble);

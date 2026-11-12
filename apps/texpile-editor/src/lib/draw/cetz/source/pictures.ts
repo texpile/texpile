@@ -22,8 +22,12 @@ export function unclosedPicture(source: string) {
 	return null;
 }
 
+export function importsCetz(source: string) {
+	return /@preview\/cetz:/.test(source);
+}
+
 function withImport(source: string) {
-	return /@preview\/cetz:/.test(source) ? source : `${CETZ_IMPORT}\n\n${source}`;
+	return importsCetz(source) ? source : `${CETZ_IMPORT}\n\n${source}`;
 }
 
 export function withPicture(source: string) {
