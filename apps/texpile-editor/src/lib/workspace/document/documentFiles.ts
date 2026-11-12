@@ -29,11 +29,11 @@ function isTex(path: string): boolean {
 /** the files `text` brings in, as candidate paths to try in turn */
 async function includesOf(path: string, text: string, main: string, root: string): Promise<string[][]> {
 	if (isTypst(path)) return includedFiles(await typstTreeOf(text), text).map((i) => [joinPath(dirname(path), i.target)]);
-	let tex = codeOnly(text);
 	// a main file's preamble \input reads macros, not text
-	const begin = samePath(path, main) ? documentWrapperOf(text)?.begin.from : undefined;
-	if (begin !== undefined) tex = tex.slice(begin);
-	return texIncludesIn(tex).map((include) => includePaths(include, dirname(path), [dirname(main), dirname(path), root]));
+	const begin = samePath(path, main) ? (documentWrapperOf(text)?.begin.from ?? 0) : 0;
+	return texIncludesIn(codeOnly(text))
+		.filter((include) => include.at >= begin)
+		.map((include) => includePaths(include, dirname(path), [dirname(main), dirname(path), root]));
 }
 
 /** `read` throws for a file that is not there, which is then listed as missing */
