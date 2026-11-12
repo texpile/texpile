@@ -122,7 +122,7 @@ export {
 } from '$lib/editor/visual/extensions/table/rules/tableRules';
 export { editPreambleHere } from '$lib/stores/editorStore';
 export { withPackageNeeded } from '$lib/languages/latex/intellisense/packages/packageNeed';
-export { bareTableSettingsPlugin, openBareTableSettings } from '$lib/editor/visual/extensions/table/bare/bareTableSettings.svelte';
+export { bareTableSettingsPlugin, openBareTableSettings } from '$lib/editor/visual/extensions/table/bare/bareTableSettingsPlugin.svelte';
 export { adoptParse } from '$lib/editor/visual/parseOrigins';
 export { containerOriginsOf } from '$lib/editor/visual/parseOrigins';
 export { containerRecordAround } from '$lib/editor/visual/parseOrigins';

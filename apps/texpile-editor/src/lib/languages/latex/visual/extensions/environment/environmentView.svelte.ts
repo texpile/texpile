@@ -9,7 +9,7 @@ import {
 	syncChipPanel
 } from '$lib/editor/visual/extensions/drawnChips/chipPanel.svelte';
 import { gearPlaceBeside, markGearPlace, offerBlockSettings } from '$lib/editor/visual/extensions/blockHandle/blockSettings';
-import { openBareTableSettings } from '$lib/editor/visual/extensions/table/bare/bareTableSettings.svelte';
+import { openBareTableSettings } from '$lib/editor/visual/extensions/table/bare/bareTableSettingsPlugin.svelte';
 import { m } from '$lib/paraglide/messages';
 import EnvironmentHead from './EnvironmentHead.svelte';
 import EnvironmentAlignSetting from './EnvironmentAlignSetting.svelte';
