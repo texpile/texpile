@@ -26,7 +26,9 @@ Delta paragraph.
 \\end{document}
 `;
 
-const texpile = useTexpile({ files: { 'unit.tex': TEX } });
+const CENTERED = `\\documentclass{article}\n\\usepackage{tikz}\n\\begin{document}\n\nBefore.\n\n\\begin{center}\n\\begin{tikzpicture}\n  \\node[draw] (a) at (0,0) {A};\n\\end{tikzpicture}\n\\end{center}\n\nAfter.\n\n\\end{document}\n`;
+
+const texpile = useTexpile({ files: { 'unit.tex': TEX, 'centered.tex': CENTERED } });
 
 type Box = { left: number; right: number; top: number; bottom: number };
 
@@ -91,4 +93,25 @@ test('the handle over a theorem moves the whole theorem', async () => {
 	expect(count(saved, '\\end{theorem}')).toBe(1);
 	expect(saved.indexOf('Delta paragraph')).toBeLessThan(saved.indexOf('\\begin{theorem}'));
 	await undoRestores(v, disk, 'unit.tex', TEX);
+});
+
+test('the settings gear of a centered figure sits clear of the handle', async () => {
+	const { page, root } = texpile();
+	const v = new VisualEditor(page, root);
+	await v.open('centered.tex');
+	const card = page.locator('.figure-card').first();
+	await card.scrollIntoViewIfNeeded();
+	const c = (await card.boundingBox())!;
+	await page.mouse.move(c.x + c.width / 2, c.y + c.height / 2, { steps: 4 });
+	const gear = page.locator('.env-gear');
+	await expect(gear).toHaveCSS('opacity', '1', { timeout: 5000 });
+	const handle = page.locator('.block-handle-btn');
+	await expect(handle.first()).toBeVisible();
+	const gearBox = (await gear.boundingBox())!;
+	for (const button of await handle.all()) {
+		const b = (await button.boundingBox())!;
+		const apart =
+			b.x + b.width <= gearBox.x || gearBox.x + gearBox.width <= b.x || b.y + b.height <= gearBox.y || gearBox.y + gearBox.height <= b.y;
+		expect(apart, 'a handle button and the gear share no pixels').toBe(true);
+	}
 });
