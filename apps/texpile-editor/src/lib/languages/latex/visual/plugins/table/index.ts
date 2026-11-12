@@ -1,8 +1,8 @@
-import { tableWrapperView, type LatexPlugin } from '$lib/languages/latex/visual/core';
+import { tableCaretPlugin, tableRulesPlugin, tableWrapperView, type LatexPlugin } from '$lib/languages/latex/visual/core';
 import { inlineTabularPart, isTextTable } from './inlineTabularFace';
 import { tableDocument } from './document';
 import { longtablePlugin } from './longtable/longtablePlugin';
-import { tableCaretPlugin, tableRulesPlugin } from './rules/tableRulesPlugin';
+import { latexTableLook } from './rules/tableRuleEdges';
 import { tableInserts } from './tableInsert';
 
 export const table: LatexPlugin = {
@@ -11,6 +11,6 @@ export const table: LatexPlugin = {
 		part.kind === 'environment' ? inlineTabularPart(part.node, core.src, { unitsOf: core.unitsOf, draw: core.drawUnits }) : undefined,
 	document: tableDocument,
 	views: () => ({ table_wrapper: tableWrapperView }),
-	editorPlugins: { beforeWordCount: () => [longtablePlugin(), tableRulesPlugin(), tableCaretPlugin()] },
+	editorPlugins: { beforeWordCount: () => [longtablePlugin(), tableRulesPlugin(latexTableLook), tableCaretPlugin()] },
 	insert: tableInserts
 };

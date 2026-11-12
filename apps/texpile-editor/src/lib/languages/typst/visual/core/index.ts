@@ -31,6 +31,15 @@ export { default as CitationReferenceField } from '$lib/editor/visual/extensions
 export { default as CitationPagesField } from '$lib/editor/visual/extensions/citation/CitationPagesField.svelte';
 export { bibAuthorShort, bibDisplayText, type BiblatexReference } from '$lib/languages/bib/biblatex';
 export { typstTableWrapperView } from '$lib/editor/visual/extensions/table/tableWrapperView.svelte';
+export {
+	heavierRule,
+	tableCaretPlugin,
+	tableRulesPlugin,
+	type CellAlign,
+	type CellEdges,
+	type RuleWeight,
+	type TableLook
+} from '$lib/editor/visual/extensions/table/rules/tableRules';
 export { CodeBlockView } from '$lib/editor/visual/extensions/codemirrorbridge/cmview.svelte';
 export { default as FigurePlaceholder } from '$lib/draw/host/card/FigurePlaceholder.svelte';
 

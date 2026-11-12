@@ -2,21 +2,13 @@
 // multicolumn's own spec. A table the editor made has no spec yet and is saved with every rule (tableSerializer)
 import type { Node } from 'prosemirror-model';
 import { TableMap } from 'prosemirror-tables';
+import { heavierRule as heavier, type CellAlign, type CellEdges, type RuleWeight, type TableLook } from '$lib/languages/latex/visual/core';
 
-export type RuleWeight = 'light' | 'heavy' | 'double';
-export type CellAlign = 'left' | 'center' | 'right';
-export type CellEdges = { top: RuleWeight | null; bottom: RuleWeight | null; left: boolean; right: boolean; align: CellAlign };
 export type SpecColumns = { bars: boolean[]; letters: string[] };
 
 const HEAVY = new Set(['toprule', 'bottomrule', 'Xhline', 'specialrule', 'thickhline', 'heavyrule']);
 const LIGHT = new Set(['hline', 'midrule', 'hhline', 'hdashline', 'firsthline', 'lasthline', 'tabucline']);
 const PARTIAL = new Set(['cline', 'cmidrule', 'cdashline']);
-const WEIGHTS: RuleWeight[] = ['light', 'double', 'heavy'];
-
-function heavier(a: RuleWeight | null, b: RuleWeight | null): RuleWeight | null {
-	if (!a || !b) return a ?? b;
-	return WEIGHTS.indexOf(a) >= WEIGHTS.indexOf(b) ? a : b;
-}
 
 /** for each column, the rule `source` draws across it; `source` is what stands between two rows, such as \hline or \cmidrule(lr){2-3} */
 export function horizontalRule(source: string, columns: number): (RuleWeight | null)[] {
@@ -141,7 +133,9 @@ export function cellEdgesOf(table: Node): Map<number, CellEdges> {
 	return edges;
 }
 
-/** a table with a stated width fills it, any other is as wide as its cells */
-export function fillsWidth(table: Node): boolean {
+// a table with a stated width fills it, any other is as wide as its cells
+function fillsWidth(table: Node): boolean {
 	return typeof table.attrs.tabularxWidth === 'string' && table.attrs.tabularxWidth.trim() !== '';
 }
+
+export const latexTableLook: TableLook = { edgesOf: cellEdgesOf, fillsWidth };

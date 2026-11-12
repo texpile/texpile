@@ -108,7 +108,16 @@ export type { ItemLabels } from '$lib/editor/visual/extensions/listNumbers/listN
 export { printedValue } from '$lib/languages/latex/visual/extensions/numbers/printedNumber';
 export type { NumberStyle } from '$lib/languages/latex/visual/extensions/numbers/printedNumber';
 export { isReadOnly } from '$lib/stores/permissionStore';
-export { compiledNumbersOf, typedInParagraph } from '$lib/editor/visual/extensions/nodeNumbers';
+export { compiledNumbersOf } from '$lib/editor/visual/extensions/nodeNumbers';
+export {
+	heavierRule,
+	tableCaretPlugin,
+	tableRulesPlugin,
+	type CellAlign,
+	type CellEdges,
+	type RuleWeight,
+	type TableLook
+} from '$lib/editor/visual/extensions/table/rules/tableRules';
 export { adoptParse } from '$lib/editor/visual/parseOrigins';
 export { containerOriginsOf } from '$lib/editor/visual/parseOrigins';
 export { containerRecordAround } from '$lib/editor/visual/parseOrigins';

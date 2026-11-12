@@ -78,3 +78,7 @@
 	float: none;
 	margin-bottom: calc(var(--spacing) * 1);
 }
+/* a tabular of its own starts at the left as it prints, and is centered inside center */
+.ProseMirror .tex-environment[data-env='center'] .table-natural-width table {
+	margin-inline: auto;
+}

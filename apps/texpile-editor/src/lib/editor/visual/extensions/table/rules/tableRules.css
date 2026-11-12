@@ -1,5 +1,5 @@
-/* a LaTeX table as it prints: its own rules, and as wide as its cells unless it states a width. An edge with no rule
-   shows as a guide under the pointer or around the caret */
+/* a table as it prints: its own rules, and as wide as its cells unless it states a width. An edge with no rule shows
+   as a guide under the pointer or around the caret */
 .ProseMirror .rules-as-printed {
 	--cell-guide: transparent;
 	--table-rule: var(--color-surface-950-50);
@@ -43,5 +43,8 @@
 }
 .ProseMirror .table-natural-width table {
 	width: auto;
+}
+/* a float centers its table, a table of its own in the text starts at the left */
+.ProseMirror .table-wrapper .table-natural-width table {
 	margin-inline: auto;
 }
