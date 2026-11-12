@@ -1,6 +1,7 @@
 // which parse each block came from, and what it knew of its bytes
 import type { Node as PMNode } from 'prosemirror-model';
 import { indexStartingBy, isContainer, spansOf, type Segment, type SourceMap } from './sourceSpans';
+import { blockTextReader, type TextReader } from './blockTextReader';
 
 /** the text a document was parsed from, and the stretch of it the document stands for (the body of a
  *  file whose preamble and postamble the parse never saw) */
@@ -62,7 +63,7 @@ export type ParseOrigins = {
  * the block, no two runs claiming a byte, a text run being its bytes (a bare line feed standing for
  * a carriage return and line feed aside). What fails is recorded on `defects`.
  */
-function soundLeaves(doc: PMNode, body: ParseBody, block: Segment, leaves: Segment[], defects: MapDefect[]): boolean {
+function soundLeaves(shown: TextReader, body: ParseBody, block: Segment, leaves: Segment[], defects: MapDefect[]): boolean {
 	let ok = true;
 	function bad(kind: MapDefect['kind'], s: Segment, detail: string) {
 		defects.push({ kind, srcFrom: s.srcFrom, srcTo: s.srcTo, pmFrom: s.pmFrom, pmTo: s.pmTo, detail });
@@ -74,10 +75,10 @@ function soundLeaves(doc: PMNode, body: ParseBody, block: Segment, leaves: Segme
 			continue;
 		}
 		if (s.kind !== 'text') continue;
-		const shown = doc.textBetween(s.pmFrom, s.pmTo);
+		const text = shown(s.pmFrom, s.pmTo);
 		const bytes = body.text.slice(s.srcFrom, s.srcTo);
-		if (shown !== bytes && shown !== bytes.replace(/\r\n/g, '\n'))
-			bad('mismatch', s, `a text run is not its bytes: ${JSON.stringify(shown)} for ${JSON.stringify(bytes)} at ${s.srcFrom}`);
+		if (text !== bytes && text !== bytes.replace(/\r\n/g, '\n'))
+			bad('mismatch', s, `a text run is not its bytes: ${JSON.stringify(text)} for ${JSON.stringify(bytes)} at ${s.srcFrom}`);
 	}
 	const bySrc = [...leaves].sort((a, b) => a.srcFrom - b.srcFrom || a.srcTo - b.srcTo);
 	for (let i = 1; i < bySrc.length; i++) {
@@ -105,6 +106,7 @@ export function rememberParseMap(doc: PMNode, map: SourceMap, body: ParseBody | 
 	const parse: ParseOrigins = { origins: [], tail: null, verbatim, from: body ? body.from : 0, defects: [] };
 	// the top-level blocks whose runs are not believed, by position: nothing inside them is either
 	const unsound: Segment[] = [];
+	const shown = blockTextReader(doc);
 	const n = doc.childCount;
 	let b = 0;
 	let l = 0;
@@ -135,7 +137,7 @@ export function rememberParseMap(doc: PMNode, map: SourceMap, body: ParseBody | 
 		}
 		// a block whose runs contradict it is not placed at all: its span may be short of its bytes,
 		// and a block written afresh before a gap still holding the rest would write them twice
-		if (body && !soundLeaves(doc, body, block, leaves, parse.defects)) {
+		if (body && !soundLeaves(shown, body, block, leaves, parse.defects)) {
 			unsound.push(block);
 			let at = start;
 			for (let k = 0; k < size; k++) {
@@ -181,7 +183,7 @@ export function rememberParseMap(doc: PMNode, map: SourceMap, body: ParseBody | 
 	parse.tail = body && prevEnd != null && prevEnd <= body.to ? body.text.slice(prevEnd, body.to) : null;
 	for (const o of parse.origins) blockOrigins.set(o.node, o);
 	docParses.set(doc, parse);
-	rememberContainers(doc, map, body, verbatim, parse.defects, unsound);
+	rememberContainers(doc, map, body, verbatim, parse.defects, unsound, shown);
 	return parse;
 }
 
@@ -196,7 +198,8 @@ function rememberContainers(
 	body: ParseBody | null,
 	verbatim: boolean,
 	defects: MapDefect[],
-	unsound: Segment[]
+	unsound: Segment[],
+	shown: TextReader
 ): void {
 	const inner = map.inner ?? [];
 	if (inner.length === 0) return;
@@ -233,7 +236,7 @@ function rememberContainers(
 				(!bounds || (seg.srcFrom >= bounds.from && seg.srcTo <= bounds.to)) &&
 				(prevEnd == null || seg.srcFrom >= prevEnd) &&
 				believed(seg) &&
-				(!body || soundLeaves(doc, body, seg, leaves, defects));
+				(!body || soundLeaves(shown, body, seg, leaves, defects));
 			if (!seg || !placed) {
 				const child = node.child(i);
 				at += child.nodeSize;
