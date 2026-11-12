@@ -27,7 +27,7 @@ export function liveMark(root: string): LiveMark {
 export function livePassed(c: { root: string; mainRel: string; engineDir: string; index: PointIndex }, mark: LiveMark): boolean {
 	const live = lives.get(normRoot(c.root));
 	if (!live || live !== mark.live || live.mainRel !== c.mainRel || live.engineDir !== c.engineDir) return false;
-	return live.edits !== mark.edits && live.index.sameGround(c.index, c.root);
+	return live.edits !== mark.edits && live.index.sameGround(c.index, c.root, true);
 }
 
 /** a compile's index replaces whatever the teleports built: its text is what disk held when it ran */

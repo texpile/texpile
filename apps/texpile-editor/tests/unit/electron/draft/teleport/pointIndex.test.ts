@@ -109,3 +109,22 @@ it('tells the same ground from the same text', () => {
 	expect(live.sameGround(new PointIndex([], 'main.tex', 4, [], '', '/seeds'), dir)).toBe(false);
 	fs.rmSync(dir, { recursive: true, force: true });
 });
+
+// figures that move to other pages get other object numbers in the next compile. A compile behind the typing is
+// dropped on the same ground, and that renumbering alone must leave it the same ground
+it('takes the same images at other object numbers for the same ground only when asked', () => {
+	const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'point-index-'));
+	function withImages(name: string, list: string): PointIndex {
+		const ix = index([]);
+		fs.writeFileSync(path.join(dir, name), list);
+		ix.imageList = name;
+		return ix;
+	}
+	const live = withImages('a.lua', 'return {{file="p.pdf",h="4pt",hash="",n=172,path="./p.pdf",w="6pt",},}\n');
+	const moved = withImages('b.lua', 'return {{file="p.pdf",h="4pt",hash="",n=465,path="./p.pdf",w="6pt",},}\n');
+	const other = withImages('c.lua', 'return {{file="q.pdf",h="4pt",hash="",n=172,path="./q.pdf",w="6pt",},}\n');
+	expect(live.sameGround(moved, dir)).toBe(false);
+	expect(live.sameGround(moved, dir, true)).toBe(true);
+	expect(live.sameGround(other, dir, true)).toBe(false);
+	fs.rmSync(dir, { recursive: true, force: true });
+});

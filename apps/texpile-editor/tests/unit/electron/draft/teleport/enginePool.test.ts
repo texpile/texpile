@@ -161,6 +161,32 @@ it('gives a compile a fresh engine once the spares read images at the base', asy
 	stopPool();
 });
 
+// a compile that numbers the images anew leaves every waiting engine holding the wrong objects: they go when its
+// list arrives, while nobody types, and the same list under another compile's path changes nothing
+it('lets the engines go that hold another numbering of the images', async () => {
+	const c = {
+		root,
+		mainRel: 'main.tex',
+		engineDir: '/e',
+		engine: 'lualatex',
+		seedDir: '/s',
+		preamble: 'pre\n\\begin{document}',
+		preStamp: null
+	};
+	fs.writeFileSync(path.join(root, 'first.lua'), 'return {{file="a.pdf",n=172,},}\n');
+	fs.writeFileSync(path.join(root, 'again.lua'), 'return {{file="a.pdf",n=172,},}\n');
+	fs.writeFileSync(path.join(root, 'moved.lua'), 'return {{file="a.pdf",n=465,},}\n');
+	made.length = 0;
+	warmPool({ ...c, imageList: 'first.lua' });
+	const first = [...made];
+	warmPool({ ...c, imageList: 'again.lua' });
+	expect(made).toEqual(first);
+	warmPool({ ...c, imageList: 'moved.lua' });
+	expect(made).toHaveLength(4);
+	expect(first).not.toContain(await takeEngine({ ...c, imageList: 'moved.lua' }));
+	stopPool();
+});
+
 // 0811.3855 keeps an old %\begin{document} above its \title and \author: an edit there must change the spares' key
 it('reads the preamble up to the begin document line that is not commented out', () => {
 	const text = '\\documentclass{article}\n%\\begin{document}\n\\author{A}\n\\begin{document}\nbody\n';

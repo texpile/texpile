@@ -24,8 +24,9 @@ type Spare = {
 	at: Promise<boolean>;
 	fonts?: string;
 	images?: string;
-	/** it read images at the base: a compile on it numbers the document's own after them, and no waiting engine holds those */
-	holdsImages?: boolean;
+	/** the list of images it read at the base, when that list names any. A compile on it numbers the document's own
+	 *  after them, and a compile that numbers them otherwise leaves it holding the wrong objects */
+	holdsImages?: string;
 	staged?: string;
 	due?: number;
 	ahead?: string;
@@ -100,17 +101,31 @@ function preload(s: Spare, c: PoolConfig): void {
 		// eslint-disable-next-line no-param-reassign
 		s.images = c.imageList;
 		// eslint-disable-next-line no-param-reassign
-		s.holdsImages ||= listsImages(c.root, c.imageList);
+		s.holdsImages ??= imagesListed(c.root, c.imageList);
 	}
 }
 
-// a compile's image list names each image's object: `return {}` for a document with none
-function listsImages(root: string, listRel: string): boolean {
-	try {
-		return /\bn\s*=\s*\d/.test(fs.readFileSync(path.join(root, listRel), 'utf8'));
-	} catch {
-		return false;
+const listTexts = new Map<string, string | undefined>();
+
+// a compile's image list names each image's object, `return {}` for a document with none. A list is written once
+function imagesListed(root: string, listRel: string): string | undefined {
+	const file = path.join(root, listRel);
+	if (!listTexts.has(file)) {
+		let text: string | undefined;
+		try {
+			text = fs.readFileSync(file, 'utf8');
+		} catch {
+			text = undefined;
+		}
+		if (listTexts.size > 16) listTexts.clear();
+		listTexts.set(file, text && /[{,]n=\d/.test(text) ? text : undefined);
 	}
+	return listTexts.get(file);
+}
+
+// the engine holds images at other objects than the compile `c` stands on: every run on it would be refused
+function holdsOtherImages(s: Spare, c: PoolConfig): boolean {
+	return !!c.imageList && !!s.holdsImages && s.holdsImages !== imagesListed(c.root, c.imageList);
 }
 
 // the first of these to reach the base
@@ -171,7 +186,7 @@ class EnginePool {
 	warm(c: PoolConfig): void {
 		this.config = c;
 		const key = keyOf(c, c.preamble);
-		for (const s of this.spares.filter((x) => x.key !== key)) {
+		for (const s of this.spares.filter((x) => x.key !== key || holdsOtherImages(x, c))) {
 			this.spares = this.spares.filter((x) => x !== s);
 			retire(s.engine);
 		}
@@ -290,7 +305,7 @@ class EnginePool {
 		}
 		this.out.delete(engine);
 		const c = this.config;
-		if (!c || s.key !== keyOf(c, c.preamble)) {
+		if (!c || s.key !== keyOf(c, c.preamble) || holdsOtherImages(s, c)) {
 			retire(engine);
 			if (c) this.warm(c);
 			return;
