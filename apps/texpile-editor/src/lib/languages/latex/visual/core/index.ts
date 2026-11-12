@@ -108,7 +108,7 @@ export type { ItemLabels } from '$lib/editor/visual/extensions/listNumbers/listN
 export { printedValue } from '$lib/languages/latex/visual/extensions/numbers/printedNumber';
 export type { NumberStyle } from '$lib/languages/latex/visual/extensions/numbers/printedNumber';
 export { isReadOnly } from '$lib/stores/permissionStore';
-export { compiledNumbersOf } from '$lib/editor/visual/extensions/nodeNumbers';
+export { compiledNumbersOf, typedInParagraph } from '$lib/editor/visual/extensions/nodeNumbers';
 export { adoptParse } from '$lib/editor/visual/parseOrigins';
 export { containerOriginsOf } from '$lib/editor/visual/parseOrigins';
 export { containerRecordAround } from '$lib/editor/visual/parseOrigins';

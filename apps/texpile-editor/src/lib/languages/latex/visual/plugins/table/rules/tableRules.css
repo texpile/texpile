@@ -1,0 +1,47 @@
+/* a LaTeX table as it prints: its own rules, and as wide as its cells unless it states a width. An edge with no rule
+   shows as a guide under the pointer or around the caret */
+.ProseMirror .rules-as-printed {
+	--cell-guide: transparent;
+	--table-rule: var(--color-surface-950-50);
+}
+.ProseMirror .rules-as-printed:hover,
+.ProseMirror .rules-as-printed.table-has-caret {
+	--cell-guide: var(--color-surface-300-700);
+}
+.ProseMirror .rules-as-printed :is(td, th) {
+	border: 1px dashed var(--cell-guide);
+}
+.ProseMirror .rules-as-printed :is(td, th).rule-top-light {
+	border-top: 1px solid var(--table-rule);
+}
+.ProseMirror .rules-as-printed :is(td, th).rule-bottom-light {
+	border-bottom: 1px solid var(--table-rule);
+}
+.ProseMirror .rules-as-printed :is(td, th).rule-top-heavy {
+	border-top: 2px solid var(--table-rule);
+}
+.ProseMirror .rules-as-printed :is(td, th).rule-bottom-heavy {
+	border-bottom: 2px solid var(--table-rule);
+}
+.ProseMirror .rules-as-printed :is(td, th).rule-top-double {
+	border-top: 3px double var(--table-rule);
+}
+.ProseMirror .rules-as-printed :is(td, th).rule-bottom-double {
+	border-bottom: 3px double var(--table-rule);
+}
+.ProseMirror .rules-as-printed :is(td, th).rule-left {
+	border-left: 1px solid var(--table-rule);
+}
+.ProseMirror .rules-as-printed :is(td, th).rule-right {
+	border-right: 1px solid var(--table-rule);
+}
+.ProseMirror .rules-as-printed :is(td, th).cell-center {
+	text-align: center;
+}
+.ProseMirror .rules-as-printed :is(td, th).cell-right {
+	text-align: right;
+}
+.ProseMirror .table-natural-width table {
+	width: auto;
+	margin-inline: auto;
+}
