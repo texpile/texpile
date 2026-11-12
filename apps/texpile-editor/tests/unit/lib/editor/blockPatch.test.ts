@@ -6,7 +6,7 @@ import { EditorState } from 'prosemirror-state';
 import type { Node as PMNode } from 'prosemirror-model';
 import { schema } from '$lib/languages/latex/schema/latexPMSchema';
 import { parseLatexFile } from '$lib/workspace/latexRoundtrip';
-import { computeBlockPatch, syncParseAttrs } from '$lib/editor/visual/blockPatch';
+import { computeBlockPatch, computeBlockPatches, syncParseAttrs } from '$lib/editor/visual/blockPatch';
 
 const SRC = `\\documentclass{article}
 \\begin{document}
@@ -70,5 +70,41 @@ describe('computeBlockPatch + syncParseAttrs', () => {
 		const tr = state.tr;
 		syncParseAttrs(tr, newDoc);
 		expect(tr.steps.length).toBe(0);
+	});
+});
+
+// one range from the first changed block to the last rebuilt every block between them: an agent's write to the
+// start and the end of a paper redrew the whole paper
+describe('computeBlockPatches', () => {
+	function patched(oldDoc: PMNode, newDoc: PMNode): PMNode {
+		const tr = EditorState.create({ schema, doc: oldDoc }).tr;
+		for (const p of computeBlockPatches(oldDoc, newDoc).reverse()) tr.replaceWith(p.from, p.to, p.nodes);
+		syncParseAttrs(tr, newDoc);
+		return tr.doc;
+	}
+
+	it('keeps the blocks between two changed places as the nodes they were', () => {
+		const oldDoc = parseLatexFile(SRC).doc;
+		const next = SRC.replace('some words', 'more words').replace('Last paragraph.', 'Last paragraph, longer.\n\nAnd one after it.');
+		const newDoc = parseLatexFile(next).doc;
+		const doc = patched(oldDoc, newDoc);
+		expect(doc.eq(newDoc)).toBe(true);
+		expect(computeBlockPatches(oldDoc, newDoc).length).toBe(2);
+		const rebuilt = [];
+		for (let i = 0; i < oldDoc.childCount; i++) if (doc.child(i) !== oldDoc.child(i)) rebuilt.push(i);
+		expect(rebuilt).toEqual([1, oldDoc.childCount - 1]);
+	});
+
+	it('ends in the fresh parse whatever was added, dropped and changed', () => {
+		const oldDoc = parseLatexFile(SRC).doc;
+		for (const next of [
+			SRC.replace('First paragraph with some words.\n\n', '').replace('\\item beta', '\\item beta\n\\item gamma'),
+			SRC.replace('\\section{One}', '\\section{One}\n\nNew first.\n\nNew second.').replace('Last paragraph.\n', ''),
+			SRC.replace('Second paragraph stays put.', 'First paragraph with some words.'),
+			SRC
+		]) {
+			const newDoc = parseLatexFile(next).doc;
+			expect(patched(oldDoc, newDoc).eq(newDoc), next).toBe(true);
+		}
 	});
 });
