@@ -27,10 +27,18 @@ export function inlineMathEnd(text: string, pos: number): number {
 	return end + delimiter.length;
 }
 
+function closesOnLine(line: Line): boolean {
+	const rest = line.text.slice(line.pos + 2).trim();
+	if (!rest.endsWith('$$') || rest.length <= 2) return false;
+	const body = rest.slice(0, -2);
+	for (let at = body.indexOf('$$'); at >= 0; at = body.indexOf('$$', at + 1)) if (!escapedAt(body, at)) return false;
+	return true;
+}
+
 function opensMathBlock(cx: BlockContext, line: Line): boolean {
 	if (line.indent >= line.baseIndent + 4 || line.text.slice(line.pos, line.pos + 2) !== '$$') return false;
 	const rest = line.text.slice(line.pos + 2).trim();
-	if (rest.endsWith('$$') && rest.length > 2) return true;
+	if (rest.endsWith('$$') && rest.length > 2) return closesOnLine(line);
 	for (const next of linesAfter(cx, line)) {
 		const text = next.replace(/^[ \t>]*/, '');
 		if (text === '') return false;
@@ -58,8 +66,7 @@ export const mathSyntax: MarkdownConfig = {
 			parse(cx, line) {
 				if (!opensMathBlock(cx, line)) return false;
 				const from = cx.lineStart + line.pos;
-				const rest = line.text.slice(line.pos + 2).trim();
-				if (rest.endsWith('$$') && rest.length > 2) cx.nextLine();
+				if (closesOnLine(line)) cx.nextLine();
 				else {
 					while (cx.nextLine() && containerDepth(line) >= cx.depth) {
 						if (!line.text.slice(line.pos).trim().endsWith('$$')) continue;
