@@ -7,9 +7,14 @@ const root = fs.realpathSync(fs.mkdtempSync(path.join(os.tmpdir(), 'texpile-pool
 afterAll(() => fs.rmSync(root, { recursive: true, force: true }));
 fs.writeFileSync(path.join(root, 'main.tex'), 'pre\n\\begin{document}\nbody\n');
 
+const made: unknown[] = [];
+
 vi.mock('../../../../../../../electron/src/draft/teleport/draftEngine', () => ({
 	DraftEngine: class {
-		constructor(readonly root: string) {}
+		constructor(readonly root: string) {
+			made.push(this);
+		}
+		preloadImages(): void {}
 		serves = 0;
 		dead = false;
 		ready = Promise.resolve([]);
@@ -127,6 +132,32 @@ it('passes over a staged engine that exited where it should have parked', async 
 	served.parked = Promise.resolve(false);
 	giveBack(served, { key: 'chain-1', rec: 'rec-1' });
 	expect(await takeStaged(c, 'chain-1')).toBeNull();
+	stopPool();
+});
+
+// a spare that read the last compile's images holds objects the next compile would number its own after: the image
+// list then changed on every compile, and every waiting engine left
+it('gives a compile a fresh engine once the spares read images at the base', async () => {
+	const c = {
+		root,
+		mainRel: 'main.tex',
+		engineDir: '/e',
+		engine: 'lualatex',
+		seedDir: '/s',
+		preamble: 'pre\n\\begin{document}',
+		preStamp: null
+	};
+	fs.writeFileSync(path.join(root, 'none.lua'), 'return {}\n');
+	fs.writeFileSync(path.join(root, 'images.lua'), 'return {{n=172,file="a.pdf",hash=""}}\n');
+	made.length = 0;
+	warmPool({ ...c, imageList: 'none.lua' });
+	const spares = [...made];
+	expect(spares).toContain(await takeEngine(c, true));
+	stopPool();
+	made.length = 0;
+	warmPool({ ...c, imageList: 'images.lua' });
+	const withImages = [...made];
+	expect(withImages).not.toContain(await takeEngine(c, true));
 	stopPool();
 });
 

@@ -24,6 +24,8 @@ type Spare = {
 	at: Promise<boolean>;
 	fonts?: string;
 	images?: string;
+	/** it read images at the base: a compile on it numbers the document's own after them, and no waiting engine holds those */
+	holdsImages?: boolean;
 	staged?: string;
 	due?: number;
 	ahead?: string;
@@ -97,6 +99,17 @@ function preload(s: Spare, c: PoolConfig): void {
 		s.engine.preloadImages(c.imageList);
 		// eslint-disable-next-line no-param-reassign
 		s.images = c.imageList;
+		// eslint-disable-next-line no-param-reassign
+		s.holdsImages ||= listsImages(c.root, c.imageList);
+	}
+}
+
+// a compile's image list names each image's object: `return {}` for a document with none
+function listsImages(root: string, listRel: string): boolean {
+	try {
+		return /\bn\s*=\s*\d/.test(fs.readFileSync(path.join(root, listRel), 'utf8'));
+	} catch {
+		return false;
 	}
 }
 
@@ -171,7 +184,7 @@ class EnginePool {
 	async take(c: PoolConfig, unserved: boolean): Promise<DraftEngine> {
 		const key = keyOf(c, c.preamble);
 		for (;;) {
-			const fit = this.spares.filter((x) => x.key === key && !x.engine.dead && !(unserved && x.engine.serves));
+			const fit = this.spares.filter((x) => x.key === key && !x.engine.dead && !(unserved && (x.engine.serves || x.holdsImages)));
 			// a staged engine waits at a chain: it goes back to the base when no other one will do
 			const free = fit.filter((x) => !x.staged);
 			if (!free.length && fit.length) this.unstage(fit[0]);
