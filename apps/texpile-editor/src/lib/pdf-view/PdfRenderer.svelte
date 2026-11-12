@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { BROWSER } from 'esm-env';
 	import { onDestroy, onMount } from 'svelte';
+	import { pdfPlaceOf, rememberPdfPlace } from './pdfPlaces';
 	import { getPdfViewerContext, type PdfViewerActions, type PdfSource } from './pdf-viewer/context';
 	import { getPdfJs, getPdfDocument } from './pdf-viewer/pdfjs-singleton';
 	import { PdfPresentationMode } from './pdf-viewer/PdfPresentationMode';
@@ -156,6 +157,8 @@
 				eventBus.on('updateviewarea', (evt: Record<string, unknown>) => {
 					const location = evt.location as { pageNumber: number };
 					viewerState.currentPage = location.pageNumber;
+					const place = loadedKey === undefined ? null : viewer?.getScrollAnchor();
+					if (place && loadedKey !== undefined) rememberPdfPlace(loadedKey, place);
 				});
 
 				eventBus.on('pagesloaded', (evt: Record<string, unknown>) => {
@@ -208,9 +211,11 @@
 			}
 
 			// reload of the same document (a recompile): note where we are so the fresh pages land
-			// back there. A different documentKey is a genuine document switch, so start at the top.
+			// back there. Another document opens where it was left, or at the top the first time.
 			const key = context.documentKey;
-			const anchor = key !== undefined && key === loadedKey ? v.getScrollAnchor() : null;
+			const anchor = key === undefined ? null : key === loadedKey ? v.getScrollAnchor() : pdfPlaceOf(key);
+			// the pages on their way in report the top, which is no place anyone left
+			loadedKey = undefined;
 
 			overlay = snapshotOverlay();
 
