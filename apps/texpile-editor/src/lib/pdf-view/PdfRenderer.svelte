@@ -374,5 +374,7 @@
 		flex: 1;
 		min-height: 0;
 		overflow: hidden;
+		/* the pages' layers stack among themselves: a link's box showed through the cover a resize puts over the pane */
+		isolation: isolate;
 	}
 </style>
