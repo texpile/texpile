@@ -77,6 +77,18 @@
 		padding: 0;
 		background: none;
 	}
+	.agent-markdown :global(.agent-math-block) {
+		margin: 0.25rem 0 0.5rem;
+		overflow-x: auto;
+		text-align: center;
+	}
+	.agent-markdown :global(.agent-math-block .ML__latex) {
+		display: inline-block;
+	}
+	.agent-markdown :global(.agent-math-failed) {
+		font-family: var(--font-mono, ui-monospace, monospace);
+		font-size: 0.85em;
+	}
 	.agent-markdown :global(.agent-table) {
 		margin: 0.25rem 0 0.5rem;
 		overflow-x: auto;

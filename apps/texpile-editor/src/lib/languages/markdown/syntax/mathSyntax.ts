@@ -4,7 +4,7 @@ import { containerDepth, linesAfter } from './blockLines';
 const DOLLAR = 36;
 const BACKSLASH = 92;
 
-function escapedAt(text: string, at: number): boolean {
+export function escapedAt(text: string, at: number): boolean {
 	let n = 0;
 	while (at - n > 0 && text.charCodeAt(at - n - 1) === BACKSLASH) n++;
 	return n % 2 === 1;
@@ -27,12 +27,17 @@ export function inlineMathEnd(text: string, pos: number): number {
 	return end + delimiter.length;
 }
 
-function closesOnLine(line: Line): boolean {
-	const rest = line.text.slice(line.pos + 2).trim();
-	if (!rest.endsWith('$$') || rest.length <= 2) return false;
-	const body = rest.slice(0, -2);
+/** `rest` is the line after its opening $$ */
+export function closesInOneLine(rest: string): boolean {
+	const trimmed = rest.trim();
+	if (!trimmed.endsWith('$$') || trimmed.length <= 2) return false;
+	const body = trimmed.slice(0, -2);
 	for (let at = body.indexOf('$$'); at >= 0; at = body.indexOf('$$', at + 1)) if (!escapedAt(body, at)) return false;
 	return true;
+}
+
+function closesOnLine(line: Line): boolean {
+	return closesInOneLine(line.text.slice(line.pos + 2));
 }
 
 function opensMathBlock(cx: BlockContext, line: Line): boolean {
