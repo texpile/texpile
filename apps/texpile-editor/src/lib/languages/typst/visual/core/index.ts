@@ -33,11 +33,13 @@ export { bibAuthorShort, bibDisplayText, type BiblatexReference } from '$lib/lan
 export { typstTableWrapperView } from '$lib/editor/visual/extensions/table/tableWrapperView.svelte';
 export {
 	heavierRule,
+	linesOfEdges,
 	tableCaretPlugin,
 	tableRulesPlugin,
 	type CellAlign,
 	type CellEdges,
 	type RuleWeight,
+	type TableLines,
 	type TableLook
 } from '$lib/editor/visual/extensions/table/rules/tableRules';
 export { bareTableSettingsPlugin, openBareTableSettings } from '$lib/editor/visual/extensions/table/bare/bareTableSettings.svelte';

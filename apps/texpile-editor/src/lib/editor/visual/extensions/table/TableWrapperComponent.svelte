@@ -6,6 +6,7 @@
 	import { Settings, AlertCircle } from '@lucide/svelte';
 	import type { Node } from 'prosemirror-model';
 	import TableSettingsPanel from './TableSettingsPanel.svelte';
+	import type { TableLines } from './rules/tableRules';
 	import { isReadOnly } from '$lib/stores/permissionStore';
 	import { templateFeaturesStore } from '$lib/stores/editorStore';
 	import { m } from '$lib/paraglide/messages';
@@ -25,6 +26,8 @@
 		colspec: string;
 		tableEnv: string;
 		setColspec: (spec: string) => void;
+		lines: TableLines | null;
+		setLines: (lines: TableLines) => void;
 	};
 
 	let {
@@ -38,7 +41,9 @@
 		setBottomRule,
 		colspec,
 		tableEnv,
-		setColspec
+		setColspec,
+		lines,
+		setLines
 	}: Props = $props();
 
 	const tableCaptionEnabled = $derived(templateFeaturesStore.current?.tableCaption ?? true);
@@ -114,6 +119,8 @@
 							{colspec}
 							{tableEnv}
 							{setColspec}
+							{lines}
+							{setLines}
 						/>
 					</Popover.Content>
 				</Popover.Positioner>

@@ -1,14 +1,7 @@
 // the lines Typst prints around each cell of a table: its stroke, the lines written between the rows, and its align
 import type { Node } from 'prosemirror-model';
 import { TableMap } from 'prosemirror-tables';
-import {
-	heavierRule,
-	horizontalAlignment,
-	type CellAlign,
-	type CellEdges,
-	type RuleWeight,
-	type TableLook
-} from '$lib/languages/typst/visual/core';
+import { heavierRule, horizontalAlignment, type CellAlign, type CellEdges, type RuleWeight } from '$lib/languages/typst/visual/core';
 
 function namedValue(args: readonly string[], name: string): string | null {
 	for (const arg of args) {
@@ -73,7 +66,7 @@ function columnSides(align: unknown, columns: number, inFigure: boolean): CellAl
 	});
 }
 
-function typstCellEdges(table: Node, inFigure: boolean): Map<number, CellEdges> {
+export function typstCellEdges(table: Node, inFigure: boolean): Map<number, CellEdges> {
 	const map = TableMap.get(table);
 	const every = strokesEveryEdge(strings(table.attrs.typArgs));
 	const sides = columnSides(table.attrs.typAlign, map.width, inFigure);
@@ -97,8 +90,6 @@ function typstCellEdges(table: Node, inFigure: boolean): Map<number, CellEdges> 
 }
 
 // fr and percent columns share out the width, any other table is as wide as its cells
-function fillsWidth(table: Node): boolean {
+export function sharesOutWidth(table: Node): boolean {
 	return /fr\b|%/.test(String(table.attrs.colspec ?? ''));
 }
-
-export const typstTableLook: TableLook = { edgesOf: typstCellEdges, fillsWidth };

@@ -7,6 +7,7 @@ import { offerBlockSettings, settingsPlace, type GearPlace } from '$lib/editor/v
 import { labelTaken } from '$lib/editor/visual/labelTaken';
 import { compiledNumbersOf } from '$lib/editor/visual/extensions/nodeNumbers';
 import { announceLabelRenamed, repointRefs } from '$lib/editor/visual/repointRefs';
+import { tableLookOf, type TableLines } from './rules/tableRules';
 
 /** which markup language the wrapper edits; typst hides every LaTeX-only control
  * (notes, colspec model, row rules, spanning) and never writes tex concepts into the doc. */
@@ -197,6 +198,15 @@ function buildTableWrapperView(
 		if (updated) componentProps.colspec = colspecOf(updated);
 	}
 
+	function linesOf(wrapper: Node): TableLines | null {
+		const table = getTableNode(wrapper);
+		return table ? (tableLookOf(view.state)?.linesOf(table) ?? null) : null;
+	}
+	function setLines(lines: TableLines) {
+		const tableAbs = getTableAbsPos();
+		if (tableAbs !== null) tableLookOf(view.state)?.setLines(view, tableAbs, lines);
+	}
+
 	// a number handed on the decorations is drawn as given, none included; Typst counts its own until a compile hands them
 	function calculateTableData(): { tableNumber: string | null } {
 		const handed = compiledNumbersOf(decorations);
@@ -232,7 +242,9 @@ function buildTableWrapperView(
 		setBottomRule,
 		colspec: colspecOf(currentNode),
 		tableEnv: envOf(currentNode),
-		setColspec
+		setColspec,
+		lines: linesOf(currentNode),
+		setLines
 	});
 
 	const component = mount(TableWrapperComponent, {
@@ -275,6 +287,7 @@ function buildTableWrapperView(
 			componentProps.bottomRule = rules.bottomRule;
 			componentProps.colspec = colspecOf(currentNode);
 			componentProps.tableEnv = envOf(currentNode);
+			componentProps.lines = linesOf(currentNode);
 
 			updateClasses();
 			return true;

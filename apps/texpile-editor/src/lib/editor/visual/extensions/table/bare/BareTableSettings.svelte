@@ -6,6 +6,8 @@
 	import * as Panel from '$lib/editor/visual/extensions/drawnChips/panel';
 	import { m } from '$lib/paraglide/messages';
 	import TableColumnsSetting from '../TableColumnsSetting.svelte';
+	import TableLinesSetting from '../rules/TableLinesSetting.svelte';
+	import type { TableLines } from '../rules/tableRules';
 
 	type Props = {
 		place: GearPlace;
@@ -14,6 +16,8 @@
 		colspec: string;
 		tableEnv: string;
 		setColspec: (spec: string) => void;
+		lines: TableLines | null;
+		setLines: (lines: TableLines) => void;
 		/** the environment a table stands alone in, when that sets its place on the line */
 		alignment: string | null;
 		setAlignment: (name: string) => void;
@@ -46,6 +50,7 @@
 						<Panel.Segments options={sides} selected={props.alignment} label={m.env_align_title()} onpick={props.setAlignment} />
 					</div>
 				{/if}
+				<TableLinesSetting lines={props.lines} setLines={props.setLines} />
 				<TableColumnsSetting
 					dialect={props.dialect}
 					table={props.table}

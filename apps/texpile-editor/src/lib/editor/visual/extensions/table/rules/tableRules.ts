@@ -1,8 +1,9 @@
 // marks every cell of a table with the rules it prints and the side its text is set to, and the table the caret is in.
 // What a table prints is the language's to say (`TableLook`)
-import { Plugin, type EditorState } from 'prosemirror-state';
-import { Decoration, DecorationSet } from 'prosemirror-view';
+import { Plugin, PluginKey, type EditorState } from 'prosemirror-state';
+import { Decoration, DecorationSet, type EditorView } from 'prosemirror-view';
 import type { Node } from 'prosemirror-model';
+import { TableMap } from 'prosemirror-tables';
 import { typedInParagraph } from '$lib/editor/visual/extensions/nodeNumbers';
 import './tableRules.css';
 
@@ -15,7 +16,35 @@ export type TableLook = {
 	edgesOf(table: Node, inFloat: boolean): Map<number, CellEdges>;
 	/** the table states a width and fills it; any other is as wide as its cells */
 	fillsWidth(table: Node): boolean;
+	/** the choice the table's lines amount to, or null when they are a pattern of its own */
+	linesOf(table: Node): TableLines | null;
+	/** gives the table at `pos` every line, the three of a formal table, or none */
+	setLines(view: EditorView, pos: number, lines: TableLines): void;
 };
+
+/** formal: a rule over the table, one under its first row and one under the table, as booktabs sets them */
+export type TableLines = 'formal' | 'all' | 'none';
+
+const tableRulesKey = new PluginKey<DecorationSet>('tableRules');
+
+/** what the editor's language says its tables print, for the table settings */
+export function tableLookOf(state: EditorState): TableLook | null {
+	return (tableRulesKey.get(state)?.spec as { look?: TableLook } | undefined)?.look ?? null;
+}
+
+/** all: every row and column boundary is ruled. formal: no bars, the table closed above and below, and at most its other rows parted here and there */
+export function linesOfEdges(table: Node, edges: ReadonlyMap<number, CellEdges>): TableLines | null {
+	if (edges.size === 0) return null;
+	const map = TableMap.get(table);
+	const cells = [...edges].map(([at, e]) => ({ e, rect: map.findCell(at) }));
+	const bars = cells.some(({ e }) => e.left || e.right);
+	if (!bars && cells.every(({ e }) => !e.top && !e.bottom)) return 'none';
+	const everyRow = cells.every(({ e }) => e.top && e.bottom);
+	// border by border a cell shares its left edge with the cell before it, which a multicolumn leaves to that cell
+	if (bars) return everyRow && cells.every(({ e, rect }) => e.right && (rect.left > 0 || e.left)) ? 'all' : null;
+	const closed = cells.every(({ e, rect }) => (rect.top > 0 || e.top) && (rect.bottom < map.height || e.bottom));
+	return closed && (!everyRow || map.height <= 2) ? 'formal' : null;
+}
 
 type Mark = { from: number; to: number; cls: string };
 
@@ -74,6 +103,8 @@ export function tableRulesPlugin(look: TableLook): Plugin<DecorationSet> {
 	}
 
 	const plugin: Plugin<DecorationSet> = new Plugin<DecorationSet>({
+		key: tableRulesKey,
+		look,
 		state: {
 			init: (_config, state) => decorate(state.doc),
 			apply(tr, old) {

@@ -10,7 +10,7 @@ import { tableFace } from './tableFace';
 import { tableKeys } from './tableKeys';
 import { typstHeaderRows } from './typstHeaderRows';
 import { tableInserts } from './tableInsert';
-import { typstTableLook } from './rules/typstTableEdges';
+import { typstTableLook } from './rules/typstTableLook';
 
 export const table: TypstPlugin = {
 	role(use) {

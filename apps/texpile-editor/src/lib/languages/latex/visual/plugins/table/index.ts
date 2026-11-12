@@ -8,7 +8,7 @@ import {
 import { inlineTabularPart, isTextTable } from './inlineTabularFace';
 import { tableDocument } from './document';
 import { longtablePlugin } from './longtable/longtablePlugin';
-import { latexTableLook } from './rules/tableRuleEdges';
+import { latexTableLook } from './rules/latexTableLook';
 import { tableInserts } from './tableInsert';
 
 export const table: LatexPlugin = {

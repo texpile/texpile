@@ -5,6 +5,8 @@
 	import type { Node } from 'prosemirror-model';
 	import TableAdvancedSection from './TableAdvancedSection.svelte';
 	import TableColumnsSetting from './TableColumnsSetting.svelte';
+	import TableLinesSetting from './rules/TableLinesSetting.svelte';
+	import type { TableLines } from './rules/tableRules';
 	import { templateFeaturesStore } from '$lib/stores/editorStore';
 	import { m } from '$lib/paraglide/messages';
 
@@ -22,6 +24,8 @@
 		colspec: string;
 		tableEnv: string;
 		setColspec: (spec: string) => void;
+		lines: TableLines | null;
+		setLines: (lines: TableLines) => void;
 	};
 
 	let {
@@ -36,7 +40,9 @@
 		setBottomRule,
 		colspec,
 		tableEnv,
-		setColspec
+		setColspec,
+		lines,
+		setLines
 	}: Props = $props();
 
 	// the wrapper's table, whose columns the settings edit
@@ -79,6 +85,7 @@
 </script>
 
 <div class="settings-content">
+	<TableLinesSetting {lines} {setLines} />
 	<TableColumnsSetting {dialect} {table} {colspec} {tableEnv} {setColspec} />
 	{#if dialect === 'latex' && isFloat}
 		<div class="settings-row">

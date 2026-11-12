@@ -5,6 +5,7 @@ import { TextSelection, type Plugin } from 'prosemirror-state';
 import type { EditorView } from 'prosemirror-view';
 import { blockSettingsPlugin, gearPlaceBeside, type GearPlace } from '$lib/editor/visual/extensions/blockHandle/blockSettings';
 import { generateLabel } from '$lib/editor/visual/label';
+import { tableLookOf, type TableLines } from '../rules/tableRules';
 import { m } from '$lib/paraglide/messages';
 import BareTableSettings from './BareTableSettings.svelte';
 
@@ -63,6 +64,16 @@ export function openBareTableSettings(request: BareTableRequest): void {
 			view.dispatch(view.state.tr.setNodeMarkup(pos, undefined, attrs));
 			props.table = tableAt(view, pos);
 			props.colspec = spec;
+		},
+		lines: tableLookOf(view.state)?.linesOf(table) ?? null,
+		setLines(lines: TableLines) {
+			tableLookOf(view.state)?.setLines(view, pos, lines);
+			const now = tableAt(view, pos);
+			if (!now) return;
+			props.table = now;
+			props.colspec = String(now.attrs.colspec ?? '');
+			props.tableEnv = String(now.attrs.env ?? 'tabular');
+			props.lines = tableLookOf(view.state)?.linesOf(now) ?? null;
 		},
 		setAlignment(name: string) {
 			const env = environment();

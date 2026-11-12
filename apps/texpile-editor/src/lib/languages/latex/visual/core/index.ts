@@ -111,13 +111,17 @@ export { isReadOnly } from '$lib/stores/permissionStore';
 export { compiledNumbersOf } from '$lib/editor/visual/extensions/nodeNumbers';
 export {
 	heavierRule,
+	linesOfEdges,
 	tableCaretPlugin,
 	tableRulesPlugin,
 	type CellAlign,
 	type CellEdges,
 	type RuleWeight,
+	type TableLines,
 	type TableLook
 } from '$lib/editor/visual/extensions/table/rules/tableRules';
+export { editPreambleHere } from '$lib/stores/editorStore';
+export { withPackageNeeded } from '$lib/languages/latex/intellisense/packages/packageNeed';
 export { bareTableSettingsPlugin, openBareTableSettings } from '$lib/editor/visual/extensions/table/bare/bareTableSettings.svelte';
 export { adoptParse } from '$lib/editor/visual/parseOrigins';
 export { containerOriginsOf } from '$lib/editor/visual/parseOrigins';

@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import type { Node } from 'prosemirror-model';
 import { typstToProseMirror } from '$lib/languages/typst/visual/convert/converter';
-import { typstTableLook } from '$lib/languages/typst/visual/plugins/table/rules/typstTableEdges';
+import { typstTableLook } from '$lib/languages/typst/visual/plugins/table/rules/typstTableLook';
 
 function tableOf(source: string): Node {
 	let table: Node | null = null;
