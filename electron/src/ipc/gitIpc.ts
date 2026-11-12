@@ -1,7 +1,7 @@
-// the git:* surface, backing the Source Control panel. Every call runs in the helper process
+// the git:* surface, backing the Source Control panel. Every call runs in the helper thread
 // (helper/helperWorker.ts); main only relays.
 import type { WebContents } from 'electron';
-import { helperCall, onHelperEvent } from '../helper/helperProcess';
+import { helperCall, onHelperEvent } from '../helper/helperThread';
 import { handleFs, handleFsE } from './ipcResult';
 import { timeSpan } from '../startupStats';
 import { withAskpass, registerAskpassIpc } from '../git/auth/gitAskpass';

@@ -1,6 +1,6 @@
 // The Source Control panel's history half: the version list, what differs from a version now, a
 // file as it was in one, and the two ways a version is written, Save version and Restore. Split
-// from gitService.ts, whose repo-root resolution and command factory it shares; the helper process
+// from gitService.ts, whose repo-root resolution and command factory it shares; the helper thread
 // serves both (helper/helperWorker.ts).
 import type { SimpleGit } from 'simple-git';
 import {

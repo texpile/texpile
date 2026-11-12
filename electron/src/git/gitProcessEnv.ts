@@ -1,4 +1,4 @@
-// The environment every git of Texpile's runs with, set on the helper process (helper/helperWorker.ts)
+// The environment every git of Texpile's runs with, set on the helper thread (helper/helperWorker.ts)
 // so each git it starts inherits it. Its own module so the live tests can run git the same way.
 //
 // English (LANGUAGE, LC_ALL, LANG): several answers are read from git's own words - why a push

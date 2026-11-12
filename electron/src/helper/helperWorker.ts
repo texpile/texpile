@@ -1,8 +1,9 @@
-// Entry of the helper utility process: git and the workspace watcher run here, not in the main
-// process. On Windows both do their setup synchronously on the calling thread (a spawn creates
-// the child in CreateProcess, chokidar opens one directory handle per watched entry), and the
-// main process is also what serves the renderer its code chunks: those holds left the editor
-// waiting on a blank pane (startupStats.ts caught it). helperProcess.ts is the other end.
+// Entry of the helper thread: git and the workspace watcher run here, not on the main thread. On
+// Windows both do their setup synchronously on the calling thread (a spawn creates the child in
+// CreateProcess, chokidar opens one directory handle per watched entry), and the main thread is
+// also what serves the renderer its code chunks: those holds left the editor waiting on a blank
+// pane (startupStats.ts caught it). helperThread.ts is the other end.
+import { parentPort } from 'node:worker_threads';
 import * as gitService from '../git/gitService';
 import * as gitRemote from '../git/remote/gitRemote';
 import * as gitHistory from '../git/history/gitHistory';
@@ -18,11 +19,11 @@ import { GIT_PROCESS_ENV } from '../git/gitProcessEnv';
 
 type Call = { id: number; op: string; args: unknown[] };
 
-// Every git here inherits this process's environment: English and no optional locks
-// (gitProcessEnv.ts says why each).
+// Every git here inherits this thread's own copy of the environment: English and no optional
+// locks (gitProcessEnv.ts says why each).
 Object.assign(process.env, GIT_PROCESS_ENV);
 
-const port = process.parentPort;
+const port = parentPort!;
 
 /** clones under way, by the key main gave each */
 const clones = new Map<string, AbortController>();
@@ -70,8 +71,7 @@ function run(op: string, args: unknown[]): unknown {
 	throw new Error(`unknown helper op ${op}`);
 }
 
-port.on('message', (e) => {
-	const { id, op, args } = e.data as Call;
+port.on('message', ({ id, op, args }: Call) => {
 	Promise.resolve()
 		.then(() => run(op, args))
 		.then(

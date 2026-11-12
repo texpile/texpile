@@ -1,7 +1,7 @@
 // A file name is that file, never a pattern. To git, "a[1].tex" after `--` is a wildcard that also
 // matches a1.tex: discarding the one threw away the other's changes, and the Timeline mixed their
 // histories. Each name is passed as a literal pathspec (literal() in gitProcessEnv.ts), and the hooks
-// git runs keep patterns of their own. These run in the helper process's environment
+// git runs keep patterns of their own. These run in the helper thread's environment
 // (gitProcessEnv.ts), against real repositories (gitLiveFixture.ts).
 import { describe, it, expect, beforeAll, afterAll, afterEach } from 'vitest';
 import { writeFileSync, existsSync, chmodSync, mkdirSync } from 'node:fs';
