@@ -33,7 +33,7 @@ function compile(root: string): void {
 	});
 }
 
-test('a picture in an input file shows as the compiled PDF prints it, and drops back to the card once the source is newer', async () => {
+test('a picture in an input file shows as the compiled PDF prints it, and keeps that picture until its source changes', async () => {
 	const { page, root } = texpile();
 	compile(root);
 	const visual = new VisualEditor(page, root);
@@ -45,10 +45,17 @@ test('a picture in an input file shows as the compiled PDF prints it, and drops 
 	expect(box.width).toBeGreaterThan(80);
 	expect(box.height).toBeGreaterThan(20);
 
+	// the file saved after the compile, its picture as it was: the card had nothing to show until the next compile
 	const later = new Date(Date.now() + 60_000);
 	fs.utimesSync(path.join(root, 'part.tex'), later, later);
 	await visual.open('paper.tex');
 	await visual.open('part.tex');
-	await expect(page.locator('.figure-card')).toBeVisible();
+	await expect(page.locator('.figure-card svg image')).toBeVisible();
 	await expect(crop).toHaveCount(0);
+
+	fs.writeFileSync(path.join(root, 'part.tex'), PART.replace('{B}', '{C}'));
+	const laterStill = new Date(later.getTime() + 60_000);
+	fs.utimesSync(path.join(root, 'part.tex'), laterStill, laterStill);
+	await expect(page.locator('.figure-card')).toContainText('TikZ figure');
+	await expect(page.locator('.figure-card svg image')).toHaveCount(0);
 });
