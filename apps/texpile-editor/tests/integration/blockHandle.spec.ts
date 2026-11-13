@@ -32,8 +32,17 @@ const BARE_TABLE = `\\documentclass{article}\n\\begin{document}\n\nBefore.\n\n\\
 
 const FLOAT = `\\documentclass{article}\n\\begin{document}\n\nBefore.\n\n\\begin{table}[h]\n\\centering\n\\caption{Results}\n\\begin{tabular}{ll}\na & b \\\\\n\\end{tabular}\n\\end{table}\n\nAfter.\n\n\\end{document}\n`;
 
+const LINES = `\\documentclass{article}\n\\begin{document}\n\n\\section{Heading}\n\nA line.\n\n\\begin{equation}\nE = mc^2\n\\end{equation}\n\n\\end{document}\n`;
+
 const texpile = useTexpile({
-	files: { 'unit.tex': TEX, 'centered.tex': CENTERED, 'bare.tex': BARE_TABLE, 'held.tex': BARE_TABLE, 'float.tex': FLOAT }
+	files: {
+		'unit.tex': TEX,
+		'centered.tex': CENTERED,
+		'bare.tex': BARE_TABLE,
+		'held.tex': BARE_TABLE,
+		'float.tex': FLOAT,
+		'lines.tex': LINES
+	}
 });
 
 type Box = { left: number; right: number; top: number; bottom: number };
@@ -150,7 +159,26 @@ test('the handle waits for the pointer in the margin beside a tall block', async
 	await page.mouse.move(block.x + block.width + 19, block.y + 11, { steps: 8 });
 	await page.waitForTimeout(200);
 	const button = (await remove.boundingBox())!;
-	expect(Math.abs(button.y - block.y)).toBeLessThan(3);
+	expect(Math.abs(button.y - block.y), "still on the block's first line").toBeLessThan(8);
+});
+
+// it stood at the block's top edge, 15px over the middle of a heading's line
+test('the handle stands level with a heading and with the middle of a formula', async () => {
+	const { page, root } = texpile();
+	const v = new VisualEditor(page, root);
+	await v.open('lines.tex');
+	const plus = page.locator('.block-handle-btn').first();
+	for (const block of [page.locator('.ProseMirror > h1'), page.locator('.ProseMirror > .block-math-container')]) {
+		await expect
+			.poll(async () => {
+				const at = (await block.boundingBox())!;
+				await page.mouse.move(5, 5);
+				await page.mouse.move(at.x + at.width / 2, at.y + at.height / 2, { steps: 4 });
+				const button = await plus.boundingBox();
+				return button ? Math.abs(button.y + button.height / 2 - (at.y + at.height / 2)) : null;
+			})
+			.toBeLessThan(3);
+	}
 });
 
 test("a table in center gets a caption and a number from the handle's gear", async () => {

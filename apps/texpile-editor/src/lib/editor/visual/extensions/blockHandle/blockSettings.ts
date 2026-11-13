@@ -1,6 +1,7 @@
 // the settings a block opens from the handle's gear or the right-click menu, kept by the element the editor draws the block as
 import { Plugin } from 'prosemirror-state';
 import type { EditorView } from 'prosemirror-view';
+import { handleLineMiddle } from './handleLine';
 
 export type BlockSettings = {
 	/** the gear's hint, such as Table settings */
@@ -13,7 +14,7 @@ export type BlockSettings = {
 
 export type GearPlace = () => { x: number; y: number; width: number; height: number };
 
-// the handle's gear from a block's top right corner: past the gutter's gap, on the block's first line (block-handle-plugin)
+// the handle's gear from a block's right edge: past the gutter's gap, level with the block's first line (block-handle-plugin)
 const GEAR_LEFT = 2;
 const GEAR_SIZE = 22;
 
@@ -77,7 +78,8 @@ export function blockSettingsUnder(view: EditorView, pos: number, inside: number
 // the gear's box from the block's top left corner
 function gearOffset(dom: Element, gear?: HTMLElement): { dx: number; dy: number; width: number; height: number } {
 	const block = dom.getBoundingClientRect();
-	if (!gear) return { dx: block.width + GEAR_LEFT, dy: 0, width: GEAR_SIZE, height: GEAR_SIZE };
+	if (!gear)
+		return { dx: block.width + GEAR_LEFT, dy: handleLineMiddle(dom) - GEAR_SIZE / 2 - block.top, width: GEAR_SIZE, height: GEAR_SIZE };
 	const at = gear.getBoundingClientRect();
 	return { dx: at.left - block.left, dy: at.top - block.top, width: at.width, height: at.height };
 }

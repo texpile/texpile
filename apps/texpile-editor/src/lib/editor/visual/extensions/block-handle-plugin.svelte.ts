@@ -14,7 +14,8 @@ import { handleUnitAt } from './blockHandle/handleUnit';
 import { FLOATING_BAR_BOTTOM } from '$lib/editor/floatingBar';
 import { positionOf } from './blockHandle/nodePosition';
 import { blockSettingsAt } from './blockHandle/blockSettings';
-import { pointerStaysWithBlock } from './blockHandle/handleReach';
+import { handleLineMiddle } from './blockHandle/handleLine';
+import { handleTop, pointerStaysWithBlock } from './blockHandle/handleReach';
 import { blockHandlePluginKey, handleDropEvents, handleDropLine, handleDropState, setHandleDragActive } from './blockHandle/handleDrop';
 
 type ItemsOf = () => readonly InsertItem[];
@@ -28,6 +29,12 @@ const GUTTER_OFFSET_LEFT_STACKED = 30;
 // one handle button (app.css .block-handle-btn); the side by side gutter is two and a 2px gap
 const HANDLE_W = 22;
 const HANDLE_GAP = 2;
+
+// the buttons from the first one's top to the last one's foot: one row, or a column with the delete icon and the gear in it
+function handleHeight(stacked: boolean, settings: boolean): number {
+	const buttons = stacked ? (settings ? 4 : 3) : 1;
+	return buttons * HANDLE_W + (buttons - 1) * HANDLE_GAP;
+}
 
 // a \noindent paragraph prints its own label in this same left margin, at the block's top edge
 // (app.css). Drop the gutter clear of it rather than have the two draw over each other.
@@ -112,10 +119,9 @@ class BlockHandleView {
 		if (!this.state.visible || this.hoveredPos == null) return false;
 		const dom = this.view.nodeDOM(this.hoveredPos);
 		if (!(dom instanceof HTMLElement)) return false;
-		const settings = this.state.settings ? 1 : 0;
-		const buttons = this.state.stacked ? 3 + settings : 1;
-		const buttonsBottom = this.state.top + buttons * HANDLE_W + (buttons - 1) * HANDLE_GAP;
-		return pointerStaysWithBlock({ x, y }, this.view.dom.getBoundingClientRect(), dom.getBoundingClientRect(), buttonsBottom);
+		const { top } = this.state;
+		const buttons = { top, bottom: top + handleHeight(this.state.stacked, this.state.settings !== null) };
+		return pointerStaysWithBlock({ x, y }, this.view.dom.getBoundingClientRect(), dom.getBoundingClientRect(), buttons);
 	}
 
 	private onMouseLeave = () => {
@@ -163,11 +169,14 @@ class BlockHandleView {
 		if (!(dom instanceof HTMLElement)) return;
 
 		const rect = dom.getBoundingClientRect();
-		const top = rect.top + (dropsForLabel(dom) ? NOINDENT_LABEL_DROP : 0);
+		const stacked = this.view.dom.closest('[data-gutter-stacked]') !== null;
+		const settings = (this.view.editable && blockSettingsAt(this.view, blockPos, dom)?.label()) || null;
+		const top = dropsForLabel(dom)
+			? rect.top + NOINDENT_LABEL_DROP
+			: handleTop(handleLineMiddle(dom), rect, handleHeight(stacked, settings !== null), HANDLE_W);
 		// anchor horizontal to view.dom, not the block: per-node indents (lists, quotes,
 		// centered figures) would make the gutter jump around
 		const containerRect = this.view.dom.getBoundingClientRect();
-		const stacked = this.view.dom.closest('[data-gutter-stacked]') !== null;
 		const left = containerRect.left - (stacked ? GUTTER_OFFSET_LEFT_STACKED : GUTTER_OFFSET_LEFT);
 		// null scroller = nothing can scroll, so nothing can be out of view
 		const area = scrollParent(this.view.dom)?.getBoundingClientRect();
@@ -187,7 +196,7 @@ class BlockHandleView {
 		this.state.stacked = stacked;
 		this.state.left = pinned;
 		this.state.right = containerRect.right + GUTTER_OFFSET_RIGHT;
-		this.state.settings = (this.view.editable && blockSettingsAt(this.view, blockPos, dom)?.label()) || null;
+		this.state.settings = settings;
 	}
 
 	private cancelHide = () => {
