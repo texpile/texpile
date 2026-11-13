@@ -61,6 +61,30 @@ test('a figure tab edits the picture in the file, and undo takes the edit back',
 	await disk.expectFile('fig.tex', (t) => t === FIG, 'the file after undo');
 });
 
+test('the undo key takes back a box just drawn, though the caret is already in its text', async () => {
+	const { page, root } = texpile();
+	const visual = new VisualEditor(page, root);
+	const disk = new Disk(root);
+	await visual.open('fig.tex');
+	await openFigure(visual);
+	const canvas = page.getByRole('application', { name: 'Figure canvas' });
+	await canvas.focus();
+	await page.keyboard.press('2');
+	// above the picture and under the tools
+	const stage = (await canvas.boundingBox())!;
+	const [x, y] = [stage.x + stage.width * 0.55, stage.y + 140];
+	await page.mouse.move(x, y);
+	await page.mouse.down();
+	await page.mouse.move(x + 120, y + 40, { steps: 6 });
+	await page.mouse.up();
+	const text = page.getByRole('textbox', { name: 'Text on the canvas' });
+	await expect(text).toBeFocused();
+	await disk.expectFile('fig.tex', (t) => t !== FIG, 'the new box on disk');
+	await page.keyboard.press('ControlOrMeta+z');
+	await expect(text).toHaveCount(0);
+	await disk.expectFile('fig.tex', (t) => t === FIG, 'the file after undo');
+});
+
 test('a narrow pane keeps the tools on one row and docks the panels at the foot', async () => {
 	const { page, root } = texpile();
 	const visual = new VisualEditor(page, root);
