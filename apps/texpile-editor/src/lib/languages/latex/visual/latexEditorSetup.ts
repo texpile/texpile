@@ -4,7 +4,7 @@ import { blockChipView, inlineChipView } from '$lib/languages/latex/visual/exten
 import { tikzLanguage } from '$lib/draw/tikz/tikzLanguage';
 import type { Plugin } from 'prosemirror-state';
 import { EditorState, type Transaction } from 'prosemirror-state';
-import type { EditorProps } from 'prosemirror-view';
+import type { EditorProps, EditorView } from 'prosemirror-view';
 import { schema } from '$lib/languages/latex/schema/latexPMSchema';
 import { keymap } from 'prosemirror-keymap';
 import { pmCommandKeys } from '$lib/keybindings/editors/pmCommandKeys';
@@ -35,6 +35,7 @@ import { tableViewOnly } from '$lib/editor/visual/extensions/table/tableViewOnly
 import { wholeTableEdits } from '$lib/editor/visual/extensions/table/wholeTableEdits';
 import { tableArrowEntry } from '$lib/editor/visual/extensions/table/caret/tableArrowEntry';
 import { tableArrowExit } from '$lib/editor/visual/extensions/table/caret/tableArrowExit';
+import { tabThroughCells } from '$lib/editor/visual/extensions/table/rows/addTableRow';
 import { crossBlockEdits } from '$lib/editor/visual/extensions/crossBlockEdits';
 import { imagePlugin } from '$lib/editor/visual/extensions/image';
 import { createCursorPlugin } from '$lib/editor/visual/extensions/cursor-plugin';
@@ -219,8 +220,8 @@ export function latexEditorPlugins(setup: LatexEditorSetup): Plugin[] {
 			// table cell, then list nesting (as markdown and typst do), and only outside both does Tab
 			// cycle the paragraph indent. Without the list step it wrote \indent into the \item
 			// instead of sinking it. always consume Tab so focus stays in the editor
-			Tab: (state: EditorState, dispatch?: (tr: Transaction) => void) => {
-				if (goToNextCell(1)(state, dispatch)) return true;
+			Tab: (state: EditorState, dispatch?: (tr: Transaction) => void, view?: EditorView) => {
+				if (tabThroughCells(state, dispatch, view)) return true;
 				if (indentListItem()(state, dispatch)) return true;
 				cycleParagraphIndent(1)(state, dispatch);
 				return true;

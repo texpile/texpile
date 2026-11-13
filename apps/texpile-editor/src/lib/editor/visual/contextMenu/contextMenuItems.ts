@@ -1,7 +1,8 @@
 // the visual editor's right-click menu entries: clipboard actions for every dialect, and the
 // table block set with its selection-dependent visibility
 import type { Component } from 'svelte';
-import { deleteColumn, addRowBefore, addRowAfter, deleteRow, deleteTable, mergeCells, splitCell } from 'prosemirror-tables';
+import { deleteColumn, deleteRow, deleteTable, mergeCells, splitCell } from 'prosemirror-tables';
+import { addTableRow } from '$lib/editor/visual/extensions/table/rows/addTableRow';
 import { Copy, Clipboard, Plus, Trash2, Combine, SplitSquareHorizontal } from '@lucide/svelte';
 import { editorViewStore } from '$lib/stores/editorStore';
 import { toaster } from '$lib/modals/toaster-svelte';
@@ -109,9 +110,7 @@ export function buildTableMenuItems(deps: TableMenuDeps): ContextMenuEntry[] {
 			icon: Plus,
 			showFor: ['cell', 'row'],
 			action: () => {
-				const view = editorView()!;
-				const { state, dispatch } = view;
-				addRowBefore(state, dispatch);
+				addTableRow(editorView()!, -1);
 			}
 		},
 		{
@@ -120,9 +119,7 @@ export function buildTableMenuItems(deps: TableMenuDeps): ContextMenuEntry[] {
 			icon: Plus,
 			showFor: ['cell', 'row'],
 			action: () => {
-				const view = editorView()!;
-				const { state, dispatch } = view;
-				addRowAfter(state, dispatch);
+				addTableRow(editorView()!, 1);
 			}
 		},
 		{ type: 'separator', showFor: ['cell', 'column', 'row'] },

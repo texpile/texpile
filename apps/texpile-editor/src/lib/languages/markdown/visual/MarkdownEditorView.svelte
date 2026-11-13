@@ -24,6 +24,7 @@
 	import { wholeTableEdits } from '$lib/editor/visual/extensions/table/wholeTableEdits';
 	import { tableArrowEntry } from '$lib/editor/visual/extensions/table/caret/tableArrowEntry';
 	import { tableArrowExit } from '$lib/editor/visual/extensions/table/caret/tableArrowExit';
+	import { tabThroughCells } from '$lib/editor/visual/extensions/table/rows/addTableRow';
 	import { crossBlockEdits } from '$lib/editor/visual/extensions/crossBlockEdits';
 	import { firstRowHeader } from './firstRowHeader';
 	import { tableAlignment } from './tableAlignment';
@@ -246,7 +247,7 @@
 				'Shift-Mod-End': extendToDocEnd,
 				'Shift-Enter': insertHardBreak,
 				// table cell first, then list indent; always consume so focus stays in the editor
-				Tab: (state, dispatch) => goToNextCell(1)(state, dispatch) || createIndentListCommand()(state, dispatch) || true,
+				Tab: (state, dispatch, view) => tabThroughCells(state, dispatch, view) || createIndentListCommand()(state, dispatch) || true,
 				'Shift-Tab': (state, dispatch) => goToNextCell(-1)(state, dispatch) || createDedentListCommand()(state, dispatch) || true
 			}),
 			cmarrowHandlers,

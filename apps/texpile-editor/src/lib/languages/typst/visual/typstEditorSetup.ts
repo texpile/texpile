@@ -32,6 +32,7 @@ import { tableEditing, goToNextCell } from 'prosemirror-tables';
 import { wholeTableEdits } from '$lib/editor/visual/extensions/table/wholeTableEdits';
 import { tableArrowEntry } from '$lib/editor/visual/extensions/table/caret/tableArrowEntry';
 import { tableArrowExit } from '$lib/editor/visual/extensions/table/caret/tableArrowExit';
+import { tabThroughCells } from '$lib/editor/visual/extensions/table/rows/addTableRow';
 import { crossBlockEdits } from '$lib/editor/visual/extensions/crossBlockEdits';
 import { columnResizing } from '$lib/editor/visual/extensions/table/columnResizing';
 import { snapWidthToFr } from '$lib/editor/visual/extensions/table/snapWidth';
@@ -259,7 +260,7 @@ export function typstEditorPlugins(setup: TypstEditorSetup): Plugin[] {
 			'Shift-Mod-End': extendToDocEnd,
 			Enter: splitBlockWithoutDuplicates,
 			// table cell first, then list indent; always consume so focus stays in the editor
-			Tab: (state, dispatch) => goToNextCell(1)(state, dispatch) || indentListItem()(state, dispatch) || true,
+			Tab: (state, dispatch, view) => tabThroughCells(state, dispatch, view) || indentListItem()(state, dispatch) || true,
 			'Shift-Tab': (state, dispatch) => goToNextCell(-1)(state, dispatch) || createDedentListCommand()(state, dispatch) || true
 		}),
 		cmarrowHandlers,
