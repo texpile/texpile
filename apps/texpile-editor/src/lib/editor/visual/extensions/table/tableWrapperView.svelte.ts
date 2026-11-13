@@ -121,9 +121,11 @@ function buildTableWrapperView(
 			// step). Both dialects: a \ref left behind still compiles, resolving to ??.
 			const renamedFrom = 'label' in attrs ? String(currentNode.attrs.label ?? '') : null;
 			if (renamedFrom !== null) repointRefs(tr, view.state.doc, renamedFrom, String(attrs.label ?? ''));
-			// a float read from a file with no notes has no place for them yet
-			if (attrs.showNotes && currentNode.lastChild?.type.name !== 'table_notes')
-				tr.insert(pos + currentNode.nodeSize - 1, view.state.schema.nodes.table_notes.create());
+			// the notes section is there while its switch is on: hidden notes would print and take the caret unseen
+			const notes = currentNode.lastChild?.type.name === 'table_notes' ? currentNode.lastChild : null;
+			const end = pos + currentNode.nodeSize - 1;
+			if (attrs.showNotes === true && !notes) tr.insert(end, view.state.schema.nodes.table_notes.create());
+			if (attrs.showNotes === false && notes) tr.delete(end - notes.nodeSize, end);
 			view.dispatch(tr);
 			if (renamedFrom !== null) announceLabelRenamed(renamedFrom, String(attrs.label ?? ''));
 		}

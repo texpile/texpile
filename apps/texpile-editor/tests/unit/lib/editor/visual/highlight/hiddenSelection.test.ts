@@ -3,6 +3,7 @@ import { EditorState, NodeSelection, TextSelection } from 'prosemirror-state';
 import { GapCursor } from 'prosemirror-gapcursor';
 import { CellSelection } from 'prosemirror-tables';
 import type { Node } from 'prosemirror-model';
+import type { DecorationSet } from 'prosemirror-view';
 import { schema } from '$lib/languages/latex/schema/latexPMSchema';
 import { hiddenSelectionHolder, hiddenSelectionPlugin } from '$lib/editor/visual/highlight/hiddenSelection';
 import { createTableNode } from '$lib/editor/visual/tableUtils';
@@ -49,7 +50,7 @@ it('hides the caret in the blocks on both sides of a gap cursor', () => {
 	const between = doc.child(0).nodeSize;
 	const plugin = hiddenSelectionPlugin();
 	const state = EditorState.create({ doc, plugins: [plugin], selection: new GapCursor(doc.resolve(between)) });
-	const marked = plugin.props.decorations!.call(plugin, state)!.find();
+	const marked = (plugin.props.decorations!.call(plugin, state) as DecorationSet).find();
 	expect(marked.map((d) => [d.from, d.to])).toEqual([
 		[0, between],
 		[between, doc.content.size]

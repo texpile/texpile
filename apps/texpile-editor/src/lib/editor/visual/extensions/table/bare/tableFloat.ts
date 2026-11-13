@@ -8,9 +8,7 @@ type Dialect = 'latex' | 'typst';
 export function floatOf(schema: Schema, table: Node, dialect: Dialect): Node {
 	const { nodes } = schema;
 	const parts =
-		dialect === 'latex'
-			? [nodes.table_caption.create(null, schema.text('Table caption')), table, nodes.table_notes.create()]
-			: [table, nodes.table_caption.create()];
+		dialect === 'latex' ? [nodes.table_caption.create(null, schema.text('Table caption')), table] : [table, nodes.table_caption.create()];
 	return nodes.table_wrapper.create({ label: generateLabel('table'), showNotes: false }, parts);
 }
 

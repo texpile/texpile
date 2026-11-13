@@ -200,6 +200,13 @@ test('Show notes section gives a float read from a file its notes', async () => 
 	await notes.click();
 	await page.keyboard.type('Source: survey.');
 	await disk.expectFile('float.tex', (text) => text.includes('{\\small Source: survey.}'), 'the notes are in the file');
+	// off takes the section away: hidden notes were written without their wrapper once the switch went back
+	const again = (await page.locator('.ProseMirror > .table-wrapper').boundingBox())!;
+	await page.mouse.move(5, 5);
+	await page.mouse.move(again.x + again.width / 2, again.y + 12, { steps: 4 });
+	await page.locator('.block-handle-settings').click();
+	await page.locator('[data-part="label"]:visible', { hasText: 'Show notes section' }).click();
+	await disk.expectFile('float.tex', (text) => text === FLOAT, 'the file is as it was read');
 });
 
 test('right-clicking a table offers its settings, which open with the alignment of the block it stands alone in', async () => {

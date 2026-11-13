@@ -35,7 +35,6 @@ import { tableViewOnly } from '$lib/editor/visual/extensions/table/tableViewOnly
 import { wholeTableEdits } from '$lib/editor/visual/extensions/table/wholeTableEdits';
 import { tableArrowEntry } from '$lib/editor/visual/extensions/table/caret/tableArrowEntry';
 import { tableArrowExit } from '$lib/editor/visual/extensions/table/caret/tableArrowExit';
-import { hiddenNotesCaret } from '$lib/editor/visual/extensions/table/caret/hiddenNotesCaret';
 import { crossBlockEdits } from '$lib/editor/visual/extensions/crossBlockEdits';
 import { imagePlugin } from '$lib/editor/visual/extensions/image';
 import { createCursorPlugin } from '$lib/editor/visual/extensions/cursor-plugin';
@@ -154,7 +153,6 @@ export function latexEditorPlugins(setup: LatexEditorSetup): Plugin[] {
 		// discarded on the next parse. See tableViewOnly.
 		tableViewOnly,
 		tableArrowExit,
-		hiddenNotesCaret,
 		tableEditing(),
 		wholeTableEdits,
 		tableArrowEntry,
