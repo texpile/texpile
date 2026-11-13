@@ -78,7 +78,10 @@
 	float: none;
 	margin-bottom: calc(var(--spacing) * 1);
 }
-/* a tabular of its own starts at the left as it prints, and is centered inside center */
+/* a tabular of its own starts at the left as it prints, and stands where center or flushright sets the text */
 .ProseMirror .tex-environment[data-env='center'] .table-natural-width table {
 	margin-inline: auto;
+}
+.ProseMirror .tex-environment[data-env='flushright'] .table-natural-width table {
+	margin-left: auto;
 }

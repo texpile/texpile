@@ -1,5 +1,5 @@
 <script lang="ts">
-	// a table's columns: each one's alignment and the vertical lines in LaTeX, the columns value as written in Typst
+	// a LaTeX table's columns: each one's alignment and width, and the vertical lines
 	import { tip } from '$lib/components/tooltip.svelte';
 	import { Switch } from '@skeletonlabs/skeleton-svelte';
 	import { AlignLeft, AlignCenter, AlignRight, WrapText, StretchHorizontal } from '@lucide/svelte';
@@ -9,14 +9,13 @@
 	import { m } from '$lib/paraglide/messages';
 
 	type Props = {
-		dialect: 'latex' | 'typst';
 		table: Node | null;
 		colspec: string;
 		tableEnv: string;
 		setColspec: (spec: string) => void;
 	};
 
-	let { dialect, table, colspec, tableEnv, setColspec }: Props = $props();
+	let { table, colspec, tableEnv, setColspec }: Props = $props();
 
 	const ALIGN_ICONS = [
 		{ value: 'l', icon: AlignLeft, title: m.tablewrap_align_left() },
@@ -59,7 +58,7 @@
 	}
 </script>
 
-{#if dialect === 'latex' && colModel && colModel.columns.length > 0}
+{#if colModel && colModel.columns.length > 0}
 	<div class="mb-3">
 		<div class="text-muted mb-1.5 text-xs font-semibold">{m.tablewrap_columns_heading()}</div>
 		{#each colModel.columns as col, i (i)}

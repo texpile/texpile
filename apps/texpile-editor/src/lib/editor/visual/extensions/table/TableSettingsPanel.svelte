@@ -4,7 +4,8 @@
 	import { ChevronDown, Info } from '@lucide/svelte';
 	import type { Node } from 'prosemirror-model';
 	import TableAdvancedSection from './TableAdvancedSection.svelte';
-	import TableColumnsSetting from './TableColumnsSetting.svelte';
+	import LatexColumnsSetting from './columns/LatexColumnsSetting.svelte';
+	import TypstColumnsSetting from './columns/TypstColumnsSetting.svelte';
 	import TableLinesSetting from './rules/TableLinesSetting.svelte';
 	import type { TableLines } from './rules/tableRules';
 	import { templateFeaturesStore } from '$lib/stores/editorStore';
@@ -24,6 +25,7 @@
 		colspec: string;
 		tableEnv: string;
 		setColspec: (spec: string) => void;
+		setAlign: (align: string | null) => void;
 		lines: TableLines | null;
 		setLines: (lines: TableLines) => void;
 	};
@@ -41,6 +43,7 @@
 		colspec,
 		tableEnv,
 		setColspec,
+		setAlign,
 		lines,
 		setLines
 	}: Props = $props();
@@ -86,7 +89,12 @@
 
 <div class="settings-content">
 	<TableLinesSetting {lines} {setLines} />
-	<TableColumnsSetting {dialect} {table} {colspec} {tableEnv} {setColspec} />
+	{#if dialect === 'typst'}
+		<!-- a figure centers what it holds -->
+		<TypstColumnsSetting {table} {colspec} {setColspec} inherited="center" {setAlign} />
+	{:else}
+		<LatexColumnsSetting {table} {colspec} {tableEnv} {setColspec} />
+	{/if}
 	{#if dialect === 'latex' && isFloat}
 		<div class="settings-row">
 			{#if tableNotesEnabled}

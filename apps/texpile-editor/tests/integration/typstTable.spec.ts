@@ -28,3 +28,27 @@ test('a table keeps the column sizes its file gives when it is opened and the te
 	await disk.expectFile('sizes.typ', (text) => text.includes('Last. More'), 'the typed word is saved');
 	expect(disk.read('sizes.typ')).toBe(SIZES.replace('Last.', 'Last. More'));
 });
+
+test("a table alone in #align opens the table settings from the handle's gear, where its side and its columns are set", async () => {
+	const { page, root } = texpile();
+	const v = new VisualEditor(page, root);
+	const disk = new Disk(root);
+	await v.open('held.typ');
+	const block = page.locator('.ProseMirror > .typ-layout').first();
+	const drawn = async () => {
+		const [outer, inner] = [(await block.boundingBox())!, (await block.locator('table').boundingBox())!];
+		return Math.round(inner.x - outer.x - (outer.x + outer.width - inner.x - inner.width));
+	};
+	expect(Math.abs(await drawn()), 'the table stands in the middle').toBeLessThan(3);
+	const box = (await block.boundingBox())!;
+	await page.mouse.move(box.x + box.width / 2, box.y + box.height / 2, { steps: 4 });
+	await page.locator('.block-handle-settings').click();
+	const settings = page.locator('.bare-table-settings');
+	const side = settings.getByRole('radiogroup', { name: 'Alignment' });
+	await expect(side.getByRole('radio', { name: 'Center' })).toHaveAttribute('aria-checked', 'true');
+	await side.getByRole('radio', { name: 'Right' }).click();
+	await expect.poll(() => disk.read('held.typ')).toContain('#align(right)[');
+	// the second column, which took the block's side until now
+	await settings.getByRole('radiogroup').nth(3).getByRole('radio', { name: 'Left' }).click();
+	await expect.poll(() => disk.read('held.typ')).toContain('align: (auto, left),');
+});

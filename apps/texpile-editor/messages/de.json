@@ -1476,6 +1476,7 @@
 	"tablewrap_caption_and_number": "Beschriftung und Nummer",
 	"tablewrap_column_spec": "Spaltenspezifikation",
 	"tablewrap_column_spec_hint": "Zu komplex für die visuelle Bearbeitung. Bearbeiten Sie die Spezifikation direkt.",
+	"tablewrap_column_sizes": "Größen",
 	"tablewrap_show_notes": "Anmerkungsbereich anzeigen",
 	"tablewrap_notes_disabled_tooltip": "Diese Funktion ist für diese Vorlage nicht aktiviert",
 	"tablewrap_span_columns": "Über Spalten hinweg",

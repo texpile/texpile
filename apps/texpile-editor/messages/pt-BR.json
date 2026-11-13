@@ -1466,6 +1466,7 @@
 	"tablewrap_caption_and_number": "Legenda e número",
 	"tablewrap_column_spec": "Definição das colunas",
 	"tablewrap_column_spec_hint": "Complexa demais para edição visual. Edite a definição diretamente.",
+	"tablewrap_column_sizes": "Tamanhos",
 	"tablewrap_show_notes": "Mostrar seção de notas",
 	"tablewrap_notes_disabled_tooltip": "Este recurso não está disponível neste modelo",
 	"tablewrap_span_columns": "Abranger colunas",

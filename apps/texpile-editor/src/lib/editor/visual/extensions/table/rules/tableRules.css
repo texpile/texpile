@@ -35,11 +35,19 @@
 .ProseMirror .rules-as-printed :is(td, th).rule-right {
 	border-right: 1px solid var(--table-rule);
 }
+/* a column that names its side keeps it inside a centered block */
+.ProseMirror .rules-as-printed :is(td, th).cell-left {
+	text-align: left;
+}
 .ProseMirror .rules-as-printed :is(td, th).cell-center {
 	text-align: center;
 }
 .ProseMirror .rules-as-printed :is(td, th).cell-right {
 	text-align: right;
+}
+/* LaTeX and Typst print a header cell in the weight of the text */
+.ProseMirror .rules-as-printed th {
+	font-weight: inherit;
 }
 .ProseMirror .table-natural-width table {
 	width: auto;

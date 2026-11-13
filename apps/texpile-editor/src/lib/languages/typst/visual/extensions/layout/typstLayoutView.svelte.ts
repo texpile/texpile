@@ -10,11 +10,25 @@ import {
 } from '$lib/editor/visual/extensions/drawnChips/chipPanel.svelte';
 import { readTypstCall } from '../../core/reading/typstCall';
 import { argsFromField, envHeadReadsBack } from '../env/envHeadEdits';
-import { layoutAttrsFor, layoutDrawing, layoutHeadSource, layoutKindOf, type LayoutKind } from './layoutDrawing';
+import {
+	horizontalAlignment,
+	layoutAttrsFor,
+	layoutDrawing,
+	layoutHeadSource,
+	layoutKindOf,
+	withHorizontal,
+	type LayoutKind
+} from './layoutDrawing';
 import { layoutSettings } from './layoutSettings';
 import { addGridCell, removeGridCell } from './gridCells';
 import TypstLayoutGear from './TypstLayoutGear.svelte';
-import { markGearPlace, offerBlockSettings } from '$lib/editor/visual/extensions/blockHandle/blockSettings';
+import { gearPlaceBeside, markGearPlace, offerBlockSettings } from '$lib/editor/visual/extensions/blockHandle/blockSettings';
+import {
+	openBareTableSettings,
+	type TableHolder,
+	type TableSide
+} from '$lib/editor/visual/extensions/table/bare/bareTableSettingsPlugin.svelte';
+import { firstPositionalValue, withFirstPositional } from './layoutEdits';
 import { m } from '$lib/paraglide/messages';
 import './typstLayout.css';
 
@@ -22,6 +36,13 @@ function readHead(head: string): { name: string; args: string | null } | null {
 	const call = readTypstCall(head);
 	if (!call || call.open === null || call.close === null) return null;
 	return { name: call.name, args: head.slice(call.open + 1, call.close) };
+}
+
+const SIDE_OF: Record<string, TableSide> = { left: 'left', start: 'left', center: 'center', right: 'right', end: 'right' };
+
+function alignmentOf(node: Node): string {
+	const call = readTypstCall(layoutHeadSource(node));
+	return call ? firstPositionalValue(call) : '';
 }
 
 function toDashed(property: string): string {
@@ -68,8 +89,14 @@ export class TypstLayoutView implements NodeView {
 		this.gearPlace.contentEditable = 'false';
 		this.panelAnchor = this.gear;
 		this.withdrawSettings = offerBlockSettings(this.dom, {
-			label: () => m.typ_layout_settings(),
+			label: () => (this.holdsOnlyTable() ? m.tablewrap_settings_button() : m.typ_layout_settings()),
 			open: (gear) => {
+				const pos = this.getPos();
+				if (this.holdsOnlyTable() && pos !== undefined) {
+					const place = gearPlaceBeside(this.dom, gear);
+					openBareTableSettings({ view: this.view, pos: pos + 1, dialect: 'typst', place, holder: this.tableHolder(pos) });
+					return;
+				}
 				markGearPlace(this.gearPlace, this.dom, gear);
 				this.openSettings(this.gearPlace);
 			}
@@ -86,6 +113,22 @@ export class TypstLayoutView implements NodeView {
 		this.draw();
 	}
 
+	// a table alone in #align is a table to its writer: its settings open, with the alignment among them
+	private holdsOnlyTable(): boolean {
+		return this.kind === 'align' && this.node.childCount === 1 && this.node.firstChild!.type.name === 'table';
+	}
+
+	private tableHolder(pos: number): TableHolder {
+		return {
+			pos,
+			sideOf: (holder) => SIDE_OF[horizontalAlignment(alignmentOf(holder)) ?? ''] ?? null,
+			withSide: (holder, side) => {
+				const next = withFirstPositional(layoutHeadSource(holder), withHorizontal(alignmentOf(holder), side));
+				return next ? this.attrsForHead(holder, next) : null;
+			}
+		};
+	}
+
 	private withPos(act: (pos: number) => void): void {
 		const pos = this.getPos();
 		if (pos !== undefined) act(pos);
@@ -95,6 +138,8 @@ export class TypstLayoutView implements NodeView {
 		const drawing = layoutDrawing(this.kind, this.node);
 		this.dom.setAttribute('data-layout', this.kind);
 		paint(this.dom, drawing.style);
+		if (drawing.style.textAlign) this.dom.setAttribute('data-align', drawing.style.textAlign);
+		else this.dom.removeAttribute('data-align');
 		paint(this.contentDOM, drawing.bodyStyle);
 		this.gearProps.cells = this.kind === 'grid' ? this.node.childCount : null;
 		if (drawing.attribution && !this.attribution) {
@@ -132,15 +177,19 @@ export class TypstLayoutView implements NodeView {
 		});
 	}
 
+	private attrsForHead(node: Node, next: string): Node['attrs'] | null {
+		const head = readHead(next);
+		if (!head) return null;
+		const grid = node.type.name === 'typ_grid';
+		const args = grid ? head.args : argsFromField(head.args ?? '', typeof node.attrs.args === 'string' ? node.attrs.args : null);
+		if (!grid && !envHeadReadsBack(head.name, args)) return null;
+		return layoutAttrsFor(node, head.name, args);
+	}
+
 	private writeHead(next: string): void {
 		const pos = this.getPos();
-		const head = readHead(next);
-		if (pos === undefined || !head) return;
-		const grid = this.node.type.name === 'typ_grid';
-		const args = grid ? head.args : argsFromField(head.args ?? '', typeof this.node.attrs.args === 'string' ? this.node.attrs.args : null);
-		if (!grid && !envHeadReadsBack(head.name, args)) return;
-		const attrs = layoutAttrsFor(this.node, head.name, args);
-		if (!attrs || JSON.stringify(attrs) === JSON.stringify(this.node.attrs)) return;
+		const attrs = this.attrsForHead(this.node, next);
+		if (pos === undefined || !attrs || JSON.stringify(attrs) === JSON.stringify(this.node.attrs)) return;
 		this.view.dispatch(this.view.state.tr.setNodeMarkup(pos, undefined, attrs));
 	}
 

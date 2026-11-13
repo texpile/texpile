@@ -9,7 +9,8 @@ import './tableRules.css';
 
 export type RuleWeight = 'light' | 'heavy' | 'double';
 export type CellAlign = 'left' | 'center' | 'right';
-export type CellEdges = { top: RuleWeight | null; bottom: RuleWeight | null; left: boolean; right: boolean; align: CellAlign };
+/** align: null for a cell that takes the side of the text around it */
+export type CellEdges = { top: RuleWeight | null; bottom: RuleWeight | null; left: boolean; right: boolean; align: CellAlign | null };
 
 export type TableLook = {
 	/** each cell's edges and alignment by the cell's offset inside the table; `inFloat`: the table stands in a table float or figure */
@@ -67,7 +68,7 @@ function tableMarks(look: TableLook, table: Node, at: number, inFloat: boolean, 
 			edges.bottom && `rule-bottom-${edges.bottom}`,
 			edges.left && 'rule-left',
 			edges.right && 'rule-right',
-			edges.align !== 'left' && `cell-${edges.align}`
+			edges.align && `cell-${edges.align}`
 		].filter(Boolean);
 		const from = at + 1 + cell;
 		if (names.length) out.push({ from, to: from + table.nodeAt(cell)!.nodeSize, cls: names.join(' ') });

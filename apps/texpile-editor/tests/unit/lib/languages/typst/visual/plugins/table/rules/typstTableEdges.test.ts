@@ -15,10 +15,10 @@ function tableOf(source: string): Node {
 const edgesOf = (source: string, inFigure = false) => [...typstTableLook.edgesOf(tableOf(source), inFigure).values()];
 
 describe('the lines a Typst table prints', () => {
-	it('strokes every edge of a plain table, with the text left in the page and centered in a figure', () => {
+	it('strokes every edge of a plain table, with the text as the text around it and centered in a figure', () => {
 		const plain = '#table(columns: 2, [a], [b], [c], [d])\n';
 		expect(new Set(edgesOf(plain).map((e) => JSON.stringify(e)))).toEqual(
-			new Set([JSON.stringify({ top: 'light', bottom: 'light', left: true, right: true, align: 'left' })])
+			new Set([JSON.stringify({ top: 'light', bottom: 'light', left: true, right: true, align: null })])
 		);
 		expect(new Set(edgesOf(plain, true).map((e) => e.align))).toEqual(new Set(['center']));
 	});

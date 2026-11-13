@@ -1476,6 +1476,7 @@
 	"tablewrap_caption_and_number": "標題與編號",
 	"tablewrap_column_spec": "欄規格",
 	"tablewrap_column_spec_hint": "太複雜，無法以視覺化方式編輯，請直接編輯規格。",
+	"tablewrap_column_sizes": "尺寸",
 	"tablewrap_show_notes": "顯示備註區域",
 	"tablewrap_notes_disabled_tooltip": "此範本未啟用此功能",
 	"tablewrap_span_columns": "跨欄",

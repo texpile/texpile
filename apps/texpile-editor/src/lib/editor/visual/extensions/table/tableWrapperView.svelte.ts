@@ -8,6 +8,7 @@ import { labelTaken } from '$lib/editor/visual/labelTaken';
 import { compiledNumbersOf } from '$lib/editor/visual/extensions/nodeNumbers';
 import { announceLabelRenamed, repointRefs } from '$lib/editor/visual/repointRefs';
 import { tableLookOf, type TableLines } from './rules/tableRules';
+import { withColumnSizes } from './columns/typstColumnSizes';
 
 /** which markup language the wrapper edits; typst hides every LaTeX-only control
  * (notes, colspec model, row rules, spanning) and never writes tex concepts into the doc. */
@@ -181,21 +182,22 @@ function buildTableWrapperView(
 		const tableAbs = getTableAbsPos();
 		const tableNode = tableAbs === null ? null : view.state.doc.nodeAt(tableAbs);
 		if (tableAbs === null || !tableNode) return;
-		// setting a spec also pins env (the serializer's faithful path needs both); an editor-created
-		// table with no env becomes a plain tabular carrying the user's spec. typst has no env: its
-		// colspec is the verbatim `columns:` value, and the serializer count-guards it on its own
+		// a LaTeX spec also pins env: an editor-made table with none becomes a plain tabular carrying the spec
 		view.dispatch(
-			view.state.tr.setNodeMarkup(
-				tableAbs,
-				undefined,
-				dialect === 'latex'
-					? { ...tableNode.attrs, colspec: spec, env: tableNode.attrs.env ?? 'tabular' }
-					: { ...tableNode.attrs, colspec: spec }
-			)
+			dialect === 'latex'
+				? view.state.tr.setNodeMarkup(tableAbs, undefined, { ...tableNode.attrs, colspec: spec, env: tableNode.attrs.env ?? 'tabular' })
+				: withColumnSizes(view.state.tr, tableAbs, spec)
 		);
 		const pos = getPos();
 		const updated = pos !== undefined ? view.state.doc.nodeAt(pos) : null;
 		if (updated) componentProps.colspec = colspecOf(updated);
+	}
+
+	function setAlign(align: string | null) {
+		const tableAbs = getTableAbsPos();
+		const tableNode = tableAbs === null ? null : view.state.doc.nodeAt(tableAbs);
+		if (tableAbs === null || !tableNode) return;
+		view.dispatch(view.state.tr.setNodeMarkup(tableAbs, undefined, { ...tableNode.attrs, typAlign: align }));
 	}
 
 	function linesOf(wrapper: Node): TableLines | null {
@@ -243,6 +245,7 @@ function buildTableWrapperView(
 		colspec: colspecOf(currentNode),
 		tableEnv: envOf(currentNode),
 		setColspec,
+		setAlign,
 		lines: linesOf(currentNode),
 		setLines
 	});

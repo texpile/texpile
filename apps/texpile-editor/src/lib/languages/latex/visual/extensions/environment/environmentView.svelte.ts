@@ -9,13 +9,20 @@ import {
 	syncChipPanel
 } from '$lib/editor/visual/extensions/drawnChips/chipPanel.svelte';
 import { gearPlaceBeside, markGearPlace, offerBlockSettings } from '$lib/editor/visual/extensions/blockHandle/blockSettings';
-import { openBareTableSettings } from '$lib/editor/visual/extensions/table/bare/bareTableSettingsPlugin.svelte';
+import {
+	openBareTableSettings,
+	type TableHolder,
+	type TableSide
+} from '$lib/editor/visual/extensions/table/bare/bareTableSettingsPlugin.svelte';
 import { m } from '$lib/paraglide/messages';
 import EnvironmentHead from './EnvironmentHead.svelte';
 import EnvironmentAlignSetting from './EnvironmentAlignSetting.svelte';
 import { environmentHeadSource, readEnvironmentHead } from './environmentHeadSource';
 import { environmentLook } from './environmentLook';
 import './environment.css';
+
+const SIDE_OF: Record<string, TableSide> = { flushleft: 'left', center: 'center', flushright: 'right' };
+const ENVIRONMENT_OF: Record<TableSide, string> = { left: 'flushleft', center: 'center', right: 'flushright' };
 
 function numberOf(decorations: readonly Decoration[]): string | null {
 	const numbers = decorations.find((d) => (d.spec as { numbers?: string[] }).numbers)?.spec.numbers as string[] | undefined;
@@ -88,6 +95,13 @@ export function environmentView(
 
 	const props = $state({ node: currentNode, onopen: () => openSettings(), number: numberOf(decorations) });
 	const component = mount(EnvironmentHead, { target: header, props });
+	function tableHolder(pos: number): TableHolder {
+		return {
+			pos,
+			sideOf: (environment) => SIDE_OF[String(environment.attrs.name)] ?? null,
+			withSide: (environment, side) => ({ ...environment.attrs, name: ENVIRONMENT_OF[side] })
+		};
+	}
 	// a table alone in center is a table to its writer: its settings open, with the alignment among them
 	function holdsOnlyTable(): boolean {
 		const look = environmentLook(String(currentNode.attrs.name ?? ''), String(currentNode.attrs.args ?? ''), undefined);
@@ -98,7 +112,7 @@ export function environmentView(
 		open(gear) {
 			const pos = getPos();
 			if (holdsOnlyTable() && pos !== undefined) {
-				openBareTableSettings({ view, pos: pos + 1, dialect: 'latex', place: gearPlaceBeside(dom, gear), around: pos });
+				openBareTableSettings({ view, pos: pos + 1, dialect: 'latex', place: gearPlaceBeside(dom, gear), holder: tableHolder(pos) });
 				return;
 			}
 			markGearPlace(gearPlace, dom, gear);

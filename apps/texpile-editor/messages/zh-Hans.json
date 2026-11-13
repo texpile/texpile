@@ -1476,6 +1476,7 @@
 	"tablewrap_caption_and_number": "标题和编号",
 	"tablewrap_column_spec": "列规格",
 	"tablewrap_column_spec_hint": "太复杂，无法可视化编辑，请直接编辑规格。",
+	"tablewrap_column_sizes": "尺寸",
 	"tablewrap_show_notes": "显示备注区域",
 	"tablewrap_notes_disabled_tooltip": "此模板未启用此功能",
 	"tablewrap_span_columns": "跨列",

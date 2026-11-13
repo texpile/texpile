@@ -21,6 +21,13 @@
 .typ-layout-gear[data-open] {
 	opacity: 1;
 }
+/* a table stands where #align sets the text */
+.typ-layout[data-align='center'] > .typ-layout-body > .table-natural-width table {
+	margin-inline: auto;
+}
+.typ-layout:is([data-align='right'], [data-align='end']) > .typ-layout-body > .table-natural-width table {
+	margin-left: auto;
+}
 .typ-layout[data-layout='box'] {
 	width: fit-content;
 	max-width: 100%;

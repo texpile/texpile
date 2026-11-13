@@ -1476,6 +1476,7 @@
 	"tablewrap_caption_and_number": "Caption and number",
 	"tablewrap_column_spec": "Column spec",
 	"tablewrap_column_spec_hint": "Too complex to edit visually. Edit the spec directly.",
+	"tablewrap_column_sizes": "Sizes",
 	"tablewrap_show_notes": "Show notes section",
 	"tablewrap_notes_disabled_tooltip": "This feature is not enabled for this template",
 	"tablewrap_span_columns": "Span columns",

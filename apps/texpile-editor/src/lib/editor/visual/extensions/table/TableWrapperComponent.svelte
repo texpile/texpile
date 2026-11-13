@@ -26,6 +26,7 @@
 		colspec: string;
 		tableEnv: string;
 		setColspec: (spec: string) => void;
+		setAlign: (align: string | null) => void;
 		lines: TableLines | null;
 		setLines: (lines: TableLines) => void;
 	};
@@ -42,6 +43,7 @@
 		colspec,
 		tableEnv,
 		setColspec,
+		setAlign,
 		lines,
 		setLines
 	}: Props = $props();
@@ -119,6 +121,7 @@
 							{colspec}
 							{tableEnv}
 							{setColspec}
+							{setAlign}
 							{lines}
 							{setLines}
 						/>

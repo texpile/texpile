@@ -6,8 +6,18 @@ import type { EditorView } from 'prosemirror-view';
 import { blockSettingsPlugin, gearPlaceBeside, type GearPlace } from '$lib/editor/visual/extensions/blockHandle/blockSettings';
 import { generateLabel } from '$lib/editor/visual/label';
 import { tableLookOf, type TableLines } from '../rules/tableRules';
+import { withColumnSizes } from '../columns/typstColumnSizes';
 import { m } from '$lib/paraglide/messages';
 import BareTableSettings from './BareTableSettings.svelte';
+
+export type TableSide = 'left' | 'center' | 'right';
+
+/** the block holding only the table that sets its side: an alignment environment, an #align */
+export type TableHolder = {
+	pos: number;
+	sideOf(holder: Node): TableSide | null;
+	withSide(holder: Node, side: TableSide): Node['attrs'] | null;
+};
 
 export type BareTableRequest = {
 	view: EditorView;
@@ -15,8 +25,8 @@ export type BareTableRequest = {
 	pos: number;
 	dialect: 'latex' | 'typst';
 	place: GearPlace;
-	/** the alignment environment holding only this table: it shows its sides, and the float takes its place */
-	around?: number;
+	/** its sides show among the settings, and the float takes its place */
+	holder?: TableHolder;
 };
 
 let closeOpen: (() => void) | null = null;
@@ -42,12 +52,16 @@ export function closeBareTableSettings(): void {
 
 export function openBareTableSettings(request: BareTableRequest): void {
 	closeBareTableSettings();
-	const { view, pos, dialect, around } = request;
+	const { view, pos, dialect, holder } = request;
 	const table = tableAt(view, pos);
 	if (!table) return;
 
-	function environment(): Node | null {
-		return around === undefined ? null : view.state.doc.nodeAt(around);
+	function holderNode(): Node | null {
+		return holder ? view.state.doc.nodeAt(holder.pos) : null;
+	}
+	function sideNow(): TableSide | null {
+		const node = holderNode();
+		return holder && node ? holder.sideOf(node) : null;
 	}
 	const props = $state({
 		place: request.place,
@@ -55,15 +69,24 @@ export function openBareTableSettings(request: BareTableRequest): void {
 		table: table as Node | null,
 		colspec: String(table.attrs.colspec ?? ''),
 		tableEnv: String(table.attrs.env ?? 'tabular'),
-		alignment: around === undefined ? null : String(environment()?.attrs.name ?? ''),
+		held: !!holder,
+		side: sideNow(),
 		setColspec(spec: string) {
 			const now = tableAt(view, pos);
 			if (!now) return;
-			const attrs =
-				dialect === 'latex' ? { ...now.attrs, colspec: spec, env: now.attrs.env ?? 'tabular' } : { ...now.attrs, colspec: spec };
-			view.dispatch(view.state.tr.setNodeMarkup(pos, undefined, attrs));
+			view.dispatch(
+				dialect === 'latex'
+					? view.state.tr.setNodeMarkup(pos, undefined, { ...now.attrs, colspec: spec, env: now.attrs.env ?? 'tabular' })
+					: withColumnSizes(view.state.tr, pos, spec)
+			);
 			props.table = tableAt(view, pos);
 			props.colspec = spec;
+		},
+		setAlign(align: string | null) {
+			const now = tableAt(view, pos);
+			if (!now) return;
+			view.dispatch(view.state.tr.setNodeMarkup(pos, undefined, { ...now.attrs, typAlign: align }));
+			props.table = tableAt(view, pos);
 		},
 		lines: tableLookOf(view.state)?.linesOf(table) ?? null,
 		setLines(lines: TableLines) {
@@ -75,18 +98,19 @@ export function openBareTableSettings(request: BareTableRequest): void {
 			props.tableEnv = String(now.attrs.env ?? 'tabular');
 			props.lines = tableLookOf(view.state)?.linesOf(now) ?? null;
 		},
-		setAlignment(name: string) {
-			const env = environment();
-			if (!env || around === undefined) return;
-			view.dispatch(view.state.tr.setNodeMarkup(around, undefined, { ...env.attrs, name }));
-			props.alignment = name;
+		setSide(side: TableSide) {
+			const node = holderNode();
+			const attrs = holder && node ? holder.withSide(node, side) : null;
+			if (!holder || !attrs) return;
+			view.dispatch(view.state.tr.setNodeMarkup(holder.pos, undefined, attrs));
+			props.side = sideNow();
 		},
 		makeFloat() {
 			const now = tableAt(view, pos);
-			const env = environment();
+			const around = holderNode();
 			if (!now) return;
-			const from = env && around !== undefined ? around : pos;
-			const to = from + (env ?? now).nodeSize;
+			const from = holder && around ? holder.pos : pos;
+			const to = from + (around ?? now).nodeSize;
 			const tr = view.state.tr.replaceWith(from, to, floatOf(view, now, dialect));
 			// the caret in the caption, over the words LaTeX starts it with
 			const caption = tr.doc.nodeAt(from)!.firstChild!;

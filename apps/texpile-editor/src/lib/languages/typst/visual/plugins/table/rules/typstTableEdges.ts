@@ -50,20 +50,19 @@ export function withRule(source: string, across: readonly (RuleWeight | null)[])
 	return across.map((own, col) => (col >= start && col < end ? weight : own));
 }
 
-function sideOf(alignment: string): CellAlign {
+// null for an alignment with no horizontal part, such as horizon or auto
+function sideOf(alignment: string): CellAlign | null {
 	const side = horizontalAlignment(alignment);
+	if (!side) return null;
 	return side === 'center' ? 'center' : side === 'right' || side === 'end' ? 'right' : 'left';
 }
 
-// a table that says nothing takes the alignment around it: a figure centers what it holds
-function columnSides(align: unknown, columns: number, inFigure: boolean): CellAlign[] {
+// a column that says nothing takes the side of the text around it, which a figure centers
+function columnSides(align: unknown, columns: number, inFigure: boolean): (CellAlign | null)[] {
 	const value = typeof align === 'string' ? align.trim() : '';
-	const unsaid: CellAlign = inFigure ? 'center' : 'left';
-	const each = value.startsWith('(') ? value.slice(1, -1).split(',').map(sideOf) : [];
-	return Array.from({ length: columns }, (_, col) => {
-		if (!value) return unsaid;
-		return value.startsWith('(') ? (each[col] ?? unsaid) : sideOf(value);
-	});
+	const unsaid: CellAlign | null = inFigure ? 'center' : null;
+	const each = value.startsWith('(') ? value.slice(1, -1).split(',').map(sideOf) : null;
+	return Array.from({ length: columns }, (_, col) => (each ? each[col] : sideOf(value)) ?? unsaid);
 }
 
 export function typstCellEdges(table: Node, inFigure: boolean): Map<number, CellEdges> {
@@ -84,7 +83,7 @@ export function typstCellEdges(table: Node, inFigure: boolean): Map<number, Cell
 			top = heavierRule(top, lines[rect.top][col]);
 			bottom = heavierRule(bottom, lines[rect.bottom][col]);
 		}
-		edges.set(at, { top, bottom, left: every, right: every, align: own ? sideOf(own) : sides[rect.left] });
+		edges.set(at, { top, bottom, left: every, right: every, align: (own ? sideOf(own) : null) ?? sides[rect.left] });
 	}
 	return edges;
 }
