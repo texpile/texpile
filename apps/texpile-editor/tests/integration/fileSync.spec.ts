@@ -7,11 +7,16 @@ import { VisualEditor } from './driver/visualEditor';
 
 const NOTES = 'Alpha beta gamma.\n\nDelta epsilon zeta.\n';
 
+// long enough that its parse runs over a few frames
+const HELD = `\\documentclass{article}\n\\begin{document}\n${Array.from({ length: 600 }, (_, i) => `Held paragraph ${i + 1} with a formula $x_{${i}}^2 + y = z$ and words enough to fill a line of the page.`).join('\n\n')}\n\\end{document}\n`;
+
 const texpile = useTexpile({
 	files: {
 		'notes.tex': NOTES,
 		'rn.tex': 'Caret rename test text.\n',
-		'vis.tex': '\\documentclass{article}\n\\begin{document}\nVisual caret rename text.\n\\end{document}\n'
+		'vis.tex': '\\documentclass{article}\n\\begin{document}\nVisual caret rename text.\n\\end{document}\n',
+		'held.tex': HELD,
+		'before.tex': '\\documentclass{article}\n\\begin{document}\nThe file shown before.\n\\end{document}\n'
 	}
 });
 
@@ -69,4 +74,35 @@ test('renaming the open file keeps the visual editor, its text and its caret', a
 	await page.keyboard.type('Z');
 	await disk().expectFile('vis2.tex', (t) => t.includes('rename text. ENDZ'), 'the typing after the rename');
 	await visual.modeButtons.source.click();
+});
+
+// the last file's text stays up while the next is parsed, and the bar of a build stood on it
+test('a tab whose file is parsed again puts no rendering bar on the file shown before', async () => {
+	const { page, root } = texpile();
+	const visual = new VisualEditor(page, root);
+	await visual.open('held.tex');
+	await page.getByRole('tab', { name: /held\.tex/ }).dblclick();
+	await visual.open('before.tex');
+	await expect(visual.editor).toContainText('The file shown before.');
+	await page.evaluate(
+		async (file) => {
+			const now = await import(/* @vite-ignore */ '/src/lib/buffers/textNow.ts' as string);
+			await now.changeTextNow(file, (text: string) => text.replace('Held paragraph 1 ', 'Held paragraph one '));
+			const seen = { onText: 0 };
+			Object.assign(window, { barSeen: seen });
+			function frame(): void {
+				for (const bar of document.querySelectorAll('.indeterminate')) {
+					const text = bar.closest('[data-handle-lane]')?.querySelector('.ProseMirror');
+					if (text?.textContent && getComputedStyle(text).visibility === 'visible') seen.onText++;
+				}
+				requestAnimationFrame(frame);
+			}
+			requestAnimationFrame(frame);
+		},
+		path.join(root, 'held.tex')
+	);
+	await page.getByRole('tab', { name: /held\.tex/ }).click();
+	await expect(visual.editor).toContainText('Held paragraph one ');
+	const onText = await page.evaluate(() => (window as unknown as { barSeen: { onText: number } }).barSeen.onText);
+	expect(onText, 'frames with the rendering bar over drawn text').toBe(0);
 });
