@@ -15,6 +15,7 @@
 	import { pagesInverted } from '$lib/preview/invertColors/pagesInverted';
 	import { wheelZoomFactor } from '$lib/preview/zoom/wheelZoom';
 	import ProgressLine from '$lib/components/progress/ProgressLine.svelte';
+	import DraftWaiting from './DraftWaiting.svelte';
 	import { DraftSession } from './draftSession.svelte';
 	import type { TeleportOutcome } from './draftTeleport.svelte';
 	import { openToolchainPrefs } from '$lib/stores/dialogStore';
@@ -238,7 +239,8 @@
 		]}
 	/>
 	<ProgressLine active={compiler.compiling && !compiler.quiet} label={compiler.status} />
-	{#if compiler.installing}
+	{#if compiler.installing && ctrl.pages.length}
+		<!-- with no pages yet the list in the pane names the install -->
 		<p class="text-muted m-3 shrink-0 text-center text-sm">{m.draft_status_installing({ file: compiler.installing })}</p>
 	{:else if compiler.slow}
 		<p class="text-muted m-3 shrink-0 text-center text-sm">{m.draft_first_compile_slow()}</p>
@@ -268,6 +270,9 @@
 				onscroll={() => vp.onScroll()}
 				class="flex flex-1 [scrollbar-gutter:stable] flex-col items-center-safe gap-4 overflow-auto p-5"
 			>
+				{#if !ctrl.pages.length && compiler.progress.started.length}
+					<DraftWaiting progress={compiler.progress} />
+				{/if}
 				{#each ctrl.pages as p (p.n)}
 					<div class="relative rounded-[2px] shadow-(--page-shadow)">
 						<canvas

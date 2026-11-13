@@ -154,6 +154,10 @@ type TexpileNative = {
 	/** the caret rests on a line the preview shows: an engine reads on to its paragraph ahead of the first key there */
 	draftStage?: (body: { root: string; mainFile: string; file: string; text: string; line: number }) => Promise<unknown>;
 	onDraftPage?: (cb: (ev: { root: string; seq: number; page: unknown }) => void) => () => void;
+	/** where a compile is (the engine starting, a pass typesetting, the bibliography) and the files and pages TeX names */
+	onDraftProgress?: (
+		cb: (at: { root: string; step?: 'engine' | 'typeset' | 'bibliography'; pass?: number; notes?: string[] }) => void
+	) => () => void;
 	draftStop: () => Promise<{ ok: boolean }>;
 	drawRender?: (body: { root: string; preamble: string; picture: string }) => Promise<unknown>;
 	drawCetz?: (body: { root: string; path: string; job: string }) => Promise<unknown>;

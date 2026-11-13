@@ -61,6 +61,8 @@ export class DraftEngine {
 	dead = false;
 	/** the format's LaTeX version, when it is older than live mode needs; the process then exits before the base */
 	oldLatex: string | null = null;
+	/** takes each line TeX prints to its terminal, for whoever shows the compile's progress */
+	said: ((line: string) => void) | null = null;
 	/** teleports served, which also numbers each serve's files */
 	serves = 0;
 	/** after a teleport: true once the process waits again, at its base or at `stagedAt`; false when it exited instead */
@@ -142,6 +144,7 @@ export class DraftEngine {
 			const m = /^@@TELE (\w+) ?(.*)$/.exec(line);
 			if (!m) {
 				if (line.startsWith('! ')) follow?.(path.basename(this.rel), 'TEX', line);
+				this.said?.(line);
 				return;
 			}
 			if (m[1] !== 'PAGE') follow?.(path.basename(this.rel), m[1], m[2]);

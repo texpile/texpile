@@ -229,6 +229,14 @@ contextBridge.exposeInMainWorld('texpileNative', {
 		ipcRenderer.on('draft:page', h);
 		return () => ipcRenderer.removeListener('draft:page', h);
 	},
+	/** subscribe to where a compile is and what TeX names as it goes; returns an unsubscribe fn. */
+	onDraftProgress: (cb: (ev: { root: string; step?: string; pass?: number; notes?: string[] }) => void) => {
+		function h(_e: unknown, ev: { root: string; step?: string; pass?: number; notes?: string[] }) {
+			cb(ev);
+		}
+		ipcRenderer.on('draft:progress', h);
+		return () => ipcRenderer.removeListener('draft:progress', h);
+	},
 	/** Stop the draft engines (draft mode off / preview closed) so they stop holding memory. */
 	draftStop: () => invokeFs('draft:stop', {}),
 	...drawBridge,

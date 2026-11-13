@@ -113,12 +113,16 @@ function startInstall(): Promise<TexLiveInstallResult> {
 }
 
 // only Texpile's own tree: a TeX the writer installed is theirs to change
-async function installFor(file: unknown, root: unknown): Promise<PackageInstall | { ok: false; reason: 'not-managed'; detail: string }> {
+async function installFor(
+	file: unknown,
+	root: unknown,
+	said?: (line: string) => void
+): Promise<PackageInstall | { ok: false; reason: 'not-managed'; detail: string }> {
 	if (typeof file !== 'string' || !isPackageFile(file)) return { ok: false, reason: 'unknown', detail: String(file) };
 	await shellEnvReady();
 	const bin = managedTexLiveBin();
 	if (!bin || !texInUseIsManaged()) return { ok: false, reason: 'not-managed', detail: file };
-	const result = await inTurn(() => installPackageFor(file, (args) => runTlmgr(bin, args), TEXLIVE_FINAL_REPOSITORY));
+	const result = await inTurn(() => installPackageFor(file, (args) => runTlmgr(bin, args, said), TEXLIVE_FINAL_REPOSITORY));
 	// a warm spare read the file list before the install
 	if (result.ok && typeof root === 'string') stopPool(root);
 	return result;
@@ -129,7 +133,12 @@ export function registerTexLiveIpc(): void {
 	// a second click, from this window or another, joins the install under way
 	ipcMain.handle('toolchain:texlive:install', () => install?.done ?? startInstall());
 	ipcMain.on('toolchain:texlive:cancel', () => install?.cancel.abort());
-	ipcMain.handle('toolchain:texlive:installFor', (_e, file: unknown, root: unknown) => installFor(file, root));
+	// what tlmgr prints goes to the preview that waits on the install, with the compile's own lines
+	ipcMain.handle('toolchain:texlive:installFor', (e, file: unknown, root: unknown) =>
+		installFor(file, root, (line) => {
+			if (typeof root === 'string' && !e.sender.isDestroyed()) e.sender.send('draft:progress', { root, notes: [line.slice(0, 160)] });
+		})
+	);
 	ipcMain.handle('toolchain:texlive:inUse', async () => {
 		await shellEnvReady();
 		return texInUseIsManaged();

@@ -3,6 +3,7 @@ import { nativeBridge, type DraftResult } from '$lib/workspace/fileSystem';
 import { readBackExtensions } from '$lib/languages/latex/knowledge/registries/sidecarExtensions';
 import { installMissingFile, texLiveInUse } from '$lib/modals/window/toolchain/install/texLivePackages';
 import { m } from '$lib/paraglide/messages';
+import { CompileProgress } from './compileProgress.svelte';
 
 // a first compile still running after this long gets a note: typing waits on it
 const SLOW_MS = 10000;
@@ -34,10 +35,15 @@ export class DraftCompiler {
 	/** the package file Texpile's TeX Live is installing for the document */
 	installing = $state<string | null>(null);
 
+	/** the steps of the running compile, for the wait with no pages on screen */
+	readonly progress: CompileProgress;
+
 	private compileToken = 0;
 	private newest: Promise<boolean | null> | null = null;
 
-	constructor(private hooks: CompilerHooks) {}
+	constructor(private hooks: CompilerHooks) {
+		this.progress = new CompileProgress(hooks.root);
+	}
 
 	/** true when the pass landed pages, false when it failed or never ran, null when a newer pass superseded it */
 	compile(reason = 'trigger'): Promise<boolean | null> {
@@ -79,6 +85,7 @@ export class DraftCompiler {
 		if (!reason.startsWith('quiet:')) this.status = reason === 'save-pdf' ? m.draft_status_compiling_export() : m.draft_status_compiling();
 		this.error = null;
 		this.missingTool = null;
+		if (!this.quiet) this.progress.begin();
 		try {
 			const body = { root: this.hooks.root(), mainFile: this.hooks.mainFile(), readBack: readBackExtensions(), rest: this.quiet };
 			let r = await n.draftCompile(body);
@@ -91,6 +98,7 @@ export class DraftCompiler {
 				this.quiet = false;
 				this.status = m.draft_status_installing({ file });
 				this.installing = file;
+				this.progress.installing(file);
 				const outcome = await installMissingFile(file, body.root);
 				this.installing = null;
 				if (!outcome.installed) {
@@ -105,6 +113,7 @@ export class DraftCompiler {
 				return null;
 			} // a newer compile owns the state now
 			if (r.ok) {
+				if (!this.quiet) this.progress.drawing();
 				await this.hooks.applyCompiled(r);
 				landed = true;
 			} else if (!(r as { superseded?: boolean }).superseded) {
@@ -143,6 +152,7 @@ export class DraftCompiler {
 		if (myToken !== this.compileToken) return null;
 		this.compiling = false;
 		this.slow = false;
+		this.progress.end();
 		// every pass parks warm engines for the edits after it, and a paused preview stopped the engines on purpose
 		if (this.hooks.paused()) void n.draftStop?.();
 		this.hooks.afterCompile();

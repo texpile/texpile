@@ -41,7 +41,10 @@ test('an edit in live mode ships its page from the engine', async () => {
 	await source.open('main.tex');
 	// the preview compiles once when it opens
 	await page.getByRole('button', { name: 'Show PDF' }).click();
+	// the wait before the first pages lists the compile's steps, which the engine's process reports
+	await expect(page.getByText('Typesetting the paper')).toBeVisible({ timeout: 60_000 });
 	await expect.poll(async () => (await events(page)).some((e) => e.kind === 'compiled'), { timeout: 120_000 }).toBe(true);
+	await expect(page.getByText('Typesetting the paper')).toHaveCount(0);
 	await source.caretAfter('Speed is ');
 	await source.type('fast ');
 	await expect

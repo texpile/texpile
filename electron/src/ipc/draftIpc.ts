@@ -1,5 +1,6 @@
 // Draft-mode IPC. Every window runs its own live preview; windows on the same folder share its engines, which stop
 // once no window's preview wants them.
+import type { WebContents } from 'electron';
 import * as draftService from '../draft/draftService';
 import { teleport, stageAt, stopTeleports } from '../draft/teleport/teleportService';
 import type { ReadBackFiles } from '../draft/draftProducts';
@@ -25,10 +26,36 @@ function previewIn(wcId: number, root: string): void {
 	previewRoots.set(wcId, key);
 }
 
+// TeX names a file or a page many times a second: what it named goes to the window ten times a second at most
+const NOTES_EVERY_MS = 100;
+const NOTES_KEPT = 8;
+
+function progressTo(sender: WebContents, root: string): (at: draftService.DraftProgress) => void {
+	let notes: string[] = [];
+	let timer: NodeJS.Timeout | null = null;
+	function send(at: draftService.DraftProgress): void {
+		if (!sender.isDestroyed()) sender.send('draft:progress', { root, ...at });
+	}
+	function flush(): void {
+		timer = null;
+		if (notes.length) send({ notes });
+		notes = [];
+	}
+	return (at) => {
+		if (!('notes' in at)) {
+			if (timer) clearTimeout(timer);
+			flush();
+			return send(at);
+		}
+		notes = [...notes, ...at.notes].slice(-NOTES_KEPT);
+		timer ??= setTimeout(flush, NOTES_EVERY_MS);
+	};
+}
+
 export function registerDraftIpc(): void {
 	handleFsE('draft:compile', async (e, body: { root: string; mainFile: string; readBack: ReadBackFiles; rest?: boolean }) => {
 		previewIn(e.sender.id, body.root);
-		return draftService.compileDraft({ ...body, engineDir: luaDir() });
+		return draftService.compileDraft({ ...body, engineDir: luaDir(), progress: progressTo(e.sender, body.root) });
 	});
 	// `seq` comes back on every page, so the window can tell this edit's pages from an earlier one's
 	handleFsE('draft:teleport', async (e, body: { root: string; mainFile: string; file: string; text: string; seq: number }) => {

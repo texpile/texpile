@@ -6,6 +6,7 @@ import * as fs from 'node:fs';
 import * as crypto from 'node:crypto';
 import { seedBbl, auxCycle } from './draftBib';
 import { OUT } from './compileJob';
+import { terminalNotes } from './terminalNotes';
 import { collectSeeds, promote, publishView, readPage, type DraftPage, type ReadBackFiles } from './draftProducts';
 import { takeEngine, diskPreamble, stampOf, stopPool } from './teleport/enginePool';
 import { PointIndex, readIndexFile } from './teleport/pointIndex';
@@ -37,7 +38,18 @@ export type DraftResult =
 	| { ok: false; error: string; ms: number; log?: string; superseded?: true; tool?: string; found?: string; file?: string };
 
 // rest: the pass the window asks for by itself once typing stops, which a preview that went on can do without
-type DraftBody = { root: string; mainFile: string; engineDir: string; engine?: string; readBack: ReadBackFiles; rest?: boolean };
+/** where a compile is: the engine starting, a pass typesetting or the bibliography being built, and what TeX names */
+export type DraftProgress = { step: 'engine' | 'typeset' | 'bibliography'; pass: number } | { notes: string[] };
+
+type DraftBody = {
+	root: string;
+	mainFile: string;
+	engineDir: string;
+	engine?: string;
+	readBack: ReadBackFiles;
+	rest?: boolean;
+	progress?: (at: DraftProgress) => void;
+};
 
 // a newer compile of the same root kills this one's engine, so a slow pass never holds the preview
 type CompileRun = { gen: number; engine: DraftEngine | null };
@@ -96,8 +108,16 @@ async function compilePasses(body: DraftBody, owned: CompileOwned, stops: number
 
 	let last: { engine: DraftEngine; seedDir: string; preFiles: string[]; preStamp: string } | null = null;
 	let oldLatex: string | null = null;
+	let passes = 0;
+	// the engine's own files and the preview's folder are Texpile's, and their names say nothing to a writer
+	function ownFile(file: string): boolean {
+		const at = file.replace(/\\/g, '/');
+		return !at.startsWith(engineDir) && !at.includes(`${OUT}/`);
+	}
 	async function enginePass(): Promise<void> {
 		if (superseded()) return;
+		const pass = ++passes;
+		body.progress?.({ step: 'engine', pass });
 		const seedDir = collectSeeds(root, outAbs, body.readBack);
 		const preamble = diskPreamble(root, mainRel) ?? '';
 		const eng = await takeEngine({ root, mainRel, engineDir, engine, seedDir, preamble, preStamp: null }, true);
@@ -106,11 +126,17 @@ async function compilePasses(body: DraftBody, owned: CompileOwned, stops: number
 			return;
 		}
 		run.engine = eng;
+		eng.said = (line) => {
+			const notes = terminalNotes(line, ownFile);
+			if (notes.length) body.progress?.({ notes });
+		};
 		const timer = setTimeout(() => eng.kill(), PASS_TIMEOUT_MS);
 		const preFiles = await eng.ready;
 		if (!preFiles && eng.oldLatex) oldLatex = eng.oldLatex;
 		const preStamp = preFiles ? stampOf(root, preFiles) : '';
+		body.progress?.({ step: 'typeset', pass });
 		await eng.go();
+		eng.said = null;
 		clearTimeout(timer);
 		if (run.engine === eng) run.engine = null;
 		if (superseded()) {
@@ -145,14 +171,12 @@ async function compilePasses(body: DraftBody, owned: CompileOwned, stops: number
 	seedBbl(root, outAbs, body.mainFile);
 	await enginePass();
 	if (oldLatex) return { ok: false, error: 'latex-too-old', found: oldLatex, ms: Date.now() - t0 };
-	let passes = 1;
 	// a changed .bbl needs up to two extra passes (bbl read, \bibcite written, \cite resolved); a first compile one
-	const bblChanged = superseded() ? false : await auxCycle(root, outAbs, body.mainFile);
+	const bblChanged = superseded()
+		? false
+		: await auxCycle(root, outAbs, body.mainFile, () => body.progress?.({ step: 'bibliography', pass: passes }));
 	const extra = bblChanged ? 2 : !auxExisted ? 1 : 0;
-	for (let i = 0; i < extra && !superseded(); i++) {
-		await enginePass();
-		passes++;
-	}
+	for (let i = 0; i < extra && !superseded(); i++) await enginePass();
 	// the engine announced a rerun and the files it reads did change: one bounded pass more
 	if (!superseded()) {
 		let log = '';
@@ -162,10 +186,7 @@ async function compilePasses(body: DraftBody, owned: CompileOwned, stops: number
 			// no log, no signal
 		}
 		const complained = /No file draft\.(toc|lof|lot)\.|Label\(s\) may have changed|There were undefined references/.test(log);
-		if (complained && refState() !== refsBefore) {
-			await enginePass();
-			passes++;
-		}
+		if (complained && refState() !== refsBefore) await enginePass();
 	}
 	if (superseded()) return { ok: false, error: 'superseded', ms: Date.now() - t0, superseded: true };
 	const ms = Date.now() - t0;

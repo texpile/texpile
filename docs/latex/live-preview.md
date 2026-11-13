@@ -42,7 +42,7 @@ Each window runs its own live preview.
 
 ## Speed
 
-The first preview compiles the whole document, so it takes the longest. A line under the toolbar moves while a compile runs, and the status says "Compiling project…".
+The first preview compiles the whole document, so it takes the longest. Until its pages show, the pane lists the steps of the compile with the files and pages TeX reads. A line under the toolbar moves while a compile runs, and the status says "Compiling project…".
 
 After that, most text edits show at once. Texpile recompiles on its own for the edits that need it.
 
