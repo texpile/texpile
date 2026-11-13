@@ -45,33 +45,44 @@ math-field::part(menu-toggle) {
 	display: none;
 }
 
+/* as a paper prints them: a section at \Large, a subsection at \large, the rest at the text's size (Typst: 1.4em,
+   1.2em, 1em), the sizes headingPart draws */
+.TexpileEditor :is(h1, h2, h3, h4, h5, h6) {
+	@apply mt-5 mb-2 leading-snug font-semibold;
+	font-size: var(--text-base);
+	font-family: var(--editor-text-font, var(--typo-heading--font-family));
+}
 .TexpileEditor h1 {
-	@apply text-3xl font-semibold md:text-4xl;
+	font-size: calc(var(--text-base) * 1.4);
 }
 .TexpileEditor h2 {
-	@apply text-2xl font-semibold md:text-3xl;
+	font-size: calc(var(--text-base) * 1.2);
 }
 .TexpileEditor h3 {
-	@apply text-xl font-semibold md:text-2xl;
-}
-.TexpileEditor h4 {
-	@apply text-lg font-semibold md:text-xl;
-}
-.TexpileEditor h5 {
-	@apply text-base font-medium md:text-lg;
-}
-.TexpileEditor h6 {
-	@apply text-sm font-medium md:text-base;
+	font-size: calc(var(--text-base) * 1.05);
 }
 
-.TexpileEditor h1,
-.TexpileEditor h2,
-.TexpileEditor h3,
-.TexpileEditor h4,
-.TexpileEditor h5,
-.TexpileEditor h6 {
-	@apply mb-2 leading-snug;
-	font-family: var(--editor-text-font, var(--typo-heading--font-family));
+/* Markdown prints nowhere, so its headings keep the sizes a web page gives them */
+.MarkdownEditor :is(h1, h2, h3, h4, h5, h6) {
+	@apply mt-0;
+}
+.MarkdownEditor h1 {
+	@apply text-3xl md:text-4xl;
+}
+.MarkdownEditor h2 {
+	@apply text-2xl md:text-3xl;
+}
+.MarkdownEditor h3 {
+	@apply text-xl md:text-2xl;
+}
+.MarkdownEditor h4 {
+	@apply text-lg md:text-xl;
+}
+.MarkdownEditor h5 {
+	@apply text-base font-medium md:text-lg;
+}
+.MarkdownEditor h6 {
+	@apply text-sm font-medium md:text-base;
 }
 
 .TexpileEditor p {
