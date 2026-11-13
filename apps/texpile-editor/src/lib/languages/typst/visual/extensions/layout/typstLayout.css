@@ -8,10 +8,12 @@
 .typ-layout > .typ-layout-body > :last-child {
 	margin-bottom: 0;
 }
+/* over the top right corner, clear of the buttons a picture in the corner cell shows there */
 .typ-layout-gear {
 	position: absolute;
 	top: 0;
 	right: 0;
+	transform: translateY(-100%);
 	z-index: 1;
 	opacity: 0;
 	user-select: none;
@@ -53,6 +55,14 @@
 	padding: var(--typ-grid-inset, 0);
 	outline: 1px dashed transparent;
 }
+/* a picture is sized for the whole grid's width: in a cell it keeps its shape, and its size is set in its settings, as in a LaTeX figure group */
+.typ-grid-cell > .imagePluginRoot > img {
+	max-width: 100%;
+	height: auto !important;
+}
+.typ-grid-cell > .imagePluginRoot .imageResizeBoxWrapper {
+	display: none;
+}
 .typ-layout:hover .typ-grid-cell {
 	outline-color: var(--color-surface-300-700);
 }
@@ -68,8 +78,9 @@
 	color: var(--muted-text);
 	background: var(--surface-wash);
 }
-/* directly in an editor with a block handle, the handle's gear opens the settings; the cell buttons stay */
-.ProseMirror[data-block-handle] > .typ-layout > .typ-layout-gear .typ-layout-settings {
+/* directly in an editor with a block handle, or as the body of a figure there, the handle's gear opens the settings; the cell buttons stay */
+.ProseMirror[data-block-handle] > .typ-layout > .typ-layout-gear .typ-layout-settings,
+.ProseMirror[data-block-handle] > [data-passes-body-settings] > .typ-layout > .typ-layout-gear .typ-layout-settings {
 	display: none;
 }
 .typ-layout-gear-place {

@@ -28,8 +28,24 @@ export function offerBlockSettings(dom: Element, settings: BlockSettings): () =>
 	};
 }
 
+/** on a block that only wraps its body, as a figure does a grid of pictures: the handle's gear opens the body's settings */
+export const PASSES_BODY_SETTINGS = 'data-passes-body-settings';
+
 export function blockSettingsOf(dom: Element | null): BlockSettings | null {
-	return (dom && offered.get(dom)) ?? null;
+	if (!dom) return null;
+	const own = offered.get(dom);
+	if (own || !dom.hasAttribute(PASSES_BODY_SETTINGS)) return own ?? null;
+	for (const child of dom.children) {
+		const inner = offered.get(child);
+		if (inner) return inner;
+	}
+	return null;
+}
+
+function servedByHandle(dom: Element): boolean {
+	const parent = dom.parentElement;
+	if (!parent) return false;
+	return parent.hasAttribute('data-block-handle') || (parent.hasAttribute(PASSES_BODY_SETTINGS) && servedByHandle(parent));
 }
 
 /** the settings of the block at `pos`, for a block whose drawing is not its own to offer them by, such as a plain table */
@@ -95,7 +111,7 @@ export function gearPlaceBeside(dom: Element, gear?: HTMLElement): GearPlace {
 
 /** where a block's settings open: by the handle's gear, where that gear stands when something else opens them, or null for the block's own gear */
 export function settingsPlace(dom: Element, gear?: HTMLElement): GearPlace | null {
-	if (!gear && !dom.parentElement?.hasAttribute('data-block-handle')) return null;
+	if (!gear && !servedByHandle(dom)) return null;
 	return gearPlaceBeside(dom, gear);
 }
 

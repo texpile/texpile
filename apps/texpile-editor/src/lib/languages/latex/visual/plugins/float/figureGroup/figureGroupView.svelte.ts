@@ -34,7 +34,7 @@ export function figureGroupView(
 	const props = $state({ node: currentNode, view, getPos });
 	const component = mount(FigureGroupSettings, { target: settings, props });
 	const withdrawSettings = offerBlockSettings(dom, {
-		label: () => m.imageoverlay_settings_title(),
+		label: () => m.figuregroup_settings_title(),
 		open: (gear) => (component as { openAt?: (at: GearPlace | null) => void }).openAt?.(settingsPlace(dom, gear))
 	});
 

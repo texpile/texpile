@@ -1361,6 +1361,7 @@
 	"image_missing_note": "{path} - não encontrado",
 	"imageoverlay_settings_title": "Configurações da imagem",
 	"imageoverlay_settings_aria": "Configurações de imagem",
+	"figuregroup_settings_title": "Configurações da figura",
 	"imageoverlay_size_label": "Tamanho",
 	"imageoverlay_show_caption_label": "Mostrar legenda",
 	"imageoverlay_show_caption_tooltip": "Mostrar texto da legenda abaixo da imagem",

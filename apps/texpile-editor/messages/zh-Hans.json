@@ -1369,6 +1369,7 @@
 	"image_missing_note": "{path} - 未找到",
 	"imageoverlay_settings_title": "图片设置",
 	"imageoverlay_settings_aria": "图片设置",
+	"figuregroup_settings_title": "图设置",
 	"imageoverlay_size_label": "大小",
 	"imageoverlay_show_caption_label": "显示说明文字",
 	"imageoverlay_show_caption_tooltip": "在图片下方显示说明文字",

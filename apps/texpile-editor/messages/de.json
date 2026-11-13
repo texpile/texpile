@@ -1369,6 +1369,7 @@
 	"image_missing_note": "{path} - nicht gefunden",
 	"imageoverlay_settings_title": "Bildeinstellungen",
 	"imageoverlay_settings_aria": "Bildeinstellungen",
+	"figuregroup_settings_title": "Abbildungseinstellungen",
 	"imageoverlay_size_label": "Größe",
 	"imageoverlay_show_caption_label": "Bildunterschrift anzeigen",
 	"imageoverlay_show_caption_tooltip": "Bildunterschrift unterhalb des Bilds anzeigen",

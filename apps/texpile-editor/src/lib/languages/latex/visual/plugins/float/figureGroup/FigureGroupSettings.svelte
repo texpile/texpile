@@ -42,9 +42,9 @@
 	<Popover.Trigger>
 		<button
 			class="btn-icon btn-icon-sm preset-tonal"
-			use:tip={m.imageoverlay_settings_title()}
+			use:tip={m.figuregroup_settings_title()}
 			type="button"
-			aria-label={m.imageoverlay_settings_aria()}
+			aria-label={m.figuregroup_settings_title()}
 			disabled={isReadOnly.current}
 		>
 			<Settings class="h-4 w-4" />

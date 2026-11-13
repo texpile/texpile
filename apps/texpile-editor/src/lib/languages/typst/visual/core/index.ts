@@ -62,3 +62,4 @@ export { loremText } from './reading/loremText';
 export { faceFollowingScope } from './scope/scopeFollowingFace';
 export { SET_TARGETS, type SetField } from './setup/setRuleFields';
 export { setRuleSummary, setRuleTargetLabel } from './setup/setRuleSummary';
+export { PASSES_BODY_SETTINGS } from '$lib/editor/visual/extensions/blockHandle/blockSettings';
