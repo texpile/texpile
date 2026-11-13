@@ -69,11 +69,15 @@ test.describe('the fix link', () => {
 		await withFile(source, 'main.tex', async () => {
 			await insertAfter(source, 'Speed is', ' $\\mathbb{R}$');
 			await waitForDiagnostic(source, on('mathbb'));
-			const cards = await hoverCard(source, '\\mathbb');
-			await cards
-				.first()
-				.getByRole('button', { name: /usepackage\{amsfonts\}/ })
-				.click();
+			// the card is drawn again when the checks run once more, which can take the button from under a click
+			await expect(async () => {
+				if ((await source.text()).includes('\\usepackage{amsfonts}')) return;
+				const cards = await hoverCard(source, '\\mathbb');
+				await cards
+					.first()
+					.getByRole('button', { name: /usepackage\{amsfonts\}/ })
+					.click({ timeout: 3000 });
+			}).toPass();
 			await expect.poll(() => source.text()).toContain('\\usepackage{amsfonts}');
 			const text = await source.text();
 			expect(text.indexOf('\\usepackage{amsfonts}')).toBeLessThan(text.indexOf('\\begin{document}'));
