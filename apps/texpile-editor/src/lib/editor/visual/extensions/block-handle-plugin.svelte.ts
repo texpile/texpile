@@ -14,6 +14,7 @@ import { handleUnitAt } from './blockHandle/handleUnit';
 import { FLOATING_BAR_BOTTOM } from '$lib/editor/floatingBar';
 import { positionOf } from './blockHandle/nodePosition';
 import { blockSettingsAt } from './blockHandle/blockSettings';
+import { EDITOR_HELD, isEditorHeld } from '$lib/resizing/heldEditor';
 import { handleLineMiddle } from './blockHandle/handleLine';
 import { handleTop, pointerStaysWithBlock } from './blockHandle/handleReach';
 import { blockHandlePluginKey, handleDropEvents, handleDropLine, handleDropState, setHandleDragActive } from './blockHandle/handleDrop';
@@ -97,6 +98,7 @@ class BlockHandleView {
 		});
 
 		this.lane = view.dom.closest<HTMLElement>('[data-handle-lane]') ?? view.dom;
+		view.dom.addEventListener(EDITOR_HELD, this.onHeld);
 		this.lane.addEventListener('mousemove', this.onMouseMove);
 		this.lane.addEventListener('mouseleave', this.onMouseLeave);
 		this.host.addEventListener('mouseenter', this.cancelHide);
@@ -106,6 +108,11 @@ class BlockHandleView {
 		view.dom.ownerDocument.addEventListener('dragend', this.onDragEnd, true);
 		view.dom.ownerDocument.addEventListener('scroll', this.onScroll, { capture: true, passive: true });
 	}
+
+	// a divider drag covers the text, and the buttons floated over the cover
+	private onHeld = () => {
+		this.state.visible = false;
+	};
 
 	private onMouseMove = (event: MouseEvent) => {
 		this.pointerInside = true;
@@ -160,6 +167,10 @@ class BlockHandleView {
 	}
 
 	private updateFromPoint(y: number) {
+		if (isEditorHeld(this.view)) {
+			this.state.visible = false;
+			return;
+		}
 		const blockPos = this.blockAt(y);
 		if (blockPos == null) return; // over padding or outside the doc, leave the gutter as-is
 		this.hoveredPos = blockPos;
@@ -171,17 +182,17 @@ class BlockHandleView {
 		const rect = dom.getBoundingClientRect();
 		const stacked = this.view.dom.closest('[data-gutter-stacked]') !== null;
 		const settings = (this.view.editable && blockSettingsAt(this.view, blockPos, dom)?.label()) || null;
-		const top = dropsForLabel(dom)
-			? rect.top + NOINDENT_LABEL_DROP
-			: handleTop(handleLineMiddle(dom), rect, handleHeight(stacked, settings !== null), HANDLE_W);
+		const height = handleHeight(stacked, settings !== null);
+		const top = dropsForLabel(dom) ? rect.top + NOINDENT_LABEL_DROP : handleTop(handleLineMiddle(dom), rect, height, HANDLE_W);
 		// anchor horizontal to view.dom, not the block: per-node indents (lists, quotes,
 		// centered figures) would make the gutter jump around
 		const containerRect = this.view.dom.getBoundingClientRect();
 		const left = containerRect.left - (stacked ? GUTTER_OFFSET_LEFT_STACKED : GUTTER_OFFSET_LEFT);
 		// null scroller = nothing can scroll, so nothing can be out of view
 		const area = scrollParent(this.view.dom)?.getBoundingClientRect();
-		// a tall block whose top has scrolled out keeps its handle under the toolbar, for as long as the block reaches there
-		const held = area ? Math.max(top, area.top + FLOATING_BAR_BOTTOM + HANDLE_GAP) : top;
+		// a tall block whose top has scrolled out keeps its handle under the toolbar, for as long as the block reaches there,
+		// and one cut by the pane's foot keeps it on the part that shows: it stood over the panel under the editor
+		const held = area ? Math.max(Math.min(top, area.bottom - height - HANDLE_GAP), area.top + FLOATING_BAR_BOTTOM + HANDLE_GAP) : top;
 		// Sideways, while the pane is scrolled to the comment cards, it stops at the pane's edge, whole
 		// and grabbable, for as long as it still fits before the text, and goes once it does not.
 		const width = stacked ? HANDLE_W : 2 * HANDLE_W + 2;
@@ -283,6 +294,7 @@ class BlockHandleView {
 	}
 
 	destroy() {
+		this.view.dom.removeEventListener(EDITOR_HELD, this.onHeld);
 		this.lane.removeEventListener('mousemove', this.onMouseMove);
 		this.lane.removeEventListener('mouseleave', this.onMouseLeave);
 		this.host.removeEventListener('mouseenter', this.cancelHide);

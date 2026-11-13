@@ -93,11 +93,20 @@ test('a divider drag covers the visual editor with its file name and lets it go 
 	const width = (await editor.boundingBox())!.width;
 	const divider = (await page.locator('.cursor-col-resize').first().boundingBox())!;
 	const [x, y] = [divider.x + divider.width / 2, divider.y + divider.height / 2];
+	// the block handle, which stayed over the cover
+	const paragraph = (await editor.locator('p', { hasText: 'Paragraph 30 ' }).boundingBox())!;
+	const handle = page.locator('.block-handle-btn:visible');
+	await expect(async () => {
+		await page.mouse.move(5, 5);
+		await page.mouse.move(paragraph.x + 40, paragraph.y + 10, { steps: 4 });
+		await expect(handle.first()).toBeVisible({ timeout: 1500 });
+	}).toPass();
 	await page.mouse.move(x, y);
 	await page.mouse.down();
 	await page.mouse.move(x + 320, y, { steps: 16 });
 	const cover = page.locator('[data-resize-cover="long.tex"]');
 	await expect(cover).toHaveAttribute('data-resizing', '');
+	await expect(handle).toHaveCount(0);
 	const held = (await editor.boundingBox())!.width;
 	await page.mouse.up();
 	await expect(cover).not.toHaveAttribute('data-resizing', '');
