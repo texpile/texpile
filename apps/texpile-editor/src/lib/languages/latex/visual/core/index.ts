@@ -109,6 +109,8 @@ export { printedValue } from '$lib/languages/latex/visual/extensions/numbers/pri
 export type { NumberStyle } from '$lib/languages/latex/visual/extensions/numbers/printedNumber';
 export { isReadOnly } from '$lib/stores/permissionStore';
 export { compiledNumbersOf } from '$lib/editor/visual/extensions/nodeNumbers';
+export { countedLabelsOf } from '$lib/languages/latex/visual/extensions/numbers/numbersPlugin';
+export type { LabelNumbers } from '$lib/languages/latex/visual/extensions/numbers/documentNumbers';
 export {
 	heavierRule,
 	linesOfEdges,

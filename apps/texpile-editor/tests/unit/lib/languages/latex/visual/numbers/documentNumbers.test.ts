@@ -5,7 +5,7 @@ import { parseLatexFile } from '$lib/workspace/latexRoundtrip';
 import { parseAuxContents } from '$lib/editor/visual/extensions/tableofcontents/compiled/auxContents';
 import type { CompiledEntry } from '$lib/editor/visual/extensions/tableofcontents/compiled/compiledNumbers';
 import { parseAuxLabels } from '$lib/workspace/auxLabels';
-import { documentNumbers, type NumberAnchors } from '$lib/languages/latex/visual/extensions/numbers/documentNumbers';
+import { documentCount, documentNumbers, type NumberAnchors } from '$lib/languages/latex/visual/extensions/numbers/documentNumbers';
 import { numberingSchemeOf, type NumberingScheme } from '$lib/languages/latex/visual/extensions/numbers/numberingScheme';
 import { loadedPackages } from '$lib/languages/latex/intellisense/packages/loadedPackages';
 import { packageUsesIn } from '$lib/languages/latex/intellisense/packages/packageUses';
@@ -64,6 +64,19 @@ function shown(text: string, anchors: NumberAnchors, standalone = true, scheme =
 	const context = { anchors, scheme, standalone };
 	return [...documentNumbers(doc, chipCounts, context)].map(([pos, n]) => `${doc.nodeAt(pos)!.type.name} ${n.join(' ')}`);
 }
+
+describe('the numbers the count gives labels', () => {
+	// a reference shows these before any compile, so each one has to be what the compile then writes
+	it('are the ones the compile wrote, for the labels on what the editor counts', () => {
+		const doc = parseLatexFile(tex).doc;
+		const { labels } = documentCount(doc, chipCounts, { anchors: NEVER, scheme: SCHEME, standalone: true });
+		const written = parseAuxLabels(aux);
+		// eq:z stands after a \tag in its align, a count the editor does not follow, and is left to the .aux
+		expect([...labels.keys()].sort()).toEqual(['app:sympy', 'eq:two', 'tab:conv', 'texpile-fig-780bbdbbac91', 'thm:a']);
+		for (const [label, { number, kind }] of labels)
+			expect(`${label} ${kind} ${number}`).toBe(`${label} ${written.kinds[label]} ${written.numbers[label]}`);
+	});
+});
 
 describe('documentNumbers', () => {
 	it('shows what the compile printed: the appendix, \\numberwithin, subequations, a \\tag and a \\setcounter', () => {

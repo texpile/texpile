@@ -5,8 +5,19 @@ import { VisualEditor } from './driver/visualEditor';
 
 const doc = (body: string) => `\\documentclass{article}\n\\usepackage{natbib}\n\\begin{document}\n\n${body}\n\n\\end{document}\n`;
 
+const RESULTS = `\\section{Results}\\label{sec:results}
+
+\\begin{figure}
+	\\includegraphics[width=0.4\\textwidth]{figures/plot.png}
+	\\caption{A plot.}\\label{fig:plot}
+\\end{figure}
+
+See Figure~\\ref{fig:plot} in Section~\\ref{sec:results} and \\eqref{eq:energy}, or \\autoref{fig:plot}.
+`;
+
 const texpile = useTexpile({
 	files: {
+		'chapters/results.tex': RESULTS,
 		'panel.tex': doc('Last paragraph of the text.\n\n\\bibliographystyle{plainnat}\n\\bibliography{refs}'),
 		'popover.tex': doc('Alpha words \\cite{knuth84} and \\label{sec:a} beta.'),
 		'math.tex': doc('Before the formula.\n\n\\[ x+y \\]\n\nAfter the formula.'),
@@ -132,4 +143,11 @@ test('arrows select a figure card from the paragraphs around it, and Backspace r
 	expect(await selected()).toBe('raw_latex');
 	await v.press('Backspace');
 	expect(await v.blockTypes()).toEqual(['paragraph', 'paragraph']);
+});
+
+test('a reference shows the number drawn on what it names, with no compile', async () => {
+	const v = visual();
+	await v.open('chapters/results.tex');
+	// the section and the figure are counted here, the equation in the main file that reads this one in
+	await expect(v.editor.locator('p').last()).toHaveText('See Figure 1 in Section 2 and (1), or Figure 1.', { timeout: 20_000 });
 });

@@ -33,6 +33,11 @@ export type NumberingContext = {
 /** each numbered node's numbers by its position: an equation's lines, a chip's footnotes, one for anything else */
 export type DocumentNumbers = Map<number, string[]>;
 
+/** kind: the counter that numbers it, as the .aux names it (figure, section, equation, theorem) */
+export type LabelNumber = { number: string; kind: string };
+/** the number each label stands for, for the labels on what the editor counts and is sure of */
+export type LabelNumbers = ReadonlyMap<string, LabelNumber>;
+
 const COUNTED_FLOATS = ['figure', 'table'];
 const COUNTED = [...HEADINGS, 'equation', ...COUNTED_FLOATS, 'footnote', 'mpfootnote', ...floatTypes()];
 const NONUMBER = /\\(nonumber|notag)\b/;
@@ -76,6 +81,10 @@ function defaultWithin(name: string, chapters: boolean): string | null {
 
 class Count {
 	readonly out: DocumentNumbers = new Map();
+	readonly labels = new Map<string, LabelNumber>();
+	// the heading a \label in the text names; null under a heading whose number the editor does not print
+	private current: LabelNumber | null = null;
+	private appended = false;
 	private readonly counters: Record<string, Counter>;
 	private sub: { base: string | null; letter: number } | null = null;
 	private shown = true;
@@ -115,7 +124,10 @@ class Count {
 			else if (event.type === 'subequations') this.sub = event.open ? { base: this.next('equation'), letter: 0 } : null;
 			else if (event.type === 'minipage') this.minipage(true);
 			else if (event.type === 'minipage-end') this.minipage(false);
-			else if (event.type === 'include') for (const c of Object.values(this.counters)) c.sure = false;
+			else if (event.type === 'include') {
+				for (const c of Object.values(this.counters)) c.sure = false;
+				this.current = null;
+			} else if (event.type === 'label') this.note(event.name, this.current?.number ?? null, this.current?.kind ?? '');
 			else if (event.type === 'form') this.reform(event.counter, event.form);
 			else if (event.type === 'within') this.rewithin(event.change);
 			else if (event.type === 'hidden') this.counters[event.counter].sure = false;
@@ -132,6 +144,11 @@ class Count {
 
 	private show(pos: number, numbers: string[]): void {
 		if (this.shown) this.out.set(pos, numbers);
+	}
+
+	// a label written twice names nothing
+	private note(label: string | null, number: string | null, kind: string): void {
+		if (label && number && !this.context.anchors.repeated?.includes(label)) this.labels.set(label, { number, kind });
 	}
 
 	private labelAnchor(label: string | null): string | undefined {
@@ -216,6 +233,7 @@ class Count {
 			const ref = d.form?.find((p) => 'ref' in p);
 			if (ref && 'ref' in ref && !HEADINGS.includes(name)) d.within = ref.ref;
 		}
+		this.appended = true;
 		if (!after[top] && c.form) c.form = withOwnStyle(c.form, 'Alph');
 		c.value = 0;
 		c.printed = null;
@@ -271,6 +289,7 @@ class Count {
 		this.counters[item.kind].value++;
 		const n = this.settle(item.kind, anchored, this.render(item.kind));
 		this.restart(item.kind);
+		this.note(label, n, item.kind);
 		if (n) this.show(item.pos, [n]);
 	}
 
@@ -284,6 +303,7 @@ class Count {
 		this.counters[counter].value++;
 		const n = this.settle(counter, this.labelAnchor(label), this.render(counter));
 		this.restart(counter);
+		this.note(label, n, counter);
 		if (n) this.show(item.pos, [n]);
 	}
 
@@ -298,6 +318,9 @@ class Count {
 		const printed = this.settle(name, anchored, this.render(name));
 		this.restart(name);
 		c.printed = printed;
+		// the .aux calls the top heading of an appendix an appendix, which is the word a \cref to it prints
+		const kind = this.appended && name === (this.chapters ? 'chapter' : 'section') ? 'appendix' : name;
+		this.current = printed ? { number: printed, kind } : null;
 		if (printed) this.show(item.pos, [printed]);
 	}
 
@@ -309,7 +332,10 @@ class Count {
 		const single = !env || isSingleLabelEnvironment(env);
 		const tag = tagIn(text);
 		// a single equation's \tag prints instead of a number and steps nothing
-		if (single && tag) return tag.text === null ? [] : [tag.starred ? tag.text : `(${tag.text})`];
+		if (single && tag) {
+			this.note(item.node.attrs.label as string | null, tag.text, 'equation');
+			return tag.text === null ? [] : [tag.starred ? tag.text : `(${tag.text})`];
+		}
 		if (single && NONUMBER.test(text)) return [];
 		// a tag on one line of several is a count the editor does not follow
 		if (tag) c.sure = false;
@@ -328,13 +354,18 @@ class Count {
 				n = this.settle('equation', anchored, this.render('equation'));
 				this.restart('equation');
 			}
+			this.note(label, n, 'equation');
 			if (n) numbers.push(`(${n})`);
 		}
 		return numbers;
 	}
 }
 
-export function documentNumbers(doc: PMNode, countsOf: ChipCountsOf, context: NumberingContext): DocumentNumbers {
+export function documentCount(
+	doc: PMNode,
+	countsOf: ChipCountsOf,
+	context: NumberingContext
+): { numbers: DocumentNumbers; labels: LabelNumbers } {
 	const own = eventsIn(doc, countsOf, context.scheme);
 	const { files, path } = context;
 	const before = files && path && !context.standalone ? eventsBefore(path, files) : null;
@@ -344,5 +375,9 @@ export function documentNumbers(doc: PMNode, countsOf: ChipCountsOf, context: Nu
 	const chapters = context.scheme.chapters || items.some((i) => i.kind === 'heading' && i.node.attrs.command === 'chapter');
 	const count = new Count(fromContents, context, countsOf, chapters, context.standalone || before !== null);
 	count.run(events);
-	return count.out;
+	return { numbers: count.out, labels: count.labels };
+}
+
+export function documentNumbers(doc: PMNode, countsOf: ChipCountsOf, context: NumberingContext): DocumentNumbers {
+	return documentCount(doc, countsOf, context).numbers;
 }

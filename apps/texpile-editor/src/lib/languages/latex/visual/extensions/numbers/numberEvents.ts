@@ -24,7 +24,9 @@ export type NumberEvent =
 	| { type: 'form'; counter: string; form: string | null }
 	| { type: 'within'; change: WithinChange }
 	// math or a float the editor shows as source, numbered where the editor cannot see
-	| { type: 'hidden'; counter: 'equation' | 'figure' | 'table' };
+	| { type: 'hidden'; counter: 'equation' | 'figure' | 'table' }
+	// a \label in the document's own text, which names the heading it stands under
+	| { type: 'label'; name: string };
 
 const APPENDIX = /\\append(ix|ices)(?![a-zA-Z@])/;
 const MATTER = /\\(front|main|back)matter(?![a-zA-Z@])/g;
@@ -62,9 +64,10 @@ export function eventsIn(doc: PMNode, countsOf: ChipCountsOf, scheme: EventSchem
 	const hidden = openers.macros.length ? new RegExp(String.raw`\\(${openers.macros.join('|')})(?![a-zA-Z@])`) : null;
 	const opening = new Set([...NUMBERED_MATH_ENVIRONMENTS, ...openers.environments]);
 	// inside a float the editor shows as an environment (one of subfigures), its images are no figures of their own
-	function walk(parent: PMNode, start: number, inFloat: boolean): void {
+	function walk(parent: PMNode, start: number, inFloat: boolean, ownText = false): void {
 		parent.forEach((node, offset) => {
 			const pos = start + offset;
+			if (ownText && node.type.name === 'label') out.push({ type: 'label', name: String(node.attrs.name) });
 			const chip = node.type.name === 'raw_latex' || node.type.name === 'inline_latex';
 			if (chip) {
 				const { code, first, floats } = chipEventsOf(node);
@@ -92,7 +95,7 @@ export function eventsIn(doc: PMNode, countsOf: ChipCountsOf, scheme: EventSchem
 			if (env === 'appendix' || env === 'appendices') out.push({ type: 'appendix' });
 			if (env === 'subequations') out.push({ type: 'subequations', open: true });
 			if (env === 'minipage') out.push({ type: 'minipage' });
-			walk(node, pos + 1, inFloat || !!float || node.type.name === 'figure_group');
+			walk(node, pos + 1, inFloat || !!float || node.type.name === 'figure_group', parent === doc && node.type.name === 'paragraph');
 			if (env === 'subequations') out.push({ type: 'subequations', open: false });
 			if (env === 'minipage') out.push({ type: 'minipage-end' });
 		});
