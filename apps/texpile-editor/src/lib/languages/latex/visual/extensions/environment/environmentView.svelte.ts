@@ -14,6 +14,7 @@ import {
 	type TableHolder,
 	type TableSide
 } from '$lib/editor/visual/extensions/table/bare/bareTableSettingsPlugin.svelte';
+import { heldTable, type HeldTable } from '$lib/editor/visual/extensions/table/bare/heldTable';
 import { m } from '$lib/paraglide/messages';
 import EnvironmentHead from './EnvironmentHead.svelte';
 import EnvironmentAlignSetting from './EnvironmentAlignSetting.svelte';
@@ -99,21 +100,24 @@ export function environmentView(
 		return {
 			pos,
 			sideOf: (environment) => SIDE_OF[String(environment.attrs.name)] ?? null,
-			withSide: (environment, side) => ({ ...environment.attrs, name: ENVIRONMENT_OF[side] })
+			withSide: (environment, side) => ({ ...environment.attrs, name: ENVIRONMENT_OF[side] }),
+			before: (environment) => heldTable(environment)?.before ?? ''
 		};
 	}
-	// a table alone in center is a table to its writer: its settings open, with the alignment among them
-	function holdsOnlyTable(): boolean {
+	// a table in center, alone or after its \arraystretch, is a table to its writer: its settings open, with the alignment among them
+	function tableHeld(): HeldTable | null {
 		const look = environmentLook(String(currentNode.attrs.name ?? ''), String(currentNode.attrs.args ?? ''), undefined);
-		return look.kind === 'align' && currentNode.childCount === 1 && currentNode.firstChild!.type.name === 'table';
+		return look.kind === 'align' ? heldTable(currentNode) : null;
 	}
 	const withdrawSettings = offerBlockSettings(dom, {
-		label: () => (holdsOnlyTable() ? m.tablewrap_settings_button() : m.env_settings_button_label()),
-		forOnlyChild: holdsOnlyTable,
+		label: () => (tableHeld() ? m.tablewrap_settings_button() : m.env_settings_button_label()),
+		forOnlyChild: () => tableHeld() !== null,
 		open(gear) {
 			const pos = getPos();
-			if (holdsOnlyTable() && pos !== undefined) {
-				openBareTableSettings({ view, pos: pos + 1, dialect: 'latex', place: gearPlaceBeside(dom, gear), holder: tableHolder(pos) });
+			const held = tableHeld();
+			if (held && pos !== undefined) {
+				const table = pos + 1 + held.offset;
+				openBareTableSettings({ view, pos: table, dialect: 'latex', place: gearPlaceBeside(dom, gear), holder: tableHolder(pos) });
 				return;
 			}
 			if (!settingsPlace(dom, gear)) return openSettings();

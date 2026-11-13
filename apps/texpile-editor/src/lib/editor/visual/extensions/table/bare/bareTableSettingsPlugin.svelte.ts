@@ -13,11 +13,13 @@ import { floatOf } from './tableFloat';
 
 export type TableSide = 'left' | 'center' | 'right';
 
-/** the block holding only the table that sets its side: an alignment environment, an #align */
+/** the block holding the table that sets its side: an alignment environment, an #align */
 export type TableHolder = {
 	pos: number;
 	sideOf(holder: Node): TableSide | null;
 	withSide(holder: Node, side: TableSide): Node['attrs'] | null;
+	/** the commands before the table in the block, which a float made of it keeps (heldTable) */
+	before?(holder: Node): string;
 };
 
 export type BareTableRequest = {
@@ -102,7 +104,8 @@ export function openBareTableSettings(request: BareTableRequest): void {
 			if (!now) return;
 			const from = holder && around ? holder.pos : pos;
 			const to = from + (around ?? now).nodeSize;
-			const tr = view.state.tr.replaceWith(from, to, floatOf(view.state.schema, now, dialect));
+			const before = (holder && around && holder.before?.(around)) || '';
+			const tr = view.state.tr.replaceWith(from, to, floatOf(view.state.schema, now, dialect, before));
 			// the caret in the caption, over the words LaTeX starts it with
 			const caption = captionIn(tr.doc.nodeAt(from)!)!;
 			const start = from + 1 + caption.offset + 1;

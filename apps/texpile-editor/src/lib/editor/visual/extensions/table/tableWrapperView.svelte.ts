@@ -234,8 +234,11 @@ function buildTableWrapperView(
 		const pos = getPos();
 		const table = getTableNode(currentNode);
 		if (pos === undefined || !table) return;
-		const tr = view.state.tr.replaceWith(pos, pos + currentNode.nodeSize, centeredTableOf(view.state.schema, table, dialect));
-		view.dispatch(tr.setSelection(Selection.near(tr.doc.resolve(pos + 1), 1)).scrollIntoView());
+		const before = typeof currentNode.attrs.preBody === 'string' ? currentNode.attrs.preBody : '';
+		const tr = view.state.tr.replaceWith(pos, pos + currentNode.nodeSize, centeredTableOf(view.state.schema, table, dialect, before));
+		// the table is the block's last child
+		const inTable = pos + tr.doc.nodeAt(pos)!.nodeSize - table.nodeSize;
+		view.dispatch(tr.setSelection(Selection.near(tr.doc.resolve(inTable), 1)).scrollIntoView());
 		view.focus();
 	}
 
