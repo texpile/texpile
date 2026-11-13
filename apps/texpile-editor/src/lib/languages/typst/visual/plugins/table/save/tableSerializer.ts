@@ -1,7 +1,8 @@
 // #table(...) assembly: cells, column widths, and the colspec
 import { Fragment, type Node } from 'prosemirror-model';
 import {
-	distribute,
+	columnWidthsOf,
+	followsTracks,
 	hashedCode,
 	ownsLineEnd,
 	parseTracks,
@@ -82,26 +83,11 @@ function gridWidth(rows: TableRow[]): number {
 	return cols;
 }
 
-function columnsOf(node: Node, rows: TableRow[], cols: number): string {
-	// A drag is detected as "the cells no longer agree with the colspec". Parsing sets colwidth from
-	// the source's own tracks, so the presence of a width proves nothing on its own - without this
-	// comparison a table that merely HAD `(auto, 1fr)` would get its tracks rewritten the moment
-	// anything else about it changed, and a stale colspec would be rebuilt from stale widths.
-	// A spec that cannot describe the current column count is no baseline at all: it is stale, and
-	// colspecFor's own fallback takes over.
-	const current = columnWidths(rows, cols);
+function columnsOf(node: Node, cols: number): string {
+	// cells carry the widths their tracks gave them at open, so only widths that left the tracks are a drag
+	const current = columnWidthsOf(node, cols);
 	const tracks = parseTracks(node.attrs.colspec, cols);
-	// the widths the colspec itself implies, spent over the same total the cells were measured
-	// against, so "did the user drag" is a comparison of like with like
-	const measured = current.reduce<number>((a, w) => a + (w ?? 0), 0);
-	const baseline = tracks && measured > 0 ? distribute(tracks, measured) : null;
-	const dragged = baseline
-		? current.some((w, i) => Math.abs((w ?? 0) - (baseline[i] ?? 0)) > 1)
-			? toFrTracks(current)
-			: null
-		: tracks
-			? null
-			: toFrTracks(current);
+	const dragged = tracks && followsTracks(current, tracks) ? null : toFrTracks(current);
 	return dragged ?? colspecFor(node.attrs.colspec, cols);
 }
 
@@ -128,7 +114,7 @@ export function tableFrame(node: Node): string {
 		(r) =>
 			`${r.isHeader ? 'header' : 'body'} ${asStrings(r.rules).join(' ')} ${r.cells.map((c) => `${c.attrs.colspan ?? 1}x${c.attrs.rowspan ?? 1}`).join(',')}`
 	);
-	return [columnsOf(node, rows, cols), alignOf(node, cols) ?? '', ...shapes].join('\n');
+	return [columnsOf(node, cols), alignOf(node, cols) ?? '', ...shapes].join('\n');
 }
 
 export function tableBody(node: Node, indent: string, core: TypstSaveCore): string {
@@ -141,7 +127,7 @@ export function tableBody(node: Node, indent: string, core: TypstSaveCore): stri
 	function rowLine(r: { cells: Node[] }) {
 		return `  ${r.cells.map(call).join(', ')},`;
 	}
-	const lines = [`  columns: ${columnsOf(node, rows, cols)},`];
+	const lines = [`  columns: ${columnsOf(node, cols)},`];
 	const align = alignOf(node, cols);
 	if (align) lines.push(`  align: ${align},`);
 	// stroke:, fill:, gutter: - verbatim, in the order they were written. No staleness rule: unlike
@@ -204,50 +190,7 @@ function argLine(indent: string, arg: string): string {
 	return /^\/\/|^\/\*[\s\S]*\*\/$/.test(arg.trim()) ? `${indent}${arg}` : `${indent}${arg},`;
 }
 
-/** The verbatim columns: value, but ONLY while it still matches the table's real column count —
- *  a context-menu column add/delete outdates it, and a wrong count silently reflows every cell
- *  in the compiled document. The fallback is the plain count (all-auto tracks). */
-/**
- * Per-column widths, read off the cells the way prosemirror-tables stores them: `colwidth` is an
- * array with one entry per column the cell spans, or null when that column was never sized.
- * Occupancy is walked so a colspan'd or rowspan'd cell contributes to the right columns.
- */
-function columnWidths(rows: { cells: Node[] }[], cols: number): (number | null)[] {
-	const widths: (number | null)[] = new Array(cols).fill(null);
-	const covered = new Set<string>();
-	rows.forEach((row, r) => {
-		let c = 0;
-		for (const cell of row.cells) {
-			while (c < cols && covered.has(`${r},${c}`)) c++;
-			const colspan = Number(cell.attrs.colspan ?? 1);
-			const rowspan = Number(cell.attrs.rowspan ?? 1);
-			const cw = cell.attrs.colwidth;
-			if (Array.isArray(cw)) {
-				for (let i = 0; i < colspan && c + i < cols; i++) {
-					const v = Number(cw[i]);
-					if (Number.isFinite(v) && v > 0 && widths[c + i] == null) widths[c + i] = v;
-				}
-			}
-			for (let dr = 1; dr < rowspan; dr++) for (let dc = 0; dc < colspan; dc++) covered.add(`${r + dr},${c + dc}`);
-			c += colspan;
-		}
-	});
-	return widths;
-}
-
-/**
- * The `columns:` value for a table whose columns have been dragged.
- *
- * Widths become `fr` proportions rather than absolute lengths, which is what the editor actually
- * shows: its tables are laid out full width with fixed layout, so a drag redistributes share, it
- * does not set a physical size. Normalised to sum to the column count, so an untouched grid reads
- * `(1fr, 1fr, 1fr)` and the numbers stay stable instead of drifting with the window width.
- *
- * A column that was never sized stays `auto`, so a partly-dragged table keeps its content-sized
- * columns instead of being forced into a full-width layout it never asked for. Returns null when
- * NOTHING was sized, and the caller falls back to the verbatim colspec - that is what keeps an
- * untouched table byte-identical.
- */
+// the columns: value as written while it still names the table's column count, else the plain count
 function colspecFor(colspec: unknown, cols: number): string {
 	const spec = typeof colspec === 'string' ? colspec.trim() : '';
 	if (/^\d+$/.test(spec) && Number(spec) === cols) return spec;
