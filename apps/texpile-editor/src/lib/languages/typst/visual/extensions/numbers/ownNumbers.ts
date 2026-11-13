@@ -1,13 +1,19 @@
+// the numbers the open Typst document gives its headings, equations, figures and tables by its own count, for the
+// time before a compile has printed them: on the elements, and in the references that name them
 import type { Node } from 'prosemirror-model';
 import type { SyntaxNode } from '@lezer/common';
-import { namedArg, readTypstCall, typstSyntax, type TypstCall } from '$lib/languages/typst/visual/core';
-import { numberReferenced, parseNumberPattern, type NumberPattern } from './numberPattern';
+import { namedArg, readTypstCall, typstSyntax, type TypstCall } from '../../core/reading/typstCall';
+import { numberPrinted, numberReferenced, parseNumberPattern, type NumberPattern } from './numberPattern';
 
 export type LabelNumber = { supplement: string; number: string } | null;
 
+/** labels: null when the words a reference prints are out of the editor's reach. drawn: a heading's or an equation's number by its position */
+export type OwnNumbers = { labels: Map<string, LabelNumber> | null; drawn: Map<number, string> };
+
 type Family = 'figure' | 'table' | 'heading' | 'equation';
 
-type Numbering = { patterns: Partial<Record<'figure' | 'heading' | 'equation', NumberPattern | null>> };
+// words: a reference prints the English words Typst starts with
+type Numbering = { patterns: Partial<Record<'figure' | 'heading' | 'equation', NumberPattern | null>>; words: boolean };
 
 const SUPPLEMENTS: Record<Family, string> = { figure: 'Figure', table: 'Table', heading: 'Section', equation: 'Equation' };
 
@@ -23,23 +29,26 @@ function stringValue(call: TypstCall, name: string): string | null | undefined {
 	return arg.kind === 'Str' ? arg.value.slice(1, -1) : arg.kind === 'None' ? null : undefined;
 }
 
+// null: the numbering itself is set where the editor cannot read it, in a template or by a function
 function readNumbering(doc: Node): Numbering | null {
 	const patterns: Numbering['patterns'] = { figure: parseNumberPattern('1') };
 	let readable = true;
+	let words = true;
 	doc.forEach((node) => {
 		if (node.type.name !== 'raw_latex') return;
 		const text = node.textContent;
-		if (/#show\s*(:|ref\b|figure\b)/.test(text)) readable = false;
+		if (/#show\s*:/.test(text)) readable = false;
+		if (/#show\s*(ref\b|figure\b)/.test(text)) words = false;
 		const call = readTypstCall(text.replace(/;\s*$/, ''));
 		if (call?.form !== 'set') return;
 		if (call.name === 'text') {
 			const lang = stringValue(call, 'lang');
-			if (namedArg(call, 'lang') && lang !== 'en') readable = false;
+			if (namedArg(call, 'lang') && lang !== 'en') words = false;
 			return;
 		}
 		const target = RULE_TARGETS[call.name];
 		if (!target) return;
-		if (namedArg(call, 'supplement')) readable = false;
+		if (namedArg(call, 'supplement')) words = false;
 		const numbering = namedArg(call, 'numbering');
 		if (!numbering) return;
 		const pattern = stringValue(call, 'numbering');
@@ -47,7 +56,7 @@ function readNumbering(doc: Node): Numbering | null {
 		else patterns[target] = pattern === null ? null : parseNumberPattern(pattern);
 		if (pattern && !patterns[target]) readable = false;
 	});
-	return readable ? { patterns } : null;
+	return readable ? { patterns, words } : null;
 }
 
 type RawFacts = { families: Family[]; labels: string[] };
@@ -87,10 +96,19 @@ function ownNumbering(args: unknown): boolean {
 	return items.some((item) => item.role === 'arg' && /^(kind|supplement|numbering)\s*:/.test(item.text));
 }
 
-export function collectLabelNumbers(doc: Node): Map<string, LabelNumber> | null {
+const counted = new WeakMap<Node, OwnNumbers | null>();
+
+/** null when the document's numbering is out of the editor's reach */
+export function ownNumbersOf(doc: Node): OwnNumbers | null {
+	if (!counted.has(doc)) counted.set(doc, countOwnNumbers(doc));
+	return counted.get(doc) ?? null;
+}
+
+function countOwnNumbers(doc: Node): OwnNumbers | null {
 	const numbering = readNumbering(doc);
 	if (!numbering) return null;
 	const labels = new Map<string, LabelNumber>();
+	const drawn = new Map<number, string>();
 	const counters: Record<'figure' | 'table' | 'equation', number> = { figure: 0, table: 0, equation: 0 };
 	let headings: number[] = [];
 	const unsure = new Set<Family>();
@@ -100,8 +118,11 @@ export function collectLabelNumbers(doc: Node): Map<string, LabelNumber> | null 
 		const known = pattern && !unsure.has(family) && counts.length > 0;
 		labels.set(label, known ? { supplement: SUPPLEMENTS[family], number: numberReferenced(pattern, counts) } : null);
 	}
+	function draw(pos: number, family: Family, counts: number[], pattern: NumberPattern | null | undefined) {
+		if (pattern && !unsure.has(family)) drawn.set(pos, numberPrinted(pattern, counts));
+	}
 
-	doc.descendants((node) => {
+	doc.descendants((node, pos) => {
 		switch (node.type.name) {
 			case 'heading': {
 				if (node.attrs.numbered === false) break;
@@ -112,6 +133,7 @@ export function collectLabelNumbers(doc: Node): Map<string, LabelNumber> | null 
 				next[level - 1]++;
 				headings = next;
 				name(node.attrs.label, 'heading', headings.slice(0, level), numbering.patterns.heading);
+				draw(pos, 'heading', headings.slice(0, level), numbering.patterns.heading);
 				break;
 			}
 			case 'typ_figure':
@@ -133,17 +155,23 @@ export function collectLabelNumbers(doc: Node): Map<string, LabelNumber> | null 
 			case 'block_math':
 				if (numbering.patterns.equation) counters.equation++;
 				name(node.attrs.label, 'equation', [counters.equation], numbering.patterns.equation);
+				draw(pos, 'equation', [counters.equation], numbering.patterns.equation);
 				break;
 			case 'typ_env':
 				if (node.attrs.label) labels.set(String(node.attrs.label), null);
 				break;
+			// what another file numbers is counted where the editor cannot see
+			case 'includedoc':
+				for (const family of Object.keys(SUPPLEMENTS) as Family[]) unsure.add(family);
+				break;
 			case 'raw_latex':
 			case 'inline_latex':
 				for (const family of factsOf(node).families) unsure.add(family);
+				if (/#include\b/.test(node.textContent)) for (const family of Object.keys(SUPPLEMENTS) as Family[]) unsure.add(family);
 				for (const label of factsOf(node).labels) if (!labels.has(label)) labels.set(label, null);
 				return false;
 		}
 		return true;
 	});
-	return labels;
+	return { labels: numbering.words ? labels : null, drawn };
 }

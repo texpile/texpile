@@ -1,4 +1,4 @@
-// Typst's numbering patterns ("1.", "1.1", "(a)", "I.") applied to a list of counters, as a reference prints them
+// Typst's numbering patterns ("1.", "1.1", "(a)", "I.") applied to a list of counters
 type Piece = { prefix: string; symbol: string };
 export type NumberPattern = { pieces: Piece[]; suffix: string };
 
@@ -66,6 +66,17 @@ function counted(symbol: string, n: number): string {
 	}
 }
 
+/** as the element itself prints it: with the pattern's first prefix and its suffix, which also parts the counters past its last symbol */
+export function numberPrinted(pattern: NumberPattern, counters: number[]): string {
+	let out = '';
+	counters.forEach((n, i) => {
+		const piece = pattern.pieces[Math.min(i, pattern.pieces.length - 1)];
+		out += (i >= pattern.pieces.length && !piece.prefix ? pattern.suffix : piece.prefix) + counted(piece.symbol, n);
+	});
+	return out + pattern.suffix;
+}
+
+/** as a reference prints it: bare, the counters parted */
 export function numberReferenced(pattern: NumberPattern, counters: number[]): string {
 	let out = '';
 	counters.forEach((n, i) => {

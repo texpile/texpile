@@ -84,8 +84,6 @@ export function syncBlockMathData(dom: HTMLElement, node: Node, syntax: MathSynt
 	dom.setAttribute('data-environment', node.attrs.environment || '');
 	dom.setAttribute('data-numbering', environmentNumbering(node.attrs.environment || ''));
 	dom.setAttribute('data-line-count', String((node.attrs.lineLabels as string[])?.length || 1));
-	// typst has no live "(1)", so a labeled equation shows its <label> where LaTeX shows the number (CSS in TypstEditorView)
-	if (syntax === 'typst') dom.setAttribute('data-typst-label', node.attrs.label || '');
 	// Typst and Markdown start a new paragraph after every display
-	else if (!node.type.spec.plainDisplay) dom.setAttribute('data-continues', String(node.attrs.continuesAfter !== false));
+	if (syntax !== 'typst' && !node.type.spec.plainDisplay) dom.setAttribute('data-continues', String(node.attrs.continuesAfter !== false));
 }

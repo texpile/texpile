@@ -26,6 +26,18 @@ describe('typstSourceOutline', () => {
 		expect((await typstSourceOutline(src)).map((i) => i.text)).toEqual(['Real']);
 	});
 
+	it('lists a figure and a table with their captions, a table by what the figure holds or by its kind', async () => {
+		const src =
+			'= Results\n\n#figure(\n  image("a.png"),\n  caption: [A *bold* picture],\n) <pic>\n\n#figure(table(columns: 2, [a], [b]), caption: [Accuracy])\n\n#figure(rect(), kind: table)\n\n#heading(level: 2, numbering: none)[Called]\n';
+		expect((await typstSourceOutline(src)).map((i) => `${i.kind ?? 'heading'}: ${i.text}`)).toEqual([
+			'heading: Results',
+			'figure: A bold picture',
+			'table: Accuracy',
+			'table: ',
+			'heading: Called'
+		]);
+	});
+
 	it('is empty for a document without headings', async () => {
 		expect(await typstSourceOutline('Just a paragraph.\n')).toEqual([]);
 	});

@@ -20,6 +20,7 @@ import {
 } from '$lib/editor/visual/extensions/tableofcontents/projectOutline';
 import { editorViewStore } from '$lib/stores/editorStore';
 import { typstOutlineOf } from '$lib/workspace/projectIntel';
+import { typstVisualFloats } from '$lib/languages/typst/outline';
 import type { TypstOutline } from '$lib/stores/projectIntel';
 import { parseOutlineRaw, assembleProjectOutline, type RawOutlineItem } from '$lib/editor/visual/extensions/tableofcontents/latexHeadings';
 import { markdownOutline } from '$lib/languages/markdown/outline';
@@ -94,7 +95,8 @@ export function attachVisualProjectToc(wsdoc: WorkspaceDoc): void {
 		if (visual && doc.kind === 'typ') {
 			const path = doc.path;
 			void typstOutlineOf(doc.texSource).then((own) => {
-				if (at === seq) settle(typstPaperOf(path, own));
+				const typst = editorViewStore.current;
+				if (at === seq) settle(typstPaperOf(path, own), typst ? typstVisualFloats(typst.state.doc) : []);
 			});
 			return;
 		}

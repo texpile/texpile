@@ -1,7 +1,7 @@
 // the numbers `@label` prints, read off the document and kept per editor for the references that show them
 import { Plugin } from 'prosemirror-state';
 import type { EditorView } from 'prosemirror-view';
-import { collectLabelNumbers, type LabelNumber } from './labelNumbers';
+import { ownNumbersOf, type LabelNumber } from '$lib/languages/typst/visual/core';
 
 export type RefNumbers = { labels: Map<string, LabelNumber> | null };
 
@@ -10,7 +10,7 @@ class RefNumbersStore implements RefNumbers {
 	private key = '';
 
 	read(view: EditorView): void {
-		const labels = collectLabelNumbers(view.state.doc);
+		const labels = ownNumbersOf(view.state.doc)?.labels ?? null;
 		const key = JSON.stringify(labels ? [...labels] : null);
 		if (this.key === key) return;
 		this.key = key;

@@ -255,25 +255,7 @@
 
 	/* raw-island insets are tightened in RawLatexView itself (all dialects), nothing typst-specific */
 
-	/* A labeled equation shows its <label> where LaTeX shows "(1)": the editor cannot know the
-	   real number (numbering is the template's #set math.equation rule), but the label proves the
-	   equation is referenceable and is exactly what the @ picker offers. mlview sets the attr. */
-	:global(
-		.TypstEditor
-			.block-math-container[data-typst-label]:not([data-typst-label='']):not([data-printed-number]:not([data-printed-number='']))::after
-	) {
-		content: '<' attr(data-typst-label) '>';
-		position: absolute;
-		right: calc(var(--spacing) * 4);
-		top: 50%;
-		transform: translateY(-50%);
-		font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-		font-size: 0.8em;
-		color: var(--muted-text);
-		user-select: none;
-		pointer-events: none;
-	}
-	/* the number the last compile printed, as printed, in place of the label */
+	/* the number Typst prints: the editor's own count, then the one the last compile printed */
 	:global(.TypstEditor .block-math-container[data-printed-number]:not([data-printed-number=''])::after) {
 		content: attr(data-printed-number);
 		position: absolute;
@@ -285,8 +267,7 @@
 		user-select: none;
 		pointer-events: none;
 	}
-	/* keep the hover gear clear of the chip, the way the LaTeX number pushes it left */
-	:global(.TypstEditor .block-math-container[data-typst-label]:not([data-typst-label='']) .math-settings-container),
+	/* keep the hover gear clear of the number, the way the LaTeX number pushes it left */
 	:global(.TypstEditor .block-math-container[data-printed-number]:not([data-printed-number='']) .math-settings-container) {
 		right: calc(var(--spacing) * 20);
 	}

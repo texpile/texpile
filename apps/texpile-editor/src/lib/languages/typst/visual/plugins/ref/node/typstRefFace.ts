@@ -1,6 +1,6 @@
 import type { Attrs } from 'prosemirror-model';
 import { bibAuthorShort, bibDisplayText, citationText, type BiblatexReference } from '$lib/languages/typst/visual/core';
-import type { LabelNumber } from './labelNumbers';
+import type { LabelNumber } from '$lib/languages/typst/visual/core';
 
 export type TypstRefFace = { text: string; known: boolean; title: string; kind: 'citation' | 'label' | 'written' };
 
