@@ -26,3 +26,21 @@ describe('a table with lines', () => {
 		expect(typstFace('#table(columns: 2, [a], table.hline(start: 1), [b])')).toBeNull();
 	});
 });
+
+// tablex names its lines, cells and spans with functions of its own, and the editor showed the call as code
+describe('a tablex table', () => {
+	it('draws the lines it draws by itself between its rows, and none between its columns when told so', () => {
+		const drawn = cells('#tablex(columns: 2, auto-vlines: false, hlinex(y: 0), [*A*], [*B*], hlinex(y: 1), [a], [b], hlinex())');
+		expect(drawn.map((cell) => cell.textContent)).toEqual(['A', 'B', 'a', 'b']);
+		expect(drawn[0].style.borderTop).toContain('solid');
+		expect(drawn[2].style.borderBottom).toContain('solid');
+		expect(drawn[0].style.borderLeft).toBe('');
+	});
+
+	it('draws a span across its columns and takes the () after it as the place the span covers', () => {
+		const drawn = cells('#tablex(columns: 2, colspanx(2)[wide], (), [a], [b])');
+		expect(drawn.map((cell) => cell.textContent)).toEqual(['wide', 'a', 'b']);
+		expect(drawn[0].style.gridColumn).toBe('1 / span 2');
+		expect(drawn[1].style.borderLeft).toContain('solid');
+	});
+});

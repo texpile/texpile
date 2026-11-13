@@ -9,25 +9,25 @@ import {
 	strokeCss,
 	namedArg,
 	type CallArg,
-	type StdUse,
 	destroyDrawings
 } from '$lib/languages/typst/visual/core';
-import { readTable } from './tableCall';
+import { readTable, type TableRead } from './tableCall';
 import { placeTable, type TableLine } from './tableGrid';
 import './tableFace.css';
 
 const DEFAULT_STROKE = '1px solid currentColor';
 const DEFAULT_INSET = '0.3em 0.5em';
 
-function lineBorder(use: StdUse, line: TableLine): string {
+function lineBorder(line: TableLine): string {
 	const stroke = namedArg(line.call, 'stroke');
 	return (stroke && strokeCss(line.call, stroke)) || DEFAULT_STROKE;
 }
 
-function cellStroke(use: StdUse): string | null {
-	const stroke = namedArg(use.call, 'stroke');
+function cellStroke(read: TableRead): string | null {
+	if (read.auto) return null;
+	const stroke = namedArg(read.call, 'stroke');
 	if (!stroke) return DEFAULT_STROKE;
-	return stroke.kind === 'None' ? null : (strokeCss(use.call, stroke) ?? DEFAULT_STROKE);
+	return stroke.kind === 'None' ? null : (strokeCss(read.call, stroke) ?? DEFAULT_STROKE);
 }
 
 function columnAlignments(align: CallArg | null): string[] | null {
@@ -42,16 +42,15 @@ function columnAlignments(align: CallArg | null): string[] | null {
 
 export function tableFace(source: string, drawer: TypstDrawer): ChipFace | null {
 	const read = readTable(source);
-	const grid = read && placeTable(read.use.call, read.use.entry, read.cols, drawer);
+	const grid = read && placeTable(read, drawer);
 	if (!read || !grid) return null;
-	const { use, cols } = read;
-	const { call } = use;
+	const { call, cols } = read;
 	const dom = faceElement('div', 'drawn-typst-table');
 	const columns = namedArg(call, 'columns');
 	const tracks = columnsCss(call, columns);
 	if (tracks) dom.style.gridTemplateColumns = tracks;
 	if (tracks?.includes('fr')) dom.style.width = '100%';
-	const stroke = cellStroke(use);
+	const stroke = cellStroke(read);
 	if (stroke) {
 		dom.style.setProperty('--typ-stroke', stroke);
 		dom.dataset.stroke = '';
@@ -69,18 +68,18 @@ export function tableFace(source: string, drawer: TypstDrawer): ChipFace | null 
 		const side = perColumn ? perColumn[cell.col] : whole;
 		if (side) box.style.textAlign = side;
 		for (const line of grid.hlines) {
-			if (line.at === cell.row) box.style.borderTop = lineBorder(use, line);
-			if (line.at === grid.rows && cell.row + cell.rowspan === grid.rows) box.style.borderBottom = lineBorder(use, line);
+			if (line.at === cell.row) box.style.borderTop = lineBorder(line);
+			if (line.at === grid.rows && cell.row + cell.rowspan === grid.rows) box.style.borderBottom = lineBorder(line);
 		}
 		for (const line of grid.vlines) {
-			if (line.at === cell.col) box.style.borderLeft = lineBorder(use, line);
-			if (line.at === cols && cell.col + cell.colspan === cols) box.style.borderRight = lineBorder(use, line);
+			if (line.at === cell.col) box.style.borderLeft = lineBorder(line);
+			if (line.at === cols && cell.col + cell.colspan === cols) box.style.borderRight = lineBorder(line);
 		}
 		box.append(cell.drawing.dom);
 		dom.append(box);
 	}
 	const drawings = grid.cells.map((cell) => cell.drawing);
-	const tipped = tip(dom, use.source);
+	const tipped = tip(dom, read.source);
 	return {
 		dom,
 		line: true,

@@ -23,11 +23,13 @@
 .typ-layout-gear[data-open] {
 	opacity: 1;
 }
-/* a table stands where #align sets the text */
-.typ-layout[data-align='center'] > .typ-layout-body > .table-natural-width table {
+/* a table stands where #align sets the text, one drawn from its code too */
+.typ-layout[data-align='center'] > .typ-layout-body > .table-natural-width table,
+.typ-layout[data-align='center'] > .typ-layout-body .drawn-typst-table {
 	margin-inline: auto;
 }
-.typ-layout:is([data-align='right'], [data-align='end']) > .typ-layout-body > .table-natural-width table {
+.typ-layout:is([data-align='right'], [data-align='end']) > .typ-layout-body > .table-natural-width table,
+.typ-layout:is([data-align='right'], [data-align='end']) > .typ-layout-body .drawn-typst-table {
 	margin-left: auto;
 }
 .typ-layout[data-layout='box'] {
