@@ -22,6 +22,9 @@ describe('a table figure caption', () => {
 		const top = `#show figure.where(kind: table): set figure.caption(position: top)\n\n${FIGURE}`;
 		expect(figureParts(top)).toEqual(['table_caption', 'table']);
 		expect(serializeToTypst(typstToProseMirror(top).doc)).toBe(top);
-		expect(figureParts(`#show figure.where(kind: image): set figure.caption(position: top)\n\n${FIGURE}`)).toEqual(['table', 'table_caption']);
+		expect(figureParts(`#show figure.where(kind: image): set figure.caption(position: top)\n\n${FIGURE}`)).toEqual([
+			'table',
+			'table_caption'
+		]);
 	});
 });
