@@ -1,5 +1,5 @@
 // atoms only while drawn: comments and suggestions read the schema's atoms as having no text
-import { NodeSelection, Plugin, TextSelection, type EditorState, type Transaction } from 'prosemirror-state';
+import { NodeSelection, Plugin, TextSelection, type EditorState, type Selection, type Transaction } from 'prosemirror-state';
 import type { Node, ResolvedPos } from 'prosemirror-model';
 import type { EditorView } from 'prosemirror-view';
 import { drawnChipOf } from './DrawnChipView';
@@ -150,17 +150,32 @@ function onKey(view: EditorView, event: KeyboardEvent): boolean {
 	return false;
 }
 
+function chipAround($pos: ResolvedPos): { from: number; to: number } | null {
+	return $pos.depth > 0 && drawnChipOf($pos.parent) ? { from: $pos.before(), to: $pos.after() } : null;
+}
+
+// a caret placed inside a drawn chip's text (a search match, a caret moved near it) takes the chip whole. A range that
+// ends there, as a drag onto the chip does, takes the chip into the range: selecting the chip alone dropped the drag
+function withWholeChips(state: EditorState): Selection | null {
+	const { selection, doc } = state;
+	if (!(selection instanceof TextSelection)) return null;
+	const [anchorIn, headIn] = [chipAround(selection.$anchor), chipAround(selection.$head)];
+	if (!anchorIn && !headIn) return null;
+	if (anchorIn && headIn && anchorIn.from === headIn.from) return NodeSelection.create(doc, headIn.from);
+	const forward = selection.head > selection.anchor;
+	const anchor = anchorIn ? (forward ? anchorIn.from : anchorIn.to) : selection.anchor;
+	const head = headIn ? (forward ? headIn.to : headIn.from) : selection.head;
+	return TextSelection.create(doc, anchor, head);
+}
+
 export function drawnChipAtomsPlugin(): Plugin {
 	return new Plugin({
 		props: { handleKeyDown: onKey },
 		view: () => ({ update: stopOnPassedLine }),
-		// a caret placed inside a drawn chip's text (a search match, a caret moved near it) takes the chip whole
 		appendTransaction(transactions, _old, state) {
 			if (!transactions.some((tr) => tr.selectionSet || tr.docChanged)) return null;
-			const { $from } = state.selection;
-			if (!(state.selection instanceof TextSelection) || $from.depth === 0) return null;
-			if (!drawnChipOf($from.parent)) return null;
-			return state.tr.setSelection(NodeSelection.create(state.doc, $from.before()));
+			const whole = withWholeChips(state);
+			return whole && state.tr.setSelection(whole);
 		}
 	});
 }

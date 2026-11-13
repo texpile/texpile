@@ -71,3 +71,35 @@ describe('a chip ending its container', () => {
 		expect(handled).toBe(false);
 	});
 });
+
+// the chip was selected alone, which dropped a drag the moment the pointer reached it
+describe('a range that ends in a chip', () => {
+	const { doc: text } = parseLatexFile(
+		'\\documentclass{article}\n\\begin{document}\nThe factor in \\Cref{eq:x} makes the sum a moving average.\n\\end{document}\n'
+	);
+	let chip = { from: -1, to: -1 };
+	text.descendants((node, pos) => {
+		if (node.isInline && !node.isText && node.textContent.includes('Cref')) {
+			chip = { from: pos, to: pos + node.nodeSize };
+			drawChipNode(node, { ownLine: false, character: false, openPanel: () => {} });
+		}
+	});
+	const end = text.content.size - 1;
+	const select = (anchor: number, head: number) => {
+		const state = EditorState.create({ doc: text, plugins: [plugin] });
+		return state.apply(state.tr.setSelection(TextSelection.create(text, anchor, head))).selection;
+	};
+
+	it('takes the chip into the range, from either side', () => {
+		expect(chip.from).toBeGreaterThan(0);
+		expect(select(end, chip.from + 1)).toMatchObject({ anchor: end, head: chip.from });
+		expect(select(1, chip.from + 1)).toMatchObject({ anchor: 1, head: chip.to });
+		expect(select(end, chip.from + 1)).toBeInstanceOf(TextSelection);
+	});
+
+	it('still takes the chip whole for a caret in its text', () => {
+		const caret = select(chip.from + 1, chip.from + 1);
+		expect(caret).toBeInstanceOf(NodeSelection);
+		expect(caret.from).toBe(chip.from);
+	});
+});
