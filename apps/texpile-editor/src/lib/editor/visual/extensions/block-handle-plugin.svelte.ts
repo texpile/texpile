@@ -14,7 +14,7 @@ import { handleUnitAt } from './blockHandle/handleUnit';
 import { FLOATING_BAR_BOTTOM } from '$lib/editor/floatingBar';
 import { positionOf } from './blockHandle/nodePosition';
 import { blockSettingsAt } from './blockHandle/blockSettings';
-import { EDITOR_HELD, isEditorHeld } from '$lib/resizing/heldEditor';
+import { dividerDragging, onDividerGrab } from '$lib/resizing/edgeDrag';
 import { handleLineMiddle } from './blockHandle/handleLine';
 import { handleTop, pointerStaysWithBlock } from './blockHandle/handleReach';
 import { blockHandlePluginKey, handleDropEvents, handleDropLine, handleDropState, setHandleDragActive } from './blockHandle/handleDrop';
@@ -76,6 +76,15 @@ class BlockHandleView {
 	// the last pointer y over the editor, so a scroll can re-anchor without a new mouse event
 	private lastPointerY: number | null = null;
 	private pointerInside = false;
+	// a handle left showing stayed over the cover of the pane, kept by the pointer beside its block
+	private readonly unwatchGrab = onDividerGrab(() => (this.state.visible = false));
+	private laneWidth = -1;
+	// a pane made wider or narrower moves its blocks from under a handle the pointer is resting beside
+	private readonly laneSize = new ResizeObserver(([lane]) => {
+		const { width } = lane.contentRect;
+		if (this.laneWidth >= 0 && width !== this.laneWidth && !this.state.popoverOpen) this.state.visible = false;
+		this.laneWidth = width;
+	});
 
 	constructor(view: EditorView, items: ItemsOf) {
 		this.view = view;
@@ -98,7 +107,7 @@ class BlockHandleView {
 		});
 
 		this.lane = view.dom.closest<HTMLElement>('[data-handle-lane]') ?? view.dom;
-		view.dom.addEventListener(EDITOR_HELD, this.onHeld);
+		this.laneSize.observe(this.lane);
 		this.lane.addEventListener('mousemove', this.onMouseMove);
 		this.lane.addEventListener('mouseleave', this.onMouseLeave);
 		this.host.addEventListener('mouseenter', this.cancelHide);
@@ -108,11 +117,6 @@ class BlockHandleView {
 		view.dom.ownerDocument.addEventListener('dragend', this.onDragEnd, true);
 		view.dom.ownerDocument.addEventListener('scroll', this.onScroll, { capture: true, passive: true });
 	}
-
-	// a divider drag covers the text, and the buttons floated over the cover
-	private onHeld = () => {
-		this.state.visible = false;
-	};
 
 	private onMouseMove = (event: MouseEvent) => {
 		this.pointerInside = true;
@@ -167,7 +171,8 @@ class BlockHandleView {
 	}
 
 	private updateFromPoint(y: number) {
-		if (isEditorHeld(this.view)) {
+		// the pointer of a divider drag runs ahead of its divider and over the text
+		if (dividerDragging()) {
 			this.state.visible = false;
 			return;
 		}
@@ -294,7 +299,8 @@ class BlockHandleView {
 	}
 
 	destroy() {
-		this.view.dom.removeEventListener(EDITOR_HELD, this.onHeld);
+		this.unwatchGrab();
+		this.laneSize.disconnect();
 		this.lane.removeEventListener('mousemove', this.onMouseMove);
 		this.lane.removeEventListener('mouseleave', this.onMouseLeave);
 		this.host.removeEventListener('mouseenter', this.cancelHide);

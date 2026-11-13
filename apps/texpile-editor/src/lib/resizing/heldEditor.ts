@@ -22,18 +22,7 @@ function readingPlace(view: EditorView): ReadingPlace | null {
 	return hit ? { scroller, pos: hit.pos, top: view.coordsAtPos(hit.pos).top } : null;
 }
 
-/** fired on the editor's element as it is held: what floats over its text, the block handle for one, goes */
-export const EDITOR_HELD = 'texpile:editor-held';
-
-const held = new WeakSet<EditorView>();
-
-export function isEditorHeld(view: EditorView): boolean {
-	return held.has(view);
-}
-
 export function holdEditor(view: EditorView): void {
-	held.add(view);
-	view.dom.dispatchEvent(new Event(EDITOR_HELD));
 	const width = `${view.dom.getBoundingClientRect().width}px`;
 	view.dom.style.setProperty('width', width);
 	view.dom.style.setProperty('min-width', width);
@@ -41,7 +30,6 @@ export function holdEditor(view: EditorView): void {
 
 /** `redraw` draws the editor for the width its column has now */
 export function releaseEditor(view: EditorView, redraw: () => void): void {
-	held.delete(view);
 	const place = view.dom.style.width ? readingPlace(view) : null;
 	view.dom.style.removeProperty('width');
 	view.dom.style.removeProperty('min-width');

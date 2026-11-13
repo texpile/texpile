@@ -1,6 +1,7 @@
 // an edge being dragged, a divider between panes or the window's own, told to the panes so they hold what they drew
 // from its first step
 
+const grabbed = new Set<() => void>();
 const released = new Set<() => void>();
 let drags = 0;
 let windowResized = -Infinity;
@@ -19,6 +20,7 @@ export function windowResizedAt(): number {
 /** a divider calls this as its drag starts and the returned function as it ends */
 export function beginDividerDrag(): () => void {
 	drags++;
+	if (drags === 1) for (const tell of [...grabbed]) tell();
 	let ended = false;
 	return () => {
 		if (ended) return;
@@ -26,6 +28,11 @@ export function beginDividerDrag(): () => void {
 		drags--;
 		if (drags === 0) for (const tell of [...released]) tell();
 	};
+}
+
+export function onDividerGrab(tell: () => void): () => void {
+	grabbed.add(tell);
+	return () => grabbed.delete(tell);
 }
 
 export function onDividerRelease(tell: () => void): () => void {

@@ -92,7 +92,7 @@ test('a divider drag covers the visual editor with its file name and lets it go 
 	const before = await firstInView();
 	const width = (await editor.boundingBox())!.width;
 	const divider = (await page.locator('.cursor-col-resize').first().boundingBox())!;
-	const [x, y] = [divider.x + divider.width / 2, divider.y + divider.height / 2];
+	const x = divider.x + divider.width / 2;
 	// the block handle, which stayed over the cover
 	const paragraph = (await editor.locator('p', { hasText: 'Paragraph 30 ' }).boundingBox())!;
 	const handle = page.locator('.block-handle-btn:visible');
@@ -101,12 +101,30 @@ test('a divider drag covers the visual editor with its file name and lets it go 
 		await page.mouse.move(paragraph.x + 40, paragraph.y + 10, { steps: 4 });
 		await expect(handle.first()).toBeVisible({ timeout: 1500 });
 	}).toPass();
-	await page.mouse.move(x, y);
+	// beside its block the handle is kept, and the pointer of a drag runs ahead of its divider to there
+	await page.evaluate(() => {
+		const seen = { overCover: 0, done: false };
+		Object.assign(window, { handleSeen: seen });
+		function frame(): void {
+			if (seen.done) return;
+			const shown = [...document.querySelectorAll('.block-handle-btn')].some((button) => getComputedStyle(button).visibility === 'visible');
+			if (shown && document.querySelector('[data-resize-cover][data-resizing]')) seen.overCover++;
+			requestAnimationFrame(frame);
+		}
+		requestAnimationFrame(frame);
+	});
+	await page.mouse.move(x, paragraph.y + 10);
 	await page.mouse.down();
-	await page.mouse.move(x + 320, y, { steps: 16 });
+	await page.mouse.move(x + 320, paragraph.y + 10, { steps: 16 });
 	const cover = page.locator('[data-resize-cover="long.tex"]');
 	await expect(cover).toHaveAttribute('data-resizing', '');
 	await expect(handle).toHaveCount(0);
+	const overCover = await page.evaluate(() => {
+		const { handleSeen } = window as unknown as { handleSeen: { overCover: number; done: boolean } };
+		handleSeen.done = true;
+		return handleSeen.overCover;
+	});
+	expect(overCover, 'frames with the handle over the cover').toBe(0);
 	const held = (await editor.boundingBox())!.width;
 	await page.mouse.up();
 	await expect(cover).not.toHaveAttribute('data-resizing', '');
