@@ -1,5 +1,6 @@
 // the elements of the open file that Typst numbers, in document order, with what tells them apart from the others
 import type { Node as PMNode } from 'prosemirror-model';
+import { captionIn } from '$lib/editor/visual/tableUtils';
 import { typstChipCounts } from '../../core/plugin/chipCounts';
 import type { NumberedElement } from './matchPrinted';
 
@@ -50,7 +51,7 @@ function figureKindOf(node: PMNode): string | null {
 
 function figureCaption(node: PMNode): string {
 	if (node.type.name === 'image') return plainText(node);
-	const caption = node.type.name === 'table_wrapper' ? node.firstChild : node.lastChild;
+	const caption = node.type.name === 'table_wrapper' ? captionIn(node)?.node : node.lastChild;
 	return caption && /caption$/.test(caption.type.name) ? plainText(caption) : '';
 }
 

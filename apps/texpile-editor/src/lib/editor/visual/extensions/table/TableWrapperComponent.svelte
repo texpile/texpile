@@ -7,6 +7,7 @@
 	import type { Node } from 'prosemirror-model';
 	import TableSettingsPanel from './TableSettingsPanel.svelte';
 	import type { TableLines } from './rules/tableRules';
+	import { captionIn } from '$lib/editor/visual/tableUtils';
 	import { isReadOnly } from '$lib/stores/permissionStore';
 	import { templateFeaturesStore } from '$lib/stores/editorStore';
 	import { m } from '$lib/paraglide/messages';
@@ -63,9 +64,8 @@
 	}
 
 	let hasPlaceholderCaption = $derived.by(() => {
-		if (!node.content || node.content.childCount === 0) return false;
-		const captionNode = node.content.child(0); // table_caption is first child
-		if (!captionNode || captionNode.type.name !== 'table_caption') return false;
+		const captionNode = captionIn(node)?.node;
+		if (!captionNode) return false;
 
 		// typst numbers a #figure with or without a caption (the serializer just omits the
 		// argument), so an empty caption is legitimate there; LaTeX needs \caption to number

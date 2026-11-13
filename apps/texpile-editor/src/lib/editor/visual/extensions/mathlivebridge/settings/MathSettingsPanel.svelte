@@ -3,14 +3,15 @@
 	// environments), and the environment picker. MathSettings owns the trigger and shell.
 	import { tip } from '$lib/components/tooltip.svelte';
 	import { Switch } from '@skeletonlabs/skeleton-svelte';
-	import { ChevronDown, Info, Trash2 } from '@lucide/svelte';
+	import { Info, Trash2 } from '@lucide/svelte';
 	import type { EditorView } from 'prosemirror-view';
 	import type { Node as PMNode } from 'prosemirror-model';
 	import { generateLabel, isTexpileLabel, sanitizeLabel } from '$lib/editor/visual/label';
 	import { labelTaken } from '$lib/editor/visual/labelTaken';
 	import { announceLabelRenamed, repointRefs } from '$lib/editor/visual/repointRefs';
-	import { setDisplayNumbered } from './mathMenu/mathFormulaType';
-	import { isMultilineEnvironment, isPerLineEnvironment } from './mathEnvironments';
+	import { setDisplayNumbered } from '../mathMenu/mathFormulaType';
+	import { isMultilineEnvironment, isPerLineEnvironment } from '../mathEnvironments';
+	import MathLabelSetting from './MathLabelSetting.svelte';
 	import { equationNumberingChange, equationsNumbered } from '$lib/languages/typst/visual/equationNumbering';
 	import { m } from '$lib/paraglide/messages';
 
@@ -29,7 +30,6 @@
 	// svelte-ignore state_referenced_locally
 	let typstNumbered = $state(isTypst && equationsNumbered(view.state.doc));
 
-	let showAdvanced = $state(false);
 	// form fields are seeded from the node once, by design
 	// svelte-ignore state_referenced_locally
 	const initialAttrs = node.attrs;
@@ -159,26 +159,6 @@
 <div class="settings-content">
 	{#if isTypst}
 		<div class="settings-row">
-			<label class="label">
-				<span>
-					{m.tablewrap_typst_label()}
-					<span class="text-muted text-sm">{m.tablewrap_typst_label_hint()}</span>
-				</span>
-				<input
-					type="text"
-					class="input text-sm"
-					class:input-error={isDuplicate}
-					value={labelInput}
-					oninput={handleLabelInput}
-					onblur={handleLabelBlur}
-					placeholder="eq:mass"
-				/>
-				{#if isDuplicate}
-					<p class="text-error-ink mt-1 text-xs">{m.mathsettings_label_duplicate_error()}</p>
-				{/if}
-			</label>
-		</div>
-		<div class="settings-row">
 			<Switch checked={typstNumbered} onCheckedChange={handleTypstNumberedToggle} class="flex w-full items-center justify-between gap-3">
 				<Switch.Label>{m.mathsettings_typst_numbered_label()}</Switch.Label>
 				<Switch.Control class="preset-filled-surface-200-800 data-[state=checked]:preset-filled-primary-500">
@@ -188,6 +168,15 @@
 			</Switch>
 			<p class="text-muted mt-1 text-xs">{m.mathsettings_typst_numbered_hint()}</p>
 		</div>
+		<MathLabelSetting
+			name={m.tablewrap_typst_label()}
+			hint={m.tablewrap_typst_label_hint()}
+			placeholder="eq:mass"
+			value={labelInput}
+			duplicate={!!isDuplicate}
+			oninput={handleLabelInput}
+			onblur={handleLabelBlur}
+		/>
 	{:else}
 		<div class="settings-row">
 			<Switch checked={numberedInput} onCheckedChange={handleNumberedToggle} class="flex w-full items-center justify-between gap-3">
@@ -260,38 +249,16 @@
 			{/if}
 
 			{#if !isPerLineLabelMode}
-				<button
-					type="button"
-					class="text-muted hover:text-surface-900-100 my-3 flex w-full items-center gap-2 text-sm transition-colors"
-					onclick={() => (showAdvanced = !showAdvanced)}
-				>
-					<ChevronDown class="h-4 w-4 transition-transform {showAdvanced ? 'rotate-180' : ''}" />
-					<span>{m.mathsettings_advanced_options()}</span>
-				</button>
-
-				{#if showAdvanced}
-					<div class="border-surface-300-700 mb-3 space-y-4 pl-6">
-						<label class="label">
-							<span>
-								{m.mathsettings_label_field_label()}
-								<span class="text-muted text-sm">{m.mathsettings_label_field_hint()}</span>
-							</span>
-							<input
-								type="text"
-								class="input text-sm"
-								class:input-error={isDuplicate}
-								value={labelInput}
-								oninput={handleLabelInput}
-								onblur={handleLabelBlur}
-								placeholder={m.mathsettings_label_placeholder()}
-							/>
-							{#if isDuplicate}
-								<p class="text-error-ink mt-1 text-xs">{m.mathsettings_label_duplicate_error()}</p>
-							{/if}
-							<p class="text-muted mt-1 text-xs">{m.mathsettings_label_field_note()}</p>
-						</label>
-					</div>
-				{/if}
+				<MathLabelSetting
+					name={m.mathsettings_label_field_label()}
+					hint={m.mathsettings_label_field_hint()}
+					placeholder={m.mathsettings_label_placeholder()}
+					note={m.mathsettings_label_field_note()}
+					value={labelInput}
+					duplicate={!!isDuplicate}
+					oninput={handleLabelInput}
+					onblur={handleLabelBlur}
+				/>
 			{/if}
 		{/if}
 	{/if}

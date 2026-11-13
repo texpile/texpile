@@ -296,6 +296,7 @@
 	"wsview_visual_label": "可视化",
 	"wsview_latex_source_title": "LaTeX 源代码",
 	"wsview_typst_source_title": "Typst 源代码",
+	"imageoverlay_latex_width_note": "占正文宽度的比例。",
 	"imageoverlay_typst_width_note": "Typst 长度：70%、5cm、120pt 或 auto。留空使用图片原始尺寸。",
 	"typst_sync_preview_only_title": "Typst 仅在预览模式下支持同步",
 	"typst_sync_preview_only_desc": "编译后的 Typst PDF 不包含同步数据。请在编译设置中开启预览，以便从源代码跳转。",

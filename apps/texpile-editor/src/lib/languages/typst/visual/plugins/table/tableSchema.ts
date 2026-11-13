@@ -6,6 +6,9 @@ function widen(spec: NodeSpec, attrs: NodeSpec['attrs']): NodeSpec {
 	return { ...spec, attrs: { ...spec.attrs, ...attrs } };
 }
 
+// the caption stands where Typst prints it: under the table, or over it by the document's own rule
+const FIGURE_CONTENT = '(table table_caption | table_caption table) table_notes?';
+
 export function tableSchema({ nodes, marks }: TypstSchemaSpec): TypstSchemaSpec {
 	const widened: Record<string, NodeSpec['attrs']> = {
 		table: { typAlign: { default: null }, typArgs: { default: [] }, typBottomRules: { default: [] } },
@@ -27,5 +30,6 @@ export function tableSchema({ nodes, marks }: TypstSchemaSpec): TypstSchemaSpec 
 	};
 	let out = nodes;
 	for (const [name, attrs] of Object.entries(widened)) out = out.update(name, widen(out.get(name)!, attrs));
+	out = out.update('table_wrapper', { ...out.get('table_wrapper')!, content: FIGURE_CONTENT });
 	return { nodes: out, marks };
 }

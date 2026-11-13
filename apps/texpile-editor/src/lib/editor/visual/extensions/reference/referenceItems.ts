@@ -2,6 +2,7 @@
 // and equation in the open document, and the text search across them
 import type { Node } from 'prosemirror-model';
 import type { EditorView } from 'prosemirror-view';
+import { captionIn } from '$lib/editor/visual/tableUtils';
 import type { BiblatexReference } from '$lib/languages/bib/biblatex';
 import { extractChipLabels, type ChipLabel } from '$lib/languages/latex/parser/labels';
 import { commonEnvFacts, holdsMath } from '$lib/languages/latex/knowledge/environments/envFacts';
@@ -116,10 +117,7 @@ export function extractTableReferences(view: EditorView): ReferenceItem[] {
 		if (node.type.name === 'table_wrapper' && node.attrs.label) {
 			tableCount++;
 
-			let captionText = '';
-			if (node.firstChild && node.firstChild.type.name === 'table_caption') {
-				captionText = node.firstChild.textContent || '';
-			}
+			const captionText = captionIn(node)?.node.textContent || '';
 
 			const subtitle =
 				currentSection && captionText ? `${currentSection} • ${captionText}` : currentSection || captionText || node.attrs.label;

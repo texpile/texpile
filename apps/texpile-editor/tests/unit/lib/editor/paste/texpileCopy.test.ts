@@ -5,6 +5,7 @@ import { Fragment } from 'prosemirror-model';
 import { Transform } from 'prosemirror-transform';
 import { schema } from '$lib/languages/latex/schema/latexPMSchema';
 import { typSchema } from '$lib/languages/typst/visual/schema';
+import { typstToProseMirror } from '$lib/languages/typst/visual/convert/converter';
 import { texpileClipboardParser, texpileClipboardSerializer } from '$lib/editor/paste/texpileCopy';
 
 function throughClipboard(s: Schema, mark: Mark): Mark | undefined {
@@ -43,6 +44,16 @@ describe('a copy in the visual editor pasted back', () => {
 		expect(nodesThroughClipboard(schema, item).attrs).toEqual(item.attrs);
 		const heading = typSchema.nodes.heading.create({ level: 1, label: 'sec:intro' }, typSchema.text('Intro'));
 		expect(nodesThroughClipboard(typSchema, heading).attrs).toEqual(heading.attrs);
+	});
+
+	it('takes the caption of a Typst table figure first in a LaTeX document', () => {
+		const figure = typstToProseMirror('#figure(\n  table(\n    columns: 2,\n    [a], [b],\n  ),\n  caption: [Accuracy],\n) <acc>').doc;
+		const div = document.createElement('div');
+		div.appendChild(texpileClipboardSerializer(typSchema).serializeFragment(figure.content));
+		const pasted = texpileClipboardParser(schema).parse(div).firstChild!;
+		expect([pasted.type.name, pasted.child(0).type.name, pasted.child(1).type.name]).toEqual(['table_wrapper', 'table_caption', 'table']);
+		expect(pasted.child(0).textContent).toBe('Accuracy');
+		expect(pasted.child(1).textContent).toBe('ab');
 	});
 
 	it('leaves the file as it was when a theorem or a display formula is cut and pasted back', async () => {

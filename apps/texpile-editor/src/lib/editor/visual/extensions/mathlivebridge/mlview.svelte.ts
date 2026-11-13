@@ -6,7 +6,7 @@ import type { Node } from 'prosemirror-model';
 import 'mathlive/fonts.css';
 import { browser } from '$lib/runtime';
 import { mount, unmount } from 'svelte';
-import MathSettings from './MathSettings.svelte';
+import MathSettings from './settings/MathSettings.svelte';
 import { m } from '$lib/paraglide/messages';
 import { offerBlockSettings, settingsPlace, type GearPlace } from '$lib/editor/visual/extensions/blockHandle/blockSettings';
 import { configureMathVirtualKeyboard } from './virtualKeyboardConfig';

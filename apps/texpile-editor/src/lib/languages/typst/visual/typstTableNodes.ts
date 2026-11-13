@@ -24,7 +24,7 @@ export function typTableNode(schema: Schema, rows = 3, cols = 2, numbered = fals
 	const table = schema.nodes.table.create(null, rowNodes);
 	if (!numbered) return table;
 	const caption = schema.nodes.table_caption.create();
-	return schema.nodes.table_wrapper.create({ label: generateLabel('table'), showNotes: false }, [caption, table]);
+	return schema.nodes.table_wrapper.create({ label: generateLabel('table'), showNotes: false }, [table, caption]);
 }
 
 export function typGridNode(schema: Schema, count = 2): PMNode {

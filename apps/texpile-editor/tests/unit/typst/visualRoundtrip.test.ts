@@ -283,12 +283,12 @@ describe('converted document shape', () => {
 		const w = doc.child(0);
 		expect(w.type.name).toBe('table_wrapper');
 		expect(w.attrs.label).toBe('tab:res');
-		expect(w.child(0).type.name).toBe('table_caption');
-		expect(w.child(0).textContent).toBe('Results.');
-		expect(w.child(1).type.name).toBe('table');
+		expect(w.child(0).type.name).toBe('table');
+		expect(w.child(1).type.name).toBe('table_caption');
+		expect(w.child(1).textContent).toBe('Results.');
 		// an argument after the cells is still the table's
 		expect(doc.child(1).type.name).toBe('table_wrapper');
-		expect(doc.child(1).child(1).attrs.typArgs).toEqual(['gutter: 4pt']);
+		expect(doc.child(1).child(0).attrs.typArgs).toEqual(['gutter: 4pt']);
 	});
 
 	it('term lists become term items with editable title and description', () => {

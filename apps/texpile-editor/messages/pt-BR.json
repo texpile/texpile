@@ -296,6 +296,7 @@
 	"wsview_visual_label": "Visual",
 	"wsview_latex_source_title": "Código-fonte LaTeX",
 	"wsview_typst_source_title": "Código-fonte Typst",
+	"imageoverlay_latex_width_note": "Uma fração da largura do texto.",
 	"imageoverlay_typst_width_note": "Uma medida do Typst: 70%, 5cm, 120pt ou auto. Se o campo ficar vazio, será usado o tamanho original da imagem.",
 	"typst_sync_preview_only_title": "O Typst sincroniza apenas no modo de visualização",
 	"typst_sync_preview_only_desc": "Um PDF compilado pelo Typst não contém dados de sincronização. Ative a Visualização nas configurações de compilação para navegar a partir do código-fonte.",

@@ -296,6 +296,7 @@
 	"wsview_visual_label": "Visuell",
 	"wsview_latex_source_title": "LaTeX-Quellcode",
 	"wsview_typst_source_title": "Typst-Quellcode",
+	"imageoverlay_latex_width_note": "Ein Anteil der Textbreite.",
 	"imageoverlay_typst_width_note": "Eine Typst-Länge: 70%, 5cm, 120pt oder auto. Leer verwendet die natürliche Bildgröße.",
 	"typst_sync_preview_only_title": "Typst synchronisiert nur im Vorschaumodus",
 	"typst_sync_preview_only_desc": "Ein kompiliertes Typst-PDF enthält keine Sync-Daten. Aktivieren Sie die Vorschau in den Kompilier-Einstellungen, um von der Quelle aus zu springen.",

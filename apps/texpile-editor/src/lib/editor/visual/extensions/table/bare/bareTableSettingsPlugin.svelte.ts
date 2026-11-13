@@ -5,6 +5,7 @@ import { TextSelection, type Plugin } from 'prosemirror-state';
 import type { EditorView } from 'prosemirror-view';
 import { blockSettingsPlugin, gearPlaceBeside, type GearPlace } from '$lib/editor/visual/extensions/blockHandle/blockSettings';
 import { generateLabel } from '$lib/editor/visual/label';
+import { captionIn } from '$lib/editor/visual/tableUtils';
 import { tableLookOf, type TableLines } from '../rules/tableRules';
 import { withColumnSizes } from '../columns/typstColumnSizes';
 import { m } from '$lib/paraglide/messages';
@@ -42,7 +43,7 @@ function floatOf(view: EditorView, table: Node, dialect: 'latex' | 'typst'): Nod
 	const parts =
 		dialect === 'latex'
 			? [nodes.table_caption.create(null, view.state.schema.text('Table caption')), table, nodes.table_notes.create()]
-			: [nodes.table_caption.create(), table];
+			: [table, nodes.table_caption.create()];
 	return nodes.table_wrapper.create({ label: generateLabel('table'), showNotes: false }, parts);
 }
 
@@ -113,8 +114,9 @@ export function openBareTableSettings(request: BareTableRequest): void {
 			const to = from + (around ?? now).nodeSize;
 			const tr = view.state.tr.replaceWith(from, to, floatOf(view, now, dialect));
 			// the caret in the caption, over the words LaTeX starts it with
-			const caption = tr.doc.nodeAt(from)!.firstChild!;
-			tr.setSelection(TextSelection.create(tr.doc, from + 2, from + 2 + caption.content.size));
+			const caption = captionIn(tr.doc.nodeAt(from)!)!;
+			const start = from + 1 + caption.offset + 1;
+			tr.setSelection(TextSelection.create(tr.doc, start, start + caption.node.content.size));
 			closeBareTableSettings();
 			view.dispatch(tr.scrollIntoView());
 			view.focus();

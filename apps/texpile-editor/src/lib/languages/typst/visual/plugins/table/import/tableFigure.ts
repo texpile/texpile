@@ -11,6 +11,7 @@ import {
 	type TypstImport,
 	type TypstSeg
 } from '$lib/languages/typst/visual/core/document';
+import { captionsAboveTables } from './captionPlace';
 import { buildTableNode, tableParts } from './tableImport';
 
 type FigureAttrs = { label: string | null; labelGap: string | null; typIndent: string | null };
@@ -21,10 +22,8 @@ function wrapperOf(im: TypstImport, fig: FigureCall, attrs: FigureAttrs): PmNode
 	if (!table) return null;
 	const caption = figureCaption(im, fig.caption);
 	const wrapper = { ...attrs, showNotes: false, typCaption: fig.caption !== null, typFigure: fig.args };
-	return im.core.node('table_wrapper', wrapper, [
-		im.core.node('table_caption', { typString: fig.caption?.name === 'Str' }, caption),
-		table
-	]);
+	const captionNode = im.core.node('table_caption', { typString: fig.caption?.name === 'Str' }, caption);
+	return im.core.node('table_wrapper', wrapper, captionsAboveTables(im.src) ? [captionNode, table] : [table, captionNode]);
 }
 
 export function tableFigureSeg(im: TypstImport, kids: SyntaxNode[], i: number): { seg: TypstSeg; next: number } | null {
