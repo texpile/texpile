@@ -879,6 +879,37 @@ html .cm-comment-add-card .cm-comment-add:hover {
 	display: block;
 	margin: 0 0 0.3em;
 }
+/* a block's source as it was: a few lines of it, wrapped inside the column */
+.TexpileEditor div.pm-suggest-was:has(> code) {
+	background-image: none;
+}
+.TexpileEditor div.pm-suggest-was > code {
+	display: -webkit-box;
+	-webkit-box-orient: vertical;
+	-webkit-line-clamp: 4;
+	overflow: hidden;
+	white-space: pre-wrap;
+	overflow-wrap: anywhere;
+	text-decoration: line-through;
+}
+/* a picture as it was drawn, on white in dark mode as its card is */
+.TexpileEditor div.pm-suggest-drawn {
+	display: flex;
+	justify-content: center;
+	padding: 0.5rem;
+	border-radius: var(--radius-base);
+	background-image: none;
+}
+.TexpileEditor div.pm-suggest-drawn > svg {
+	max-width: 100%;
+	height: auto;
+}
+html[data-mode='dark'] .TexpileEditor div.pm-suggest-drawn > svg {
+	box-sizing: content-box;
+	padding: 0.5rem;
+	border-radius: var(--radius-base);
+	background-color: white;
+}
 /* a display formula sits centered, as the one that replaced it does, with the rule through the formula alone */
 .TexpileEditor div.pm-suggest-was:has(> div.math-static-placeholder) {
 	background-image: none;
