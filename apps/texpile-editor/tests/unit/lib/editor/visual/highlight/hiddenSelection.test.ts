@@ -4,7 +4,8 @@ import { GapCursor } from 'prosemirror-gapcursor';
 import { CellSelection } from 'prosemirror-tables';
 import type { Node } from 'prosemirror-model';
 import { schema } from '$lib/languages/latex/schema/latexPMSchema';
-import { hiddenSelectionHolder } from '$lib/editor/visual/highlight/hiddenSelection';
+import { hiddenSelectionHolder, hiddenSelectionPlugin } from '$lib/editor/visual/highlight/hiddenSelection';
+import { createTableNode } from '$lib/editor/visual/tableUtils';
 
 function posOf(doc: Node, name: string, nth = 0): number {
 	let at = -1;
@@ -40,4 +41,17 @@ it('holds a selected node, a table for its cells, a gap cursor in its block, and
 		from: cellAt,
 		to: cellAt + doc.nodeAt(cellAt)!.nodeSize
 	});
+});
+
+// Chrome painted its own caret in the float under a gap, beside the gap cursor's bar
+it('hides the caret in the blocks on both sides of a gap cursor', () => {
+	const doc = schema.node('doc', null, [createTableNode(schema, 1, 1), createTableNode(schema, 1, 1)]);
+	const between = doc.child(0).nodeSize;
+	const plugin = hiddenSelectionPlugin();
+	const state = EditorState.create({ doc, plugins: [plugin], selection: new GapCursor(doc.resolve(between)) });
+	const marked = plugin.props.decorations!.call(plugin, state)!.find();
+	expect(marked.map((d) => [d.from, d.to])).toEqual([
+		[0, between],
+		[between, doc.content.size]
+	]);
 });

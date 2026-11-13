@@ -22,7 +22,8 @@
 	import { padTablesInState } from '$lib/editor/visual/padTables';
 	import { tableViewOnly } from '$lib/editor/visual/extensions/table/tableViewOnly';
 	import { wholeTableEdits } from '$lib/editor/visual/extensions/table/wholeTableEdits';
-	import { tableArrowEntry } from '$lib/editor/visual/extensions/table/tableArrowEntry';
+	import { tableArrowEntry } from '$lib/editor/visual/extensions/table/caret/tableArrowEntry';
+	import { tableArrowExit } from '$lib/editor/visual/extensions/table/caret/tableArrowExit';
 	import { crossBlockEdits } from '$lib/editor/visual/extensions/crossBlockEdits';
 	import { firstRowHeader } from './firstRowHeader';
 	import { tableAlignment } from './tableAlignment';
@@ -199,6 +200,7 @@
 			// on the next parse - a control that lied. The node view is kept because it is what
 			// renders the <colgroup>; only the drag handlers are gone.
 			tableViewOnly,
+			tableArrowExit,
 			tableEditing(),
 			wholeTableEdits,
 			tableArrowEntry,

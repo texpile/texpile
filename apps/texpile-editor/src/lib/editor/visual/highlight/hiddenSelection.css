@@ -9,6 +9,9 @@
 .ProseMirror .pm-selection-hidden > * {
 	caret-color: auto;
 }
+.ProseMirror.pm-block-carets .pm-beside-gap {
+	caret-color: transparent;
+}
 
 /* the browser's own highlight over a selected node or a table's selected cells, which show as selected themselves */
 .ProseMirror .pm-selection-hidden::selection,

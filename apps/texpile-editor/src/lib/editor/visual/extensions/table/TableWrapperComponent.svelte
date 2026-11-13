@@ -30,6 +30,7 @@
 		setAlign: (align: string | null) => void;
 		lines: TableLines | null;
 		setLines: (lines: TableLines) => void;
+		dropCaption: () => void;
 	};
 
 	let {
@@ -46,7 +47,8 @@
 		setColspec,
 		setAlign,
 		lines,
-		setLines
+		setLines,
+		dropCaption
 	}: Props = $props();
 
 	const tableCaptionEnabled = $derived(templateFeaturesStore.current?.tableCaption ?? true);
@@ -124,6 +126,10 @@
 							{setAlign}
 							{lines}
 							{setLines}
+							dropCaption={() => {
+								settingsOpen = false;
+								dropCaption();
+							}}
 						/>
 					</Popover.Content>
 				</Popover.Positioner>

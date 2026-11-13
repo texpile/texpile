@@ -28,6 +28,7 @@
 		setAlign: (align: string | null) => void;
 		lines: TableLines | null;
 		setLines: (lines: TableLines) => void;
+		dropCaption: () => void;
 	};
 
 	let {
@@ -45,7 +46,8 @@
 		setColspec,
 		setAlign,
 		lines,
-		setLines
+		setLines,
+		dropCaption
 	}: Props = $props();
 
 	// the wrapper's table, whose columns the settings edit
@@ -94,6 +96,18 @@
 		<TypstColumnsSetting {table} {colspec} {setColspec} inherited="center" {setAlign} />
 	{:else}
 		<LatexColumnsSetting {table} {colspec} {tableEnv} {setColspec} />
+	{/if}
+	{#if dialect === 'typst' || isFloat}
+		<div class="settings-row">
+			<!-- on is what a float is; off leaves the table of its own, centered as the float printed it -->
+			<Switch checked onCheckedChange={dropCaption} class="flex items-center justify-between gap-3">
+				<Switch.Label>{m.tablewrap_caption_and_number()}</Switch.Label>
+				<Switch.Control class="preset-filled-surface-200-800 data-[state=checked]:preset-filled-primary-500">
+					<Switch.Thumb />
+				</Switch.Control>
+				<Switch.HiddenInput />
+			</Switch>
+		</div>
 	{/if}
 	{#if dialect === 'latex' && isFloat}
 		<div class="settings-row">

@@ -4,12 +4,12 @@ import type { Node } from 'prosemirror-model';
 import { TextSelection, type Plugin } from 'prosemirror-state';
 import type { EditorView } from 'prosemirror-view';
 import { blockSettingsPlugin, gearPlaceBeside, type GearPlace } from '$lib/editor/visual/extensions/blockHandle/blockSettings';
-import { generateLabel } from '$lib/editor/visual/label';
 import { captionIn } from '$lib/editor/visual/tableUtils';
 import { tableLookOf, type TableLines } from '../rules/tableRules';
 import { withColumnSizes } from '../columns/typstColumnSizes';
 import { m } from '$lib/paraglide/messages';
 import BareTableSettings from './BareTableSettings.svelte';
+import { floatOf } from './tableFloat';
 
 export type TableSide = 'left' | 'center' | 'right';
 
@@ -35,16 +35,6 @@ let closeOpen: (() => void) | null = null;
 function tableAt(view: EditorView, pos: number): Node | null {
 	const node = view.state.doc.nodeAt(pos);
 	return node?.type.name === 'table' ? node : null;
-}
-
-// LaTeX numbers a table by its caption, so a new float starts with words to type over; Typst numbers it without
-function floatOf(view: EditorView, table: Node, dialect: 'latex' | 'typst'): Node {
-	const { nodes } = view.state.schema;
-	const parts =
-		dialect === 'latex'
-			? [nodes.table_caption.create(null, view.state.schema.text('Table caption')), table, nodes.table_notes.create()]
-			: [table, nodes.table_caption.create()];
-	return nodes.table_wrapper.create({ label: generateLabel('table'), showNotes: false }, parts);
 }
 
 export function closeBareTableSettings(): void {
@@ -112,7 +102,7 @@ export function openBareTableSettings(request: BareTableRequest): void {
 			if (!now) return;
 			const from = holder && around ? holder.pos : pos;
 			const to = from + (around ?? now).nodeSize;
-			const tr = view.state.tr.replaceWith(from, to, floatOf(view, now, dialect));
+			const tr = view.state.tr.replaceWith(from, to, floatOf(view.state.schema, now, dialect));
 			// the caret in the caption, over the words LaTeX starts it with
 			const caption = captionIn(tr.doc.nodeAt(from)!)!;
 			const start = from + 1 + caption.offset + 1;

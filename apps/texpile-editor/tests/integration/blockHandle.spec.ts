@@ -30,7 +30,11 @@ const CENTERED = `\\documentclass{article}\n\\usepackage{tikz}\n\\begin{document
 
 const BARE_TABLE = `\\documentclass{article}\n\\begin{document}\n\nBefore.\n\n\\begin{center}\n\\begin{tabular}{|l|r|}\n\\hline\nName & Value \\\\\n\\hline\n\\end{tabular}\n\\end{center}\n\nAfter.\n\n\\end{document}\n`;
 
-const texpile = useTexpile({ files: { 'unit.tex': TEX, 'centered.tex': CENTERED, 'bare.tex': BARE_TABLE, 'held.tex': BARE_TABLE } });
+const FLOAT = `\\documentclass{article}\n\\begin{document}\n\nBefore.\n\n\\begin{table}[h]\n\\centering\n\\caption{Results}\n\\begin{tabular}{ll}\na & b \\\\\n\\end{tabular}\n\\end{table}\n\nAfter.\n\n\\end{document}\n`;
+
+const texpile = useTexpile({
+	files: { 'unit.tex': TEX, 'centered.tex': CENTERED, 'bare.tex': BARE_TABLE, 'held.tex': BARE_TABLE, 'float.tex': FLOAT }
+});
 
 type Box = { left: number; right: number; top: number; bottom: number };
 
@@ -165,6 +169,37 @@ test("a table in center gets a caption and a number from the handle's gear", asy
 	const saved = disk.read('bare.tex');
 	expect(saved).not.toContain('\\begin{center}');
 	expect(saved).toContain('\\begin{tabular}{|l|r|}');
+	// and back: the float's own settings take the caption and the number away
+	const float = (await page.locator('.ProseMirror > .table-wrapper').boundingBox())!;
+	await page.mouse.move(5, 5);
+	await page.mouse.move(float.x + float.width / 2, float.y + 12, { steps: 4 });
+	await page.locator('.block-handle-settings').click();
+	await page.locator('[data-part="label"]:visible', { hasText: 'Caption and number' }).click();
+	await expect(page.locator('.ProseMirror > .table-wrapper')).toHaveCount(0);
+	await disk.expectFile(
+		'bare.tex',
+		(text) => text.includes('\\begin{center}') && !text.includes('\\begin{table}'),
+		'the table is in center again'
+	);
+	expect(disk.read('bare.tex')).not.toContain('\\caption');
+});
+
+// the switch only showed notes a float already had, and one read from a file had none
+test('Show notes section gives a float read from a file its notes', async () => {
+	const { page, root } = texpile();
+	const v = new VisualEditor(page, root);
+	const disk = new Disk(root);
+	await v.open('float.tex');
+	const float = (await page.locator('.ProseMirror > .table-wrapper').boundingBox())!;
+	await page.mouse.move(float.x + float.width / 2, float.y + 12, { steps: 4 });
+	await page.locator('.block-handle-settings').click();
+	await page.locator('[data-part="label"]:visible', { hasText: 'Show notes section' }).click();
+	await page.keyboard.press('Escape');
+	const notes = page.locator('.ProseMirror .table-notes');
+	await expect(notes).toBeVisible();
+	await notes.click();
+	await page.keyboard.type('Source: survey.');
+	await disk.expectFile('float.tex', (text) => text.includes('{\\small Source: survey.}'), 'the notes are in the file');
 });
 
 test('right-clicking a table offers its settings, which open with the alignment of the block it stands alone in', async () => {

@@ -1,4 +1,5 @@
 import type { Node } from 'prosemirror-model';
+import { Selection } from 'prosemirror-state';
 import type { Decoration, EditorView, NodeView } from 'prosemirror-view';
 import { mount, unmount } from 'svelte';
 import TableWrapperComponent from './TableWrapperComponent.svelte';
@@ -9,6 +10,7 @@ import { compiledNumbersOf } from '$lib/editor/visual/extensions/nodeNumbers';
 import { announceLabelRenamed, repointRefs } from '$lib/editor/visual/repointRefs';
 import { tableLookOf, type TableLines } from './rules/tableRules';
 import { withColumnSizes } from './columns/typstColumnSizes';
+import { centeredTableOf } from './bare/tableFloat';
 
 /** which markup language the wrapper edits; typst hides every LaTeX-only control
  * (notes, colspec model, row rules, spanning) and never writes tex concepts into the doc. */
@@ -119,6 +121,9 @@ function buildTableWrapperView(
 			// step). Both dialects: a \ref left behind still compiles, resolving to ??.
 			const renamedFrom = 'label' in attrs ? String(currentNode.attrs.label ?? '') : null;
 			if (renamedFrom !== null) repointRefs(tr, view.state.doc, renamedFrom, String(attrs.label ?? ''));
+			// a float read from a file with no notes has no place for them yet
+			if (attrs.showNotes && currentNode.lastChild?.type.name !== 'table_notes')
+				tr.insert(pos + currentNode.nodeSize - 1, view.state.schema.nodes.table_notes.create());
 			view.dispatch(tr);
 			if (renamedFrom !== null) announceLabelRenamed(renamedFrom, String(attrs.label ?? ''));
 		}
@@ -223,6 +228,15 @@ function buildTableWrapperView(
 		return isLabelDuplicate(view, label, pos);
 	}
 
+	function dropCaption() {
+		const pos = getPos();
+		const table = getTableNode(currentNode);
+		if (pos === undefined || !table) return;
+		const tr = view.state.tr.replaceWith(pos, pos + currentNode.nodeSize, centeredTableOf(view.state.schema, table, dialect));
+		view.dispatch(tr.setSelection(Selection.near(tr.doc.resolve(pos + 1), 1)).scrollIntoView());
+		view.focus();
+	}
+
 	// the caption's prefix, Table 1: as it prints (TableWrapperComponent's styles draw it)
 	function showNumber(number: string | null) {
 		dom.style.setProperty('--table-prefix', JSON.stringify(`${m.tablewrap_table_display({ number: number ?? '' }).trim()}: `));
@@ -247,7 +261,8 @@ function buildTableWrapperView(
 		setColspec,
 		setAlign,
 		lines: linesOf(currentNode),
-		setLines
+		setLines,
+		dropCaption
 	});
 
 	const component = mount(TableWrapperComponent, {

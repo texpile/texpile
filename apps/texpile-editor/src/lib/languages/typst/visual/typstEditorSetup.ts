@@ -30,7 +30,8 @@ import { hiddenSelectionPlugin } from '$lib/editor/visual/highlight/hiddenSelect
 import { dropCursor } from 'prosemirror-dropcursor';
 import { tableEditing, goToNextCell } from 'prosemirror-tables';
 import { wholeTableEdits } from '$lib/editor/visual/extensions/table/wholeTableEdits';
-import { tableArrowEntry } from '$lib/editor/visual/extensions/table/tableArrowEntry';
+import { tableArrowEntry } from '$lib/editor/visual/extensions/table/caret/tableArrowEntry';
+import { tableArrowExit } from '$lib/editor/visual/extensions/table/caret/tableArrowExit';
 import { crossBlockEdits } from '$lib/editor/visual/extensions/crossBlockEdits';
 import { columnResizing } from '$lib/editor/visual/extensions/table/columnResizing';
 import { snapWidthToFr } from '$lib/editor/visual/extensions/table/snapWidth';
@@ -203,6 +204,7 @@ export function typstEditorPlugins(setup: TypstEditorSetup): Plugin[] {
 		// the serializer needs to emit proportions instead of one fr beside two autos.
 		columnResizing({ snap: snapWidthToFr, redistribute: true }),
 		captureColumnWidths,
+		tableArrowExit,
 		tableEditing(),
 		...pluginEditorPlugins('afterTableEditing'),
 		wholeTableEdits,
