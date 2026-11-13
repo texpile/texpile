@@ -65,11 +65,13 @@ async function insertFrom(page: Page, path: string[]) {
 		.first()
 		.click();
 	for (const name of path.slice(0, -1)) {
-		await page
-			.getByRole('menuitem', { name: new RegExp(`^${name}`) })
-			.first()
-			.hover();
-		await page.keyboard.press('ArrowRight');
+		const parent = page.getByRole('menuitem', { name: new RegExp(`^${name}`) }).first();
+		// under load the pointer arrives before the menu takes it, and the key then opens nothing
+		await expect(async () => {
+			await parent.hover();
+			await page.keyboard.press('ArrowRight');
+			await expect(parent).toHaveAttribute('aria-expanded', 'true', { timeout: 1500 });
+		}).toPass();
 	}
 	const item = page.getByRole('menuitem', { name: new RegExp(`^${path[path.length - 1]}`) }).last();
 	await expect(item).toBeVisible();

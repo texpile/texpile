@@ -46,8 +46,7 @@ test("a table alone in #align opens the table settings from the handle's gear, w
 	};
 	expect(Math.abs(await drawn()), 'the table stands in the middle').toBeLessThan(3);
 	const box = (await block.boundingBox())!;
-	await page.mouse.move(box.x + box.width / 2, box.y + box.height / 2, { steps: 4 });
-	await page.locator('.block-handle-settings').click();
+	await v.openBlockSettings(box.x + box.width / 2, box.y + box.height / 2);
 	const settings = page.locator('.bare-table-settings');
 	const side = settings.getByRole('radiogroup', { name: 'Alignment' });
 	await expect(side.getByRole('radio', { name: 'Center' })).toHaveAttribute('aria-checked', 'true');

@@ -159,8 +159,7 @@ test("a table in center gets a caption and a number from the handle's gear", asy
 	const disk = new Disk(root);
 	await v.open('bare.tex');
 	const table = (await page.locator('.ProseMirror > .tex-environment').first().boundingBox())!;
-	await page.mouse.move(table.x + table.width / 2, table.y + table.height / 2, { steps: 4 });
-	await page.locator('.block-handle-settings').click();
+	await v.openBlockSettings(table.x + table.width / 2, table.y + table.height / 2);
 	const settings = page.locator('.bare-table-settings');
 	await expect(settings.getByRole('radio', { name: 'Center' })).toHaveAttribute('aria-checked', 'true');
 	await settings.getByText('Caption and number').click();
@@ -171,9 +170,7 @@ test("a table in center gets a caption and a number from the handle's gear", asy
 	expect(saved).toContain('\\begin{tabular}{|l|r|}');
 	// and back: the float's own settings take the caption and the number away
 	const float = (await page.locator('.ProseMirror > .table-wrapper').boundingBox())!;
-	await page.mouse.move(5, 5);
-	await page.mouse.move(float.x + float.width / 2, float.y + 12, { steps: 4 });
-	await page.locator('.block-handle-settings').click();
+	await v.openBlockSettings(float.x + float.width / 2, float.y + 12);
 	await page.locator('[data-part="label"]:visible', { hasText: 'Caption and number' }).click();
 	await expect(page.locator('.ProseMirror > .table-wrapper')).toHaveCount(0);
 	await disk.expectFile(
@@ -191,8 +188,7 @@ test('Show notes section gives a float read from a file its notes', async () => 
 	const disk = new Disk(root);
 	await v.open('float.tex');
 	const float = (await page.locator('.ProseMirror > .table-wrapper').boundingBox())!;
-	await page.mouse.move(float.x + float.width / 2, float.y + 12, { steps: 4 });
-	await page.locator('.block-handle-settings').click();
+	await v.openBlockSettings(float.x + float.width / 2, float.y + 12);
 	await page.locator('[data-part="label"]:visible', { hasText: 'Show notes section' }).click();
 	await page.keyboard.press('Escape');
 	const notes = page.locator('.ProseMirror .table-notes');
@@ -202,9 +198,7 @@ test('Show notes section gives a float read from a file its notes', async () => 
 	await disk.expectFile('float.tex', (text) => text.includes('{\\small Source: survey.}'), 'the notes are in the file');
 	// off takes the section away: hidden notes were written without their wrapper once the switch went back
 	const again = (await page.locator('.ProseMirror > .table-wrapper').boundingBox())!;
-	await page.mouse.move(5, 5);
-	await page.mouse.move(again.x + again.width / 2, again.y + 12, { steps: 4 });
-	await page.locator('.block-handle-settings').click();
+	await v.openBlockSettings(again.x + again.width / 2, again.y + 12);
 	await page.locator('[data-part="label"]:visible', { hasText: 'Show notes section' }).click();
 	await disk.expectFile('float.tex', (text) => text === FLOAT, 'the file is as it was read');
 });
