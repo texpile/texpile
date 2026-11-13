@@ -363,19 +363,35 @@ export function syncTypstDocuments(): void {
 	session?.client.sync();
 }
 
-/** what `tinymist.doStartPreview` answers with */
 export async function formatTypstDocument(root: string | null, file: string, text: string): Promise<string> {
-	const client = await typstClient(root);
-	// worded as main words a missing program, so Format offers the install rather than an error
-	if (!client) throw new Error((await tinymistResolved()) ? 'tinymist is not available' : 'tinymist was not found on PATH.');
-	pushSettings(client);
-	const edits = await client.request<
-		{ textDocument: { uri: string }; options: { tabSize: number; insertSpaces: boolean } },
-		LspTextEdit[] | null
-	>('textDocument/formatting', { textDocument: { uri: fileUri(file) }, options: { tabSize: 2, insertSpaces: true } });
-	// null/empty means "already formatted", which is a success, not a failure
-	if (!Array.isArray(edits) || edits.length === 0) return text;
-	return applyTextEdits(text, edits);
+	acquireTypstLsp();
+	try {
+		const client = await typstClient(root);
+		// worded as main words a missing program, so Format offers the install rather than an error
+		if (!client) throw new Error((await tinymistResolved()) ? 'tinymist is not available' : 'tinymist was not found on PATH.');
+		await client.initializing;
+		pushSettings(client);
+		const uri = fileUri(file);
+		// the server formats its own copy of the document, so a copy no source editor keeps in step is given the text first
+		const workspace = workspaceOf(client);
+		const held = workspace?.getFile(uri);
+		if (workspace && !held) workspace.openText(uri, 'typst', text);
+		else if (held && !held.getView()) workspace?.updateText(uri, text);
+		client.sync();
+		try {
+			const edits = await client.request<
+				{ textDocument: { uri: string }; options: { tabSize: number; insertSpaces: boolean } },
+				LspTextEdit[] | null
+			>('textDocument/formatting', { textDocument: { uri }, options: { tabSize: 2, insertSpaces: true } });
+			// null/empty means "already formatted", which is a success, not a failure
+			if (!Array.isArray(edits) || edits.length === 0) return text;
+			return applyTextEdits(text, edits);
+		} finally {
+			if (!held) workspace?.closeText(uri);
+		}
+	} finally {
+		releaseTypstLsp();
+	}
 }
 
 /** one file's share of a rename, keyed by absolute path rather than URI */
