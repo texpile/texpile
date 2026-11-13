@@ -8,7 +8,7 @@ import {
 	openChipPanel,
 	syncChipPanel
 } from '$lib/editor/visual/extensions/drawnChips/chipPanel.svelte';
-import { gearPlaceBeside, markGearPlace, offerBlockSettings } from '$lib/editor/visual/extensions/blockHandle/blockSettings';
+import { gearPlaceBeside, markGearPlace, offerBlockSettings, settingsPlace } from '$lib/editor/visual/extensions/blockHandle/blockSettings';
 import {
 	openBareTableSettings,
 	type TableHolder,
@@ -109,12 +109,14 @@ export function environmentView(
 	}
 	const withdrawSettings = offerBlockSettings(dom, {
 		label: () => (holdsOnlyTable() ? m.tablewrap_settings_button() : m.env_settings_button_label()),
+		forOnlyChild: holdsOnlyTable,
 		open(gear) {
 			const pos = getPos();
 			if (holdsOnlyTable() && pos !== undefined) {
 				openBareTableSettings({ view, pos: pos + 1, dialect: 'latex', place: gearPlaceBeside(dom, gear), holder: tableHolder(pos) });
 				return;
 			}
+			if (!settingsPlace(dom, gear)) return openSettings();
 			markGearPlace(gearPlace, dom, gear);
 			openSettings(gearPlace);
 		}

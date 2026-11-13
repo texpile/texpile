@@ -3136,7 +3136,7 @@
 	"env_align_right": "靠右對齊",
 	"bibliography_empty": "在 .bib 檔案中加入參考文獻。",
 	"bibliography_show_all": "顯示全部 {count} 筆",
-	"typ_layout_settings": "設定",
+	"typ_layout_settings": "版面設定",
 	"typ_layout_title_align": "對齊",
 	"typ_layout_title_block": "區塊",
 	"typ_layout_title_columns": "分欄",

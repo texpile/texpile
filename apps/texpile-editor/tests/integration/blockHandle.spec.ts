@@ -30,7 +30,7 @@ const CENTERED = `\\documentclass{article}\n\\usepackage{tikz}\n\\begin{document
 
 const BARE_TABLE = `\\documentclass{article}\n\\begin{document}\n\nBefore.\n\n\\begin{center}\n\\begin{tabular}{|l|r|}\n\\hline\nName & Value \\\\\n\\hline\n\\end{tabular}\n\\end{center}\n\nAfter.\n\n\\end{document}\n`;
 
-const texpile = useTexpile({ files: { 'unit.tex': TEX, 'centered.tex': CENTERED, 'bare.tex': BARE_TABLE } });
+const texpile = useTexpile({ files: { 'unit.tex': TEX, 'centered.tex': CENTERED, 'bare.tex': BARE_TABLE, 'held.tex': BARE_TABLE } });
 
 type Box = { left: number; right: number; top: number; bottom: number };
 
@@ -165,4 +165,20 @@ test("a table in center gets a caption and a number from the handle's gear", asy
 	const saved = disk.read('bare.tex');
 	expect(saved).not.toContain('\\begin{center}');
 	expect(saved).toContain('\\begin{tabular}{|l|r|}');
+});
+
+test('right-clicking a table offers its settings, which open with the alignment of the block it stands alone in', async () => {
+	test.skip(process.platform === 'darwin', 'the editor context menu is native on macOS');
+	const { page, root } = texpile();
+	const v = new VisualEditor(page, root);
+	await v.open('held.tex');
+	const cell = (await page.locator('.ProseMirror > .tex-environment td').first().boundingBox())!;
+	await page.mouse.click(cell.x + cell.width / 2, cell.y + cell.height / 2, { button: 'right' });
+	await page.getByRole('menuitem', { name: 'Table settings', exact: true }).click();
+	const settings = page.locator('.bare-table-settings');
+	await expect(settings.getByRole('radiogroup', { name: 'Alignment' }).getByRole('radio', { name: 'Center' })).toHaveAttribute(
+		'aria-checked',
+		'true'
+	);
+	await page.keyboard.press('Escape');
 });

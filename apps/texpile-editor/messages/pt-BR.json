@@ -3092,7 +3092,7 @@
 	"env_align_right": "Direita",
 	"bibliography_empty": "Adicione referências a um arquivo .bib.",
 	"bibliography_show_all": "Mostrar todas as {count}",
-	"typ_layout_settings": "Configurações",
+	"typ_layout_settings": "Configurações de layout",
 	"typ_layout_title_align": "Alinhamento",
 	"typ_layout_title_block": "Bloco",
 	"typ_layout_title_columns": "Colunas",

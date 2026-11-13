@@ -22,7 +22,7 @@ import {
 import { layoutSettings } from './layoutSettings';
 import { addGridCell, removeGridCell } from './gridCells';
 import TypstLayoutGear from './TypstLayoutGear.svelte';
-import { gearPlaceBeside, markGearPlace, offerBlockSettings } from '$lib/editor/visual/extensions/blockHandle/blockSettings';
+import { gearPlaceBeside, markGearPlace, offerBlockSettings, settingsPlace } from '$lib/editor/visual/extensions/blockHandle/blockSettings';
 import {
 	openBareTableSettings,
 	type TableHolder,
@@ -90,6 +90,7 @@ export class TypstLayoutView implements NodeView {
 		this.panelAnchor = this.gear;
 		this.withdrawSettings = offerBlockSettings(this.dom, {
 			label: () => (this.holdsOnlyTable() ? m.tablewrap_settings_button() : m.typ_layout_settings()),
+			forOnlyChild: () => this.holdsOnlyTable(),
 			open: (gear) => {
 				const pos = this.getPos();
 				if (this.holdsOnlyTable() && pos !== undefined) {
@@ -97,6 +98,7 @@ export class TypstLayoutView implements NodeView {
 					openBareTableSettings({ view: this.view, pos: pos + 1, dialect: 'typst', place, holder: this.tableHolder(pos) });
 					return;
 				}
+				if (!settingsPlace(this.dom, gear)) return this.openSettings();
 				markGearPlace(this.gearPlace, this.dom, gear);
 				this.openSettings(this.gearPlace);
 			}

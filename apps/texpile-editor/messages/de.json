@@ -3136,7 +3136,7 @@
 	"env_align_right": "Rechts",
 	"bibliography_empty": "Fügen Sie Literatur in einer .bib-Datei hinzu.",
 	"bibliography_show_all": "Alle {count} anzeigen",
-	"typ_layout_settings": "Einstellungen",
+	"typ_layout_settings": "Layout-Einstellungen",
 	"typ_layout_title_align": "Ausrichtung",
 	"typ_layout_title_block": "Block",
 	"typ_layout_title_columns": "Spalten",

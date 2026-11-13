@@ -131,7 +131,8 @@ export function openBareTableSettings(request: BareTableRequest): void {
 /** the handle's gear for a table that is a block of its own */
 export function bareTableSettingsPlugin(dialect: 'latex' | 'typst'): Plugin {
 	return blockSettingsPlugin((view, pos) => {
-		if (!tableAt(view, pos)) return null;
+		// a float's table has the float's settings
+		if (!tableAt(view, pos) || view.state.doc.resolve(pos).parent.type.name === 'table_wrapper') return null;
 		return {
 			label: () => m.tablewrap_settings_button(),
 			open(gear) {

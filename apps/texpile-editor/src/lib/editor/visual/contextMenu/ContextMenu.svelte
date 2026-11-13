@@ -4,7 +4,8 @@
 	import { editorViewStore } from '$lib/stores/editorStore';
 	import { onMount } from 'svelte';
 	import { CellSelection, mergeCells, splitCell } from 'prosemirror-tables';
-	import { ArrowRight, BookMarked, BookPlus, MessageSquarePlus } from '@lucide/svelte';
+	import { ArrowRight, BookMarked, BookPlus, MessageSquarePlus, Settings } from '@lucide/svelte';
+	import { blockSettingsUnder } from '$lib/editor/visual/extensions/blockHandle/blockSettings';
 	import { TextSelection } from 'prosemirror-state';
 	import { setPmCommentPending, type SourceAnchorFn } from '$lib/editor/visual/extensions/pmComments';
 	import type { CommentAnchor } from '$lib/comments/anchor';
@@ -163,6 +164,10 @@
 		if (onInsertCitation) items.push({ label: m.zotero_insert_citation(), icon: BookMarked, onclick: () => run(() => onInsertCitation()) });
 		if (onCiteByDoi) items.push({ label: m.cite_doi_insert(), icon: BookPlus, onclick: () => run(() => onCiteByDoi()) });
 		if (isOnTable) items.push({ separator: true }, ...getVisibleTableMenuItems().map(entry));
+		// the handle's gear, for people who reach for the menu, and the way to the settings of a block inside another
+		const view = editorViewStore.current!;
+		const settings = pos && view.editable ? blockSettingsUnder(view, pos.pos, pos.inside) : null;
+		if (settings) items.push({ separator: true }, { label: settings.label(), icon: Settings, onclick: () => settings.open() });
 		if (showInOutput && pos) {
 			const at = pos.pos;
 			items.push({ separator: true }, { label: showInOutput.label, icon: ArrowRight, onclick: () => showInOutput.run(at) });
