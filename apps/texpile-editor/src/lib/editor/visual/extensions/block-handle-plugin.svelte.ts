@@ -11,6 +11,7 @@ import { insertItems } from '$lib/editor/visual/insert/insertItems.svelte';
 import { insertBlockAfter } from '$lib/editor/visual/insert/insertRun';
 import { returnFocusToText } from './popoverFocus/returnFocus';
 import { handleUnitAt } from './blockHandle/handleUnit';
+import { FLOATING_BAR_BOTTOM } from '$lib/editor/floatingBar';
 import { positionOf } from './blockHandle/nodePosition';
 import { blockSettingsAt } from './blockHandle/blockSettings';
 import { pointerStaysWithBlock } from './blockHandle/handleReach';
@@ -170,22 +171,19 @@ class BlockHandleView {
 		const left = containerRect.left - (stacked ? GUTTER_OFFSET_LEFT_STACKED : GUTTER_OFFSET_LEFT);
 		// null scroller = nothing can scroll, so nothing can be out of view
 		const area = scrollParent(this.view.dom)?.getBoundingClientRect();
-		// A tall block whose top has scrolled past the editor's visible area would put the gutter
-		// over the toolbar above it, or off-screen entirely. Hidden rather than pinned to the top
-		// edge: the gutter's y IS which block it acts on, and one of these buttons deletes, so a
-		// handle floating away from the block edge it belongs to would be guessing on the user's
-		// behalf. Scroll the block's top back into view and it comes back.
+		// a tall block whose top has scrolled out keeps its handle under the toolbar, for as long as the block reaches there
+		const held = area ? Math.max(top, area.top + FLOATING_BAR_BOTTOM + HANDLE_GAP) : top;
 		// Sideways, while the pane is scrolled to the comment cards, it stops at the pane's edge, whole
 		// and grabbable, for as long as it still fits before the text, and goes once it does not.
 		const width = stacked ? HANDLE_W : 2 * HANDLE_W + 2;
 		const pinned = area ? Math.max(left, area.left) : left;
-		if (area && (top < area.top || pinned + width > containerRect.left)) {
+		if (area && (held + HANDLE_W > Math.max(rect.bottom, top + HANDLE_W) || pinned + width > containerRect.left)) {
 			this.state.visible = false;
 			return;
 		}
 		this.cancelHide();
 		this.state.visible = true;
-		this.state.top = top;
+		this.state.top = held;
 		this.state.stacked = stacked;
 		this.state.left = pinned;
 		this.state.right = containerRect.right + GUTTER_OFFSET_RIGHT;
