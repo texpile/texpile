@@ -9,6 +9,7 @@ import { isLargeDocument } from '$lib/languages/latex/visual/largeDocument';
 import { hasOldWords, pmSuggestionsKey } from '../extensions/pmSuggestionsState';
 import { contentWidth } from '../lineBoxes';
 import { ColumnWidth } from '$lib/resizing/columnWidth';
+import { holdEditor, releaseEditor } from '$lib/resizing/heldEditor';
 import { compositionWrapPlugin } from './compositionWrap';
 import { hyphenSelectionPlugin } from './hyphenSelection';
 import type { DocumentHyphenation } from './documentHyphenationLanguage';
@@ -29,8 +30,6 @@ type LineBreakState = {
 	decorations: DecorationSet;
 	/** how each paragraph is drawn now. In the state because a swapped in state starts empty yet can bring the same nodes back */
 	shown: WeakMap<PMNode, DrawnAs>;
-	/** the column's width keeps moving: the paragraphs wrap the browser's way until it rests (app.css) */
-	moving: boolean;
 	/** a document too large to break carries no decorations, and one rule justifies it when the text is justified */
 	plain: boolean;
 };
@@ -308,8 +307,7 @@ function lineBreaker(view: EditorView): { update(view: EditorView, before: Edito
 		const changed = stale.length > 0 || fresh.length > 0;
 		const decorations = large ? DecorationSet.empty : changed ? current.remove(stale).add(doc, fresh) : current;
 		const plain = large && context.justified;
-		if (decorations !== held.decorations || shown !== held.shown || held.moving || held.plain !== plain)
-			publish({ decorations, shown, moving: false, plain });
+		if (decorations !== held.decorations || shown !== held.shown || held.plain !== plain) publish({ decorations, shown, plain });
 		// after the publish, so the marks land on the spans as they are drawn now
 		for (const [paragraph, pos, block, breaks] of withStruck) {
 			const struck = view.dom.contains(block) ? struckWordsIn(view, paragraph, pos, block) : null;
@@ -341,11 +339,9 @@ function lineBreaker(view: EditorView): { update(view: EditorView, before: Edito
 			checkNow();
 		},
 		hold() {
-			if (view.isDestroyed || !width.moving) return;
-			const held = lineBreakKey.getState(view.state)!;
-			if (!held.moving) publish({ ...held, moving: true });
+			if (!view.isDestroyed && width.moving) holdEditor(view);
 		},
-		rest: startOver
+		rest: () => releaseEditor(view, startOver)
 	});
 	function widthChanged(): void {
 		width.changed();
@@ -437,7 +433,7 @@ function lineBreakPlugin(): Plugin<LineBreakState> {
 	return new Plugin<LineBreakState>({
 		key: lineBreakKey,
 		state: {
-			init: () => ({ decorations: DecorationSet.empty, shown: new WeakMap(), moving: false, plain: false }),
+			init: () => ({ decorations: DecorationSet.empty, shown: new WeakMap(), plain: false }),
 			apply(tr, held) {
 				const next = tr.getMeta(lineBreakKey) as LineBreakState | undefined;
 				if (next || !tr.docChanged) return next ?? held;
@@ -447,9 +443,7 @@ function lineBreakPlugin(): Plugin<LineBreakState> {
 		props: {
 			decorations: (state) => lineBreakKey.getState(state)?.decorations,
 			attributes(state): Record<string, string> {
-				const held = lineBreakKey.getState(state);
-				const classes = [held?.plain && 'pm-lines-plain', held?.moving && 'pm-lines-moving'].filter(Boolean).join(' ');
-				return classes ? { class: classes } : {};
+				return lineBreakKey.getState(state)?.plain ? { class: 'pm-lines-plain' } : {};
 			}
 		},
 		view: lineBreaker

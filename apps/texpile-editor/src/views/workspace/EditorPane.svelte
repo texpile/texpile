@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { resizeCover } from '$lib/resizing/resizeCover';
 	// The editor column: the mode toolbar on top and, under it, whichever surface the open file
 	// needs (starter picker, diff, source, visual, bib, pdf, image). Chooses the surface; the
 	// state behind it all lives in WorkspaceView.
@@ -272,7 +273,11 @@
 				/>
 			{/if}
 			<!-- relative anchors the floating find bar; it sits outside the scroller so it doesn't scroll away -->
-			<div class="relative min-h-0 min-w-0 flex-1">
+			<div
+				class="relative min-h-0 min-w-0 flex-1"
+				data-resize-cover={loadedPath && structured && viewMode === 'visual' && !comparing ? basename(loadedPath) : undefined}
+				{@attach resizeCover}
+			>
 				{#if loadedPath}<FigureOverlay path={loadedPath} {figure} {viewMode} />{/if}
 				{#if loadedPath && structured && viewMode === 'visual' && visualDoc && !comparing && !parked}
 					<SearchBar />

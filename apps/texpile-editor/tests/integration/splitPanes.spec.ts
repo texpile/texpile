@@ -19,7 +19,9 @@ Last paragraph.
 \end{document}
 `;
 
-const texpile = useTexpile({ files: { 'shared.tex': SHARED, 'list.tex': LIST } });
+const LONG = `\\documentclass{article}\n\\begin{document}\n${Array.from({ length: 60 }, (_, i) => `Paragraph ${i + 1} has enough words to run over several lines of the page, so that a change of width breaks it again.`).join('\n\n')}\n\\end{document}\n`;
+
+const texpile = useTexpile({ files: { 'shared.tex': SHARED, 'list.tex': LIST, 'long.tex': LONG } });
 
 async function splitSideBySide(page: Page): Promise<void> {
 	await page.getByRole('button', { name: 'Layout' }).click();
@@ -73,4 +75,36 @@ test('the same file in two panes edits as one and saves once', async () => {
 	await source.restore(SHARED);
 	await page.getByRole('button', { name: 'Layout' }).click();
 	await page.getByRole('menuitemradio', { name: 'One editor' }).click();
+});
+
+// the text wrapped the browser's way on every step of the drag, a layout of the whole page each time
+test('a divider drag covers the visual editor with its file name and lets it go on the same words', async () => {
+	const { page, root } = texpile();
+	const v = new VisualEditor(page, root);
+	await v.open('long.tex');
+	const editor = page.locator('.ProseMirror');
+	await editor.locator('p', { hasText: 'Paragraph 30 ' }).scrollIntoViewIfNeeded();
+	const firstInView = () =>
+		v.evalView<string>(
+			`const pane = view.dom.closest('.overflow-auto').getBoundingClientRect(); const hit = view.posAtCoords({ left: pane.left + pane.width / 2, top: pane.top + 4 });
+			 return view.state.doc.resolve(hit.pos).parent.textContent.slice(0, 13);`
+		);
+	const before = await firstInView();
+	const width = (await editor.boundingBox())!.width;
+	const divider = (await page.locator('.cursor-col-resize').first().boundingBox())!;
+	const [x, y] = [divider.x + divider.width / 2, divider.y + divider.height / 2];
+	await page.mouse.move(x, y);
+	await page.mouse.down();
+	await page.mouse.move(x + 320, y, { steps: 16 });
+	const cover = page.locator('[data-resize-cover="long.tex"]');
+	await expect(cover).toHaveAttribute('data-resizing', '');
+	const held = (await editor.boundingBox())!.width;
+	await page.mouse.up();
+	await expect(cover).not.toHaveAttribute('data-resizing', '');
+	const released = (await editor.boundingBox())!.width;
+	expect(
+		[width - held < 60, held - released > 60],
+		`the page holds its width until the divider is let go: ${width}, ${held}, ${released}`
+	).toEqual([true, true]);
+	expect(await firstInView()).toBe(before);
 });
