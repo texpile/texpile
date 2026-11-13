@@ -170,7 +170,7 @@ export class MathLiveView implements NodeView {
 		if (Object.keys(macros).length === 0 && !this.macrosApplied) return;
 		this.macrosApplied = true;
 		this.mathField.macros = { ...this.mathField.macros, ...macros };
-		this.mathField.setValue(this.node.textContent || '', { format: 'latex-expanded', silenceNotifications: true });
+		this.mathField.setValue(this.node.textContent || '', { format: 'latex-expanded', mode: 'math', silenceNotifications: true });
 	}
 
 	/** the element currently standing in for this node: the live field once there is one */
@@ -393,7 +393,8 @@ export class MathLiveView implements NodeView {
 	private showNode(field: MathfieldElement): void {
 		this.updating = true;
 		// silenced: the formula shown again is not an edit, and its input event, fired after a caret has entered, wrote it back
-		field.setValue(this.node.textContent || '', { format: mathFormat(this.syntax), silenceNotifications: true });
+		// mode: with none given mathlive takes the one at its caret, which is text after a formula that ends in \text{..}
+		field.setValue(this.node.textContent || '', { format: mathFormat(this.syntax), mode: 'math', silenceNotifications: true });
 		requestAnimationFrame(() => {
 			this.updating = false;
 		});
