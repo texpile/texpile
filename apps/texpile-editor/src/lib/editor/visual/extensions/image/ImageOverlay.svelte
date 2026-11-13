@@ -67,7 +67,7 @@
 </script>
 
 <div class="image-overlay-wrapper" bind:this={overlayElement} {@attach offerSettings}>
-	<div class="pointer-events-auto absolute top-2 right-2 flex gap-1">
+	<div class="image-overlay-buttons pointer-events-auto absolute top-2 right-2 flex gap-1">
 		{#if dialect !== 'markdown'}
 			<button
 				class="settings-button"
@@ -127,6 +127,24 @@
 	/* directly in an editor with a block handle, the handle's gear opens the settings */
 	:global(.ProseMirror[data-block-handle] > .imagePluginRoot .image-settings-btn) {
 		display: none;
+	}
+
+	/* and the crop button joins the handle's row: its size and look, level with the gear, on a plate the page's
+	   color for where it lies on the picture */
+	:global(.ProseMirror[data-block-handle] > .imagePluginRoot) .image-overlay-buttons {
+		top: 3px;
+		right: 0;
+	}
+	:global(.ProseMirror[data-block-handle] > .imagePluginRoot) .settings-button {
+		width: calc(var(--spacing) * 5.5);
+		height: calc(var(--spacing) * 5.5);
+		border: none;
+		background: light-dark(var(--color-surface-50), var(--color-surface-950));
+		color: var(--faint-text);
+	}
+	:global(.ProseMirror[data-block-handle] > .imagePluginRoot) .settings-button:hover {
+		background: light-dark(var(--color-surface-200), var(--color-surface-700));
+		color: var(--color-surface-950-50);
 	}
 
 	:global(.imagePluginRoot:not(:hover)) .image-overlay-wrapper {
