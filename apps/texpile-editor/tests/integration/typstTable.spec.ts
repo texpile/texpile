@@ -22,6 +22,11 @@ test('a table keeps the column sizes its file gives when it is opened and the te
 			.locator('col')
 			.evaluateAll((cols) => cols.map((c) => (c as HTMLElement).style.width));
 	await expect.poll(widths, { message: 'the 3cm and 4cm columns take their widths' }).toEqual(['113px', '151px']);
+	// a click on a column border that never moves is no resize
+	const cell = (await page.locator('.ProseMirror table').first().locator('td, th').first().boundingBox())!;
+	await page.mouse.move(cell.x + cell.width - 1, cell.y + cell.height / 2, { steps: 3 });
+	await page.mouse.down();
+	await page.mouse.up();
 	await v.editor.locator('p', { hasText: 'Last.' }).click();
 	await page.keyboard.press('End');
 	await page.keyboard.type(' More');

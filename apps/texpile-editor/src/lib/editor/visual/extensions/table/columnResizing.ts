@@ -273,10 +273,13 @@ function handleMouseDown(
 		win.removeEventListener('mousemove', move);
 		const pluginState = columnResizingPluginKey.getState(view.state);
 		if (pluginState?.dragging) {
-			// TEXPILE: commit the SNAPPED width(s), so nothing shifts on release
-			const pair = widths(pluginState.dragging, event);
-			if (pair) updateColumnWidths(view, pluginState.activeHandle, pair);
-			else updateColumnWidth(view, pluginState.activeHandle, quantise(draggedWidth(pluginState.dragging, event, cellMinWidth)));
+			// TEXPILE: a click on the border that never moved leaves the table's widths as its file has them
+			if (event.clientX !== pluginState.dragging.startX) {
+				// TEXPILE: commit the SNAPPED width(s), so nothing shifts on release
+				const pair = widths(pluginState.dragging, event);
+				if (pair) updateColumnWidths(view, pluginState.activeHandle, pair);
+				else updateColumnWidth(view, pluginState.activeHandle, quantise(draggedWidth(pluginState.dragging, event, cellMinWidth)));
+			}
 			view.dispatch(view.state.tr.setMeta(columnResizingPluginKey, { setDragging: null }));
 		}
 	}
@@ -298,8 +301,6 @@ function handleMouseDown(
 				);
 		}
 	}
-
-	displayColumnWidth(view, pluginState.activeHandle, width, defaultCellMinWidth);
 
 	win.addEventListener('mouseup', finish);
 	win.addEventListener('mousemove', move);
