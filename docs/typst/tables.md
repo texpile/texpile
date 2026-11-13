@@ -20,7 +20,7 @@ A range copied from a spreadsheet pastes as a table.
 
 ## Table settings
 
-![A table with its settings open: the column spec and Advanced Options](../../landing/src/lib/assets/showcase/docs/typst/table-settings.png)
+![A table with its settings open: Lines, Columns, Sizes, Caption and number, and Advanced Options](../../landing/src/lib/assets/showcase/docs/typst/table-settings.png)
 
 1. Hover the table and click its settings icon.
-2. Edit the **Column spec** as Typst, such as `(auto, 1fr, auto)`. The label is under **Advanced Options**.
+2. Set the lines and each column's alignment. **Sizes** takes the column widths as Typst, such as `(auto, 1fr, auto)`. The label is under **Advanced Options**.
