@@ -18,9 +18,9 @@ import { blockHandlePluginKey, handleDropEvents, handleDropLine, handleDropState
 
 type ItemsOf = () => readonly InsertItem[];
 
-// left gutter width: two ~22px buttons plus gap
+// each gutter: two 22px buttons, the 2px between them and 2px to the text
 const GUTTER_OFFSET_LEFT = 48;
-const GUTTER_OFFSET_RIGHT = 8;
+const GUTTER_OFFSET_RIGHT = 2;
 // one button wide plus the gap to the text: the stacked gutter, while comments crowd the pane (the scroller's
 // data-gutter-stacked, which the comment rail decides)
 const GUTTER_OFFSET_LEFT_STACKED = 30;
@@ -112,7 +112,7 @@ class BlockHandleView {
 		const dom = this.view.nodeDOM(this.hoveredPos);
 		if (!(dom instanceof HTMLElement)) return false;
 		const settings = this.state.settings ? 1 : 0;
-		const buttons = this.state.stacked ? 3 + settings : 1 + settings;
+		const buttons = this.state.stacked ? 3 + settings : 1;
 		const buttonsBottom = this.state.top + buttons * HANDLE_W + (buttons - 1) * HANDLE_GAP;
 		return pointerStaysWithBlock({ x, y }, this.view.dom.getBoundingClientRect(), dom.getBoundingClientRect(), buttonsBottom);
 	}

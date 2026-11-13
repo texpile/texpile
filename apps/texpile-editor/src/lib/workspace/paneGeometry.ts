@@ -19,7 +19,7 @@ export const COMMENT_RAIL_WIDTH = 258;
 export const COMMENT_RAIL_PEEK = 40;
 export const EDITOR_TEXT_MIN = 440;
 /** the visual editor's side padding: the block handles' gutters (VisualEditorHost) */
-export const EDITOR_TEXT_PAD = 78;
+export const EDITOR_TEXT_PAD = 96;
 /** the same with the handles stacked on the left, while comments crowd a narrow pane */
 export const EDITOR_TEXT_PAD_STACKED = 34;
 

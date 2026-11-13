@@ -83,16 +83,16 @@
 	{#if state.stacked}{@render deleteButton()}{@render settingsButton()}{/if}
 </div>
 
-<!-- right gutter (delete, and the block's settings under it: the gutter is one button wide), same visibility rules
-     as the left; with the gutters stacked both are in the left one -->
+<!-- right gutter, the left one mirrored: the block's settings by the text and delete at the outer edge, where it
+     stays on a block with no settings. Same visibility rules as the left; with the gutters stacked both are in the left one -->
 {#if !state.stacked}
 	<div
-		class="block-handle-gutter fixed z-10 flex flex-col gap-0.5"
+		class="block-handle-gutter fixed z-10 flex w-[46px] items-center justify-end gap-0.5"
 		style="visibility: {state.visible ? 'visible' : 'hidden'}; pointer-events: {state.visible
 			? 'auto'
 			: 'none'}; top: {state.top}px; left: {state.right}px;"
 	>
-		{@render deleteButton()}{@render settingsButton()}
+		{@render settingsButton()}{@render deleteButton()}
 	</div>
 {/if}
 

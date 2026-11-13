@@ -13,9 +13,8 @@ export type BlockSettings = {
 
 export type GearPlace = () => { x: number; y: number; width: number; height: number };
 
-// the handle's gear from a block's top right corner: past the gutter's gap, under the delete button (block-handle-plugin)
-const GEAR_LEFT = 8;
-const GEAR_TOP = 24;
+// the handle's gear from a block's top right corner: past the gutter's gap, on the block's first line (block-handle-plugin)
+const GEAR_LEFT = 2;
 const GEAR_SIZE = 22;
 
 const offered = new WeakMap<Element, BlockSettings>();
@@ -78,7 +77,7 @@ export function blockSettingsUnder(view: EditorView, pos: number, inside: number
 // the gear's box from the block's top left corner
 function gearOffset(dom: Element, gear?: HTMLElement): { dx: number; dy: number; width: number; height: number } {
 	const block = dom.getBoundingClientRect();
-	if (!gear) return { dx: block.width + GEAR_LEFT, dy: GEAR_TOP, width: GEAR_SIZE, height: GEAR_SIZE };
+	if (!gear) return { dx: block.width + GEAR_LEFT, dy: 0, width: GEAR_SIZE, height: GEAR_SIZE };
 	const at = gear.getBoundingClientRect();
 	return { dx: at.left - block.left, dy: at.top - block.top, width: at.width, height: at.height };
 }
