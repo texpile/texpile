@@ -1168,8 +1168,6 @@
 	"title_classification": "分類號",
 	"title_running": "頁首",
 	"placeholder_title_block": "標題區",
-	"placeholder_list_of_figures": "插圖目錄",
-	"placeholder_list_of_tables": "表格目錄",
 	"placeholder_index": "索引",
 	"title_edit_source": "編輯原始碼",
 	"typst_rename_prompt": "新名稱",

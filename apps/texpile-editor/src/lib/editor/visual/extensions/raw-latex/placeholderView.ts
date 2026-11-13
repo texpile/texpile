@@ -11,9 +11,9 @@ import { m } from '$lib/paraglide/messages';
 const PLACEHOLDER_COMMANDS: Record<string, () => string> = {
 	// sits right under the drawn title and authors, where a bare "Title" read as a field of its own
 	maketitle: m.placeholder_title_block,
-	tableofcontents: m.toc_heading,
-	listoffigures: m.placeholder_list_of_figures,
-	listoftables: m.placeholder_list_of_tables,
+	tableofcontents: m.drawn_chip_typst_outline_contents,
+	listoffigures: m.drawn_chip_typst_outline_figures,
+	listoftables: m.drawn_chip_typst_outline_tables,
 	printindex: m.placeholder_index,
 	printbibliography: m.drawn_chip_bib_title
 };

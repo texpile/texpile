@@ -5,6 +5,7 @@ import { insertsSkip, valueSkipPart } from './valueSkipPart';
 import { readSpacing } from './spacingCommand';
 import SpacingSettings from './SpacingSettings.svelte';
 import { spacingDocument } from './document';
+import { spacingInserts } from './spacingInsert';
 
 const BREAKS = ['\\', 'newline'];
 
@@ -32,5 +33,6 @@ export const spacing: LatexPlugin = {
 		return undefined;
 	},
 	settings: (source) => (readSpacing(source) ? SpacingSettings : null),
-	document: spacingDocument
+	document: spacingDocument,
+	insert: spacingInserts
 };

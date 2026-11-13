@@ -1,5 +1,6 @@
 import { tip } from '$lib/components/tooltip.svelte';
 import { faceElement, tippedFace, type ChipFace } from '$lib/editor/visual/extensions/drawnChips/chipFace';
+import { partLabelFace } from '$lib/editor/visual/extensions/drawnChips/partLabelFace';
 import type { TitlePart } from '$lib/languages/latex/knowledge/types';
 import type { TreeCall } from '$lib/languages/latex/parser/tree/walk/treeArgs';
 import type { Stretch } from '$lib/languages/latex/parser/tree/walk/stretch';
@@ -138,9 +139,7 @@ function noteFace(note: string, marks: TitleMarks): ChipFace {
 function printBlockFace(command: string): ChipFace | null {
 	const placeholder = placeholderCommand(command);
 	if (!placeholder) return null;
-	const dom = faceElement('div', 'latex-placeholder');
-	dom.textContent = placeholder.label;
-	return tippedFace(dom, command, { line: true });
+	return partLabelFace(placeholder.label, command);
 }
 
 export function titleSeparator(): ChipFace {

@@ -108,6 +108,7 @@
 					<MenuBarSubmenu value="document" label={m.menubar_insert_document_parts()} {select}>
 						{@render item('abstract', m.blockmenu_abstract())}
 						{@render item('appendix', m.drawn_chip_appendix_title())}
+						{@render item('contents', m.drawn_chip_typst_outline_contents())}
 						{@render item('bibliography', m.drawn_chip_bib_title())}
 						{@render item('include', m.menubar_insert_include_file())}
 					</MenuBarSubmenu>
@@ -115,7 +116,7 @@
 					<MenuBarSubmenu value="latex" label={m.menubar_insert_latex_source()} {select}>
 						{@render item('rawlatex', m.menubar_insert_raw_latex())}
 						{@render item('inlinelatex', m.menubar_insert_inline_latex())}
-						{@render item('comment', m.drawn_chip_comment_title())}
+						{@render item('comment', m.menubar_insert_source_comment())}
 					</MenuBarSubmenu>
 				{:else if dialect === 'typ'}
 					<InsertClassParts {select} />

@@ -18,6 +18,7 @@ export { chipHost, quietTemplateSpaces } from '$lib/editor/visual/extensions/chi
 export type { ChipSettingsProps } from '$lib/editor/visual/extensions/drawnChips/chipPanel.svelte';
 export * as Panel from '$lib/editor/visual/extensions/drawnChips/panel';
 export { dividerFace } from '$lib/editor/visual/extensions/drawnChips/dividerFace';
+export { partLabelFace } from '$lib/editor/visual/extensions/drawnChips/partLabelFace';
 export { footnoteFace } from '$lib/editor/visual/extensions/drawnChips/footnoteFace';
 export { showGlossaryTerm } from '$lib/editor/visual/extensions/drawnChips/faces/glossaryTerm';
 export { settingRow, settingsFace } from '$lib/editor/visual/extensions/drawnChips/settings/settingsFace';

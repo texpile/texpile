@@ -13,7 +13,7 @@ export function tableInserts(ctx: LatexInsertContext): LatexInsertOffer[] {
 			shape: 'block',
 			style: false,
 			select: 'cell',
-			make: (s) => createTableNode(s, 2, 2, true),
+			make: (s) => createTableNode(s, 3, 3, true),
 			covers: ['table', 'table*', ...grids.map((e) => e.name)]
 		}
 	];

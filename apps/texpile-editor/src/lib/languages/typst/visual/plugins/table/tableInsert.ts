@@ -12,7 +12,7 @@ export function tableInserts(): BlockInsertItem[] {
 			shape: 'block',
 			style: false,
 			select: 'cell',
-			make: (s) => typTableNode(s)
+			make: (s) => typTableNode(s, 3, 3, true)
 		}
 	];
 }

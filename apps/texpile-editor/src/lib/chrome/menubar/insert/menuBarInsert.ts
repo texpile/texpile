@@ -162,7 +162,7 @@ export function makeInsertHandlers(deps: InsertDeps): {
 				// no table_caption) and always numbered a table markdown cannot number
 				insertBlock((schema) =>
 					dialect === 'typ'
-						? typTableNode(schema)
+						? typTableNode(schema, 3, 3, true)
 						: dialect === 'md'
 							? mdTableNode(schema)
 							: (createTableNode(schema, 3, 3) as unknown as PMNode)

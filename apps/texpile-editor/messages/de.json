@@ -1168,8 +1168,6 @@
 	"title_classification": "Klassifikation",
 	"title_running": "Kolumnentitel",
 	"placeholder_title_block": "Titelblock",
-	"placeholder_list_of_figures": "Abbildungsverzeichnis",
-	"placeholder_list_of_tables": "Tabellenverzeichnis",
 	"placeholder_index": "Register",
 	"title_edit_source": "Quelltext bearbeiten",
 	"typst_rename_prompt": "Neuer Name",
