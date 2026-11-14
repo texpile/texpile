@@ -20,9 +20,8 @@
 </script>
 
 <!-- reveal-late: a compile with warm engines lands its pages before a card is worth reading -->
-<!-- the same card as the Typst preview's notice -->
 <div
-	class="reveal-late bg-surface-100-900 border-surface-300-700 rounded-container m-auto flex w-full max-w-sm shrink-0 flex-col overflow-hidden border text-sm shadow-sm"
+	class="reveal-late bg-surface-50 dark:bg-surface-900 border-surface-300-700 rounded-container m-auto flex w-full max-w-sm shrink-0 flex-col overflow-hidden border text-sm shadow-sm"
 >
 	<div class="flex h-11 items-center gap-3 px-4">
 		<span class="cap-center flex-1 truncate font-semibold">{m.draft_wait_title({ file: basename(props.mainFile) })}</span>
@@ -55,7 +54,7 @@
 		{/if}
 	</ul>
 	<!-- five lines tall from the start, so the card keeps its size as the lines arrive -->
-	<div class="bg-surface-50-950 border-surface-200-800 border-t px-4 py-3">
+	<div class="bg-surface-100 dark:bg-surface-950 border-surface-200-800 border-t px-4 py-3">
 		<div class="flex h-22.5 flex-col justify-end overflow-hidden font-mono text-xs leading-[1.125rem]">
 			{#each notes as note, i (i)}
 				{@const kind = compileNoteKind(note)}
