@@ -73,5 +73,3 @@
 		</Popover.Positioner>
 	</Portal>
 </Popover>
-<!-- zero-width space so the cursor can land after the reference -->
-<span style="font-size: 1rem;">&#8203;</span>

@@ -20,6 +20,7 @@ const texpile = useTexpile({
 		'chapters/results.tex': RESULTS,
 		'panel.tex': doc('Last paragraph of the text.\n\n\\bibliographystyle{plainnat}\n\\bibliography{refs}'),
 		'popover.tex': doc('Alpha words \\cite{knuth84} and \\label{sec:a} beta.'),
+		'lonechip.tex': doc('\\subsection*{Details}\n\\label{app:details}\n\nAfter the label.'),
 		'math.tex': doc('Before the formula.\n\n\\[ x+y \\]\n\nAfter the formula.'),
 		'paste.tex': doc('Some text \\textbf{\\emph{nested}} words and \\url{http://x.org} end.'),
 		'figure.tex': `\\documentclass{article}\n\\usepackage{tikz}\n\\begin{document}\n\n${Array.from({ length: 60 }, (_, i) => `word${i}`).join(' ')}\n\n\\begin{tikzpicture}\n  \\node[draw] (a) at (0,0) {A};\n\\end{tikzpicture}\n\nAfter the figure.\n\n\\end{document}\n`,
@@ -56,6 +57,17 @@ test('a key pressed after a click on a chip adds to the argument in its panel, n
 	await v.page.waitForTimeout(400);
 	await v.page.keyboard.press('Backspace');
 	await disk().expectFile('panel.tex', (t) => t.includes('\\bibliographystyle{plainna}'), 'one letter of the argument goes');
+});
+
+// the click landed in a zero width space inside the chip, which selected the chip, and the next key replaced it
+test('a click after a chip that ends its paragraph puts the caret there, and typing keeps the chip', async () => {
+	const v = visual();
+	await v.open('lonechip.tex');
+	const box = await boxOf(v, await nodePos(v, 'label'));
+	await v.page.mouse.click(box.right + 80, (box.top + box.bottom) / 2);
+	await v.page.waitForTimeout(300);
+	await v.type('X');
+	await disk().expectFile('lonechip.tex', (t) => t.includes('\\label{app:details}X'), 'the letter lands after the label');
 });
 
 test("Escape on a citation chip's popover gives the typing back to the text", async () => {
