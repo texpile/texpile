@@ -65,9 +65,10 @@
 	.includedoc-syntax {
 		color: var(--muted-text);
 	}
+	/* a link's own color (Skeleton's .anchor), in either mode */
 	.includedoc-path {
 		font-weight: 600;
-		color: var(--primary-ink);
+		color: light-dark(var(--typo-anchor--color-light), var(--typo-anchor--color-dark));
 	}
 	.includedoc-missing .includedoc-path {
 		color: var(--color-ref-broken-fg);
