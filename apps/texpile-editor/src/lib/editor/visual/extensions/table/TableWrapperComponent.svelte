@@ -7,7 +7,6 @@
 	import type { Node } from 'prosemirror-model';
 	import TableSettingsPanel from './TableSettingsPanel.svelte';
 	import type { TableLines } from './rules/tableRules';
-	import { captionIn } from '$lib/editor/visual/tableUtils';
 	import { isReadOnly } from '$lib/stores/permissionStore';
 	import { templateFeaturesStore } from '$lib/stores/editorStore';
 	import { m } from '$lib/paraglide/messages';
@@ -64,18 +63,6 @@
 		place = at;
 		settingsOpen = true;
 	}
-
-	let hasPlaceholderCaption = $derived.by(() => {
-		const captionNode = captionIn(node)?.node;
-		if (!captionNode) return false;
-
-		// typst numbers a #figure with or without a caption (the serializer just omits the
-		// argument), so an empty caption is legitimate there; LaTeX needs \caption to number
-		if (captionNode.content.size === 0) return dialect === 'latex';
-
-		const captionText = captionNode.textContent.trim();
-		return (captionText === '' && dialect === 'latex') || captionText === 'Table caption';
-	});
 </script>
 
 <div class="table-chrome">
@@ -86,15 +73,6 @@
 		</div>
 	{/if}
 	<div class="table-tools">
-		{#if hasPlaceholderCaption}
-			<button
-				type="button"
-				class="flex items-center"
-				use:tip={dialect === 'typst' ? m.tablewrap_caption_placeholder_tooltip() : m.tablewrap_caption_required_tooltip()}
-			>
-				<AlertCircle class="text-warning-ink h-4 w-4" />
-			</button>
-		{/if}
 		<Popover open={settingsOpen} onOpenChange={(e) => (settingsOpen = e.open)} {positioning}>
 			<Popover.Trigger class="table-settings-btn">
 				<button

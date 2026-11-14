@@ -1471,8 +1471,6 @@
 	"tablewrap_align_stretch": "拉伸 (X)",
 	"tablewrap_table_display": "表 {number}",
 	"tablewrap_caption_unsupported_warning": "此模板不支持带编号的表格。",
-	"tablewrap_caption_required_tooltip": "带编号的表格需要标题。",
-	"tablewrap_caption_placeholder_tooltip": "此占位标题会显示在 PDF 中。请编辑它，或清空以省略标题。",
 	"tablewrap_settings_button": "表格设置",
 	"tablewrap_columns_heading": "列",
 	"tablewrap_column_width_aria": "第 {index} 列宽度",

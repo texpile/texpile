@@ -1471,8 +1471,6 @@
 	"tablewrap_align_stretch": "延展 (X)",
 	"tablewrap_table_display": "表 {number}",
 	"tablewrap_caption_unsupported_warning": "此範本不支援帶編號的表格。",
-	"tablewrap_caption_required_tooltip": "帶編號的表格需要標題。",
-	"tablewrap_caption_placeholder_tooltip": "此佔位標題會顯示在 PDF 中。請編輯它，或清空以省略標題。",
 	"tablewrap_settings_button": "表格設定",
 	"tablewrap_columns_heading": "欄",
 	"tablewrap_column_width_aria": "第 {index} 欄寬度",

@@ -1463,8 +1463,6 @@
 	"tablewrap_align_stretch": "Estender (X)",
 	"tablewrap_table_display": "Tabela {number}",
 	"tablewrap_caption_unsupported_warning": "Este modelo não suporta tabelas numeradas.",
-	"tablewrap_caption_required_tooltip": "Uma legenda é obrigatória para tabelas numeradas.",
-	"tablewrap_caption_placeholder_tooltip": "Esta legenda provisória aparece no PDF. Edite-a ou apague-a para omitir a legenda.",
 	"tablewrap_settings_button": "Configurações da tabela",
 	"tablewrap_columns_heading": "Colunas",
 	"tablewrap_column_width_aria": "Largura da coluna {index}",

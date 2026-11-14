@@ -1471,8 +1471,6 @@
 	"tablewrap_align_stretch": "Stretch (X)",
 	"tablewrap_table_display": "Table {number}",
 	"tablewrap_caption_unsupported_warning": "This template does not support numbered tables.",
-	"tablewrap_caption_required_tooltip": "A caption is required for numbered tables.",
-	"tablewrap_caption_placeholder_tooltip": "This placeholder appears in the PDF. Edit it, or clear it to leave the caption out.",
 	"tablewrap_settings_button": "Table settings",
 	"tablewrap_columns_heading": "Columns",
 	"tablewrap_column_width_aria": "Column {index} width",

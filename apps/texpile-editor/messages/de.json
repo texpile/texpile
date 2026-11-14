@@ -1471,8 +1471,6 @@
 	"tablewrap_align_stretch": "Gestreckt (X)",
 	"tablewrap_table_display": "Tabelle {number}",
 	"tablewrap_caption_unsupported_warning": "Diese Vorlage unterstützt keine nummerierten Tabellen.",
-	"tablewrap_caption_required_tooltip": "Für nummerierte Tabellen ist eine Beschriftung erforderlich.",
-	"tablewrap_caption_placeholder_tooltip": "Dieser Platzhalter erscheint im PDF. Bearbeiten Sie ihn oder löschen Sie ihn, um die Beschriftung wegzulassen.",
 	"tablewrap_settings_button": "Tabelleneinstellungen",
 	"tablewrap_columns_heading": "Spalten",
 	"tablewrap_column_width_aria": "Breite von Spalte {index}",
