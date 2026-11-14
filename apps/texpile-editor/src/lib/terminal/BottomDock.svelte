@@ -72,9 +72,13 @@
 	// there until turned off; where the agent cannot run (a guest, the browser, a lone file) the tab says why
 	const agentOn = $derived(!panelTabOff());
 	const agentBlocked = $derived(agentUnavailable());
+	// once opened it stays up behind the other tabs, so a message half written is still there on the way back
+	let agentOpened = $state(false);
 	// turned off from Preferences in any window: the tab goes (the workspace stops the agent behind it)
 	$effect(() => {
 		if (!agentOn && view === 'agent') view = terminalEnabled ? 'terminal' : 'problems';
+		if (!agentOn) agentOpened = false;
+		else if (view === 'agent') agentOpened = true;
 	});
 
 	// shells (roster, compile shell, run/reset plumbing) live in terminalShells.svelte.ts
@@ -299,15 +303,6 @@
 		<div class="bg-surface-50-950 absolute inset-0 z-10 overflow-hidden">
 			<ProblemsPanel root={cwd} onJump={onProblemJump} />
 		</div>
-	{:else if view === 'agent'}
-		<div class="bg-surface-50-950 absolute inset-0 z-10 overflow-hidden">
-			<AgentPanel
-				onOpenTerminal={() => {
-					view = 'terminal';
-					shells.ensure();
-				}}
-			/>
-		</div>
 	{:else if view === 'comments'}
 		<div class="bg-surface-50-950 absolute inset-0 z-10 overflow-hidden">
 			<CommentsPanel
@@ -325,6 +320,16 @@
 				onDeleteMessage={onCommentDeleteMessage}
 				beside={commentBeside}
 				onAttach={onCommentAttach}
+			/>
+		</div>
+	{/if}
+	{#if agentOpened}
+		<div class="bg-surface-50-950 absolute inset-0 z-10 overflow-hidden" class:hidden={view !== 'agent'}>
+			<AgentPanel
+				onOpenTerminal={() => {
+					view = 'terminal';
+					shells.ensure();
+				}}
 			/>
 		</div>
 	{/if}
