@@ -183,6 +183,7 @@ export function makeMainActions(d: ActionSurfaceDeps) {
 			d.layout().setPdfPaneOpen(true);
 			toaster.info({ title: m.session_compile_requested(), duration: 2500 });
 		},
+		requestCompileStop: () => collabGuest.requestCompileStop(),
 		openCompileModal: () => d.fmt.openCompileModal(),
 		// the badges toggle: a second click on the panel already showing closes the dock
 		showProblems: () => toggleDockPanel(d, 'problems'),

@@ -11,6 +11,7 @@ import { publishWindowState } from '$lib/workspace/mcpPublish';
 import { attachMcpCommands } from '$lib/workspace/mcpCommands';
 import { compileConfig } from '$lib/workspace/projectConfigSync.svelte';
 import { attachSessionHandlers } from '$lib/collab/workspaceSession';
+import { followHostCompile } from '$lib/collab/compile/followHostCompile.svelte';
 import { DocRegistries } from '$lib/workspace/docRegistries.svelte';
 import { ScmActions } from '$lib/workspace/scm/actions/scmActions.svelte';
 import { ChangeBaseline } from '$lib/workspace/changeBaseline.svelte';
@@ -287,6 +288,7 @@ export class WorkspaceIntegrations {
 		$effect(() =>
 			attachSessionHandlers(d.session(), {
 				runCompile: () => void d.compiler().runCompile(),
+				stopCompile: () => d.compiler().stopCompile(),
 				isBusy: () => d.compiler().busy,
 				refreshTree: () => void d.files().refreshTree(),
 				followMove: (from, to) => d.files().treeOps.followMove(from, to),
@@ -295,6 +297,7 @@ export class WorkspaceIntegrations {
 				typstScrollForGuest: (rel, line, character) => d.typstPreview().scrollForGuest(rel, line, character)
 			})
 		);
+		followHostCompile({ guest: d.guest, compiling: () => d.compiler().compiling });
 		// keep the label registry and the embedded bibitem refs fresh
 		$effect(() => {
 			void doc.texSource; // dependency: re-arm the debounce on every source change

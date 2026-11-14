@@ -10,9 +10,8 @@
 	import CompileButton, { COMPILE_TONE } from '$lib/preview/CompileButton.svelte';
 	import CompileOptionsMenu from './CompileOptionsMenu.svelte';
 	import { AnchoredMenu } from '$lib/pdf-view/anchoredMenu.svelte';
-	import type { ComponentProps } from 'svelte';
+	import type { Component, ComponentProps } from 'svelte';
 	import { m } from '$lib/paraglide/messages';
-	import type { FileKind } from '$lib/workspace/documentBuffer.svelte';
 	import EditModePicker from './EditModePicker.svelte';
 	import OpenAgentButton from '$lib/ai/agentPanel/ui/OpenAgentButton.svelte';
 	import {
@@ -30,7 +29,6 @@
 
 	type Props = {
 		loadedPath: string | null;
-		kind: FileKind;
 		guest: boolean;
 		terminalAvailable: boolean;
 		compiling: boolean;
@@ -48,6 +46,9 @@
 		commandPending?: boolean;
 		/** guest only: ask the host to compile (it owns the toolchain). */
 		onRequestCompile: () => void;
+		/** guest only: the host is compiling, so the request becomes a stop */
+		hostCompiling?: boolean;
+		onRequestCompileStop?: () => void;
 		onConfigureCompile: () => void;
 		onCompileFromScratch: () => void;
 		onCleanAux: () => void;
@@ -77,7 +78,6 @@
 	};
 	let {
 		loadedPath,
-		kind,
 		guest,
 		terminalAvailable,
 		compiling,
@@ -91,6 +91,8 @@
 		onCompile,
 		commandPending = false,
 		onRequestCompile,
+		hostCompiling = false,
+		onRequestCompileStop = () => {},
 		onConfigureCompile,
 		onCompileFromScratch,
 		onCleanAux,
@@ -229,17 +231,27 @@
 			     host's Compile so the bar reads the same on both sides. Hidden while the host
 			     streams a live Typst preview: the stream already follows every keystroke, so a
 			     compile request has nothing to produce (the host's Compile only re-opens its
-			     preview pane there). .typ shows it too - a Typst project compiled by shell (the
-			     Preview switch off) pushes its PDF exactly as a LaTeX one does. -->
-			{#if loadedPath && (kind === 'tex' || kind === 'typ') && !guestTypstOffered}
+			     preview pane there). Any file shows it, as the host's Compile does: the request
+			     compiles the main file. -->
+			{#if !guestTypstOffered}
+				{@const label = hostCompiling ? m.wsview_stop_label() : m.session_request_compile()}
+				{#snippet face(Icon: Component, text: string, shown: boolean)}
+					<span class="col-start-1 row-start-1 flex items-center justify-center gap-1.5" class:invisible={!shown}>
+						<Icon class={compact ? 'size-3.5' : 'size-4'} />
+						{#if !compact}<span class="cap-center">{text}</span>{/if}
+					</span>
+				{/snippet}
 				<button
-					class="btn btn-xs preset-tonal-primary {solid} gap-1.5"
-					onclick={onRequestCompile}
-					use:tip={m.session_request_compile()}
-					aria-label={m.session_request_compile()}
+					class="btn btn-xs {COMPILE_TONE[hostCompiling ? 'error' : 'primary']} {solid}"
+					onclick={hostCompiling ? onRequestCompileStop : onRequestCompile}
+					use:tip={label}
+					aria-label={label}
 				>
-					<Play class={compact ? 'size-3.5' : 'size-4'} />
-					{#if !compact}<span class="cap-center">{m.session_request_compile()}</span>{/if}
+					<!-- both faces in one cell, so the button keeps its width when it turns into Stop -->
+					<span class="grid">
+						{@render face(Play, m.session_request_compile(), !hostCompiling)}
+						{@render face(Square, m.wsview_stop_label(), hostCompiling)}
+					</span>
 				</button>
 			{/if}
 		{/if}

@@ -18,7 +18,7 @@ import { forgetJoinCode, rememberJoinCode } from './joinLink.svelte';
 import { commentLogOf } from './sharedComments';
 import type { SharedCompileIntel } from './editSession';
 import { decodeParseContext, type SharedParseContext } from './parse/parseContext';
-import type { ControlPayload, PreviewPayload } from './protocol';
+import { isSafeRel, type ControlPayload, type PreviewPayload } from './protocol';
 import { settings } from '$lib/settings';
 
 export type GuestFile = {
@@ -66,6 +66,9 @@ class GuestCollabController {
 	parseContext = $state.raw<SharedParseContext | null>(null);
 	folderSnippets = $state<string | null>(null);
 	private parseContextRaw: unknown = null;
+	/** the host's main file, manifest-relative */
+	hostMainFile = $state<string | null>(null);
+	hostCompiling = $state(false);
 	/** the host is streaming a live Typst preview; the pane shows it instead of the pushed PDF */
 	typstPreviewOffered = $state(false);
 	/** the raw preview page the host shipped (blob 'typst-page'); null until asked for and answered */
@@ -320,6 +323,9 @@ class GuestCollabController {
 	private onMeta(): void {
 		if (!this.doc || !this.session) return;
 		this.typstPreviewOffered = Number(metaOf(this.doc).get('typstPreview') ?? 0) === 1;
+		const main = metaOf(this.doc).get('mainFile');
+		this.hostMainFile = typeof main === 'string' && main && isSafeRel(main) ? main : null;
+		this.hostCompiling = Number(metaOf(this.doc).get('compiling') ?? 0) === 1;
 		const rev = Number(metaOf(this.doc).get('pdfRev') ?? 0);
 		this.pdfName = String(metaOf(this.doc).get('pdfName') ?? '');
 		// a rev we haven't seen means we missed the broadcast (joined late / was offline): ask once.
@@ -442,6 +448,10 @@ class GuestCollabController {
 		this.session?.sendControl({ kind: 'compile-request' });
 	}
 
+	requestCompileStop(): void {
+		this.session?.sendControl({ kind: 'compile-stop' });
+	}
+
 	leave(): void {
 		// an ended session is torn down already; an effect teardown reads the status from before the end
 		if (!this.session && this.status !== 'joining') return;
@@ -491,6 +501,8 @@ class GuestCollabController {
 		this.folderSnippets = null;
 		this.parseContextRaw = null;
 		this.typstPreviewOffered = false;
+		this.hostMainFile = null;
+		this.hostCompiling = false;
 		this.previewPage = null;
 		this.previewPageAsked = false;
 		this.onPreviewFrame = null;

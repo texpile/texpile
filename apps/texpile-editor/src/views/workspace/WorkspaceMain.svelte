@@ -160,7 +160,6 @@
 	{/if}
 	<EditorTopbar
 		loadedPath={doc.path}
-		{kind}
 		{guest}
 		terminalAvailable={termDock.available}
 		compiling={compiler.compiling}
@@ -174,6 +173,8 @@
 		onCompile={compiler.runCompile}
 		commandPending={panes.commandPending}
 		onRequestCompile={actions.requestCompile}
+		hostCompiling={collabGuest.hostCompiling && collabGuest.hostOnline}
+		onRequestCompileStop={actions.requestCompileStop}
 		onConfigureCompile={actions.openCompileModal}
 		onCompileFromScratch={compiler.runCompileFromScratch}
 		onCleanAux={compiler.runCleanAux}

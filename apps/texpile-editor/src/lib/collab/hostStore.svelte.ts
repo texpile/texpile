@@ -46,6 +46,7 @@ class HostCollabController {
 
 	/** WorkspaceView wires these to its compile machinery. */
 	onCompileRequest: (() => void) | null = null;
+	onCompileStop: (() => void) | null = null;
 	/** WorkspaceView wires this to resolve a guest's SyncTeX request and reply via replyControl. */
 	onSyncRequest: ((payload: ControlPayload, from: number) => void) | null = null;
 	/** WorkspaceView wires this to refresh its own tree after a guest upload/rename/delete. */
@@ -74,6 +75,14 @@ class HostCollabController {
 	shareCompileIntel(intel: SharedCompileIntel): void {
 		if (!this.active || !this.doc) return;
 		metaOf(this.doc).set('compileIntel', JSON.stringify(intel));
+	}
+	/** the main file and whether it is compiling, in the meta map so a late joiner reads them */
+	shareCompileState(main: string | null, compiling: boolean): void {
+		if (!this.active || !this.doc) return;
+		const meta = metaOf(this.doc);
+		const rel = (main && this.rel(main)) ?? '';
+		if ((meta.get('mainFile') ?? '') !== rel) meta.set('mainFile', rel);
+		if (Number(meta.get('compiling') ?? 0) !== (compiling ? 1 : 0)) meta.set('compiling', compiling ? 1 : 0);
 	}
 	readonly parseContext = null;
 	shareParseContext(context: SharedParseContext): void {
@@ -193,6 +202,7 @@ class HostCollabController {
 					onPreview: (p, from) => this.onPreview?.(p, from),
 					onControl: (payload, from) => {
 						if (payload.kind === 'compile-request') this.onCompileRequest?.();
+						else if (payload.kind === 'compile-stop') this.onCompileStop?.();
 						else if (payload.kind === 'synctex-inverse' || payload.kind === 'synctex-forward') void this.onSyncRequest?.(payload, from);
 						else if (payload.kind === 'file-op') void this.applyGuestFileOp(payload);
 						else if (payload.kind === 'typst-scroll') this.onTypstScroll?.(payload, from);

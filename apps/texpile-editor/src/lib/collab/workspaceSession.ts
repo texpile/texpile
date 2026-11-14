@@ -62,6 +62,7 @@ export function visualCollabBridge(deps: VisualCollabBridgeDeps) {
 
 export type SessionHandlerDeps = {
 	runCompile(): void;
+	stopCompile(): void;
 	/** a run is already in flight; guest requests are dropped rather than queued */
 	isBusy(): boolean;
 	/** a guest changed files on the host's disk (upload / rename / delete) */
@@ -86,6 +87,7 @@ export function attachSessionHandlers(session: EditSession, deps: SessionHandler
 		toaster.info({ title: m.wsview_toast_compile_requested_title(), duration: 3000 });
 		deps.runCompile();
 	};
+	collabHost.onCompileStop = () => deps.stopCompile();
 	session.onFileOp = () => deps.refreshTree();
 	// straight onto collabHost, not the EditSession interface: only the host records guests' edits
 	collabHost.onGuestEdit = (rel, before, after, edit) => deps.recordGuestEdit(rel, before, after, edit);
@@ -155,6 +157,7 @@ export function attachSessionHandlers(session: EditSession, deps: SessionHandler
 	previewRelay.attach();
 	return () => {
 		session.onCompileRequest = null;
+		collabHost.onCompileStop = null;
 		session.onSyncRequest = null;
 		session.onFileOp = null;
 		collabHost.onGuestEdit = null;
