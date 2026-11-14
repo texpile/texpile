@@ -25,7 +25,10 @@ export function crossRefFace(command: string, labels: string[], shown: string | 
 		const names = templateFeaturesStore.current.crossRefNames ?? DEFAULT_CROSS_REF_NAMES;
 		// no label yet prints what LaTeX prints for one it cannot resolve
 		const unlabeled = labels.length === 0;
-		dom.textContent = (shown ?? (unlabeled ? '' : crossRefText(command, labels, aux, names, range).text)) || '??';
+		const text = (shown ?? (unlabeled ? '' : crossRefText(command, labels, aux, names, range).text)) || '??';
+		// the numbers are handed over again on every key typed anywhere, and the same text written again reads as a
+		// change of size to the line breaker, which then breaks the chip's paragraph anew
+		if (dom.textContent !== text) dom.textContent = text;
 		const missing = labels.find((label) => undefinedRefs.current.has(label) && !counted?.has(label));
 		dom.classList.toggle('drawn-crossref-broken', unlabeled || missing !== undefined);
 		tipped.update(missing !== undefined ? `Label "${missing}" not found` : source);

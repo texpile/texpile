@@ -17,7 +17,9 @@ export function footnoteFace(counted: number | null, given: string | null, note:
 		decorate(decorations) {
 			if (counted === null || given !== null) return;
 			// a footnote the editor is not sure how to number
-			dom.textContent = footnoteNumbersOf(decorations)[counted] || '∗';
+			const mark = footnoteNumbersOf(decorations)[counted] || '∗';
+			// written only when it differs, as a cross-reference is (crossRefFace)
+			if (dom.textContent !== mark) dom.textContent = mark;
 		},
 		destroy: () => tipped?.destroy()
 	};
