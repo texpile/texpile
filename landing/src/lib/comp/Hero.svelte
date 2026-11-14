@@ -2,7 +2,7 @@
 	import { localizeHref } from '$lib/paraglide/runtime';
 	import { onMount } from 'svelte';
 	import Download from '@lucide/svelte/icons/download';
-	import Github from '@lucide/svelte/icons/github';
+	import GithubMark from './GithubMark.svelte';
 	import HeroScreencast from './hero/HeroScreencast.svelte';
 	import type { HeroFormat } from './hero/heroScenes';
 	import { detectOS, type OS } from '$lib/os';
@@ -55,7 +55,7 @@
 					rel="noopener noreferrer"
 					class="rounded-base inline-flex items-center gap-2 border border-white/15 px-7 py-3 font-semibold text-white transition-colors hover:bg-white/10"
 				>
-					<Github class="h-5 w-5" />
+					<GithubMark class="h-5 w-5" />
 					{m.hero_cta_github()}
 				</a>
 			</div>

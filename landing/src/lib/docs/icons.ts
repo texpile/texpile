@@ -1,6 +1,6 @@
 // The icons a page's front matter can name. An explicit map, because a namespace import of
 // @lucide/svelte cannot be tree-shaken and would ship every icon.
-import type { Icon } from '@lucide/svelte';
+import type { LucideIcon } from '@lucide/svelte';
 import BookMarked from '@lucide/svelte/icons/book-marked';
 import Bot from '@lucide/svelte/icons/bot';
 import BoxSelect from '@lucide/svelte/icons/box-select';
@@ -31,7 +31,7 @@ import Table from '@lucide/svelte/icons/table';
 import Type from '@lucide/svelte/icons/type';
 import Users from '@lucide/svelte/icons/users';
 
-export const ICONS: Record<string, typeof Icon> = {
+export const ICONS: Record<string, LucideIcon> = {
 	'book-marked': BookMarked,
 	bot: Bot,
 	'box-select': BoxSelect,
