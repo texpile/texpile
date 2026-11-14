@@ -177,8 +177,8 @@ html {
 	--diff-delete-tint: var(--color-error-500);
 	--diff-highlight-tint: var(--color-warning-400);
 
-	/* \ref and \cite chips, footnote marks and an included file's path, in the link's color */
-	--ref-fg: light-dark(var(--typo-anchor--color-light), var(--typo-anchor--color-dark));
+	/* \ref and \cite chips, footnote marks and an included file's path */
+	--ref-fg: var(--primary-ink);
 	--ref-bg: color-mix(in oklab, var(--color-primary-500) 15%, transparent);
 	--ref-broken-fg: var(--error-ink);
 	--ref-broken-bg: color-mix(in oklab, var(--color-error-500) 15%, transparent);
