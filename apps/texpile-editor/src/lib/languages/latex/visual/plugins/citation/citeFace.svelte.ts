@@ -32,7 +32,9 @@ export function citeFace(command: string, call: CiteCallGroups, source: string, 
 	const tipped = tip(dom, source);
 	function show(): void {
 		const cited = citationOf(command, call);
-		dom.textContent = cited ? cited.text : '(…)';
+		const text = cited ? cited.text : '(…)';
+		// written again as it was, it reads as a change of size to the line breaker
+		if (dom.textContent !== text) dom.textContent = text;
 		dom.classList.toggle('drawn-crossref-broken', cited?.broken ?? true);
 	}
 	show();

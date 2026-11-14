@@ -12,12 +12,15 @@ import { ColumnWidth } from '$lib/resizing/columnWidth';
 import { holdEditor, releaseEditor } from '$lib/resizing/heldEditor';
 import { compositionWrapPlugin } from './compositionWrap';
 import { hyphenSelectionPlugin } from './hyphenSelection';
+import { decorationsFor, marksToSwap, plainlyJustified } from './breakDecorations';
 import type { DocumentHyphenation } from './documentHyphenationLanguage';
 import { isHeldBlock } from './heldBlocks';
 import { loadHyphenator, readyHyphenator } from './hyphenationLanguages';
 import { inlineBoxWatch } from './inlineBoxWatch';
 import { linesKeptWhileTyping } from './linesKeptWhileTyping';
 import { paragraphBreaks, sameBreaks, type BreakingContext, type ChosenBreaks, type ParagraphBreaks } from './paragraphBreaks';
+import { textBlocksInChange } from './rebreak/blocksInChange';
+import { rebreakLimit } from './rebreak/rebreakLimit';
 import { struckWordsIn, type StruckWords } from './struckWords';
 import { runStyleReader } from './textRunStyles';
 import { wordBeingTypedKey, wordBeingTypedPlugin } from './wordBeingTyped';
@@ -38,45 +41,8 @@ export const lineBreakKey = new PluginKey<LineBreakState>('texpile-line-breaks')
 
 // a line that failed to break where it was told to runs past the edge by far more than rounding does
 const SPILL_ALLOWANCE = 2;
-// a paragraph whose inline views keep changing size is left to the browser once it has been broken this often in a second
-const MOST_REBREAKS_A_SECOND = 6;
-
-// ProseMirror reuses any drawn piece up to five ahead that reads the same under an equal decoration and drops what lies
-// between, so a line end space before a formula took the one after it and the formula was rebuilt. No two specs are equal
-let marksMade = 0;
-
-// the paragraph cannot wrap on its own; only the marked spaces, dashes and hyphenation points let it (app.css)
-function decorationsFor(pos: number, paragraph: PMNode, breaks: ChosenBreaks): Decoration[] {
-	const held = Decoration.node(
-		pos,
-		pos + paragraph.nodeSize,
-		{ class: breaks.justified ? 'pm-line-par pm-line-justified' : 'pm-line-par' },
-		{ holdsParagraph: true, justified: breaks.justified }
-	);
-	const ends = breaks.marks
-		.filter((mark) => !mark.inside)
-		.map((mark) =>
-			Decoration.inline(pos + mark.from, pos + mark.to, { class: `pm-line-${mark.kind}` }, { made: ++marksMade, kind: mark.kind })
-		);
-	return [held, ...ends];
-}
-
-function markKey(mark: Decoration): string {
-	return `${mark.from} ${mark.to} ${mark.spec.kind ?? mark.spec.justified}`;
-}
-
-// a mark carried through the edit stays where the new breaks want one like it: most keys move no line end at all, and
-// ProseMirror redraws every mark swapped for an equal one
-function marksToSwap(mine: Decoration[], wanted: Decoration[]): { stale: Decoration[]; fresh: Decoration[] } {
-	const drawn = new Map<string, Decoration>();
-	const stale: Decoration[] = [];
-	for (const old of mine) {
-		if (drawn.has(markKey(old))) stale.push(old);
-		else drawn.set(markKey(old), old);
-	}
-	const fresh = wanted.filter((mark) => !drawn.delete(markKey(mark)));
-	return { stale: [...stale, ...drawn.values()], fresh };
-}
+// the number a heading prints before its words (app.css), which takes room on its first line
+const LEAD_ATTRIBUTES = ['data-number'];
 
 // a line end inside a suggestion's struck words goes on the widget's own spans, which no decoration reaches; ProseMirror
 // ignores changes inside a widget, and a redrawn widget comes back bare, so this runs again after every redraw
@@ -94,9 +60,10 @@ function markStruckWords(struck: StruckWords[], breaks: ChosenBreaks): void {
 	}
 }
 
-// a paragraph the browser wraps sits among held ones, and ragged beside justified text it reads as a mistake
-function plainlyJustified(pos: number, paragraph: PMNode): Decoration {
-	return Decoration.node(pos, pos + paragraph.nodeSize, { class: 'pm-line-justified' }, { holdsParagraph: true });
+// the browser's own wrapping, justified only where the breaker's lines were: a heading stays ragged
+function leftToBrowser(breaks: ParagraphBreaks | undefined): 'native' | 'untouched' {
+	if (typeof breaks === 'object') return breaks.justified ? 'native' : 'untouched';
+	return breaks ?? 'native';
 }
 
 // the visual editors on the page, each asked whether its width changed
@@ -112,7 +79,8 @@ function lineBreaker(view: EditorView): { update(view: EditorView, before: Edito
 	let broken = new WeakMap<PMNode, ParagraphBreaks>();
 	let outdated = new WeakSet<PMNode>();
 	let retried = new WeakSet<PMNode>();
-	let rebreaks = new WeakMap<PMNode, { since: number; count: number }>();
+	let resized = new WeakSet<PMNode>();
+	const limit = rebreakLimit();
 	let widths = new WeakMap<HTMLElement, number>();
 	const unchecked = new Set<HTMLElement>();
 	let begun = false;
@@ -161,27 +129,30 @@ function lineBreaker(view: EditorView): { update(view: EditorView, before: Edito
 		});
 	}
 
-	/** false once the paragraph has been broken too often lately: two views trading sizes must not spin */
-	function inlineViewChanged(paragraph: PMNode): boolean {
-		const now = performance.now();
-		const recent = rebreaks.get(paragraph);
-		if (!recent || now - recent.since > 1000) rebreaks.set(paragraph, { since: now, count: 1 });
-		else if (++recent.count > MOST_REBREAKS_A_SECOND) {
-			broken.set(paragraph, 'native');
-			return false;
-		}
+	// a theorem's head floats beside its first paragraph, whose first line it shortens
+	function blockBeside(head: Element): PMNode | null {
+		const body = head.nextElementSibling;
+		if (!body || getComputedStyle(head).float === 'none') return null;
+		const first = body.matches('p') ? body : body.querySelector('p');
+		return first ? blockOf(first) : null;
+	}
+
+	/** something on the paragraph's lines changed size with no edit to its words */
+	function sizeChanged(paragraph: PMNode): void {
+		resized.add(paragraph);
 		outdated.add(paragraph);
 		retried.delete(paragraph);
-		return true;
 	}
 
 	const inlineBoxes = inlineBoxWatch((element) => {
 		const paragraph = blockOf(element);
-		if (paragraph && inlineViewChanged(paragraph)) rebreakNextFrame(false);
+		if (!paragraph) return;
+		sizeChanged(paragraph);
+		rebreakNextFrame(false);
 	});
 
 	// a cell whose column changed width is broken again for it; two cells trading widths hit the same limit as views
-	// trading sizes, and the browser takes the paragraph
+	// trading sizes
 	const cellSizes = new ResizeObserver((entries) => {
 		for (const { target } of entries) {
 			if (!(target instanceof HTMLElement)) continue;
@@ -189,7 +160,9 @@ function lineBreaker(view: EditorView): { update(view: EditorView, before: Edito
 			if (known === undefined || Math.abs(contentWidth(target) - known) < 0.5) continue;
 			widths.delete(target);
 			const paragraph = blockOf(target);
-			if (paragraph && inlineViewChanged(paragraph)) rebreakNextFrame(false);
+			if (!paragraph) continue;
+			sizeChanged(paragraph);
+			rebreakNextFrame(false);
 		}
 	});
 
@@ -222,7 +195,7 @@ function lineBreaker(view: EditorView): { update(view: EditorView, before: Edito
 			// once more with what is on the page now (a table cell may have been given another width), then the browser
 			// takes it
 			widths.delete(block);
-			if (retried.has(paragraph)) broken.set(paragraph, 'native');
+			if (retried.has(paragraph)) broken.set(paragraph, leftToBrowser(broken.get(paragraph)));
 			else outdated.add(paragraph);
 			retried.add(paragraph);
 			spilled = true;
@@ -279,6 +252,10 @@ function lineBreaker(view: EditorView): { update(view: EditorView, before: Edito
 				let breaks = known;
 				if (!breaks || outdated.has(node)) {
 					breaks = struck ? paragraphBreaks(view, node, pos, block, context, struck, typing.take(node)) : 'native';
+					// the same lines again are no move: a chip drawn again as it was, a caret passing through
+					const moved = known !== undefined && !sameBreaks(known, breaks);
+					if (moved && resized.has(node) && limit.reached(node)) breaks = leftToBrowser(breaks);
+					resized.delete(node);
 					broken.set(node, breaks);
 					outdated.delete(node);
 					if (typeof breaks === 'object') unchecked.add(block);
@@ -322,7 +299,8 @@ function lineBreaker(view: EditorView): { update(view: EditorView, before: Edito
 		broken = new WeakMap();
 		outdated = new WeakSet();
 		retried = new WeakSet();
-		rebreaks = new WeakMap();
+		resized = new WeakSet();
+		limit.reset();
 		widths = new WeakMap();
 		typing.forget();
 		context.styleOf = runStyleReader();
@@ -348,19 +326,21 @@ function lineBreaker(view: EditorView): { update(view: EditorView, before: Edito
 	}
 	widthChecks.add(widthChanged);
 
-	// a citation that resolves or a formula that gets typeset changes width without a transaction
+	// a citation that resolves or a formula that gets typeset changes width without a transaction, and so does a
+	// heading's number or a theorem's head
 	const inlineViews = new MutationObserver((records) => {
 		const touched = new Set<PMNode>();
 		for (const record of records) {
 			const element = record.target instanceof Element ? record.target : record.target.parentElement;
 			const swapped = [...record.addedNodes].some((node) => node instanceof HTMLElement && node.contentEditable === 'false');
-			const inside = swapped ? element : element?.closest('[contenteditable="false"]');
-			const paragraph = inside ? blockOf(inside) : null;
+			const inside = swapped || record.type === 'attributes' ? element : element?.closest('[contenteditable="false"]');
+			const paragraph = inside ? (blockOf(inside) ?? blockBeside(inside)) : null;
 			if (paragraph && broken.has(paragraph)) touched.add(paragraph);
 		}
-		if ([...touched].filter(inlineViewChanged).length > 0) rebreak();
+		touched.forEach(sizeChanged);
+		if (touched.size > 0) rebreak();
 	});
-	inlineViews.observe(view.dom, { subtree: true, childList: true, characterData: true });
+	inlineViews.observe(view.dom, { subtree: true, childList: true, characterData: true, attributeFilter: LEAD_ATTRIBUTES });
 
 	function fontsLoaded(): void {
 		forgetTextWidths();
@@ -404,6 +384,15 @@ function lineBreaker(view: EditorView): { update(view: EditorView, before: Edito
 	return {
 		update(_, before) {
 			const state = view.state;
+			if (before.doc !== state.doc) {
+				limit.reset();
+				for (const block of textBlocksInChange(before.doc, state.doc)) {
+					if (!broken.has(block)) continue;
+					outdated.add(block);
+					retried.delete(block);
+					lineBreakKey.getState(state)?.shown.delete(block);
+				}
+			}
 			const swapped = lineBreakKey.getState(before)?.shown !== lineBreakKey.getState(state)?.shown;
 			const again = typing.toBreakAgain(before, state);
 			for (const paragraph of again) {

@@ -1,6 +1,7 @@
 // where one paragraph's lines end, or why it is left to the browser
 import type { Node as PMNode } from 'prosemirror-model';
 import type { EditorView } from 'prosemirror-view';
+import { cssZoomOf } from '../lineBoxes';
 import { breakLines } from './knuthPlass';
 import { paragraphItems, type BreakMark, type ParagraphItems, type ParagraphMeasures } from './paragraphItems';
 import type { StruckWords } from './struckWords';
@@ -46,6 +47,23 @@ const JUSTIFIED_PASSES = [
 const RAGGED_PASSES = [{ tolerance: Infinity, hyphenate: false, sloppy: true }];
 const EMERGENCY_STRETCH_EMS = 3;
 
+// what the first line gives up before its first word: the indent, a heading's number, a theorem's run-in head, the key
+// of a bibliography entry. The stylesheet or a widget draws most of these, so it is read off the page
+function firstLineLead(view: EditorView, pos: number, block: HTMLElement, style: CSSStyleDeclaration): number {
+	const indent = parseFloat(style.textIndent) || 0;
+	// centered text starts its first line wherever the line's own length puts it
+	if (style.direction === 'rtl' || !JUSTIFIABLE_ALIGNMENTS.has(style.textAlign)) return indent;
+	try {
+		const zoom = cssZoomOf(block);
+		const edge =
+			block.getBoundingClientRect().left / zoom + (parseFloat(style.paddingLeft) || 0) + (parseFloat(style.borderLeftWidth) || 0);
+		const lead = view.coordsAtPos(pos + 1, 1).left / zoom - edge;
+		return Number.isFinite(lead) ? Math.max(indent, lead) : indent;
+	} catch {
+		return indent;
+	}
+}
+
 // the items the kept breaks sit on now, up to the first one the paragraph no longer offers (a word held whole, say)
 function keptItems(built: ParagraphItems, kept: KeptBreaks): number[] {
 	const offered = [...built.marks];
@@ -74,7 +92,7 @@ export function paragraphBreaks(
 	// a heading is set ragged, as titlesec and KOMA set it
 	const justified = context.justified && paragraph.type.name === 'paragraph' && JUSTIFIABLE_ALIGNMENTS.has(style.textAlign);
 	const width = context.widthOf(block) - SLACK;
-	const indent = parseFloat(style.textIndent) || 0;
+	const indent = firstLineLead(view, pos, block, style);
 	const emergencyStretch = EMERGENCY_STRETCH_EMS * parseFloat(style.fontSize);
 	const measures = justified ? context : { ...context, hyphenator: null };
 	let built = paragraphItems(view, paragraph, pos, block, measures, struck);
