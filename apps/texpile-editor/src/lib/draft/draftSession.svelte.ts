@@ -80,7 +80,6 @@ export class DraftSession {
 				this.opts.onDiagnostics()?.(this.opts.root() + '/_draft/draft.log');
 			},
 			paused: opts.paused,
-			hasPages: () => this.pages.length > 0,
 			emit: (k, d) => this.ev(k, d)
 		});
 		this.teleport = new DraftTeleport({

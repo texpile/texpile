@@ -1253,7 +1253,6 @@
 	"draft_status_updated": "已在 {ms} 毫秒内更新",
 	"draft_status_compiling": "正在编译项目……",
 	"draft_status_compiling_export": "正在编译文档以导出……",
-	"draft_first_compile_slow": "首次预览耗时最长，因为它要处理整个文档。之后的修改会很快显示。",
 	"draft_wait_engine": "正在启动引擎",
 	"draft_wait_typeset": "正在排版文档",
 	"draft_wait_typeset_again": "正在为引用重新排版",

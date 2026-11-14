@@ -1253,7 +1253,6 @@
 	"draft_status_updated": "已在 {ms} 毫秒內更新",
 	"draft_status_compiling": "正在編譯專案……",
 	"draft_status_compiling_export": "正在編譯文件以匯出……",
-	"draft_first_compile_slow": "首次預覽耗時最長，因為它要處理整份文件。之後的修改會很快顯示。",
 	"draft_wait_engine": "正在啟動引擎",
 	"draft_wait_typeset": "正在排版文件",
 	"draft_wait_typeset_again": "正在為引用重新排版",

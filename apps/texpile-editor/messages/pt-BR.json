@@ -1250,7 +1250,6 @@
 	"draft_status_updated": "Atualizado em {ms} ms",
 	"draft_status_compiling": "Compilando projeto…",
 	"draft_status_compiling_export": "Compilando documento para exportação…",
-	"draft_first_compile_slow": "A primeira visualização demora mais porque processa o documento inteiro. As edições seguintes aparecem em instantes.",
 	"draft_wait_engine": "Iniciando o motor",
 	"draft_wait_typeset": "Compondo o documento",
 	"draft_wait_typeset_again": "Compondo de novo para as referências",

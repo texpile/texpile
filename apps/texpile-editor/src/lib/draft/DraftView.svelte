@@ -242,8 +242,6 @@
 	{#if compiler.installing && ctrl.pages.length}
 		<!-- with no pages yet the list in the pane names the install -->
 		<p class="text-muted m-3 shrink-0 text-center text-sm">{m.draft_status_installing({ file: compiler.installing })}</p>
-	{:else if compiler.slow}
-		<p class="text-muted m-3 shrink-0 text-center text-sm">{m.draft_first_compile_slow()}</p>
 	{/if}
 	{#if compiler.missingTool}
 		<div class="text-error-ink bg-surface-50-950 rounded-container m-3 flex shrink-0 items-center gap-3 p-3 text-xs">

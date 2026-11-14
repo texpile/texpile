@@ -1253,7 +1253,6 @@
 	"draft_status_updated": "In {ms} ms aktualisiert",
 	"draft_status_compiling": "Projekt wird kompiliert…",
 	"draft_status_compiling_export": "Dokument wird für den Export kompiliert…",
-	"draft_first_compile_slow": "Die erste Vorschau dauert am längsten, weil sie das ganze Dokument setzt. Änderungen danach erscheinen gleich.",
 	"draft_wait_engine": "Engine wird gestartet",
 	"draft_wait_typeset": "Dokument wird gesetzt",
 	"draft_wait_typeset_again": "Dokument wird für die Verweise erneut gesetzt",

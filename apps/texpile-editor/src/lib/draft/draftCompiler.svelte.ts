@@ -5,9 +5,6 @@ import { installMissingFile, texLiveInUse } from '$lib/modals/window/toolchain/i
 import { m } from '$lib/paraglide/messages';
 import { CompileProgress } from './compileProgress.svelte';
 
-// a first compile still running after this long gets a note: typing waits on it
-const SLOW_MS = 10000;
-
 type CompilerHooks = {
 	root: () => string;
 	mainFile: () => string;
@@ -17,8 +14,6 @@ type CompilerHooks = {
 	afterCompile: () => void;
 	/** the preview is paused, its engine stopped */
 	paused: () => boolean;
-	/** pages are on screen: a compile then only refreshes them */
-	hasPages: () => boolean;
 	emit: (kind: string, detail?: unknown) => void;
 };
 
@@ -26,8 +21,6 @@ export class DraftCompiler {
 	compiling = $state(false);
 	/** the running pass is the refresh after typing rests, which shows no progress */
 	quiet = $state(false);
-	/** a compile with no pages on screen yet has run past SLOW_MS */
-	slow = $state(false);
 	status = $state('');
 	error = $state<string | null>(null);
 	/** the engine was not found; the banner offers the Toolchain folders */
@@ -80,7 +73,6 @@ export class DraftCompiler {
 		this.hooks.emit('compile-start', { reason });
 		this.compiling = true;
 		this.quiet = reason.startsWith('quiet:');
-		const slowTimer = this.hooks.hasPages() ? null : setTimeout(() => (this.slow = true), SLOW_MS);
 		// a quiet pass (the refresh after teleported edits) announces nothing; a fresh compile announces itself
 		if (!reason.startsWith('quiet:')) this.status = reason === 'save-pdf' ? m.draft_status_compiling_export() : m.draft_status_compiling();
 		this.error = null;
@@ -107,7 +99,6 @@ export class DraftCompiler {
 				}
 				r = await n.draftCompile(body);
 			}
-			if (slowTimer) clearTimeout(slowTimer);
 			if (myToken !== this.compileToken) {
 				this.hooks.emit('compile-superseded', { reason });
 				return null;
@@ -145,7 +136,6 @@ export class DraftCompiler {
 				}
 			}
 		} catch (e) {
-			if (slowTimer) clearTimeout(slowTimer);
 			if (myToken !== this.compileToken) return null;
 			this.error = e instanceof Error ? e.message : String(e);
 			this.status = '';
@@ -154,7 +144,6 @@ export class DraftCompiler {
 		// (compiling flag, queued patch) to it so we don't clear its in-flight status early
 		if (myToken !== this.compileToken) return null;
 		this.compiling = false;
-		this.slow = false;
 		this.progress.end();
 		// every pass parks warm engines for the edits after it, and a paused preview stopped the engines on purpose
 		if (this.hooks.paused()) void n.draftStop?.();

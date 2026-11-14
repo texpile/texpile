@@ -17,7 +17,6 @@ function compiler() {
 		applyCompiled: async () => {},
 		afterCompile: () => {},
 		paused: () => paused,
-		hasPages: () => false,
 		emit: () => {}
 	});
 }
@@ -51,17 +50,4 @@ it('stops the engine again after a pass while paused', async () => {
 	native.passes[0]({ ok: true });
 	expect(await pass).toBe(true);
 	expect(native.draftStop).toHaveBeenCalledTimes(1);
-});
-
-// nothing is on screen during a first compile, and it can run for a minute
-it('says so when the first compile runs long', async () => {
-	vi.useFakeTimers();
-	const c = compiler();
-	void c.compile('trigger:1');
-	await vi.advanceTimersByTimeAsync(10_000);
-	expect(c.slow).toBe(true);
-	native.passes[0]({ ok: false, error: 'boom' });
-	await vi.advanceTimersByTimeAsync(0);
-	expect(c.slow).toBe(false);
-	vi.useRealTimers();
 });
