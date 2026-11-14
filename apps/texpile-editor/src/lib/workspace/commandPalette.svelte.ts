@@ -42,6 +42,10 @@ export type PaletteActions = {
 	sidebarOpen(): boolean;
 	toggleBottomPanel(): void;
 	bottomPanelOpen(): boolean;
+	/** the Agent tab is on in Preferences and this window has a Bottom Panel for it */
+	agentTabOffered(): boolean;
+	agentTabOpen(): boolean;
+	toggleAgentTab(): void;
 	toggleTerminal(): void;
 	terminalVisible(): boolean;
 	terminalAvailable(): boolean;

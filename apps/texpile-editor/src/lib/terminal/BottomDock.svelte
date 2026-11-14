@@ -96,7 +96,7 @@
 			(mod) => (TerminalComp = mod.default),
 			(e) => console.error('Failed to load terminal chunk:', e)
 		);
-	} else view = 'problems';
+	} else if (view === 'terminal') view = 'problems';
 
 	// parent API (via bind:this)
 	/** run a command on the dedicated compile shell (never one the user is working in). */

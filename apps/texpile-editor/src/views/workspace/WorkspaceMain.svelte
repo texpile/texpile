@@ -183,6 +183,7 @@
 		onShowProblems={actions.showProblems}
 		commentCount={panes.comments.filter((t: Any) => !t.resolved && !panes.commentGhosts.has(t.id)).length}
 		onShowComments={actions.showComments}
+		onShowAgent={termDock.available || guest ? actions.showAgent : undefined}
 		suggesting={suggesting.current}
 		onToggleSuggest={canComment && (!session.isGuest || collabGuest.hostRecords) ? toggleSuggest : undefined}
 		onTogglePdf={layout.togglePdfPane}

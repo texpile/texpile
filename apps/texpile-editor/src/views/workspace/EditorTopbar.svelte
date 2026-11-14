@@ -14,6 +14,7 @@
 	import { m } from '$lib/paraglide/messages';
 	import type { FileKind } from '$lib/workspace/documentBuffer.svelte';
 	import EditModePicker from './EditModePicker.svelte';
+	import OpenAgentButton from '$lib/ai/agentPanel/ui/OpenAgentButton.svelte';
 	import {
 		ArrowRight,
 		Square,
@@ -58,6 +59,8 @@
 		/** open review threads in the project; 0 hides the badge, like a clean compile hides Problems */
 		commentCount?: number;
 		onShowComments?: () => void;
+		/** given where the window has a Bottom Panel */
+		onShowAgent?: () => void;
 		suggesting?: boolean;
 		onToggleSuggest?: (suggesting: boolean) => void;
 		onTogglePdf: () => void;
@@ -97,6 +100,7 @@
 		onShowProblems,
 		commentCount = 0,
 		onShowComments = () => {},
+		onShowAgent,
 		suggesting = false,
 		onToggleSuggest,
 		onTogglePdf,
@@ -274,6 +278,9 @@
 				<MessageSquare class="size-3.5" />
 				{commentCount}
 			</button>
+		{/if}
+		{#if onShowAgent && !fileMode.current}
+			<OpenAgentButton class={quiet} onOpen={onShowAgent} />
 		{/if}
 		{#if onToggleSuggest}
 			<EditModePicker {suggesting} onChange={onToggleSuggest} {compact} />

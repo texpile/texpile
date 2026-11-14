@@ -1,4 +1,4 @@
-import { CloudDownload, Columns2, Eye, GitBranch, GitCompare, GitMerge, PanelBottom, PanelLeft, Search, Undo2 } from '@lucide/svelte';
+import { Bot, CloudDownload, Columns2, Eye, GitBranch, GitCompare, GitMerge, PanelBottom, PanelLeft, Search, Undo2 } from '@lucide/svelte';
 import { COLOR_VISION_MODES, colorVisionLabel } from '$lib/preview/colorVision/colorVision';
 import { m } from '$lib/paraglide/messages';
 import type { CommandInfo } from '../commands/commandRegistry';
@@ -22,6 +22,12 @@ export const VIEW_COMMANDS: CommandInfo[] = [
 		title: () => m.keybindings_cmd_toggle_bottom_panel(),
 		category,
 		palette: { keywords: 'dock terminal problems comments agent panel', icon: PanelBottom }
+	},
+	{
+		id: 'view.agent',
+		title: () => m.keybindings_cmd_toggle_agent(),
+		category,
+		palette: { keywords: 'ai assistant chat claude codex gemini panel', icon: Bot }
 	},
 	// the simulations are found by typing (color, blind, protan...) rather than listed, four rows of one feature in the
 	// browse list; the way back is listed while on

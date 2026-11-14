@@ -145,3 +145,21 @@ test.describe('package files row', () => {
 		await expect(prefs.row('package-files')).toContainText('1 in this folder - 3 for every folder', { timeout: 15_000 });
 	});
 });
+
+test.describe('AI Assistant', () => {
+	test('the Agent button opens the Agent tab, and goes with all AI disabled', async () => {
+		const session = texpile();
+		const { page } = session;
+		const prefs = prefsOf(session);
+		if (await prefs.dialog.isVisible()) await prefs.close();
+		const button = page.locator('button[aria-label="Agent"]');
+		await button.click();
+		await expect(page.getByText('Choose an agent', { exact: true })).toBeVisible();
+		await prefs.open();
+		await prefs.goTo('AI Assistant');
+		await prefs.toggle('Disable all AI integrations in Texpile');
+		await prefs.close();
+		await expect(button).toHaveCount(0);
+		await expect(page.getByText('Choose an agent', { exact: true })).toBeHidden();
+	});
+});

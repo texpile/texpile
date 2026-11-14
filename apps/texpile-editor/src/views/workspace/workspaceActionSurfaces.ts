@@ -10,6 +10,9 @@ import { startClone } from '$lib/workspace/scm/remote/cloneFlow';
 import { canClone } from '$lib/workspace/scm/remote/gitClone';
 import { forgetSignIns } from '$lib/workspace/forgetSignIns';
 import { focusScmMessage } from '$lib/workspace/scm/actions/scmHandlers.svelte';
+import { focusEditor } from '$lib/workspace/editorCommands';
+import { askForAgentBoxCaret } from '$lib/ai/agentPanel/ui/box/agentBoxCaret.svelte';
+import { panelTabOff } from '$lib/ai/agentPanel/agentOffer.svelte';
 import { capsOf, fileMode } from '$lib/workspace/fileMode.svelte';
 import { tabs, tabKey, type Tab } from '$lib/workspace/tabs.svelte';
 import { collabGuest } from '$lib/collab/guestStore.svelte';
@@ -109,7 +112,7 @@ function named(d: ActionSurfaceDeps): Promise<boolean> {
 	return d.guest() ? Promise.resolve(true) : ensureName(workspaceRoot.current);
 }
 
-function toggleDockPanel(d: ActionSurfaceDeps, view: 'problems' | 'comments') {
+function toggleDockPanel(d: ActionSurfaceDeps, view: 'problems' | 'comments' | 'agent') {
 	const dock = d.termDock();
 	if (dock.visible && d.getDockView() === view) {
 		dock.hide();
@@ -117,6 +120,13 @@ function toggleDockPanel(d: ActionSurfaceDeps, view: 'problems' | 'comments') {
 	}
 	dock.show();
 	d.setDockView(view);
+}
+
+/** opens the Agent tab with the caret in its message box; a second call hides the panel and returns the caret to the document */
+function toggleAgentTab(d: ActionSurfaceDeps): void {
+	toggleDockPanel(d, 'agent');
+	if (d.termDock().visible) askForAgentBoxCaret();
+	else focusEditor(d.wsdoc.modes.mode === 'source');
 }
 
 export function makeMainActions(d: ActionSurfaceDeps) {
@@ -176,6 +186,7 @@ export function makeMainActions(d: ActionSurfaceDeps) {
 		// the badges toggle: a second click on the panel already showing closes the dock
 		showProblems: () => toggleDockPanel(d, 'problems'),
 		showComments: () => toggleDockPanel(d, 'comments'),
+		showAgent: () => toggleAgentTab(d),
 		insertZoteroCitation: () => d.integrations.insertZoteroCitation(),
 		citeByDoi: () => d.integrations.citeByDoi(),
 		countWords: () => countDocumentWords(d.wsdoc.doc),
@@ -340,6 +351,10 @@ export function makePaletteActions(d: ActionSurfaceDeps) {
 		sidebarOpen: () => d.layout().sidebarOpen,
 		toggleBottomPanel: () => d.termDock().togglePanel(),
 		bottomPanelOpen: () => d.termDock().visible,
+		agentTabOffered: () => !panelTabOff() && !fileMode.current && (d.termDock().available || d.guest()),
+		agentTabOpen: () => d.termDock().visible && d.getDockView() === 'agent',
+		// after the palette has closed and given the focus back
+		toggleAgentTab: () => void setTimeout(() => toggleAgentTab(d)),
 		toggleTerminal: () => d.termDock().toggle(),
 		terminalVisible: () => d.termDock().visible,
 		terminalAvailable: () => d.termDock().available,
