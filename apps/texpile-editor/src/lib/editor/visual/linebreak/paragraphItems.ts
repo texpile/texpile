@@ -5,7 +5,7 @@ import { breakOpportunities } from './breakOpportunities';
 import type { LineItem } from './knuthPlass';
 import type { Hyphenator } from './liangHyphenation';
 import type { StruckWords } from './struckWords';
-import type { RunStyleReader, TextRunStyle } from './textRunStyles';
+import type { RoomBesideRun, RunStyleReader, TextRunStyle } from './textRunStyles';
 import type { TypedWord } from './wordBeingTyped';
 import { textWidth } from './wordWidths';
 
@@ -24,6 +24,8 @@ export type ParagraphMeasures = {
 	hyphenator: Hyphenator | null;
 	/** the room an inline node view takes on a line */
 	inlineWidthOf(dom: HTMLElement): number;
+	/** the room the elements around a run of text take beside it (inline code's padding) */
+	roomBeside?(view: EditorView, block: HTMLElement, pos: number, size: number): RoomBesideRun;
 	/** document positions of a word the patterns must leave alone */
 	wholeWord: TypedWord | null;
 	/** a word wider than this may end a line after any of its characters, as the browser splits a word that fits no line */
@@ -45,6 +47,8 @@ const ONE_WORD = /^(\P{L}*)(\p{L}{5,})(\P{L}*)$/u;
 const NODE_VIEW = 'x';
 // a tab is as wide as the way to the next tab stop, which no item can say
 const UNPLACEABLE = /[\t\r]/;
+// what a suggestion draws at a position: its struck words and the line ends it removed
+const SUGGESTION_WIDGET = '[class*="pm-suggest"], [data-line-end]';
 /** a node view that is partly on a line of its own and partly in the text carries this, and its paragraph wraps natively */
 export const UNPLACEABLE_VIEW = 'data-unplaceable';
 
@@ -89,7 +93,7 @@ export function paragraphItems(
 	measures: ParagraphMeasures,
 	struck: StruckWords[] = []
 ): ParagraphItems | null {
-	const { styleOf, hyphenator, inlineWidthOf, wholeWord, splitWiderThan = Infinity } = measures;
+	const { styleOf, hyphenator, inlineWidthOf, roomBeside, wholeWord, splitWiderThan = Infinity } = measures;
 	let text = '';
 	const runs: Run[] = [];
 	let placeable = true;
@@ -113,6 +117,12 @@ export function paragraphItems(
 			});
 			text += words.text.slice(run.from, run.to);
 		}
+	}
+	// stands in the text as a letter, like a node view: it stays with the word beside it
+	function addRoom(width: number, at: number): void {
+		if (width <= 0) return;
+		runs.push({ from: text.length, to: text.length + 1, at, size: 0, width });
+		text += NODE_VIEW;
 	}
 	function addText(slice: string, at: number, style: TextRunStyle): void {
 		runs.push({ from: text.length, to: text.length + slice.length, at, size: slice.length, style });
@@ -142,6 +152,8 @@ export function paragraphItems(
 			const style = styleOf.ofRun(view, block, child, pos + at);
 			if (!style?.measurable || UNPLACEABLE.test(child.text!)) placeable = false;
 			else {
+				const room = child.marks.length > 0 ? roomBeside?.(view, block, pos + at, child.nodeSize) : undefined;
+				addRoom(room?.before ?? 0, at);
 				// struck words can sit in the middle of a text node
 				let done = 0;
 				while (nextStruck < struck.length && struck[nextStruck].at < at + child.text!.length) {
@@ -151,10 +163,18 @@ export function paragraphItems(
 					addStruck(struck[nextStruck++]);
 				}
 				addText(child.text!.slice(done), at + done, style);
+				addRoom(room?.after ?? 0, at + child.nodeSize);
 			}
 		}
 	});
 	while (nextStruck < struck.length) addStruck(struck[nextStruck++]);
+	// a chip drawn after the last word (a Typst heading's label) stays on the last line with it. One before the first
+	// word is in the first line's lead, and a suggestion's are the struck words above
+	const end = pos + paragraph.nodeSize - 1;
+	for (const widget of block.querySelectorAll<HTMLElement>('.ProseMirror-widget')) {
+		if (widget.matches(SUGGESTION_WIDGET) || view.posAtDOM(widget, 0) !== end || end === pos + 1) continue;
+		addRoom(inlineWidthOf(widget), end - pos);
+	}
 	if (!placeable || runs.length === 0) return null;
 
 	const items: LineItem[] = [];
@@ -241,9 +261,13 @@ export function paragraphItems(
 		items.push({ kind: 'glue', width, stretch: width / 2, shrink: 0 });
 	}
 
-	// a break with no space to mark is drawn on the character before it
-	function markBefore(at: number): void {
-		marks.set(items.length, markOf(at - 1, at, 'break'));
+	// a break with no space to mark is drawn on the character before it; false when that is the room beside a run,
+	// which is no character of the text
+	function markBefore(at: number): boolean {
+		const mark = markOf(at - 1, at, 'break');
+		if (mark.to <= mark.from && !mark.inside) return false;
+		marks.set(items.length, mark);
+		return true;
 	}
 	function halfSpace(index: number): number {
 		const r = runOf(index);
@@ -258,14 +282,11 @@ export function paragraphItems(
 		if (dropFrom < spacesTo) addSpaces(dropFrom, spacesTo);
 		if (kind === 'end' || kind === 'required') items.push(...END_OF_LINE);
 		else if (kind === 'ideographic') {
-			markBefore(at);
-			items.push({ kind: 'glue', width: 0, stretch: halfSpace(at - 1), shrink: 0 });
+			if (markBefore(at)) items.push({ kind: 'glue', width: 0, stretch: halfSpace(at - 1), shrink: 0 });
 		} else if (kind === 'word') {
-			markBefore(at);
-			items.push({ kind: 'penalty', width: 0, cost: 0, flagged: false, fromPatterns: false });
+			if (markBefore(at)) items.push({ kind: 'penalty', width: 0, cost: 0, flagged: false, fromPatterns: false });
 		} else if (kind === 'joint') {
-			markBefore(at);
-			items.push({ kind: 'penalty', width: 0, cost: EXPLICIT_HYPHEN_PENALTY, flagged: true, fromPatterns: false });
+			if (markBefore(at)) items.push({ kind: 'penalty', width: 0, cost: EXPLICIT_HYPHEN_PENALTY, flagged: true, fromPatterns: false });
 		}
 		hyphenatable = kind !== 'joint';
 		start = at;

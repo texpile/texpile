@@ -7,7 +7,7 @@ import { settings } from '$lib/settings';
 import { templateFeaturesStore } from '$lib/stores/editorStore';
 import { isLargeDocument } from '$lib/languages/latex/visual/largeDocument';
 import { hasOldWords, pmSuggestionsKey } from '../extensions/pmSuggestionsState';
-import { contentWidth } from '../lineBoxes';
+import { contentWidth, inlineOverrun } from '../lineBoxes';
 import { ColumnWidth } from '$lib/resizing/columnWidth';
 import { holdEditor, releaseEditor } from '$lib/resizing/heldEditor';
 import { compositionWrapPlugin } from './compositionWrap';
@@ -171,6 +171,7 @@ function lineBreaker(view: EditorView): { update(view: EditorView, before: Edito
 		hyphenator: null,
 		styleOf: runStyleReader(),
 		inlineWidthOf: inlineBoxes.widthOf,
+		roomBeside: (v, block, pos, size) => context.styleOf.roomBeside(v, block, pos, size),
 		wholeWord: null,
 		widthOf(block) {
 			let width = widths.get(block);
@@ -190,6 +191,8 @@ function lineBreaker(view: EditorView): { update(view: EditorView, before: Edito
 		let spilled = false;
 		for (const block of unchecked) {
 			if (block.scrollWidth <= block.clientWidth + SPILL_ALLOWANCE) continue;
+			// a peer's name label beside a caret near the edge runs over too, and takes no room on the line
+			if (inlineOverrun(block, 'pm-line-break') <= SPILL_ALLOWANCE) continue;
 			const paragraph = blockOf(block);
 			if (!paragraph) continue;
 			// once more with what is on the page now (a table cell may have been given another width), then the browser
