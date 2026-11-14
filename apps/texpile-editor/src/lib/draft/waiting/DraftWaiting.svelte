@@ -7,7 +7,7 @@
 	import type { CompileProgress, StartedStep } from './compileProgress.svelte';
 
 	const props: { progress: CompileProgress; mainFile: string } = $props();
-	const { started, notes, page, seconds } = $derived(props.progress);
+	const { started, notes, page, elapsed } = $derived(props.progress);
 	const drawing = $derived(started.at(-1)?.step === 'draw');
 
 	function label(at: StartedStep): string {
@@ -25,7 +25,7 @@
 >
 	<div class="flex h-11 items-center gap-3 px-4">
 		<span class="cap-center flex-1 truncate font-semibold">{m.draft_wait_title({ file: basename(props.mainFile) })}</span>
-		<span class="text-muted cap-center text-xs tabular-nums">{m.draft_wait_seconds({ secs: seconds })}</span>
+		<span class="text-muted cap-center text-xs tabular-nums">{m.draft_wait_seconds({ secs: (elapsed / 1000).toFixed(1) })}</span>
 	</div>
 	<ul class="flex flex-col px-4 pb-3">
 		{#each started as at, i (i)}

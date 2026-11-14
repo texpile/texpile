@@ -14,21 +14,22 @@ export class CompileProgress {
 	notes = $state.raw<string[]>([]);
 	/** the last page the running step shipped, 0 before its first */
 	page = $state(0);
-	/** whole seconds since the compile began */
-	seconds = $state(0);
+	/** ms since the compile began */
+	elapsed = $state(0);
 	private unlisten: (() => void) | undefined;
 	private clock: ReturnType<typeof setInterval> | undefined;
+	private began = 0;
 
 	constructor(private root: () => string) {}
 
 	begin(): void {
-		const began = performance.now();
-		this.started = [{ step: 'engine', pass: 1, at: began }];
+		this.began = performance.now();
+		this.started = [{ step: 'engine', pass: 1, at: this.began }];
 		this.notes = [];
 		this.page = 0;
-		this.seconds = 0;
+		this.elapsed = 0;
 		clearInterval(this.clock);
-		this.clock = setInterval(() => (this.seconds = Math.floor((performance.now() - began) / 1000)), 1000);
+		this.clock = setInterval(() => (this.elapsed = performance.now() - this.began), 100);
 		this.unlisten ??= nativeBridge()?.onDraftProgress?.((at) => {
 			if (at.root !== this.root() || !this.started.length) return;
 			const pass = at.pass ?? 1;
@@ -67,5 +68,6 @@ export class CompileProgress {
 	private add(next: StartedStep): void {
 		this.started = [...this.started, next];
 		this.page = 0;
+		this.elapsed = next.at - this.began;
 	}
 }
