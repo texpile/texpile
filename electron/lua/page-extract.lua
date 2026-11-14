@@ -11,6 +11,8 @@ local pageno = 0
 local pages = {}
 -- \AtEndDocument has run: from here every shipout rewrites the manifest (see page_extract)
 local doc_ended = false
+-- TeX was still inside a box or math once the last page was out: the document's tail reached no page
+local doc_open = false
 
 local src_line_attr, src_file_attr
 local src_files, src_filen = {}, 0
@@ -118,8 +120,9 @@ local function write_manifest()
 		local unc = p.unc and string.format(',"unc":"%s"', p.unc) or ""
 		t[#t + 1] = string.format('{"n":%d,"w":%.4f,"h":%.4f%s}', i, p.w, p.h, unc)
 	end
-	f:write(string.format('{"count":%d,"paperW":%.4f,"paperH":%.4f,"hOffset":%.4f,"vOffset":%.4f,"srcFiles":%s%s,"pages":[%s]}',
-		pageno, pw, ph, hoff, voff, src_files_json(), body_line and string.format(',"bodyLine":%d', body_line) or "", table.concat(t, ",")))
+	f:write(string.format('{"count":%d,"paperW":%.4f,"paperH":%.4f,"hOffset":%.4f,"vOffset":%.4f,"srcFiles":%s%s%s,"pages":[%s]}',
+		pageno, pw, ph, hoff, voff, src_files_json(), body_line and string.format(',"bodyLine":%d', body_line) or "",
+		doc_open and ',"open":true' or "", table.concat(t, ",")))
 	f:close()
 end
 
@@ -151,4 +154,9 @@ end
 function page_extract_finish()
 	doc_ended = true
 	write_manifest()
+end
+
+function page_extract_last()
+	doc_open = tex.nest.ptr > 0
+	if doc_open then write_manifest() end
 end

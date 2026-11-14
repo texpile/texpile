@@ -42,7 +42,7 @@ export type TeleportResult =
 	// edit leaves its paragraph open, and the next keystroke decides; replaced: a compile's index took over first
 	| {
 			ok: false;
-			reason: 'no-index' | 'preamble' | 'outside' | 'held' | 'refused' | 'failed' | 'superseded' | 'replaced';
+			reason: 'no-index' | 'preamble' | 'outside' | 'held' | 'open' | 'refused' | 'failed' | 'superseded' | 'replaced';
 			detail?: string;
 			ms: number;
 			// a cut run's pages stay on screen, and the pages past `stop` take its source lines
@@ -410,6 +410,8 @@ export class LiveDraft {
 		// a fatal error ended the job: its pages.json is an earlier serve's
 		if (!outcome.stop && !outcome.ended)
 			return { ok: false, reason: 'failed', detail: `engine exit ${outcome.code} after the apply`, ms: ms() };
+		// a float left open took the rest of the document with it: the pages on screen stand until it closes
+		if (outcome.open) return { ok: false, reason: 'open', ms: ms() };
 
 		let manifest: { count?: number; srcFiles?: string[] } = {};
 		try {

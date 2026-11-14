@@ -84,7 +84,7 @@ return function(T)
 	-- after \enddocument
 	function texpile_tele_end()
 		if not T.serving then return end
-		if not T.silent then T.say("END") end
+		if not T.silent then T.say(tex.nest.ptr > 0 and "END open" or "END") end
 		T.wind_down()
 		T.ended = true
 		tex.sprint({ token.create("global"), token.create("let"), token.create("@@end"), token.create("relax"), token.create("begingroup") })

@@ -84,6 +84,24 @@ export function promote(engineAbs: string, outAbs: string, root: string, readBac
 	}
 }
 
+/** the pass ended inside a box or math: the tail of its document reached no page (page-extract's `open`) */
+export function endedOpen(engineAbs: string): boolean {
+	try {
+		return JSON.parse(fs.readFileSync(path.join(engineAbs, 'pages.json'), 'utf8')).open === true;
+	} catch {
+		return false;
+	}
+}
+
+/** an unfinished pass leaves _draft as the last whole one made it, but for the log that names what it stopped in */
+export function promoteLog(engineAbs: string, outAbs: string): void {
+	try {
+		fs.copyFileSync(path.join(engineAbs, 'draft.log'), path.join(outAbs, 'draft.log'));
+	} catch {
+		/* Problems then lists the pass before */
+	}
+}
+
 /** the last pass's PDF and synctex replace the ones the screen reads */
 export function publishView(outAbs: string): void {
 	for (const f of VIEW_FILES) {

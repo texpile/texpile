@@ -1272,6 +1272,7 @@
 	"draft_file_install_failed": "無法安裝 {file}（{detail}）。",
 	"draft_latex_too_old": "即時模式需要 LaTeX 2021-06 或更新版本。此 TeX 的版本為 {found}。",
 	"draft_no_pages": "文件未能編譯。錯誤列在「問題」中。",
+	"draft_open_environment": "第 {line} 行的 {begin} 尚未結束。預覽會在 {end} 之後繼續。",
 	"draft_toolbar_save_pdf": "儲存 PDF",
 	"draft_toolbar_zoom_out": "縮小",
 	"draft_toolbar_actual_size": "實際大小（100%）",

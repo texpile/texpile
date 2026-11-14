@@ -50,7 +50,16 @@ export type DraftResult =
 			marginY: number;
 			pages: DraftPage[];
 	  }
-	| { ok: false; error: string; ms: number; log?: string; superseded?: true; found?: string; file?: string };
+	| {
+			ok: false;
+			error: string;
+			ms: number;
+			log?: string;
+			superseded?: true;
+			found?: string;
+			file?: string;
+			open?: { name: string; line: number };
+	  };
 
 /** an edit's teleport (see electron/src/draft/teleport/liveDraft.ts); its pages arrive through onDraftPage */
 export type TeleportResult =
@@ -67,7 +76,7 @@ export type TeleportResult =
 	  }
 	| {
 			ok: false;
-			reason: 'no-index' | 'preamble' | 'outside' | 'held' | 'refused' | 'failed' | 'superseded' | 'replaced';
+			reason: 'no-index' | 'preamble' | 'outside' | 'held' | 'open' | 'refused' | 'failed' | 'superseded' | 'replaced';
 			detail?: string;
 			ms: number;
 			// a cut run's pages stay on screen, and the pages past `stop` take its source lines

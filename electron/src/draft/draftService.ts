@@ -7,7 +7,7 @@ import * as crypto from 'node:crypto';
 import { seedBbl, auxCycle } from './draftBib';
 import { OUT } from './compileJob';
 import { terminalNotes } from './terminalNotes';
-import { collectSeeds, promote, publishView, readPage, type DraftPage, type ReadBackFiles } from './draftProducts';
+import { collectSeeds, endedOpen, promote, promoteLog, publishView, readPage, type DraftPage, type ReadBackFiles } from './draftProducts';
 import { takeEngine, diskPreamble, stampOf, stopPool } from './teleport/enginePool';
 import { PointIndex, readIndexFile } from './teleport/pointIndex';
 import { adoptIndex, keepsIndex, liveMark, livePassed, stopCount, sweepLive } from './teleport/teleportService';
@@ -17,6 +17,7 @@ import { shellEnvReady } from '../shell/shellEnv';
 import { findProgram } from '../shell/findProgram';
 import { normRoot } from '../windows/normRoot';
 import { missingTexFile } from '../texlive/texlivePackages';
+import { openEnvironment, type OpenEnvironment } from './openEnvironment';
 
 export type DraftResult =
 	| {
@@ -34,8 +35,18 @@ export type DraftResult =
 			marginY: number;
 			pages: DraftPage[];
 	  }
-	/** error 'engine-missing' names the program in `tool`; 'latex-too-old' the format's LaTeX version in `found`; 'file-missing' the package file in `file`; 'no-pages' is a run TeX's own errors ended */
-	| { ok: false; error: string; ms: number; log?: string; superseded?: true; tool?: string; found?: string; file?: string };
+	/** error 'engine-missing' names the program in `tool`; 'latex-too-old' the format's LaTeX version in `found`; 'file-missing' the package file in `file`; 'no-pages' is a run TeX's own errors ended; 'unfinished' one that ended inside a box, with the environment LaTeX names in `open` */
+	| {
+			ok: false;
+			error: string;
+			ms: number;
+			log?: string;
+			superseded?: true;
+			tool?: string;
+			found?: string;
+			file?: string;
+			open?: OpenEnvironment;
+	  };
 
 // rest: the pass the window asks for by itself once typing stops, which a preview that went on can do without
 /** where a compile is: the engine starting, a pass typesetting or the bibliography being built, and what TeX names */
@@ -108,6 +119,7 @@ async function compilePasses(body: DraftBody, owned: CompileOwned, stops: number
 
 	let last: { engine: DraftEngine; seedDir: string; preFiles: string[]; preStamp: string } | null = null;
 	let oldLatex: string | null = null;
+	let unfinished = false;
 	let passes = 0;
 	// the engine's own files and the preview's folder are Texpile's, and their names say nothing to a writer
 	function ownFile(file: string): boolean {
@@ -143,6 +155,13 @@ async function compilePasses(body: DraftBody, owned: CompileOwned, stops: number
 			eng.remove();
 			return;
 		}
+		// a float left open took the tail of the document: what the last whole pass left stands, numbers and all
+		if (endedOpen(eng.abs)) {
+			promoteLog(eng.abs, outAbs);
+			eng.remove();
+			unfinished = true;
+			return;
+		}
 		promote(eng.abs, outAbs, root, body.readBack);
 		last?.engine.remove();
 		last = preFiles ? { engine: eng, seedDir, preFiles, preStamp } : null;
@@ -172,13 +191,14 @@ async function compilePasses(body: DraftBody, owned: CompileOwned, stops: number
 	await enginePass();
 	if (oldLatex) return { ok: false, error: 'latex-too-old', found: oldLatex, ms: Date.now() - t0 };
 	// a changed .bbl needs up to two extra passes (bbl read, \bibcite written, \cite resolved); a first compile one
-	const bblChanged = superseded()
-		? false
-		: await auxCycle(root, outAbs, body.mainFile, () => body.progress?.({ step: 'bibliography', pass: passes }));
+	const bblChanged =
+		superseded() || unfinished
+			? false
+			: await auxCycle(root, outAbs, body.mainFile, () => body.progress?.({ step: 'bibliography', pass: passes }));
 	const extra = bblChanged ? 2 : !auxExisted ? 1 : 0;
-	for (let i = 0; i < extra && !superseded(); i++) await enginePass();
+	for (let i = 0; i < extra && !superseded() && !unfinished; i++) await enginePass();
 	// the engine announced a rerun and the files it reads did change: one bounded pass more
-	if (!superseded()) {
+	if (!superseded() && !unfinished) {
 		let log = '';
 		try {
 			log = fs.readFileSync(path.join(outAbs, 'draft.log'), 'utf8');
@@ -190,6 +210,16 @@ async function compilePasses(body: DraftBody, owned: CompileOwned, stops: number
 	}
 	if (superseded()) return { ok: false, error: 'superseded', ms: Date.now() - t0, superseded: true };
 	const ms = Date.now() - t0;
+	if (unfinished) {
+		let log = '';
+		try {
+			log = fs.readFileSync(path.join(outAbs, 'draft.log'), 'utf8');
+		} catch {
+			/* no log, no name */
+		}
+		const open = openEnvironment(log);
+		return { ok: false, error: 'unfinished', ms, ...(open ? { open } : {}) };
+	}
 
 	const manifestPath = path.join(outAbs, 'pages.json');
 	if (!fs.existsSync(manifestPath)) {

@@ -19,6 +19,8 @@ export type TeleportOutcome = {
 	cut?: boolean;
 	// the run read the document to its end
 	ended?: boolean;
+	// and TeX was still inside a box or math there: the tail of the document reached no page
+	open?: boolean;
 	refused?: string;
 	pages: EnginePage[];
 	code: number | null;
@@ -230,6 +232,7 @@ export class DraftEngine {
 				} else if (kind === 'CUT' || kind === 'END') {
 					if (kind === 'CUT') out.cut = true;
 					else out.ended = true;
+					if (rest === 'open') out.open = true;
 					this.#release = null;
 					resolve(out);
 				} else if (kind === 'REFUSED') out.refused = rest;

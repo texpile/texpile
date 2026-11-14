@@ -251,6 +251,7 @@ export class DraftSession {
 	/** a teleport finished: the pages past its stop keep their ink and move their source lines, or the count is new */
 	private async landed(r: TeleportLanded, seq: number): Promise<void> {
 		this.showShippedBand(seq, true);
+		if (r.from !== undefined) this.compiler.typesetAgain();
 		if (r.srcFiles.length) this.paper = { ...this.paper, srcFiles: r.srcFiles };
 		if (r.shifts) this.moveSourceLines(r.stop ?? this.pages.length, r.shifts);
 		if (r.stop === undefined && this.pages.length > r.count) {

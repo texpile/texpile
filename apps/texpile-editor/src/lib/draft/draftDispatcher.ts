@@ -117,7 +117,7 @@ export class DraftDispatcher {
 		const restOwed = this.timer !== null;
 		this.cancel();
 		void target.teleportEdit(relFromRoot(path, root), src).then((outcome) => {
-			if (outcome === 'shown') this.after(REST_MS, () => void this.compileNow(true));
+			if (outcome === 'shown' || outcome === 'open') this.after(REST_MS, () => void this.compileNow(true));
 			else if (outcome === 'compile') this.after(RECOMPILE_DEBOUNCE_MS, () => void this.compileNow(false));
 			else if (restOwed && !this.timer) this.after(REST_MS, () => void this.compileNow(true));
 		});

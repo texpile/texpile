@@ -27,6 +27,8 @@ export class DraftCompiler {
 	missingTool = $state<string | null>(null);
 	/** the package file Texpile's TeX Live is installing for the document */
 	installing = $state<string | null>(null);
+	// the banner is about the document's own text, which typesets again once an edit lands
+	private ofDocument = false;
 
 	/** the steps of the running compile, for the wait with no pages on screen */
 	readonly progress: CompileProgress;
@@ -49,6 +51,17 @@ export class DraftCompiler {
 		const pass = this.runPass(reason, ++this.compileToken);
 		this.newest = pass;
 		return pass;
+	}
+
+	/** an edit's pages landed: the document typesets, whatever the last pass said of its text */
+	typesetAgain(): void {
+		if (this.ofDocument) this.clearError();
+	}
+
+	private clearError(): void {
+		this.error = null;
+		this.ofDocument = false;
+		this.missingTool = null;
 	}
 
 	/** the newest pass while one runs */
@@ -75,8 +88,8 @@ export class DraftCompiler {
 		this.quiet = reason.startsWith('quiet:');
 		// a quiet pass (the refresh after teleported edits) announces nothing; a fresh compile announces itself
 		if (!reason.startsWith('quiet:')) this.status = reason === 'save-pdf' ? m.draft_status_compiling_export() : m.draft_status_compiling();
-		this.error = null;
-		this.missingTool = null;
+		// a rest pass announces nothing, so what the pass before it said stands until it lands
+		if (!this.quiet) this.clearError();
 		if (!this.quiet) this.progress.begin();
 		try {
 			const body = { root: this.hooks.root(), mainFile: this.hooks.mainFile(), readBack: readBackExtensions(), rest: this.quiet };
@@ -104,13 +117,21 @@ export class DraftCompiler {
 				return null;
 			} // a newer compile owns the state now
 			if (r.ok) {
+				this.clearError();
 				if (!this.quiet) this.progress.drawing();
 				await this.hooks.applyCompiled(r);
 				landed = true;
 			} else if (!(r as { superseded?: boolean }).superseded) {
 				// svelte-check doesn't reliably narrow this cross-module discriminated union.
 				// A service-side 'superseded' isn't an error -- the newer compile will render.
-				const fail = r as { error: string; log?: string; tool?: string; found?: string; file?: string };
+				const fail = r as {
+					error: string;
+					log?: string;
+					tool?: string;
+					found?: string;
+					file?: string;
+					open?: { name: string; line: number };
+				};
 				if (fail.error === 'file-missing' && fail.file) {
 					this.error = missing ?? m.draft_file_missing({ file: fail.file });
 					this.status = '';
@@ -121,8 +142,12 @@ export class DraftCompiler {
 				} else if (fail.error === 'latex-too-old' && fail.found) {
 					this.error = m.draft_latex_too_old({ found: fail.found });
 					this.status = '';
-				} else if (fail.error === 'no-pages') {
-					this.error = m.draft_no_pages();
+				} else if (fail.error === 'no-pages' || fail.error === 'unfinished') {
+					const { open } = fail;
+					this.error = open
+						? m.draft_open_environment({ begin: `\\begin{${open.name}}`, end: `\\end{${open.name}}`, line: open.line })
+						: m.draft_no_pages();
+					this.ofDocument = true;
 					this.status = '';
 				} else {
 					// The message only, never fail.log. This banner's job is "the preview could not be

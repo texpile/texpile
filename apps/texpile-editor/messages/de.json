@@ -1272,6 +1272,7 @@
 	"draft_file_install_failed": "{file} konnte nicht installiert werden ({detail}).",
 	"draft_latex_too_old": "Der Live-Modus braucht LaTeX 2021-06 oder neuer. Dieses TeX hat {found}.",
 	"draft_no_pages": "Das Dokument ließ sich nicht kompilieren. Die Fehler stehen unter Probleme.",
+	"draft_open_environment": "{begin} in Zeile {line} ist noch offen. Die Vorschau geht nach {end} weiter.",
 	"draft_toolbar_save_pdf": "PDF speichern",
 	"draft_toolbar_zoom_out": "Verkleinern",
 	"draft_toolbar_actual_size": "Tatsächliche Größe (100 %)",
