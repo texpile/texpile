@@ -20,6 +20,7 @@
 	import { resolvedMode, themeEpoch } from '$lib/theme';
 	import { settings, updateSettings } from '$lib/settings';
 	import { followScrollTick, guestJumpFreezeTick } from './followSignal';
+	import { typstPreviewPaused } from './previewPause';
 	import { scrollbarRadius, textColour, themeColour } from './themeColour';
 	import { askForProgram, tinymistMissing } from '$lib/modals/window/missingProgram/missingProgram.svelte';
 	import { m } from '$lib/paraglide/messages';
@@ -238,11 +239,13 @@
 				<span class="text-muted truncate font-mono text-[10px]">{stallDetail}</span>
 			{:else}
 				<span class="truncate text-sm"
-					>{frameUrl
-						? m.typst_preview_live()
-						: tinymistMissing.current
-							? m.typst_preview_not_running()
-							: m.typst_preview_connecting()}</span
+					>{typstPreviewPaused.current && frameUrl
+						? m.wsview_paused_label()
+						: frameUrl
+							? m.typst_preview_live()
+							: tinymistMissing.current
+								? m.typst_preview_not_running()
+								: m.typst_preview_connecting()}</span
 				>
 			{/if}
 		{/if}
@@ -290,7 +293,7 @@
 	{#snippet vision(place: PreviewToolbarPlace)}
 		<ColorVisionMenu {place} />
 	{/snippet}
-	<!-- no close button: Layout closes it docked, the OS window popped out, the Live button either way -->
+	<!-- no close button: Layout closes it docked, the OS window popped out -->
 	{#snippet popout()}
 		<button onclick={() => onPopout?.()} use:tip={m.wsview_popout_preview()} aria-label={m.wsview_popout_preview()}>
 			<PictureInPicture2 size={16} />

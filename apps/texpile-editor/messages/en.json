@@ -462,7 +462,6 @@
 	"wsview_livemode_desc_post": "pipeline, so the compile command and engine below cannot be customized. Only lualatex is supported.",
 	"wsview_compile_disabled_live": "Compile command - disabled in live mode",
 	"wsview_compile_disabled_preview": "Compile command - disabled while Preview is on",
-	"wsview_typst_preview_live_title": "Preview is live. Click to close it",
 	"wsview_compile_desc_pre": "Runs in a shell at the folder root.",
 	"wsview_compile_desc_post": "expands to your main file. Saved for this folder.",
 	"wsview_engine_label": "Engine",

@@ -462,7 +462,6 @@
 	"wsview_livemode_desc_post": ". Por isso, o comando e o motor de compilação abaixo não podem ser personalizados. Somente o lualatex é suportado.",
 	"wsview_compile_disabled_live": "Comando de compilação - desativado no modo ao vivo",
 	"wsview_compile_disabled_preview": "Comando de compilação - desativado enquanto a Visualização está ativa",
-	"wsview_typst_preview_live_title": "A visualização está ativa. Clique para fechá-la",
 	"wsview_compile_desc_pre": "Executado no shell a partir da raiz da pasta.",
 	"wsview_compile_desc_post": "é substituído pelo arquivo principal. O comando fica salvo nesta pasta.",
 	"wsview_engine_label": "Motor",

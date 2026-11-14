@@ -15,7 +15,7 @@ Write Typst in the visual editor or as source, and watch the preview update as y
 
 1. **Main file.** The star marks the file Texpile previews and compiles.
 2. **Visual / Source.** Switch editors at any time. Both edit the same file.
-3. **Live.** The preview is on. Click it to close the preview.
+3. **Live.** Click to pause. **Paused** resumes.
 4. **Preview.** The document as it prints, updated as you type.
 5. **Jump to preview.** Shows the cursor's place in the preview. Click the preview to jump back.
 

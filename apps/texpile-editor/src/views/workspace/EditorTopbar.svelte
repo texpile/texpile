@@ -38,6 +38,9 @@
 		guestTypstOffered?: boolean;
 		pdfPaneOpen: boolean;
 		draftPaused: boolean;
+		typstPaused?: boolean;
+		onPauseTypst?: () => void;
+		onResumeTypst?: () => void;
 		onStopCompile: () => void;
 		onPauseDraft: () => void;
 		onResumeDraft: () => void;
@@ -85,6 +88,9 @@
 		guestTypstOffered = false,
 		pdfPaneOpen,
 		draftPaused,
+		typstPaused = false,
+		onPauseTypst = () => {},
+		onResumeTypst = () => {},
 		onStopCompile,
 		onPauseDraft,
 		onResumeDraft,
@@ -155,25 +161,22 @@
 				title: withKeyLabel((combo) => m.wsview_stop_compile_title({ combo }), 'compile.stop'),
 				onclick: onStopCompile
 			};
-		// the preview is attached; closing the pane is its stop (the pane detaches the server task
-		// on close), so this is both indicator and off switch
-		if (typstLive && pdfPaneOpen)
-			return { tone: 'success', dot: true, label: m.wsview_live_label(), title: m.wsview_typst_preview_live_title(), onclick: onTogglePdf };
-		if (latexLiveMode() && pdfPaneOpen) {
-			if (draftPaused)
+		// Typst's preview pauses as LaTeX's live mode does: the pane keeps its pages and the engine stops
+		if ((typstLive || latexLiveMode()) && pdfPaneOpen) {
+			if (typstLive ? typstPaused : draftPaused)
 				return {
 					tone: 'warning',
 					icon: Play,
 					label: m.wsview_paused_label(),
 					title: m.wsview_engine_stopped_title(),
-					onclick: onResumeDraft
+					onclick: typstLive ? onResumeTypst : onResumeDraft
 				};
 			return {
 				tone: 'success',
 				dot: true,
 				label: m.wsview_live_label(),
 				title: m.wsview_live_preview_running_title(),
-				onclick: onPauseDraft
+				onclick: typstLive ? onPauseTypst : onPauseDraft
 			};
 		}
 		const live = typstLive || latexLiveMode();

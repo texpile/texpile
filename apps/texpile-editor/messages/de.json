@@ -462,7 +462,6 @@
 	"wsview_livemode_desc_post": "-Pipeline, daher können der Kompilierbefehl und die Engine unten nicht angepasst werden. Es wird nur lualatex unterstützt.",
 	"wsview_compile_disabled_live": "Kompilierbefehl - im Live-Modus deaktiviert",
 	"wsview_compile_disabled_preview": "Kompilierbefehl - bei aktivierter Vorschau deaktiviert",
-	"wsview_typst_preview_live_title": "Vorschau läuft. Klicken, um sie zu schließen",
 	"wsview_compile_desc_pre": "Wird in einer Shell im Stammverzeichnis des Ordners ausgeführt.",
 	"wsview_compile_desc_post": "wird zu Ihrer Hauptdatei erweitert. Wird für diesen Ordner gespeichert.",
 	"wsview_engine_label": "Engine",

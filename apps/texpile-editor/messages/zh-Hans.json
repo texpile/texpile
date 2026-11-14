@@ -462,7 +462,6 @@
 	"wsview_livemode_desc_post": "流程，因此下方的编译命令和引擎无法自定义。仅支持 lualatex。",
 	"wsview_compile_disabled_live": "编译命令 - 在实时模式下已禁用",
 	"wsview_compile_disabled_preview": "编译命令 - 预览开启时已禁用",
-	"wsview_typst_preview_live_title": "预览正在运行。点击以关闭",
 	"wsview_compile_desc_pre": "在文件夹根目录下的 shell 中运行。",
 	"wsview_compile_desc_post": "会展开为你的主文件。此设置针对该文件夹保存。",
 	"wsview_engine_label": "引擎",

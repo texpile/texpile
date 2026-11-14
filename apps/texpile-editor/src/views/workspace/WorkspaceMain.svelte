@@ -17,6 +17,7 @@
 	import { ensureName } from '$lib/identity/ownName.svelte';
 	import { activeSuggestions, suggesting } from '$lib/comments/activeSuggestions.svelte';
 	import { collabGuest } from '$lib/collab/guestStore.svelte';
+	import { typstPreviewPaused } from '$lib/languages/typst/preview/previewPause';
 	import type { WorkspaceMainProps } from './workspaceMainProps';
 	import { untrack } from 'svelte';
 	import { versionSchemeOf } from '$lib/files/identity/versionUris';
@@ -167,6 +168,9 @@
 		{guestTypstOffered}
 		pdfPaneOpen={layout.pdfPaneOpen}
 		draftPaused={draft.paused}
+		typstPaused={typstPreviewPaused.current}
+		onPauseTypst={actions.pauseTypstPreview}
+		onResumeTypst={actions.resumeTypstPreview}
 		onStopCompile={compiler.stopCompile}
 		onPauseDraft={actions.pauseDraft}
 		onResumeDraft={actions.resumeDraft}

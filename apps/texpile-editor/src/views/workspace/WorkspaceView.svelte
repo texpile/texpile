@@ -387,7 +387,7 @@
 			{folderEmpty}
 			{dockShrunk}
 			draft={draftCtl}
-			typstPreviewHost={typstPreview.host}
+			typstPreviewHost={typstPreview.paneHost}
 			typstPreviewWanted={typstPreview.wanted}
 			mainIsTypst={typstPreview.mainIsTypst}
 			guestTypstOffered={guest && collabGuest.typstPreviewOffered}

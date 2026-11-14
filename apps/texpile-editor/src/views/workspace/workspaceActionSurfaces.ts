@@ -178,6 +178,8 @@ export function makeMainActions(d: ActionSurfaceDeps) {
 		pauseDraft: () => d.draftCtl.pause(),
 		onCaretMove: (line: number, character: number) => d.typstPreview.onCaretMove(line, character),
 		resumeDraft: () => void d.draftCtl.resume(),
+		pauseTypstPreview: () => d.typstPreview.pause(),
+		resumeTypstPreview: () => d.typstPreview.resume(),
 		requestCompile: () => {
 			collabGuest.requestCompile();
 			d.layout().setPdfPaneOpen(true);
