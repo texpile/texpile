@@ -15,7 +15,7 @@
 	import { pagesInverted } from '$lib/preview/invertColors/pagesInverted';
 	import { wheelZoomFactor } from '$lib/preview/zoom/wheelZoom';
 	import ProgressLine from '$lib/components/progress/ProgressLine.svelte';
-	import DraftWaiting from './DraftWaiting.svelte';
+	import DraftWaiting from './waiting/DraftWaiting.svelte';
 	import { DraftSession } from './draftSession.svelte';
 	import type { TeleportOutcome } from './draftTeleport.svelte';
 	import { openToolchainPrefs } from '$lib/stores/dialogStore';
@@ -269,7 +269,7 @@
 				class="flex flex-1 [scrollbar-gutter:stable] flex-col items-center-safe gap-4 overflow-auto p-5"
 			>
 				{#if !ctrl.pages.length && compiler.progress.started.length}
-					<DraftWaiting progress={compiler.progress} />
+					<DraftWaiting progress={compiler.progress} {mainFile} />
 				{/if}
 				{#each ctrl.pages as p (p.n)}
 					<div class="relative rounded-[2px] shadow-(--page-shadow)">

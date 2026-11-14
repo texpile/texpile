@@ -3,7 +3,7 @@ import { nativeBridge, type DraftResult } from '$lib/workspace/fileSystem';
 import { readBackExtensions } from '$lib/languages/latex/knowledge/registries/sidecarExtensions';
 import { installMissingFile, texLiveInUse } from '$lib/modals/window/toolchain/install/texLivePackages';
 import { m } from '$lib/paraglide/messages';
-import { CompileProgress } from './compileProgress.svelte';
+import { CompileProgress } from './waiting/compileProgress.svelte';
 
 type CompilerHooks = {
 	root: () => string;
