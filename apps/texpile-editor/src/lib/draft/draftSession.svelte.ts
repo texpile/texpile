@@ -37,6 +37,8 @@ export class DraftSession {
 	paper = $state<PaperMetrics>({ w: 595, h: 842, mx: 72.27, my: 72.27, srcFiles: [] });
 	canvasEls = $state<HTMLCanvasElement[]>([]);
 	savingPdf = $state(false);
+	/** the last compile found nothing to print */
+	empty = $state(false);
 
 	readonly fonts = new DraftFonts();
 	readonly bitmaps: DraftBitmaps;
@@ -168,6 +170,7 @@ export class DraftSession {
 			if (this.vp.fitMode) this.vp.fitToWidth(); // size to the pane now that the paper dims are known
 		}
 		this.pages = r.pages;
+		this.empty = r.pages.length === 0;
 		this.parsedPages.clear();
 		this.notInPdf.clear();
 		this.drawingsInPdf = pdfDrawings(r.pages);
@@ -220,6 +223,7 @@ export class DraftSession {
 		pages[p.n - 1] = p;
 		for (let i = 0; i < pages.length; i++) if (!pages[i]) pages[i] = { n: i + 1, w: p.w, h: p.h, records: '' };
 		this.pages = pages;
+		this.empty = false;
 		this.parsedPages.set(p.n, after);
 		this.notInPdf.add(p.n);
 		await tick();
@@ -254,7 +258,8 @@ export class DraftSession {
 		if (r.from !== undefined) this.compiler.typesetAgain();
 		if (r.srcFiles.length) this.paper = { ...this.paper, srcFiles: r.srcFiles };
 		if (r.shifts) this.moveSourceLines(r.stop ?? this.pages.length, r.shifts);
-		if (r.stop === undefined && this.pages.length > r.count) {
+		// a title half typed prints nothing for a moment: the page shown stays until the pass after typing says so
+		if (r.stop === undefined && this.pages.length > r.count && r.count > 0) {
 			this.pages = this.pages.slice(0, r.count);
 			await tick();
 			this.vp.applyCssSizes();

@@ -309,6 +309,10 @@
 			<div class="absolute inset-0 flex overflow-auto p-5">
 				<DraftWaiting progress={compiler.progress} {mainFile} />
 			</div>
+		{:else if !ctrl.pages.length && ctrl.empty && !compiler.error}
+			<div class="absolute inset-0 flex p-5">
+				<p class="text-muted m-auto text-center text-sm">{m.draft_empty()}</p>
+			</div>
 		{/if}
 	</div>
 </div>

@@ -1265,6 +1265,7 @@
 	"draft_latex_too_old": "O modo ao vivo precisa do LaTeX 2021-06 ou mais recente. Este TeX tem {found}.",
 	"draft_no_pages": "O documento não compilou. Os erros estão em Problemas.",
 	"draft_open_environment": "{begin} na linha {line} ainda está aberto. A prévia continua depois de {end}.",
+	"draft_empty": "A prévia precisa de texto no documento.",
 	"draft_toolbar_save_pdf": "Salvar PDF",
 	"draft_toolbar_zoom_out": "Diminuir zoom",
 	"draft_toolbar_actual_size": "Tamanho original (100%)",
