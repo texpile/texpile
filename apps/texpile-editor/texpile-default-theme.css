@@ -294,8 +294,8 @@
 	--diff-delete-tint: rgb(239, 68, 68);
 	--diff-highlight-tint: rgb(250, 204, 21);
 
-	/* \ref and \cite chips */
-	--ref-fg: light-dark(oklch(54.6% 0.245 262.881), oklch(70.7% 0.165 254.624));
+	/* \ref and \cite chips, footnote marks and an included file's path, in the link's color */
+	--ref-fg: light-dark(var(--typo-anchor--color-light), var(--typo-anchor--color-dark));
 	--ref-bg: light-dark(oklch(97% 0.014 254.604), oklch(28.2% 0.091 267.935));
 	--ref-broken-fg: light-dark(oklch(50.5% 0.213 27.518), oklch(70.4% 0.191 22.216));
 	--ref-broken-bg: light-dark(oklch(97.1% 0.013 17.38), oklch(25.8% 0.092 26.042));
