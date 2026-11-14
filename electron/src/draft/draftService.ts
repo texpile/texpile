@@ -34,7 +34,7 @@ export type DraftResult =
 			marginY: number;
 			pages: DraftPage[];
 	  }
-	/** error 'engine-missing' names the program in `tool`; 'latex-too-old' the format's LaTeX version in `found`; 'file-missing' the package file in `file` */
+	/** error 'engine-missing' names the program in `tool`; 'latex-too-old' the format's LaTeX version in `found`; 'file-missing' the package file in `file`; 'no-pages' is a run TeX's own errors ended */
 	| { ok: false; error: string; ms: number; log?: string; superseded?: true; tool?: string; found?: string; file?: string };
 
 // rest: the pass the window asks for by itself once typing stops, which a preview that went on can do without
@@ -206,7 +206,8 @@ async function compilePasses(body: DraftBody, owned: CompileOwned, stops: number
 			.filter((l) => /^!|error/i.test(l))
 			.slice(-12)
 			.join('\n');
-		return { ok: false, error: 'Draft compile produced no pages (is lualatex on PATH? see _draft/draft.log)', ms, log };
+		// the engine was found and ran: what stopped it is in the log, which Problems reads
+		return { ok: false, error: 'no-pages', ms, log };
 	}
 
 	let manifest: {

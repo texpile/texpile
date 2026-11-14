@@ -130,6 +130,9 @@ export class DraftCompiler {
 				} else if (fail.error === 'latex-too-old' && fail.found) {
 					this.error = m.draft_latex_too_old({ found: fail.found });
 					this.status = '';
+				} else if (fail.error === 'no-pages') {
+					this.error = m.draft_no_pages();
+					this.status = '';
 				} else {
 					// The message only, never fail.log. This banner's job is "the preview could not be
 					// produced" -- lualatex missing, an unreadable manifest -- which is not a LaTeX
