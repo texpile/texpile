@@ -223,32 +223,9 @@ jobs:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
         run: |
-          npx wrangler@4 r2 object get "$BUCKET/versions.json" --file dist/versions.json --remote 2>/dev/null \
-            || echo '{"versions":[]}' > dist/versions.json
-          node -e '
-            const fs = require("fs");
-            const version = process.env.VERSION;
-            let manifest;
-            try { manifest = JSON.parse(fs.readFileSync("dist/versions.json", "utf8")); } catch { manifest = null; }
-            if (!manifest || !Array.isArray(manifest.versions)) manifest = { versions: [] };
-            const entry = JSON.parse(fs.readFileSync("dist/latest.json", "utf8"));
-            manifest.versions = manifest.versions.filter((v) => v.version !== version);
-            manifest.versions.unshift(entry);
-            // retention: the newest STABLE major line and its latest 3 minor series, plus any
-            // prerelease ahead of the newest stable (an rc must not evict the 0.x list). The
-            // v<version>/ binaries stay in R2 forever regardless (blockmaps reference them) delete manually
-            const core = (v) => v.version.split("-")[0].split(".").map(Number);
-            const gt = (a, b) => (a[0] !== b[0] ? a[0] > b[0] : a[1] !== b[1] ? a[1] > b[1] : a[2] > b[2]);
-            const stable = manifest.versions.filter((v) => !v.version.includes("-"));
-            const newest = stable.map(core).sort((a, b) => (gt(a, b) ? -1 : gt(b, a) ? 1 : 0))[0] ?? [-1, 0, 0];
-            const minors = [...new Set(stable.filter((v) => core(v)[0] === newest[0]).map((v) => core(v)[1]))]
-              .sort((a, b) => b - a)
-              .slice(0, 3);
-            manifest.versions = manifest.versions.filter((v) =>
-              v.version.includes("-") ? gt(core(v), newest) : core(v)[0] === newest[0] && minors.includes(core(v)[1])
-            );
-            fs.writeFileSync("dist/versions.json", JSON.stringify(manifest, null, 2));
-          '
+          npx wrangler@4 r2 object get "$BUCKET/versions.json" --file dist/versions.was.json --remote 2>/dev/null \
+            || echo '{"versions":[]}' > dist/versions.was.json
+          node apps/texpile-editor/scripts/versions-json.mjs dist/versions.was.json dist/latest.json > dist/versions.json
           cat dist/versions.json
           npx wrangler@4 r2 object put "$BUCKET/versions.json" --file dist/versions.json --remote --content-type application/json
 
