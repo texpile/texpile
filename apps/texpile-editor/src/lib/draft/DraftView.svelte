@@ -268,9 +268,6 @@
 				onscroll={() => vp.onScroll()}
 				class="flex flex-1 [scrollbar-gutter:stable] flex-col items-center-safe gap-4 overflow-auto p-5"
 			>
-				{#if !ctrl.pages.length && compiler.progress.started.length}
-					<DraftWaiting progress={compiler.progress} {mainFile} />
-				{/if}
 				{#each ctrl.pages as p (p.n)}
 					<div class="relative rounded-[2px] shadow-(--page-shadow)">
 						<canvas
@@ -307,5 +304,11 @@
 				{/each}
 			</div>
 		</ColorVisionFilter>
+		{#if !ctrl.pages.length && compiler.progress.started.length}
+			<!-- outside the scroller, whose scrollbar gutter puts a child left of the pane's middle -->
+			<div class="absolute inset-0 flex overflow-auto p-5">
+				<DraftWaiting progress={compiler.progress} {mainFile} />
+			</div>
+		{/if}
 	</div>
 </div>
