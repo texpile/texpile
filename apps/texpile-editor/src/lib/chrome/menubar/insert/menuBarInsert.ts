@@ -36,7 +36,7 @@ import { ITEM_VALUE, makeListInserts } from './insertListSelect';
 import { amsmathFor, GRAPHICX, ensurePackage } from './packageOnInsert';
 import type { formatOf } from '$lib/workspace/documentBuffer.svelte';
 import type { Node as PMNode, Schema } from 'prosemirror-model';
-import { insertBlockAtCaret, replaceSelectionWithBlock } from '$lib/editor/visual/insert/insertRun';
+import { insertBlockAtCaret, openEmptyChip, replaceSelectionWithBlock } from '$lib/editor/visual/insert/insertRun';
 import { symbolPicker } from '$lib/editor/symbols/symbolPicker.svelte';
 import { latexSymbolSet } from '$lib/languages/latex/symbols/latexSymbolSet';
 
@@ -80,6 +80,7 @@ function insertBlock(make: (schema: Schema) => PMNode, select: 'cell' | 'in' | '
 	const tr = insertBlockAtCaret(view.state, { select, make });
 	if (tr) view.dispatch(tr);
 	view.focus();
+	openEmptyChip(view);
 }
 
 export function makeInsertHandlers(deps: InsertDeps): {

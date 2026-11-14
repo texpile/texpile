@@ -4,7 +4,7 @@
 	import { groupedByCategory } from './insertCategories';
 	import type { BlockInsertItem } from './insertItem';
 	import { insertItems } from './insertItems.svelte';
-	import { allowedAtCaret, styleAt, turnIntoStyle } from './insertRun';
+	import { allowedAtCaret, openEmptyChip, styleAt, turnIntoStyle } from './insertRun';
 
 	const styles = $derived(insertItems.current.filter((item): item is BlockInsertItem => item.shape === 'block' && item.style));
 	const current = $derived(editorViewStore.current ? styleAt(editorViewStore.current.state, styles) : null);
@@ -29,6 +29,7 @@
 		if (!view || !item) return;
 		turnIntoStyle(view.state, item, view.dispatch);
 		view.focus();
+		openEmptyChip(view);
 	}
 </script>
 

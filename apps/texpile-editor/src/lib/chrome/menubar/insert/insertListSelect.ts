@@ -2,7 +2,7 @@ import { editorViewStore } from '$lib/stores/editorStore';
 import { activeCm, cmReplace, runVisualCommand } from '$lib/chrome/menuBarCommands';
 import type { InsertItem } from '$lib/editor/visual/insert/insertItem';
 import { insertArguments, insertItems, insertSourceOf } from '$lib/editor/visual/insert/insertItems.svelte';
-import { insertBlockAtCaret } from '$lib/editor/visual/insert/insertRun';
+import { insertBlockAtCaret, openEmptyChip } from '$lib/editor/visual/insert/insertRun';
 import { groupedByCategory, type InsertGroup } from '$lib/editor/visual/insert/insertCategories';
 import type { formatOf } from '$lib/workspace/documentBuffer.svelte';
 import { cmAfterLine, insertChips, selectedLatex } from './menuBarInsertDrawn';
@@ -59,6 +59,7 @@ function inVisual(item: InsertItem, dialect: ReturnType<typeof formatOf>): void 
 	const tr = insertBlockAtCaret(view.state, item);
 	if (tr) view.dispatch(tr);
 	view.focus();
+	openEmptyChip(view);
 }
 
 export function makeListInserts(deps: ListInsertDeps): (value: string) => Promise<boolean> {

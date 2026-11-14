@@ -5,9 +5,9 @@ import { macroCallName } from './ownMacroCall';
 
 /** in an empty argument, for a call just typed; else after the call */
 export function macroCaret(source: string): number | undefined {
-	if (!macroFooter(source, () => {})) return undefined;
 	const empty = source.indexOf('{}');
-	return empty >= 0 ? empty + 1 : source.length;
+	if (empty >= 0) return empty + 1;
+	return macroFooter(source, () => {}) ? source.length : undefined;
 }
 
 /** under a call of the paper's own macro: its definition, and the way to it */

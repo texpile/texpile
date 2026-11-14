@@ -8,7 +8,7 @@ import BlockHandle from './BlockHandle.svelte';
 import { scrollParent } from '$lib/editor/visual/scrollParent';
 import type { BlockInsertItem, InsertItem } from '$lib/editor/visual/insert/insertItem';
 import { insertItems } from '$lib/editor/visual/insert/insertItems.svelte';
-import { insertBlockAfter } from '$lib/editor/visual/insert/insertRun';
+import { insertBlockAfter, openEmptyChip } from '$lib/editor/visual/insert/insertRun';
 import { returnFocusToText } from './popoverFocus/returnFocus';
 import { handleUnitAt } from './blockHandle/handleUnit';
 import { FLOATING_BAR_BOTTOM } from '$lib/editor/floatingBar';
@@ -255,7 +255,10 @@ class BlockHandleView {
 		// close the popover before focusing PM: Zag restores focus to the trigger on dismiss and
 		// would yank it back. one frame later, view.focus() takes focus for good.
 		this.state.popoverOpen = false;
-		requestAnimationFrame(() => view.focus());
+		requestAnimationFrame(() => {
+			view.focus();
+			openEmptyChip(view);
+		});
 		this.scheduleHide();
 	}
 
