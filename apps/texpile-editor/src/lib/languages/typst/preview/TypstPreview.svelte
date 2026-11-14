@@ -128,6 +128,11 @@
 		};
 	});
 
+	// a pane opened while paused (popped out, docked back) has no pages to keep, so the preview runs again
+	$effect(() => {
+		if (typstPreviewPaused.current && !host && !frameUrl) typstPreviewPaused.current = false;
+	});
+
 	/** what the framed page reports about itself; see the bridge in electron/src/typstPreviewPage.ts */
 	type FrameStatus = {
 		pages: number;
