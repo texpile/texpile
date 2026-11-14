@@ -165,9 +165,9 @@ export class VisualEditor {
 		await expect(async () => {
 			await this.page.mouse.move(5, 5);
 			await this.page.mouse.move(x, y, { steps: 4 });
-			await expect(gear).toBeVisible({ timeout: 1500 });
+			// inside the retry: a save read back draws the handle again, which detaches a gear already seen
+			await gear.click({ timeout: 1500 });
 		}).toPass();
-		await gear.click();
 	}
 
 	/** the format bar's word count as shown, also while it reads "N of M words" with a selection */
