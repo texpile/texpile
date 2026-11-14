@@ -58,7 +58,7 @@ describe.skipIf(corpus.length === 0)('the reference chip against real papers', (
 			`shows labels, not guesses, before ${paper.name} has compiled`,
 			() => {
 				const guessed = chips(paper)
-					.map((c) => ({ label: c.label, text: refState(c.command, c.label, {}, NO_REFS).text }))
+					.map((c) => ({ label: c.label, text: refState(c.command, c.label, undefined, {}, NO_REFS).text }))
 					.filter((r) => r.text !== r.label);
 				expect({ paper: paper.name, guessed }).toEqual({ paper: paper.name, guessed: [] });
 			},
@@ -75,7 +75,7 @@ describe.skipIf(corpus.length === 0)('the reference chip against real papers', (
 					.map((c) => ({
 						label: c.label,
 						want: c.command === 'eqref' ? `(${aux[c.label]})` : aux[c.label],
-						got: refState(c.command, c.label, aux, NO_REFS).text
+						got: refState(c.command, c.label, undefined, aux, NO_REFS).text
 					}))
 					.filter((r) => r.got !== r.want);
 				expect({ paper: paper.name, wrong }).toEqual({ paper: paper.name, wrong: [] });
@@ -97,7 +97,7 @@ describe.skipIf(corpus.length === 0)('the reference chip against real papers', (
 			() => {
 				const numbers = parseAuxLabels(fs.readFileSync(aux, 'utf8')).numbers;
 				const found = chips(paper);
-				const unresolved = found.filter((c) => refState(c.command, c.label, numbers, NO_REFS).text === c.label);
+				const unresolved = found.filter((c) => refState(c.command, c.label, undefined, numbers, NO_REFS).text === c.label);
 				expect({ paper: paper.name, refs: found.length, unresolved: unresolved.map((c) => c.label) }).toEqual({
 					paper: paper.name,
 					refs: found.length,

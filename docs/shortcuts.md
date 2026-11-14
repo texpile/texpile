@@ -58,6 +58,7 @@ Keys: `a` to `z`, `0` to `9`, `f1` to `f24`, `enter`, `tab`, `space`, `backspace
 | Alt Z          | Insert a citation from Zotero (Cmd Option Z on macOS)                         |
 | Ctrl Shift G   | Source Control, with the cursor in the message box (Control Shift G on macOS) |
 | Ctrl Enter     | Commit, from the Source Control message box                                   |
+| Ctrl Alt I     | Agent tab, with the cursor in the message box (Control Cmd I on macOS)        |
 | F8             | Next spelling problem                                                         |
 | Shift F8       | Previous spelling problem                                                     |
 

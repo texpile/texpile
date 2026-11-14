@@ -88,7 +88,15 @@ function copiedAttrs(dom: HTMLElement, attribute: string, type: string): Attrs |
 	}
 }
 
+// a Typst figure holds its caption after the table, and a LaTeX float takes the caption first
+function captionFirst(wrapper: HTMLElement): void {
+	const caption = [...wrapper.children].find((child) => child.hasAttribute('data-table-caption'));
+	if (caption && caption !== wrapper.firstElementChild) wrapper.prepend(caption);
+}
+
 export function texpileClipboardParser(schema: Schema): DOMParser {
+	const float = schema.nodes.table_wrapper;
+	const captionLeads = !!float && !float.contentMatch.matchType(schema.nodes.table);
 	const rules = DOMParser.fromSchema(schema).rules.map((rule) => {
 		if (!('tag' in rule)) return rule;
 		const tagRule = rule as TagParseRule;
@@ -98,6 +106,7 @@ export function texpileClipboardParser(schema: Schema): DOMParser {
 		return {
 			...tagRule,
 			getAttrs(dom: HTMLElement) {
+				if (captionLeads && type === 'table_wrapper') captionFirst(dom);
 				const read = tagRule.getAttrs ? tagRule.getAttrs(dom) : (tagRule.attrs ?? null);
 				const copied = read === false ? null : copiedAttrs(dom, attribute, type);
 				return copied ? { ...read, ...copied } : read;

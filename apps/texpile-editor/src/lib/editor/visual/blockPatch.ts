@@ -33,18 +33,28 @@ export function blockEq(a: PMNode, b: PMNode): boolean {
 	return a.type === b.type && Mark.sameSet(a.marks, b.marks) && attrsEqualExceptStamps(a.attrs, b.attrs) && a.content.eq(b.content);
 }
 
-/** null when every block matches (stamps may still differ; run syncParseAttrs regardless). */
-export function computeBlockPatch(oldDoc: PMNode, newDoc: PMNode): BlockPatch | null {
-	const a = oldDoc.childCount;
-	const b = newDoc.childCount;
-	let start = 0;
-	while (start < a && start < b && blockEq(oldDoc.child(start), newDoc.child(start))) start++;
-	let endA = a;
-	let endB = b;
-	while (endA > start && endB > start && blockEq(oldDoc.child(endA - 1), newDoc.child(endB - 1))) {
+type BlockRange = [first: number, last: number];
+
+// the blocks both ranges start with and end with: what differs is [start, endA) of the old and [startB, endB) of the new
+function sharedEnds(oldDoc: PMNode, newDoc: PMNode, [a0, a1]: BlockRange, [b0, b1]: BlockRange) {
+	let start = a0;
+	let startB = b0;
+	while (start < a1 && startB < b1 && blockEq(oldDoc.child(start), newDoc.child(startB))) {
+		start++;
+		startB++;
+	}
+	let endA = a1;
+	let endB = b1;
+	while (endA > start && endB > startB && blockEq(oldDoc.child(endA - 1), newDoc.child(endB - 1))) {
 		endA--;
 		endB--;
 	}
+	return { start, startB, endA, endB };
+}
+
+/** null when every block matches (stamps may still differ; run syncParseAttrs regardless). */
+export function computeBlockPatch(oldDoc: PMNode, newDoc: PMNode): BlockPatch | null {
+	const { start, endA, endB } = sharedEnds(oldDoc, newDoc, [0, oldDoc.childCount], [0, newDoc.childCount]);
 	if (start === endA && start === endB) return null;
 	let from = 0;
 	for (let i = 0; i < start; i++) from += oldDoc.child(i).nodeSize;
@@ -53,6 +63,48 @@ export function computeBlockPatch(oldDoc: PMNode, newDoc: PMNode): BlockPatch | 
 	const nodes: PMNode[] = [];
 	for (let i = start; i < endB; i++) nodes.push(newDoc.child(i));
 	return { from, to, nodes };
+}
+
+// a changed stretch ends at the nearest pair of equal blocks this many blocks on, at most
+const RESYNC_BLOCKS = 16;
+
+/** The ranges to replace, in document order; none when every block matches. A change in several places (what an
+ *  agent writes) leaves the blocks between them the nodes they were, where one range would rebuild them all. `blocks`
+ *  and `newBlocks` narrow the comparison to a run of each document's children */
+export function computeBlockPatches(
+	oldDoc: PMNode,
+	newDoc: PMNode,
+	blocks: BlockRange = [0, oldDoc.childCount],
+	newBlocks: BlockRange = [0, newDoc.childCount]
+): BlockPatch[] {
+	const { start, startB, endA, endB } = sharedEnds(oldDoc, newDoc, blocks, newBlocks);
+	// the nearest equal pair past (i, j), one changed block before one added or dropped
+	function resync(i: number, j: number): [number, number] {
+		for (let d = 1; d <= RESYNC_BLOCKS; d++) {
+			for (let skew = d % 2; skew <= d; skew += 2) {
+				for (const di of skew ? [(d - skew) / 2, (d + skew) / 2] : [d / 2]) {
+					const dj = d - di;
+					if (i + di < endA && j + dj < endB && blockEq(oldDoc.child(i + di), newDoc.child(j + dj))) return [i + di, j + dj];
+				}
+			}
+		}
+		return [endA, endB];
+	}
+	const patches: BlockPatch[] = [];
+	let at = 0;
+	for (let i = 0; i < start; i++) at += oldDoc.child(i).nodeSize;
+	let i = start;
+	let j = startB;
+	while (i < endA || j < endB) {
+		const [toI, toJ] = resync(i, j);
+		const patch: BlockPatch = { from: at, to: at, nodes: [] };
+		for (; i < toI; i++) patch.to += oldDoc.child(i).nodeSize;
+		for (; j < toJ; j++) patch.nodes.push(newDoc.child(j));
+		patches.push(patch);
+		at = patch.to;
+		for (; i < endA && j < endB && blockEq(oldDoc.child(i), newDoc.child(j)); i++, j++) at += oldDoc.child(i).nodeSize;
+	}
+	return patches;
 }
 
 /** the node with its LAST descendant text's trailing spaces/tabs removed; null when it was only

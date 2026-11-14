@@ -1,4 +1,7 @@
 import { it, expect } from 'vitest';
+import * as fs from 'node:fs';
+import * as os from 'node:os';
+import * as path from 'node:path';
 import { PointIndex, type IndexEntry, type Point } from '../../../../../../../electron/src/draft/teleport/pointIndex';
 
 function point(rec: string, stack: [string, number][], open = false): IndexEntry {
@@ -86,4 +89,42 @@ it('keeps the file a cut run entered readable', () => {
 	ix.keepBefore(ix.planFor('intro.tex', edit)!, 'intro.tex', edit, [{ enter: 'intro.tex' }, intro('i18', 18), intro('i25', 25)]);
 	const above = ix.planFor('intro.tex', { from: 4, oldTo: 4, newTo: 4 });
 	expect(above && recs(above.stops)).toEqual(['i18', 'i30']);
+});
+
+// a compile that read older text than the live preview shows stands on the same ground, and only the text differs:
+// that is what lets the preview keep its index and engines when such a compile lands
+it('tells the same ground from the same text', () => {
+	const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'point-index-'));
+	function reading(text: string): PointIndex {
+		const ix = index([]);
+		const file = path.join(dir, `${text.length}.tex`);
+		fs.writeFileSync(file, text);
+		ix.basis.set('main.tex', file);
+		return ix;
+	}
+	const live = reading('one\ntwo more\n');
+	expect(live.sameGround(reading('one\ntwo\n'), dir)).toBe(true);
+	expect(live.standsOn(reading('one\ntwo\n'), dir)).toBe(false);
+	expect(live.standsOn(reading('one\ntwo more\n'), dir)).toBe(true);
+	expect(live.sameGround(new PointIndex([], 'main.tex', 4, [], '', '/seeds'), dir)).toBe(false);
+	fs.rmSync(dir, { recursive: true, force: true });
+});
+
+// figures that move to other pages get other object numbers in the next compile. A compile behind the typing is
+// dropped on the same ground, and that renumbering alone must leave it the same ground
+it('takes the same images at other object numbers for the same ground only when asked', () => {
+	const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'point-index-'));
+	function withImages(name: string, list: string): PointIndex {
+		const ix = index([]);
+		fs.writeFileSync(path.join(dir, name), list);
+		ix.imageList = name;
+		return ix;
+	}
+	const live = withImages('a.lua', 'return {{file="p.pdf",h="4pt",hash="",n=172,path="./p.pdf",w="6pt",},}\n');
+	const moved = withImages('b.lua', 'return {{file="p.pdf",h="4pt",hash="",n=465,path="./p.pdf",w="6pt",},}\n');
+	const other = withImages('c.lua', 'return {{file="q.pdf",h="4pt",hash="",n=172,path="./q.pdf",w="6pt",},}\n');
+	expect(live.sameGround(moved, dir)).toBe(false);
+	expect(live.sameGround(moved, dir, true)).toBe(true);
+	expect(live.sameGround(other, dir, true)).toBe(false);
+	fs.rmSync(dir, { recursive: true, force: true });
 });

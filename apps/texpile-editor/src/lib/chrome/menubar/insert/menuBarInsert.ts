@@ -31,11 +31,12 @@ import {
 import { runVisualCommand, insertNode, activeCm, cmReplace, cmApply } from '$lib/chrome/menuBarCommands';
 import { makeDrawnInserts } from './menuBarInsertDrawn';
 import { makeTypstInserts } from './menuBarInsertTypst';
+import { makeFigureInsert } from './menuBarInsertFigure';
 import { ITEM_VALUE, makeListInserts } from './insertListSelect';
 import { amsmathFor, GRAPHICX, ensurePackage } from './packageOnInsert';
 import type { formatOf } from '$lib/workspace/documentBuffer.svelte';
 import type { Node as PMNode, Schema } from 'prosemirror-model';
-import { insertBlockAtCaret, replaceSelectionWithBlock } from '$lib/editor/visual/insert/insertRun';
+import { insertBlockAtCaret, openEmptyChip, replaceSelectionWithBlock } from '$lib/editor/visual/insert/insertRun';
 import { symbolPicker } from '$lib/editor/symbols/symbolPicker.svelte';
 import { latexSymbolSet } from '$lib/languages/latex/symbols/latexSymbolSet';
 
@@ -79,6 +80,7 @@ function insertBlock(make: (schema: Schema) => PMNode, select: 'cell' | 'in' | '
 	const tr = insertBlockAtCaret(view.state, { select, make });
 	if (tr) view.dispatch(tr);
 	view.focus();
+	openEmptyChip(view);
 }
 
 export function makeInsertHandlers(deps: InsertDeps): {
@@ -110,9 +112,11 @@ export function makeInsertHandlers(deps: InsertDeps): {
 	const insertDrawn = makeDrawnInserts(deps);
 	const insertTypst = makeTypstInserts(deps);
 	const insertFromList = makeListInserts(deps);
+	const insertFigure = makeFigureInsert(deps);
 
 	async function insertSelect(value: string) {
 		if (await insertFromList(value)) return;
+		if (insertFigure(value)) return;
 		if (deps.dialect() === 'typ' && (await insertTypst(value))) return;
 		// Symbol…: the picker inserts where the caret is, in either mode
 		if (deps.dialect() === 'tex' && value === 'symbolpicker') return void (await symbolPicker.show(latexSymbolSet));
@@ -159,7 +163,7 @@ export function makeInsertHandlers(deps: InsertDeps): {
 				// no table_caption) and always numbered a table markdown cannot number
 				insertBlock((schema) =>
 					dialect === 'typ'
-						? typTableNode(schema)
+						? typTableNode(schema, 3, 3, true)
 						: dialect === 'md'
 							? mdTableNode(schema)
 							: (createTableNode(schema, 3, 3) as unknown as PMNode)

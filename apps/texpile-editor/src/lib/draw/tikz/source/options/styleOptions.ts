@@ -169,12 +169,23 @@ export function withCorners(items: string[], corners: 'sharp' | 'rounded') {
 	return replaceItems(items, (item) => keyValue(item)[0] === 'rounded corners', corners === 'rounded' ? 'rounded corners' : null);
 }
 
-function replaceItems(items: string[], drop: (item: string) => boolean, add: string | null) {
+function replaceItems(items: string[], drop: (item: string) => boolean, add: string | null, ahead?: (item: string) => boolean) {
 	const at = items.findIndex(drop);
 	const kept = items.filter((item) => !drop(item));
 	if (add === null) return kept;
-	kept.splice(at < 0 ? kept.length : at, 0, add);
+	const where = at < 0 ? kept.length : at;
+	const first = ahead ? kept.findIndex(ahead) : -1;
+	kept.splice(first < 0 ? where : Math.min(first, where), 0, add);
 	return kept;
+}
+
+// TikZ lets a bare color overrule every one of these before it
+function isOwnColor(item: string) {
+	return ['fill', 'draw', 'text'].includes(keyValue(item)[0]);
+}
+
+function replaceColor(items: string[], spec: { keys: string[]; bare: boolean }, add: string | null) {
+	return replaceItems(items, colorDropper(spec), add, add !== null && isColor(add) ? isOwnColor : undefined);
 }
 
 function colorDropper({ keys, bare }: { keys: string[]; bare: boolean }) {
@@ -184,7 +195,7 @@ function colorDropper({ keys, bare }: { keys: string[]; bare: boolean }) {
 export function withStroke(items: string[], target: StyleTarget, color: string | null) {
 	const spec = strokeKeys(target);
 	const add = color === null ? null : spec.bare ? color : color === 'black' && target === 'node' ? 'draw' : `draw=${color}`;
-	return replaceItems(items, colorDropper(spec), add);
+	return replaceColor(items, spec, add);
 }
 
 export function withFill(items: string[], target: StyleTarget, color: string | null) {
@@ -199,7 +210,7 @@ function withPlainFill(items: string[], target: StyleTarget, color: string | nul
 	const spec = fillKeys(target);
 	// a \filldraw fills unless told not to
 	const none = target === 'filldraw' ? 'fill=none' : null;
-	return replaceItems(items, colorDropper(spec), color === null ? none : spec.bare ? color : `fill=${color}`);
+	return replaceColor(items, spec, color === null ? none : spec.bare ? color : `fill=${color}`);
 }
 
 export function withPattern(items: string[], target: StyleTarget, pattern: string) {

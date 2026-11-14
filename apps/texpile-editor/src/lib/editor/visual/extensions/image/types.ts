@@ -20,6 +20,9 @@ export type ImagePluginAction = InsertImagePlaceholder | RemoveImagePlaceholder;
 
 export type ImagePlaceholderObject = { src?: string; className?: string };
 
+/** an image refitted to its column: the width read first, for every image, and only then the sizes written */
+export type ImageFit = { measure: () => number; apply: (maxWidth: number) => void };
+
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type ImagePluginSettings<T = any> = {
 	downloadImage?: (url: string) => Promise<string>;
@@ -36,7 +39,7 @@ export type ImagePluginSettings<T = any> = {
 	defaultAlt: string;
 	enableResize: boolean;
 	isBlock: boolean;
-	resizeCallback: (el: Element, updateCallback: () => void) => () => void;
+	resizeCallback: (el: Element, fit: ImageFit) => () => void;
 	imageMargin: number;
 	minSize: number;
 	maxSize: number;

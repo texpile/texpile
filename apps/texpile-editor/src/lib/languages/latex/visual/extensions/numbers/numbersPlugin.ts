@@ -1,10 +1,11 @@
 // the numbers on the nodes that print one
 import type { Node as PMNode } from 'prosemirror-model';
-import { Plugin, PluginKey, type Transaction } from 'prosemirror-state';
-import { ReplaceStep } from 'prosemirror-transform';
+import { Plugin, PluginKey } from 'prosemirror-state';
 import { Decoration, DecorationSet } from 'prosemirror-view';
 import type { ChipCountsOf } from '$lib/editor/visual/extensions/drawnChips/footnoteNumbers';
-import { documentNumbers, type NumberingContext } from './documentNumbers';
+import { typedInParagraph } from '$lib/editor/visual/extensions/nodeNumbers';
+import { referencesLabel, referencesRange } from '$lib/languages/latex/knowledge/calls/citeCommands';
+import { documentCount, type LabelNumbers, type NumberingContext } from './documentNumbers';
 
 export type NumbersSetup = {
 	/** what the last compile wrote to the .aux, and how the document numbers */
@@ -16,9 +17,39 @@ export type NumbersSetup = {
 
 export const numbersKey = new PluginKey<DecorationSet>('texpile-numbers');
 
+const REFERENCE = /\\([A-Za-z]+)\*?\s*(?:\[[^\]]*\]\s*)*\{([^{}]*)\}(?:\s*\{([^{}]*)\})?/g;
+const referenced = new WeakMap<PMNode, readonly string[]>();
+
+// the labels a node's references name: a \ref's own, a chip's by the commands in its source
+function referencedLabels(node: PMNode): readonly string[] {
+	let labels = referenced.get(node);
+	if (labels) return labels;
+	const found: string[] = [];
+	if (node.type.name === 'ref') found.push(node.textContent);
+	else {
+		for (const [, name, first, second] of node.textContent.matchAll(REFERENCE)) {
+			if (!referencesLabel(name)) continue;
+			found.push(...first.split(','), ...(second && referencesRange(name) ? [second] : []));
+		}
+	}
+	labels = found.map((label) => label.trim()).filter(Boolean);
+	referenced.set(node, labels);
+	return labels;
+}
+
+/** the numbers the editor's own count gives labels, handed to a node that references one of them */
+export function countedLabelsOf(decorations: readonly Decoration[]): LabelNumbers | null {
+	for (const decoration of decorations) {
+		const counted = (decoration.spec as { counted?: LabelNumbers }).counted;
+		if (counted) return counted;
+	}
+	return null;
+}
+
 function decorate(doc: PMNode, setup: NumbersSetup): DecorationSet {
 	const decorations: Decoration[] = [];
-	for (const [pos, numbers] of documentNumbers(doc, setup.counts, setup.context())) {
+	const { numbers: counted, labels } = documentCount(doc, setup.counts, setup.context());
+	for (const [pos, numbers] of counted) {
 		const node = doc.nodeAt(pos);
 		if (!node) continue;
 		const end = pos + node.nodeSize;
@@ -28,22 +59,15 @@ function decorate(doc: PMNode, setup: NumbersSetup): DecorationSet {
 			decorations.push(Decoration.node(pos, end, { 'data-number': numbers[0] }, { numbers }));
 		else decorations.push(Decoration.node(pos, end, {}, { numbers }));
 	}
+	if (labels.size)
+		doc.descendants((node, pos) => {
+			const name = node.type.name;
+			if (name !== 'ref' && name !== 'inline_latex' && name !== 'raw_latex') return true;
+			if (referencedLabels(node).some((label) => labels.has(label)))
+				decorations.push(Decoration.node(pos, pos + node.nodeSize, {}, { counted: labels }));
+			return false;
+		});
 	return DecorationSet.create(doc, decorations);
-}
-
-function onlyText(fragment: PMNode['content']): boolean {
-	return fragment.content.every((n) => n.isText);
-}
-
-function typedInParagraph(tr: Transaction): boolean {
-	return tr.steps.every((step, i) => {
-		if (!(step instanceof ReplaceStep) || !onlyText(step.slice.content)) return false;
-		const doc = tr.docs[i];
-		const $from = doc.resolve(step.from);
-		return (
-			$from.parent.type.name === 'paragraph' && $from.sameParent(doc.resolve(step.to)) && onlyText(doc.slice(step.from, step.to).content)
-		);
-	});
 }
 
 export function numbersPlugin(setup: NumbersSetup): Plugin<DecorationSet> {

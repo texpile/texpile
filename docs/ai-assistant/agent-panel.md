@@ -8,6 +8,8 @@ order: 1
 
 Chat with an AI agent that reads and edits files in the open folder and runs commands there. Pick an agent from the menu at the right end of the bottom panel's tabs.
 
+The robot button at the top of the PDF, or in the title bar while the PDF is closed, opens the tab with the cursor in the message box. `Ctrl Alt I` does the same (`Control Cmd I` on macOS). Click the button again to hide the bottom panel.
+
 > [!REQUIRES] an [AI agent](README.md#set-up-an-agent) installed outside Texpile
 
 ![The Agent tab before an agent is chosen, with Open Preferences, Disable All AI and the agent menu open](../../landing/src/lib/assets/showcase/docs/review/agent-tab-choose.png)

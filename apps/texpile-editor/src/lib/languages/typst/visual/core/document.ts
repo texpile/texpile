@@ -40,7 +40,7 @@ export {
 	type BlockSpan,
 	type LeafSpan
 } from '$lib/editor/visual/sourceSpans';
-export { distribute, parseTracks, toFrTracks } from '../serialize/tracks';
+export { columnWidthsOf, distribute, followsTracks, parseTracks, toFrTracks } from '../serialize/tracks';
 export { dedentAfterFirstLine, envLabel, indentAfterFirstLine, ownsLineEnd, type EnvBodyRender } from '../serialize/envSerializer';
 export { bodyIndent, captionValue, figureSource, stringCaption } from '../serialize/elements/figureSerializer';
 export { codeHolderBody } from '../serialize/elements/codeBodySource';

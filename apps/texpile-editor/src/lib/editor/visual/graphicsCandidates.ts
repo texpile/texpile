@@ -28,6 +28,8 @@ export type GraphicSearchOpts = {
 	source: string;
 };
 
+let answered: (GraphicSearchOpts & { dirs: string[] }) | null = null;
+
 /**
  * The directories a relative graphic could live in, in search order.
  *
@@ -37,12 +39,17 @@ export type GraphicSearchOpts = {
  * probe and saves a broken figure.
  */
 export function graphicSearchDirs(opts: GraphicSearchOpts): string[] {
+	// every image a document draws asks, and each answer read the whole source: half a second for the 72 of a long file
+	if (answered && answered.source === opts.source && answered.root === opts.root && answered.loadedPath === opts.loadedPath)
+		return answered.dirs;
 	const base = opts.loadedPath ? dirname(opts.loadedPath) : null;
-	const dirs: (string | null)[] = [base, opts.root];
+	const found: (string | null)[] = [base, opts.root];
 	for (const d of searchDirsIn(codeOnly(opts.source))) {
-		for (const parent of [base, opts.root]) if (parent) dirs.push(joinPath(parent, d));
+		for (const parent of [base, opts.root]) if (parent) found.push(joinPath(parent, d));
 	}
-	return [...new Set(dirs.filter((d): d is string => !!d))];
+	const dirs = [...new Set(found.filter((d): d is string => !!d))];
+	answered = { ...opts, dirs };
+	return dirs;
 }
 
 /** every URL a relative graphic could resolve to; the tooltip's <img> advances past the misses. */

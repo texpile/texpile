@@ -1,4 +1,4 @@
-import { getPdfDocument } from '$lib/pdf-view';
+import { getPdfDocument, pdfCanvas } from '$lib/pdf-view';
 import { clampRegion, compiledPictureKey, type PageRegion } from './pictureRegion';
 
 export type PictureCrop = { url: string; width: number; height: number };
@@ -55,9 +55,7 @@ async function draw(pdfUrl: string, region: PageRegion, scale: number): Promise<
 		const box = clampRegion(region, base.width, base.height);
 		if (!box) return null;
 		const viewport = page.getViewport({ scale, offsetX: -box.x * scale, offsetY: -box.y * scale });
-		const canvas = document.createElement('canvas');
-		canvas.width = Math.ceil(box.w * scale);
-		canvas.height = Math.ceil(box.h * scale);
+		const canvas = pdfCanvas(Math.ceil(box.w * scale), Math.ceil(box.h * scale));
 		const ctx = canvas.getContext('2d');
 		if (!ctx) return null;
 		// print intent: the display intent waits on requestAnimationFrame, which a hidden window never fires

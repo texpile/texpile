@@ -8,7 +8,8 @@
 	import { tip } from '$lib/components/tooltip.svelte';
 	import { centerRevertArrows } from './diffRevertArrows';
 	import { joinCollapsedBars } from './diffCollapsedBars';
-	import { EditorView, lineNumbers, keymap, drawSelection } from '@codemirror/view';
+	import { EditorView, lineNumbers, keymap } from '@codemirror/view';
+	import { cmDrawnSelection } from '$lib/editor/cmDrawnSelection';
 	import { cmCommandKeys } from '$lib/keybindings/editors/cmCommandKeys';
 	import { EditorState, type Extension } from '@codemirror/state';
 	import { defaultKeymap, history, historyKeymap } from '@codemirror/commands';
@@ -104,7 +105,7 @@
 		// native one at `caret-color: black`, which nothing overrides because no editor here sets
 		// EditorView.darkTheme - so the caret was invisible on a dark diff. It draws .cm-cursor
 		// instead, which app.css already colours, and brings this pane's selection with it.
-		return [lineNumbers(), drawSelection(), cmSyntaxHighlight(), langExt, EditorView.lineWrapping];
+		return [lineNumbers(), cmDrawnSelection(), cmSyntaxHighlight(), langExt, EditorView.lineWrapping];
 	}
 
 	function editable(): boolean {

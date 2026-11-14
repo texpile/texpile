@@ -4,7 +4,7 @@ import { describe, it, expect, afterEach } from 'vitest';
 import { flushSync, mount, unmount } from 'svelte';
 import { EditorState } from 'prosemirror-state';
 import { EditorView } from 'prosemirror-view';
-import MathSettingsPanel from '$lib/editor/visual/extensions/mathlivebridge/MathSettingsPanel.svelte';
+import MathSettingsPanel from '$lib/editor/visual/extensions/mathlivebridge/settings/MathSettingsPanel.svelte';
 import { typstToProseMirror } from '$lib/languages/typst/visual/convert/converter';
 import { serializeToTypst } from '$lib/languages/typst/visual/serialize/serializer';
 

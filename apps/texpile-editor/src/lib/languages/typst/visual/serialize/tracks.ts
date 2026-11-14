@@ -6,6 +6,8 @@
 // count is only valid once something has measured the table - do it at parse time and a reopened
 // table pins itself to a nominal width instead of filling the pane.
 
+import type { Node } from 'prosemirror-model';
+
 /** absolute typst lengths -> CSS px */
 const LENGTH_PX: Record<string, number> = { pt: 96 / 72, mm: 96 / 25.4, cm: 96 / 2.54, in: 96 };
 
@@ -65,6 +67,38 @@ export function distribute(tracks: Track[], total: number): (number | null)[] {
 		used += w;
 	});
 	return out;
+}
+
+/** each column's width as its cells carry it, null for a column left to its content */
+export function columnWidthsOf(table: Node, cols: number): (number | null)[] {
+	const widths: (number | null)[] = new Array(cols).fill(null);
+	const covered = new Set<string>();
+	table.forEach((row, _offset, r) => {
+		let c = 0;
+		row.forEach((cell) => {
+			while (c < cols && covered.has(`${r},${c}`)) c++;
+			const colspan = Number(cell.attrs.colspan ?? 1);
+			const rowspan = Number(cell.attrs.rowspan ?? 1);
+			const cw = cell.attrs.colwidth;
+			if (Array.isArray(cw)) {
+				for (let i = 0; i < colspan && c + i < cols; i++) {
+					const v = Number(cw[i]);
+					if (Number.isFinite(v) && v > 0 && widths[c + i] == null) widths[c + i] = v;
+				}
+			}
+			for (let dr = 1; dr < rowspan; dr++) for (let dc = 0; dc < colspan; dc++) covered.add(`${r + dr},${c + dc}`);
+			c += colspan;
+		});
+	});
+	return widths;
+}
+
+/** the widths are the ones these tracks give: no column was dragged, so the tracks stay as the file has them */
+export function followsTracks(widths: readonly (number | null)[], tracks: Track[]): boolean {
+	const measured = widths.reduce<number>((sum, w) => sum + (w ?? 0), 0);
+	if (!(measured > 0)) return true;
+	const given = distribute(tracks, measured);
+	return widths.every((w, i) => Math.abs((w ?? 0) - (given[i] ?? 0)) <= 1);
 }
 
 /** Columns snap to quarter-fr steps rather than landing wherever the mouse stopped. A drag is a

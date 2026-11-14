@@ -6,7 +6,15 @@ import type { Node as PMNode } from 'prosemirror-model';
 import type { PmSuggestionRange } from './pmSuggestionsPlace';
 import { editMode, mapSuggestionEdges, noteTypedSide, typingSide } from '$lib/comments/activeSuggestions.svelte';
 import type { CaretSide } from '$lib/comments/oldWordsCaret';
-import { breakMark, goneBlocksElement, lineEnd, oldNodeElement, oldWordsElement, suggestionTint } from './pmSuggestionWidgets';
+import {
+	breakMark,
+	goneBlocksElement,
+	lineEnd,
+	oldNodeElement,
+	oldWordsElement,
+	replacedPicture,
+	suggestionTint
+} from './pmSuggestionWidgets';
 import { rangeAttrs } from '$lib/editor/visual/highlight/paintRange';
 import { isSelfRendered } from '../diff/selfRendered';
 import { liftPosition } from './liftPosition';
@@ -47,16 +55,19 @@ function build(doc: PMNode, ranges: PmSuggestionRange[], focused: string | null,
 		const focus = on ? ' pm-suggest-focused' : '';
 		const { id } = r;
 		if (r.node) {
-			if (doc.nodeAt(r.from)?.nodeSize !== r.to - r.from) continue;
+			const now = doc.nodeAt(r.from);
+			if (now?.nodeSize !== r.to - r.from) continue;
 			const { was, old } = r;
-			if (was)
+			if (was) {
+				const picture = replacedPicture(was, now);
 				decos.push(
-					Decoration.widget(r.from, () => oldNodeElement(was, id, on), {
+					Decoration.widget(r.from, () => oldNodeElement(was, id, on, picture), {
 						side: -1,
 						ignoreSelection: true,
-						key: `was-${id}-${on}-${was.toString()}`
+						key: `was-${id}-${on}-${picture !== null}-${was.toString()}`
 					})
 				);
+			}
 			// the words the node replaced, struck out before it
 			if (old.length)
 				decos.push(

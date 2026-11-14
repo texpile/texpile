@@ -1,4 +1,5 @@
 import { expect, test } from '@playwright/test';
+import { Disk } from './driver/disk';
 import { useTexpile } from './driver/useTexpile';
 import { VisualEditor } from './driver/visualEditor';
 
@@ -26,9 +27,14 @@ Last words.
 \end{document}
 `;
 
+const float = (caption: string, rows: string) =>
+	`\\begin{table}[h]\n\\centering\n\\caption{${caption}}\n\\begin{tabular}{|l|l|}\n\\hline\n${rows}\n\\end{tabular}\n\\end{table}\n`;
+const floats = `\\documentclass{article}\n\\begin{document}\nBefore.\n\n${float('First', 'alpha & beta \\\\ \\hline\ngamma & delta \\\\ \\hline')}\n${float('Second', 'one & two \\\\ \\hline')}\nAfter.\n\\end{document}\n`;
+
 const texpile = useTexpile({
 	files: {
-		'deck.tex': deck
+		'deck.tex': deck,
+		'floats.tex': floats
 	}
 });
 const visual = () => new VisualEditor(texpile().page, texpile().root);
@@ -65,4 +71,23 @@ test('Down and Up in a deck go from one line of text to the next without stoppin
 		up.push((await where(v)).split(':')[2]);
 	}
 	expect(up).toEqual(['Right column t', 'Left column te', 'Second Frame', 'Some words on ']);
+});
+
+// Down from the row's first cell went past the gap to the next caption, and Up from the gap stood inside the float above
+test('Down from the last row of a table float stops between two floats, where typing starts a paragraph', async () => {
+	const v = visual();
+	const disk = new Disk(texpile().root);
+	await v.open('floats.tex');
+	await caretAtEndOf(v, 'gamma');
+	await v.press('ArrowDown');
+	expect((await where(v)).split(':').slice(0, 2)).toEqual(['GapCursor', 'doc']);
+	await v.press('ArrowUp');
+	expect(await where(v)).toBe('TextSelection:paragraph:delta');
+	await v.press('ArrowDown');
+	await texpile().page.keyboard.type('Between.');
+	await disk.expectFile(
+		'floats.tex',
+		(text) => /\\end\{table\}\s+Between\.\s+\\begin\{table\}/.test(text),
+		'the words stand between the floats'
+	);
 });

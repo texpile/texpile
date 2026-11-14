@@ -20,7 +20,7 @@ A range copied from a spreadsheet pastes as a table.
 
 ## Table settings
 
-![A table with its settings open: column alignment, vertical lines, and the notes section](../../landing/src/lib/assets/showcase/docs/latex/table-settings.png)
+![A table with its settings open: Lines, Columns, Vertical lines, Caption and number, and the notes section](../../landing/src/lib/assets/showcase/docs/latex/table-settings.png)
 
 1. Hover the table and click its settings icon.
 2. Set each column, the lines and the notes.

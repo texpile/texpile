@@ -12,3 +12,9 @@
 	margin-top: calc(var(--spacing) * 2);
 	text-align: center;
 }
+.typ-figure[data-printed] > .typ-figure-caption::before {
+	content: var(--figure-prefix);
+	font-weight: 600;
+	color: var(--muted-text);
+	margin-right: 0.25em;
+}

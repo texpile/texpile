@@ -23,6 +23,12 @@ function nodesOf(tree: Tree): string[] {
 	return nodes;
 }
 
+/** how many of `before`'s subtrees `after` holds as they are */
+export function sharedTrees(before: Tree, after: Tree): number {
+	const old = treesOf(before);
+	return [...treesOf(after)].filter((t) => old.has(t)).length;
+}
+
 /** the first node where two trees differ, or null when they are the same */
 export function firstDifference(a: Tree, b: Tree): string | null {
 	const left = nodesOf(a);
@@ -38,6 +44,5 @@ export function reparse(parser: LRParser, text: string, edit: TextEdit): { tree:
 	const after = applyEdit(text, edit);
 	const change = { fromA: edit.from, toA: edit.to, fromB: edit.from, toB: edit.from + edit.insert.length };
 	const tree = parser.parse(after, TreeFragment.applyChanges(TreeFragment.addTree(before), [change]));
-	const old = treesOf(before);
-	return { tree, fresh: parser.parse(after), reused: [...treesOf(tree)].filter((t) => old.has(t)).length };
+	return { tree, fresh: parser.parse(after), reused: sharedTrees(before, tree) };
 }

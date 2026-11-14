@@ -22,6 +22,7 @@
 	import { syncWindowOverlay } from './windowOverlay';
 	import Kbd from '$lib/components/Kbd.svelte';
 	import { titleBarLayout } from './titleBarLayout.svelte';
+	import { commandCenterWidth, MIN_WIDTH, SIDE_GAP } from './commandCenterWidth';
 	import iconUrl from '$branding/Logo-icon.svg';
 	import { m } from '$lib/paraglide/messages';
 
@@ -50,27 +51,12 @@
 	const palettable = $derived(!!commandPalette.actions);
 
 	/*
-	 * Keeping the command center centred ON THE WINDOW, and using that as the trigger for everything
-	 * else. Centred is the invariant; compacting the menus is what we DO when it is threatened.
-	 *
-	 * A window-centred box of width W spans [(win-W)/2, (win+W)/2], so it clears both sides only if
-	 * each side is narrower than (win-W)/2. That makes the usable width a function of the WIDER side:
-	 *
-	 *     available = win - 2 * max(leftWidth, rightWidth) - 2 * GAP
+	 * The menus give way to the command center: they compact while the left side is wider than a box of MIN_WIDTH on
+	 * the window's center allows.
 	 *
 	 * Measured, not guessed at with pixel breakpoints: the left side is eight localized menu labels
 	 * plus the app icon, so its width depends on the UI language, and no constant would survive that.
-	 *
-	 * Three outcomes, in order:
-	 *   available >= MIN                   -> centre it, all menus inline
-	 *   only true with fewer menus inline  -> move menus into an overflow button, one at a time, then
-	 *                                         centre it. Centred is never traded away for menus.
-	 *   still too small                    -> drop the command center entirely
 	 */
-	const GAP = 12; // clearance between the box and whichever side it is closest to
-	const MIN_W = 200; // narrower than this the field is not worth showing
-	const MAX_W = 460; // a title is short; past this the field is mostly empty however you align it
-	const SHARE = 0.24; // of the window, as VS Code sizes its search, so the menus keep air before it
 	const BADGE_FROM = 320; // below this the Ctrl+K badge is dropped so the title keeps its room
 
 	let winWidth = $state(1280);
@@ -78,12 +64,12 @@
 	let rightW = $state(0); // window controls
 
 	/**
-	 * The widest the left block may be while a MIN_W box can still sit centred, from rearranging the
+	 * The widest the left block may be while a MIN_WIDTH box can still sit centred, from rearranging the
 	 * inequality above. This is the budget the menu bar spends: it drops menus into an overflow button
 	 * until it is under it, one at a time, so the bar degrades as `File Edit View ⋯` rather than
 	 * collapsing wholesale.
 	 */
-	const menuBudget = $derived((winWidth - MIN_W) / 2 - GAP);
+	const menuBudget = $derived((winWidth - MIN_WIDTH) / 2 - SIDE_GAP);
 
 	/**
 	 * One fit step per MEASUREMENT, which is what makes the degradation progressive.
@@ -108,13 +94,7 @@
 
 	// width to actually render at, from the CURRENT left side, so the bar gets the room the overflow
 	// just freed. 0 means it does not fit even with every menu hidden, and it is dropped entirely.
-	// a wide right side (the project's controls with the preview closed) would drop it while the middle stands
-	// empty: it then centres in the space between the two sides instead
-	const offCenter = $derived(winWidth - 2 * Math.max(leftW, rightW) - 2 * GAP < MIN_W);
-	const centerW = $derived.by(() => {
-		const room = offCenter ? winWidth - leftW - rightW - 2 * GAP : winWidth - 2 * Math.max(leftW, rightW) - 2 * GAP;
-		return room >= MIN_W ? Math.min(MAX_W, room, Math.max(MIN_W, Math.round(winWidth * SHARE))) : 0;
-	});
+	const centerW = $derived(commandCenterWidth(winWidth, leftW, rightW));
 
 	// Mirror the document title rather than take it as a prop: it is already computed (in
 	// WorkspaceView's <svelte:head>) and threading the same string down two more components to
@@ -208,15 +188,13 @@
 			{/if}
 		</div>
 
-		<!-- Centred on the WINDOW, which is the whole point of positioning it absolutely: in flow it
-		     would centre in the leftover space and drift right as the menus grew. It can do that safely
-		     here only because centerW is computed to clear both sides - it is 0, and this renders
-		     nothing, when even a compacted menu bar leaves no room.
-		     The layer stays click-through so the drag region underneath still works. -->
+		<!-- In the middle of the room between the two sides; the start screen's plain title keeps the window's center, over
+		     a page laid out on it. Out of flow, so a click-through layer over the drag region underneath; centerW is 0,
+		     and this renders nothing, when even a compacted menu bar leaves no room. -->
 		<div
 			class="pointer-events-none absolute inset-0 flex items-center justify-center"
-			style:padding-left={offCenter ? `${leftW}px` : null}
-			style:padding-right={offCenter ? `${rightW}px` : null}
+			style:padding-left={palettable ? `${leftW}px` : null}
+			style:padding-right={palettable ? `${rightW}px` : null}
 		>
 			{#if palettable && centerW > 0}
 				<!--

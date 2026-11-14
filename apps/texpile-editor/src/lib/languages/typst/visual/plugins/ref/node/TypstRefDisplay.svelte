@@ -47,6 +47,7 @@
 		<span
 			class="typ-ref rounded-base cursor-pointer transition-colors"
 			class:py-0.5={face.kind === 'label'}
+			class:-my-0.5={face.kind === 'label'}
 			class:text-ref-fg={face.known}
 			class:bg-ref-bg={face.known && dropdownOpen}
 			class:hover:bg-ref-bg={face.known}
@@ -73,5 +74,3 @@
 		</Popover.Positioner>
 	</Portal>
 </Popover>
-<!-- zero-width space so the cursor can land after the reference -->
-<span style="font-size: 1rem;">&#8203;</span>

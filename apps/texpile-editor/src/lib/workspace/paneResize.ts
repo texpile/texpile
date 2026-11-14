@@ -3,6 +3,8 @@
 // arrow-key nudge; the only real differences are how a pointer position maps to a value and what
 // gets persisted, so both are parameters here.
 
+import { beginDividerDrag } from '$lib/resizing/edgeDrag';
+
 type DragOptions = {
 	/** pointer position -> the new value, or null to ignore this move (e.g. no measurable rect) */
 	compute: (ev: MouseEvent) => number | null;
@@ -22,6 +24,7 @@ type DragOptions = {
 export function startDrag(e: MouseEvent, { compute, apply, commit, onState }: DragOptions): void {
 	e.preventDefault();
 	onState?.(true);
+	const endDrag = beginDividerDrag();
 	function onMove(ev: MouseEvent) {
 		const next = compute(ev);
 		if (next !== null) apply(next);
@@ -31,6 +34,7 @@ export function startDrag(e: MouseEvent, { compute, apply, commit, onState }: Dr
 		window.removeEventListener('mouseup', onUp);
 		onState?.(false);
 		commit();
+		endDrag();
 	}
 	window.addEventListener('mousemove', onMove);
 	window.addEventListener('mouseup', onUp);

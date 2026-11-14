@@ -43,18 +43,22 @@ function typstTextLanguage(head: string): DeclaredLanguage | undefined {
 
 let last: { preamble: string; language: DeclaredLanguage | undefined } | null = null;
 const BEGIN_DOCUMENT = /^\\begin\s*\{document\}/;
+// a text that writes neither is Typst, Markdown or a fragment: nothing in it for the LaTeX reader
+const WRITES_DOCUMENT = /\\begin\s*\{document\}/;
+const WRITES_COMMAND = /\\[A-Za-z]/;
 
 /** undefined when the source names no language */
 export function declaredLanguage(source: string): DeclaredLanguage | undefined {
 	if (last && source.startsWith(last.preamble) && BEGIN_DOCUMENT.test(source.slice(last.preamble.length, last.preamble.length + 40)))
 		return last.language;
-	const begin = documentWrapperOf(source)?.begin.from;
-	const language = languageIn(source.slice(0, begin ?? HEAD));
-	last = begin === undefined ? null : { preamble: source.slice(0, begin), language };
+	const begin = WRITES_DOCUMENT.test(source) ? documentWrapperOf(source)?.begin.from : undefined;
+	const head = source.slice(0, begin ?? HEAD);
+	const language = (WRITES_COMMAND.test(head) ? latexLanguageIn(head) : undefined) ?? otherLanguageIn(head);
+	last = begin === undefined ? null : { preamble: head, language };
 	return language;
 }
 
-function languageIn(head: string): DeclaredLanguage | undefined {
+function latexLanguageIn(head: string): DeclaredLanguage | undefined {
 	const code = codeOnly(head);
 	const babel = callsIn(code, ['package']).find((call) =>
 		call.args.some((a) => rolesOf(a.arg).includes('package') && a.values.some((v) => isBabelPackage(v.value)))
@@ -77,10 +81,12 @@ function languageIn(head: string): DeclaredLanguage | undefined {
 		: undefined;
 	if (documentClass && classLanguage) return { name: classLanguage, from: code.slice(documentClass.at, documentClass.end) };
 	const declared = languageDeclarationsIn(code).find((d) => d.main);
-	if (declared) {
-		const variant = declared.options && /variant\s*=\s*([\w-]+)/.exec(declared.options)?.[1];
-		return { name: declared.name.toLowerCase(), ...(variant ? { variant: variant.toLowerCase() } : {}), from: declared.from };
-	}
+	if (!declared) return undefined;
+	const variant = declared.options && /variant\s*=\s*([\w-]+)/.exec(declared.options)?.[1];
+	return { name: declared.name.toLowerCase(), ...(variant ? { variant: variant.toLowerCase() } : {}), from: declared.from };
+}
+
+function otherLanguageIn(head: string): DeclaredLanguage | undefined {
 	const typst = typstTextLanguage(head);
 	if (typst) return typst;
 	const front = FRONTMATTER.exec(head);

@@ -4,7 +4,7 @@ import { tableFigureCode, tableFigureSeg } from './import/tableFigure';
 import { tableSchema } from './tableSchema';
 import { tableSaves } from './save/tableSaves';
 import { tableFrame } from './save/tableSerializer';
-import { readTable } from './tableCall';
+import { readTable } from './drawn/tableCall';
 
 export const tableDocument: TypstDocumentPlugin = {
 	import: {

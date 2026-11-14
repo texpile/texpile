@@ -1,8 +1,7 @@
 import { EditorView } from 'prosemirror-view';
 import { keymap } from 'prosemirror-keymap';
 import { referenceStore, templateFeaturesStore } from '$lib/stores/editorStore';
-import { mount, unmount } from 'svelte';
-import ReferencePickerDropdown from './ReferencePickerDropdown.svelte';
+import { hideReferencePicker, selectReferenceAt, showReferencePicker } from './referencePicker.svelte';
 import type { TexpileSuggester } from '../suggest/texpile-suggest';
 import {
 	convertBibliographyToReferenceItems,
@@ -18,8 +17,6 @@ export type { ReferenceItem, ReferenceItemMeta } from './referenceItems';
 
 let selectedIndex = 0;
 let referenceList: ReferenceItem[] = [];
-let dropdownComponent: ReturnType<typeof mount> | null = null;
-let dropdownContainer: HTMLElement | null = null;
 let currentView: EditorView | null = null;
 let currentRange: { from: number; to: number } | null = null;
 
@@ -51,7 +48,7 @@ const suggestReference: TexpileSuggester = {
 		referenceList = filterReferences(allReferences, query.full);
 		selectedIndex = 0;
 
-		showDropdown(view, range.from, referenceList, selectedIndex, query.full);
+		showReferencePicker(view, range.from, referenceList, query.full, handleReferenceSelection);
 	},
 
 	onExit: (_params) => {
@@ -63,7 +60,7 @@ const keymapPlugin = keymap({
 	ArrowDown: () => {
 		if (referenceList.length > 0) {
 			selectedIndex = (selectedIndex + 1) % referenceList.length;
-			updateDropdown(selectedIndex);
+			selectReferenceAt(selectedIndex);
 			return true;
 		}
 		return false;
@@ -71,7 +68,7 @@ const keymapPlugin = keymap({
 	ArrowUp: () => {
 		if (referenceList.length > 0) {
 			selectedIndex = (selectedIndex - 1 + referenceList.length) % referenceList.length;
-			updateDropdown(selectedIndex);
+			selectReferenceAt(selectedIndex);
 			return true;
 		}
 		return false;
@@ -128,88 +125,8 @@ function handleReferenceSelection(item: ReferenceItem) {
 	hideDropdown();
 }
 
-function showDropdown(view: EditorView, pos: number, items: ReferenceItem[], selectedIndex: number, query: string) {
-	if (!dropdownContainer) {
-		dropdownContainer = document.createElement('div');
-		dropdownContainer.className = 'reference-picker-container';
-		dropdownContainer.style.position = 'fixed';
-		dropdownContainer.style.zIndex = '50';
-	}
-	// in the window the editor is in, which may be one of its own
-	const doc = view.dom.ownerDocument;
-	if (dropdownContainer.parentNode !== doc.body) doc.body.appendChild(dropdownContainer);
-
-	if (dropdownComponent) {
-		unmount(dropdownComponent);
-	}
-
-	dropdownComponent = mount(ReferencePickerDropdown, {
-		target: dropdownContainer,
-		props: {
-			items,
-			selectedIndex,
-			query,
-			onSelect: handleReferenceSelection
-		}
-	});
-
-	// coordsAtPos is viewport-relative, so use fixed positioning
-	const coords = view.coordsAtPos(pos);
-	const windowHeight = doc.defaultView?.innerHeight ?? window.innerHeight;
-	const windowWidth = doc.defaultView?.innerWidth ?? window.innerWidth;
-
-	// wait a frame so the dropdown has real dimensions
-	requestAnimationFrame(() => {
-		if (!dropdownContainer) return;
-		const dropdownRect = dropdownContainer.getBoundingClientRect();
-		const dropdownHeight = dropdownRect.height;
-		const dropdownWidth = dropdownRect.width || 384; // fallback to 384px (w-96)
-
-		const spaceBelow = windowHeight - coords.bottom;
-		const spaceAbove = coords.top;
-
-		let top: number;
-		if (spaceBelow >= dropdownHeight + 4 || spaceBelow >= spaceAbove) {
-			top = coords.bottom + 4;
-		} else {
-			top = coords.top - dropdownHeight - 4;
-		}
-
-		let left = coords.left;
-		if (left + dropdownWidth > windowWidth) {
-			left = windowWidth - dropdownWidth - 10;
-		}
-
-		dropdownContainer.style.left = `${left}px`;
-		dropdownContainer.style.top = `${top}px`;
-	});
-}
-
-function updateDropdown(newSelectedIndex: number) {
-	if (!dropdownComponent || !dropdownContainer) return;
-
-	// svelte 5 mount props aren't reactive from outside, so remount with new props
-	unmount(dropdownComponent);
-	dropdownComponent = mount(ReferencePickerDropdown, {
-		target: dropdownContainer,
-		props: {
-			items: referenceList,
-			selectedIndex: newSelectedIndex,
-			query: '',
-			onSelect: handleReferenceSelection
-		}
-	});
-}
-
 function hideDropdown() {
-	if (dropdownComponent) {
-		unmount(dropdownComponent);
-		dropdownComponent = null;
-	}
-	if (dropdownContainer) {
-		dropdownContainer.remove();
-		dropdownContainer = null;
-	}
+	hideReferencePicker();
 	referenceList = [];
 	selectedIndex = 0;
 	currentView = null;

@@ -20,7 +20,7 @@ export function follows(prev: BlockOrigin | null, next: BlockOrigin | null): boo
 	return !!prev && !!next && prev.parse === next.parse && next.index === prev.index + 1;
 }
 
-export type Placed = { key: string; nodes: Node[]; block: Segment; leaves: Segment[]; inner: Segment[] };
+export type Placed = { key: string; nodes: Node[]; leaves: Segment[]; inner: Segment[] };
 export type Entry = { key: string; text: string; leaves?: Segment[] | null; inner?: Segment[] | null; placed?: Placed };
 /** what a splice hands back: the bytes, the leaf runs in them, and the range of every block below
  *  the top level in them, all relative to the text and to the first node */
@@ -31,12 +31,7 @@ export type Splice = (node: Node, origin: BlockOrigin, ctx: Ctx, prefix?: string
 // nothing changes them in place, so sharing them is safe. The runs of a construct of several
 // blocks are kept on its first, and believed only while every block is the one they were made
 // for: the first item of a list is untouched by an edit to its third, which lands at the same place
-export function placedRuns(
-	entry: Entry,
-	key: string,
-	nodes: Node[],
-	make: () => { block: Segment; leaves: Segment[]; inner: Segment[] }
-): Placed {
+export function placedRuns(entry: Entry, key: string, nodes: Node[], make: () => { leaves: Segment[]; inner: Segment[] }): Placed {
 	const hit = entry.placed;
 	if (hit && hit.key === key && hit.nodes.length === nodes.length && hit.nodes.every((n, k) => n === nodes[k])) return hit;
 	const placed: Placed = { key, nodes, ...make() };

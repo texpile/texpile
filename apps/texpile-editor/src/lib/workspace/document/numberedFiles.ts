@@ -27,6 +27,7 @@ export function numberedFilesOf(files: DocumentFiles, scheme: EventScheme): Numb
 	}
 	return {
 		start: () => (files.start ? fileAt(files.start) : null),
+		readsIn: (path) => !!files.start && pathKey(path) !== pathKey(files.start) && !!files.texts[pathKey(path)],
 		readIn(include, from) {
 			for (const path of includePaths(include, dirname(from), [dirname(from), files.root])) {
 				const file = fileAt(path);

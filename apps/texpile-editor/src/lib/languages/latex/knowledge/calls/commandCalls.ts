@@ -42,11 +42,33 @@ function holds(reading: { args: Argument[]; repeat?: Argument[] }, roles: readon
 	);
 }
 
+// each role's commands, read off the index in one pass: a pass for every set of roles asked was 120 ms of a launch
+let byRole: Map<ArgumentRole, string[]> | null = null;
+
+function namesByRole(): Map<ArgumentRole, string[]> {
+	if (byRole) return byRole;
+	const index = new Map<ArgumentRole, string[]>();
+	for (const name of Object.keys(INDEX)) {
+		const reading = INDEX[name];
+		const held = new Set<ArgumentRole>();
+		for (const arg of reading.repeat ? [...reading.args, ...reading.repeat] : reading.args) {
+			if (arg.derives !== undefined) held.add('derives');
+			for (const role of rolesOf(arg)) held.add(role);
+		}
+		for (const role of held) {
+			const names = index.get(role);
+			if (names) names.push(name);
+			else index.set(role, [name]);
+		}
+	}
+	byRole = index;
+	return index;
+}
+
 /** the commands with an argument of one of `roles`, longest name first */
 export function commandNames(roles: readonly ArgumentRole[]): string[] {
-	return Object.keys(INDEX)
-		.filter((n) => holds(INDEX[n], roles))
-		.sort((a, b) => b.length - a.length || (a < b ? -1 : 1));
+	const index = namesByRole();
+	return [...new Set(roles.flatMap((role) => index.get(role) ?? []))].sort((a, b) => b.length - a.length || (a < b ? -1 : 1));
 }
 
 /** the commands whose first braced argument is typeset in `mode`, longest name first */

@@ -88,6 +88,8 @@ export const DEFAULT_KEYBINDINGS: DefaultKeybinding[] = [
 	// Ctrl on macOS too, as in VS Code: Cmd+Shift+G stays find previous there. Before the source editor, which would
 	// take it as find previous (still on Shift+F3 and Shift+Enter)
 	{ command: 'view.sourceControl', key: 'ctrl+shift+g' },
+	// VS Code's keys for its chat, on both systems
+	{ command: 'view.agent', key: 'mod+alt+i', mac: 'ctrl+mod+i' },
 	{ command: 'view.zoomIn', key: 'mod+=', late: true },
 	{ command: 'view.zoomIn', key: 'mod+shift+=', late: true },
 	{ command: 'view.zoomOut', key: 'mod+-', late: true },

@@ -26,10 +26,13 @@ import { baseKeymap, toggleMark } from 'prosemirror-commands';
 import { history } from 'prosemirror-history';
 import { undoVisual, redoVisual } from '$lib/editor/visual/visualUndo';
 import { gapCursorWithArrows } from '$lib/editor/visual/gapArrows';
+import { hiddenSelectionPlugin } from '$lib/editor/visual/highlight/hiddenSelection';
 import { dropCursor } from 'prosemirror-dropcursor';
 import { tableEditing, goToNextCell } from 'prosemirror-tables';
 import { wholeTableEdits } from '$lib/editor/visual/extensions/table/wholeTableEdits';
-import { tableArrowEntry } from '$lib/editor/visual/extensions/table/tableArrowEntry';
+import { tableArrowEntry } from '$lib/editor/visual/extensions/table/caret/tableArrowEntry';
+import { tableArrowExit } from '$lib/editor/visual/extensions/table/caret/tableArrowExit';
+import { tabThroughCells } from '$lib/editor/visual/extensions/table/rows/addTableRow';
 import { crossBlockEdits } from '$lib/editor/visual/extensions/crossBlockEdits';
 import { columnResizing } from '$lib/editor/visual/extensions/table/columnResizing';
 import { snapWidthToFr } from '$lib/editor/visual/extensions/table/snapWidth';
@@ -94,6 +97,7 @@ import { shiftArrowsPlugin } from '$lib/editor/visual/extensions/shiftArrows/shi
 import { typstChipKind } from './extensions/typstChipKind';
 import { footnoteNumbersPlugin } from '$lib/editor/visual/extensions/drawnChips/footnoteNumbers';
 import { typstChipCounts } from './core/plugin/chipCounts';
+import { typstNumbersPlugin } from './extensions/numbers/typstNumbersPlugin';
 import { IncludeDocView } from '$lib/editor/visual/extensions/includedoc/includeDocView.svelte';
 import { pmComments } from '$lib/editor/visual/extensions/pmComments';
 import type { CommentAnchor } from '$lib/comments/anchor';
@@ -169,6 +173,8 @@ export type TypstEditorSetup = {
 	addCommentLabel: string;
 	/** read at each check: the editor's file can change its language */
 	spellLanguage: () => SpellLanguage | null;
+	/** the open file, whose document's printed numbers it shows */
+	filePath?: () => string | null;
 };
 
 export function typstEditorPlugins(setup: TypstEditorSetup): Plugin[] {
@@ -182,7 +188,8 @@ export function typstEditorPlugins(setup: TypstEditorSetup): Plugin[] {
 		onAddComment,
 		sourceAnchor,
 		addCommentLabel,
-		spellLanguage
+		spellLanguage,
+		filePath
 	} = setup;
 	return [
 		parseCarryPlugin,
@@ -190,6 +197,7 @@ export function typstEditorPlugins(setup: TypstEditorSetup): Plugin[] {
 		...pluginEditorPlugins('atStart'),
 		typstCopyPlugin,
 		gapCursorWithArrows(),
+		hiddenSelectionPlugin(),
 		dropCursor({ color: 'var(--color-primary-500)', width: 2, class: 'pm-drop-cursor' }),
 		// Typst is the one dialect where a drag can be saved: `columns:` takes real lengths and
 		// fr. The drag snaps to that same grid (vendored columnResizing + snapWidthToFr);
@@ -197,6 +205,7 @@ export function typstEditorPlugins(setup: TypstEditorSetup): Plugin[] {
 		// the serializer needs to emit proportions instead of one fr beside two autos.
 		columnResizing({ snap: snapWidthToFr, redistribute: true }),
 		captureColumnWidths,
+		tableArrowExit,
 		tableEditing(),
 		...pluginEditorPlugins('afterTableEditing'),
 		wholeTableEdits,
@@ -251,7 +260,7 @@ export function typstEditorPlugins(setup: TypstEditorSetup): Plugin[] {
 			'Shift-Mod-End': extendToDocEnd,
 			Enter: splitBlockWithoutDuplicates,
 			// table cell first, then list indent; always consume so focus stays in the editor
-			Tab: (state, dispatch) => goToNextCell(1)(state, dispatch) || indentListItem()(state, dispatch) || true,
+			Tab: (state, dispatch, view) => tabThroughCells(state, dispatch, view) || indentListItem()(state, dispatch) || true,
 			'Shift-Tab': (state, dispatch) => goToNextCell(-1)(state, dispatch) || createDedentListCommand()(state, dispatch) || true
 		}),
 		cmarrowHandlers,
@@ -282,6 +291,8 @@ export function typstEditorPlugins(setup: TypstEditorSetup): Plugin[] {
 		createBlockHandlePlugin(),
 		wholeBlockDragPlugin(),
 		dropPastNodeViewsPlugin(),
+		// before the footnote counter: a chip reads the first numbers it is handed
+		typstNumbersPlugin({ filePath: filePath ?? (() => null) }),
 		footnoteNumbersPlugin(typstChipCounts),
 		createNodeFlashPlugin(),
 		// collaborators' carets; VisualCollab feeds it, and is inert outside a shared session

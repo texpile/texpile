@@ -5,8 +5,9 @@ import { pdfStore } from '$lib/stores/pdfStore';
 import { activeFilePath, isDirty, mainFile, workspaceRoot } from '$lib/workspace/workspaceStore';
 import { synctexForward } from '$lib/workspace/synctex';
 import { pictureOfCard } from '../../anchor/figureAnchors';
-import { cachedDrawing, drawingTime } from '../../drawingCache';
+import { cachedDrawing, drawingTime, saveDrawing } from '../../drawingCache';
 import { chooseShown, isPdfCurrent } from './compiledFreshness';
+import { blobDataUrl, cropSvg, isCropSvg } from './keptCrop';
 import { pictureLines, regionFromBoxes, type PageRegion } from './pictureRegion';
 import { renderPictureCrop, type PictureCrop } from './renderPictureCrop';
 
@@ -15,6 +16,10 @@ export type CompiledSource = { pdfPath(): string | null };
 export type CardPicture = { svg: string | null; compiled: PictureCrop | null };
 
 const REGIONS_KEPT = 200;
+const CROPS_NOTED = 400;
+
+// the crops already kept, by their url
+const kept = new Set<string>();
 
 const regions = new Map<string, Promise<PageRegion | null>>();
 const changes = new EventTarget();
@@ -86,8 +91,25 @@ async function compiledPicture(picture: string, index: number): Promise<{ crop: 
 	return crop && { crop, pdfMtimeMs: pdfStat.mtimeMs };
 }
 
+// The picture as the PDF printed it, kept under its source as a figure tab's drawing is. An edit elsewhere in the file or
+// a reload leaves the PDF older than the file, and the card had nothing to show until the next compile
+async function keepCompiled(key: string, crop: PictureCrop): Promise<void> {
+	if (kept.has(crop.url)) return;
+	if (kept.size > CROPS_NOTED) kept.clear();
+	kept.add(crop.url);
+	const blob = await fetch(crop.url)
+		.then((answer) => answer.blob())
+		.catch(() => null);
+	const image = blob && (await blobDataUrl(blob));
+	if (image) saveDrawing(key, cropSvg(image, crop.width, crop.height));
+}
+
 export async function resolveCardPicture(key: string, picture: string, index: number): Promise<CardPicture> {
 	const compiled = await compiledPicture(picture, index).catch(() => null);
-	const svg = cachedDrawing(key);
-	return chooseShown(svg, drawingTime(key), compiled?.crop ?? null, compiled?.pdfMtimeMs ?? 0);
+	const cached = cachedDrawing(key);
+	const drawn = cached && !isCropSvg(cached) ? cached : null;
+	const shown = chooseShown(drawn, drawingTime(key), compiled?.crop ?? null, compiled?.pdfMtimeMs ?? 0);
+	if (!shown.compiled) return { svg: cached, compiled: null };
+	void keepCompiled(key, shown.compiled);
+	return shown;
 }

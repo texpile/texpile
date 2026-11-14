@@ -113,8 +113,9 @@ export function latexCount(source: string, main: boolean): FileCount {
 	return fileCount(latexText(source, main));
 }
 
+/** what the top bar counts: the words and characters alone, so no part is looked for */
 export function latexProse(source: string, main: boolean): string {
-	return latexText(source, main).text;
+	return maskTex(proseSource(source, main)).text;
 }
 
 /** the body of the file with \begin{document}, plus the \title that \maketitle prints; the rest blanked */
@@ -125,17 +126,25 @@ function bodyOnly(src: string): string {
 	const to = wrapper.end?.from ?? src.length;
 	let preamble = ' '.repeat(from);
 	const printed = commandTokensOf(src).list.some((t) => t.name === 'maketitle' && t.at >= from && t.at < to);
-	const title = printed && callsIn(codeOnly(src), ['text']).find((c) => c.command === 'title' && c.at < from);
+	const title = printed && callsIn(codeOnly(src).slice(0, from), ['text']).find((c) => c.command === 'title');
 	if (title) preamble = preamble.slice(0, title.at) + src.slice(title.at, title.end) + preamble.slice(title.end);
 	return preamble + src.slice(from, to);
 }
 
-function latexText(source: string, main: boolean): { text: string; regions: Region[] } {
-	let src = spellOutLetters(source);
-	if (main) src = bodyOnly(src);
+// the lists of references are found in the source as written, whose tree the editor already holds: looking in the
+// text with its preamble blanked read a 140-page file once more on every count
+function proseSource(source: string, main: boolean): string {
+	const src = spellOutLetters(source);
+	const body = main ? bodyOnly(src) : src;
 	// the list of references is the bibliography's, not the author's prose
-	src = blankRanges(src, bibliographyRanges(src));
+	const references = bibliographyRanges(src)
+		.filter(([from]) => from < body.length)
+		.map(([from, to]): [number, number] => [from, Math.min(to, body.length)]);
+	return blankRanges(body, references);
+}
 
+function latexText(source: string, main: boolean): { text: string; regions: Region[] } {
+	const src = proseSource(source, main);
 	const regions = partRegions(codeOnly(src));
 	// a caption inside a table (longtable) is still a caption
 	for (const [from, to] of tableRanges(src)) regions.push({ from, to, part: 'tables' });

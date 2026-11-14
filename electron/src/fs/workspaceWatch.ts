@@ -1,7 +1,7 @@
-// The workspace watcher's main-process end. The watching itself (fsWatch.ts) runs in the helper
-// process; this keeps the key -> root table, relays its change events, and re-arms the watches
-// if that process has to be forked again.
-import { helperCall, onHelperEvent, onHelperRefork } from '../helper/helperProcess';
+// The workspace watcher's main-thread end. The watching itself (fsWatch.ts) runs in the helper
+// thread; this keeps the key -> root table, relays its change events, and re-arms the watches
+// if that thread has to be started again.
+import { helperCall, onHelperEvent, onHelperRestart } from '../helper/helperThread';
 import type { RawFileChange } from './coalesceChanges';
 
 const active = new Map<string, { root: string; onChange: (changes: RawFileChange[]) => void }>();
@@ -9,7 +9,7 @@ const active = new Map<string, { root: string; onChange: (changes: RawFileChange
 onHelperEvent((e) => {
 	if (e.event === 'fs-changed') active.get(e.key)?.onChange(e.data as RawFileChange[]);
 });
-onHelperRefork(() => {
+onHelperRestart(() => {
 	for (const [key, w] of active) void helperCall('watch.start', [key, w.root]).catch(() => {});
 });
 

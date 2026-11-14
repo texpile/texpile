@@ -7,7 +7,8 @@ const doc = (body: string) =>
 
 const texpile = useTexpile({
 	files: {
-		'den.tex': doc('Intro.\n\n\\[\n\\rho = \\den{\\psi} + \\den\\phi\n\\]\n\nOutro.')
+		'den.tex': doc('Intro.\n\n\\[\n\\rho = \\den{\\psi} + \\den\\phi\n\\]\n\nOutro.'),
+		'units.tex': doc('Intro.\n\n\\begin{gather*}\nF_x = 11.12\\ \\text{kN} \\\\\nF_y = 4.448\\ \\text{kN}\n\\end{gather*}\n\nOutro.')
 	}
 });
 
@@ -29,6 +30,24 @@ function formula(v: VisualEditor): Promise<string> {
 		`let found = ''; view.state.doc.descendants((n) => { if (n.type.name === 'block_math') found = n.textContent; }); return found;`
 	);
 }
+
+/** what the live field of the editor's first display formula holds */
+function unitsFormula(v: VisualEditor): Promise<string> {
+	return v.evalView<string>(`return view.dom.querySelector('.block-math-container math-field')?.value ?? '';`);
+}
+
+// the paper's macros set the formula again, and mathlive read it in the mode at its caret: text, after a unit
+test("a formula that ends in text is still drawn once the paper's macros reach it", async () => {
+	const v = visual();
+	await v.open('units.tex');
+	const at = await v.evalView<{ x: number; y: number }>(
+		`const r = view.dom.querySelector('.block-math-container').getBoundingClientRect(); return { x: r.x + r.width / 2, y: r.y + r.height / 2 };`
+	);
+	await v.page.mouse.move(at.x, at.y, { steps: 4 });
+	await expect.poll(() => unitsFormula(v)).toContain('F_{x}');
+	await v.page.waitForTimeout(1500);
+	expect(await unitsFormula(v)).not.toContain('textbackslash');
+});
 
 test('a macro in a formula opens as its LaTeX, and an edit rewrites that call only', async () => {
 	const v = visual();
@@ -59,4 +78,16 @@ test('a macro in a formula opens as its LaTeX, and an edit rewrites that call on
 		await v.page.keyboard.press('Escape');
 		await expect(panel).toHaveCount(0);
 	}
+});
+
+// a formula with the keyboard trusted its own text, so the view ProseMirror kept went on showing the file before
+test('another file opened from a formula shows its own formula', async () => {
+	const v = visual();
+	await v.open('den.tex');
+	const field = await liveField(v);
+	// on the \\rho, clear of the macros that open a panel
+	await field.click({ position: { x: 6, y: 12 } });
+	await expect.poll(() => v.page.evaluate(() => document.activeElement?.tagName)).toBe('MATH-FIELD');
+	await v.open('units.tex');
+	await expect.poll(() => unitsFormula(v)).toContain('F_{x}');
 });

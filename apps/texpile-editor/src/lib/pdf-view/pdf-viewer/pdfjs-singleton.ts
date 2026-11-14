@@ -1,4 +1,5 @@
 import { BROWSER } from 'esm-env';
+import { idleRelease } from '$lib/idleRelease';
 
 type PdfLib = typeof import('pdfjs-dist/legacy/build/pdf.mjs');
 type DocumentInit = NonNullable<Parameters<PdfLib['getDocument']>[0]>;
@@ -62,19 +63,70 @@ export async function getPdfJs(): Promise<typeof import('pdfjs-dist/legacy/build
  * Passing `worker` takes the branch above out of play: `src.worker instanceof PDFWorker` leaves
  * task._worker null, so no document destroy can reach the worker. It lives until destroyPdfJs().
  */
+const fontFrames = new WeakMap<Document, HTMLIFrameElement>();
+
 /**
- * `ownerDocument` is which document's font registry the render uses. pdf.js registers the PDF's
- * embedded fonts via the FontLoader of this document (defaults to the global one), and canvases
- * living in a DIFFERENT document cannot see them - which is exactly what a viewer mounted in the
- * popped-out preview window is, and every glyph came out as a box there. Pass the document the
- * viewer's canvases live in.
+ * The document the fonts of every PDF drawn in `host`'s window go to: an empty frame's. pdf.js adds each embedded
+ * font to a document's font set, and a change of the window's own set makes the browser lay out all the text in the
+ * window again: the compiled paper loading and scrolling beside the editor laid the editor out 28 times. Only a
+ * canvas of this document draws those fonts, so a page is drawn on one (`pdfCanvas`) and copied to where it shows.
  */
-export async function getPdfDocument(src: DocumentSource, ownerDocument?: Document): Promise<LoadingTask | null> {
+export function pdfFontDocument(host: Document = document): Document {
+	let frame = fontFrames.get(host);
+	if (!frame?.isConnected || !frame.contentDocument) {
+		frame = host.createElement('iframe');
+		frame.hidden = true;
+		frame.tabIndex = -1;
+		frame.setAttribute('aria-hidden', 'true');
+		host.body.append(frame);
+		fontFrames.set(host, frame);
+	}
+	return frame.contentDocument!;
+}
+
+/** a canvas a PDF opened in `host`'s window can be drawn on with its own fonts */
+export function pdfCanvas(width: number, height: number, host: Document = document): HTMLCanvasElement {
+	const canvas = pdfFontDocument(host).createElement('canvas');
+	canvas.width = width;
+	canvas.height = height;
+	return canvas;
+}
+
+// documents opened and not yet destroyed
+let openDocuments = 0;
+
+// pdf.js and its worker go once no document has been open for half a minute: a paper's figures are drawn once and
+// kept as pictures, and the worker held 10 MB after them
+const restWhenIdle = idleRelease(
+	30_000,
+	() => openDocuments > 0,
+	() => destroyPdfJs()
+);
+
+function documentClosed(): void {
+	openDocuments--;
+	restWhenIdle();
+}
+
+/** `host` is the document of the window the PDF shows in: the popped-out preview has its own */
+export async function getPdfDocument(src: DocumentSource, host: Document = document): Promise<LoadingTask | null> {
+	openDocuments++;
 	const pdfjs = await getPdfJs();
-	if (!pdfjs || !pdfWorker) return null;
+	if (!pdfjs || !pdfWorker) {
+		documentClosed();
+		return null;
+	}
 	// a bare url goes into the init parameters, which is also where the worker has to go
 	const params = typeof src === 'string' || src instanceof URL ? { url: src } : src;
-	return pdfjs.getDocument({ ...params, worker: pdfWorker, ...(ownerDocument ? { ownerDocument } : {}) });
+	const task = pdfjs.getDocument({ ...params, worker: pdfWorker, ownerDocument: pdfFontDocument(host) });
+	const destroy = task.destroy.bind(task);
+	let closed = false;
+	task.destroy = () => {
+		if (!closed) documentClosed();
+		closed = true;
+		return destroy();
+	};
+	return task;
 }
 
 /** destroys the PDF.js worker; the next getPdfJs() call creates a new one. */

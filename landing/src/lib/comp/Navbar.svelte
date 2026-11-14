@@ -1,12 +1,11 @@
 <script lang="ts">
-	import Github from '@lucide/svelte/icons/github';
+	import GithubMark from './GithubMark.svelte';
 	import Globe from '@lucide/svelte/icons/globe';
 	import Check from '@lucide/svelte/icons/check';
 	import LogoDark from '$branding/Logo-dark.svg';
 	import LogoLight from '$branding/Logo-light.svg';
 	import { onMount } from 'svelte';
 	import { page } from '$app/state';
-	import { base } from '$app/paths';
 	import { Menu, Portal } from '@skeletonlabs/skeleton-svelte';
 	import { locales, localizeHref, getLocale, type Locale } from '$lib/paraglide/runtime';
 	import { m } from '$lib/paraglide/messages';
@@ -25,14 +24,12 @@
 	// full document navigation (not client-side routing), same as every other locale switch on this site.
 	// details.value is always one of `locales` (that's all the menu ever renders), hence the cast.
 	//
-	// `base` rather than resolve(): localizeHref returns a rewritten URL (/zh-Hans/docs/mcp) whose locale
-	// prefix hooks.ts strips again, so it is never one of the route pathnames resolve() is typed
-	// against. Casting it to Pathname was a lie that only type-checked by accident — resolve()'s
-	// ResolveArgs is a distributive conditional, so a union argument expands to a union of tuples
-	// that no single call can satisfy. Applying `base` is all resolve() did for us anyway.
+	// The href as it is rather than resolve(): localizeHref returns a rewritten URL (/zh-Hans/docs/mcp)
+	// whose locale prefix hooks.ts strips again, so it is never one of the route pathnames resolve() is
+	// typed against. The site is served from a domain root, so there is no base path to add.
 	function onLocaleSelect(details: { value: string }) {
 		const href = localizeHref(page.url.pathname, { locale: details.value as Locale });
-		window.location.href = base + href;
+		window.location.href = href;
 	}
 
 	let atTop = $state(true);
@@ -133,7 +130,7 @@
 						: 'text-surface-600 hover:text-surface-950'}"
 					aria-label={m.nav_github_aria()}
 				>
-					<Github class="h-5 w-5" />
+					<GithubMark class="h-5 w-5" />
 				</a>
 			</div>
 		</nav>

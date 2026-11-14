@@ -44,10 +44,13 @@ function pngSize(bytes: Buffer): [number, number] {
 const SHOT = png(300, 200);
 const LATEX =
 	'\\documentclass{article}\n\\usepackage{graphicx}\n\\begin{document}\n\n\\begin{figure}\n  \\centering\n  \\includegraphics[width=0.8\\linewidth]{shot.png}\n  \\caption{Shot.}\n\\end{figure}\n\n\\end{document}\n';
-const texpile = useTexpile({ files: { 'crop.tex': LATEX } });
+const GRID =
+	'#figure(\n  grid(\n    columns: 2,\n    gutter: 1em,\n    image("wide.png"),\n    image("wide.png"),\n  ),\n  caption: [Two shots],\n)\n';
+const texpile = useTexpile({ files: { 'crop.tex': LATEX, 'grid.typ': GRID } });
 
 function placeImage(root: string): void {
 	if (!fs.existsSync(path.join(root, 'shot.png'))) fs.writeFileSync(path.join(root, 'shot.png'), SHOT);
+	if (!fs.existsSync(path.join(root, 'wide.png'))) fs.writeFileSync(path.join(root, 'wide.png'), png(900, 600));
 }
 
 async function cropFromTheLeft(page: Page): Promise<void> {
@@ -112,4 +115,23 @@ test('the image tab lists its uses, writes each edit, undoes, and restores the o
 	await page.getByRole('button', { name: 'Restore original' }).click();
 	await expect.poll(() => disk.readBytes('shot.png').equals(SHOT), { message: 'the original back' }).toBe(true);
 	await page.getByRole('button', { name: 'Edit image' }).click();
+});
+
+// a picture wider than its cell was squeezed to the cell's width at its full height, and the figure had no gear
+test("pictures side by side in a Typst figure keep their shape, and the handle's gear opens the grid's settings", async () => {
+	const { page, root } = texpile();
+	placeImage(root);
+	const v = new VisualEditor(page, root);
+	await v.open('grid.typ');
+	const image = page.locator('.typ-grid-cell > .imagePluginRoot > img').first();
+	await expect
+		.poll(async () => {
+			const shown = await image.boundingBox();
+			return shown && shown.height > 10 ? Math.round((shown.width / shown.height) * 10) : 0;
+		})
+		.toBe(15);
+	const [cell, shown] = [(await page.locator('.typ-grid-cell').first().boundingBox())!, (await image.boundingBox())!];
+	expect(shown.width).toBeLessThanOrEqual(cell.width + 1);
+	await v.openBlockSettings(shown.x + shown.width / 2, shown.y + shown.height / 2);
+	await expect(page.getByText('Columns', { exact: true })).toBeVisible();
 });

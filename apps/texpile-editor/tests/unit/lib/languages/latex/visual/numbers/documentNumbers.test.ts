@@ -1,16 +1,17 @@
-import { beforeAll, describe, expect, it } from 'vitest';
+import { beforeAll, describe, expect, it, vi } from 'vitest';
 import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { parseLatexFile } from '$lib/workspace/latexRoundtrip';
 import { parseAuxContents } from '$lib/editor/visual/extensions/tableofcontents/compiled/auxContents';
 import type { CompiledEntry } from '$lib/editor/visual/extensions/tableofcontents/compiled/compiledNumbers';
 import { parseAuxLabels } from '$lib/workspace/auxLabels';
-import { documentNumbers, type NumberAnchors } from '$lib/languages/latex/visual/extensions/numbers/documentNumbers';
+import { documentCount, documentNumbers, type NumberAnchors } from '$lib/languages/latex/visual/extensions/numbers/documentNumbers';
 import { numberingSchemeOf, type NumberingScheme } from '$lib/languages/latex/visual/extensions/numbers/numberingScheme';
 import { loadedPackages } from '$lib/languages/latex/intellisense/packages/loadedPackages';
 import { packageUsesIn } from '$lib/languages/latex/intellisense/packages/packageUses';
 import { loadedRegistry } from '$lib/languages/latex/knowledge/registries/registries';
 import { chipCounts } from '$lib/languages/latex/visual/core/plugin/chipCounts';
+import { eventsBefore } from '$lib/languages/latex/visual/extensions/numbers/readInEvents';
 import { numberedFilesOf } from '$lib/workspace/document/numberedFiles';
 import { pathKey } from '$lib/workspace/fileSystem';
 
@@ -63,6 +64,19 @@ function shown(text: string, anchors: NumberAnchors, standalone = true, scheme =
 	const context = { anchors, scheme, standalone };
 	return [...documentNumbers(doc, chipCounts, context)].map(([pos, n]) => `${doc.nodeAt(pos)!.type.name} ${n.join(' ')}`);
 }
+
+describe('the numbers the count gives labels', () => {
+	// a reference shows these before any compile, so each one has to be what the compile then writes
+	it('are the ones the compile wrote, for the labels on what the editor counts', () => {
+		const doc = parseLatexFile(tex).doc;
+		const { labels } = documentCount(doc, chipCounts, { anchors: NEVER, scheme: SCHEME, standalone: true });
+		const written = parseAuxLabels(aux);
+		// eq:z stands after a \tag in its align, a count the editor does not follow, and is left to the .aux
+		expect([...labels.keys()].sort()).toEqual(['app:sympy', 'eq:two', 'tab:conv', 'texpile-fig-780bbdbbac91', 'thm:a']);
+		for (const [label, { number, kind }] of labels)
+			expect(`${label} ${kind} ${number}`).toBe(`${label} ${written.kinds[label]} ${written.numbers[label]}`);
+	});
+});
 
 describe('documentNumbers', () => {
 	it('shows what the compile printed: the appendix, \\numberwithin, subequations, a \\tag and a \\setcounter', () => {
@@ -193,6 +207,23 @@ describe('documentNumbers', () => {
 		expect(numbersOf(main, '/p/main.tex', true)).toEqual(['heading 1', 'heading 3']);
 		expect(numbersOf(chapter, '/p/chapter.tex', false)).toEqual(['heading 2', 'block_math (1)']);
 		expect(numbersOf(main, '/p/main.tex', true, false)).toEqual(['heading 1']);
+	});
+
+	// on the way back to a long main file edited since, the file still shown asked for it and waited a second
+	it('leaves the start file unread for the start itself and for a file the document never reads in', () => {
+		const texts = {
+			[pathKey('/p/main.tex')]: { path: '/p/main.tex', text: '\\begin{document}\n\\input{chapter}\n\\end{document}\n' },
+			[pathKey('/p/chapter.tex')]: { path: '/p/chapter.tex', text: '\\section{B}\n' }
+		};
+		const files = numberedFilesOf(
+			{ start: '/p/main.tex', root: '/p', texts },
+			{ mathOpeners: { macros: [], environments: [] }, theorems: {} }
+		);
+		const start = vi.spyOn(files, 'start');
+		expect(eventsBefore('/p/other.tex', files)).toBeNull();
+		expect(eventsBefore('/p/main.tex', files)).toBeNull();
+		expect(start).not.toHaveBeenCalled();
+		expect(eventsBefore('/p/chapter.tex', files)).not.toBeNull();
 	});
 
 	it('numbers no chapter of the front matter, and prints what the folder class sets as it loads', async () => {

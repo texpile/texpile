@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 // Painting page records onto a canvas.
-import { buildDrawList } from './renderCore';
+import { buildDrawList, type Outline } from './renderCore';
 import type { DraftFonts } from './draftFonts';
 import type { DraftBitmaps } from './draftBitmaps';
 import type { PaperMetrics } from '../draftPaper';
@@ -16,6 +16,24 @@ export type PaintDeps = {
 	drawingInPdf: (rec: any) => PdfDrawing | undefined;
 };
 
+// a glyph's outline as a canvas path, built once: a page holds thousands of glyphs and few shapes
+const shapes = new WeakMap<Outline, Path2D>();
+function shapeOf(outline: Outline): Path2D {
+	let shape = shapes.get(outline);
+	if (!shape) {
+		shape = new Path2D();
+		for (const c of outline.commands) {
+			if (c.type === 'M') shape.moveTo(c.x!, c.y!);
+			else if (c.type === 'L') shape.lineTo(c.x!, c.y!);
+			else if (c.type === 'C') shape.bezierCurveTo(c.x1!, c.y1!, c.x2!, c.y2!, c.x!, c.y!);
+			else if (c.type === 'Q') shape.quadraticCurveTo(c.x1!, c.y1!, c.x!, c.y!);
+			else shape.closePath();
+		}
+		shapes.set(outline, shape);
+	}
+	return shape;
+}
+
 /* eslint-disable no-param-reassign -- painting sets the canvas context's state */
 /** on a page the PDF does not have, how many drawings came from the compile's PDF and how many it does not hold */
 export type PaintedDrawings = { fromPdf: number; unmatched: number };
@@ -27,15 +45,29 @@ export function paintRecords(ctx: CanvasRenderingContext2D, records: any[], S: n
 	const { ops } = buildDrawList(records, (id) => idMap[id] || null, S, { glyphFill: '#000', ruleFill: '#000' });
 	ctx.save();
 	ctx.translate(d.paper.mx * S, (d.paper.my + dy) * S);
+	const page = ctx.getTransform();
+	let placed = false;
 	for (const op of ops) {
 		if (op.kind === 'glyph') {
-			op.path.fill = op.fill;
+			const shape = shapeOf(op.outline);
+			ctx.setTransform(page.a * op.sx, 0, 0, page.d * op.sy, page.e + page.a * op.x, page.f + page.d * op.y);
+			placed = true;
+			ctx.fillStyle = op.fill;
+			ctx.fill(shape);
 			// a plain antialiased fill reads visibly thinner than the pdf.js raster it
 			// replaces (measured ~25% lighter strokes): a hairline stroke restores the weight
-			op.path.stroke = op.fill;
-			op.path.strokeWidth = 0.3;
-			op.path.draw(ctx);
-		} else if (op.kind === 'rect') {
+			if (op.hairline) {
+				ctx.strokeStyle = op.fill;
+				ctx.lineWidth = 0.3 / op.sy;
+				ctx.stroke(shape);
+			}
+			continue;
+		}
+		if (placed) {
+			ctx.setTransform(page);
+			placed = false;
+		}
+		if (op.kind === 'rect') {
 			ctx.fillStyle = op.fill;
 			ctx.fillRect(op.x, op.y, op.w, op.h);
 		} else if (op.kind === 'image') {

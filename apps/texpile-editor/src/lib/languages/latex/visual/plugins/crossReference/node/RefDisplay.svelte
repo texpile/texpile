@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { jumpToLabel, projectIntelStore, tip, undefinedRefs } from '$lib/languages/latex/visual/core';
+	import { jumpToLabel, projectIntelStore, tip, undefinedRefs, type LabelNumbers } from '$lib/languages/latex/visual/core';
 
 	import type { Node as PMNode } from 'prosemirror-model';
 	import type { EditorView } from 'prosemirror-view';
@@ -8,10 +8,13 @@
 	let {
 		node,
 		view,
+		counted,
 		onJumpToLabel
 	}: {
 		node: PMNode;
 		view: EditorView;
+		/** the numbers the editor's count gives labels, when this one is among them */
+		counted: LabelNumbers | null;
 		/** the label is not drawn in this document; true when the workspace jumped to it */
 		onJumpToLabel?: (name: string) => boolean;
 	} = $props();
@@ -20,7 +23,9 @@
 
 	const command = $derived(String(node.attrs?.command ?? 'ref'));
 
-	const state = $derived(refState(command, label, projectIntelStore.current.auxNumbers, undefinedRefs.current));
+	const state = $derived(
+		refState(command, label, counted?.get(label.trim())?.number, projectIntelStore.current.auxNumbers, undefinedRefs.current)
+	);
 
 	// the anchor in the document decides whether the jump happens, not whether we could resolve a
 	// number. nothing drawn here: the workspace knows this file's raw environments and the other

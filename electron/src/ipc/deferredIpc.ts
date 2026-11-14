@@ -7,7 +7,7 @@
 // asset.
 import { ipcMain } from 'electron';
 import { readSettings } from '../appSettings';
-import { DEFERRED_STEP_CHANNELS, type DeferredStep } from './deferredChannels';
+import { DEFERRED_STEP_CHANNELS, waitsForFirstCall, type DeferredStep } from './deferredChannels';
 
 type Terminal = typeof import('./terminalIpc.js');
 type McpServer = typeof import('../mcp/server.js');
@@ -31,12 +31,14 @@ export function registerDeferredReadyIpc(): void {
 	ipcMain.handle('deferred:ready', async (_e, channel: string) => {
 		void registerDeferredIpc();
 		const last = steps.findLastIndex(([name]) => DEFERRED_STEP_CHANNELS[name].some((c) => channel.startsWith(c)));
-		await (last < 0 ? registerDeferredIpc() : loaded[last].promise);
+		if (last < 0) await registerDeferredIpc();
+		else await (held().has(steps[last][0]) ? run(last) : loaded[last].promise);
 	});
 }
 
 // cheapest and most likely to be wanted first; the MCP server last, as nothing in the UI waits on it.
 // Templates lead: an empty folder opens on the starter picker, which lists the saved ones at once.
+// Some wait for their first call instead (waitsForFirstCall)
 const steps: Array<[DeferredStep, () => Promise<void>]> = [
 	['templates', async () => (await import('./templatesIpc.js')).registerTemplatesIpc()],
 	['snippets', async () => (await import('./snippetsIpc.js')).registerSnippetsIpc()],
@@ -88,10 +90,27 @@ const steps: Array<[DeferredStep, () => Promise<void>]> = [
 const STEP_GAP_MS = 25;
 
 const loaded = steps.map(() => Promise.withResolvers<void>());
+const running: (Promise<void> | undefined)[] = [];
+
+function run(i: number): Promise<void> {
+	return (running[i] ??= steps[i][1]());
+}
+
+let heldSteps: Set<DeferredStep> | null = null;
+
+// read once: a step that waits for its first call stays that way until the app is started again
+function held(): Set<DeferredStep> {
+	if (!heldSteps) {
+		const mcpEnabled = !!readSettings().mcpEnabled;
+		heldSteps = new Set(steps.map(([name]) => name).filter((name) => waitsForFirstCall(name, mcpEnabled)));
+	}
+	return heldSteps;
+}
 
 async function load(): Promise<void> {
-	for (const [i, [, step]] of steps.entries()) {
-		await step();
+	for (const [i, [name]] of steps.entries()) {
+		if (held().has(name)) continue;
+		await run(i);
 		loaded[i].resolve();
 		await new Promise<void>((r) => setTimeout(r, STEP_GAP_MS));
 	}

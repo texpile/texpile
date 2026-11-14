@@ -1,0 +1,99 @@
+// the numbers Typst printed at the last compile, on the elements of the open file that print one. With no compile
+// behind the document its headings and equations take the editor's own count, and the figures count in their views
+import type { Node as PMNode } from 'prosemirror-model';
+import { Plugin, PluginKey } from 'prosemirror-state';
+import { Decoration, DecorationSet } from 'prosemirror-view';
+import { typedInParagraph } from '$lib/editor/visual/extensions/nodeNumbers';
+import { samePath } from '$lib/workspace/fileSystem';
+import { mainFile } from '$lib/workspace/workspaceStore';
+import { onTypstPrintedNumbers, printedNumbersOfFile } from '$lib/stores/typstPrintedNumbers';
+import { matchPrinted } from './matchPrinted';
+import { figureSupplement, numberedElementsOf, type FoundElement } from './numberedElements';
+import { ownNumbersOf } from './ownNumbers';
+
+export type TypstNumbersSetup = { filePath: () => string | null };
+
+type NumbersState = { set: DecorationSet; printed: boolean };
+
+export const typstNumbersKey = new PluginKey<NumbersState>('texpile-typst-numbers');
+
+const NONE: NumbersState = { set: DecorationSet.empty, printed: false };
+
+// a node's own view draws `numbers` as given: an empty list is a number that does not print, no list leaves the counting to the view
+function nodeDecoration(doc: PMNode, element: FoundElement, number: string | null, captionPrefix: string): Decoration {
+	const node = doc.nodeAt(element.pos)!;
+	const end = element.pos + node.nodeSize;
+	const numbers = number === null ? [] : [number];
+	const name = node.type.name;
+	if (name === 'heading' || name === 'image')
+		return Decoration.node(element.pos, end, number === null ? {} : { 'data-number': number }, { numbers });
+	return Decoration.node(element.pos, end, {}, name === 'typ_figure' ? { numbers, captionPrefix } : { numbers });
+}
+
+// a file another .typ reads in starts its count where that document has got to, which the editor does not see
+function countsFromItsStart(path: string | null): boolean {
+	const main = mainFile.current;
+	return !main || !/\.typ$/i.test(main) || (!!path && samePath(main, path));
+}
+
+function ownCount(doc: PMNode, path: string | null): NumbersState {
+	const drawn = countsFromItsStart(path) ? ownNumbersOf(doc)?.drawn : null;
+	if (!drawn?.size) return NONE;
+	const decorations: Decoration[] = [];
+	for (const [pos, number] of drawn) {
+		const node = doc.nodeAt(pos)!;
+		const heading = node.type.name === 'heading';
+		decorations.push(Decoration.node(pos, pos + node.nodeSize, heading ? { 'data-number': number } : {}, { numbers: [number] }));
+	}
+	return { set: DecorationSet.create(doc, decorations), printed: false };
+}
+
+function decorate(doc: PMNode, path: string | null): NumbersState {
+	const known = printedNumbersOfFile(path);
+	if (!known) return ownCount(doc, path);
+	const elements = numberedElementsOf(doc);
+	const whole = !!path && samePath(known.main, path) && !elements.some((e) => e.kind === 'include');
+	const printed = matchPrinted(elements, known.items, whole);
+	const decorations: Decoration[] = [];
+	const notes = new Map<number, string[]>();
+	elements.forEach((element, i) => {
+		const number = printed[i]?.number ?? null;
+		if (element.kind === 'include') return;
+		if (element.kind === 'footnote') notes.set(element.pos, [...(notes.get(element.pos) ?? []), number ?? '']);
+		else {
+			const node = doc.nodeAt(element.pos)!;
+			// the word the figure itself writes outranks the printed one: it may have changed since the compile
+			const supplement = (node.type.name === 'typ_figure' && figureSupplement(node.attrs.typFigure)) || printed[i]?.supplement || '';
+			decorations.push(nodeDecoration(doc, element, number, number === null ? '' : `${supplement ? `${supplement} ` : ''}${number}: `));
+		}
+	});
+	for (const [pos, joined] of notes)
+		decorations.push(Decoration.node(pos, pos + doc.nodeAt(pos)!.nodeSize, {}, { footnotes: joined.join(',') }));
+	return { set: DecorationSet.create(doc, decorations), printed: true };
+}
+
+// before the footnote plugin of the drawn chips: a chip reads the first `footnotes` it is handed
+export function typstNumbersPlugin(setup: TypstNumbersSetup): Plugin<NumbersState> {
+	return new Plugin<NumbersState>({
+		key: typstNumbersKey,
+		state: {
+			init: (_, state) => decorate(state.doc, setup.filePath()),
+			apply: (tr, state) => {
+				if (!tr.docChanged && !tr.getMeta(typstNumbersKey)) return state;
+				if (!tr.getMeta(typstNumbersKey) && typedInParagraph(tr)) return { ...state, set: state.set.map(tr.mapping, tr.doc) };
+				return decorate(tr.doc, setup.filePath());
+			}
+		},
+		props: {
+			decorations: (state) => typstNumbersKey.getState(state)?.set,
+			// the view's own figure counting stops when numbers are printed
+			attributes: (state): Record<string, string> => (typstNumbersKey.getState(state)?.printed ? { 'data-compiled-numbers': 'true' } : {})
+		},
+		view(view) {
+			const stop = onTypstPrintedNumbers(() => {
+				if (!view.isDestroyed) view.dispatch(view.state.tr.setMeta(typstNumbersKey, true).setMeta('addToHistory', false));
+			});
+			return { destroy: stop };
+		}
+	});
+}

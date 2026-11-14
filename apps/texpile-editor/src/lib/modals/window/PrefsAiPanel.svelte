@@ -1,6 +1,5 @@
 <script lang="ts">
 	// The AI category: the MCP server an assistant connects to, the agent Refine runs, and the Agent tab's.
-	import { Switch } from '@skeletonlabs/skeleton-svelte';
 	import { settings, updateSettings, setMcpEnabled } from '$lib/settings';
 	import { agentName, isPresetAgent, PRESET_AGENTS, type RefineAgent } from '$lib/ai/selectionRefiner';
 	import { lookUpRefineAgents, refineAgentsTicked, refineInstalled } from '$lib/ai/refineAgents.svelte';
@@ -11,6 +10,7 @@
 	import AgentPanelPrefs from '$lib/ai/agentPanel/ui/AgentPanelPrefs.svelte';
 	import { setAiOff } from '$lib/ai/aiSwitch';
 	import PrefsRow from './rows/PrefsRow.svelte';
+	import PrefsSwitchRow from './rows/PrefsSwitchRow.svelte';
 	import { m } from '$lib/paraglide/messages';
 
 	const ROW = 'border-surface-200-800 flex items-start justify-between gap-6 border-b py-4 last:border-b-0';
@@ -84,24 +84,13 @@
 	{/if}
 {/snippet}
 
-{#snippet toggle(checked: boolean, onChange: (v: boolean) => void)}
-	<Switch {checked} onCheckedChange={(d) => onChange(d.checked)}>
-		<Switch.Control><Switch.Thumb /></Switch.Control>
-		<Switch.HiddenInput />
-	</Switch>
-{/snippet}
-
-<PrefsRow id="ai-off">
-	{@render toggle(settings.current.aiOff === true, (v) => void onAiOff(v))}
-</PrefsRow>
+<PrefsSwitchRow id="ai-off" checked={settings.current.aiOff === true} onChange={(v) => void onAiOff(v)} />
 
 <!-- what the switch turns off stays in sight, as it was picked, for when it is turned back on -->
 <div class:opacity-50={settings.current.aiOff} inert={settings.current.aiOff}>
 	<!-- persisted through the main process, not updateSettings: flipping this also has to start or stop the
 	     loopback server, and main owns it -->
-	<PrefsRow id="mcp">
-		{@render toggle(settings.current.mcpEnabled === true, (v) => void onMcpToggle(v))}
-	</PrefsRow>
+	<PrefsSwitchRow id="mcp" checked={settings.current.mcpEnabled === true} onChange={(v) => void onMcpToggle(v)} />
 	{#if settings.current.mcpEnabled === true && mcp}
 		<div class="border-surface-200-800 flex items-center justify-between gap-3 border-b py-3">
 			{#if mcp.running && mcp.port}

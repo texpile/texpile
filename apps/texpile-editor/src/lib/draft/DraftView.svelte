@@ -15,6 +15,7 @@
 	import { pagesInverted } from '$lib/preview/invertColors/pagesInverted';
 	import { wheelZoomFactor } from '$lib/preview/zoom/wheelZoom';
 	import ProgressLine from '$lib/components/progress/ProgressLine.svelte';
+	import DraftWaiting from './waiting/DraftWaiting.svelte';
 	import { DraftSession } from './draftSession.svelte';
 	import type { TeleportOutcome } from './draftTeleport.svelte';
 	import { openToolchainPrefs } from '$lib/stores/dialogStore';
@@ -76,6 +77,10 @@
 	/** an edit: the engine typesets from the last point before it and the changed pages replace the shown ones */
 	export function teleportEdit(file: string, text: string): Promise<TeleportOutcome> {
 		return ctrl.teleport.edit(file, text);
+	}
+	/** the caret rests in a paragraph: an engine reads on to it, so the first key typed there shows at once */
+	export function stageAt(file: string, text: string, line: number): void {
+		ctrl.teleport.stage(file, text, line);
 	}
 	/** forward sync: scroll + flash the box synctex reported for a source line. */
 	export function syncTo(pageNo: number, hBp: number, vBp: number, wBp: number, hgtBp: number) {
@@ -234,10 +239,9 @@
 		]}
 	/>
 	<ProgressLine active={compiler.compiling && !compiler.quiet} label={compiler.status} />
-	{#if compiler.installing}
+	{#if compiler.installing && ctrl.pages.length}
+		<!-- with no pages yet the list in the pane names the install -->
 		<p class="text-muted m-3 shrink-0 text-center text-sm">{m.draft_status_installing({ file: compiler.installing })}</p>
-	{:else if compiler.slow}
-		<p class="text-muted m-3 shrink-0 text-center text-sm">{m.draft_first_compile_slow()}</p>
 	{/if}
 	{#if compiler.missingTool}
 		<div class="text-error-ink bg-surface-50-950 rounded-container m-3 flex shrink-0 items-center gap-3 p-3 text-xs">
@@ -300,5 +304,15 @@
 				{/each}
 			</div>
 		</ColorVisionFilter>
+		{#if !ctrl.pages.length && compiler.progress.started.length}
+			<!-- outside the scroller, whose scrollbar gutter puts a child left of the pane's middle -->
+			<div class="absolute inset-0 flex overflow-auto p-5">
+				<DraftWaiting progress={compiler.progress} {mainFile} />
+			</div>
+		{:else if !ctrl.pages.length && ctrl.empty && !compiler.error}
+			<div class="absolute inset-0 flex p-5">
+				<p class="text-muted m-auto text-center text-sm">{m.draft_empty()}</p>
+			</div>
+		{/if}
 	</div>
 </div>

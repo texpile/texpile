@@ -8,6 +8,8 @@ export type ReadInFile = { path: string; events: NumberEvent[] };
 /** the folder's files as the document reads them in */
 export type NumberedFiles = {
 	start(): ReadInFile | null;
+	/** whether the document reads the file at `path` in, after its start; known without reading the start */
+	readsIn?(path: string): boolean;
 	/** the file an include in the file at `from` reads in, null when the folder has no such file */
 	readIn(include: TexInclude, from: string): ReadInFile | null;
 };
@@ -52,6 +54,9 @@ export function withReadIn(events: NumberEvent[], path: string, files: NumberedF
 
 /** what the document numbers before it first reads in the file at `path`, null when it never does */
 export function eventsBefore(path: string, files: NumberedFiles): NumberEvent[] | null {
+	// nothing comes before the start itself or a file the document never reads in, and asking the start for its
+	// events parses it whole: 1 s on the way back to a long main file edited since
+	if (files.readsIn && !files.readsIn(path)) return null;
 	const start = files.start();
 	if (!start) return null;
 	const { events, stopped } = spliced(start.events, start.path, files, path);

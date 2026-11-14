@@ -26,7 +26,24 @@ Delta paragraph.
 \\end{document}
 `;
 
-const texpile = useTexpile({ files: { 'unit.tex': TEX } });
+const CENTERED = `\\documentclass{article}\n\\usepackage{tikz}\n\\begin{document}\n\nBefore.\n\n\\begin{center}\n\\begin{tikzpicture}\n  \\node[draw] (a) at (0,0) {A};\n\\end{tikzpicture}\n\\end{center}\n\nAfter.\n\n\\begin{equation}\nE = mc^2\n\\end{equation}\n\n\\end{document}\n`;
+
+const BARE_TABLE = `\\documentclass{article}\n\\begin{document}\n\nBefore.\n\n\\begin{center}\n\\begin{tabular}{|l|r|}\n\\hline\nName & Value \\\\\n\\hline\n\\end{tabular}\n\\end{center}\n\nAfter.\n\n\\end{document}\n`;
+
+const FLOAT = `\\documentclass{article}\n\\begin{document}\n\nBefore.\n\n\\begin{table}[h]\n\\centering\n\\caption{Results}\n\\begin{tabular}{ll}\na & b \\\\\n\\end{tabular}\n\\end{table}\n\nAfter.\n\n\\end{document}\n`;
+
+const LINES = `\\documentclass{article}\n\\begin{document}\n\n\\section{Heading}\n\nA line.\n\n\\begin{equation}\nE = mc^2\n\\end{equation}\n\n\\end{document}\n`;
+
+const texpile = useTexpile({
+	files: {
+		'unit.tex': TEX,
+		'centered.tex': CENTERED,
+		'bare.tex': BARE_TABLE,
+		'held.tex': BARE_TABLE,
+		'float.tex': FLOAT,
+		'lines.tex': LINES
+	}
+});
 
 type Box = { left: number; right: number; top: number; bottom: number };
 
@@ -91,4 +108,141 @@ test('the handle over a theorem moves the whole theorem', async () => {
 	expect(count(saved, '\\end{theorem}')).toBe(1);
 	expect(saved.indexOf('Delta paragraph')).toBeLessThan(saved.indexOf('\\begin{theorem}'));
 	await undoRestores(v, disk, 'unit.tex', TEX);
+});
+
+test("the handle's gear sets a centered figure's alignment and opens an equation's settings", async () => {
+	const { page, root } = texpile();
+	const v = new VisualEditor(page, root);
+	const disk = new Disk(root);
+	await v.open('centered.tex');
+	const gear = page.locator('.block-handle-settings');
+
+	const card = page.locator('.figure-card').first();
+	await card.scrollIntoViewIfNeeded();
+	const c = (await card.boundingBox())!;
+	await page.mouse.move(c.x + c.width / 2, c.y + c.height / 2, { steps: 4 });
+	await gear.click();
+	const panel = page.locator('.drawn-chip-panel');
+	await expect(panel.getByRole('radio', { name: 'Center' })).toHaveAttribute('aria-checked', 'true');
+	await panel.getByRole('radio', { name: 'Right' }).click();
+	await expect.poll(() => disk.read('centered.tex')).toContain('\\begin{flushright}\n\\begin{tikzpicture}');
+	await page.keyboard.press('Escape');
+	await page.locator('.ProseMirror p', { hasText: 'After.' }).click();
+
+	const equation = page.locator('.ProseMirror > .block-math-container');
+	const e = (await equation.boundingBox())!;
+	await page.mouse.move(e.x + e.width / 2, e.y + e.height / 2, { steps: 4 });
+	// the equation's own gear is the handle's now
+	await expect(equation.locator('.math-settings-btn')).toBeHidden();
+	await gear.click();
+	const settings = page.locator('[data-scope="popover"][data-part="content"][data-state="open"]');
+	await expect(settings).toBeVisible();
+	const [g, s2] = [(await gear.boundingBox())!, (await settings.boundingBox())!];
+	expect(Math.abs(s2.x + s2.width - (g.x + g.width)), "the settings hang from the gear's right edge").toBeLessThan(4);
+});
+
+test('the handle waits for the pointer in the margin beside a tall block', async () => {
+	const { page, root } = texpile();
+	const v = new VisualEditor(page, root);
+	await v.open('centered.tex');
+	const card = page.locator('.figure-card').first();
+	await card.scrollIntoViewIfNeeded();
+	const block = (await page.locator('.ProseMirror > .tex-environment').first().boundingBox())!;
+	const middle = block.y + block.height / 2;
+	await page.mouse.move(block.x + block.width / 2, middle, { steps: 4 });
+	const remove = page.locator('.block-handle-btn-danger');
+	await expect(remove).toBeVisible();
+	// sideways into the margin, level with the block's middle and well under the button, then up to it
+	await page.mouse.move(block.x + block.width + 19, middle, { steps: 8 });
+	await page.waitForTimeout(400);
+	await expect(remove).toBeVisible();
+	await page.mouse.move(block.x + block.width + 19, block.y + 11, { steps: 8 });
+	await page.waitForTimeout(200);
+	const button = (await remove.boundingBox())!;
+	expect(Math.abs(button.y - block.y), "still on the block's first line").toBeLessThan(8);
+});
+
+// it stood at the block's top edge, 15px over the middle of a heading's line
+test('the handle stands level with a heading and with the middle of a formula', async () => {
+	const { page, root } = texpile();
+	const v = new VisualEditor(page, root);
+	await v.open('lines.tex');
+	const plus = page.locator('.block-handle-btn').first();
+	for (const block of [page.locator('.ProseMirror > h1'), page.locator('.ProseMirror > .block-math-container')]) {
+		await expect
+			.poll(async () => {
+				const at = (await block.boundingBox())!;
+				await page.mouse.move(5, 5);
+				await page.mouse.move(at.x + at.width / 2, at.y + at.height / 2, { steps: 4 });
+				const button = await plus.boundingBox();
+				return button ? Math.abs(button.y + button.height / 2 - (at.y + at.height / 2)) : null;
+			})
+			.toBeLessThan(3);
+	}
+});
+
+test("a table in center gets a caption and a number from the handle's gear", async () => {
+	const { page, root } = texpile();
+	const v = new VisualEditor(page, root);
+	const disk = new Disk(root);
+	await v.open('bare.tex');
+	const table = (await page.locator('.ProseMirror > .tex-environment').first().boundingBox())!;
+	await v.openBlockSettings(table.x + table.width / 2, table.y + table.height / 2);
+	const settings = page.locator('.bare-table-settings');
+	await expect(settings.getByRole('radio', { name: 'Center' })).toHaveAttribute('aria-checked', 'true');
+	await settings.getByText('Caption and number').click();
+	await expect(page.locator('.ProseMirror > .table-wrapper')).toHaveCount(1);
+	await expect.poll(() => disk.read('bare.tex')).toContain('\\begin{table}');
+	const saved = disk.read('bare.tex');
+	expect(saved).not.toContain('\\begin{center}');
+	expect(saved).toContain('\\begin{tabular}{|l|r|}');
+	// and back: the float's own settings take the caption and the number away
+	const float = (await page.locator('.ProseMirror > .table-wrapper').boundingBox())!;
+	await v.openBlockSettings(float.x + float.width / 2, float.y + 12);
+	await page.locator('[data-part="label"]:visible', { hasText: 'Caption and number' }).click();
+	await expect(page.locator('.ProseMirror > .table-wrapper')).toHaveCount(0);
+	await disk.expectFile(
+		'bare.tex',
+		(text) => text.includes('\\begin{center}') && !text.includes('\\begin{table}'),
+		'the table is in center again'
+	);
+	expect(disk.read('bare.tex')).not.toContain('\\caption');
+});
+
+// the switch only showed notes a float already had, and one read from a file had none
+test('Show notes section gives a float read from a file its notes', async () => {
+	const { page, root } = texpile();
+	const v = new VisualEditor(page, root);
+	const disk = new Disk(root);
+	await v.open('float.tex');
+	const float = (await page.locator('.ProseMirror > .table-wrapper').boundingBox())!;
+	await v.openBlockSettings(float.x + float.width / 2, float.y + 12);
+	await page.locator('[data-part="label"]:visible', { hasText: 'Show notes section' }).click();
+	await page.keyboard.press('Escape');
+	const notes = page.locator('.ProseMirror .table-notes');
+	await expect(notes).toBeVisible();
+	await notes.click();
+	await page.keyboard.type('Source: survey.');
+	await disk.expectFile('float.tex', (text) => text.includes('{\\small Source: survey.}'), 'the notes are in the file');
+	// off takes the section away: hidden notes were written without their wrapper once the switch went back
+	const again = (await page.locator('.ProseMirror > .table-wrapper').boundingBox())!;
+	await v.openBlockSettings(again.x + again.width / 2, again.y + 12);
+	await page.locator('[data-part="label"]:visible', { hasText: 'Show notes section' }).click();
+	await disk.expectFile('float.tex', (text) => text === FLOAT, 'the file is as it was read');
+});
+
+test('right-clicking a table offers its settings, which open with the alignment of the block it stands alone in', async () => {
+	test.skip(process.platform === 'darwin', 'the editor context menu is native on macOS');
+	const { page, root } = texpile();
+	const v = new VisualEditor(page, root);
+	await v.open('held.tex');
+	const cell = (await page.locator('.ProseMirror > .tex-environment td').first().boundingBox())!;
+	await page.mouse.click(cell.x + cell.width / 2, cell.y + cell.height / 2, { button: 'right' });
+	await page.getByRole('menuitem', { name: 'Table settings', exact: true }).click();
+	const settings = page.locator('.bare-table-settings');
+	await expect(settings.getByRole('radiogroup', { name: 'Alignment' }).getByRole('radio', { name: 'Center' })).toHaveAttribute(
+		'aria-checked',
+		'true'
+	);
+	await page.keyboard.press('Escape');
 });

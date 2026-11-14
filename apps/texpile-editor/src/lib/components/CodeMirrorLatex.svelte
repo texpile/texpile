@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { onMount, onDestroy } from 'svelte';
-	import { EditorView, keymap, drawSelection, placeholder as cmPlaceholder, type KeyBinding } from '@codemirror/view';
+	import { EditorView, keymap, placeholder as cmPlaceholder, type KeyBinding } from '@codemirror/view';
+	import { cmDrawnSelection } from '$lib/editor/cmDrawnSelection';
 	import { EditorState, Compartment, type Extension } from '@codemirror/state';
 	import { defaultKeymap, history, historyKeymap } from '@codemirror/commands';
 	import { tabIndentBinding } from '$lib/editor/source/extensions/keybindings/cmTabKey';
@@ -90,7 +91,7 @@
 					tabIndentBinding
 				]),
 				history(),
-				drawSelection(),
+				cmDrawnSelection(),
 				cmSyntaxHighlight(),
 				// tooltipsInBody renders the autocomplete popup on document.body so it
 				// escapes parent scroll/overflow containers

@@ -16,6 +16,12 @@ const HYPHEN_MINS: Record<HyphenationLanguage, [left: number, right: number]> = 
 
 const files = import.meta.glob<string>('./patterns/*.txt', { query: '?raw', import: 'default' });
 const loaded = new Map<HyphenationLanguage, Promise<Hyphenator>>();
+const ready = new Map<HyphenationLanguage, Hyphenator>();
+
+/** the hyphenator for a language whose patterns are already in, without a wait */
+export function readyHyphenator(language: HyphenationLanguage): Hyphenator | undefined {
+	return ready.get(language);
+}
 
 export function loadHyphenator(language: HyphenationLanguage): Promise<Hyphenator> {
 	let hyphenator = loaded.get(language);
@@ -23,9 +29,11 @@ export function loadHyphenator(language: HyphenationLanguage): Promise<Hyphenato
 		const [leftMin, rightMin] = HYPHEN_MINS[language];
 		// not every language ships a list of exceptions
 		const exceptions = files[`./patterns/hyph-${language}.hyp.txt`]?.() ?? Promise.resolve('');
-		hyphenator = Promise.all([files[`./patterns/hyph-${language}.pat.txt`](), exceptions]).then(([patterns, listed]) =>
-			createHyphenator({ patterns, exceptions: listed, leftMin, rightMin })
-		);
+		hyphenator = Promise.all([files[`./patterns/hyph-${language}.pat.txt`](), exceptions]).then(([patterns, listed]) => {
+			const made = createHyphenator({ patterns, exceptions: listed, leftMin, rightMin });
+			ready.set(language, made);
+			return made;
+		});
 		loaded.set(language, hyphenator);
 	}
 	return hyphenator;

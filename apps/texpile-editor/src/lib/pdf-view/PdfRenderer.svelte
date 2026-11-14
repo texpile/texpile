@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { BROWSER } from 'esm-env';
 	import { onDestroy, onMount } from 'svelte';
+	import { pdfPlaceOf, rememberPdfPlace } from './pdfPlaces';
 	import { getPdfViewerContext, type PdfViewerActions, type PdfSource } from './pdf-viewer/context';
 	import { getPdfJs, getPdfDocument } from './pdf-viewer/pdfjs-singleton';
 	import { PdfPresentationMode } from './pdf-viewer/PdfPresentationMode';
@@ -156,6 +157,8 @@
 				eventBus.on('updateviewarea', (evt: Record<string, unknown>) => {
 					const location = evt.location as { pageNumber: number };
 					viewerState.currentPage = location.pageNumber;
+					const place = loadedKey === undefined ? null : viewer?.getScrollAnchor();
+					if (place && loadedKey !== undefined) rememberPdfPlace(loadedKey, place);
 				});
 
 				eventBus.on('pagesloaded', (evt: Record<string, unknown>) => {
@@ -196,8 +199,7 @@
 
 			// getPdfDocument, not pdfjs.getDocument: the task must not adopt the shared worker, or the
 			// destroy below (and every other document's) would tear it down for the whole app.
-			// ownerDocument is where THIS viewer's canvases live - the popped-out preview window's
-			// document when detached - so the PDF's fonts register where they will be drawn.
+			// the document of the window this viewer shows in: the popped-out preview has its own
 			const loadingTask = await getPdfDocument(documentSource, scrollContainerEl.ownerDocument);
 			if (!loadingTask) return;
 			toDestroy = loadingTask; // if the parse rejects, the task itself still needs freeing
@@ -209,9 +211,11 @@
 			}
 
 			// reload of the same document (a recompile): note where we are so the fresh pages land
-			// back there. A different documentKey is a genuine document switch, so start at the top.
+			// back there. Another document opens where it was left, or at the top the first time.
 			const key = context.documentKey;
-			const anchor = key !== undefined && key === loadedKey ? v.getScrollAnchor() : null;
+			const anchor = key === undefined ? null : key === loadedKey ? v.getScrollAnchor() : pdfPlaceOf(key);
+			// the pages on their way in report the top, which is no place anyone left
+			loadedKey = undefined;
 
 			overlay = snapshotOverlay();
 
@@ -226,7 +230,7 @@
 			}
 			toDestroy = null; // the live viewer now owns it; a later load's cleanup() will destroy it
 			findController?.setDocument(loadedPdfDocument);
-			presentationMode.setDocument(loadedPdfDocument);
+			presentationMode.setDocument(loadedPdfDocument, scrollContainerEl.ownerDocument);
 			v.restoreScrollAnchor(anchor ?? { page: 1, fraction: 0 });
 
 			if (overlay) {
@@ -375,5 +379,7 @@
 		flex: 1;
 		min-height: 0;
 		overflow: hidden;
+		/* the pages' layers stack among themselves: a link's box showed through the cover a resize puts over the pane */
+		isolation: isolate;
 	}
 </style>

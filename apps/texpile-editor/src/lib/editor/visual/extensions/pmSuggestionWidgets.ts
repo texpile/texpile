@@ -5,6 +5,7 @@ import { renderStaticMath } from './mathlivebridge/mathStatic';
 import { mathSyntaxOf } from './mathlivebridge/mathFieldFactory';
 import { oldContentSerializer } from './oldContentSerializer';
 import { tintElement } from '$lib/editor/visual/highlight/paintRange';
+import { cachedDrawing, loadSavedDrawing, onDrawingsChange, pictureKey } from '$lib/draw/host/drawingCache';
 
 const SUGGESTION_TINTS = {
 	new: ['var(--diff-insert-tint)', 18, 34],
@@ -68,10 +69,47 @@ export function oldWordsElement(schema: Schema, runs: OldRun[], id: string, focu
 	return span;
 }
 
+const TIKZ_BEGIN = '\\begin{tikzpicture}';
+const TIKZ_END = '\\end{tikzpicture}';
+
+// the one picture a block holds, as its card names it: a TikZ environment, alone or in its float, or a CeTZ canvas without its #
+function pictureIn(source: string): string | null {
+	const text = source.trim().replace(/^#/, '');
+	if (/^(cetz\.)?canvas\(/.test(text)) return text;
+	const from = text.indexOf(TIKZ_BEGIN);
+	const to = text.lastIndexOf(TIKZ_END);
+	if (from < 0 || to < from || text.includes(TIKZ_BEGIN, from + 1)) return null;
+	return text.slice(from, to + TIKZ_END.length);
+}
+
+/** the picture the old node holds, when the node that took its place holds another */
+export function replacedPicture(was: PMNode, now: PMNode): string | null {
+	const picture = was.isBlock ? pictureIn(was.textContent) : null;
+	return picture && picture !== pictureIn(now.textContent) ? picture : null;
+}
+
+// the picture as the figure engine drew it, in place of its source once that drawing is kept
+function showOldPicture(holder: HTMLElement, picture: string): void {
+	const key = pictureKey(picture);
+	function draw(): boolean {
+		const svg = cachedDrawing(key);
+		const drawn = svg && new DOMParser().parseFromString(svg, 'image/svg+xml').documentElement;
+		if (!drawn || drawn.nodeName !== 'svg') return false;
+		holder.classList.add('pm-suggest-drawn');
+		holder.replaceChildren(document.importNode(drawn, true));
+		return true;
+	}
+	if (draw()) return;
+	const stop = onDrawingsChange(() => {
+		if (!holder.isConnected || draw()) stop();
+	});
+	void loadSavedDrawing(key);
+}
+
 // the node as it was, beside the one it is now: a formula typeset by the same renderer that draws the
-// new one, anything else as its source, since a node that draws itself has no words to strike. One
-// that is all attributes (an include) has no source here, and reads as its schema form
-export function oldNodeElement(node: PMNode, id: string, focused: boolean): HTMLElement {
+// new one, a picture as it was drawn, anything else as its source, since a node that draws itself has
+// no words to strike. One that is all attributes (an include) has no source here, and reads as its schema form
+export function oldNodeElement(node: PMNode, id: string, focused: boolean, picture: string | null = null): HTMLElement {
 	const block = node.isBlock;
 	const holder = document.createElement(block ? 'div' : 'span');
 	holder.className = `pm-suggest-old pm-suggest-was${focused ? ' pm-suggest-focused' : ''}`;
@@ -84,6 +122,7 @@ export function oldNodeElement(node: PMNode, id: string, focused: boolean): HTML
 		const code = document.createElement('code');
 		code.textContent = node.textContent;
 		holder.appendChild(code);
+		if (picture) showOldPicture(holder, picture);
 	}
 	return holder;
 }

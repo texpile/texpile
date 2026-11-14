@@ -94,6 +94,8 @@ export type DocumentBufferDeps = {
 	clearPendingAnchor(): void;
 	/** macro-defining text from the main file's include chain, as the parse saw it */
 	projectMacros?(): string;
+	/** a parse of `source` is about to be drawn */
+	adoptingText?(source: string): void;
 	offerInserts?(file: InsertSource): Promise<unknown> | null;
 	/** the document a file's text parses to, for the save check; null when it cannot be parsed
 	 *  now (a timeout), which leaves the file as serialized. Absent: no save check */
@@ -368,6 +370,7 @@ export class DocumentBuffer {
 	}
 
 	adoptParsed(parsed: ParsedLatexFile, source: string): void {
+		this.deps.adoptingText?.(source);
 		this.docMeta = { preamble: parsed.preamble, postamble: parsed.postamble, hadDocumentEnv: parsed.hadDocumentEnv, table: parsed.table };
 		this.visualDoc = parsed.doc;
 		this.lastDoc = parsed.doc;

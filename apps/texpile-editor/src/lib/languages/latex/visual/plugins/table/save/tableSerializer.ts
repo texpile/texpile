@@ -115,11 +115,8 @@ function wrapper(node: Node, serializeNode: SerializeNodeFn): string {
 	const tableNode = childByType(node, 'table');
 	const notesNode = childByType(node, 'table_notes');
 	const notesSize = typeof node.attrs.notesSize === 'string' && node.attrs.notesSize ? node.attrs.notesSize : 'small';
-	// notes with text are written whether or not the switch shows them: typed text is never dropped
-	const notes =
-		notesNode && (node.attrs.showNotes || notesNode.childCount > 0)
-			? `\\par\\smallskip\n{\\${notesSize} ${renderInline(notesNode, serializeNode)}}`
-			: '';
+	// an empty notes section writes nothing: `{\small }` reads back as no notes and prints a skip
+	const notes = notesNode && notesNode.childCount > 0 ? `\\par\\smallskip\n{\\${notesSize} ${renderInline(notesNode, serializeNode)}}` : '';
 	if (captionNode && tableNode && captionNode.attrs.rowAt != null && tableNode.attrs.env === 'longtable') {
 		const longtable = assembleTable(tableNode, serializeNode, captionRowOf(node, captionNode, serializeNode));
 		return notes ? `${longtable}\n${notes}` : longtable;
@@ -161,7 +158,8 @@ function wrapper(node: Node, serializeNode: SerializeNodeFn): string {
 	const belowParts = [caption.replace(/\n$/, ''), labels.replace(/\n+$/, '')].filter(Boolean);
 	const above = node.attrs.captionBelow ? '' : `${caption}${labels}`;
 	const below = node.attrs.captionBelow && belowParts.length ? `\n${belowParts.join('\n')}` : '';
-	return `\\begin{${env}}${placement}\n${centering}${above}${preBody}${body}${below}\n${notes}${postBody}\n\\end{${env}}\n`;
+	const tail = notes || postBody ? `\n${notes}${postBody}` : '';
+	return `\\begin{${env}}${placement}\n${centering}${above}${preBody}${body}${below}${tail}\n\\end{${env}}\n`;
 }
 
 function buildRowspanCoverage(table: Node): RowspanCoverage {

@@ -32,7 +32,7 @@ import type { Node as PMNode } from 'prosemirror-model';
 export type VisualCollabBridgeDeps = {
 	doc: DocumentBuffer;
 	parser: VisualParser;
-	parse(text: string): Promise<{ parsed?: ParsedLatexFile }>;
+	parse(text: string, abandon?: AbortSignal): Promise<{ parsed?: ParsedLatexFile }>;
 };
 
 /** the api object VisualCollab reads and writes through */
@@ -51,7 +51,7 @@ export function visualCollabBridge(deps: VisualCollabBridgeDeps) {
 		get sourceMap() {
 			return doc.sourceMap;
 		},
-		parse: async (text: string) => (await deps.parse(text)).parsed ?? null,
+		parse: async (text: string, abandon?: AbortSignal) => (await deps.parse(text, abandon)).parsed ?? null,
 		adopt: (parsed: ParsedLatexFile, liveDoc: PMNode, text: string) => doc.adoptPatched(parsed, liveDoc, text),
 		commit(content: string) {
 			isDirty.current = content !== doc.diskBaseline;

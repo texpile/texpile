@@ -4,7 +4,7 @@ import { blockChipView, inlineChipView } from '$lib/languages/latex/visual/exten
 import { tikzLanguage } from '$lib/draw/tikz/tikzLanguage';
 import type { Plugin } from 'prosemirror-state';
 import { EditorState, type Transaction } from 'prosemirror-state';
-import type { EditorProps } from 'prosemirror-view';
+import type { EditorProps, EditorView } from 'prosemirror-view';
 import { schema } from '$lib/languages/latex/schema/latexPMSchema';
 import { keymap } from 'prosemirror-keymap';
 import { pmCommandKeys } from '$lib/keybindings/editors/pmCommandKeys';
@@ -24,6 +24,7 @@ import {
 } from '$lib/editor/visual/selectDocBoundary';
 import { lineEdgeKeys } from '$lib/editor/visual/lineEdgeArrows';
 import { gapCursorWithArrows } from '$lib/editor/visual/gapArrows';
+import { hiddenSelectionPlugin } from '$lib/editor/visual/highlight/hiddenSelection';
 import { createMathField } from '$lib/editor/visual/extensions/mathlivebridge/mlcommands';
 import { createCodeBlock } from '$lib/editor/visual/extensions/codemirrorbridge/cmcommands';
 import { cmarrowHandlers } from '$lib/editor/visual/extensions/codemirrorbridge/cmarrowhandler';
@@ -32,7 +33,9 @@ import { dropCursor } from 'prosemirror-dropcursor';
 import { tableEditing, goToNextCell } from 'prosemirror-tables';
 import { tableViewOnly } from '$lib/editor/visual/extensions/table/tableViewOnly';
 import { wholeTableEdits } from '$lib/editor/visual/extensions/table/wholeTableEdits';
-import { tableArrowEntry } from '$lib/editor/visual/extensions/table/tableArrowEntry';
+import { tableArrowEntry } from '$lib/editor/visual/extensions/table/caret/tableArrowEntry';
+import { tableArrowExit } from '$lib/editor/visual/extensions/table/caret/tableArrowExit';
+import { tabThroughCells } from '$lib/editor/visual/extensions/table/rows/addTableRow';
 import { crossBlockEdits } from '$lib/editor/visual/extensions/crossBlockEdits';
 import { imagePlugin } from '$lib/editor/visual/extensions/image';
 import { createCursorPlugin } from '$lib/editor/visual/extensions/cursor-plugin';
@@ -143,12 +146,14 @@ export function latexEditorPlugins(setup: LatexEditorSetup): Plugin[] {
 		macroJumpPlugin(jumpToDefinition),
 		labelRenameUndo,
 		gapCursorWithArrows(),
+		hiddenSelectionPlugin(),
 		// drop cursor is inline-styled (not CSS-targetable) and its default black vanishes on dark
 		dropCursor({ color: 'var(--color-primary-500)', width: 2, class: 'pm-drop-cursor' }),
 		// TableView without the drag: a LaTeX column width lives in the colspec and only exists
 		// for p{}/tabularx columns, so a dragged l/c/r column had nowhere to be written and was
 		// discarded on the next parse. See tableViewOnly.
 		tableViewOnly,
+		tableArrowExit,
 		tableEditing(),
 		wholeTableEdits,
 		tableArrowEntry,
@@ -215,8 +220,8 @@ export function latexEditorPlugins(setup: LatexEditorSetup): Plugin[] {
 			// table cell, then list nesting (as markdown and typst do), and only outside both does Tab
 			// cycle the paragraph indent. Without the list step it wrote \indent into the \item
 			// instead of sinking it. always consume Tab so focus stays in the editor
-			Tab: (state: EditorState, dispatch?: (tr: Transaction) => void) => {
-				if (goToNextCell(1)(state, dispatch)) return true;
+			Tab: (state: EditorState, dispatch?: (tr: Transaction) => void, view?: EditorView) => {
+				if (tabThroughCells(state, dispatch, view)) return true;
 				if (indentListItem()(state, dispatch)) return true;
 				cycleParagraphIndent(1)(state, dispatch);
 				return true;

@@ -19,6 +19,7 @@ import type { PDFDocumentProxy, PDFPageProxy, PageViewport } from 'pdfjs-dist/le
 import { EventBus } from './EventBus';
 import { SimpleLinkService } from './SimpleLinkService';
 import { ANNOTATION_MODE_FORMS, PdfScripting, keepScriptedVisibility, type FormScripting } from './PdfScripting';
+import { pdfCanvas } from './pdfjs-singleton';
 
 let AnnotationLayer: typeof import('pdfjs-dist/legacy/build/pdf.mjs').AnnotationLayer;
 
@@ -49,6 +50,7 @@ export type PresentationModeCallbacks = {
 export class PdfPresentationMode {
 	private state: PresentationModeState = PresentationModeState.UNKNOWN;
 	private pdfDocument: PDFDocumentProxy | null = null;
+	private fontHost: Document = document;
 	private currentPageNumber = 1;
 	private totalPages = 0;
 
@@ -87,8 +89,10 @@ export class PdfPresentationMode {
 		this.callbacks = callbacks;
 	}
 
-	setDocument(pdfDocument: PDFDocumentProxy | null): void {
+	/** `host`: the document of the window the PDF was opened in, whose font document holds its fonts */
+	setDocument(pdfDocument: PDFDocumentProxy | null, host: Document = document): void {
 		this.pdfDocument = pdfDocument;
+		this.fontHost = host;
 		this.totalPages = pdfDocument?.numPages ?? 0;
 	}
 
@@ -368,13 +372,17 @@ export class PdfPresentationMode {
 
 			const forms = await this.forms;
 			this.annotationCanvasMap.clear();
+			// drawn where the PDF's fonts are, then copied to the slide
+			const stage = pdfCanvas(this.canvas.width, this.canvas.height, this.fontHost);
 			await page.render({
-				canvasContext: context,
+				canvasContext: stage.getContext('2d')!,
 				viewport: scaledViewport,
-				canvas: this.canvas,
+				canvas: stage,
 				annotationCanvasMap: this.annotationCanvasMap,
 				...(forms?.enableScripting ? { annotationMode: ANNOTATION_MODE_FORMS } : {})
 			}).promise;
+			context.drawImage(stage, 0, 0);
+			stage.width = 0;
 
 			if (this.pageWrapper) {
 				this.pageWrapper.style.width = `${this.canvas.width}px`;

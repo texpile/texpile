@@ -50,7 +50,16 @@ export type DraftResult =
 			marginY: number;
 			pages: DraftPage[];
 	  }
-	| { ok: false; error: string; ms: number; log?: string; superseded?: true; found?: string; file?: string };
+	| {
+			ok: false;
+			error: string;
+			ms: number;
+			log?: string;
+			superseded?: true;
+			found?: string;
+			file?: string;
+			open?: { name: string; line: number };
+	  };
 
 /** an edit's teleport (see electron/src/draft/teleport/liveDraft.ts); its pages arrive through onDraftPage */
 export type TeleportResult =
@@ -67,7 +76,7 @@ export type TeleportResult =
 	  }
 	| {
 			ok: false;
-			reason: 'no-index' | 'preamble' | 'outside' | 'held' | 'refused' | 'failed' | 'superseded' | 'replaced';
+			reason: 'no-index' | 'preamble' | 'outside' | 'held' | 'open' | 'refused' | 'failed' | 'superseded' | 'replaced';
 			detail?: string;
 			ms: number;
 			// a cut run's pages stay on screen, and the pages past `stop` take its source lines
@@ -144,9 +153,20 @@ type TexpileNative = {
 	fsRealRelative: (root: string, rel: string) => Promise<string | null>;
 	fsFormatLatex: (path: string, text: string) => Promise<{ formatted: string }>;
 	synctex: (body: Record<string, unknown>) => Promise<Record<string, unknown>>;
-	draftCompile: (body: { root: string; mainFile: string; readBack: { byTex: string[]; byTools: string[] } }) => Promise<DraftResult>;
+	draftCompile: (body: {
+		root: string;
+		mainFile: string;
+		readBack: { byTex: string[]; byTools: string[] };
+		rest?: boolean;
+	}) => Promise<DraftResult>;
 	draftTeleport?: (body: { root: string; mainFile: string; file: string; text: string; seq: number }) => Promise<TeleportResult>;
+	/** the caret rests on a line the preview shows: an engine reads on to its paragraph ahead of the first key there */
+	draftStage?: (body: { root: string; mainFile: string; file: string; text: string; line: number }) => Promise<unknown>;
 	onDraftPage?: (cb: (ev: { root: string; seq: number; page: unknown }) => void) => () => void;
+	/** where a compile is (the engine starting, a pass typesetting, the bibliography) and the files and pages TeX names */
+	onDraftProgress?: (
+		cb: (at: { root: string; step?: 'engine' | 'typeset' | 'bibliography'; pass?: number; notes?: string[] }) => void
+	) => () => void;
 	draftStop: () => Promise<{ ok: boolean }>;
 	drawRender?: (body: { root: string; preamble: string; picture: string }) => Promise<unknown>;
 	drawCetz?: (body: { root: string; path: string; job: string }) => Promise<unknown>;

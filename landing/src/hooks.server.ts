@@ -1,11 +1,12 @@
-import type { Handle } from '@sveltejs/kit';
+import type { Handle } from '@sveltejs/kit/hooks';
 import { paraglideMiddleware } from '$lib/paraglide/server';
 import { getTextDirection } from '$lib/paraglide/runtime';
 import { m } from '$lib/paraglide/messages';
 
 const paraglideHandle: Handle = ({ event, resolve }) =>
 	paraglideMiddleware(event.request, ({ request: localizedRequest, locale }) => {
-		event.request = localizedRequest;
+		// SvelteKit 3 types the request as read-only; the de-localized one still has to stand in for it
+		(event as { request: Request }).request = localizedRequest;
 		return resolve(event, {
 			transformPageChunk: ({ html }) =>
 				html

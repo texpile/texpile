@@ -1,6 +1,6 @@
-// what \cref, \Cref, \autoref, \pageref and \nameref print, from what the last compile wrote to the .aux. A label the
-// .aux does not know prints as itself, the way a \ref chip does
-import type { CrossRefNames } from '$lib/languages/latex/visual/core';
+// what \cref, \Cref, \autoref, \pageref and \nameref print: the number the editor counts for a label, else what the
+// last compile wrote to the .aux. A label neither knows prints as itself, the way a \ref chip does
+import type { CrossRefNames, LabelNumbers } from '$lib/languages/latex/visual/core';
 export type CrossRefAux = {
 	numbers: Record<string, string>;
 	pages: Record<string, string>;
@@ -9,6 +9,20 @@ export type CrossRefAux = {
 };
 
 export type CrossRefText = { text: string; known: boolean };
+
+/** `aux` for these labels with the editor's count laid over it, so a reference prints the number drawn on what it names */
+export function withCounted(aux: CrossRefAux, labels: readonly string[], counted: LabelNumbers | null): CrossRefAux {
+	if (!counted || !labels.some((label) => counted.has(label))) return aux;
+	const numbers = { ...aux.numbers };
+	const kinds = { ...aux.kinds };
+	for (const label of labels) {
+		const own = counted.get(label);
+		if (!own) continue;
+		numbers[label] = own.number;
+		kinds[label] = own.kind;
+	}
+	return { ...aux, numbers, kinds };
+}
 
 function listed(items: string[]): string {
 	return items.length < 2 ? (items[0] ?? '') : `${items.slice(0, -1).join(', ')} and ${items[items.length - 1]}`;

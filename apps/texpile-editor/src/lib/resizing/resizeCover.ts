@@ -1,4 +1,4 @@
-// a preview covered while its width keeps moving, the way the editor is (app.css, data-resize-cover)
+// a preview covered while its width keeps moving (app.css, data-resize-cover)
 import { ColumnWidth } from './columnWidth';
 
 export function resizeCover(pane: HTMLElement): () => void {

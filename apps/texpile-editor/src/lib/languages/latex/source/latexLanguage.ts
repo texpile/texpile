@@ -12,11 +12,11 @@ import { lineIndentation } from '$lib/editor/source/extensions/line-indent/lineI
 export const latexLanguage = LRLanguage.define({
 	name: 'latex',
 	parser,
-	// the pairs and the before-set are LaTeX Workshop's; `$` deliberately not among them there or
-	// here: \$ for currency and $$ display math both fight a same-character auto-close
+	// the bracket pairs and the before-set are LaTeX Workshop's. `$` pairs as in Typst, so a formula being typed is
+	// never left open and the live preview shows it on every key; \$ and $$ stay as typed (latexEscapedBrackets)
 	languageData: {
 		commentTokens: { line: '%' },
-		closeBrackets: { brackets: ['(', '[', '{'], before: ';:.,={}])>\\` \t$' },
+		closeBrackets: { brackets: ['(', '[', '{', '$'], before: ';:.,={}])>\\` \t$' },
 		indentOnInput: /^\s*(?:[}\])]|\\end\{)$/
 	}
 });

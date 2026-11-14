@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { inEditorPane, isReadOnly, tip } from '$lib/languages/latex/visual/core';
+	import { inEditorPane, isReadOnly, tip, type GearPlace } from '$lib/languages/latex/visual/core';
 
 	import { Popover, Portal } from '@skeletonlabs/skeleton-svelte';
 	import { Settings } from '@lucide/svelte';
@@ -14,6 +14,17 @@
 	const props: Props = $props();
 	let open = $state(false);
 	let typed = $state('');
+	let place = $state.raw<GearPlace | null>(null);
+	const positioning = $derived(
+		inEditorPane({ placement: 'bottom-end', offset: { mainAxis: 4 }, ...(place ? { getAnchorRect: place } : {}) })
+	);
+
+	/** `at`: the block handle's gear, when that is what opened them */
+	export function openAt(at: GearPlace | null): void {
+		place = at;
+		typed = String(props.node.attrs.label ?? '');
+		open = true;
+	}
 
 	function commit(): void {
 		typed = renameGroupLabel(props.view, props.getPos, props.node, typed);
@@ -26,14 +37,14 @@
 		open = e.open;
 		if (e.open) typed = String(props.node.attrs.label ?? '');
 	}}
-	positioning={inEditorPane({ placement: 'bottom-end', offset: { mainAxis: 4 } })}
+	{positioning}
 >
 	<Popover.Trigger>
 		<button
 			class="btn-icon btn-icon-sm preset-tonal"
-			use:tip={m.imageoverlay_settings_title()}
+			use:tip={m.figuregroup_settings_title()}
 			type="button"
-			aria-label={m.imageoverlay_settings_aria()}
+			aria-label={m.figuregroup_settings_title()}
 			disabled={isReadOnly.current}
 		>
 			<Settings class="h-4 w-4" />

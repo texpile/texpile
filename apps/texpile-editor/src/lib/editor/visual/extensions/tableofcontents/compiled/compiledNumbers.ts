@@ -9,7 +9,7 @@ export type CompiledEntry = { kind: string; title: string; number: string | null
 const MOST_CELLS = 1_000_000;
 
 /** letters and digits only: what TeX writes of a title keeps its words, not its markup or spacing */
-function plainTitle(title: string): string {
+export function plainTitle(title: string): string {
 	return title
 		.replace(/\\[a-zA-Z@]+/g, ' ')
 		.replace(/[^\p{L}\p{N}]+/gu, '')

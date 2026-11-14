@@ -20,6 +20,10 @@
 	type Release = { version: string; publishedAt?: string; files: Record<string, string> };
 	let latest = $state<Release | null>(null);
 	let history = $state<Release[]>([]);
+	// the newest few releases, the rest behind Show more
+	const HISTORY_SHOWN = 5;
+	let historyOpen = $state(false);
+	const shownHistory = $derived(historyOpen ? history : history.slice(0, HISTORY_SHOWN));
 	let detected = $state<'windows' | 'mac' | 'linux' | null>(null);
 
 	onMount(async () => {
@@ -233,7 +237,7 @@
 			<div class="mt-10">
 				<h2 class="text-surface-500 mb-3 text-center text-xs font-semibold tracking-wide uppercase">{m.dl_version_history()}</h2>
 				<div class="border-surface-200 divide-surface-200 divide-y overflow-hidden rounded-lg border bg-white">
-					{#each history as r, i (r.version)}
+					{#each shownHistory as r, i (r.version)}
 						<div class="flex flex-col gap-2 p-4 sm:flex-row sm:items-center sm:justify-between">
 							<div class="flex items-center gap-2.5">
 								<span class="font-semibold">v{r.version.replace(/^v/, '')}</span>
@@ -272,6 +276,19 @@
 						</div>
 					{/each}
 				</div>
+				{#if history.length > HISTORY_SHOWN}
+					<div class="mt-3 text-center">
+						<button
+							type="button"
+							class="text-primary-600 inline-flex items-center gap-1 text-sm font-medium hover:underline"
+							aria-expanded={historyOpen}
+							onclick={() => (historyOpen = !historyOpen)}
+						>
+							{historyOpen ? m.dl_show_less() : m.dl_show_more()}
+							<ChevronDown class="h-4 w-4 transition-transform {historyOpen ? 'rotate-180' : ''}" />
+						</button>
+					</div>
+				{/if}
 			</div>
 		{/if}
 	</div>

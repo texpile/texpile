@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { resizeCover } from '$lib/resizing/resizeCover';
 	// The editor column: the mode toolbar on top and, under it, whichever surface the open file
 	// needs (starter picker, diff, source, visual, bib, pdf, image). Chooses the surface; the
 	// state behind it all lives in WorkspaceView.
@@ -148,12 +149,6 @@
 	);
 	const editorReady = $derived(visual.ready);
 
-	/** Rendered for the whole build, but it holds itself invisible until the wait is real (see
-	 * lateReveal.ts), so a fast build never flashes a bar. Deliberately not a size threshold: that
-	 * would bake in an assumption about how fast the machine is, and suppress the bar on a slow CPU
-	 * exactly where the wait is worst. */
-	const showRenderBar = $derived(!editorReady);
-
 	/** kinds that have a visual (ProseMirror) surface */
 	const structured = $derived(kind === 'tex' || kind === 'md' || kind === 'typ');
 
@@ -171,6 +166,13 @@
 	/** the visual editor is wanted, whether or not it has been built yet */
 	const visualPending = $derived(loadedPath && structured && viewMode === 'visual');
 	const held = heldVisualDoc(() => ({ loadedPath, visualDoc, docMeta, texSource, sourceMap, pending: !!visualPending }));
+
+	/** Rendered for the whole build, but it holds itself invisible until the wait is real (see
+	 * lateReveal.ts), so a fast build never flashes a bar. Deliberately not a size threshold: that
+	 * would bake in an assumption about how fast the machine is, and suppress the bar on a slow CPU
+	 * exactly where the wait is worst. Only over the pane's own document: the last file's, held while
+	 * the next is parsed, is drawn text, and the bar stood on it. */
+	const showRenderBar = $derived(!editorReady && held.own);
 	const shownDoc = $derived(held.current?.visualDoc ?? null);
 	const formatBar = $derived(
 		formatToolbarOf({ loadedPath, kind, viewMode: requestedViewMode, encodingIssue, conflicted, compare, figure, visualDoc: shownDoc })
@@ -271,9 +273,12 @@
 					actions={historyButtons}
 				/>
 			{/if}
-			<!-- relative anchors the floating find bar; it sits outside the scroller so it doesn't scroll away.
-			     data-resize-cover: the file named over a resizing editor (app.css) -->
-			<div class="relative min-h-0 min-w-0 flex-1" data-resize-cover={loadedPath ? basename(loadedPath) : ''}>
+			<!-- relative anchors the floating find bar; it sits outside the scroller so it doesn't scroll away -->
+			<div
+				class="relative min-h-0 min-w-0 flex-1"
+				data-resize-cover={loadedPath && structured && viewMode === 'visual' && !comparing ? basename(loadedPath) : undefined}
+				{@attach resizeCover}
+			>
 				{#if loadedPath}<FigureOverlay path={loadedPath} {figure} {viewMode} />{/if}
 				{#if loadedPath && structured && viewMode === 'visual' && visualDoc && !comparing && !parked}
 					<SearchBar />

@@ -37,6 +37,8 @@ export class DraftSession {
 	paper = $state<PaperMetrics>({ w: 595, h: 842, mx: 72.27, my: 72.27, srcFiles: [] });
 	canvasEls = $state<HTMLCanvasElement[]>([]);
 	savingPdf = $state(false);
+	/** the last compile found nothing to print */
+	empty = $state(false);
 
 	readonly fonts = new DraftFonts();
 	readonly bitmaps: DraftBitmaps;
@@ -80,7 +82,6 @@ export class DraftSession {
 				this.opts.onDiagnostics()?.(this.opts.root() + '/_draft/draft.log');
 			},
 			paused: opts.paused,
-			hasPages: () => this.pages.length > 0,
 			emit: (k, d) => this.ev(k, d)
 		});
 		this.teleport = new DraftTeleport({
@@ -169,6 +170,7 @@ export class DraftSession {
 			if (this.vp.fitMode) this.vp.fitToWidth(); // size to the pane now that the paper dims are known
 		}
 		this.pages = r.pages;
+		this.empty = r.pages.length === 0;
 		this.parsedPages.clear();
 		this.notInPdf.clear();
 		this.drawingsInPdf = pdfDrawings(r.pages);
@@ -202,15 +204,11 @@ export class DraftSession {
 		const changed = this.pages
 			.filter((p) => shown[p.n - 1]?.records !== p.records)
 			.map((p) => shippedPage(p.n, parseRecords(shown[p.n - 1]?.records ?? '').records, parseRecords(p.records).records));
-		if (changed.length) this.followBand(editBand(changed, true), changed[0].n);
+		this.followBand(editBand(changed, true));
 	}
 
-	/** with no changed words to show, the first page that changed */
-	private followBand(band: EditBand | null, page: number): void {
-		if (!band) {
-			if (this.vp.followEdits) this.vp.goToPage(page);
-			return;
-		}
+	private followBand(band: EditBand | null): void {
+		if (!band) return;
 		this.ev('edit-band', band);
 		this.vp.showEditBand(band);
 		this.vp.followEdit(band.page, band.top, band.bottom, band.colL, band.colR);
@@ -225,6 +223,7 @@ export class DraftSession {
 		pages[p.n - 1] = p;
 		for (let i = 0; i < pages.length; i++) if (!pages[i]) pages[i] = { n: i + 1, w: p.w, h: p.h, records: '' };
 		this.pages = pages;
+		this.empty = false;
 		this.parsedPages.set(p.n, after);
 		this.notInPdf.add(p.n);
 		await tick();
@@ -237,9 +236,9 @@ export class DraftSession {
 	private showShippedBand(seq: number, ended: boolean): void {
 		if (seq !== this.shipped.seq || this.shipped.shown) return;
 		const band = editBand(this.shipped.pages, ended);
-		if (!band && !(ended && this.shipped.pages.length)) return;
+		if (!band) return;
 		this.shipped.shown = true;
-		this.followBand(band, this.shipped.pages[0]?.n ?? 1);
+		this.followBand(band);
 	}
 
 	private moveSourceLines(stop: number, shifts: SourceShift[]): void {
@@ -256,9 +255,11 @@ export class DraftSession {
 	/** a teleport finished: the pages past its stop keep their ink and move their source lines, or the count is new */
 	private async landed(r: TeleportLanded, seq: number): Promise<void> {
 		this.showShippedBand(seq, true);
+		if (r.from !== undefined) this.compiler.typesetAgain();
 		if (r.srcFiles.length) this.paper = { ...this.paper, srcFiles: r.srcFiles };
 		if (r.shifts) this.moveSourceLines(r.stop ?? this.pages.length, r.shifts);
-		if (r.stop === undefined && this.pages.length > r.count) {
+		// a title half typed prints nothing for a moment: the page shown stays until the pass after typing says so
+		if (r.stop === undefined && this.pages.length > r.count && r.count > 0) {
 			this.pages = this.pages.slice(0, r.count);
 			await tick();
 			this.vp.applyCssSizes();
