@@ -23,7 +23,12 @@ describe('escapedAt', () => {
 
 /** `text` with the caret at `|`, after `keys` are typed there one by one as the editor's own input handlers take them */
 function typed(text: string, keys: string): string {
-	const state = EditorState.create({ doc: text.replace('|', ''), selection: { anchor: text.indexOf('|') }, extensions: [latex()] });
+	const caret = text.indexOf('|');
+	const state = EditorState.create({
+		doc: text.slice(0, caret) + text.slice(caret + 1),
+		selection: { anchor: caret },
+		extensions: [latex()]
+	});
 	const view = new EditorView({ state, parent: document.body });
 	for (const key of keys) {
 		const at = view.state.selection.main.head;
