@@ -149,12 +149,10 @@ function typeset(el: HTMLElement, latex: string): void {
 		el.innerHTML = markupOf(el.dataset.syntax === 'typst' ? 'typst' : 'latex', latex);
 		madeWith.set(el, mathMacrosKey());
 	} catch {
-		// mathlive throws outright on some malformed input. Fall back to the source text so the node
-		// still occupies roughly the right space instead of collapsing to nothing.
+		// mathlive throws outright on some malformed input, and the source stands in for the formula
 		el.textContent = latex;
-		return;
 	}
-	// the real render supersedes the estimate; let the content decide the box from here
+	// what is drawn decides the box from here: the estimate's box is too narrow for a formula's source
 	el.style.width = '';
 	el.style.height = '';
 }

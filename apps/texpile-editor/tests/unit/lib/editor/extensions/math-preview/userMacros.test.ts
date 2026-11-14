@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { scanMacroDefinitions } from '../../../../../../src/lib/editor/source/extensions/math-preview/userMacros';
+import { scanMacroDefinitions, withoutLoops } from '../../../../../../src/lib/editor/source/extensions/math-preview/userMacros';
 
 describe('scanMacroDefinitions (math preview macro dictionary)', () => {
 	it('captures \\newcommand bodies with nested braces and arg counts', () => {
@@ -36,5 +36,14 @@ describe('scanMacroDefinitions (math preview macro dictionary)', () => {
 		);
 		expect(m.vect).toEqual({ def: '\\boldsymbol{#1}', args: 1 });
 		expect(m.R).toEqual({ def: '\\mathbf{R}', args: 0 });
+	});
+
+	it('leaves out a definition that reaches itself, and keeps the ones that call it', () => {
+		const m = withoutLoops(
+			scanMacroDefinitions(
+				'\\def\\small{\\@setsize\\small{10pt}\\ixpt\\@ixpt}\n\\def\\a{\\b}\n\\def\\b{\\a}\n\\newcommand{\\tiny}{\\small x}'
+			)
+		);
+		expect(Object.keys(m)).toEqual(['tiny']);
 	});
 });

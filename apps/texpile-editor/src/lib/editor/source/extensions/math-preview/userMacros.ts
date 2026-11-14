@@ -88,6 +88,22 @@ export function scanRegisterDefinitions(text: string): string[] {
 	return definedIn(codeOnly(text), 'macro').flatMap((d) => (d.register ? [d.name] : []));
 }
 
+const CALLED = /\\([a-zA-Z@]+)/g;
+
+/** without the definitions that reach themselves, as a class's \def\small{\@setsize\small...} does: MathLive expands one without end */
+export function withoutLoops(macros: Record<string, MacroDef>): Record<string, MacroDef> {
+	function reaches(from: string, target: string, seen: Set<string>): boolean {
+		for (const [, called] of macros[from].def.matchAll(CALLED)) {
+			if (called === target) return true;
+			if (!Object.hasOwn(macros, called) || seen.has(called)) continue;
+			seen.add(called);
+			if (reaches(called, target, seen)) return true;
+		}
+		return false;
+	}
+	return Object.fromEntries(Object.entries(macros).filter(([name]) => !reaches(name, name, new Set([name]))));
+}
+
 let cache: { text: string; intel: unknown; macros: Record<string, MacroDef> } | null = null;
 
 /** buffer definitions merged over cross-file ones (buffer wins), cached per doc text. */
@@ -98,7 +114,7 @@ export function mathMacrosFor(docText: string): Record<string, MacroDef> {
 	for (const m of intel.macros) {
 		if (m.definition !== undefined) macros[m.name] = { def: m.definition, args: m.argCount ?? 0, optional: m.optional };
 	}
-	Object.assign(macros, scanMacroDefinitions(docText));
-	cache = { text: docText, intel, macros };
-	return macros;
+	const usable = withoutLoops(Object.assign(macros, scanMacroDefinitions(docText)));
+	cache = { text: docText, intel, macros: usable };
+	return usable;
 }
