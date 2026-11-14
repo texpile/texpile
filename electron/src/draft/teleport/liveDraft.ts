@@ -264,6 +264,8 @@ export class LiveDraft {
 			return Date.now() - t0;
 		}
 		const file = norm(req.file);
+		// _draft was cleared under the preview: the text the index stands on is gone with it, and a compile stands it up again
+		if (!this.#intact()) return { ok: false, reason: 'failed', detail: 'a folder the index reads is gone', ms: ms() };
 		const old = this.index.text(file);
 		if (old === null) return { ok: false, reason: 'outside', ms: ms() };
 		const lines = linesOf(req.text);
@@ -439,6 +441,11 @@ export class LiveDraft {
 			count: this.count,
 			srcFiles: this.srcFiles
 		};
+	}
+
+	#intact(): boolean {
+		const outAbs = path.join(this.root, OUT);
+		return [...this.index.folders()].every((name) => fs.existsSync(path.join(outAbs, name)));
 	}
 
 	#sourceShifts(file: string, shifts: LineShift[]): SourceShift[] {

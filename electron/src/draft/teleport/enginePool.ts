@@ -11,7 +11,6 @@ import { normRoot } from '../../windows/normRoot';
 
 // each parked lualatex holds 100 to 300 MB; the count takes in the ones serving, per folder
 const ENGINES = 2;
-const IDLE_STOP_MS = 10 * 60 * 1000;
 // a served run that reaches no clean point in this long is in a loop
 const PARK_MS = 10000;
 
@@ -146,7 +145,6 @@ class EnginePool {
 	// taken and not handed back yet, with the key and stamp they were taken under
 	out = new Map<DraftEngine, Spare>();
 	config: PoolConfig | null = null;
-	idleTimer: NodeJS.Timeout | null = null;
 
 	constructor(private readonly onStop: () => void) {}
 
@@ -177,12 +175,6 @@ class EnginePool {
 		this.watchExit(spare);
 	}
 
-	armIdleStop(): void {
-		if (this.idleTimer) clearTimeout(this.idleTimer);
-		this.idleTimer = setTimeout(() => this.stop(), IDLE_STOP_MS);
-		this.idleTimer.unref?.();
-	}
-
 	warm(c: PoolConfig): void {
 		this.config = c;
 		const key = keyOf(c, c.preamble);
@@ -193,7 +185,6 @@ class EnginePool {
 		for (const s of this.spares) if (!s.staged) preload(s, c);
 		// disk moved on from what the configuration expects: a spare would hold the wrong base
 		if (diskPreamble(c.root, c.mainRel) === c.preamble) while (this.spares.length + this.out.size < ENGINES) this.spawnSpare(c);
-		this.armIdleStop();
 	}
 
 	async take(c: PoolConfig, unserved: boolean): Promise<DraftEngine> {
@@ -325,11 +316,13 @@ class EnginePool {
 		this.watchExit(back);
 	}
 
-	stop(): void {
-		if (this.idleTimer) clearTimeout(this.idleTimer);
-		this.idleTimer = null;
+	/** `keepServed` while the folder's live preview stands: its index reads the folders of the engines that served */
+	stop(keepServed = false): void {
 		this.config = null;
-		for (const s of [...this.spares, ...this.out.values()]) s.engine.remove();
+		for (const s of [...this.spares, ...this.out.values()]) {
+			if (keepServed) retire(s.engine);
+			else s.engine.remove();
+		}
 		this.spares = [];
 		this.out.clear();
 		this.onStop();
@@ -395,6 +388,6 @@ export function giveBack(engine: DraftEngine, staged?: { key: string; rec: strin
 }
 
 /** the folder's engines stop; with no folder, every folder's */
-export function stopPool(root?: string): void {
-	for (const [key, pool] of [...pools]) if (root === undefined || key === normRoot(root)) pool.stop();
+export function stopPool(root?: string, keepServed = false): void {
+	for (const [key, pool] of [...pools]) if (root === undefined || key === normRoot(root)) pool.stop(keepServed);
 }

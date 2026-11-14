@@ -124,7 +124,7 @@ async function installFor(
 	if (!bin || !texInUseIsManaged()) return { ok: false, reason: 'not-managed', detail: file };
 	const result = await inTurn(() => installPackageFor(file, (args) => runTlmgr(bin, args, said), TEXLIVE_FINAL_REPOSITORY));
 	// a warm spare read the file list before the install
-	if (result.ok && typeof root === 'string') stopPool(root);
+	if (result.ok && typeof root === 'string') stopPool(root, true);
 	return result;
 }
 

@@ -115,6 +115,14 @@ it('sends a run that ended the job to the compile', async () => {
 	expect(r).toMatchObject({ ok: false, reason: 'failed' });
 });
 
+// the pool stopped after ten idle minutes and took the folders the index read, and the edits after it drew from nothing
+it('sends an edit to the compile once a folder its index reads is gone', async () => {
+	const live = liveDraft();
+	live.index.fontList = '_draft/pgone/tele/fonts.lua';
+	const r = await live.teleport({ file: 'main.tex', text: main.replace('\nc\n', '\nc more\n') }, () => undefined);
+	expect(r).toMatchObject({ ok: false, reason: 'failed' });
+});
+
 // a compile that read the file before the edit reached disk would otherwise be the last word
 it('answers the running and waiting edits replaced when a compile takes over', async () => {
 	looping = 1;

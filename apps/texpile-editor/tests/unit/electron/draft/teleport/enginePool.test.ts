@@ -29,8 +29,14 @@ vi.mock('../../../../../../../electron/src/draft/teleport/draftEngine', () => ({
 			this.dropped = true;
 			this.parked = Promise.resolve(true);
 		}
-		kill(): void {}
-		remove(): void {}
+		killed = false;
+		removed = false;
+		kill(): void {
+			this.killed = true;
+		}
+		remove(): void {
+			this.removed = true;
+		}
 	}
 }));
 
@@ -62,6 +68,26 @@ it('hands a compile only an engine that never served', async () => {
 	giveBack(served);
 	expect(await takeEngine(c, true)).not.toBe(served);
 	stopPool();
+});
+
+// a pool stopped under a standing preview deleted the folders its index reads
+it('leaves the folder of an engine that served when its pool stops under a standing preview', async () => {
+	const c = {
+		root,
+		mainRel: 'main.tex',
+		engineDir: '/e',
+		engine: 'lualatex',
+		seedDir: '/s',
+		preamble: 'pre\n\\begin{document}',
+		preStamp: null
+	};
+	warmPool(c);
+	const served = await takeEngine(c);
+	served.serves = 1;
+	served.parked = Promise.resolve(true);
+	giveBack(served);
+	stopPool(root, true);
+	expect(served as unknown as { killed: boolean; removed: boolean }).toMatchObject({ killed: true, removed: false });
 });
 
 // each window's live preview runs its own folder
