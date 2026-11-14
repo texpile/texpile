@@ -210,6 +210,13 @@
 		frame?.contentWindow?.postMessage({ channel: CHANNEL, type: 'invert', value: on }, '*');
 	});
 
+	// guests keep the preview running through this window's pause, so the page is told to take no new frames
+	$effect(() => {
+		const held = typstPreviewPaused.current;
+		void status;
+		frame?.contentWindow?.postMessage({ channel: CHANNEL, type: 'hold', value: held }, '*');
+	});
+
 	/** `dir` is +1 to zoom in, -1 out; the far side steps through tinymist's own zoom ladder. */
 	function stepZoom(dir: 1 | -1): void {
 		frame?.contentWindow?.postMessage({ channel: CHANNEL, type: 'zoom', value: dir }, '*');
