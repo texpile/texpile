@@ -12,12 +12,12 @@ one, or with keeping one of these current.
 | Portuguese (Brazil)   | `pt-BR`   | 97%        | Reviewed by [@ale4-dev](https://github.com/ale4-dev)                    |
 | Spanish               | `es`      | 24%        | Maintained by [@nicolobos77](https://github.com/nicolobos77)            |
 
-Translated is the share of the strings in `en.json` each file translates, as of 2026-11-15.
-
 ## Translating
 
-The message files are `apps/texpile-editor/messages/<locale>.json`. `en.json` is the source, and
-the other files use its keys.
+The message files are `apps/texpile-editor/messages/<locale>.json`.
+
+`en.json` is the source of truth. When translating, reference its keys.
+If a value is untranslated, do not add its key to the locale.
 
 - Translate the values, never the keys
 - Leave `{placeholders}` alone; they are filled in at runtime
