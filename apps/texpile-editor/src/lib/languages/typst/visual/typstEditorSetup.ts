@@ -18,7 +18,8 @@ import {
 	selectDocStart
 } from '$lib/editor/visual/selectDocBoundary';
 import { lineEdgeKeys } from '$lib/editor/visual/lineEdgeArrows';
-import { TypstBibliographyView, isTypstBibliography } from './extensions/typstBibliographyView.svelte';
+import { isTypstBibliography, typstBibliography } from './extensions/typstBibliography';
+import { BibliographyNodeView } from '$lib/editor/visual/extensions/bibliography/bibliographyNodeView.svelte';
 import { keymap } from 'prosemirror-keymap';
 import { pmCommandKeys } from '$lib/keybindings/editors/pmCommandKeys';
 import { pmEditorScope } from '$lib/keybindings/editors/editorScopes';
@@ -27,6 +28,8 @@ import { history } from 'prosemirror-history';
 import { undoVisual, redoVisual } from '$lib/editor/visual/visualUndo';
 import { gapCursorWithArrows } from '$lib/editor/visual/gapArrows';
 import { hiddenSelectionPlugin } from '$lib/editor/visual/highlight/hiddenSelection';
+import { visualCaretDoctor } from '$lib/debug/visualCaretDoctor';
+import { caretClearOfFormatBar } from '$lib/editor/visual/formatBarScroll';
 import { dropCursor } from 'prosemirror-dropcursor';
 import { tableEditing, goToNextCell } from 'prosemirror-tables';
 import { wholeTableEdits } from '$lib/editor/visual/extensions/table/wholeTableEdits';
@@ -198,6 +201,8 @@ export function typstEditorPlugins(setup: TypstEditorSetup): Plugin[] {
 		typstCopyPlugin,
 		gapCursorWithArrows(),
 		hiddenSelectionPlugin(),
+		...visualCaretDoctor(),
+		caretClearOfFormatBar(),
 		dropCursor({ color: 'var(--color-primary-500)', width: 2, class: 'pm-drop-cursor' }),
 		// Typst is the one dialect where a drag can be saved: `columns:` takes real lengths and
 		// fr. The drag snaps to that same grid (vendored columnResizing + snapWidthToFr);
@@ -313,7 +318,7 @@ export function typstNodeViews(docDir: () => string): NonNullable<EditorProps['n
 		// ones keep their text verbatim: #bibliography as a card, a comment folded to a line
 		raw_latex: (node, view, getPos, decorations) =>
 			isTypstBibliography(node.textContent)
-				? new TypstBibliographyView(node, view, getPos as () => number)
+				? new BibliographyNodeView(node, view, getPos as () => number, typstBibliography)
 				: isFigureBlock(cetzLanguage, node.textContent)
 					? new FigureCardView(node, view, getPos as () => number, cetzLanguage, m.figure_card_cetz())
 					: drawnOrSource(node, view, getPos as () => number, decorations, typstChipKind(true)),

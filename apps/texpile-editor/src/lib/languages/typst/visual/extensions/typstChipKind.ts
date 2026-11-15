@@ -10,7 +10,7 @@ import { typstChipSettings } from '../core/plugin/typstChipSettings';
 import { hashedCode } from '../core/code/codeSource';
 import { isFigureBlock } from '$lib/draw/host/card/FigureCardView.svelte';
 import { cetzLanguage } from '$lib/draw/cetz/cetzLanguage';
-import { isTypstBibliography } from './typstBibliographyView.svelte';
+import { isTypstBibliography } from './typstBibliography';
 
 function parsed(source: string) {
 	try {

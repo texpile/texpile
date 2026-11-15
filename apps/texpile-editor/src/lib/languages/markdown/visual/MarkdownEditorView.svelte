@@ -17,6 +17,8 @@
 	import { undoVisual, redoVisual } from '$lib/editor/visual/visualUndo';
 	import { gapCursor } from 'prosemirror-gapcursor';
 	import { hiddenSelectionPlugin } from '$lib/editor/visual/highlight/hiddenSelection';
+	import { visualCaretDoctor } from '$lib/debug/visualCaretDoctor';
+	import { caretClearOfFormatBar } from '$lib/editor/visual/formatBarScroll';
 	import { dropCursor } from 'prosemirror-dropcursor';
 	import { tableEditing, goToNextCell } from 'prosemirror-tables';
 	import { padTablesInState } from '$lib/editor/visual/padTables';
@@ -195,6 +197,8 @@
 			markdownCopyPlugin,
 			gapCursor(),
 			hiddenSelectionPlugin(),
+			...visualCaretDoctor(),
+			caretClearOfFormatBar(),
 			dropCursor({ color: 'var(--color-primary-500)', width: 2, class: 'pm-drop-cursor' }),
 			// TableView WITHOUT columnResizing: a pipe table has no width syntax, so a dragged column
 			// could never be written to the file. It used to move on screen and be silently discarded

@@ -1,4 +1,4 @@
-import { NodeSelection, TextSelection, type PluginKey } from 'prosemirror-state';
+import { TextSelection, type PluginKey } from 'prosemirror-state';
 import type { MathLivePluginState } from './mlplugin';
 import { MathfieldElement } from 'mathlive';
 import type { Decoration, EditorView, NodeView } from 'prosemirror-view';
@@ -11,12 +11,13 @@ import { m } from '$lib/paraglide/messages';
 import { offerBlockSettings, settingsPlace, type GearPlace } from '$lib/editor/visual/extensions/blockHandle/blockSettings';
 import { configureMathVirtualKeyboard } from './virtualKeyboardConfig';
 import { installSuggestionPopoverFlashFix } from './suggestionPopoverFlashFix';
-import { syncBlockMathAttrs, isMathLatexEmpty, emptyMathBlockLike } from './mathEnvironments';
+import { syncBlockMathAttrs, isMathLatexEmpty } from './mathEnvironments';
 import { mathUnchanged, withoutEmptySlots } from './mlEquivalent';
 import { equationNumbersIn, renderEquationNumbers, syncBlockMathData } from './equationNumbers';
 import { compiledNumbersOf } from '../nodeNumbers';
-import { MathFieldExit, applyMathOutline } from './mathFieldExit';
+import { MathFieldExit, applyMathOutline, newFormulaBelow } from './mathFieldExit';
 import { enterField, selectFormulaOf } from './caret/fieldEntry';
+import { FieldFocusAsk } from './caret/fieldFocusAsk';
 import {
 	buildMathField,
 	releaseMathField,
@@ -70,6 +71,7 @@ export class MathLiveView implements NodeView {
 	private compiledNumbers: string[] | null;
 	private syntax: MathSyntax;
 	private following = false;
+	private focusAsk = new FieldFocusAsk();
 
 	constructor(
 		node: Node,
@@ -293,6 +295,7 @@ export class MathLiveView implements NodeView {
 	}
 
 	handleFocus() {
+		if (this.focusAsk.late(this.view, document.activeElement === this.mathField)) return;
 		if (this.mathField) this.mathField.readOnly = !this.view.editable;
 		// mathlive#3066 hotfix
 		if (this.mathField) dropIntlBackslashBinding(this.mathField);
@@ -302,6 +305,7 @@ export class MathLiveView implements NodeView {
 		this.updateOutline(true);
 	}
 	handleBlur() {
+		this.focusAsk.drop();
 		// alt-tab blurs the field too: keep its caret (and keep it if empty) for when the window comes back
 		if (!document.hasFocus()) return;
 		const isEmpty = this.isMathfieldEmpty();
@@ -387,6 +391,7 @@ export class MathLiveView implements NodeView {
 		if (!this.updating) return;
 		// the caret is arriving, so the real field has to exist now
 		this.materialize();
+		this.focusAsk.ask(this.view);
 		if (this.mathField) enterField(this.mathField, anchor === 0 && head === 0, this.view.editable);
 	}
 
@@ -455,20 +460,7 @@ export class MathLiveView implements NodeView {
 	keydown(event: KeyboardEvent) {
 		const field = this.mathField;
 		if (!field) return; // a key event means the field exists; this is a type guard
-		if (
-			this.isblock &&
-			this.view.editable &&
-			event.key === 'Enter' &&
-			event.shiftKey &&
-			!event.altKey &&
-			!event.ctrlKey &&
-			!event.metaKey
-		) {
-			const pos = this.getPos() + this.node.nodeSize;
-			const tr = this.view.state.tr.insert(pos, emptyMathBlockLike(this.node));
-			this.view.dispatch(tr.setSelection(NodeSelection.create(tr.doc, pos)));
-			return;
-		}
+		if (this.isblock && newFormulaBelow(event, this.view, this.node, this.getPos())) return;
 		this.exit.keydown(event, field);
 	}
 
@@ -487,6 +479,7 @@ export class MathLiveView implements NodeView {
 		if (!field || visualFind.movingSelection || this.following || !this.view.editable) return;
 
 		const cameFrom = this.mlpluginkey.getState(this.view.state)?.prevCursorPos;
+		this.focusAsk.ask(this.view);
 		enterField(field, cameFrom === undefined || cameFrom <= this.getPos(), this.view.editable);
 	}
 

@@ -75,7 +75,9 @@ import { IeeeAuthorView } from '$lib/languages/latex/visual/extensions/template-
 import { InlinePlaceholderView } from '$lib/editor/visual/extensions/raw-latex/inlinePlaceholderView';
 import { PlaceholderRawView } from '$lib/editor/visual/extensions/raw-latex/placeholderView';
 import { placeholderCaret } from '$lib/editor/visual/extensions/raw-latex/placeholderCaret';
-import { BibliographyNodeView } from '$lib/editor/visual/extensions/bibliography/bibliographyNodeView.svelte';
+import { visualCaretDoctor } from '$lib/debug/visualCaretDoctor';
+import { caretClearOfFormatBar } from '$lib/editor/visual/formatBarScroll';
+import { BibliographyNodeView, latexBibliography } from '$lib/editor/visual/extensions/bibliography/bibliographyNodeView.svelte';
 import { environmentView } from '$lib/languages/latex/visual/extensions/environment/environmentView.svelte';
 import { createBoundaryClickPlugin } from '$lib/editor/visual/extensions/boundary-click-plugin';
 import { wordSelectionTrim } from '$lib/editor/visual/extensions/wordSelectionTrim';
@@ -147,6 +149,8 @@ export function latexEditorPlugins(setup: LatexEditorSetup): Plugin[] {
 		labelRenameUndo,
 		gapCursorWithArrows(),
 		hiddenSelectionPlugin(),
+		...visualCaretDoctor(),
+		caretClearOfFormatBar(),
 		// drop cursor is inline-styled (not CSS-targetable) and its default black vanishes on dark
 		dropCursor({ color: 'var(--color-primary-500)', width: 2, class: 'pm-drop-cursor' }),
 		// TableView without the drag: a LaTeX column width lives in the colspec and only exists
@@ -301,7 +305,7 @@ export function latexNodeViews(
 			const at = getPos as () => number;
 			switch (blockChipView(node.textContent)) {
 				case 'bibliography':
-					return new BibliographyNodeView(node, view, at);
+					return new BibliographyNodeView(node, view, at, latexBibliography);
 				case 'placeholder':
 					return new PlaceholderRawView(node, view, at);
 				case 'ieee-author':

@@ -1,5 +1,5 @@
 // atoms only while drawn: comments and suggestions read the schema's atoms as having no text
-import { NodeSelection, Plugin, TextSelection, type EditorState, type Selection, type Transaction } from 'prosemirror-state';
+import { NodeSelection, Plugin, Selection, TextSelection, type EditorState, type Transaction } from 'prosemirror-state';
 import type { Node, ResolvedPos } from 'prosemirror-model';
 import type { EditorView } from 'prosemirror-view';
 import { drawnChipOf } from './DrawnChipView';
@@ -36,6 +36,30 @@ function inlineChipBeside(state: EditorState, side: Side): { node: Node; pos: nu
 	if (!node || node.isText || node.type.name === 'inline_math') return null;
 	if (!drawnChipOf(node) && !(node.isInline && node.isAtom && NodeSelection.isSelectable(node))) return null;
 	return { node, pos: side < 0 ? $head.pos - node.nodeSize : $head.pos };
+}
+
+// a chip on a line of its own leaves no place for a caret beside another chip, nor at its paragraph's edge: Chrome took
+// the caret to the document's start
+function lineChipPast(state: EditorState, side: Side): Selection | null {
+	const { selection } = state;
+	let past: number;
+	let passedLine: boolean;
+	if (selection instanceof NodeSelection && selection.node.isInline && drawnChipOf(selection.node)?.ownLine) {
+		past = side > 0 ? selection.to : selection.from;
+		passedLine = true;
+	} else {
+		const beside = inlineChipBeside(state, side);
+		if (!beside) return null;
+		past = side < 0 ? beside.pos : beside.pos + beside.node.nodeSize;
+		passedLine = !!drawnChipOf(beside.node)?.ownLine;
+	}
+	const $past = state.doc.resolve(past);
+	const next = side > 0 ? $past.nodeAfter : $past.nodeBefore;
+	if (next) {
+		if (next.isText || !(passedLine || drawnChipOf(next)?.ownLine) || !NodeSelection.isSelectable(next)) return null;
+		return NodeSelection.create(state.doc, side > 0 ? past : past - next.nodeSize);
+	}
+	return passedLine && $past.depth > 0 ? Selection.findFrom(state.doc.resolve(side > 0 ? $past.after() : $past.before()), side) : null;
 }
 
 function onlyWordKey(event: KeyboardEvent): boolean {
@@ -120,6 +144,8 @@ function onKey(view: EditorView, event: KeyboardEvent): boolean {
 		case 'ArrowLeft':
 		case 'ArrowRight': {
 			if (event.shiftKey || oldWordsAhead(state, side > 0)) return false;
+			const lineChip = lineChipPast(state, side);
+			if (lineChip) return select(view, state.tr.setSelection(lineChip));
 			const beside = inlineChipBeside(state, side);
 			if (!beside) return false;
 			const past = side < 0 ? beside.pos : beside.pos + beside.node.nodeSize;

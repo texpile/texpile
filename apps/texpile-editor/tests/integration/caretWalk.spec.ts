@@ -31,10 +31,13 @@ const float = (caption: string, rows: string) =>
 	`\\begin{table}[h]\n\\centering\n\\caption{${caption}}\n\\begin{tabular}{|l|l|}\n\\hline\n${rows}\n\\end{tabular}\n\\end{table}\n`;
 const floats = `\\documentclass{article}\n\\begin{document}\nBefore.\n\n${float('First', 'alpha & beta \\\\ \\hline\ngamma & delta \\\\ \\hline')}\n${float('Second', 'one & two \\\\ \\hline')}\nAfter.\n\\end{document}\n`;
 
+const refs = `\\documentclass{article}\n\\usepackage{biblatex}\n\\begin{document}\nLast words.\n\n\\printbibliography\n\\end{document}\n`;
+
 const texpile = useTexpile({
 	files: {
 		'deck.tex': deck,
-		'floats.tex': floats
+		'floats.tex': floats,
+		'refs.tex': refs
 	}
 });
 const visual = () => new VisualEditor(texpile().page, texpile().root);
@@ -81,6 +84,14 @@ test('Down from the last row of a table float stops between two floats, where ty
 	await caretAtEndOf(v, 'gamma');
 	await v.press('ArrowDown');
 	expect((await where(v)).split(':').slice(0, 2)).toEqual(['GapCursor', 'doc']);
+	// the gap cursor draws its own bar, and the browser painted a second caret in its element or the block beside it
+	expect(
+		await v.evalView<string[]>(
+			`const { $head } = view.state.selection;
+			const near = [view.dom.querySelector('.ProseMirror-gapcursor'), view.nodeDOM($head.pos - $head.nodeBefore.nodeSize), view.nodeDOM($head.pos)];
+			return near.map((el) => getComputedStyle(el).caretColor);`
+		)
+	).toEqual(Array(3).fill('rgba(0, 0, 0, 0)'));
 	await v.press('ArrowUp');
 	expect(await where(v)).toBe('TextSelection:paragraph:delta');
 	await v.press('ArrowDown');
@@ -90,4 +101,13 @@ test('Down from the last row of a table float stops between two floats, where ty
 		(text) => /\\end\{table\}\s+Between\.\s+\\begin\{table\}/.test(text),
 		'the words stand between the floats'
 	);
+});
+
+// Down put the caret inside the text the References card does not show, so no caret showed anywhere
+test('Down onto the bibliography selects the whole card', async () => {
+	const v = visual();
+	await v.open('refs.tex');
+	await caretAtEndOf(v, 'Last words.');
+	await v.press('ArrowDown');
+	await expect.poll(() => where(v)).toMatch(/^NodeSelection:raw_latex:/);
 });

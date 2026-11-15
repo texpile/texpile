@@ -1,16 +1,26 @@
-/* A caret straight in the page, or in the block a gap cursor stands in, is never the text's: the gap cursor draws
-   its own. The blocks inside name theirs, so a hidden caret restyles one level of elements and stops. ProseMirror's
-   own way is a class on the page that restyled every element of the document: 80 ms a click on a 20-page paper */
-.ProseMirror.pm-block-carets,
-.ProseMirror .pm-selection-hidden {
+/* A caret straight in the page is never the text's: the gap cursor draws its own. The blocks inside name theirs, so a
+   hidden caret restyles one level of elements and stops. ProseMirror's own way is a class on the page that restyled
+   every element of the document: 80 ms a click on a 20-page paper */
+.ProseMirror.pm-block-carets {
 	caret-color: transparent;
 }
-.ProseMirror.pm-block-carets > *,
-.ProseMirror .pm-selection-hidden > * {
+.ProseMirror.pm-block-carets > * {
 	caret-color: auto;
 }
-.ProseMirror.pm-block-carets .pm-beside-gap {
+/* while the selection is hidden Chrome paints its own caret where it can: in the block holding the selection (a
+   selected node, the block a nested gap cursor stands in), the gap cursor's element, or the nearest block on either side
+   that takes one (hiddenSelection.ts). Every block flipped instead cost 35 ms a click on 140 pages */
+.ProseMirror.pm-block-carets .pm-selection-hidden,
+.ProseMirror.pm-block-carets .ProseMirror-gapcursor,
+.ProseMirror.pm-block-carets .pm-caret-hidden {
 	caret-color: transparent;
+}
+
+/* a selected drawn block holds the browser's range over its contents (holdHiddenSelection), and Chrome moves a range
+   it cannot select to the document's start: a chip's button is user-select none */
+.ProseMirror .pm-selection-hidden,
+.ProseMirror .pm-selection-hidden * {
+	user-select: text !important;
 }
 
 /* the browser's own highlight over a selected node or a table's selected cells, which show as selected themselves */

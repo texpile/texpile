@@ -6,9 +6,10 @@ import { withPinnedScroll } from '$lib/editor/visual/scrollPin';
 import type { EditorView } from 'prosemirror-view';
 import type { Node } from 'prosemirror-model';
 import type { MathfieldElement } from 'mathlive';
-import { TextSelection } from 'prosemirror-state';
+import { NodeSelection, TextSelection } from 'prosemirror-state';
 import { isMac } from '$lib/platform';
 import { moveOneLine } from './mlVerticalArrows';
+import { emptyMathBlockLike } from './mathEnvironments';
 
 type ExitHost = {
 	view: EditorView;
@@ -38,6 +39,15 @@ export function applyMathOutline(target: HTMLElement, empty: boolean, pendingDel
 	target.style.outline = 'none';
 }
 /* eslint-enable no-param-reassign */
+
+/** Shift+Enter in a display formula starts an empty one of its kind below it */
+export function newFormulaBelow(event: KeyboardEvent, view: EditorView, node: Node, pos: number): boolean {
+	if (!view.editable || event.key !== 'Enter' || !event.shiftKey || event.altKey || event.ctrlKey || event.metaKey) return false;
+	const at = pos + node.nodeSize;
+	const tr = view.state.tr.insert(at, emptyMathBlockLike(node));
+	view.dispatch(tr.setSelection(NodeSelection.create(tr.doc, at)));
+	return true;
+}
 
 export class MathFieldExit {
 	// empty + one backspace = pending, second backspace or blur deletes

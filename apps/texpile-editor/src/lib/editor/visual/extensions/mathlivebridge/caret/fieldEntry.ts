@@ -7,6 +7,9 @@ export function enterField(field: MathfieldElement, atStart: boolean, editable: 
 	// eslint-disable-next-line no-param-reassign -- the field is the element to set up
 	field.readOnly = !editable;
 	field.focus();
+	// mathlive moves the keyboard into the field 60 ms later. Until then ProseMirror read the browser's range, which Chrome
+	// cannot keep beside a formula between drawn blocks: it took the caret to the document's start
+	field.shadowRoot?.querySelector<HTMLElement>('.ML__keyboard-sink')?.focus({ preventScroll: true });
 	field.executeCommand((atStart ? 'moveToMathfieldStart' : 'moveToMathfieldEnd') as never);
 }
 

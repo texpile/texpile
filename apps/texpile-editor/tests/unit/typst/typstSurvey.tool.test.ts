@@ -13,7 +13,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { parseTypstFile } from '$lib/languages/typst/visual/roundtrip';
 import { typstFace } from '$lib/languages/typst/visual/core/walk/typstFace';
-import { isTypstBibliography } from '$lib/languages/typst/visual/extensions/typstBibliographyView.svelte';
+import { isTypstBibliography } from '$lib/languages/typst/visual/extensions/typstBibliography';
 import { isFigureBlock } from '$lib/draw/host/card/FigureCardView.svelte';
 import { cetzLanguage } from '$lib/draw/cetz/cetzLanguage';
 import { chipStatements, isAlone, type ChipStatement } from './survey/typstSurveyHeads';

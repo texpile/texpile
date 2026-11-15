@@ -103,3 +103,83 @@ describe('a range that ends in a chip', () => {
 		expect(caret.from).toBe(chip.from);
 	});
 });
+
+// two \vspace chips drawn on lines of their own left the caret between them, where Chrome has no place for it and took
+// it to the document's start
+describe('two chips on lines of their own', () => {
+	const { doc: spaced } = parseLatexFile(
+		'\\documentclass{article}\n\\begin{document}\nAbove \\vspace{1em}\\vspace{2em} below.\n\\end{document}\n'
+	);
+	const lines: number[] = [];
+	spaced.descendants((node, pos) => {
+		if (node.type.name !== 'inline_latex') return;
+		lines.push(pos);
+		drawChipNode(node, { ownLine: true, character: false, openPanel: () => {} });
+	});
+	function pressFrom(selection: TextSelection | NodeSelection, key: string) {
+		let state = EditorState.create({ doc: spaced, selection });
+		const view = {
+			get state() {
+				return state;
+			},
+			dispatch: (tr: Transaction) => (state = state.apply(tr))
+		} as unknown as EditorView;
+		plugin.props.handleKeyDown!.call(plugin, view, new KeyboardEvent('keydown', { key }));
+		return state.selection;
+	}
+
+	it('Right past the first selects the second, and Left from the second selects the first', () => {
+		expect(lines).toHaveLength(2);
+		const second = pressFrom(TextSelection.create(spaced, lines[0]), 'ArrowRight');
+		expect(second).toBeInstanceOf(NodeSelection);
+		expect(second.from).toBe(lines[1]);
+		const first = pressFrom(NodeSelection.create(spaced, lines[1]), 'ArrowLeft');
+		expect(first).toBeInstanceOf(NodeSelection);
+		expect(first.from).toBe(lines[0]);
+	});
+});
+
+// the same chip ending its paragraph left the caret after it, where Chrome has no place either
+it('Right from a chip on a line of its own that ends its paragraph goes on into the next one', () => {
+	const { doc: ending } = parseLatexFile(
+		'\\documentclass{article}\n\\begin{document}\nAbove \\vspace{1em}\n\nNext words.\n\\end{document}\n'
+	);
+	let chip = -1;
+	ending.descendants((node, pos) => {
+		if (node.type.name !== 'inline_latex') return;
+		chip = pos;
+		drawChipNode(node, { ownLine: true, character: false, openPanel: () => {} });
+	});
+	let state = EditorState.create({ doc: ending, selection: NodeSelection.create(ending, chip) });
+	const view = {
+		get state() {
+			return state;
+		},
+		dispatch: (tr: Transaction) => (state = state.apply(tr))
+	} as unknown as EditorView;
+	plugin.props.handleKeyDown!.call(plugin, view, new KeyboardEvent('keydown', { key: 'ArrowRight' }));
+	expect(state.selection.$head.parent.textContent).toBe('Next words.');
+});
+
+// in a table caption a \vspace drawn on its own line stood right before a chip drawn in the line
+it('Right past a chip on a line of its own selects any chip right after it', () => {
+	const { doc: caption } = parseLatexFile(
+		'\\documentclass{article}\n\\begin{document}\nAbove \\vspace{1em}\\hspace{2em} below.\n\\end{document}\n'
+	);
+	const chips: number[] = [];
+	caption.descendants((node, pos) => {
+		if (node.type.name !== 'inline_latex') return;
+		drawChipNode(node, { ownLine: chips.length === 0, character: false, openPanel: () => {} });
+		chips.push(pos);
+	});
+	let state = EditorState.create({ doc: caption, selection: TextSelection.create(caption, chips[0]) });
+	const view = {
+		get state() {
+			return state;
+		},
+		dispatch: (tr: Transaction) => (state = state.apply(tr))
+	} as unknown as EditorView;
+	plugin.props.handleKeyDown!.call(plugin, view, new KeyboardEvent('keydown', { key: 'ArrowRight' }));
+	expect(state.selection).toBeInstanceOf(NodeSelection);
+	expect(state.selection.from).toBe(chips[1]);
+});

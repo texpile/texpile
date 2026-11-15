@@ -8,6 +8,7 @@ export const placeholderCaret = new Plugin({
 		const { $from } = selection;
 		if (!(selection instanceof TextSelection) || $from.parent.type.name !== 'raw_latex') return null;
 		const command = placeholderCommand($from.parent.textContent)?.command;
+		// the bibliography's card takes a caret itself, in Typst too
 		if (!command || command === 'printbibliography') return null;
 		return state.tr.setSelection(NodeSelection.create(state.doc, $from.before()));
 	}

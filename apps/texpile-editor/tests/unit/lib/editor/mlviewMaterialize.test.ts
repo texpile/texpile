@@ -54,9 +54,10 @@ const { MathLiveView } = await import('$lib/editor/visual/extensions/mathlivebri
 function makeView(latex = 'x^2', isBlock = false, editable = true) {
 	const type = isBlock ? schema.nodes.block_math : schema.nodes.inline_math;
 	const node = type.create(isBlock ? { numbered: false, lineLabels: [] } : null, schema.text(latex));
+	const selection = { from: 0, to: 0, eq: (other: unknown) => other === selection };
 	const pmView = {
 		editable,
-		state: { doc: { descendants() {} }, tr: {}, selection: { from: 0, to: 0 } },
+		state: { doc: { descendants() {} }, tr: {}, selection },
 		dispatch() {},
 		focus() {}
 	} as unknown as ProseMirrorView;

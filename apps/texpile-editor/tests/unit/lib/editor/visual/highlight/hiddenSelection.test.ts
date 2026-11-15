@@ -1,12 +1,28 @@
+// @vitest-environment jsdom
 import { it, expect } from 'vitest';
 import { EditorState, NodeSelection, TextSelection } from 'prosemirror-state';
+import { EditorView } from 'prosemirror-view';
 import { GapCursor } from 'prosemirror-gapcursor';
 import { CellSelection } from 'prosemirror-tables';
 import type { Node } from 'prosemirror-model';
-import type { DecorationSet } from 'prosemirror-view';
 import { schema } from '$lib/languages/latex/schema/latexPMSchema';
-import { hiddenSelectionHolder, hiddenSelectionPlugin } from '$lib/editor/visual/highlight/hiddenSelection';
-import { createTableNode } from '$lib/editor/visual/tableUtils';
+import { parseLatexFile } from '$lib/workspace/latexRoundtrip';
+import { drawnBlockBetween, hiddenSelectionHolder, hiddenSelectionPlugin } from '$lib/editor/visual/highlight/hiddenSelection';
+
+// jsdom has no isContentEditable
+Object.defineProperty(HTMLElement.prototype, 'isContentEditable', {
+	configurable: true,
+	get(this: HTMLElement) {
+		const at = this.closest('[contenteditable]');
+		return !!at && at.getAttribute('contenteditable') !== 'false';
+	}
+});
+
+const drawn = () => {
+	const dom = document.createElement('div');
+	dom.setAttribute('contenteditable', 'false');
+	return { dom };
+};
 
 function posOf(doc: Node, name: string, nth = 0): number {
 	let at = -1;
@@ -44,15 +60,35 @@ it('holds a selected node, a table for its cells, a gap cursor in its block, and
 	});
 });
 
-// Chrome painted its own caret in the float under a gap, beside the gap cursor's bar
-it('hides the caret in the blocks on both sides of a gap cursor', () => {
-	const doc = schema.node('doc', null, [createTableNode(schema, 1, 1), createTableNode(schema, 1, 1)]);
-	const between = doc.child(0).nodeSize;
-	const plugin = hiddenSelectionPlugin();
-	const state = EditorState.create({ doc, plugins: [plugin], selection: new GapCursor(doc.resolve(between)) });
-	const marked = (plugin.props.decorations!.call(plugin, state) as DecorationSet).find();
-	expect(marked.map((d) => [d.from, d.to])).toEqual([
-		[0, between],
-		[between, doc.content.size]
+// a selected formula holds the browser's range over its contents, and read back before its field took the focus that
+// range became the formula's hidden source selected as text
+it("reads a range over a drawn block's contents back as the block selected", () => {
+	const doc = schema.node('doc', null, [
+		schema.node('paragraph', null, [schema.text('see')]),
+		schema.nodes.block_math.create({ numbered: false, lineLabels: [] }, schema.text('a=b'))
 	]);
+	const view = new EditorView(document.body.appendChild(document.createElement('div')), {
+		state: EditorState.create({ doc }),
+		nodeViews: { block_math: drawn }
+	});
+	const at = posOf(doc, 'block_math');
+	const selection = drawnBlockBetween(view, doc.resolve(at + 1), doc.resolve(at + doc.nodeAt(at)!.nodeSize - 1));
+	expect(selection).toBeInstanceOf(NodeSelection);
+	expect(selection?.from).toBe(at);
+	view.destroy();
+});
+
+// Chrome paints its own caret beside a hidden selection, in the nearest block that takes one: past the chips of a gap
+// between two \input lines, in the paragraphs on either side. Flipping every block's caret instead cost 35 ms a move
+it('hides the caret of the nearest block on each side that takes one, past drawn blocks', () => {
+	const { doc } = parseLatexFile(
+		'\\documentclass{article}\n\\begin{document}\nFirst words.\n\n\\input{a}\n\n\\input{b}\n\nLast words.\n\\end{document}\n'
+	);
+	const view = new EditorView(document.body.appendChild(document.createElement('div')), {
+		state: EditorState.create({ doc, plugins: [hiddenSelectionPlugin()] }),
+		nodeViews: { includedoc: drawn }
+	});
+	view.dispatch(view.state.tr.setSelection(new GapCursor(doc.resolve(posOf(doc, 'includedoc', 1)))));
+	expect([...view.dom.querySelectorAll('.pm-caret-hidden')].map((el) => el.textContent)).toEqual(['First words.', 'Last words.']);
+	view.destroy();
 });
