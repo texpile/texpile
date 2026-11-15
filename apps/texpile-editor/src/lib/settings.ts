@@ -90,7 +90,7 @@ export type AppSettings = {
 	/** what the source editor folds the first time a file opens, from nothing to every fold */
 	foldOnOpen: 'off' | 'floats' | 'equations' | 'environments' | 'everything';
 	/** UI display language. Not the LaTeX document language (see DocumentLanguage). */
-	uiLocale: 'en' | 'zh-Hans' | 'zh-Hant' | 'de' | 'pt-BR';
+	uiLocale: 'en' | 'zh-Hans' | 'zh-Hant' | 'de' | 'pt-BR' | 'es';
 	/** shared-session relay endpoint (ws:// or wss://); the self-hosted-relay escape hatch. */
 	collabRelayUrl: string;
 	/** folders open across windows; maintained by the MAIN process for session restore.

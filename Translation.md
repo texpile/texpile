@@ -3,18 +3,21 @@
 Texpile ships in the languages below. Open an [issue](../../issues) if you can help with another
 one, or with keeping one of these current.
 
-| Language              | Locale    | Status                                                                  |
-| --------------------- | --------- | ----------------------------------------------------------------------- |
-| English               | `en`      | Source language, maintained by [@louisqli](https://github.com/louisqli) |
-| Chinese (Simplified)  | `zh-Hans` | Maintained by [@louisqli](https://github.com/louisqli)                  |
-| Chinese (Traditional) | `zh-Hant` | Maintained by [@louisqli](https://github.com/louisqli)                  |
-| German                | `de`      | Machine translated, review welcome                                      |
-| Portuguese (Brazil)   | `pt-BR`   | Reviewed by [@ale4-dev](https://github.com/ale4-dev)                    |
+| Language              | Locale    | Translated | Status                                                                  |
+| --------------------- | --------- | ---------- | ----------------------------------------------------------------------- |
+| English               | `en`      | 100%       | Source language, maintained by [@louisqli](https://github.com/louisqli) |
+| Chinese (Simplified)  | `zh-Hans` | 100%       | Maintained by [@louisqli](https://github.com/louisqli)                  |
+| Chinese (Traditional) | `zh-Hant` | 100%       | Maintained by [@louisqli](https://github.com/louisqli)                  |
+| German                | `de`      | 100%       | Machine translated, review welcome                                      |
+| Portuguese (Brazil)   | `pt-BR`   | 97%        | Reviewed by [@ale4-dev](https://github.com/ale4-dev)                    |
+| Spanish               | `es`      | 24%        | Maintained by [@nicolobos77](https://github.com/nicolobos77)            |
+
+Translated is the share of the strings in `en.json` each file translates, as of 2026-11-15.
 
 ## Translating
 
 The message files are `apps/texpile-editor/messages/<locale>.json`. `en.json` is the source, and
-every other file carries the same keys.
+the other files use its keys.
 
 - Translate the values, never the keys
 - Leave `{placeholders}` alone; they are filled in at runtime
