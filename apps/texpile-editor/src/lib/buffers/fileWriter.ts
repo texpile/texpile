@@ -78,6 +78,12 @@ export class FileWriter {
 		return unwritten;
 	}
 
+	/** written over whatever the disk holds, a conflict or a disk version that is no text included */
+	saveAnyway(path: string): Promise<boolean> {
+		const t = this.target(path);
+		return t ? t.files.save(t.rel, true) : Promise.resolve(false);
+	}
+
 	/** the File Cache Conflict choice for a file */
 	resolveConflict(path: string, choice: 'disk' | 'memory'): Promise<boolean> {
 		const t = this.target(path);

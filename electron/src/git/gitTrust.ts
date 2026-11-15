@@ -5,7 +5,7 @@
 // VS Code's Manage Unsafe Repositories, reduced to the one folder open.
 import { simpleGit } from 'simple-git';
 import { homedir } from 'node:os';
-import { errMsg, git, gitRecheck, isMissingGit, type GitOpResult } from './gitService';
+import { errMsg, git, gitRecheck, isMissingGit, ownEnvironment, type GitOpResult } from './gitService';
 import { unsafeRepoFrom } from './unsafeRepo';
 
 export type GitTrustResult = GitOpResult & { path?: string };
@@ -26,7 +26,13 @@ export async function gitTrustRepo(workspaceRoot: string): Promise<GitTrustResul
 		const path = unsafeRepoFrom(refusal);
 		if (!path) return { ok: false, error: refusal };
 		// from the home folder: the global config is not the refused repository's to answer for
-		await simpleGit({ baseDir: homedir(), binary: 'git' }).raw(['config', '--global', '--add', 'safe.directory', path]);
+		await simpleGit({ baseDir: homedir(), binary: 'git', allowEnvironment: ownEnvironment() }).raw([
+			'config',
+			'--global',
+			'--add',
+			'safe.directory',
+			path
+		]);
 		await gitRecheck(); // the refusal was remembered as "no repository here"
 		return { ok: true, path };
 	} catch (e) {

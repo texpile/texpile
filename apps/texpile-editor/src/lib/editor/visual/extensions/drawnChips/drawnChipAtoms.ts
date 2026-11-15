@@ -2,7 +2,10 @@
 import { NodeSelection, Plugin, Selection, TextSelection, type EditorState, type Transaction } from 'prosemirror-state';
 import type { Node, ResolvedPos } from 'prosemirror-model';
 import type { EditorView } from 'prosemirror-view';
+import { GapCursor } from 'prosemirror-gapcursor';
 import { drawnChipOf } from './DrawnChipView';
+import { isLineParagraph, lineChipAtEdge } from '$lib/editor/visual/lineParagraph';
+import { gapCursorAt } from '$lib/editor/visual/gapSelection';
 import { landBesideOldWords, oldWordsAhead } from '$lib/editor/visual/extensions/pmOldWordsCaret';
 import { isMac } from '$lib/platform';
 
@@ -13,9 +16,34 @@ function select(view: EditorView, tr: Transaction): true {
 	return true;
 }
 
+/** the drawn chip across the block edge at `$edge`: a chip block, or a chip on a line of its own the textblock there
+ *  meets the key with */
+function chipAcross(state: EditorState, $edge: ResolvedPos, side: Side): { node: Node; pos: number } | null {
+	const node = side < 0 ? $edge.nodeBefore : $edge.nodeAfter;
+	const pos = side < 0 ? $edge.pos - (node?.nodeSize ?? 0) : $edge.pos;
+	const chip = lineChipAtEdge(node, pos, side);
+	if (chip !== null) return { node: state.doc.nodeAt(chip)!, pos: chip };
+	return node && drawnChipOf(node) ? { node, pos } : null;
+}
+
+/** Left or Right from a selected block, or from a textblock's edge, onto a chip on a line of its own across it */
+function lineChipAcrossHorizontally(state: EditorState, side: Side): number | null {
+	const { selection, doc } = state;
+	let $edge: ResolvedPos;
+	if (selection instanceof NodeSelection && selection.node.isBlock) $edge = side < 0 ? selection.$from : selection.$to;
+	else if (selection instanceof TextSelection && selection.empty && selection.$head.depth > 0) {
+		const { $head } = selection;
+		if ($head.parentOffset !== (side < 0 ? 0 : $head.parent.content.size)) return null;
+		$edge = doc.resolve(side < 0 ? $head.before() : $head.after());
+	} else return null;
+	const node = side < 0 ? $edge.nodeBefore : $edge.nodeAfter;
+	return lineChipAtEdge(node, side < 0 ? $edge.pos - (node?.nodeSize ?? 0) : $edge.pos, side);
+}
+
 /** the drawn chip beside an empty caret, inline in its line or the block across its textblock's edge */
 function chipBeside(state: EditorState, side: Side): { node: Node; pos: number } | null {
 	const { selection } = state;
+	if (selection instanceof GapCursor) return chipAcross(state, selection.$head, side);
 	if (!(selection instanceof TextSelection) || !selection.empty) return null;
 	const $head = selection.$head;
 	const inline = side < 0 ? $head.nodeBefore : $head.nodeAfter;
@@ -23,9 +51,7 @@ function chipBeside(state: EditorState, side: Side): { node: Node; pos: number }
 	if ($head.depth === 0) return null;
 	const atEdge = side < 0 ? $head.parentOffset === 0 : $head.parentOffset === $head.parent.content.size;
 	if (!atEdge) return null;
-	const $edge = state.doc.resolve(side < 0 ? $head.before() : $head.after());
-	const node = side < 0 ? $edge.nodeBefore : $edge.nodeAfter;
-	return node && drawnChipOf(node) ? { node, pos: side < 0 ? $edge.pos - node.nodeSize : $edge.pos } : null;
+	return chipAcross(state, state.doc.resolve(side < 0 ? $head.before() : $head.after()), side);
 }
 
 function inlineChipBeside(state: EditorState, side: Side): { node: Node; pos: number } | null {
@@ -139,7 +165,10 @@ function blockAcross(view: EditorView, side: Side): { pos: number } | 'end' | nu
 	}
 	const node = side > 0 ? $edge.nodeAfter : $edge.nodeBefore;
 	if (!node) return selection instanceof NodeSelection && selection.node.isBlock ? 'end' : null;
-	return drawnChipOf(node)?.ownLine ? { pos: side > 0 ? $edge.pos : $edge.pos - node.nodeSize } : null;
+	const pos = side > 0 ? $edge.pos : $edge.pos - node.nodeSize;
+	const chip = lineChipAtEdge(node, pos, side);
+	if (chip !== null) return { pos: chip };
+	return drawnChipOf(node)?.ownLine ? { pos } : null;
 }
 
 function selectedChip(state: EditorState) {
@@ -163,6 +192,8 @@ function onKey(view: EditorView, event: KeyboardEvent): boolean {
 		case 'ArrowLeft':
 		case 'ArrowRight': {
 			if (event.shiftKey || oldWordsAhead(state, side > 0)) return false;
+			const across = lineChipAcrossHorizontally(state, side);
+			if (across !== null) return select(view, state.tr.setSelection(NodeSelection.create(state.doc, across)));
 			const lineChip = lineChipPast(state, side);
 			if (lineChip) return select(view, state.tr.setSelection(lineChip));
 			const beside = inlineChipBeside(state, side);
@@ -215,13 +246,32 @@ function withWholeChips(state: EditorState): Selection | null {
 	return TextSelection.create(doc, anchor, head);
 }
 
+// a caret at the edge of a line paragraph (a click above \appendix) is the gap beside it, where one is. One after a chip
+// on a line of its own that ends its textblock has no line to stand on (End on the line before \appendix): Chrome drew
+// it at the end of the divider. It goes to the line before the chip, or past a line paragraph
+function caretOffLineEdge(state: EditorState): Selection | null {
+	const { selection, doc } = state;
+	if (!(selection instanceof TextSelection) || !selection.empty) return null;
+	const { $head } = selection;
+	if ($head.depth === 0) return null;
+	const atEnd = $head.parentOffset === $head.parent.content.size;
+	if (isLineParagraph($head.parent)) {
+		if ($head.parentOffset === 0) return gapCursorAt(doc.resolve($head.before()));
+		if (!atEnd) return null;
+		const $after = doc.resolve($head.after());
+		return gapCursorAt($after) ?? Selection.findFrom($after, 1);
+	}
+	const chip = $head.nodeBefore;
+	return atEnd && chip && drawnChipOf(chip)?.ownLine ? TextSelection.create(doc, $head.pos - chip.nodeSize) : null;
+}
+
 export function drawnChipAtomsPlugin(): Plugin {
 	return new Plugin({
 		props: { handleKeyDown: onKey },
 		view: () => ({ update: stopOnPassedLine }),
 		appendTransaction(transactions, _old, state) {
 			if (!transactions.some((tr) => tr.selectionSet || tr.docChanged)) return null;
-			const whole = withWholeChips(state);
+			const whole = withWholeChips(state) ?? caretOffLineEdge(state);
 			return whole && state.tr.setSelection(whole);
 		}
 	});

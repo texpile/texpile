@@ -4,7 +4,7 @@
 import { simpleGit } from 'simple-git';
 import { readdir, rm, stat } from 'node:fs/promises';
 import { isAbsolute, join } from 'node:path';
-import { errMsg, isMissingGit } from '../gitService';
+import { errMsg, git, isMissingGit, ownEnvironment } from '../gitService';
 import { OWN_ENVIRONMENT, classifyPushError, isRemoteUrl, netEnv, type GitAuthEnv } from './gitRemote';
 
 /** 'exists': the folder is already there and has something in it. 'not-found': nothing answers at
@@ -62,7 +62,7 @@ const CHECKOUT_FAILED_RE = /clone succeeded, but checkout failed/i;
  *  leaves the project checked out */
 async function checkedOut(dir: string): Promise<boolean> {
 	try {
-		return (await simpleGit(dir).raw(['rev-parse', '--verify', '-q', 'HEAD'])).trim() !== '' && (await occupied(join(dir, '.git')));
+		return (await git(dir).raw(['rev-parse', '--verify', '-q', 'HEAD'])).trim() !== '' && (await occupied(join(dir, '.git')));
 	} catch {
 		return false;
 	}
@@ -92,16 +92,18 @@ export async function gitClone(
 	const target = join(parent, name);
 	if (await occupied(target)) return { ok: false, failure: 'exists', path: target };
 
+	const env = netEnv(auth);
 	const g = simpleGit({
 		baseDir: parent,
 		binary: 'git',
 		maxConcurrentProcesses: 1,
 		config: ['core.quotePath=false'],
+		allowEnvironment: ownEnvironment(env),
 		unsafe: OWN_ENVIRONMENT,
 		progress: ({ stage, progress }) => onProgress?.({ stage, percent: progress }),
 		// git clone removes the folder it made when it is stopped, as when it fails
 		abort: signal
-	}).env(netEnv(auth));
+	}).env(env);
 	try {
 		// `--` so an address can never be read as an option; isRemoteUrl already refuses one that could
 		const depth = opts.shallow ? ['--depth', '1', '--shallow-submodules'] : [];

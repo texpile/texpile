@@ -4,6 +4,7 @@ import { NodeSelection, TextSelection, type EditorState, type Plugin, type Selec
 import type { ResolvedPos } from 'prosemirror-model';
 import { Decoration, DecorationSet, type EditorView } from 'prosemirror-view';
 import { drawnChipOf } from '$lib/editor/visual/extensions/drawnChips/DrawnChipView';
+import { gapsBesideLineParagraphs, lineChipAtEdge } from '$lib/editor/visual/lineParagraph';
 
 export function textBeside($pos: ResolvedPos, dir: -1 | 1): boolean {
 	let $at = $pos;
@@ -16,7 +17,7 @@ export function textBeside($pos: ResolvedPos, dir: -1 | 1): boolean {
 		}
 		while (node && !node.isAtom && !node.inlineContent && !node.type.spec.createGapCursor)
 			node = dir > 0 ? node.firstChild : node.lastChild;
-		return node !== null && !node.isAtom && !node.type.spec.createGapCursor && !drawnChipOf(node);
+		return node !== null && !node.isAtom && !node.type.spec.createGapCursor && !drawnChipOf(node) && lineChipAtEdge(node, 0, dir) === null;
 	}
 }
 
@@ -47,6 +48,11 @@ function selectDrawnBeside(view: EditorView, gap: GapCursor, dir: -1 | 1): boole
 	const { $head } = gap;
 	const node = dir > 0 ? $head.nodeAfter : $head.nodeBefore;
 	const at = dir > 0 ? $head.pos : $head.pos - (node?.nodeSize ?? 0);
+	const chip = lineChipAtEdge(node, at, dir);
+	if (chip !== null) {
+		view.dispatch(view.state.tr.setSelection(NodeSelection.create(view.state.doc, chip)).scrollIntoView());
+		return true;
+	}
 	const dom = node && view.nodeDOM(at);
 	if (!node || !NodeSelection.isSelectable(node) || !(dom instanceof HTMLElement) || dom.isContentEditable) return false;
 	if (dom.querySelector('[contenteditable="true"]')) return false;
@@ -66,6 +72,7 @@ function drawGapCursor(state: EditorState): DecorationSet | null {
 }
 
 export function heldGapCursor(): Plugin {
+	gapsBesideLineParagraphs();
 	const plugin = gapCursor();
 	plugin.props.decorations = drawGapCursor;
 	return plugin;

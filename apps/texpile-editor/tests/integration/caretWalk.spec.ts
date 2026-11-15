@@ -33,11 +33,16 @@ const floats = `\\documentclass{article}\n\\begin{document}\nBefore.\n\n${float(
 
 const refs = `\\documentclass{article}\n\\usepackage{biblatex}\n\\begin{document}\nLast words.\n\n\\printbibliography\n\\end{document}\n`;
 
+const appendix = `\\documentclass{article}\n\\begin{document}\n\\input{one}\n\n\\appendix\n\\input{two}\n\\end{document}\n`;
+const wordsAppendix = `\\documentclass{article}\n\\begin{document}\n\\input{one}\n\nSome words\\appendix\n\\input{two}\n\\end{document}\n`;
+
 const texpile = useTexpile({
 	files: {
 		'deck.tex': deck,
 		'floats.tex': floats,
-		'refs.tex': refs
+		'refs.tex': refs,
+		'appendix.tex': appendix,
+		'words-appendix.tex': wordsAppendix
 	}
 });
 const visual = () => new VisualEditor(texpile().page, texpile().root);
@@ -110,4 +115,46 @@ test('Down onto the bibliography selects the whole card', async () => {
 	await caretAtEndOf(v, 'Last words.');
 	await v.press('ArrowDown');
 	await expect.poll(() => where(v)).toMatch(/^NodeSelection:raw_latex:/);
+});
+
+// \appendix is a paragraph holding only its divider: the caret stood at its edge as on an empty line, typing there wrote
+// beside \appendix, and no gap showed above or below it
+test('a divider alone in its paragraph has a gap above and below, where typing starts a paragraph of its own', async () => {
+	const v = visual();
+	const disk = new Disk(texpile().root);
+	await v.open('appendix.tex');
+	await v.evalView(
+		`let S = view.state.selection.constructor; while (Object.getPrototypeOf(S).fromJSON) S = Object.getPrototypeOf(S);
+		view.focus(); view.dispatch(view.state.tr.setSelection(S.fromJSON(view.state.doc, { type: 'node', anchor: 0 })));`
+	);
+	const down: string[] = [];
+	for (let i = 0; i < 4; i++) {
+		await v.press('ArrowDown');
+		down.push((await where(v)).split(':').slice(0, 2).join(':'));
+	}
+	expect(down).toEqual(['GapCursor:doc', 'NodeSelection:inline_latex', 'GapCursor:doc', 'NodeSelection:includedoc']);
+	for (let i = 0; i < 3; i++) await v.press('ArrowUp');
+	expect((await where(v)).split(':')[0]).toBe('GapCursor');
+	await texpile().page.keyboard.type('Words.');
+	await disk.expectFile(
+		'appendix.tex',
+		(text) => /\\input\{one\}\s+Words\.\n\s*\n\\appendix/.test(text),
+		'the words stand above \\appendix'
+	);
+});
+
+// with words before \appendix in its paragraph, Up from the \input under it put the caret after the divider, drawn at its
+// end where it read as the divider's own tick
+test('Up from below a divider that ends a paragraph of words selects the divider, then goes to the words', async () => {
+	const v = visual();
+	await v.open('words-appendix.tex');
+	await v.evalView(
+		`let at = -1; view.state.doc.forEach((n, pos) => { if (n.textContent.startsWith('Some words')) at = pos + n.nodeSize; });
+		let S = view.state.selection.constructor; while (Object.getPrototypeOf(S).fromJSON) S = Object.getPrototypeOf(S);
+		view.focus(); view.dispatch(view.state.tr.setSelection(S.fromJSON(view.state.doc, { type: 'node', anchor: at })));`
+	);
+	await v.press('ArrowUp');
+	expect((await where(v)).split(':').slice(0, 2).join(':')).toBe('NodeSelection:inline_latex');
+	await v.press('ArrowUp');
+	expect(await v.evalView<string>('const { $head } = view.state.selection; return $head.nodeBefore?.text ?? "";')).toBe('Some words');
 });

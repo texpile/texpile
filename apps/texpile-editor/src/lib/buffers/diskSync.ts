@@ -1,13 +1,13 @@
 import { decodeEditableText } from '$lib/files/service/textLimit';
 import { takeDiskChange } from '$lib/files/sync/diskMerge';
 import { detectEol, toLf, type Eol } from '$lib/workspace/edits/lineEndings';
-import { m } from '$lib/paraglide/messages';
 import type { TextBuffers } from './textBuffers';
 
 /** a loaded file catching up with its disk, as IntelliJ's FileDocumentManager does in its merge mode */
 export class DiskSync {
-	/** the disk and the editor changed the same words: rel -> the disk's text, until someone chooses */
-	private readonly conflicted = new Map<string, string>();
+	/** the disk and the editor changed the same words: rel -> the disk's text, until someone chooses; null when the
+	 *  disk's version is no text the editor can hold (not UTF-8, or past the size limit) */
+	private readonly conflicted = new Map<string, string | null>();
 
 	constructor(private readonly buffers: TextBuffers) {}
 
@@ -74,9 +74,14 @@ export class DiskSync {
 			b.hooks.deleted?.(abs);
 			return false;
 		}
+		// as IntelliJ never leaves a file without a way to write the edits: the choice of the conflict, not a dead end
 		if (read === 'unreadable') {
+			// with nothing unsaved there is nothing to ask: the file waits for its disk to read as text again (a sync
+			// client halfway through a write)
+			if (!b.hasPending(rel) && !b.isDirty(rel)) return false;
 			b.hold(rel);
-			b.hooks.failed?.(abs, new Error(m.filesync_disk_not_text()));
+			this.conflicted.set(rel, null);
+			b.hooks.conflict?.(abs, null, t.toString());
 			return false;
 		}
 		const { text: disk, eol } = read;
@@ -102,12 +107,16 @@ export class DiskSync {
 		if (held === undefined) return false;
 		this.conflicted.delete(rel);
 		if (choice === 'memory') {
-			b.takeCommonText(rel, held);
+			if (held !== null) b.takeCommonText(rel, held);
 			return b.save(rel, true);
 		}
 		// the disk as it is now, which can have moved again while the dialog was up
 		const read = await this.read(b.abs(rel)).catch(() => null);
-		const disk = read && read !== 'unreadable' ? read : { text: held, eol: undefined };
+		if (held === null && (!read || read === 'unreadable')) {
+			b.hooks.unreadable?.(b.abs(rel));
+			return true;
+		}
+		const disk = read && read !== 'unreadable' ? read : { text: held ?? '', eol: undefined };
 		b.adoptDisk(rel, disk.text, disk.eol);
 		b.hooks.diskTaken?.(b.abs(rel), disk.text);
 		return true;

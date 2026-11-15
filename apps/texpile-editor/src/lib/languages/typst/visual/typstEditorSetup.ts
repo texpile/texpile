@@ -53,7 +53,7 @@ import {
 import { indentListItem } from '$lib/editor/visual/extensions/listIndent/listIndent';
 import { inputRules, textblockTypeInputRule, InputRule, undoInputRule, smartQuotes, ellipsis } from 'prosemirror-inputrules';
 import { selectFigureBackward, selectFigureForward } from '$lib/editor/visual/figureDeleteGuard';
-import { deleteEmptyBlockForward, deleteEmptyFirstBlock } from '$lib/editor/visual/emptyBlockDelete';
+import { deleteEmptyBlockBackward, deleteEmptyBlockForward } from '$lib/editor/visual/emptyBlockDelete';
 import { liftFromStyleEnvironment } from '$lib/editor/visual/liftFromStyleEnvironment';
 import { emDashRule, enDashRule, emDashUpgradeRule } from '$lib/editor/visual/extensions/inputrules/dashRules';
 import { visualFindPlugin } from '$lib/editor/visual/find/visualFindPlugin';
@@ -232,7 +232,7 @@ export function typstEditorPlugins(setup: TypstEditorSetup): Plugin[] {
 		shiftArrowsPlugin(),
 		// before the list keymap, whose Backspace and Delete act at a block edge: they would join the block after an empty one into it, and a block into a figure
 		keymap({ Backspace: liftFromStyleEnvironment }),
-		keymap({ Backspace: deleteEmptyFirstBlock, Delete: deleteEmptyBlockForward }),
+		keymap({ Backspace: deleteEmptyBlockBackward, Delete: deleteEmptyBlockForward }),
 		keymap({ Backspace: selectFigureBackward, Delete: selectFigureForward }),
 		keymap(listKeymap),
 		inputRules({ rules: typInputRules }),

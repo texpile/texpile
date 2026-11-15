@@ -34,7 +34,7 @@
 	import { createListPlugins, listInputRules, listKeymap, createIndentListCommand, createDedentListCommand } from 'prosemirror-flat-list';
 	import { inputRules, textblockTypeInputRule, wrappingInputRule, InputRule, undoInputRule } from 'prosemirror-inputrules';
 	import { selectFigureBackward, selectFigureForward } from '$lib/editor/visual/figureDeleteGuard';
-	import { deleteEmptyBlockForward, deleteEmptyFirstBlock } from '$lib/editor/visual/emptyBlockDelete';
+	import { deleteEmptyBlockBackward, deleteEmptyBlockForward } from '$lib/editor/visual/emptyBlockDelete';
 	import { visualFindPlugin } from '$lib/editor/visual/find/visualFindPlugin';
 	import { mdSchema } from './schema';
 	import { markdownCopyPlugin } from './clipboard';
@@ -219,7 +219,7 @@
 			listAttrInheritance,
 			history(),
 			// before the list keymap, whose Backspace and Delete act at a block edge: they would join the block after an empty one into it, and a block into a figure
-			keymap({ Backspace: deleteEmptyFirstBlock, Delete: deleteEmptyBlockForward }),
+			keymap({ Backspace: deleteEmptyBlockBackward, Delete: deleteEmptyBlockForward }),
 			keymap({ Backspace: selectFigureBackward, Delete: selectFigureForward }),
 			shiftArrowsPlugin(),
 			keymap(listKeymap),

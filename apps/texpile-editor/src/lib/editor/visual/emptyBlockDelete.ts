@@ -1,7 +1,8 @@
-// Backspace in an empty block at the very start of the document, and Delete in an empty block with
-// another after it, take the empty block out. ProseMirror has nothing before the first block to join
-// it with, so Backspace did nothing, and Delete joined the next block into the empty one, which
-// turned a heading after it into body text.
+// Backspace in an empty block at the very start of the document or after a block with no text to join
+// (an \input, a table), and Delete in an empty block with another after it, take the empty block out.
+// ProseMirror has nothing before the first block to join it with, so Backspace did nothing; the list
+// keymap's Backspace selected the block before and left the empty line; and Delete joined the next
+// block into the empty one, which turned a heading after it into body text.
 import type { EditorState, Transaction } from 'prosemirror-state';
 import type { ResolvedPos } from 'prosemirror-model';
 import { gapAwareSelectionNear } from './gapSelection';
@@ -17,19 +18,23 @@ function inEmptyBlock(state: EditorState): ResolvedPos | null {
 	return REMOVABLE.has(block.type.name) && block.content.size === 0 ? $cursor : null;
 }
 
-/** the empty block goes and the cursor starts the block that followed it */
-function remove($cursor: ResolvedPos, state: EditorState, dispatch?: (tr: Transaction) => void): boolean {
+/** the empty block goes and the cursor takes its place, else the block on `dir`'s side */
+function remove($cursor: ResolvedPos, state: EditorState, dispatch?: (tr: Transaction) => void, dir: -1 | 1 = 1): boolean {
 	if (dispatch) {
 		const at = $cursor.before();
 		const tr = state.tr.delete(at, $cursor.after());
-		dispatch(tr.setSelection(gapAwareSelectionNear(tr.doc.resolve(at), 1)).scrollIntoView());
+		dispatch(tr.setSelection(gapAwareSelectionNear(tr.doc.resolve(at), dir)).scrollIntoView());
 	}
 	return true;
 }
 
-export function deleteEmptyFirstBlock(state: EditorState, dispatch?: (tr: Transaction) => void): boolean {
+export function deleteEmptyBlockBackward(state: EditorState, dispatch?: (tr: Transaction) => void): boolean {
 	const $cursor = inEmptyBlock(state);
-	if (!$cursor || $cursor.index(0) > 0) return false;
+	if (!$cursor) return false;
+	if ($cursor.index(0) > 0) {
+		const before = state.doc.child($cursor.index(0) - 1);
+		return !before.isTextblock && before.isBlock && remove($cursor, state, dispatch, -1);
+	}
 	if (state.doc.childCount > 1) return remove($cursor, state, dispatch);
 	// the document's only block stays, but an empty heading goes back to body text
 	const paragraph = state.schema.nodes.paragraph;
