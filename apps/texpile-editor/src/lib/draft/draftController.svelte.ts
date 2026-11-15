@@ -152,7 +152,9 @@ export class DraftController {
 		this.dispatcher.adoptCurrentAsBaseline();
 	}
 
+	// leaving the workspace takes its warm engines too: they no longer stop on their own when idle
 	dispose() {
 		this.dispatcher.cancel();
+		void nativeBridge()?.draftStop?.();
 	}
 }
