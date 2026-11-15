@@ -1,5 +1,6 @@
-/** `memory` reads the editor's text now: a collaborator can type while the dialog is up */
-export type FileCacheConflict = { path: string; disk: string; memory: () => string };
+/** `memory` reads the editor's text now: a collaborator can type while the dialog is up. `disk` is null when the disk's
+ *  version is no text the editor can hold */
+export type FileCacheConflict = { path: string; disk: string | null; memory: () => string };
 
 export type FileCacheChoice = 'disk' | 'memory';
 

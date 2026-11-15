@@ -21,7 +21,7 @@ import { editorGroups } from '$lib/workspace/groups/editorGroups.svelte';
 import { visualDocCache } from '$lib/workspace/visualDocCache';
 import { saveVisualPosition } from '$lib/workspace/visualPositions';
 import { editorViewStore } from '$lib/stores/editorStore';
-import { samePath } from '$lib/workspace/fileSystem';
+import { basename, samePath } from '$lib/workspace/fileSystem';
 import type { WorkspaceProvider } from '$lib/workspace/workspaceProvider';
 import type { EditSession } from '$lib/collab/editSession';
 import type { WorkspaceDoc } from './workspaceDoc.svelte';
@@ -152,8 +152,15 @@ export class WorkspaceEditFlow {
 						detachDeleted(p);
 					}
 				}),
-			failed: (_path, e) =>
-				toaster.error({ title: m.wsview_toast_save_failed_title(), description: e instanceof Error ? e.message : m.wsview_error_unknown() })
+			unreadable: (path) => {
+				fileCacheConflicts.remove(path);
+				detachDeleted(path);
+			},
+			failed: (path, e) =>
+				toaster.error({
+					title: m.wsview_toast_save_failed_file({ name: basename(path) }),
+					description: e instanceof Error ? e.message : m.wsview_error_unknown()
+				})
 		});
 	}
 

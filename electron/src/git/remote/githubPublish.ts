@@ -1,11 +1,11 @@
 // Publish to GitHub: create the repository, record it as a remote, push the branch to it. VS Code's
 // "Publish to GitHub", signed in with the credential git already uses for github.com instead of an
 // OAuth app of Texpile's own - Git Credential Manager, a keychain, `gh auth setup-git`, or, when
-// there is none, a token typed into the askpass prompt once. Git runs in the helper process; the
+// there is none, a token typed into the askpass prompt once. Git runs in the helper thread; the
 // API call runs here, on Chromium's network stack, so a system proxy applies to it as it does to
 // the rest of the app.
 import { net, type WebContents } from 'electron';
-import { helperCall } from '../../helper/helperProcess';
+import { helperCall } from '../../helper/helperThread';
 import { withAskpass } from '../auth/gitAskpass';
 import { createGithubRepo, type GithubFailure } from './github';
 import type { GitOpResult } from '../gitService';

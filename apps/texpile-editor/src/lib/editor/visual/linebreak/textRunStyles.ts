@@ -63,9 +63,28 @@ function deepestElementAt(view: EditorView, pos: number): Element | null {
 	return node.nodeType === Node.TEXT_NODE ? node.parentElement : (node as Element);
 }
 
+/** the room the elements around a run take beside it, where one of them begins or ends: inline code's padding */
+export type RoomBesideRun = { before: number; after: number };
+
+function sideRoom(style: CSSStyleDeclaration, side: 'Left' | 'Right'): number {
+	return (
+		(parseFloat(style[`padding${side}`]) || 0) + (parseFloat(style[`margin${side}`]) || 0) + (parseFloat(style[`border${side}Width`]) || 0)
+	);
+}
+
+function textAt(view: EditorView, pos: number, side: 1 | -1): Node | null {
+	const at = view.domAtPos(pos, side);
+	let node: Node | null =
+		at.node.nodeType === Node.TEXT_NODE ? at.node : (at.node.childNodes[side > 0 ? at.offset : at.offset - 1] ?? null);
+	while (node && node.nodeType !== Node.TEXT_NODE) node = side > 0 ? node.firstChild : node.lastChild;
+	return node;
+}
+
 export type RunStyleReader = {
 	/** the style of a run of the document's text */
 	ofRun(view: EditorView, block: HTMLElement, run: PMNode, pos: number): TextRunStyle | null;
+	/** the room beside the run of `size` characters at `pos`; the breaker's own text widths leave it out */
+	roomBeside(view: EditorView, block: HTMLElement, pos: number, size: number): RoomBesideRun;
 	/** the style of the text an element draws (a suggestion's struck words) */
 	ofElement(element: Element): TextRunStyle;
 };
@@ -74,7 +93,28 @@ export type RunStyleReader = {
 export function runStyleReader(): RunStyleReader {
 	const seen = new WeakMap<HTMLElement, Map<string, TextRunStyle>>();
 	const byElement = new WeakMap<Element, TextRunStyle>();
+	const rooms = new WeakMap<Element, RoomBesideRun>();
+	function roomOf(element: Element): RoomBesideRun {
+		let room = rooms.get(element);
+		if (!room) {
+			const style = getComputedStyle(element);
+			rooms.set(element, (room = { before: sideRoom(style, 'Left'), after: sideRoom(style, 'Right') }));
+		}
+		return room;
+	}
+	// what the elements between the text and its block add on the side where the text is their first, or last
+	function roomOn(text: Node | null, block: HTMLElement, side: 'before' | 'after'): number {
+		let room = 0;
+		for (let at = text, up = text?.parentElement; at && up && up !== block && block.contains(up); at = up, up = up.parentElement) {
+			if ((side === 'before' ? up.firstChild : up.lastChild) !== at) break;
+			room += roomOf(up)[side];
+		}
+		return room;
+	}
 	return {
+		roomBeside(view, block, pos, size) {
+			return { before: roomOn(textAt(view, pos, 1), block, 'before'), after: roomOn(textAt(view, pos + size, -1), block, 'after') };
+		},
 		ofRun(view, block, run, pos) {
 			let styles = seen.get(block);
 			if (!styles) seen.set(block, (styles = new Map()));

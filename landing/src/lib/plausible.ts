@@ -1,6 +1,6 @@
 // Plausible for the marketing site only; the offline editor app never loads this
 
-import { browser } from '$app/environment';
+import { browser } from '$app/env';
 import type { track as Track } from '@plausible-analytics/tracker';
 
 let initialized = false;

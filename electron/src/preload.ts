@@ -214,11 +214,13 @@ contextBridge.exposeInMainWorld('texpileNative', {
 	synctex: (body: Record<string, unknown>) => invokeFs('synctex:call', body),
 	/** Draft-mode compile: runs lualatex with the per-page extractor hook -> the real
 	 * engine's exact per-page positioned records. -> { ok, pages, paperW, paperH, ... }. */
-	draftCompile: (body: { root: string; mainFile: string; readBack: { byTex: string[]; byTools: string[] } }) =>
+	draftCompile: (body: { root: string; mainFile: string; readBack: { byTex: string[]; byTools: string[] }; rest?: boolean }) =>
 		invokeFs('draft:compile', body),
 	/** Draft-mode edit: the engine teleports before the edit and typesets on -> { ok, from?, stop?, count, srcFiles }
 	 * or { ok: false, reason }. Pages arrive through onDraftPage as they ship. */
 	draftTeleport: (body: { root: string; mainFile: string; file: string; text: string; seq: number }) => invokeFs('draft:teleport', body),
+	/** the caret rests in a paragraph: an engine reads on to it ahead of the first key there */
+	draftStage: (body: { root: string; mainFile: string; file: string; text: string; line: number }) => invokeFs('draft:stage', body),
 	/** subscribe to the pages a teleport ships; returns an unsubscribe fn. */
 	onDraftPage: (cb: (ev: { root: string; seq: number; page: unknown }) => void) => {
 		function h(_e: unknown, ev: { root: string; seq: number; page: unknown }) {
@@ -226,6 +228,14 @@ contextBridge.exposeInMainWorld('texpileNative', {
 		}
 		ipcRenderer.on('draft:page', h);
 		return () => ipcRenderer.removeListener('draft:page', h);
+	},
+	/** subscribe to where a compile is and what TeX names as it goes; returns an unsubscribe fn. */
+	onDraftProgress: (cb: (ev: { root: string; step?: string; pass?: number; notes?: string[] }) => void) => {
+		function h(_e: unknown, ev: { root: string; step?: string; pass?: number; notes?: string[] }) {
+			cb(ev);
+		}
+		ipcRenderer.on('draft:progress', h);
+		return () => ipcRenderer.removeListener('draft:progress', h);
 	},
 	/** Stop the draft engines (draft mode off / preview closed) so they stop holding memory. */
 	draftStop: () => invokeFs('draft:stop', {}),

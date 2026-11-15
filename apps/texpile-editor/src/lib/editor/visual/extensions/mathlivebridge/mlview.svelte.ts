@@ -1,4 +1,4 @@
-import { NodeSelection, TextSelection, type PluginKey } from 'prosemirror-state';
+import { TextSelection, type PluginKey } from 'prosemirror-state';
 import type { MathLivePluginState } from './mlplugin';
 import { MathfieldElement } from 'mathlive';
 import type { Decoration, EditorView, NodeView } from 'prosemirror-view';
@@ -6,15 +6,18 @@ import type { Node } from 'prosemirror-model';
 import 'mathlive/fonts.css';
 import { browser } from '$lib/runtime';
 import { mount, unmount } from 'svelte';
-import MathSettings from './MathSettings.svelte';
+import MathSettings from './settings/MathSettings.svelte';
+import { m } from '$lib/paraglide/messages';
+import { offerBlockSettings, settingsPlace, type GearPlace } from '$lib/editor/visual/extensions/blockHandle/blockSettings';
 import { configureMathVirtualKeyboard } from './virtualKeyboardConfig';
 import { installSuggestionPopoverFlashFix } from './suggestionPopoverFlashFix';
-import { syncBlockMathAttrs, isMathLatexEmpty, emptyMathBlockLike } from './mathEnvironments';
+import { syncBlockMathAttrs, isMathLatexEmpty } from './mathEnvironments';
 import { mathUnchanged, withoutEmptySlots } from './mlEquivalent';
 import { equationNumbersIn, renderEquationNumbers, syncBlockMathData } from './equationNumbers';
 import { compiledNumbersOf } from '../nodeNumbers';
-import { MathFieldExit, applyMathOutline } from './mathFieldExit';
+import { MathFieldExit, applyMathOutline, newFormulaBelow } from './mathFieldExit';
 import { enterField, selectFormulaOf } from './caret/fieldEntry';
+import { FieldFocusAsk } from './caret/fieldFocusAsk';
 import {
 	buildMathField,
 	releaseMathField,
@@ -55,6 +58,7 @@ export class MathLiveView implements NodeView {
 	private origFocus?: (options?: FocusOptions) => void;
 	private settingsContainer?: HTMLElement;
 	private settingsComponent?: ReturnType<typeof mount>;
+	private withdrawSettings?: () => void;
 	private unwatchMacros?: () => void;
 	private unwatchSnippets?: () => void;
 	private unwatchMacroCalls?: () => void;
@@ -67,6 +71,7 @@ export class MathLiveView implements NodeView {
 	private compiledNumbers: string[] | null;
 	private syntax: MathSyntax;
 	private following = false;
+	private focusAsk = new FieldFocusAsk();
 
 	constructor(
 		node: Node,
@@ -120,6 +125,10 @@ export class MathLiveView implements NodeView {
 			// at load and pays for exactly the ones the user reaches for.
 			this.dom.addEventListener('pointerenter', this.mountSettings);
 			this.dom.addEventListener('focusin', this.mountSettings);
+			this.withdrawSettings = offerBlockSettings(this.dom, {
+				label: () => m.mathsettings_settings_button_label(),
+				open: (gear) => this.openSettings(gear)
+			});
 		}
 
 		this.updating = false;
@@ -163,7 +172,7 @@ export class MathLiveView implements NodeView {
 		if (Object.keys(macros).length === 0 && !this.macrosApplied) return;
 		this.macrosApplied = true;
 		this.mathField.macros = { ...this.mathField.macros, ...macros };
-		this.mathField.setValue(this.node.textContent || '', { format: 'latex-expanded', silenceNotifications: true });
+		this.mathField.setValue(this.node.textContent || '', { format: 'latex-expanded', mode: 'math', silenceNotifications: true });
 	}
 
 	/** the element currently standing in for this node: the live field once there is one */
@@ -270,14 +279,14 @@ export class MathLiveView implements NodeView {
 			pos: this.getPos(),
 			syntax: this.syntax,
 			editable: this.view.editable && !field.readOnly,
-			openSettings: this.openSettings
+			openSettings: () => this.openSettings()
 		};
 		showMathMenu(field, equation, event);
 	};
 
-	private openSettings = (): void => {
+	private openSettings = (gear?: HTMLElement): void => {
 		this.mountSettings();
-		(this.settingsComponent as { open?: () => void } | undefined)?.open?.();
+		(this.settingsComponent as { open?: (at: GearPlace | null) => void } | undefined)?.open?.(settingsPlace(this.dom, gear));
 	};
 
 	private updateEquationNumbers() {
@@ -286,6 +295,7 @@ export class MathLiveView implements NodeView {
 	}
 
 	handleFocus() {
+		if (this.focusAsk.late(this.view, document.activeElement === this.mathField)) return;
 		if (this.mathField) this.mathField.readOnly = !this.view.editable;
 		// mathlive#3066 hotfix
 		if (this.mathField) dropIntlBackslashBinding(this.mathField);
@@ -295,6 +305,7 @@ export class MathLiveView implements NodeView {
 		this.updateOutline(true);
 	}
 	handleBlur() {
+		this.focusAsk.drop();
 		// alt-tab blurs the field too: keep its caret (and keep it if empty) for when the window comes back
 		if (!document.hasFocus()) return;
 		const isEmpty = this.isMathfieldEmpty();
@@ -380,13 +391,15 @@ export class MathLiveView implements NodeView {
 		if (!this.updating) return;
 		// the caret is arriving, so the real field has to exist now
 		this.materialize();
+		this.focusAsk.ask(this.view);
 		if (this.mathField) enterField(this.mathField, anchor === 0 && head === 0, this.view.editable);
 	}
 
 	private showNode(field: MathfieldElement): void {
 		this.updating = true;
 		// silenced: the formula shown again is not an edit, and its input event, fired after a caret has entered, wrote it back
-		field.setValue(this.node.textContent || '', { format: mathFormat(this.syntax), silenceNotifications: true });
+		// mode: with none given mathlive takes the one at its caret, which is text after a formula that ends in \text{..}
+		field.setValue(this.node.textContent || '', { format: mathFormat(this.syntax), mode: 'math', silenceNotifications: true });
 		requestAnimationFrame(() => {
 			this.updating = false;
 		});
@@ -447,20 +460,7 @@ export class MathLiveView implements NodeView {
 	keydown(event: KeyboardEvent) {
 		const field = this.mathField;
 		if (!field) return; // a key event means the field exists; this is a type guard
-		if (
-			this.isblock &&
-			this.view.editable &&
-			event.key === 'Enter' &&
-			event.shiftKey &&
-			!event.altKey &&
-			!event.ctrlKey &&
-			!event.metaKey
-		) {
-			const pos = this.getPos() + this.node.nodeSize;
-			const tr = this.view.state.tr.insert(pos, emptyMathBlockLike(this.node));
-			this.view.dispatch(tr.setSelection(NodeSelection.create(tr.doc, pos)));
-			return;
-		}
+		if (this.isblock && newFormulaBelow(event, this.view, this.node, this.getPos())) return;
 		this.exit.keydown(event, field);
 	}
 
@@ -479,6 +479,7 @@ export class MathLiveView implements NodeView {
 		if (!field || visualFind.movingSelection || this.following || !this.view.editable) return;
 
 		const cameFrom = this.mlpluginkey.getState(this.view.state)?.prevCursorPos;
+		this.focusAsk.ask(this.view);
 		enterField(field, cameFrom === undefined || cameFrom <= this.getPos(), this.view.editable);
 	}
 
@@ -496,6 +497,7 @@ export class MathLiveView implements NodeView {
 		this.updateOutline(false);
 	}
 	destroy() {
+		this.withdrawSettings?.();
 		this.unwatchMacros?.();
 		this.unwatchSnippets?.();
 		this.unwatchMacroCalls?.();

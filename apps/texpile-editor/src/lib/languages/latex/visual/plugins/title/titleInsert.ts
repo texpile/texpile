@@ -1,7 +1,7 @@
 import { Calendar, Heading, Landmark, User } from '@lucide/svelte';
 import type { Component } from 'svelte';
 import type { Node } from 'prosemirror-model';
-import type { Command } from 'prosemirror-state';
+import { NodeSelection, TextSelection, type Command } from 'prosemirror-state';
 import { serializeToLatex, type LatexInsertContext, type LatexInsertOffer } from '$lib/languages/latex/visual/core';
 import { endsInComment } from '$lib/languages/latex/visual/core/document';
 import { m } from '$lib/paraglide/messages';
@@ -28,8 +28,16 @@ function titleStyle(name: string): Command {
 	return (state, dispatch) => {
 		const { $from } = state.selection;
 		if ($from.parent.type.name !== 'paragraph') return false;
-		const chip = state.schema.nodes.raw_latex.create(null, state.schema.text(callOf(name, wordsOf($from.parent))));
-		dispatch?.(state.tr.replaceWith($from.before(), $from.after(), chip).scrollIntoView());
+		const words = wordsOf($from.parent);
+		const chip = state.schema.nodes.raw_latex.create(null, state.schema.text(callOf(name, words)));
+		const at = $from.before();
+		const tr = state.tr.replaceWith(at, $from.after(), chip);
+		// left selected, the chip is what the next key replaces: with words the caret goes on below it, without them
+		// the chip stays selected for its panel, where the words are typed
+		const end = at + chip.nodeSize;
+		if (words && !tr.doc.resolve(end).nodeAfter?.isTextblock) tr.insert(end, state.schema.nodes.paragraph.createAndFill()!);
+		tr.setSelection(words ? TextSelection.near(tr.doc.resolve(end), 1) : NodeSelection.create(tr.doc, at));
+		dispatch?.(tr.scrollIntoView());
 		return true;
 	};
 }

@@ -24,6 +24,7 @@ import {
 import { startTypstPreview, killTypstPreview, scrollTypstPreview } from './previewCommands';
 import { typstProblemsLog } from './previewProblems';
 import { noteFollowScroll } from './followSignal';
+import { typstPreviewPaused } from './previewPause';
 import { m } from '$lib/paraglide/messages';
 
 export type TypstPreviewHooks = {
@@ -93,6 +94,7 @@ export class TypstPreviewController {
 	enable(): void {
 		// pressed again after tinymist was missing: look again, which says so again if it still is
 		tinymistMissing.current = false;
+		typstPreviewPaused.current = false;
 		this.hooks.setPreviewSwitch(workspaceRoot.current, true);
 		this.hooks.setPaneOpen(true);
 	}
@@ -271,6 +273,19 @@ export class TypstPreviewController {
 		void scrollTypstPreview(root, this.task, joinPath(root, rel), line, character);
 	}
 
+	/** what this window's pane connects to: guests can hold the task while the window is paused */
+	get paneHost(): string | null {
+		return typstPreviewPaused.current ? null : this.host;
+	}
+
+	pause(): void {
+		typstPreviewPaused.current = true;
+	}
+
+	resume(): void {
+		typstPreviewPaused.current = false;
+	}
+
 	/** leaving the workspace must not leave a preview compiling in the server */
 	dispose(): void {
 		this.detach();
@@ -365,7 +380,7 @@ export class TypstPreviewController {
 		$effect(() => {
 			// guests holding the stream keep the task alive with the host's own pane closed; their
 			// demand exists only while hosting, so this never starts a task for a lone workspace
-			const want = this.wanted && (this.hooks.getPaneOpen() || previewRelay.demand > 0);
+			const want = this.wanted && ((this.hooks.getPaneOpen() && !typstPreviewPaused.current) || previewRelay.demand > 0);
 			// switched off and on, or the pane reopened: one more look, for a tinymist installed since
 			if (want && !wasWanted && tinymistMissing.current) this.lookForTinymist();
 			wasWanted = want;
@@ -383,6 +398,11 @@ export class TypstPreviewController {
 				this.host = null;
 				this.detach();
 			}
+		});
+
+		// a closed pane loses its pages, so it opens live again
+		$effect(() => {
+			if (!this.wanted || !this.hooks.getPaneOpen()) typstPreviewPaused.current = false;
 		});
 
 		// the folders in Preferences moved PATH, so a tinymist that was missing may be there now

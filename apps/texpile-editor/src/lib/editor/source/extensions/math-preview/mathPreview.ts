@@ -9,6 +9,7 @@ import 'mathlive/fonts.css';
 import { settings, updateSettings } from '$lib/settings';
 import { docText } from '$lib/editor/source/docText';
 import { mathRegionAt, type MathRegion } from './mathScanner';
+import { latexMathRegionAt } from './latexMathRegions';
 import { scanSourceMath } from './sourceMath';
 import { mathMacrosFor } from './userMacros';
 import { rememberLatexTree } from '$lib/languages/latex/syntax/latexTrees';
@@ -21,47 +22,44 @@ const markdownSource = Facet.define<boolean, boolean>({ combine: (values) => val
 
 /** above this the preview silently disables instead of re-scanning megabytes per keystroke. */
 
-// regions: null = not scanned yet; regionsFor fills the cell in place on first need, which also
-// makes turning the preview setting back on rescan lazily, no transaction required
+// a Markdown file's math. null = not scanned yet; markdownRegions fills the cell in place on first need, which also
+// makes turning the preview setting back on rescan lazily, no transaction required. A LaTeX file's stays null
 type RegionCell = { regions: MathRegion[] | null };
 
 const regionsField = StateField.define<RegionCell>({
 	create: () => ({ regions: null }),
 	update(value, tr) {
 		if (!tr.docChanged) return value;
-		const markdown = tr.state.facet(markdownSource);
-		return { regions: value.regions === null ? null : updateRegions(value.regions, tr, markdown) };
+		return { regions: value.regions === null ? null : updateRegions(value.regions, tr) };
 	}
 });
 
-function scan(state: EditorState): MathRegion[] {
-	if (state.doc.length > MAX_TEXT_BYTES) return [];
+// Markdown's math is found over the whole text, and the cell carries the list from edit to edit
+function markdownRegions(state: EditorState): MathRegion[] {
+	const cell = state.field(regionsField);
+	cell.regions ??= state.doc.length > MAX_TEXT_BYTES ? [] : scanSourceMath(docText(state.doc), true).math;
+	return cell.regions;
+}
+
+// LaTeX's is read off the tree around `pos`: listing the whole file's math to find one region cost 5 ms a key in a long file
+function regionAt(state: EditorState, pos: number): MathRegion | null {
+	if (state.facet(markdownSource)) return mathRegionAt(markdownRegions(state), pos);
+	if (state.doc.length > MAX_TEXT_BYTES) return null;
 	const text = docText(state.doc);
-	const markdown = state.facet(markdownSource);
-	const tree = markdown ? null : ensureSyntaxTree(state, state.doc.length, PARSE_BUDGET_MS);
+	const tree = ensureSyntaxTree(state, state.doc.length, PARSE_BUDGET_MS);
 	if (tree) rememberLatexTree(text, tree);
-	return scanSourceMath(text, markdown).math;
+	return latexMathRegionAt(text, pos);
 }
 
 /** the math the caret sits in, between its delimiters; null outside math or in an editor without the preview */
 export function mathAtCaret(state: EditorState): MathRegion | null {
-	const cell = state.field(regionsField, false);
-	if (!cell) return null;
+	if (!state.field(regionsField, false)) return null;
 	const head = state.selection.main.head;
-	const region = mathRegionAt((cell.regions ??= scan(state)), head);
+	const region = regionAt(state, head);
 	return region && head >= region.innerFrom && head <= region.innerTo ? region : null;
 }
 
-function regionsFor(state: EditorState): MathRegion[] {
-	if (settings.current.mathPreview === false) return []; // preview off: never pay for a scan
-	const cell = state.field(regionsField);
-	if (cell.regions === null) cell.regions = scan(state);
-	return cell.regions;
-}
-
-// a brace too: the group an unclosed $ sits in ends it at its }
-const LATEX_DELIMITERS = /[\\${}]/;
-// plus what bounds Markdown code: backticks, tilde fences, link destinations, autolinks
+// math's own delimiters, and what bounds Markdown code: backticks, tilde fences, link destinations, autolinks
 const MARKDOWN_DELIMITERS = /[\\$`~\]<]/;
 // indentation and list markers decide whether a line is code
 const MARKDOWN_LINE_PREFIX = /^[ \t]*(?:[-+*]|\d{1,9}[.)]?)?[ \t]*/;
@@ -69,19 +67,18 @@ const MARKDOWN_LINE_PREFIX = /^[ \t]*(?:[-+*]|\d{1,9}[.)]?)?[ \t]*/;
 // a full rescan is O(doc), so when a change is provably inert — stays on one line, no `\` or `$`
 // on that line or its neighbors, at least a line away from every region — just shift the old
 // regions through the edit. Anything else returns null = lazy full rescan.
-function updateRegions(regions: MathRegion[], tr: Transaction, markdown: boolean): MathRegion[] | null {
-	const delimiters = markdown ? MARKDOWN_DELIMITERS : LATEX_DELIMITERS;
+function updateRegions(regions: MathRegion[], tr: Transaction): MathRegion[] | null {
 	let inert = true;
 	tr.changes.iterChanges((fromA, toA, fromB, _toB, inserted) => {
 		if (!inert) return;
 		const oldDoc = tr.startState.doc;
 		const lineA = oldDoc.lineAt(fromA);
 		// inserted or deleted newlines move blank-line clamps and comment/line boundaries
-		if (inserted.lines > 1 || toA > lineA.to || delimiters.test(oldDoc.sliceString(fromA, toA))) {
+		if (inserted.lines > 1 || toA > lineA.to || MARKDOWN_DELIMITERS.test(oldDoc.sliceString(fromA, toA))) {
 			inert = false;
 			return;
 		}
-		if (markdown && fromA <= lineA.from + (MARKDOWN_LINE_PREFIX.exec(lineA.text)?.[0].length ?? 0)) {
+		if (fromA <= lineA.from + (MARKDOWN_LINE_PREFIX.exec(lineA.text)?.[0].length ?? 0)) {
 			inert = false;
 			return;
 		}
@@ -89,7 +86,7 @@ function updateRegions(regions: MathRegion[], tr: Transaction, markdown: boolean
 		const lineB = newDoc.lineAt(fromB);
 		const ctxFrom = lineB.number > 1 ? newDoc.line(lineB.number - 1).from : lineB.from;
 		const ctxTo = lineB.number < newDoc.lines ? newDoc.line(lineB.number + 1).to : lineB.to;
-		if (delimiters.test(newDoc.sliceString(ctxFrom, ctxTo))) {
+		if (MARKDOWN_DELIMITERS.test(newDoc.sliceString(ctxFrom, ctxTo))) {
 			inert = false;
 			return;
 		}
@@ -132,7 +129,9 @@ function touchesRegion(regions: MathRegion[], from: number, to: number): boolean
 function activeRegion(state: EditorState): MathRegion | null {
 	const sel = state.selection.main;
 	if (!sel.empty) return null;
-	const region = mathRegionAt(regionsFor(state), sel.head);
+	// preview off: never pay for a look
+	if (settings.current.mathPreview === false) return null;
+	const region = regionAt(state, sel.head);
 	if (!region) return null;
 	// nothing to render yet, the user just typed the opening delimiter
 	if (!state.sliceDoc(region.innerFrom, region.innerTo).trim()) return null;

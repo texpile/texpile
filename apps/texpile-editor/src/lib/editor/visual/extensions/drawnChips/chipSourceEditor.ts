@@ -1,5 +1,6 @@
 // the chip's LaTeX in its panel: a small CodeMirror in the source editor's colors, whose undo is the document's own
-import { EditorView as CMView, keymap, drawSelection } from '@codemirror/view';
+import { EditorView as CMView, keymap } from '@codemirror/view';
+import { cmDrawnSelection } from '$lib/editor/cmDrawnSelection';
 import { Compartment, Prec } from '@codemirror/state';
 import { closeCompletion, currentCompletions } from '@codemirror/autocomplete';
 import { defaultKeymap } from '@codemirror/commands';
@@ -45,7 +46,7 @@ export function chipSourceEditor(parent: HTMLElement, options: ChipSourceEditorO
 				{ key: 'Mod-y', run: run(options.redo) },
 				{ key: 'Shift-Mod-z', run: run(options.redo) }
 			]),
-			drawSelection(),
+			cmDrawnSelection(),
 			CMView.lineWrapping,
 			language.of(options.language === 'latex' ? latex() : []),
 			// after the language, whose Backspace takes out a pair of braces it closed

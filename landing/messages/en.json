@@ -213,6 +213,8 @@
 	"dl_appimage_desc": "other distros, needs libfuse2",
 	"dl_version_history": "Version history",
 	"dl_latest_badge": "Latest",
+	"dl_show_more": "Show more",
+	"dl_show_less": "Show less",
 	"dl_modal_starting": "Your download is starting…",
 	"dl_modal_star_prompt": "While you wait, consider starring the project on GitHub to support it.",
 	"dl_star_github": "Star on GitHub",

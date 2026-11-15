@@ -1,6 +1,6 @@
 // @vitest-environment jsdom
 import { describe, expect, it } from 'vitest';
-import { isTypstBibliography } from '$lib/languages/typst/visual/extensions/typstBibliographyView.svelte';
+import { isTypstBibliography } from '$lib/languages/typst/visual/extensions/typstBibliography';
 
 describe('a bibliography chip shown as its card', () => {
 	it('is one opening with the call, a label after it included', () => {

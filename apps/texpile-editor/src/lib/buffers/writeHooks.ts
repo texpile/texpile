@@ -21,8 +21,11 @@ export type WriteHooks = {
 	afterWrite?(absPath: string, content: string): void;
 	/** the disk's change went into the text, whole or merged with unsaved edits; `disk` is the new common text */
 	diskTaken?(absPath: string, disk: string): void;
-	/** the disk and the editor changed the same words; the file's writes wait for resolveConflict */
-	conflict?(absPath: string, disk: string, memory: string): void;
+	/** the disk and the editor changed the same words, or the disk's version is no text (`disk` null); the file's
+	 *  writes wait for resolveConflict */
+	conflict?(absPath: string, disk: string | null, memory: string): void;
+	/** the edits were given up on a file whose disk version is no text: it closes */
+	unreadable?(absPath: string): void;
 	/** the file is gone from disk */
 	deleted?(absPath: string): void;
 	/** a file in conflict needs no choice any more: written, reverted, renamed or dropped */

@@ -34,5 +34,9 @@ preview does, and checks that the band holds a line with the words the edit wrot
 place). The summary then counts the bands that were right, on the wrong line or page, missing, or in the known limits
 (`bandOracle.mjs`); a band off its edit goes to the dump folder as `band-<n>.json`.
 
+Each summary counts `forgot`: the times an engine could not go back to a point it kept and took the edit from the base
+instead. With `TELE_TRACE=1` a gate prints every report the engines make, and with `TELE_KEEP=1` it leaves its folder
+in the OS temp folder.
+
 `fixtures/` holds the documents both run on; unit tests read some of them too. Copies go to the OS temp folder, so
 the fixtures are never edited.

@@ -33,10 +33,11 @@
 
 .tex-environment:has(> .env-header [data-look='align']) > .env-header {
 	position: absolute;
-	right: 100%;
+	right: 0;
 	top: 0;
+	/* over a figure card or an image that fills the body */
+	z-index: 1;
 	float: none;
-	margin-right: calc(var(--spacing) * 1);
 	opacity: 0;
 }
 .tex-environment:has(> .env-header [data-look='align']):hover > .env-header {
@@ -47,6 +48,14 @@
 }
 .tex-environment:has(> .env-header [data-align='right']) > .tex-environment-body {
 	text-align: right;
+}
+.env-gear-place {
+	position: absolute;
+	pointer-events: none;
+}
+/* directly in an editor with a block handle, the handle's gear opens the alignment */
+.ProseMirror[data-block-handle] > .tex-environment:has(> .env-header [data-look='align']) > .env-header {
+	display: none;
 }
 .env-gear {
 	display: flex;
@@ -68,4 +77,11 @@
 .tex-environment:has(> .env-header [data-look='box']) > .env-header {
 	float: none;
 	margin-bottom: calc(var(--spacing) * 1);
+}
+/* a tabular of its own starts at the left as it prints, and stands where center or flushright sets the text */
+.ProseMirror .tex-environment[data-env='center'] .table-natural-width table {
+	margin-inline: auto;
+}
+.ProseMirror .tex-environment[data-env='flushright'] .table-natural-width table {
+	margin-left: auto;
 }

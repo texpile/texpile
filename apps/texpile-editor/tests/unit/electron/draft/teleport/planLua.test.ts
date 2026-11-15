@@ -10,7 +10,7 @@ it('writes the edited text on one line, each control character in three digits',
 		new Map([['main.tex', { text: 'a\t1\r\n2\n' }]]),
 		'main.tex',
 		{ from: 1, oldTo: 1, newTo: 2 },
-		1,
+		{ line: 1, paragraph: 1 },
 		['main.tex'],
 		serve
 	);

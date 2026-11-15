@@ -1,4 +1,4 @@
-// Landing a re-parsed remote document in the live view: replace only the block range that
+// Landing a re-parsed remote document in the live view: replace only the block ranges that
 // changed, carry a caret inside it through the file, and hold the topmost visible line still so
 // the patch never reads as a scroll jump.
 import { TextSelection } from 'prosemirror-state';
@@ -7,7 +7,7 @@ import type { Node as PMNode } from 'prosemirror-model';
 import { type SourceMap } from '$lib/editor/visual/sourceSpans';
 import { adoptParse, withBlockRuns, type ParseOrigins } from '$lib/editor/visual/parseOrigins';
 import { caretAtOffset, offsetAtPm } from '$lib/editor/visual/sourceMap';
-import { computeBlockPatch, protectCaretBlock, syncParseAttrs } from '$lib/editor/visual/blockPatch';
+import { computeBlockPatches, protectCaretBlock, syncParseAttrs } from '$lib/editor/visual/blockPatch';
 import { carriedOffset, patchAroundCaret } from './caretPatch';
 
 // same walk as EditorView's doc-swap helper: the pane that actually scrolls the editor
@@ -50,13 +50,13 @@ export function applyRemotePatch(
 		// the block being typed in must not lose its in-progress tail to the re-parse: trailing
 		// whitespace and still-empty paragraphs don't survive serialize->parse in any dialect
 		const newDoc = protectCaretBlock(v.state.doc, parsedDoc, head);
-		const patch = computeBlockPatch(v.state.doc, newDoc);
-		// caret inside the replaced range: carry it through the file (outside it, PM maps it)
-		if (patch && head > patch.from && head < patch.to) {
+		const patches = computeBlockPatches(v.state.doc, newDoc);
+		// caret inside a replaced range: carry it through the file (outside it, PM maps it)
+		if (patches.some((p) => head > p.from && head < p.to)) {
 			const offset = offsetAtPm(oldMap, head);
 			srcOffset = offset == null ? null : carriedOffset(v.state.doc, head, offset, oldMap, oldSource, newSource);
 		}
-		if (patch) tr.replaceWith(patch.from, patch.to, patch.nodes);
+		for (const p of [...patches].reverse()) tr.replaceWith(p.from, p.to, p.nodes);
 		syncParseAttrs(tr, newDoc);
 	}
 	if (!tr.steps.length) {

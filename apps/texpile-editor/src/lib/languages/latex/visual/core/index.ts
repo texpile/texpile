@@ -86,6 +86,7 @@ export { default as FigureCard } from '$lib/draw/host/card/FigureCard.svelte';
 export { default as FigurePlaceholder } from '$lib/draw/host/card/FigurePlaceholder.svelte';
 export { tikzLanguage } from '$lib/draw/tikz/tikzLanguage';
 export { inEditorPane } from '$lib/editor/visual/editorPanePositioning';
+export { offerBlockSettings, settingsPlace, type GearPlace } from '$lib/editor/visual/extensions/blockHandle/blockSettings';
 export { citationText } from '$lib/editor/visual/extensions/citation/citationText';
 export { citationVariantKind } from '$lib/languages/latex/visual/extensions/citation/citationVariantKind';
 export { default as CitationReferenceField } from '$lib/editor/visual/extensions/citation/CitationReferenceField.svelte';
@@ -108,6 +109,22 @@ export { printedValue } from '$lib/languages/latex/visual/extensions/numbers/pri
 export type { NumberStyle } from '$lib/languages/latex/visual/extensions/numbers/printedNumber';
 export { isReadOnly } from '$lib/stores/permissionStore';
 export { compiledNumbersOf } from '$lib/editor/visual/extensions/nodeNumbers';
+export { countedLabelsOf } from '$lib/languages/latex/visual/extensions/numbers/numbersPlugin';
+export type { LabelNumbers } from '$lib/languages/latex/visual/extensions/numbers/documentNumbers';
+export {
+	heavierRule,
+	linesOfEdges,
+	tableCaretPlugin,
+	tableRulesPlugin,
+	type CellAlign,
+	type CellEdges,
+	type RuleWeight,
+	type TableLines,
+	type TableLook
+} from '$lib/editor/visual/extensions/table/rules/tableRules';
+export { editPreambleHere } from '$lib/stores/editorStore';
+export { withPackageNeeded } from '$lib/languages/latex/intellisense/packages/packageNeed';
+export { bareTableSettingsPlugin, openBareTableSettings } from '$lib/editor/visual/extensions/table/bare/bareTableSettingsPlugin.svelte';
 export { adoptParse } from '$lib/editor/visual/parseOrigins';
 export { containerOriginsOf } from '$lib/editor/visual/parseOrigins';
 export { containerRecordAround } from '$lib/editor/visual/parseOrigins';

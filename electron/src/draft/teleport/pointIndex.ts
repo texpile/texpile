@@ -112,6 +112,33 @@ export class PointIndex {
 		}
 	}
 
+	/** a compile's index `fresh` read the same preamble, seed files and images as this one stands on. With
+	 *  `anyObjects`, the same images at whatever object numbers: a compile numbers them anew when figures move to
+	 *  other pages, which changes nothing for a preview that goes on from its own index */
+	sameGround(fresh: PointIndex, root: string, anyObjects = false): boolean {
+		if (this.seedDir !== fresh.seedDir || this.preStamp !== fresh.preStamp || this.bodyLine !== fresh.bodyLine) return false;
+		if (this.preFiles.join('\n') !== fresh.preFiles.join('\n')) return false;
+		function images(list?: string): string | null {
+			try {
+				const text = list ? fs.readFileSync(path.join(root, list), 'utf8') : null;
+				return text !== null && anyObjects ? text.replace(/([{,])n=\d+,/g, '$1') : text;
+			} catch {
+				return null;
+			}
+		}
+		return images(this.imageList) === images(fresh.imageList);
+	}
+
+	/** the same ground, and the same text of every file */
+	standsOn(fresh: PointIndex, root: string): boolean {
+		if (this.basis.size !== fresh.basis.size) return false;
+		for (const rel of fresh.basis.keys()) {
+			const text = this.text(rel);
+			if (text === null || text !== fresh.text(rel)) return false;
+		}
+		return this.sameGround(fresh, root);
+	}
+
 	/** the source snapshots a run wrote become the basis of the files it read */
 	adoptBasis(src: string): void {
 		const walk = (dir: string, rel: string): void => {

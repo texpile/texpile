@@ -1,5 +1,5 @@
-// Runs in the helper process (helper/helperWorker.ts): chokidar opens a native watcher per entry,
-// synchronously, and that must not hold the main process. workspaceWatch.ts is the main-side end.
+// Runs in the helper thread (helper/helperWorker.ts): chokidar opens a native watcher per entry,
+// synchronously, and that must not hold the main thread. workspaceWatch.ts is the main-side end.
 //
 // Watches a claimed workspace root so the renderer hears about external writes NOW, not on the
 // next window focus. It reports which paths changed, coalesced as VS Code does; the renderer's

@@ -1,9 +1,9 @@
 // The Source Control panel's remote half: publishing a branch, uploading, syncing, and the
 // credentials all three sign in with. Split from gitService.ts, whose repo-root resolution and
-// command factory it shares; the helper process serves both (helper/helperWorker.ts).
+// command factory it shares; the helper thread serves both (helper/helperWorker.ts).
 import { simpleGit, type SimpleGit, type SimpleGitOptions } from 'simple-git';
 import { spawn } from 'node:child_process';
-import { git, isMissingGit, errMsg, resolveRepoRoot, retryLocked, upstreamExists, type GitOpResult } from '../gitService';
+import { git, isMissingGit, errMsg, ownEnvironment, resolveRepoRoot, retryLocked, upstreamExists, type GitOpResult } from '../gitService';
 import { statusOf } from '../gitStatusParse';
 
 // -- remotes --------------------------------------------------------------------
@@ -70,6 +70,7 @@ export const OWN_ENVIRONMENT: SimpleGitOptions['unsafe'] = {
 	allowUnsafeConfigEnvCount: true,
 	allowUnsafeCredentialHelper: true,
 	allowUnsafeEditor: true,
+	allowUnsafeExec: true,
 	allowUnsafeMergeDriver: true,
 	allowUnsafePager: true,
 	allowUnsafeSshCommand: true,
@@ -101,15 +102,17 @@ export function netEnv(auth: GitAuthEnv): Record<string, string> {
  *  `stall`, for a git nobody is waiting to sign in to (the automatic check): how long it may go
  *  without a word before it is stopped. */
 export function netGit(baseDir: string, auth: GitAuthEnv = {}, stall = 0): SimpleGit {
+	const env = netEnv(auth);
 	return simpleGit({
 		baseDir,
 		binary: 'git',
 		maxConcurrentProcesses: 1,
 		// core.fsmonitor: as in the shared factory, no program the project's own config names
 		config: ['core.quotePath=false', 'core.fsmonitor=false'],
+		allowEnvironment: ownEnvironment(env),
 		unsafe: OWN_ENVIRONMENT,
 		...(stall > 0 && { timeout: { block: stall } })
-	}).env(netEnv(auth));
+	}).env(env);
 }
 
 /** A remote's name ends up in refs and config keys; git's own rules are looser, these are the ones

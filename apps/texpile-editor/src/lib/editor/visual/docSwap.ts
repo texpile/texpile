@@ -37,6 +37,9 @@ export function swapParsedDoc(editorView: EditorView, schema: Schema, next: PmNo
 /** carries nothing across: the caller restores this file's own caret and scroll */
 export function swapDocForNewFile(editorView: EditorView, schema: Schema, next: PmNode): void {
 	const scroller = scrollParent(editorView.dom);
+	// a formula with the keyboard keeps its own text over its node's, and ProseMirror hands its view the new file's formula
+	const held = editorView.dom.ownerDocument.activeElement;
+	if (held instanceof HTMLElement && held !== editorView.dom && editorView.dom.contains(held)) held.blur();
 	editorView.updateState(stateForDoc(editorView, schema, next));
 	if (scroller) scroller.scrollTop = 0;
 }

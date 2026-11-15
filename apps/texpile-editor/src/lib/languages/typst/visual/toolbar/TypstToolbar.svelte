@@ -171,7 +171,7 @@
 					<TypstToolbarTable />
 				{/snippet}
 				{#snippet tb_codeBlock()}
-					{@render iconButton(m.blockmenu_code_block(), false, createCodeBlock(), Code)}
+					{@render iconButton(m.toolbar_insert_code_block_aria(), false, createCodeBlock(), Code)}
 				{/snippet}
 				{#snippet tb_hr()}
 					{@render iconButton(m.mdtoolbar_hr(), false, insertHorizontalRule, Minus)}

@@ -13,24 +13,24 @@
 	"devDependencies": {
 		"@skeletonlabs/skeleton": "^5.0.1",
 		"@skeletonlabs/skeleton-svelte": "^5.0.1",
-		"@sveltejs/adapter-static": "^3.0.8",
-		"@sveltejs/kit": "^2.70.3",
+		"@sveltejs/adapter-static": "^4.0.0",
+		"@sveltejs/kit": "^3.1.0",
 		"@sveltejs/vite-plugin-svelte": "^7.3.1",
 		"@tailwindcss/forms": "^0.5.9",
 		"@tailwindcss/typography": "^0.5.15",
 		"@tailwindcss/vite": "^4.3.3",
 		"markdown-it": "^15.0.3",
-		"shiki": "^4.5.0",
-		"svelte": "^5.57.2",
-		"svelte-check": "^4.7.7",
+		"shiki": "^4.6.0",
+		"svelte": "^5.57.3",
+		"svelte-check": "^4.7.8",
 		"tailwindcss": "^4.3.3",
 		"typescript": "^6.0.3",
 		"vite": "^8.3.5"
 	},
 	"dependencies": {
 		"@fontsource/poppins": "^5.3.0",
-		"@inlang/paraglide-js": "2.29.1",
-		"@lucide/svelte": "^0.562.0",
-		"@plausible-analytics/tracker": "^0.4.6"
+		"@inlang/paraglide-js": "2.29.3",
+		"@lucide/svelte": "^1.59.0",
+		"@plausible-analytics/tracker": "^0.4.7"
 	}
 }

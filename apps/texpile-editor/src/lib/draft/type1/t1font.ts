@@ -57,8 +57,12 @@ export class T1Path {
 	}
 }
 
+/** a glyph in units of its em, y down: placed by a translate and a scale */
+export type GlyphOutline = { commands: Cmd[] };
+
 export type T1Font = {
 	pathForSlot(slot: number, x: number, y: number, sizePx: number): T1Path | null;
+	outlineForSlot(slot: number): GlyphOutline | null;
 	/** slot -> Unicode (AGL/uniXXXX), 0 = unknown; for word extraction, not ink */
 	textMap: number[];
 };
@@ -166,36 +170,65 @@ export function parseT1(pfb: Uint8Array, encText: string | null): T1Font | null 
 		return out;
 	}
 
+	const outlines = new Map<string, GlyphOutline | null>();
+	function outline(nm: string): GlyphOutline | null {
+		if (outlines.has(nm)) return outlines.get(nm)!;
+		const src = compile(nm);
+		let out: GlyphOutline | null = null;
+		if (src?.length) {
+			function ux(gx: number, gy: number) {
+				return ma * gx + mc * gy + me;
+			}
+			function uy(gx: number, gy: number) {
+				return -(mb * gx + md * gy + mf);
+			}
+			out = {
+				commands: src.map((c): Cmd => {
+					if (c.type === 'Z') return { type: 'Z' };
+					if (c.type === 'C')
+						return {
+							type: 'C',
+							x1: ux(c.x1!, c.y1!),
+							y1: uy(c.x1!, c.y1!),
+							x2: ux(c.x2!, c.y2!),
+							y2: uy(c.x2!, c.y2!),
+							x: ux(c.x!, c.y!),
+							y: uy(c.x!, c.y!)
+						};
+					return { type: c.type, x: ux(c.x!, c.y!), y: uy(c.x!, c.y!) };
+				})
+			};
+		}
+		outlines.set(nm, out);
+		return out;
+	}
+	function outlineForSlot(slot: number): GlyphOutline | null {
+		const nm = names[slot & 0xff];
+		return nm ? outline(nm) : null;
+	}
+
 	return {
 		textMap,
+		outlineForSlot,
 		pathForSlot(slot: number, X: number, Y: number, sizePx: number): T1Path | null {
-			const nm = names[slot & 0xff];
-			if (!nm) return null;
-			const src = compile(nm);
-			if (!src || !src.length) return null;
-			function tx(gx: number, gy: number) {
-				return X + (ma * gx + mc * gy + me) * sizePx;
-			}
-			function ty(gx: number, gy: number) {
-				return Y - (mb * gx + md * gy + mf) * sizePx;
-			}
-			const out: Cmd[] = new Array(src.length);
-			for (let i = 0; i < src.length; i++) {
-				const c = src[i];
-				if (c.type === 'Z') out[i] = { type: 'Z' };
-				else if (c.type === 'C')
-					out[i] = {
-						type: 'C',
-						x1: tx(c.x1!, c.y1!),
-						y1: ty(c.x1!, c.y1!),
-						x2: tx(c.x2!, c.y2!),
-						y2: ty(c.x2!, c.y2!),
-						x: tx(c.x!, c.y!),
-						y: ty(c.x!, c.y!)
-					};
-				else out[i] = { type: c.type, x: tx(c.x!, c.y!), y: ty(c.x!, c.y!) };
-			}
-			return new T1Path(out);
+			const unit = outlineForSlot(slot);
+			if (!unit) return null;
+			return new T1Path(
+				unit.commands.map((c): Cmd => {
+					if (c.type === 'Z') return { type: 'Z' };
+					if (c.type === 'C')
+						return {
+							type: 'C',
+							x1: X + c.x1! * sizePx,
+							y1: Y + c.y1! * sizePx,
+							x2: X + c.x2! * sizePx,
+							y2: Y + c.y2! * sizePx,
+							x: X + c.x! * sizePx,
+							y: Y + c.y! * sizePx
+						};
+					return { type: c.type, x: X + c.x! * sizePx, y: Y + c.y! * sizePx };
+				})
+			);
 		}
 	};
 }

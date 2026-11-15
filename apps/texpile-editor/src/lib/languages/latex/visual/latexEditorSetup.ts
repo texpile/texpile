@@ -4,7 +4,7 @@ import { blockChipView, inlineChipView } from '$lib/languages/latex/visual/exten
 import { tikzLanguage } from '$lib/draw/tikz/tikzLanguage';
 import type { Plugin } from 'prosemirror-state';
 import { EditorState, type Transaction } from 'prosemirror-state';
-import type { EditorProps } from 'prosemirror-view';
+import type { EditorProps, EditorView } from 'prosemirror-view';
 import { schema } from '$lib/languages/latex/schema/latexPMSchema';
 import { keymap } from 'prosemirror-keymap';
 import { pmCommandKeys } from '$lib/keybindings/editors/pmCommandKeys';
@@ -24,6 +24,7 @@ import {
 } from '$lib/editor/visual/selectDocBoundary';
 import { lineEdgeKeys } from '$lib/editor/visual/lineEdgeArrows';
 import { gapCursorWithArrows } from '$lib/editor/visual/gapArrows';
+import { hiddenSelectionPlugin } from '$lib/editor/visual/highlight/hiddenSelection';
 import { createMathField } from '$lib/editor/visual/extensions/mathlivebridge/mlcommands';
 import { createCodeBlock } from '$lib/editor/visual/extensions/codemirrorbridge/cmcommands';
 import { cmarrowHandlers } from '$lib/editor/visual/extensions/codemirrorbridge/cmarrowhandler';
@@ -32,7 +33,9 @@ import { dropCursor } from 'prosemirror-dropcursor';
 import { tableEditing, goToNextCell } from 'prosemirror-tables';
 import { tableViewOnly } from '$lib/editor/visual/extensions/table/tableViewOnly';
 import { wholeTableEdits } from '$lib/editor/visual/extensions/table/wholeTableEdits';
-import { tableArrowEntry } from '$lib/editor/visual/extensions/table/tableArrowEntry';
+import { tableArrowEntry } from '$lib/editor/visual/extensions/table/caret/tableArrowEntry';
+import { tableArrowExit } from '$lib/editor/visual/extensions/table/caret/tableArrowExit';
+import { tabThroughCells } from '$lib/editor/visual/extensions/table/rows/addTableRow';
 import { crossBlockEdits } from '$lib/editor/visual/extensions/crossBlockEdits';
 import { imagePlugin } from '$lib/editor/visual/extensions/image';
 import { createCursorPlugin } from '$lib/editor/visual/extensions/cursor-plugin';
@@ -52,7 +55,7 @@ import {
 import { indentListItem } from '$lib/editor/visual/extensions/listIndent/listIndent';
 import { inputRules, InputRule, smartQuotes, ellipsis, undoInputRule } from 'prosemirror-inputrules';
 import { selectFigureBackward, selectFigureForward } from '$lib/editor/visual/figureDeleteGuard';
-import { deleteEmptyBlockForward, deleteEmptyFirstBlock } from '$lib/editor/visual/emptyBlockDelete';
+import { deleteEmptyBlockBackward, deleteEmptyBlockForward } from '$lib/editor/visual/emptyBlockDelete';
 import { liftFromStyleEnvironment } from '$lib/editor/visual/liftFromStyleEnvironment';
 import { placeholderPlugin } from '$lib/editor/visual/extensions/placeholderplugin';
 import { tablePlaceholderPlugin } from '$lib/editor/visual/extensions/table/tablePlaceholderPlugin';
@@ -72,7 +75,10 @@ import { IeeeAuthorView } from '$lib/languages/latex/visual/extensions/template-
 import { InlinePlaceholderView } from '$lib/editor/visual/extensions/raw-latex/inlinePlaceholderView';
 import { PlaceholderRawView } from '$lib/editor/visual/extensions/raw-latex/placeholderView';
 import { placeholderCaret } from '$lib/editor/visual/extensions/raw-latex/placeholderCaret';
-import { BibliographyNodeView } from '$lib/editor/visual/extensions/bibliography/bibliographyNodeView.svelte';
+import { visualCaretDoctor } from '$lib/debug/visualCaretDoctor';
+import { caretClearOfFormatBar } from '$lib/editor/visual/formatBarScroll';
+import { verticalArrowStall } from '$lib/editor/visual/verticalArrowStall';
+import { BibliographyNodeView, latexBibliography } from '$lib/editor/visual/extensions/bibliography/bibliographyNodeView.svelte';
 import { environmentView } from '$lib/languages/latex/visual/extensions/environment/environmentView.svelte';
 import { createBoundaryClickPlugin } from '$lib/editor/visual/extensions/boundary-click-plugin';
 import { wordSelectionTrim } from '$lib/editor/visual/extensions/wordSelectionTrim';
@@ -143,12 +149,17 @@ export function latexEditorPlugins(setup: LatexEditorSetup): Plugin[] {
 		macroJumpPlugin(jumpToDefinition),
 		labelRenameUndo,
 		gapCursorWithArrows(),
+		hiddenSelectionPlugin(),
+		...visualCaretDoctor(),
+		caretClearOfFormatBar(),
+		verticalArrowStall(),
 		// drop cursor is inline-styled (not CSS-targetable) and its default black vanishes on dark
 		dropCursor({ color: 'var(--color-primary-500)', width: 2, class: 'pm-drop-cursor' }),
 		// TableView without the drag: a LaTeX column width lives in the colspec and only exists
 		// for p{}/tabularx columns, so a dragged l/c/r column had nowhere to be written and was
 		// discarded on the next parse. See tableViewOnly.
 		tableViewOnly,
+		tableArrowExit,
 		tableEditing(),
 		wholeTableEdits,
 		tableArrowEntry,
@@ -164,7 +175,7 @@ export function latexEditorPlugins(setup: LatexEditorSetup): Plugin[] {
 		shiftArrowsPlugin(),
 		// before the list keymap, whose Backspace and Delete act at a block edge: they would join the block after an empty one into it, and a block into a figure
 		keymap({ Backspace: liftFromStyleEnvironment }),
-		keymap({ Backspace: deleteEmptyFirstBlock, Delete: deleteEmptyBlockForward }),
+		keymap({ Backspace: deleteEmptyBlockBackward, Delete: deleteEmptyBlockForward }),
 		keymap({ Backspace: selectFigureBackward, Delete: selectFigureForward }),
 		keymap({ Enter: enterKeepingListEnvironment }),
 		keymap(listKeymap),
@@ -215,8 +226,8 @@ export function latexEditorPlugins(setup: LatexEditorSetup): Plugin[] {
 			// table cell, then list nesting (as markdown and typst do), and only outside both does Tab
 			// cycle the paragraph indent. Without the list step it wrote \indent into the \item
 			// instead of sinking it. always consume Tab so focus stays in the editor
-			Tab: (state: EditorState, dispatch?: (tr: Transaction) => void) => {
-				if (goToNextCell(1)(state, dispatch)) return true;
+			Tab: (state: EditorState, dispatch?: (tr: Transaction) => void, view?: EditorView) => {
+				if (tabThroughCells(state, dispatch, view)) return true;
 				if (indentListItem()(state, dispatch)) return true;
 				cycleParagraphIndent(1)(state, dispatch);
 				return true;
@@ -296,7 +307,7 @@ export function latexNodeViews(
 			const at = getPos as () => number;
 			switch (blockChipView(node.textContent)) {
 				case 'bibliography':
-					return new BibliographyNodeView(node, view, at);
+					return new BibliographyNodeView(node, view, at, latexBibliography);
 				case 'placeholder':
 					return new PlaceholderRawView(node, view, at);
 				case 'ieee-author':

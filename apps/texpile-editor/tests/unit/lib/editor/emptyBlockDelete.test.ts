@@ -1,7 +1,7 @@
 // @vitest-environment jsdom
 import { describe, it, expect } from 'vitest';
-import { EditorState, TextSelection, type Transaction } from 'prosemirror-state';
-import { deleteEmptyBlockForward, deleteEmptyFirstBlock } from '$lib/editor/visual/emptyBlockDelete';
+import { EditorState, NodeSelection, TextSelection, type Transaction } from 'prosemirror-state';
+import { deleteEmptyBlockBackward, deleteEmptyBlockForward } from '$lib/editor/visual/emptyBlockDelete';
 import { parseLatexFile } from '$lib/workspace/latexRoundtrip';
 import { parseMarkdownFile } from '$lib/languages/markdown/visual/roundtrip';
 
@@ -13,7 +13,7 @@ function withEmptyFirst(type: 'paragraph' | 'heading') {
 	return EditorState.create({ doc: withEmpty, selection: TextSelection.create(withEmpty, 1) });
 }
 
-function run(command: typeof deleteEmptyFirstBlock, state: EditorState): EditorState {
+function run(command: typeof deleteEmptyBlockBackward, state: EditorState): EditorState {
 	let next = state;
 	expect(command(state, (tr: Transaction) => (next = state.apply(tr)))).toBe(true);
 	return next;
@@ -28,7 +28,7 @@ function blocks(state: EditorState): string[] {
 describe('an empty block at the start of the document', () => {
 	for (const type of ['paragraph', 'heading'] as const) {
 		it(`goes with Backspace or Delete when it is a ${type}, and the heading after it stays a heading`, () => {
-			for (const command of [deleteEmptyFirstBlock, deleteEmptyBlockForward]) {
+			for (const command of [deleteEmptyBlockBackward, deleteEmptyBlockForward]) {
 				const state = run(command, withEmptyFirst(type));
 				expect(blocks(state)).toEqual(['heading Introduction', 'paragraph Some words.']);
 				expect(state.selection.from).toBe(1);
@@ -38,10 +38,21 @@ describe('an empty block at the start of the document', () => {
 
 	it('stays when it is the only block, and a heading becomes body text', () => {
 		const { doc } = parseLatexFile('\\section{}\n');
-		const state = run(deleteEmptyFirstBlock, EditorState.create({ doc, selection: TextSelection.create(doc, 1) }));
+		const state = run(deleteEmptyBlockBackward, EditorState.create({ doc, selection: TextSelection.create(doc, 1) }));
 		expect(blocks(state)).toEqual(['paragraph ']);
-		expect(deleteEmptyFirstBlock(state)).toBe(false);
+		expect(deleteEmptyBlockBackward(state)).toBe(false);
 	});
+});
+
+it('an empty line after an \\input goes with Backspace, where the list keymap only selected the \\input', () => {
+	const { doc } = parseLatexFile('\\input{chapters/one}\n\nSome words.\n');
+	expect(doc.firstChild!.type.name).toBe('includedoc');
+	const withEmpty = doc.copy(doc.content.replaceChild(1, doc.type.schema.nodes.paragraph.create()).addToEnd(doc.child(1)));
+	const at = doc.firstChild!.nodeSize + 1;
+	const state = run(deleteEmptyBlockBackward, EditorState.create({ doc: withEmpty, selection: TextSelection.create(withEmpty, at) }));
+	expect(blocks(state)).toEqual(['includedoc ', 'paragraph Some words.']);
+	expect(state.selection).toBeInstanceOf(NodeSelection);
+	expect(state.selection.from).toBe(0);
 });
 
 describe('a figure whose caption is empty', () => {
@@ -59,7 +70,7 @@ describe('a figure whose caption is empty', () => {
 			expect(doc.firstChild!.type.name).toBe('image');
 			expect(doc.firstChild!.content.size).toBe(0);
 			const state = EditorState.create({ doc, selection: TextSelection.create(doc, 1) });
-			expect(deleteEmptyFirstBlock(state)).toBe(false);
+			expect(deleteEmptyBlockBackward(state)).toBe(false);
 			expect(deleteEmptyBlockForward(state)).toBe(false);
 		});
 	}

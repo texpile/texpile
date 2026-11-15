@@ -189,6 +189,7 @@
 				value={sizePercent}
 				oninput={(e) => setSizePercent(Number((e.currentTarget as HTMLInputElement).value))}
 			/>
+			<p class="text-muted mt-1 text-xs">{m.imageoverlay_latex_width_note()}</p>
 		</div>
 	{/if}
 

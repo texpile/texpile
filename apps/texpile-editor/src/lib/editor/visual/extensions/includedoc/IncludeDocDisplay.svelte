@@ -67,7 +67,7 @@
 	}
 	.includedoc-path {
 		font-weight: 600;
-		color: var(--primary-ink);
+		color: var(--ref-fg);
 	}
 	.includedoc-missing .includedoc-path {
 		color: var(--color-ref-broken-fg);

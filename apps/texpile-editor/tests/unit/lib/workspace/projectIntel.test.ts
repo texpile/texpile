@@ -95,3 +95,23 @@ it('reads a \\def with parameters of a style file the project ships as a macro w
 	expect([editor?.signature, editor?.definition, editor?.argCount]).toEqual(['m', '\\gdef\\@editor{#1}', 1]);
 	expect(projectIntelStore.current.macros.map((m) => m.name)).not.toContain('our@helper');
 });
+
+// a PDF open in a tab is the active file: its bytes were read as text and parsed as LaTeX, 1.2 s for a 12 MB file
+it('reads only a .tex file to see whether the open file is a document of its own', async () => {
+	const asked: string[] = [];
+	const read = async (p: string) => {
+		asked.push(p);
+		return '\\documentclass{article}\n\\begin{document}\n\\end{document}';
+	};
+	await refreshProjectIntel(
+		[{ name: 'main.tex', path: '/w/main.tex', relPath: 'main.tex' }],
+		[],
+		null,
+		'/w/main.pdf',
+		read,
+		null,
+		'/w/main.tex'
+	);
+	expect(asked).not.toContain('/w/main.pdf');
+	expect(projectIntelStore.current.documentFiles.start).toBe('/w/main.tex');
+});

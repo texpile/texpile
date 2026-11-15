@@ -21,5 +21,5 @@ export const crossReference: LatexPlugin = {
 		return readHyperref(source) ? HyperrefSettings : null;
 	},
 	document: crossReferenceDocument,
-	views: (setup) => ({ ref: (node, view) => new RefView(node, view, setup.onJumpToLabel) })
+	views: (setup) => ({ ref: (node, view, _getPos, decorations) => new RefView(node, view, decorations, setup.onJumpToLabel) })
 };

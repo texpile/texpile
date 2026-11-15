@@ -189,7 +189,9 @@ export function imageNodeView(pluginSettings: ImagePluginSettings) {
 
 		image.alt = node.attrs.alt ?? '';
 		let resizeControls: HTMLDivElement | undefined;
-		function updateDom() {
+		// what the image was last fitted to: a refit for the same node, width and picture writes nothing
+		let fitted: { node: Node; maxWidth: number; dimensions: typeof dimensions } | undefined;
+		function updateDom(measured?: number) {
 			if (resizeActive) {
 				return;
 			}
@@ -211,10 +213,15 @@ export function imageNodeView(pluginSettings: ImagePluginSettings) {
 				return;
 			}
 
+			const resizable = pluginSettings.enableResize && !!dimensions;
+			const maxWidth = resizable ? (measured ?? getMaxWidth(root, pluginSettings)) : 0;
+			const same = fitted?.node === updatedNode && fitted.maxWidth === maxWidth && fitted.dimensions === dimensions;
+			if (same && !!resizeControls === resizable) return;
+			fitted = { node: updatedNode, maxWidth, dimensions };
+
 			Object.keys(updatedNode.attrs).map((attr) => root.setAttribute(`imageplugin-${attr}`, updatedNode.attrs[attr]));
 
 			if (pluginSettings.enableResize && dimensions) {
-				const maxWidth = getMaxWidth(root, pluginSettings);
 				const finalDimensions = calculateImageDimensions(
 					maxWidth,
 					maxWidth,
@@ -282,7 +289,10 @@ export function imageNodeView(pluginSettings: ImagePluginSettings) {
 			await show(finalSrc);
 			const parent = root.parentElement;
 			if (!parent || !pluginSettings.enableResize) return;
-			unsubscribeResizeObserver = pluginSettings.resizeCallback(parent, updateDom);
+			unsubscribeResizeObserver = pluginSettings.resizeCallback(parent, {
+				measure: () => getMaxWidth(root, pluginSettings),
+				apply: updateDom
+			});
 		})();
 		// the text around it would otherwise be drawn a frame without it, then pushed down; the lookup above still runs
 		const known = pluginSettings.knownImage?.(node.attrs.src) ?? null;
@@ -294,7 +304,7 @@ export function imageNodeView(pluginSettings: ImagePluginSettings) {
 			image.decoding = 'sync';
 			image.src = knownShown;
 			// once ProseMirror has put it on the page, which its width is measured from
-			queueMicrotask(updateDom);
+			queueMicrotask(() => updateDom());
 		}
 		return {
 			...(contentEl

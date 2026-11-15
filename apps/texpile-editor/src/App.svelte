@@ -47,6 +47,13 @@
 		return null;
 	}
 
+	// the Refine card comes when one first opens: its code reaches the editors' own (formulas, comments, the source
+	// editor), which the start screen read before it could paint
+	let RefineCard = $state<typeof import('$lib/ai/RefineCard.svelte').default | null>(null);
+	$effect(() => {
+		if (refineCard.current && !RefineCard) void import('$lib/ai/RefineCard.svelte').then((mod) => (RefineCard = mod.default));
+	});
+
 	// one in-flight load per view; cleared on failure so a later navigation can retry
 	let workspaceLoad: Promise<void> | null = null;
 	let sessionLoad: Promise<void> | null = null;
@@ -136,7 +143,7 @@
 	import ConfirmHost from '$lib/modals/ConfirmHost.svelte';
 	import TooltipHost from '$lib/components/TooltipHost.svelte';
 	import ContextMenuHost from '$lib/menus/ContextMenuHost.svelte';
-	import RefineCard from '$lib/ai/RefineCard.svelte';
+	import { refineCard } from '$lib/ai/refineCardState.svelte';
 	import MissingProgramDialog from '$lib/modals/window/missingProgram/MissingProgramDialog.svelte';
 </script>
 
@@ -169,7 +176,7 @@
 
 <ConfirmHost />
 <TooltipHost />
-<RefineCard />
+{#if RefineCard}<RefineCard />{/if}
 <MissingProgramDialog />
 <ContextMenuHost />
 

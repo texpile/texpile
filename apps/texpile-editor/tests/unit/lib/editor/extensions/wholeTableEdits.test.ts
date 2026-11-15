@@ -60,12 +60,12 @@ describe('an edit across a table edge', () => {
 		view.destroy();
 	});
 
-	it('deletes the whole table from its caption to the paragraph after it, leaving no empty grid', () => {
+	it('deletes the whole table from the paragraph before it into its caption, leaving no empty grid', () => {
 		const doc = parseTypstFile(FIGURE).doc;
-		const view = mount(doc, textAt(doc, 'Timing', 3), textAt(doc, 'A closing', 2));
+		const view = mount(doc, textAt(doc, 'lists the runs', 0), textAt(doc, 'Timing', 3));
 		expect(press(view, 'Delete')).toBe(true);
 		expect(tables(view.state.doc)).toBe(0);
-		expect(view.state.doc.textContent).toContain('closing paragraph after it.');
+		expect(view.state.doc.textContent).toContain('The table below ');
 		expect(view.state.doc.textContent).not.toContain('Timing');
 		view.destroy();
 	});

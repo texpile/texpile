@@ -30,8 +30,8 @@
 		lastParsedSource: string | null;
 		/** where every run of the live doc sits in texSource */
 		readonly sourceMap: SourceMap;
-		/** parse in the worker; null on failure/timeout (the next change retries). */
-		parse(text: string): Promise<ParsedLatexFile | null>;
+		/** parse in the worker; null on failure/timeout (the next change retries), or once `abandon` fires */
+		parse(text: string, abandon?: AbortSignal): Promise<ParsedLatexFile | null>;
 		/** adopt a remote parse of `text`: new docMeta + the live doc reference (visualDoc/lastDoc handshake). */
 		adopt(parsed: ParsedLatexFile, liveDoc: PMNode, text: string): void;
 		/** the merged content changed: the open file is saved or not */
@@ -66,6 +66,9 @@
 	// remote edits -> block patch
 	let remotePatchTimer: ReturnType<typeof setTimeout> | null = null;
 	let remoteParseMs = 0;
+	let remoteParsedAt = 0;
+	// the parse on its way: a change to the text makes it one nobody can use
+	let parsing: AbortController | null = null;
 	// set by a local visual edit: the doc's parse predates it, so the next quiet moment
 	// re-parses purely to refresh them (content usually identical, attrs-only patch)
 	let origStale = false;
@@ -88,7 +91,8 @@
 		deferredRestamp = false;
 	}
 
-	function scheduleRemotePatch(delay = Math.max(60, remoteParseMs * 2)) {
+	// parses start twice their own length after the last one came back, so the first after a rest starts at once
+	function scheduleRemotePatch(delay = Math.max(60, remoteParsedAt + remoteParseMs * 2 - performance.now())) {
 		if (remotePatchTimer && delay > 0) return;
 		if (remotePatchTimer) clearTimeout(remotePatchTimer);
 		remotePatchTimer = setTimeout(() => {
@@ -106,12 +110,15 @@
 		const snapshot = binding.ytext.toString();
 		if (snapshot === api.texSource && !origStale) return;
 		const t0 = performance.now();
-		const parsed = await api.parse(snapshot);
-		remoteParseMs = performance.now() - t0;
+		const mine = (parsing = new AbortController());
+		const parsed = await api.parse(snapshot, mine.signal);
+		if (parsing === mine) parsing = null;
+		remoteParsedAt = performance.now();
+		if (!mine.signal.aborted) remoteParseMs = remoteParsedAt - t0;
 		// superseded: the file/mode/view moved on, or more edits landed while parsing
 		if (path !== p || !active() || editorViewStore.current !== v) return;
 		if (session.collabFor(p)?.ytext !== binding.ytext) return;
-		if (binding.ytext.toString() !== snapshot) return scheduleRemotePatch();
+		if (mine.signal.aborted || binding.ytext.toString() !== snapshot) return scheduleRemotePatch();
 		if (!parsed) return; // unparsable mid-edit state; the next change retries
 		const oldSource = api.texSource;
 		const oldMap = api.sourceMap;
@@ -207,6 +214,7 @@
 		if (!binding) return;
 		const t = binding.ytext;
 		function onRemote(ev: Y.YTextEvent) {
+			parsing?.abort();
 			const origin = ev.transaction.origin;
 			if (origin === EDIT_ORIGIN || origin === SEED_ORIGIN) return;
 			scheduleRemotePatch();
@@ -254,6 +262,11 @@
 	// update still bumps clocks, which reads as caret flicker on some consumers)
 	let lastPublishedCursor: string | null = null;
 
+	function othersIn(awareness: { clientID: number; getStates(): Map<number, unknown> }): boolean {
+		for (const id of awareness.getStates().keys()) if (id !== awareness.clientID) return true;
+		return false;
+	}
+
 	/** WorkspaceView wires this to the visual editor's selection-change callback. */
 	export function publishCursor(): void {
 		if (visualCursorTimer) return;
@@ -269,6 +282,11 @@
 					deferredRestamp = false;
 					scheduleRemotePatch(150);
 				}
+			}
+			// nobody else in the file reads the caret: it is published when someone arrives (onAwareness)
+			if (!othersIn(binding.awareness)) {
+				lastPublishedCursor = null;
+				return;
 			}
 			// the map describes texSource as it is now, local edits included
 			const sel = v.state.selection;
@@ -324,6 +342,7 @@
 		const self = binding.awareness.clientID;
 		function onAwareness(changes: { added: number[]; updated: number[]; removed: number[] }) {
 			if ([...changes.added, ...changes.updated, ...changes.removed].every((id) => id === self)) return;
+			if (changes.added.some((id) => id !== self)) publishCursor();
 			return scheduleRemoteCursorRender();
 		}
 		binding.awareness.on('change', onAwareness);

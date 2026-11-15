@@ -24,7 +24,9 @@ export type NumberEvent =
 	| { type: 'form'; counter: string; form: string | null }
 	| { type: 'within'; change: WithinChange }
 	// math or a float the editor shows as source, numbered where the editor cannot see
-	| { type: 'hidden'; counter: 'equation' | 'figure' | 'table' };
+	| { type: 'hidden'; counter: 'equation' | 'figure' | 'table' }
+	// a \label in the document's own text, which names the heading it stands under
+	| { type: 'label'; name: string };
 
 const APPENDIX = /\\append(ix|ices)(?![a-zA-Z@])/;
 const MATTER = /\\(front|main|back)matter(?![a-zA-Z@])/g;
@@ -32,29 +34,47 @@ const HIDDEN_FLOAT = /\\begin\s*\{(figure|table)\*?\}/g;
 
 export type EventScheme = Pick<NumberingScheme, 'mathOpeners' | 'theorems'>;
 
+// first: what the chip says before any math it hides is counted. floats: the floats it holds
+type ChipEvents = { code: string; first: NumberEvent[]; floats: NumberEvent[] };
+// a long document holds thousands of chips, and each one says the same for as long as it is the same node
+const chipEvents = new WeakMap<PMNode, ChipEvents>();
+
+function chipEventsOf(node: PMNode): ChipEvents {
+	const kept = chipEvents.get(node);
+	if (kept) return kept;
+	const text = node.textContent;
+	const code = codeOnly(text);
+	const first: NumberEvent[] = [];
+	for (const m of code.matchAll(MATTER)) first.push({ type: 'matter', main: m[1] === 'main' });
+	if (APPENDIX.test(code)) first.push({ type: 'appendix' });
+	for (const change of counterChangesIn(text)) first.push({ type: 'change', change });
+	const includes = texIncludesIn(code);
+	if (includes.length) first.push({ type: 'include', includes });
+	for (const change of withinChangesIn(code)) first.push({ type: 'within', change });
+	for (const { counter, form } of definedFormsIn(code)) first.push({ type: 'form', counter, form });
+	const floats = [...code.matchAll(HIDDEN_FLOAT)].map((m): NumberEvent => ({ type: 'hidden', counter: m[1] as 'figure' | 'table' }));
+	const events = { code, first, floats };
+	chipEvents.set(node, events);
+	return events;
+}
+
 export function eventsIn(doc: PMNode, countsOf: ChipCountsOf, scheme: EventScheme): NumberEvent[] {
 	const out: NumberEvent[] = [];
 	const openers: MathOpeners = scheme.mathOpeners;
 	const hidden = openers.macros.length ? new RegExp(String.raw`\\(${openers.macros.join('|')})(?![a-zA-Z@])`) : null;
 	const opening = new Set([...NUMBERED_MATH_ENVIRONMENTS, ...openers.environments]);
 	// inside a float the editor shows as an environment (one of subfigures), its images are no figures of their own
-	function walk(parent: PMNode, start: number, inFloat: boolean): void {
+	function walk(parent: PMNode, start: number, inFloat: boolean, ownText = false): void {
 		parent.forEach((node, offset) => {
 			const pos = start + offset;
+			if (ownText && node.type.name === 'label') out.push({ type: 'label', name: String(node.attrs.name) });
 			const chip = node.type.name === 'raw_latex' || node.type.name === 'inline_latex';
 			if (chip) {
-				const text = node.textContent;
-				const code = codeOnly(text);
-				for (const m of code.matchAll(MATTER)) out.push({ type: 'matter', main: m[1] === 'main' });
-				if (APPENDIX.test(code)) out.push({ type: 'appendix' });
-				for (const change of counterChangesIn(text)) out.push({ type: 'change', change });
-				const includes = texIncludesIn(code);
-				if (includes.length) out.push({ type: 'include', includes });
-				for (const change of withinChangesIn(code)) out.push({ type: 'within', change });
-				for (const { counter, form } of definedFormsIn(code)) out.push({ type: 'form', counter, form });
+				const { code, first, floats } = chipEventsOf(node);
+				out.push(...first);
 				// a footnote or a box shown as source can hold numbered math too
 				if (hidden?.test(code) || NUMBERED_MATH.test(code)) out.push({ type: 'hidden', counter: 'equation' });
-				for (const m of code.matchAll(HIDDEN_FLOAT)) out.push({ type: 'hidden', counter: m[1] as 'figure' | 'table' });
+				out.push(...floats);
 			}
 			if (node.type.name === 'includedoc') {
 				const includes = texIncludesIn(`\\${String(node.attrs.command)}{${String(node.attrs.path)}}`);
@@ -75,7 +95,7 @@ export function eventsIn(doc: PMNode, countsOf: ChipCountsOf, scheme: EventSchem
 			if (env === 'appendix' || env === 'appendices') out.push({ type: 'appendix' });
 			if (env === 'subequations') out.push({ type: 'subequations', open: true });
 			if (env === 'minipage') out.push({ type: 'minipage' });
-			walk(node, pos + 1, inFloat || !!float || node.type.name === 'figure_group');
+			walk(node, pos + 1, inFloat || !!float || node.type.name === 'figure_group', parent === doc && node.type.name === 'paragraph');
 			if (env === 'subequations') out.push({ type: 'subequations', open: false });
 			if (env === 'minipage') out.push({ type: 'minipage-end' });
 		});

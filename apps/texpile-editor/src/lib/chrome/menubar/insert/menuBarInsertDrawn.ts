@@ -44,6 +44,7 @@ export const DRAWN_INSERT_ITEMS = [
 	'hspace',
 	'abstract',
 	'appendix',
+	'contents',
 	'bibliography',
 	'include',
 	'comment'
@@ -279,6 +280,8 @@ export function makeDrawnInserts(deps: DrawnInsertDeps): (value: string) => Prom
 				return cmAfterLine(cm, '\\begin{abstract}\n\n\\end{abstract}', '\\begin{abstract}\n'.length);
 			case 'appendix':
 				return cmOnOwnLine(cm, '\\appendix');
+			case 'contents':
+				return cmOnOwnLine(cm, '\\tableofcontents');
 			case 'bibliography':
 				return cmOnOwnLine(cm, bibliographySources().join('\n'));
 			case 'include': {
@@ -334,6 +337,8 @@ export function makeDrawnInserts(deps: DrawnInsertDeps): (value: string) => Prom
 				return insertOne(schema.nodes.abstract.create({ sourceForm: 'env' }, schema.nodes.paragraph.create()), true);
 			case 'appendix':
 				return insertChips(['\\appendix'], 'line');
+			case 'contents':
+				return insertChips(['\\tableofcontents'], 'line', false, false);
 			case 'bibliography':
 				return insertChips(bibliographySources(), 'line');
 			case 'include': {

@@ -7,9 +7,14 @@ const root = fs.realpathSync(fs.mkdtempSync(path.join(os.tmpdir(), 'texpile-pool
 afterAll(() => fs.rmSync(root, { recursive: true, force: true }));
 fs.writeFileSync(path.join(root, 'main.tex'), 'pre\n\\begin{document}\nbody\n');
 
+const made: unknown[] = [];
+
 vi.mock('../../../../../../../electron/src/draft/teleport/draftEngine', () => ({
 	DraftEngine: class {
-		constructor(readonly root: string) {}
+		constructor(readonly root: string) {
+			made.push(this);
+		}
+		preloadImages(): void {}
 		serves = 0;
 		dead = false;
 		ready = Promise.resolve([]);
@@ -24,8 +29,14 @@ vi.mock('../../../../../../../electron/src/draft/teleport/draftEngine', () => ({
 			this.dropped = true;
 			this.parked = Promise.resolve(true);
 		}
-		kill(): void {}
-		remove(): void {}
+		killed = false;
+		removed = false;
+		kill(): void {
+			this.killed = true;
+		}
+		remove(): void {
+			this.removed = true;
+		}
 	}
 }));
 
@@ -57,6 +68,26 @@ it('hands a compile only an engine that never served', async () => {
 	giveBack(served);
 	expect(await takeEngine(c, true)).not.toBe(served);
 	stopPool();
+});
+
+// a pool stopped under a standing preview deleted the folders its index reads
+it('leaves the folder of an engine that served when its pool stops under a standing preview', async () => {
+	const c = {
+		root,
+		mainRel: 'main.tex',
+		engineDir: '/e',
+		engine: 'lualatex',
+		seedDir: '/s',
+		preamble: 'pre\n\\begin{document}',
+		preStamp: null
+	};
+	warmPool(c);
+	const served = await takeEngine(c);
+	served.serves = 1;
+	served.parked = Promise.resolve(true);
+	giveBack(served);
+	stopPool(root, true);
+	expect(served as unknown as { killed: boolean; removed: boolean }).toMatchObject({ killed: true, removed: false });
 });
 
 // each window's live preview runs its own folder
@@ -97,8 +128,8 @@ it('hands a staged engine to its own chain, and sends it back to the base for an
 	warmPool(c);
 	const running = await takeEngine(c);
 	stageEngine(c, 'chain-1', () => ({ plan: 'plan-1', serve: 1 }));
-	expect(takeStaged(c, 'chain-2')).toBeNull();
-	const staged = takeStaged(c, 'chain-1');
+	expect(await takeStaged(c, 'chain-2')).toBeNull();
+	const staged = await takeStaged(c, 'chain-1');
 	expect(staged).not.toBe(running);
 	expect(seen(staged).stagedWith).toBe('plan-1');
 	running.parked = Promise.resolve(true);
@@ -107,6 +138,78 @@ it('hands a staged engine to its own chain, and sends it back to the base for an
 	expect(seen(running).stagedWith).toBe('plan-3');
 	expect(await takeEngine(c)).toBe(running);
 	expect(seen(running).dropped).toBe(true);
+	stopPool();
+});
+
+// an engine ends its run with an exit when it cannot park: it served its count, or the run wrote PDF objects
+it('passes over a staged engine that exited where it should have parked', async () => {
+	const c = {
+		root,
+		mainRel: 'main.tex',
+		engineDir: '/e',
+		engine: 'lualatex',
+		seedDir: '/s',
+		preamble: 'pre\n\\begin{document}',
+		preStamp: null
+	};
+	warmPool(c);
+	const served = await takeEngine(c);
+	served.serves = 1;
+	served.parked = Promise.resolve(false);
+	giveBack(served, { key: 'chain-1', rec: 'rec-1' });
+	expect(await takeStaged(c, 'chain-1')).toBeNull();
+	stopPool();
+});
+
+// a spare that read the last compile's images holds objects the next compile would number its own after: the image
+// list then changed on every compile, and every waiting engine left
+it('gives a compile a fresh engine once the spares read images at the base', async () => {
+	const c = {
+		root,
+		mainRel: 'main.tex',
+		engineDir: '/e',
+		engine: 'lualatex',
+		seedDir: '/s',
+		preamble: 'pre\n\\begin{document}',
+		preStamp: null
+	};
+	fs.writeFileSync(path.join(root, 'none.lua'), 'return {}\n');
+	fs.writeFileSync(path.join(root, 'images.lua'), 'return {{n=172,file="a.pdf",hash=""}}\n');
+	made.length = 0;
+	warmPool({ ...c, imageList: 'none.lua' });
+	const spares = [...made];
+	expect(spares).toContain(await takeEngine(c, true));
+	stopPool();
+	made.length = 0;
+	warmPool({ ...c, imageList: 'images.lua' });
+	const withImages = [...made];
+	expect(withImages).not.toContain(await takeEngine(c, true));
+	stopPool();
+});
+
+// a compile that numbers the images anew leaves every waiting engine holding the wrong objects: they go when its
+// list arrives, while nobody types, and the same list under another compile's path changes nothing
+it('lets the engines go that hold another numbering of the images', async () => {
+	const c = {
+		root,
+		mainRel: 'main.tex',
+		engineDir: '/e',
+		engine: 'lualatex',
+		seedDir: '/s',
+		preamble: 'pre\n\\begin{document}',
+		preStamp: null
+	};
+	fs.writeFileSync(path.join(root, 'first.lua'), 'return {{file="a.pdf",n=172,},}\n');
+	fs.writeFileSync(path.join(root, 'again.lua'), 'return {{file="a.pdf",n=172,},}\n');
+	fs.writeFileSync(path.join(root, 'moved.lua'), 'return {{file="a.pdf",n=465,},}\n');
+	made.length = 0;
+	warmPool({ ...c, imageList: 'first.lua' });
+	const first = [...made];
+	warmPool({ ...c, imageList: 'again.lua' });
+	expect(made).toEqual(first);
+	warmPool({ ...c, imageList: 'moved.lua' });
+	expect(made).toHaveLength(4);
+	expect(first).not.toContain(await takeEngine({ ...c, imageList: 'moved.lua' }));
 	stopPool();
 });
 

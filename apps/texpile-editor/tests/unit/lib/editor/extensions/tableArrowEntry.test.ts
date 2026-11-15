@@ -2,7 +2,7 @@
 import { describe, expect, it } from 'vitest';
 import { EditorState, TextSelection, type Transaction } from 'prosemirror-state';
 import type { EditorView } from 'prosemirror-view';
-import { tableArrowEntry } from '$lib/editor/visual/extensions/table/tableArrowEntry';
+import { tableArrowEntry } from '$lib/editor/visual/extensions/table/caret/tableArrowEntry';
 import { parseLatexFile } from '$lib/workspace/latexRoundtrip';
 import { parseTypstFile } from '$lib/languages/typst/visual/roundtrip';
 

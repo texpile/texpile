@@ -5,12 +5,25 @@ import { VisualEditor } from './driver/visualEditor';
 
 const doc = (body: string) => `\\documentclass{article}\n\\usepackage{natbib}\n\\begin{document}\n\n${body}\n\n\\end{document}\n`;
 
+const RESULTS = `\\section{Results}\\label{sec:results}
+
+\\begin{figure}
+	\\includegraphics[width=0.4\\textwidth]{figures/plot.png}
+	\\caption{A plot.}\\label{fig:plot}
+\\end{figure}
+
+See Figure~\\ref{fig:plot} in Section~\\ref{sec:results} and \\eqref{eq:energy}, or \\autoref{fig:plot}.
+`;
+
 const texpile = useTexpile({
 	files: {
+		'chapters/results.tex': RESULTS,
 		'panel.tex': doc('Last paragraph of the text.\n\n\\bibliographystyle{plainnat}\n\\bibliography{refs}'),
 		'popover.tex': doc('Alpha words \\cite{knuth84} and \\label{sec:a} beta.'),
+		'lonechip.tex': doc('\\subsection*{Details}\n\\label{app:details}\n\nAfter the label.'),
 		'math.tex': doc('Before the formula.\n\n\\[ x+y \\]\n\nAfter the formula.'),
 		'paste.tex': doc('Some text \\textbf{\\emph{nested}} words and \\url{http://x.org} end.'),
+		'figure.tex': `\\documentclass{article}\n\\usepackage{tikz}\n\\begin{document}\n\n${Array.from({ length: 60 }, (_, i) => `word${i}`).join(' ')}\n\n\\begin{tikzpicture}\n  \\node[draw] (a) at (0,0) {A};\n\\end{tikzpicture}\n\nAfter the figure.\n\n\\end{document}\n`,
 		'color.tex': `\\documentclass{article}\n\\usepackage{xcolor}\n\\begin{document}\n\n\\textcolor{red}{We know that $(a+b)^2$ can be evaluated as $a^2+b^2+2ab$.}\n\n\\end{document}\n`
 	}
 });
@@ -44,6 +57,17 @@ test('a key pressed after a click on a chip adds to the argument in its panel, n
 	await v.page.waitForTimeout(400);
 	await v.page.keyboard.press('Backspace');
 	await disk().expectFile('panel.tex', (t) => t.includes('\\bibliographystyle{plainna}'), 'one letter of the argument goes');
+});
+
+// the click landed in a zero width space inside the chip, which selected the chip, and the next key replaced it
+test('a click after a chip that ends its paragraph puts the caret there, and typing keeps the chip', async () => {
+	const v = visual();
+	await v.open('lonechip.tex');
+	const box = await boxOf(v, await nodePos(v, 'label'));
+	await v.page.mouse.click(box.right + 80, (box.top + box.bottom) / 2);
+	await v.page.waitForTimeout(300);
+	await v.type('X');
+	await disk().expectFile('lonechip.tex', (t) => t.includes('\\label{app:details}X'), 'the letter lands after the label');
 });
 
 test("Escape on a citation chip's popover gives the typing back to the text", async () => {
@@ -106,4 +130,36 @@ test('editing a formula in colored text keeps it in the color, as one \\textcolo
 		(t) => t.includes('\\textcolor{red}{We know that $(a+b)^2+1$ can be evaluated as') && t.split('\\textcolor').length === 2,
 		'the edited formula stays inside the one color run'
 	);
+});
+
+test('arrows select a figure card from the paragraphs around it, and Backspace removes it', async () => {
+	const v = visual();
+	await v.open('figure.tex');
+	const selected = () =>
+		v.evalView<string>(
+			`const s = view.state.selection; return s.node ? s.node.type.name : s.constructor.name + ':' + s.$head.parent.textContent.slice(0, 5);`
+		);
+	// the caret mid-line in a wrapped paragraph passes its lines first, then the card is selected
+	await v.caretAfter('word3 ');
+	await v.press('ArrowDown');
+	expect(await selected(), 'one line down is still the paragraph').toBe('TextSelection:word0');
+	for (let i = 0; i < 8 && (await selected()) !== 'raw_latex'; i++) await v.press('ArrowDown');
+	expect(await selected()).toBe('raw_latex');
+	await v.press('ArrowDown');
+	expect(await selected()).toBe('TextSelection:After');
+	await v.press('ArrowUp');
+	expect(await selected()).toBe('raw_latex');
+	await v.press('ArrowUp');
+	expect(await selected()).toMatch(/^TextSelection:word/);
+	await v.press('ArrowDown');
+	expect(await selected()).toBe('raw_latex');
+	await v.press('Backspace');
+	expect(await v.blockTypes()).toEqual(['paragraph', 'paragraph']);
+});
+
+test('a reference shows the number drawn on what it names, with no compile', async () => {
+	const v = visual();
+	await v.open('chapters/results.tex');
+	// the section and the figure are counted here, the equation in the main file that reads this one in
+	await expect(v.editor.locator('p').last()).toHaveText('See Figure 1 in Section 2 and (1), or Figure 1.', { timeout: 20_000 });
 });

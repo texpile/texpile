@@ -27,7 +27,12 @@ import { validateLatex as validateLatexInternal } from '../core/parser';
 import { atomToAsciiMath } from '../formats/atom-to-ascii-math';
 import { parseMathString } from '../formats/parse-math-string';
 
-import type { LatexSyntaxError, ParseMode } from './core-types';
+import type {
+  LatexSyntaxError,
+  MacroDictionary,
+  NormalizedMacroDictionary,
+  ParseMode,
+} from './core-types';
 
 import '../core/modes';
 import { getDefaultContext } from '../core/context-utils';
@@ -127,7 +132,7 @@ function renderToMarkup(
     from.letterShapeStyle = options.letterShapeStyle;
 
   if (options?.macros) {
-    const macros = normalizeMacroDictionary(options?.macros);
+    const macros = normalizedMacros(options.macros);
     from.getMacro = (token) => getMacroDefinition(token, macros);
   }
   if (options?.registers)
@@ -232,6 +237,17 @@ export function getMathCommands(
   syntax: 'latex' | 'typst'
 ): readonly MathCommand[] {
   return mathCommands(syntax);
+}
+
+// Texpile: one dictionary typesets every formula of a document, so it is normalized once
+const normalizedByDictionary = new WeakMap<object, NormalizedMacroDictionary>();
+function normalizedMacros(macros: MacroDictionary): NormalizedMacroDictionary {
+  let known = normalizedByDictionary.get(macros);
+  if (!known) {
+    known = normalizeMacroDictionary(macros);
+    normalizedByDictionary.set(macros, known);
+  }
+  return known;
 }
 
 /**

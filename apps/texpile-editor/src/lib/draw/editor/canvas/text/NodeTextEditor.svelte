@@ -3,6 +3,7 @@
 	import type { FigureEditorState } from '../../state/editorState.svelte';
 	import { editedNodeBox, nodeTextPlace } from './nodeTextPlace';
 	import { dropEmptyText, isMultiline, previewSelectedText, readSelectedText, writeSelectedText } from '../../state/selection/nodeText';
+	import { isCommandKey } from '$lib/keybindings/editors/editorKeys';
 
 	type Props = { editor: FigureEditorState };
 	const props: Props = $props();
@@ -12,9 +13,11 @@
 	const initial = $derived(box ? (readSelectedText(props.editor) ?? '') : '');
 	let draft = $state('');
 	let problem = $state<string | null>(null);
+	let typed = false;
 
 	function begin(el: HTMLTextAreaElement) {
 		draft = initial;
+		typed = false;
 		// eslint-disable-next-line no-param-reassign -- the value binding lands after this, and would undo the select
 		el.value = initial;
 		el.focus();
@@ -35,6 +38,13 @@
 	// Escape commits, as in Excalidraw; Enter is a new line in a node and the end of a cell's or a branch's one line
 	function onkeydown(e: KeyboardEvent) {
 		e.stopPropagation();
+		// a shape added by mistake goes with the undo key, though the caret is already in its text
+		if (!typed && isCommandKey(e, 'figure.undo')) {
+			e.preventDefault();
+			props.editor.editingText = false;
+			props.editor.undo();
+			return;
+		}
 		const commits = e.key === 'Escape' || (e.key === 'Enter' && (e.ctrlKey || e.metaKey || !isMultiline(props.editor)));
 		if (!commits) return;
 		e.preventDefault();
@@ -57,6 +67,7 @@
 		aria-invalid={!!problem}
 		value={draft}
 		oninput={(e) => {
+			typed = true;
 			draft = e.currentTarget.value;
 			problem = null;
 			previewSelectedText(props.editor, draft);

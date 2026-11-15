@@ -38,18 +38,35 @@ function environmentRegion(node: SyntaxNode, env: string): MathRegion {
 	return region;
 }
 
+// the region a node is, if it is math
+function regionOf(text: string, node: SyntaxNode): MathRegion | null {
+	if (MATH_NODES.has(node.name)) return mathRegion(node);
+	if (node.name !== 'Environment' || !node.firstChild) return null;
+	const env = environmentName(text, node.firstChild);
+	return hasMathBody(commonEnvFacts(env)) ? environmentRegion(node, env) : null;
+}
+
 export function findLatexMathRegions(text: string): MathRegion[] {
 	const regions: MathRegion[] = [];
 	latexTreeOf(text).iterate({
 		enter(node) {
-			if (MATH_NODES.has(node.name)) regions.push(mathRegion(node.node));
-			else if (node.name === 'Environment' && node.node.firstChild) {
-				const env = environmentName(text, node.node.firstChild);
-				if (!hasMathBody(commonEnvFacts(env))) return;
-				regions.push(environmentRegion(node.node, env));
-			} else return;
+			if (!MATH_NODES.has(node.name) && node.name !== 'Environment') return;
+			const region = regionOf(text, node.node);
+			if (!region) return;
+			regions.push(region);
 			return false;
 		}
 	});
 	return regions;
+}
+
+/** the region `mathRegionAt` finds at `pos` in the list above, read off the nodes around `pos` alone */
+export function latexMathRegionAt(text: string, pos: number): MathRegion | null {
+	let found: MathRegion | null = null;
+	for (let node: SyntaxNode | null = latexTreeOf(text).resolveInner(pos, -1); node; node = node.parent) {
+		const region = regionOf(text, node);
+		// the outermost wins, as the list holds no math inside math
+		if (region && region.from < pos && pos <= region.to) found = region;
+	}
+	return found;
 }

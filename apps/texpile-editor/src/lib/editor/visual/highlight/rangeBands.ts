@@ -38,6 +38,8 @@ const BANDED = '.pm-range-node[data-band], .pm-line-hyphen-selected[data-band]';
 
 /** one rule per crossed inline element on screen: how far its line reaches above and below it */
 export function rangeBandRules(view: EditorView): string {
+	// a parked editor has no boxes, and every block of it would count as near the screen
+	if (view.dom.getClientRects().length === 0) return '';
 	const linesOf = new Map<HTMLElement, LineBox[]>();
 	let rules = '';
 	const crossed = blocksNearScreen(view.dom).flatMap((block) => [...block.querySelectorAll<HTMLElement>(BANDED)]);
@@ -121,8 +123,9 @@ export function rangeBandPainter(view: EditorView): RangeBandPainter {
 	function repaint(): void {
 		// a document opened with no paragraph yet is measured when one arrives
 		if (!measured) measureText();
-		// a thread's or a peer's bands with no selection of our own still have to be measured
-		if (!frame && (style.textContent || view.dom.querySelector(BANDED))) frame = requestAnimationFrame(paint);
+		// looked for in the frame, among the blocks near the screen: asking the whole document for a band on every
+		// transaction cost 4 ms a key in a long one
+		if (!frame) frame = requestAnimationFrame(paint);
 	}
 	win.addEventListener('scroll', repaint, { capture: true, passive: true });
 	const resized = typeof ResizeObserver === 'undefined' ? null : new ResizeObserver(repaint);

@@ -104,7 +104,8 @@ export function seedBbl(root: string, outAbs: string, mainFile: string): void {
 
 // The aux cycle (latexmk-lite): run biber (biblatex) when the .bcf changed, or bibtex
 // (\bibdata in the aux) when the .bbl is missing/stale. Returns whether the .bbl changed.
-export async function auxCycle(root: string, outAbs: string, mainFile: string): Promise<boolean> {
+/** `running` is told as biber or bibtex starts */
+export async function auxCycle(root: string, outAbs: string, mainFile: string, running?: () => void): Promise<boolean> {
 	await shellEnvReady();
 	const bbl = path.join(outAbs, 'draft.bbl');
 	const bblBefore = mtimeOf(bbl) + ':' + (fs.existsSync(bbl) ? sha1(fs.readFileSync(bbl)) : '');
@@ -118,6 +119,7 @@ export async function auxCycle(root: string, outAbs: string, mainFile: string): 
 		const sources = [...control.matchAll(/<bcf:datasource[^>]*>([^<]+)<\/bcf:datasource>/g)].map((m) => m[1]);
 		const inputs = `biber ${sha1(control)} ${stampOf(root, sources)}`;
 		if (lastInputs.get(root) !== inputs || !fs.existsSync(bbl)) {
+			running?.();
 			await run('biber', ['--input-directory', OUT, '--output-directory', OUT, 'draft'], { cwd: root });
 			lastInputs.set(root, inputs);
 		}
@@ -135,6 +137,7 @@ export async function auxCycle(root: string, outAbs: string, mainFile: string): 
 		if (bibs.length > 0 && (lastInputs.get(root) !== inputs || !fs.existsSync(bbl))) {
 			lastInputs.set(root, inputs);
 			const prev = fs.existsSync(bbl) ? fs.readFileSync(bbl) : null;
+			running?.();
 			await run('bibtex', ['draft'], {
 				cwd: outAbs,
 				env: { ...process.env, BIBINPUTS: root + path.delimiter, BSTINPUTS: root + path.delimiter }

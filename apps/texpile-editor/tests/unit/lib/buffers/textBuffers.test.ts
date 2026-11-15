@@ -151,6 +151,68 @@ describe('TextBuffers writing', () => {
 	});
 });
 
+describe('TextBuffers when the disk holds no text', () => {
+	// a Latin-1 é, which is no UTF-8
+	const latin1 = new Uint8Array([0x63, 0x61, 0x66, 0xe9]);
+
+	async function unreadableOnDisk(hooks: WriteHooks = {}) {
+		const conflict = vi.fn();
+		const opened = await open({ 'main.tex': 'one' }, { diskChanged: async () => true, conflict, ...hooks });
+		opened.buffers.fold('main.tex', 'mine');
+		opened.fs.readBytes = async () => latin1;
+		await opened.buffers.flushAll();
+		return { ...opened, conflict };
+	}
+
+	it('asks, as a conflict with no disk text, instead of holding the edits with no way out; Keep writes them', async () => {
+		const failed = vi.fn();
+		const { buffers, disk, conflict } = await unreadableOnDisk({ failed });
+		expect([conflict.mock.calls, failed.mock.calls, buffers.conflictedFiles]).toEqual([
+			[['root/main.tex', null, 'mine']],
+			[],
+			['main.tex']
+		]);
+		await buffers.resolveConflict('main.tex', 'memory');
+		expect([disk['main.tex'], buffers.conflictedFiles, buffers.hasPending('main.tex')]).toEqual(['mine', [], false]);
+	});
+
+	it('closes the file when the edits are discarded and the disk still holds no text, writing nothing', async () => {
+		const unreadable = vi.fn();
+		const { buffers, writes } = await unreadableOnDisk({ unreadable });
+		await buffers.resolveConflict('main.tex', 'disk');
+		expect([unreadable.mock.calls, writes]).toEqual([[['root/main.tex']], []]);
+	});
+
+	it('takes the disk in when it reads as text again by the time the edits are discarded', async () => {
+		const unreadable = vi.fn();
+		const { buffers, text, fs } = await unreadableOnDisk({ unreadable });
+		fs.readBytes = async () => new TextEncoder().encode('fixed outside');
+		await buffers.resolveConflict('main.tex', 'disk');
+		expect([text.toString(), unreadable.mock.calls]).toEqual(['fixed outside', []]);
+	});
+
+	it('drops the question on its own when the disk reads as text again, and the held edits are written', async () => {
+		const resolved = vi.fn();
+		const { buffers, fs, disk } = await unreadableOnDisk({ resolved });
+		fs.readBytes = async () => new TextEncoder().encode('one');
+		await buffers.syncFromDisk();
+		await buffers.flushAll();
+		expect([resolved.mock.calls, buffers.conflictedFiles, disk['main.tex']]).toEqual([[['root/main.tex']], [], 'mine']);
+	});
+
+	it('asks nothing for a file with no unsaved edits, and takes the disk in once it reads as text', async () => {
+		const conflict = vi.fn();
+		const failed = vi.fn();
+		const { buffers, text, fs } = await open({ 'main.tex': 'one' }, { diskChanged: async () => true, conflict, failed });
+		fs.readBytes = async () => latin1;
+		await buffers.syncFromDisk();
+		expect([conflict.mock.calls, failed.mock.calls, buffers.conflictedFiles, text.toString()]).toEqual([[], [], [], 'one']);
+		fs.readBytes = async () => new TextEncoder().encode('two');
+		await buffers.syncFromDisk();
+		expect(text.toString()).toBe('two');
+	});
+});
+
 describe('TextBuffers taking in the disk', () => {
 	it('takes a change on disk in as an undoable edit it never writes back; the undo is written', async () => {
 		const { buffers, text, disk, writes } = await open({ 'main.tex': 'one' });

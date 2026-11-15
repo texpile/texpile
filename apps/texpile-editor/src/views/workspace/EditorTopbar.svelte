@@ -10,10 +10,10 @@
 	import CompileButton, { COMPILE_TONE } from '$lib/preview/CompileButton.svelte';
 	import CompileOptionsMenu from './CompileOptionsMenu.svelte';
 	import { AnchoredMenu } from '$lib/pdf-view/anchoredMenu.svelte';
-	import type { ComponentProps } from 'svelte';
+	import type { Component, ComponentProps } from 'svelte';
 	import { m } from '$lib/paraglide/messages';
-	import type { FileKind } from '$lib/workspace/documentBuffer.svelte';
 	import EditModePicker from './EditModePicker.svelte';
+	import OpenAgentButton from '$lib/ai/agentPanel/ui/OpenAgentButton.svelte';
 	import {
 		ArrowRight,
 		Square,
@@ -29,7 +29,6 @@
 
 	type Props = {
 		loadedPath: string | null;
-		kind: FileKind;
 		guest: boolean;
 		terminalAvailable: boolean;
 		compiling: boolean;
@@ -39,6 +38,9 @@
 		guestTypstOffered?: boolean;
 		pdfPaneOpen: boolean;
 		draftPaused: boolean;
+		typstPaused?: boolean;
+		onPauseTypst?: () => void;
+		onResumeTypst?: () => void;
 		onStopCompile: () => void;
 		onPauseDraft: () => void;
 		onResumeDraft: () => void;
@@ -47,6 +49,9 @@
 		commandPending?: boolean;
 		/** guest only: ask the host to compile (it owns the toolchain). */
 		onRequestCompile: () => void;
+		/** guest only: the host is compiling, so the request becomes a stop */
+		hostCompiling?: boolean;
+		onRequestCompileStop?: () => void;
 		onConfigureCompile: () => void;
 		onCompileFromScratch: () => void;
 		onCleanAux: () => void;
@@ -58,6 +63,8 @@
 		/** open review threads in the project; 0 hides the badge, like a clean compile hides Problems */
 		commentCount?: number;
 		onShowComments?: () => void;
+		/** given where the window has a Bottom Panel */
+		onShowAgent?: () => void;
 		suggesting?: boolean;
 		onToggleSuggest?: (suggesting: boolean) => void;
 		onTogglePdf: () => void;
@@ -74,7 +81,6 @@
 	};
 	let {
 		loadedPath,
-		kind,
 		guest,
 		terminalAvailable,
 		compiling,
@@ -82,12 +88,17 @@
 		guestTypstOffered = false,
 		pdfPaneOpen,
 		draftPaused,
+		typstPaused = false,
+		onPauseTypst = () => {},
+		onResumeTypst = () => {},
 		onStopCompile,
 		onPauseDraft,
 		onResumeDraft,
 		onCompile,
 		commandPending = false,
 		onRequestCompile,
+		hostCompiling = false,
+		onRequestCompileStop = () => {},
 		onConfigureCompile,
 		onCompileFromScratch,
 		onCleanAux,
@@ -97,6 +108,7 @@
 		onShowProblems,
 		commentCount = 0,
 		onShowComments = () => {},
+		onShowAgent,
 		suggesting = false,
 		onToggleSuggest,
 		onTogglePdf,
@@ -107,7 +119,7 @@
 	const quiet = $derived(
 		compact
 			? 'btn btn-xs h-[22px] px-1.5 hover:preset-tonal'
-			: 'btn btn-xs preset-outlined-surface-200-800 bg-surface-50-950 hover:preset-tonal'
+			: 'btn btn-xs preset-outlined-surface-200-800 bg-surface-50-950 hover:preset-tonal self-stretch'
 	);
 	const solid = $derived(compact ? 'h-[22px] px-1.5' : '');
 	// with the preview closed, Compile's one job is showing the PDF, so the title bar names that instead
@@ -149,25 +161,22 @@
 				title: withKeyLabel((combo) => m.wsview_stop_compile_title({ combo }), 'compile.stop'),
 				onclick: onStopCompile
 			};
-		// the preview is attached; closing the pane is its stop (the pane detaches the server task
-		// on close), so this is both indicator and off switch
-		if (typstLive && pdfPaneOpen)
-			return { tone: 'success', dot: true, label: m.wsview_live_label(), title: m.wsview_typst_preview_live_title(), onclick: onTogglePdf };
-		if (latexLiveMode() && pdfPaneOpen) {
-			if (draftPaused)
+		// Typst's preview pauses as LaTeX's live mode does: the pane keeps its pages and the engine stops
+		if ((typstLive || latexLiveMode()) && pdfPaneOpen) {
+			if (typstLive ? typstPaused : draftPaused)
 				return {
 					tone: 'warning',
 					icon: Play,
 					label: m.wsview_paused_label(),
 					title: m.wsview_engine_stopped_title(),
-					onclick: onResumeDraft
+					onclick: typstLive ? onResumeTypst : onResumeDraft
 				};
 			return {
 				tone: 'success',
 				dot: true,
 				label: m.wsview_live_label(),
 				title: m.wsview_live_preview_running_title(),
-				onclick: onPauseDraft
+				onclick: typstLive ? onPauseTypst : onPauseDraft
 			};
 		}
 		const live = typstLive || latexLiveMode();
@@ -225,17 +234,27 @@
 			     host's Compile so the bar reads the same on both sides. Hidden while the host
 			     streams a live Typst preview: the stream already follows every keystroke, so a
 			     compile request has nothing to produce (the host's Compile only re-opens its
-			     preview pane there). .typ shows it too - a Typst project compiled by shell (the
-			     Preview switch off) pushes its PDF exactly as a LaTeX one does. -->
-			{#if loadedPath && (kind === 'tex' || kind === 'typ') && !guestTypstOffered}
+			     preview pane there). Any file shows it, as the host's Compile does: the request
+			     compiles the main file. -->
+			{#if !guestTypstOffered}
+				{@const label = hostCompiling ? m.wsview_stop_label() : m.session_request_compile()}
+				{#snippet face(Icon: Component, text: string, shown: boolean)}
+					<span class="col-start-1 row-start-1 flex items-center justify-center gap-1.5" class:invisible={!shown}>
+						<Icon class={compact ? 'size-3.5' : 'size-4'} />
+						{#if !compact}<span class="cap-center">{text}</span>{/if}
+					</span>
+				{/snippet}
 				<button
-					class="btn btn-xs preset-tonal-primary {solid} gap-1.5"
-					onclick={onRequestCompile}
-					use:tip={m.session_request_compile()}
-					aria-label={m.session_request_compile()}
+					class="btn btn-xs {COMPILE_TONE[hostCompiling ? 'error' : 'primary']} {solid}"
+					onclick={hostCompiling ? onRequestCompileStop : onRequestCompile}
+					use:tip={label}
+					aria-label={label}
 				>
-					<Play class={compact ? 'size-3.5' : 'size-4'} />
-					{#if !compact}<span class="cap-center">{m.session_request_compile()}</span>{/if}
+					<!-- both faces in one cell, so the button keeps its width when it turns into Stop -->
+					<span class="grid">
+						{@render face(Play, m.session_request_compile(), !hostCompiling)}
+						{@render face(Square, m.wsview_stop_label(), hostCompiling)}
+					</span>
 				</button>
 			{/if}
 		{/if}
@@ -274,6 +293,9 @@
 				<MessageSquare class="size-3.5" />
 				{commentCount}
 			</button>
+		{/if}
+		{#if onShowAgent}
+			<OpenAgentButton class={quiet} onOpen={onShowAgent} />
 		{/if}
 		{#if onToggleSuggest}
 			<EditModePicker {suggesting} onChange={onToggleSuggest} {compact} />

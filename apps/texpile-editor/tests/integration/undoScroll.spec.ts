@@ -16,13 +16,21 @@ async function caretInView(v: VisualEditor): Promise<boolean> {
 	return v.evalView<boolean>(`const r = view.coordsAtPos(view.state.selection.head); return r.top >= 0 && r.bottom <= window.innerHeight;`);
 }
 
+// the editor scrolls a caret a key moved into view two frames after the key; the reader scrolls away after that
 async function scrollToBottom(v: VisualEditor): Promise<void> {
-	await v.evalView(
-		`let el = view.dom;
-		 while (el && el.scrollHeight <= el.clientHeight + 1) el = el.parentElement;
-		 (el ?? document.scrollingElement).scrollTop = 1e9;`
-	);
-	await expect.poll(async () => !(await caretInView(v))).toBe(true);
+	await expect
+		.poll(async () => {
+			await v.evalView(
+				`return new Promise((done) => requestAnimationFrame(() => requestAnimationFrame(() => {
+					let el = view.dom;
+					while (el && el.scrollHeight <= el.clientHeight + 1) el = el.parentElement;
+					(el ?? document.scrollingElement).scrollTop = 1e9;
+					requestAnimationFrame(() => done());
+				})));`
+			);
+			return !(await caretInView(v));
+		})
+		.toBe(true);
 }
 
 test('undo and redo scroll the change into view', async () => {

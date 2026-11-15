@@ -213,6 +213,8 @@
 	"dl_appimage_desc": "其他发行版，需要 libfuse2",
 	"dl_version_history": "版本历史",
 	"dl_latest_badge": "最新",
+	"dl_show_more": "显示更多",
+	"dl_show_less": "收起",
 	"dl_modal_starting": "下载即将开始……",
 	"dl_modal_star_prompt": "等待的同时，可以在 GitHub 上给项目点个 star 表示支持。",
 	"dl_star_github": "在 GitHub 上点 Star",

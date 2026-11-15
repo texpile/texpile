@@ -97,12 +97,19 @@ export type GitOpResult = {
 	error?: string;
 };
 
+/** the names of the variables in `env`, for simple-git's allowEnvironment: it takes every GIT_ one
+ *  out of git's environment unless named, and this environment is the author's own */
+export function ownEnvironment(env: Record<string, string | undefined> = process.env): string[] {
+	return Object.keys(env);
+}
+
 /** exported for gitRemote.ts, like the three below. `block`: how long a command may say nothing
  *  before it is taken for hung and killed; 0 for never (patientGit) */
 export function git(baseDir: string, block = 20000): SimpleGit {
 	return simpleGit({
 		baseDir,
 		binary: 'git',
+		allowEnvironment: ownEnvironment(),
 		maxConcurrentProcesses: 4,
 		...(block > 0 && { timeout: { block } }),
 		// git octal-escapes any non-ASCII path it prints, which then matches no file on disk. On the

@@ -40,3 +40,24 @@ export function paragraphStart(lines: string[], edit: LineEdit): number {
 	while (from > 0 && lines[from - 1].trim() !== '') from--;
 	return from + 1;
 }
+
+// an environment opened this far above an edit is not looked for
+const MAX_BACK = 400;
+
+/** The line a run records the next edit's point at. No point can be recorded inside an environment, so an edit in one
+ * starts from the first line of the paragraph that opens the outermost one around it; any other from its own paragraph */
+export function stageLine(lines: string[], edit: LineEdit): number {
+	const start = paragraphStart(lines, edit);
+	let closed = 0;
+	let outer = 0;
+	for (let i = start - 2; i >= 0 && start - i <= MAX_BACK; i--) {
+		const code = lines[i].replace(/(^|[^\\])%.*$/, '$1');
+		for (const m of [...code.matchAll(/\\(begin|end)\s*\{([^}]*)\}/g)].reverse()) {
+			if (m[2] === 'document') return outer ? paragraphStart(lines, { from: outer, oldTo: outer, newTo: outer }) : start;
+			if (m[1] === 'end') closed++;
+			else if (closed > 0) closed--;
+			else outer = i + 1;
+		}
+	}
+	return outer ? paragraphStart(lines, { from: outer, oldTo: outer, newTo: outer }) : start;
+}

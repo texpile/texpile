@@ -114,5 +114,3 @@
 		</Popover.Positioner>
 	</Portal>
 </Popover>
-<!-- zero-width space so the cursor can land after the citation -->
-<span>&#8203;</span>

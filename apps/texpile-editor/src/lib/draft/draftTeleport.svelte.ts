@@ -20,7 +20,8 @@ type TeleportHooks = {
 	emit: (kind: string, detail?: unknown) => void;
 };
 
-export type TeleportOutcome = 'shown' | 'held' | 'compile' | 'none';
+/** `open`: the document ended inside a float the writer is still typing, so the pages stand and the rest pass says so */
+export type TeleportOutcome = 'shown' | 'held' | 'open' | 'compile' | 'none';
 
 export class DraftTeleport {
 	private seq = 0;
@@ -38,6 +39,11 @@ export class DraftTeleport {
 			if (ev.root !== this.hooks.root()) return;
 			this.pageQueue = this.pageQueue.then(() => this.hooks.applyPage(ev.page as DraftPage, ev.seq));
 		});
+	}
+
+	/** the caret rests on `line` of a file the preview shows as `text` */
+	stage(file: string, text: string, line: number): void {
+		void nativeBridge()?.draftStage?.({ root: this.hooks.root(), mainFile: this.hooks.mainFile(), file, text, line });
 	}
 
 	async edit(file: string, text: string): Promise<TeleportOutcome> {
@@ -68,6 +74,7 @@ export class DraftTeleport {
 		}
 		if (r.shifts && r.stop !== undefined) this.hooks.moveSourceLines(r.stop, r.shifts);
 		if (r.reason === 'held') return 'held';
+		if (r.reason === 'open') return 'open';
 		if (r.reason === 'superseded' || r.reason === 'outside') return 'none';
 		// the preamble changed, or no index yet, or the engine refused: only a full pass shows it
 		this.hooks.refused();

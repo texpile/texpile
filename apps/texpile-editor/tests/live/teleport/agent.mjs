@@ -265,6 +265,7 @@ const summary = {
 	files: docFiles.length,
 	first: first ?? (rest ? { kind: 'rest', rest } : undefined),
 	noInk: g.noInkTotal(),
+	forgot: g.forgot,
 	...(g.band ? { band: g.band.stats } : {})
 };
 if (jsonOut) fs.writeFileSync(jsonOut, JSON.stringify({ ...summary, results }, null, 1));

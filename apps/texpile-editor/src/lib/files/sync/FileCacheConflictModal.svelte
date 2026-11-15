@@ -10,12 +10,13 @@
 
 	function showDifference(): void {
 		const c = conflict;
-		if (!c) return;
+		if (!c || c.disk === null) return;
+		const disk = c.disk;
 		showTwoVersions({
 			title: m.filesync_conflict_title(),
 			subtitle: m.filesync_difference_sides(),
 			path: c.path,
-			before: async () => c.disk,
+			before: async () => disk,
 			after: async () => c.memory()
 		});
 	}
@@ -23,15 +24,27 @@
 
 {#if conflict && !twoVersions.current}
 	<Modal title={m.filesync_conflict_title()} card="max-h-full max-w-md overflow-y-auto p-5" dismissable={false}>
-		<p class="text-sm">{m.filesync_conflict_body({ name: basename(conflict.path) })}</p>
-		<ModalActions
-			class="mt-5"
-			size="xs"
-			buttons={[
-				{ label: m.filesync_load_disk(), role: 'primary', onclick: () => fileCacheConflicts.choose('disk') },
-				{ label: m.filesync_keep_memory(), role: 'secondary', onclick: () => fileCacheConflicts.choose('memory') },
-				{ label: m.filesync_show_difference(), role: 'secondary', onclick: showDifference }
-			]}
-		/>
+		{#if conflict.disk === null}
+			<p class="text-sm">{m.filesync_unreadable_body({ name: basename(conflict.path) })}</p>
+			<ModalActions
+				class="mt-5"
+				size="xs"
+				buttons={[
+					{ label: m.filesync_keep_memory(), role: 'primary', onclick: () => fileCacheConflicts.choose('memory') },
+					{ label: m.filesync_discard_memory(), role: 'secondary', onclick: () => fileCacheConflicts.choose('disk') }
+				]}
+			/>
+		{:else}
+			<p class="text-sm">{m.filesync_conflict_body({ name: basename(conflict.path) })}</p>
+			<ModalActions
+				class="mt-5"
+				size="xs"
+				buttons={[
+					{ label: m.filesync_load_disk(), role: 'primary', onclick: () => fileCacheConflicts.choose('disk') },
+					{ label: m.filesync_keep_memory(), role: 'secondary', onclick: () => fileCacheConflicts.choose('memory') },
+					{ label: m.filesync_show_difference(), role: 'secondary', onclick: showDifference }
+				]}
+			/>
+		{/if}
 	</Modal>
 {/if}

@@ -18,6 +18,10 @@ export { chipHost, quietTemplateSpaces } from '$lib/editor/visual/extensions/chi
 export type { ChipSettingsProps } from '$lib/editor/visual/extensions/drawnChips/chipPanel.svelte';
 export * as Panel from '$lib/editor/visual/extensions/drawnChips/panel';
 export { dividerFace } from '$lib/editor/visual/extensions/drawnChips/dividerFace';
+export { labelFace } from '$lib/editor/visual/extensions/drawnChips/faces/labelFace';
+export { typedInParagraph } from '$lib/editor/visual/extensions/nodeNumbers';
+export { ownNumbersOf, type LabelNumber } from '../extensions/numbers/ownNumbers';
+export { partLabelFace } from '$lib/editor/visual/extensions/drawnChips/partLabelFace';
 export { footnoteFace } from '$lib/editor/visual/extensions/drawnChips/footnoteFace';
 export { showGlossaryTerm } from '$lib/editor/visual/extensions/drawnChips/faces/glossaryTerm';
 export { settingRow, settingsFace } from '$lib/editor/visual/extensions/drawnChips/settings/settingsFace';
@@ -31,6 +35,18 @@ export { default as CitationReferenceField } from '$lib/editor/visual/extensions
 export { default as CitationPagesField } from '$lib/editor/visual/extensions/citation/CitationPagesField.svelte';
 export { bibAuthorShort, bibDisplayText, type BiblatexReference } from '$lib/languages/bib/biblatex';
 export { typstTableWrapperView } from '$lib/editor/visual/extensions/table/tableWrapperView.svelte';
+export {
+	heavierRule,
+	linesOfEdges,
+	tableCaretPlugin,
+	tableRulesPlugin,
+	type CellAlign,
+	type CellEdges,
+	type RuleWeight,
+	type TableLines,
+	type TableLook
+} from '$lib/editor/visual/extensions/table/rules/tableRules';
+export { bareTableSettingsPlugin, openBareTableSettings } from '$lib/editor/visual/extensions/table/bare/bareTableSettingsPlugin.svelte';
 export { CodeBlockView } from '$lib/editor/visual/extensions/codemirrorbridge/cmview.svelte';
 export { default as FigurePlaceholder } from '$lib/draw/host/card/FigurePlaceholder.svelte';
 
@@ -46,3 +62,4 @@ export { loremText } from './reading/loremText';
 export { faceFollowingScope } from './scope/scopeFollowingFace';
 export { SET_TARGETS, type SetField } from './setup/setRuleFields';
 export { setRuleSummary, setRuleTargetLabel } from './setup/setRuleSummary';
+export { PASSES_BODY_SETTINGS } from '$lib/editor/visual/extensions/blockHandle/blockSettings';

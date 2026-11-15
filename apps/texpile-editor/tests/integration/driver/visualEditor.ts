@@ -159,6 +159,17 @@ export class VisualEditor {
 		await this.page.waitForTimeout(30);
 	}
 
+	/** opens the settings of the block under a point from the handle's gear; the handle follows the pointer, and a move the editor missed shows none */
+	async openBlockSettings(x: number, y: number): Promise<void> {
+		const gear = this.page.locator('.block-handle-settings');
+		await expect(async () => {
+			await this.page.mouse.move(5, 5);
+			await this.page.mouse.move(x, y, { steps: 4 });
+			// inside the retry: a save read back draws the handle again, which detaches a gear already seen
+			await gear.click({ timeout: 1500 });
+		}).toPass();
+	}
+
 	/** the format bar's word count as shown, also while it reads "N of M words" with a selection */
 	wordCount(): Locator {
 		return this.page.getByText(/^[\d,]+ words?$|^[\d,]+ of [\d,]+ words?$/).first();

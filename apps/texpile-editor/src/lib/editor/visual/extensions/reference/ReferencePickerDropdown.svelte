@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { BookOpen, Hash, Heading, Image, Table } from '@lucide/svelte';
 	import type { ReferenceItem } from './referenceManagerPlugin';
+	import { keepInView } from '$lib/menus/keepInView';
 
 	let {
 		items = [],
@@ -53,6 +54,7 @@
 							: 'hover:preset-tonal'}"
 						onclick={() => onSelect(item)}
 						onmousedown={(e) => e.preventDefault()}
+						use:keepInView={index === selectedIndex}
 					>
 						<IconComponent class="mt-0.5 h-4 w-4 flex-shrink-0" />
 						<div class="min-w-0 flex-1">

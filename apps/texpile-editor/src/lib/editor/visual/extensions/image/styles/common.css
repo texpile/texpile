@@ -9,6 +9,10 @@
 	align-self: center;
 	width: 100%;
 }
+/* on white in dark mode, as a drawn figure is (FigureCard): a picture's ink is made for paper */
+html[data-mode='dark'] .imagePluginRoot img {
+	background-color: white;
+}
 
 .imagePluginRoot:hover .imagePluginOverlay {
 	opacity: 1;

@@ -14,25 +14,33 @@ export class UnsavedGuard {
 
 	constructor(private deps: UnsavedGuardDeps) {}
 
-	/** resolves true to go on, false on Cancel */
+	/** resolves true to go on, false on Cancel. Save Anyway writes over whatever the disk holds, as IntelliJ's Keep
+	 *  Memory Changes does, so leaving never has to cost the edits; a file it still cannot write asks again */
 	async confirmLeave(): Promise<boolean> {
 		await this.deps.writer.flushAndWait();
-		const stranded = this.deps.writer.stranded();
-		if (!stranded.length) return true;
-		const choice = await promptAsk({
-			title: m.wsview_stranded_title(),
-			message: m.wsview_stranded_body({ names: stranded.map(basename).join(', ') }),
-			buttons: [
-				{ id: 'discard', label: m.wsview_stranded_discard() },
-				{ id: 'cancel', label: m.wsview_cancel_label(), primary: true }
-			],
-			cancelId: 'cancel'
-		});
-		if (choice !== 'discard') return false;
-		for (const path of stranded) {
-			this.deps.writer.revert(path);
-			this.onDiscard?.(path);
+		for (;;) {
+			const stranded = this.deps.writer.stranded();
+			if (!stranded.length) return true;
+			const choice = await promptAsk({
+				title: m.wsview_stranded_title(),
+				message: m.wsview_stranded_body({ names: stranded.map(basename).join(', ') }),
+				buttons: [
+					{ id: 'discard', label: m.wsview_stranded_discard() },
+					{ id: 'save', label: m.wsview_stranded_save() },
+					{ id: 'cancel', label: m.wsview_cancel_label(), primary: true }
+				],
+				cancelId: 'cancel'
+			});
+			if (choice === 'save') {
+				await Promise.all(stranded.map((path) => this.deps.writer.saveAnyway(path)));
+				continue;
+			}
+			if (choice !== 'discard') return false;
+			for (const path of stranded) {
+				this.deps.writer.revert(path);
+				this.onDiscard?.(path);
+			}
+			return true;
 		}
-		return true;
 	}
 }

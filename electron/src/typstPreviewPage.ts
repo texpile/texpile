@@ -106,6 +106,8 @@ function injection(opts: PreparePageOptions): string {
 	// too. Our listener registers before the viewer subscribes (it constructs, then attaches), so
 	// stopImmediatePropagation starves every later listener of the frame.
 	var jumpFreezeUntil = 0;
+	// the window paused its preview while guests keep it running: the page keeps what it shows
+	var held = false;
 	var Native = window.WebSocket;
 	function WrappedWebSocket(url, protocols) {
 		sock.url = String(url);
@@ -120,6 +122,7 @@ function injection(opts: PreparePageOptions): string {
 		s.addEventListener('open', function () { sock.state = 1; });
 		s.addEventListener('close', function (e) { sock.state = 3; sock.closeCode = e.code; sock.closeReason = e.reason; });
 		s.addEventListener('message', function (e) {
+			if (held) return e.stopImmediatePropagation();
 			if (Date.now() >= jumpFreezeUntil) return;
 			// tinymist sends jump/cursor as BINARY frames (a jump is ~41 bytes of ASCII inside a
 			// binary message), so the sniff decodes the head of small ArrayBuffers too - a
@@ -249,6 +252,7 @@ function injection(opts: PreparePageOptions): string {
 		if (m.type === 'zoom') { step(m.value); setTimeout(function () { reply('zoom', zoomPercent()); }, 0); }
 		else if (m.type === 'quiet') quietUntil = Date.now() + (typeof m.value === 'number' ? m.value : 500);
 		else if (m.type === 'freeze') jumpFreezeUntil = Date.now() + (typeof m.value === 'number' ? m.value : 1500);
+		else if (m.type === 'hold') held = !!m.value;
 		else if (m.type === 'query') reply('status', status());
 		else if (m.type === 'invert') document.documentElement.classList.toggle('texpile-inverted', !!m.value);
 	});

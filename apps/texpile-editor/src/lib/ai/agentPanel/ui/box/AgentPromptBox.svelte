@@ -12,6 +12,7 @@
 	import AgentAddMenu from './AgentAddMenu.svelte';
 	import AgentContextUsage from './AgentContextUsage.svelte';
 	import { COMPACT_CHAT_MESSAGE } from './contextUsageMeter';
+	import { takeAskedCaret } from './agentBoxCaret.svelte';
 	import { runsCommand } from '../../slashMatch';
 	import { attachedKey } from '../../attach/attached';
 	import { EditorSelection } from '../../attach/editorSelection.svelte';
@@ -157,7 +158,8 @@
 			bind:value={text}
 			onkeydown={onKeydown}
 			onpaste={(e) => void onPaste(e)}
-			onfocus={() => selected.read()}></textarea>
+			onfocus={() => selected.read()}
+			{@attach takeAskedCaret}></textarea>
 		<div class="mt-1.5 flex h-6 items-center gap-1">
 			<AgentAddMenu
 				agent={props.agent}

@@ -10,12 +10,18 @@
 	//
 	// Mounted outside the guest/host branch, driven by dialogStore, so who opens them is no longer
 	// tangled up with who renders them.
-	import PreferencesDialog from './PreferencesDialog.svelte';
 	import NamePrompt from '$lib/identity/NamePrompt.svelte';
 	import { preferencesOpen, takePreferencesReopen } from '$lib/stores/dialogStore';
 
 	if (takePreferencesReopen()) preferencesOpen.current = true;
+
+	// loaded when the window first opens, as on the start screen: its code rode in with every workspace
+	let PreferencesDialog = $state<typeof import('./PreferencesDialog.svelte').default | null>(null);
+	$effect(() => {
+		if (preferencesOpen.current && !PreferencesDialog)
+			void import('./PreferencesDialog.svelte').then((mod) => (PreferencesDialog = mod.default));
+	});
 </script>
 
-<PreferencesDialog bind:open={preferencesOpen.current} />
+{#if PreferencesDialog}<PreferencesDialog bind:open={preferencesOpen.current} />{/if}
 <NamePrompt />

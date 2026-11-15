@@ -50,3 +50,7 @@
 .figure-group-settings:focus-within {
 	opacity: 1;
 }
+/* directly in an editor with a block handle, the handle's gear opens the group's settings */
+.ProseMirror[data-block-handle] > .figure-group > .figure-group-settings {
+	display: none;
+}

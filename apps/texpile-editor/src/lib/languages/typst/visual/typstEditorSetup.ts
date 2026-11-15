@@ -18,7 +18,8 @@ import {
 	selectDocStart
 } from '$lib/editor/visual/selectDocBoundary';
 import { lineEdgeKeys } from '$lib/editor/visual/lineEdgeArrows';
-import { TypstBibliographyView, isTypstBibliography } from './extensions/typstBibliographyView.svelte';
+import { isTypstBibliography, typstBibliography } from './extensions/typstBibliography';
+import { BibliographyNodeView } from '$lib/editor/visual/extensions/bibliography/bibliographyNodeView.svelte';
 import { keymap } from 'prosemirror-keymap';
 import { pmCommandKeys } from '$lib/keybindings/editors/pmCommandKeys';
 import { pmEditorScope } from '$lib/keybindings/editors/editorScopes';
@@ -26,10 +27,16 @@ import { baseKeymap, toggleMark } from 'prosemirror-commands';
 import { history } from 'prosemirror-history';
 import { undoVisual, redoVisual } from '$lib/editor/visual/visualUndo';
 import { gapCursorWithArrows } from '$lib/editor/visual/gapArrows';
+import { hiddenSelectionPlugin } from '$lib/editor/visual/highlight/hiddenSelection';
+import { visualCaretDoctor } from '$lib/debug/visualCaretDoctor';
+import { caretClearOfFormatBar } from '$lib/editor/visual/formatBarScroll';
+import { verticalArrowStall } from '$lib/editor/visual/verticalArrowStall';
 import { dropCursor } from 'prosemirror-dropcursor';
 import { tableEditing, goToNextCell } from 'prosemirror-tables';
 import { wholeTableEdits } from '$lib/editor/visual/extensions/table/wholeTableEdits';
-import { tableArrowEntry } from '$lib/editor/visual/extensions/table/tableArrowEntry';
+import { tableArrowEntry } from '$lib/editor/visual/extensions/table/caret/tableArrowEntry';
+import { tableArrowExit } from '$lib/editor/visual/extensions/table/caret/tableArrowExit';
+import { tabThroughCells } from '$lib/editor/visual/extensions/table/rows/addTableRow';
 import { crossBlockEdits } from '$lib/editor/visual/extensions/crossBlockEdits';
 import { columnResizing } from '$lib/editor/visual/extensions/table/columnResizing';
 import { snapWidthToFr } from '$lib/editor/visual/extensions/table/snapWidth';
@@ -46,7 +53,7 @@ import {
 import { indentListItem } from '$lib/editor/visual/extensions/listIndent/listIndent';
 import { inputRules, textblockTypeInputRule, InputRule, undoInputRule, smartQuotes, ellipsis } from 'prosemirror-inputrules';
 import { selectFigureBackward, selectFigureForward } from '$lib/editor/visual/figureDeleteGuard';
-import { deleteEmptyBlockForward, deleteEmptyFirstBlock } from '$lib/editor/visual/emptyBlockDelete';
+import { deleteEmptyBlockBackward, deleteEmptyBlockForward } from '$lib/editor/visual/emptyBlockDelete';
 import { liftFromStyleEnvironment } from '$lib/editor/visual/liftFromStyleEnvironment';
 import { emDashRule, enDashRule, emDashUpgradeRule } from '$lib/editor/visual/extensions/inputrules/dashRules';
 import { visualFindPlugin } from '$lib/editor/visual/find/visualFindPlugin';
@@ -94,6 +101,7 @@ import { shiftArrowsPlugin } from '$lib/editor/visual/extensions/shiftArrows/shi
 import { typstChipKind } from './extensions/typstChipKind';
 import { footnoteNumbersPlugin } from '$lib/editor/visual/extensions/drawnChips/footnoteNumbers';
 import { typstChipCounts } from './core/plugin/chipCounts';
+import { typstNumbersPlugin } from './extensions/numbers/typstNumbersPlugin';
 import { IncludeDocView } from '$lib/editor/visual/extensions/includedoc/includeDocView.svelte';
 import { pmComments } from '$lib/editor/visual/extensions/pmComments';
 import type { CommentAnchor } from '$lib/comments/anchor';
@@ -169,6 +177,8 @@ export type TypstEditorSetup = {
 	addCommentLabel: string;
 	/** read at each check: the editor's file can change its language */
 	spellLanguage: () => SpellLanguage | null;
+	/** the open file, whose document's printed numbers it shows */
+	filePath?: () => string | null;
 };
 
 export function typstEditorPlugins(setup: TypstEditorSetup): Plugin[] {
@@ -182,7 +192,8 @@ export function typstEditorPlugins(setup: TypstEditorSetup): Plugin[] {
 		onAddComment,
 		sourceAnchor,
 		addCommentLabel,
-		spellLanguage
+		spellLanguage,
+		filePath
 	} = setup;
 	return [
 		parseCarryPlugin,
@@ -190,6 +201,10 @@ export function typstEditorPlugins(setup: TypstEditorSetup): Plugin[] {
 		...pluginEditorPlugins('atStart'),
 		typstCopyPlugin,
 		gapCursorWithArrows(),
+		hiddenSelectionPlugin(),
+		...visualCaretDoctor(),
+		caretClearOfFormatBar(),
+		verticalArrowStall(),
 		dropCursor({ color: 'var(--color-primary-500)', width: 2, class: 'pm-drop-cursor' }),
 		// Typst is the one dialect where a drag can be saved: `columns:` takes real lengths and
 		// fr. The drag snaps to that same grid (vendored columnResizing + snapWidthToFr);
@@ -197,6 +212,7 @@ export function typstEditorPlugins(setup: TypstEditorSetup): Plugin[] {
 		// the serializer needs to emit proportions instead of one fr beside two autos.
 		columnResizing({ snap: snapWidthToFr, redistribute: true }),
 		captureColumnWidths,
+		tableArrowExit,
 		tableEditing(),
 		...pluginEditorPlugins('afterTableEditing'),
 		wholeTableEdits,
@@ -216,7 +232,7 @@ export function typstEditorPlugins(setup: TypstEditorSetup): Plugin[] {
 		shiftArrowsPlugin(),
 		// before the list keymap, whose Backspace and Delete act at a block edge: they would join the block after an empty one into it, and a block into a figure
 		keymap({ Backspace: liftFromStyleEnvironment }),
-		keymap({ Backspace: deleteEmptyFirstBlock, Delete: deleteEmptyBlockForward }),
+		keymap({ Backspace: deleteEmptyBlockBackward, Delete: deleteEmptyBlockForward }),
 		keymap({ Backspace: selectFigureBackward, Delete: selectFigureForward }),
 		keymap(listKeymap),
 		inputRules({ rules: typInputRules }),
@@ -251,7 +267,7 @@ export function typstEditorPlugins(setup: TypstEditorSetup): Plugin[] {
 			'Shift-Mod-End': extendToDocEnd,
 			Enter: splitBlockWithoutDuplicates,
 			// table cell first, then list indent; always consume so focus stays in the editor
-			Tab: (state, dispatch) => goToNextCell(1)(state, dispatch) || indentListItem()(state, dispatch) || true,
+			Tab: (state, dispatch, view) => tabThroughCells(state, dispatch, view) || indentListItem()(state, dispatch) || true,
 			'Shift-Tab': (state, dispatch) => goToNextCell(-1)(state, dispatch) || createDedentListCommand()(state, dispatch) || true
 		}),
 		cmarrowHandlers,
@@ -282,6 +298,8 @@ export function typstEditorPlugins(setup: TypstEditorSetup): Plugin[] {
 		createBlockHandlePlugin(),
 		wholeBlockDragPlugin(),
 		dropPastNodeViewsPlugin(),
+		// before the footnote counter: a chip reads the first numbers it is handed
+		typstNumbersPlugin({ filePath: filePath ?? (() => null) }),
 		footnoteNumbersPlugin(typstChipCounts),
 		createNodeFlashPlugin(),
 		// collaborators' carets; VisualCollab feeds it, and is inert outside a shared session
@@ -302,7 +320,7 @@ export function typstNodeViews(docDir: () => string): NonNullable<EditorProps['n
 		// ones keep their text verbatim: #bibliography as a card, a comment folded to a line
 		raw_latex: (node, view, getPos, decorations) =>
 			isTypstBibliography(node.textContent)
-				? new TypstBibliographyView(node, view, getPos as () => number)
+				? new BibliographyNodeView(node, view, getPos as () => number, typstBibliography)
 				: isFigureBlock(cetzLanguage, node.textContent)
 					? new FigureCardView(node, view, getPos as () => number, cetzLanguage, m.figure_card_cetz())
 					: drawnOrSource(node, view, getPos as () => number, decorations, typstChipKind(true)),

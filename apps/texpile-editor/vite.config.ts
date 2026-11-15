@@ -10,6 +10,9 @@ import { readChangelog } from './scripts/changelog.mjs';
 import { spellDictionaries } from './scripts/spellDictionaries';
 import { pdfSandbox } from './scripts/pdfSandbox';
 import { packageData, packageDataIds } from './scripts/packageData';
+import { noUniversalSiblings } from './scripts/universalSiblings';
+import { eagerCompile } from './scripts/eagerCompile';
+import { noRootHiddenSelection } from './scripts/rootHiddenSelection';
 
 // pre-bundle every runtime dependency up front: lazy discovery re-optimizes mid-session and
 // forces a full page reload (mathlive and the CodeMirror language modes are the usual offenders)
@@ -90,7 +93,9 @@ export default defineConfig(({ mode, command }) => ({
 				]),
 		// the spelling dictionaries for languages other than English
 		...(mode === 'test' ? [] : [spellDictionaries(__dirname), pdfSandbox(__dirname)]),
-		packageData(PACKAGE_DATA, mode !== 'web')
+		packageData(PACKAGE_DATA, mode !== 'web'),
+		// a launch runs 43% of the workspace chunk and 73% of ProseMirror; the next largest shares cost more memory than they save
+		eagerCompile(['/src/views/workspace/WorkspaceView.svelte', '/prosemirror-view/'])
 	],
 
 	// relative asset URLs: the packaged app is served from the app:// scheme (electron/src/main.ts),
@@ -177,9 +182,12 @@ export default defineConfig(({ mode, command }) => ({
 
 	assetsInclude: ['**/*.wasm'],
 
+	css: { postcss: { plugins: [noUniversalSiblings, noRootHiddenSelection] } },
+
 	worker: {
 		format: 'es',
-		plugins: () => [noRunesInWorkers, packageDataIds(PACKAGE_DATA)]
+		plugins: () => [noRunesInWorkers, packageDataIds(PACKAGE_DATA)],
+		rollupOptions: { output: { charset: 'ascii' } }
 	},
 
 	build: {
@@ -200,6 +208,9 @@ export default defineConfig(({ mode, command }) => ({
 		modulePreload: { polyfill: false },
 		rollupOptions: {
 			output: {
+				// V8 keeps a script's whole source at two bytes a character once it holds one character past
+				// Latin-1, and every chunk held a few (a dash, an arrow, a message in Chinese): 33 MB of the page
+				charset: 'ascii',
 				// the big editor deps go into their own chunks so the workspace payload streams as
 				// parallel, independently-cacheable pieces instead of one blob
 				manualChunks(id: string) {

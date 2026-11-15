@@ -29,6 +29,13 @@ describe('UnsavedGuard and files that are not open', () => {
 		expect([textOf('/w/ch.tex'), writer.stranded(), disk['/w/ch.tex']]).toEqual(['base', [], 'theirs']);
 	});
 
+	it('Save Anyway writes the edit over the change on disk and leaves without asking again', async () => {
+		vi.mocked(promptAsk).mockResolvedValue('save');
+		const { guard, writer, disk } = await strandedFolder();
+		expect(await guard.confirmLeave()).toBe(true);
+		expect([vi.mocked(promptAsk).mock.calls.length, writer.stranded(), disk['/w/ch.tex']]).toEqual([1, [], 'mine']);
+	});
+
 	it('Cancel stays, with the edit kept', async () => {
 		vi.mocked(promptAsk).mockResolvedValue('cancel');
 		const { guard, textOf } = await strandedFolder();

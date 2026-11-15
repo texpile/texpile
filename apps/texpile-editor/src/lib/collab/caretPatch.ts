@@ -4,7 +4,7 @@
 import type { Node as PMNode } from 'prosemirror-model';
 import type { Transaction } from 'prosemirror-state';
 import { sourceToPm, type Segment, type SourceMap } from '$lib/editor/visual/sourceSpans';
-import { blockEq } from '$lib/editor/visual/blockPatch';
+import { blockEq, computeBlockPatches } from '$lib/editor/visual/blockPatch';
 import { spliceDiff } from './spliceDiff';
 import { carriedRuns } from './caretRuns';
 import { diffInts } from '$lib/diff/iterables/diffIterableUtil';
@@ -292,23 +292,8 @@ function inkOf(block: PMNode): string {
 	return out;
 }
 
-// the old children [first, last) made the parse's [firstNew, lastNew), less the equal blocks at either end
+// the old children [first, last) made the parse's [firstNew, lastNew), less the blocks that are equal
 function replaceRun(tr: Transaction, doc: PMNode, parsed: PMNode, first: number, last: number, firstNew: number, lastNew: number): void {
-	let [a0, a1, b0, b1] = [first, last, firstNew, lastNew];
-	while (a0 < a1 && b0 < b1 && blockEq(doc.child(a0), parsed.child(b0))) {
-		a0++;
-		b0++;
-	}
-	while (a1 > a0 && b1 > b0 && blockEq(doc.child(a1 - 1), parsed.child(b1 - 1))) {
-		a1--;
-		b1--;
-	}
-	if (a0 === a1 && b0 === b1) return;
-	let from = 0;
-	for (let i = 0; i < a0; i++) from += doc.child(i).nodeSize;
-	let to = from;
-	for (let i = a0; i < a1; i++) to += doc.child(i).nodeSize;
-	const nodes: PMNode[] = [];
-	for (let i = b0; i < b1; i++) nodes.push(parsed.child(i));
-	tr.replaceWith(from, to, nodes);
+	const patches = computeBlockPatches(doc, parsed, [first, last], [firstNew, lastNew]);
+	for (const p of patches.reverse()) tr.replaceWith(p.from, p.to, p.nodes);
 }

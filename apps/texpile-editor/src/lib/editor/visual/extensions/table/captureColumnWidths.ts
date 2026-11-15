@@ -17,7 +17,14 @@
 import { Plugin, PluginKey } from 'prosemirror-state';
 import type { EditorView } from 'prosemirror-view';
 import type { Node } from 'prosemirror-model';
-import { parseTracks, distribute, toFrShares, type Track } from '$lib/languages/typst/visual/serialize/tracks';
+import {
+	columnWidthsOf,
+	distribute,
+	followsTracks,
+	parseTracks,
+	toFrShares,
+	type Track
+} from '$lib/languages/typst/visual/serialize/tracks';
 
 const key = new PluginKey('captureColumnWidths');
 
@@ -130,11 +137,10 @@ function sync(view: EditorView): boolean {
 		if (cols === 0) return false;
 		const { sized, bare } = sizedCounts(node);
 
-		// nothing to do: no source tracks to honour and no drag to finish
-		const tracks = sized === 0 ? parseTracks(node.attrs.colspec, cols) : null;
-		const wantsOpen = sized === 0 && !!tracks && !tracks.every((t) => t.kind === 'auto');
-		const partlySized = sized > 0 && bare > 0;
-		if (!wantsOpen && sized === 0) return false;
+		// the widths the file's own tracks give: nothing was dragged, and the file keeps the sizes it has
+		const tracks = parseTracks(node.attrs.colspec, cols);
+		const asWritten = !!tracks && (sized === 0 || followsTracks(columnWidthsOf(node, cols), tracks));
+		if (sized === 0 && !(asWritten && tracks.some((t) => t.kind !== 'auto'))) return false;
 
 		const dom = view.nodeDOM(pos);
 		if (!(dom instanceof HTMLElement)) return false;
@@ -144,22 +150,20 @@ function sync(view: EditorView): boolean {
 			return false;
 		}
 
-		// A fully sized table still needs correcting when its columns no longer add up to the space
-		// available - the pane was resized, or a column was added. Without this a table that once
-		// overflowed keeps its scrollbar forever, since nothing else revisits it. distribute() spends
-		// the total exactly, so the next pass finds a difference of zero and stops.
-		const wantsDrag = partlySized || overflowBy(m.widths, m.total) > 2;
-		if (!wantsOpen && !wantsDrag) return false;
-
-		if (wantsDrag) {
-			// mid-drag: some columns sized, some not. Snap the whole set and spend the table's width.
-			const shares = toFrShares(m.widths);
-			if (!shares) return false;
-			const snapped: Track[] = shares.map((s) => (s == null ? { kind: 'auto' } : { kind: 'fr', value: s }));
-			applyWidths(view, node, pos, cols, distribute(snapped, m.total));
-		} else {
-			applyWidths(view, node, pos, cols, distribute(tracks!, m.total));
+		if (asWritten) {
+			// the fr columns share what the auto columns leave of the pane, which shows once the fr columns have a width
+			const taken = sized === 0 ? 0 : tracks.reduce((sum, track, i) => sum + (track.kind === 'auto' ? m.widths[i] : 0), 0);
+			applyWidths(view, node, pos, cols, distribute(tracks, m.total - taken));
+			return false;
 		}
+
+		// mid-drag: some columns sized, some not; or dragged columns that no longer add up to the space
+		// available, after the pane was resized or a column was added
+		if (!(sized > 0 && bare > 0) && overflowBy(m.widths, m.total) <= 2) return false;
+		const shares = toFrShares(m.widths);
+		if (!shares) return false;
+		const snapped: Track[] = shares.map((s) => (s == null ? { kind: 'auto' } : { kind: 'fr', value: s }));
+		applyWidths(view, node, pos, cols, distribute(snapped, m.total));
 		return false;
 	});
 	return complete;

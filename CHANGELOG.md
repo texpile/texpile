@@ -5,6 +5,8 @@ Release notes for Texpile Desktop. Add notes under `## [Unreleased]` as you work
 
 ## [Unreleased]
 
+- feat: Spanish interface language (by @nicolobos77)
+
 ## [2.0.0] - 2026-11-10
 
 - WARNING: 2.0.0 cannot collaborate with any clients on 1.x

@@ -19,6 +19,11 @@ body {
 	background-color: var(--color-surface-50-950);
 	color: var(--color-surface-950-50);
 }
+/* every window fills its viewport, so the page itself has nothing to scroll: a floating element that runs past the
+   window is cut there, never a reason for the whole app to move */
+html {
+	overflow: hidden;
+}
 /* the mode is read here and nowhere else in this file: color-scheme is what makes every
    light-dark() value and pairing token pick a side, and what native controls follow */
 html {
@@ -119,7 +124,7 @@ html.window-glass
 		.fieldset
 	),
 /* the editor's own boxes draw their borders through @apply, not a utility class, so the rule above misses them */
-html.window-glass .TexpileEditor :is(hr, div.abstract, .table-wrapper, .table-header, td, th, .settings-button) {
+html.window-glass .TexpileEditor :is(hr, div.abstract, td, th, .settings-button) {
 	border-color: var(--glass-line);
 }
 /* a bar's line drawn as a shadow, which the border rule above does not reach */
@@ -384,9 +389,11 @@ math-field {
 	color: var(--muted-text);
 }
 /* the PM gap cursor defaults to solid black, invisible on dark; !important so the
-   override wins regardless of stylesheet order */
+   override wins regardless of stylesheet order. Its own blink animates visibility, which the
+   main thread restyles on every frame for as long as the cursor shows; opacity runs off it */
 .ProseMirror-gapcursor:after {
 	border-top: var(--default-border-width) solid var(--color-surface-950-50) !important;
+	animation: pm-caret-blink 1.1s step-end infinite !important;
 }
 /* dropPastNodeViews.ts. mathlive turns pointer events back on inside its shadow root */
 .ProseMirror.pm-own-drag [contenteditable='false'],
@@ -595,19 +602,8 @@ select.input {
 .ProseMirror.pm-lines-plain > .prosemirror-flat-list p {
 	text-align: justify;
 }
-/* while the column's width is changing the editor keeps the width its lines were broken for and its parent clips what
-   runs past a narrower column; the pane is covered until the lines are broken again, as Overleaf does, and names its
-   file so split panes stay told apart. The previews are covered the same way while their width moves (resizeCover).
-   The solid ground: a see-through window clears the usual one */
-.ProseMirror.pm-lines-frozen {
-	flex: none;
-	max-width: none;
-	pointer-events: none;
-}
-:has(> .ProseMirror.pm-lines-frozen) {
-	overflow-x: clip;
-}
-[data-resize-cover]:has(.ProseMirror.pm-lines-frozen)::after,
+/* a preview or a visual editor is covered while its width moves and names itself, so split panes stay told apart
+   (resizeCover). The solid ground: a see-through window clears the usual one */
 [data-resize-cover][data-resizing]::after {
 	content: attr(data-resize-cover);
 	position: absolute;
@@ -887,6 +883,37 @@ html .cm-comment-add-card .cm-comment-add:hover {
 .TexpileEditor div.pm-suggest-was {
 	display: block;
 	margin: 0 0 0.3em;
+}
+/* a block's source as it was: a few lines of it, wrapped inside the column */
+.TexpileEditor div.pm-suggest-was:has(> code) {
+	background-image: none;
+}
+.TexpileEditor div.pm-suggest-was > code {
+	display: -webkit-box;
+	-webkit-box-orient: vertical;
+	-webkit-line-clamp: 4;
+	overflow: hidden;
+	white-space: pre-wrap;
+	overflow-wrap: anywhere;
+	text-decoration: line-through;
+}
+/* a picture as it was drawn, on white in dark mode as its card is */
+.TexpileEditor div.pm-suggest-drawn {
+	display: flex;
+	justify-content: center;
+	padding: 0.5rem;
+	border-radius: var(--radius-base);
+	background-image: none;
+}
+.TexpileEditor div.pm-suggest-drawn > svg {
+	max-width: 100%;
+	height: auto;
+}
+html[data-mode='dark'] .TexpileEditor div.pm-suggest-drawn > svg {
+	box-sizing: content-box;
+	padding: 0.5rem;
+	border-radius: var(--radius-base);
+	background-color: white;
 }
 /* a display formula sits centered, as the one that replaced it does, with the rule through the formula alone */
 .TexpileEditor div.pm-suggest-was:has(> div.math-static-placeholder) {
@@ -1502,6 +1529,22 @@ html.pm-drop-refused .pm-drop-cursor {
 	}
 }
 
+/* a popover taller than the room its positioner found scrolls inside itself */
+[data-scope='popover'][data-part='content'] {
+	max-height: var(--available-height);
+	overflow-y: auto;
+}
+
+/* Skeleton draws a slider in the neutral ink; here it takes the brand color, as a switch that is on does */
+[data-scope='slider'][data-part='range'] {
+	background: light-dark(var(--color-brand-light), var(--color-brand-dark));
+}
+[data-scope='slider'][data-part='thumb'] {
+	box-shadow: inset 0 0 0 2px light-dark(var(--color-brand-light), var(--color-brand-dark));
+}
+[data-scope='slider'][data-part='thumb']:focus-visible {
+	outline-color: light-dark(var(--color-brand-light), var(--color-brand-dark));
+}
 [data-scope='dialog'][data-part='backdrop'] {
 	animation: dialog-fade-in 200ms cubic-bezier(0.16, 1, 0.3, 1);
 }

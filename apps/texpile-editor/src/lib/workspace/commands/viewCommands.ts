@@ -24,6 +24,12 @@ export function viewCommands(a: PaletteActions): CommandImpl[] {
 			title: () => (a.bottomPanelOpen() ? m.palette_hide_bottom_panel() : m.palette_show_bottom_panel()),
 			run: () => a.toggleBottomPanel()
 		},
+		{
+			id: 'view.agent',
+			enabled: () => a.agentTabOffered(),
+			title: () => (a.agentTabOpen() ? m.palette_hide_agent() : m.palette_show_agent()),
+			run: () => a.toggleAgentTab()
+		},
 		...COLOR_VISION_MODES.map((mode): CommandImpl => ({
 			id: `view.colorVision.${mode}`,
 			enabled: () => mode !== colorVision.current,

@@ -47,7 +47,7 @@ export function buildMathField(
 	field.colorMap = themeColorMap;
 	field.syntax = syntax;
 
-	field.setValue(content, { format: mathFormat(syntax) });
+	field.setValue(content, { format: mathFormat(syntax), mode: 'math' });
 
 	field.addEventListener('input', listeners.input);
 	field.addEventListener('move-out', listeners.moveOut as EventListener);

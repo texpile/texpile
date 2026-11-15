@@ -21,6 +21,15 @@ beforeEach(() => {
 	projectSpelling.current = null;
 });
 
+describe('the choice for a file', () => {
+	// asked on every key: a new object each time drew the menus' language list again
+	it('is the same object while the text names the same language', () => {
+		const first = spellingFor('/w/a.tex', '\\usepackage[ngerman]{babel}\nEin Satz.');
+		expect(spellingFor('/w/a.tex', '\\usepackage[ngerman]{babel}\nEin Satz mehr.')).toBe(first);
+		expect(spellingFor('/w/a.tex', '\\usepackage[french]{babel}\nUne phrase.')).not.toBe(first);
+	});
+});
+
 describe('the language a document names', () => {
 	it('reads babel, polyglossia, Typst and front matter, variants included', () => {
 		expect(languageIn('\\documentclass{article}\n\\usepackage[english,ngerman]{babel}\n\\begin{document}')).toBe('de');

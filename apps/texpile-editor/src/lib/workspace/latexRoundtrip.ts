@@ -5,7 +5,7 @@ import { documentWrapperOf } from '$lib/languages/latex/syntax/documentWrapper';
 import { serializeToLatexDetailed } from '$lib/languages/latex/serializer/latexSerializer';
 import { dropParagraphEnd } from '$lib/languages/latex/serializer/paragraphEnds';
 import { padTables } from '$lib/editor/visual/padTables';
-import { collectMap, shiftMap, type RegionParse, type SourceMap } from '$lib/editor/visual/sourceSpans';
+import { collectMap, lazyMap, shiftMap, type RegionParse, type SourceMap } from '$lib/editor/visual/sourceSpans';
 import { rememberParseMap, warnMapDefects, type ParseBody, type ParseOrigins } from '$lib/editor/visual/parseOrigins';
 import type { Node } from 'prosemirror-model';
 import type { PackageTable } from '$lib/languages/latex/parser/signatures/packageTable';
@@ -165,7 +165,7 @@ export function serializeLatexFileDetailed(
 	if (parsed.hadDocumentEnv === false) {
 		// the line end before a dropped \par would stand in front of the file's own trailing gap, one more each save
 		const end = body === text ? body : body.trimEnd();
-		return { text: tailProtected ? end : end + (tailGap ?? '\n'), map: shiftMap(map, 0, end.length) };
+		return { text: tailProtected ? end : end + (tailGap ?? '\n'), map: lazyMap(() => shiftMap(map, 0, end.length)) };
 	}
 	// the gap the file had, not a separator of our own: editing the first or the last block would
 	// otherwise swallow the blank line it sat behind, and that shows up as a suggestion covering the
@@ -173,7 +173,10 @@ export function serializeLatexFileDetailed(
 	const leadSep = leadProtected ? '' : (leadGap ?? '\n');
 	const tailSep = tailProtected ? '' : (tailGap ?? '\n');
 	const prefix = parsed.preamble.length + leadSep.length;
-	return { text: `${parsed.preamble}${leadSep}${body}${tailSep}${parsed.postamble}`, map: shiftMap(map, prefix, prefix + body.length) };
+	return {
+		text: `${parsed.preamble}${leadSep}${body}${tailSep}${parsed.postamble}`,
+		map: lazyMap(() => shiftMap(map, prefix, prefix + body.length))
+	};
 }
 
 /** minimal skeleton for a brand-new .tex, no template system. */

@@ -63,11 +63,19 @@ function readAgainWithTypstParser(source: string): void {
 	);
 }
 
+// one object per choice: it is asked for on every key, and a new object each time drew the menus' language list again
+const choices = new Map<string, SpellingChoice>();
+
 export function spellingFor(path: string | null, source: string): SpellingChoice {
 	readAgainWithTypstParser(source);
 	const named = declaredLanguage(source) ?? mainLanguageFor(path);
 	const automatic = named ? spellLanguageOf(named) : settings.current.spellLanguage;
-	return { language: projectSpelling.current ?? automatic, automatic, named };
+	const choice: SpellingChoice = { language: projectSpelling.current ?? automatic, automatic, named };
+	const key = JSON.stringify(choice);
+	const known = choices.get(key);
+	if (known) return known;
+	choices.set(key, choice);
+	return choice;
 }
 
 /** in the reading language: German, Deutsch */

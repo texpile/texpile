@@ -4,7 +4,7 @@
 // worker; each document is destroyed after its one render, which the singleton's non-adopting
 // getPdfDocument makes safe. Rendered once per URL for the session - the blob is a snapshot,
 // a regenerated figure shows after the file is reopened.
-import { getPdfDocument } from '$lib/pdf-view';
+import { getPdfDocument, pdfCanvas } from '$lib/pdf-view';
 import { figureRasterScale } from './pdfRasterScale';
 
 const cache = new Map<string, Promise<string | null>>();
@@ -35,9 +35,7 @@ async function render(url: string): Promise<string | null> {
 		const page = await doc.getPage(1);
 		const base = page.getViewport({ scale: 1 });
 		const viewport = page.getViewport({ scale: figureRasterScale(base.width, base.height) });
-		const canvas = document.createElement('canvas');
-		canvas.width = Math.ceil(viewport.width);
-		canvas.height = Math.ceil(viewport.height);
+		const canvas = pdfCanvas(Math.ceil(viewport.width), Math.ceil(viewport.height));
 		const ctx = canvas.getContext('2d');
 		if (!ctx) return null;
 		// print intent: the display intent chunks its work through requestAnimationFrame, which a

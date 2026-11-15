@@ -15,20 +15,26 @@
 	import { baseKeymap, toggleMark } from 'prosemirror-commands';
 	import { history } from 'prosemirror-history';
 	import { undoVisual, redoVisual } from '$lib/editor/visual/visualUndo';
-	import { gapCursor } from 'prosemirror-gapcursor';
+	import { heldGapCursor } from '$lib/editor/visual/gapArrows';
+	import { hiddenSelectionPlugin } from '$lib/editor/visual/highlight/hiddenSelection';
+	import { visualCaretDoctor } from '$lib/debug/visualCaretDoctor';
+	import { caretClearOfFormatBar } from '$lib/editor/visual/formatBarScroll';
+	import { verticalArrowStall } from '$lib/editor/visual/verticalArrowStall';
 	import { dropCursor } from 'prosemirror-dropcursor';
 	import { tableEditing, goToNextCell } from 'prosemirror-tables';
 	import { padTablesInState } from '$lib/editor/visual/padTables';
 	import { tableViewOnly } from '$lib/editor/visual/extensions/table/tableViewOnly';
 	import { wholeTableEdits } from '$lib/editor/visual/extensions/table/wholeTableEdits';
-	import { tableArrowEntry } from '$lib/editor/visual/extensions/table/tableArrowEntry';
+	import { tableArrowEntry } from '$lib/editor/visual/extensions/table/caret/tableArrowEntry';
+	import { tableArrowExit } from '$lib/editor/visual/extensions/table/caret/tableArrowExit';
+	import { tabThroughCells } from '$lib/editor/visual/extensions/table/rows/addTableRow';
 	import { crossBlockEdits } from '$lib/editor/visual/extensions/crossBlockEdits';
 	import { firstRowHeader } from './firstRowHeader';
 	import { tableAlignment } from './tableAlignment';
 	import { createListPlugins, listInputRules, listKeymap, createIndentListCommand, createDedentListCommand } from 'prosemirror-flat-list';
 	import { inputRules, textblockTypeInputRule, wrappingInputRule, InputRule, undoInputRule } from 'prosemirror-inputrules';
 	import { selectFigureBackward, selectFigureForward } from '$lib/editor/visual/figureDeleteGuard';
-	import { deleteEmptyBlockForward, deleteEmptyFirstBlock } from '$lib/editor/visual/emptyBlockDelete';
+	import { deleteEmptyBlockBackward, deleteEmptyBlockForward } from '$lib/editor/visual/emptyBlockDelete';
 	import { visualFindPlugin } from '$lib/editor/visual/find/visualFindPlugin';
 	import { mdSchema } from './schema';
 	import { markdownCopyPlugin } from './clipboard';
@@ -190,13 +196,18 @@
 		const plugins = [
 			parseCarryPlugin,
 			markdownCopyPlugin,
-			gapCursor(),
+			heldGapCursor(),
+			hiddenSelectionPlugin(),
+			...visualCaretDoctor(),
+			caretClearOfFormatBar(),
+			verticalArrowStall(),
 			dropCursor({ color: 'var(--color-primary-500)', width: 2, class: 'pm-drop-cursor' }),
 			// TableView WITHOUT columnResizing: a pipe table has no width syntax, so a dragged column
 			// could never be written to the file. It used to move on screen and be silently discarded
 			// on the next parse - a control that lied. The node view is kept because it is what
 			// renders the <colgroup>; only the drag handlers are gone.
 			tableViewOnly,
+			tableArrowExit,
 			tableEditing(),
 			wholeTableEdits,
 			tableArrowEntry,
@@ -208,7 +219,7 @@
 			listAttrInheritance,
 			history(),
 			// before the list keymap, whose Backspace and Delete act at a block edge: they would join the block after an empty one into it, and a block into a figure
-			keymap({ Backspace: deleteEmptyFirstBlock, Delete: deleteEmptyBlockForward }),
+			keymap({ Backspace: deleteEmptyBlockBackward, Delete: deleteEmptyBlockForward }),
 			keymap({ Backspace: selectFigureBackward, Delete: selectFigureForward }),
 			shiftArrowsPlugin(),
 			keymap(listKeymap),
@@ -242,7 +253,7 @@
 				'Shift-Mod-End': extendToDocEnd,
 				'Shift-Enter': insertHardBreak,
 				// table cell first, then list indent; always consume so focus stays in the editor
-				Tab: (state, dispatch) => goToNextCell(1)(state, dispatch) || createIndentListCommand()(state, dispatch) || true,
+				Tab: (state, dispatch, view) => tabThroughCells(state, dispatch, view) || createIndentListCommand()(state, dispatch) || true,
 				'Shift-Tab': (state, dispatch) => goToNextCell(-1)(state, dispatch) || createDedentListCommand()(state, dispatch) || true
 			}),
 			cmarrowHandlers,

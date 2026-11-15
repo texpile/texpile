@@ -1,8 +1,8 @@
 // @vitest-environment jsdom
 import { it, expect, afterEach } from 'vitest';
-import { EditorState } from 'prosemirror-state';
+import { EditorState, TextSelection } from 'prosemirror-state';
 import { EditorView } from 'prosemirror-view';
-import { Fragment, type Node as PMNode } from 'prosemirror-model';
+import { Fragment, Slice, type Node as PMNode } from 'prosemirror-model';
 import { parseLatexFile } from '$lib/workspace/latexRoundtrip';
 import { DocumentBuffer } from '$lib/workspace/documentBuffer.svelte';
 import { snapToSavedFile } from '$lib/workspace/edits/savedFileSnap';
@@ -89,4 +89,34 @@ it('leaves nothing to snap on the next save', async () => {
 	expect(await snapToSavedFile(view, buffer, async (t) => parseLatexFile(t), buffer.texSource)).toBe(true);
 	await buffer.verifyForWrite('C:/ws/main.tex', buffer.texSource);
 	expect(differing).toHaveLength(1);
+});
+
+// the half typed block was split under the caret: its picture moved out, and the caption typed next landed before it
+it('waits while the caret is in LaTeX source still being typed', async () => {
+	const src = '\\documentclass{article}\n\\begin{document}\nBefore.\n\nAfter.\n\\end{document}\n';
+	const buffer = new DocumentBuffer({
+		writeNow: () => {},
+		rebuildVisual: () => {},
+		isVisualMode: () => true,
+		noteLocalEdit: () => {},
+		clearPendingAnchor: () => {}
+	});
+	const parsed = parseLatexFile(src);
+	buffer.openTex('C:/ws/main.tex', src, '\n');
+	buffer.adoptParsed(parsed, src);
+	const { schema } = parsed.doc.type;
+	const half = schema.nodes.raw_latex.create(null, schema.text('\\begin{figure}[ht]\n\\centering\n\\includegraphics{a.png}'));
+	const first = parsed.doc.child(0);
+	const shown = parsed.doc.replace(first.nodeSize, first.nodeSize, new Slice(Fragment.from(half), 0, 0));
+	view = new EditorView(document.body.appendChild(document.createElement('div')), { state: EditorState.create({ doc: shown }) });
+	buffer.onVisualChange(view.state.doc);
+	const saved = buffer.texSource;
+	const inBlock = first.nodeSize + half.nodeSize - 1;
+	view.dispatch(view.state.tr.setSelection(TextSelection.create(view.state.doc, inBlock)));
+
+	expect(await snapToSavedFile(view, buffer, async (t) => parseLatexFile(t), saved)).toBe(false);
+	expect(view.state.doc.child(1).textContent).toBe(half.textContent);
+	view.dispatch(view.state.tr.setSelection(TextSelection.create(view.state.doc, 1)));
+	expect(await snapToSavedFile(view, buffer, async (t) => parseLatexFile(t), saved)).toBe(true);
+	expect(view.state.doc.child(1).textContent).not.toBe(half.textContent);
 });

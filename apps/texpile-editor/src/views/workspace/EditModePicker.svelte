@@ -40,7 +40,7 @@
 	{#snippet trigger(attrs)}
 		<button
 			{...attrs}
-			class="btn btn-xs gap-1 {props.suggesting ? 'preset-filled-primary-500' : quiet} {props.compact ? 'h-[22px] px-1.5' : ''}"
+			class="btn btn-xs gap-1 {props.suggesting ? 'preset-filled-primary-500' : quiet} {props.compact ? 'h-[22px] px-1.5' : 'self-stretch'}"
 			aria-label={`${m.suggest_mode_picker()}: ${props.suggesting ? m.suggest_mode_suggesting() : m.suggest_mode_editing()}`}
 			use:tip={props.suggesting ? m.suggest_mode_on() : m.suggest_mode_off()}
 		>

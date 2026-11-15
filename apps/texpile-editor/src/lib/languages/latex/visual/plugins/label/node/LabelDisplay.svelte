@@ -12,5 +12,3 @@
 	<Tag class={twice ? 'text-ref-broken-fg' : ''} />
 	<span class="text-chip-name {twice ? 'text-ref-broken-fg' : ''}">{name}</span>
 </button>
-<!-- zero-width space so the cursor can land after the chip -->
-<span>&#8203;</span>

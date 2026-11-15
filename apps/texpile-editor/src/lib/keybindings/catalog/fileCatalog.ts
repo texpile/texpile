@@ -1,9 +1,9 @@
 import {
+	CircleUser,
 	FileOutput,
 	FilePlus2,
 	FolderGit2,
 	FolderOpen,
-	Github,
 	History,
 	KeyRound,
 	LayoutTemplate,
@@ -73,7 +73,7 @@ export const FILE_COMMANDS: CommandInfo[] = [
 		id: 'file.githubAccount',
 		title: () => m.keybindings_cmd_github_account(),
 		category,
-		palette: { keywords: 'github account login logout browser oauth token', icon: Github }
+		palette: { keywords: 'github account login logout browser oauth token', icon: CircleUser }
 	},
 	{
 		id: 'file.localHistory',

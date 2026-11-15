@@ -22,7 +22,7 @@
 
 {#if collabHost.active}
 	<button
-		class="app-no-drag title-bar-button mr-1 shrink-0 gap-1.5 self-center"
+		class="app-no-drag title-bar-button mr-2 shrink-0 gap-1.5 self-center"
 		onclick={() => onShareSession?.()}
 		use:tip={m.menubar_share_session()}
 	>

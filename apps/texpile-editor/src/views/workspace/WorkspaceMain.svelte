@@ -17,6 +17,7 @@
 	import { ensureName } from '$lib/identity/ownName.svelte';
 	import { activeSuggestions, suggesting } from '$lib/comments/activeSuggestions.svelte';
 	import { collabGuest } from '$lib/collab/guestStore.svelte';
+	import { typstPreviewPaused } from '$lib/languages/typst/preview/previewPause';
 	import type { WorkspaceMainProps } from './workspaceMainProps';
 	import { untrack } from 'svelte';
 	import { versionSchemeOf } from '$lib/files/identity/versionUris';
@@ -160,7 +161,6 @@
 	{/if}
 	<EditorTopbar
 		loadedPath={doc.path}
-		{kind}
 		{guest}
 		terminalAvailable={termDock.available}
 		compiling={compiler.compiling}
@@ -168,12 +168,17 @@
 		{guestTypstOffered}
 		pdfPaneOpen={layout.pdfPaneOpen}
 		draftPaused={draft.paused}
+		typstPaused={typstPreviewPaused.current}
+		onPauseTypst={actions.pauseTypstPreview}
+		onResumeTypst={actions.resumeTypstPreview}
 		onStopCompile={compiler.stopCompile}
 		onPauseDraft={actions.pauseDraft}
 		onResumeDraft={actions.resumeDraft}
 		onCompile={compiler.runCompile}
 		commandPending={panes.commandPending}
 		onRequestCompile={actions.requestCompile}
+		hostCompiling={collabGuest.hostCompiling && collabGuest.hostOnline}
+		onRequestCompileStop={actions.requestCompileStop}
 		onConfigureCompile={actions.openCompileModal}
 		onCompileFromScratch={compiler.runCompileFromScratch}
 		onCleanAux={compiler.runCleanAux}
@@ -183,6 +188,7 @@
 		onShowProblems={actions.showProblems}
 		commentCount={panes.comments.filter((t: Any) => !t.resolved && !panes.commentGhosts.has(t.id)).length}
 		onShowComments={actions.showComments}
+		onShowAgent={termDock.available ? actions.showAgent : undefined}
 		suggesting={suggesting.current}
 		onToggleSuggest={canComment && (!session.isGuest || collabGuest.hostRecords) ? toggleSuggest : undefined}
 		onTogglePdf={layout.togglePdfPane}

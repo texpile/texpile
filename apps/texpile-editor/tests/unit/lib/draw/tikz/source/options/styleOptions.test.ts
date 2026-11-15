@@ -34,6 +34,12 @@ describe('styling', () => {
 		expect(writeCommandOptions(SRC, inner, withArrows(inner.items, '->'))).toContain('\\draw[->] (0,0)');
 	});
 
+	it('writes a bare color ahead of the colors it would overrule', () => {
+		expect(withStroke(['thick', 'fill=gray!20'], 'draw', 'blue')).toEqual(['thick', 'blue', 'fill=gray!20']);
+		expect(withStroke(['fill=gray!20', 'red'], 'filldraw', 'blue')).toEqual(['blue', 'fill=gray!20']);
+		expect(withFill(['draw=red'], 'fill', 'blue')).toEqual(['blue', 'draw=red']);
+	});
+
 	it('moves the fill color onto a pattern and back', () => {
 		const patterned = withPattern(['red'], 'fill', 'dots');
 		expect(patterned).toEqual(['pattern=dots', 'pattern color=red']);

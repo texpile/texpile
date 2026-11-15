@@ -57,16 +57,11 @@ export class WorkspaceFormatting {
 		return this.compileSettings.save(thenRun);
 	}
 
-	/**
-	 * Whether Format can serve the open file. LaTeX goes through latexindent (an external tool the
-	 * provider must expose); Typst goes through tinymist's built-in typstyle, gated to SOURCE mode:
-	 * the formatter edits the server's in-memory document, and only the source editor's LSP binding
-	 * keeps that identical to the buffer - in visual mode the server's copy is stale or closed.
-	 */
+	// LaTeX goes through latexindent, which the provider must offer; Typst through the typstyle inside tinymist
 	canFormatDoc(): boolean {
-		const { doc, modes } = this.d.wsdoc;
+		const { doc } = this.d.wsdoc;
 		if (doc.kind === 'tex') return this.d.provider.caps.format;
-		return doc.kind === 'typ' && typstBridgeAvailable() && modes.mode === 'source';
+		return doc.kind === 'typ' && typstBridgeAvailable();
 	}
 
 	openFormatModal(): void {

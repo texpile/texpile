@@ -26,4 +26,12 @@ describe('declared language while typing', () => {
 		expect(declaredLanguage(file('\\usepackage[french]{babel}', 'Hallo Welt, wie'))?.name).toBe('french');
 		expect(reads.count).toBe(before + 1);
 	});
+
+	// a Typst chapter went through the LaTeX grammar on every key, to look for a preamble it cannot have
+	it('reads a text without \\begin{document} with no LaTeX parse', () => {
+		const before = reads.count;
+		expect(declaredLanguage('---\nlang: de\n---\n# Titel\n\nEin Satz mit $x^2$.\n')?.name).toBe('de');
+		expect(declaredLanguage('= Title\n\nA sentence with $x^2$ and a #link("a").\n')).toBeUndefined();
+		expect(reads.count).toBe(before);
+	});
 });

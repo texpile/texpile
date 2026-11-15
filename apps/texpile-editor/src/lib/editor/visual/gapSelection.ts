@@ -14,8 +14,11 @@ import type { ResolvedPos } from 'prosemirror-model';
 
 // valid() is real at runtime but flagged @internal, so the .d.ts hides it; the plugin itself
 // gates every gap cursor it creates on exactly this predicate, which is why we must too - a
-// reimplementation would drift from whatever the installed plugin actually accepts
-const gapCursorValid = (GapCursor as unknown as { valid($pos: ResolvedPos): boolean }).valid.bind(GapCursor);
+// reimplementation would drift from whatever the installed plugin actually accepts. Read at the
+// call: lineParagraph.ts widens it
+function gapCursorValid($pos: ResolvedPos): boolean {
+	return (GapCursor as unknown as { valid($pos: ResolvedPos): boolean }).valid($pos);
+}
 
 /** a gap cursor at `$pos`, when the plugin would accept one there */
 export function gapCursorAt($pos: ResolvedPos): GapCursor | null {

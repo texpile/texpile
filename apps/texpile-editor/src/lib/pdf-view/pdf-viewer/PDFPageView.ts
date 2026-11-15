@@ -19,6 +19,7 @@ import type { PDFPageProxy, PageViewport, TextLayer } from 'pdfjs-dist/legacy/bu
 import type { EventBus } from './EventBus';
 import { AnnotationLayerBuilder } from './AnnotationLayerBuilder';
 import { ANNOTATION_MODE_FORMS, type FormScripting } from './PdfScripting';
+import { pdfCanvas } from './pdfjs-singleton';
 import type { SimpleLinkService } from './SimpleLinkService';
 
 let setLayerDimensions: typeof import('pdfjs-dist/legacy/build/pdf.mjs').setLayerDimensions;
@@ -296,19 +297,24 @@ export class PDFPageView {
 			this.canvas.style.width = `${Math.floor(width)}px`;
 			this.canvas.style.height = `${Math.floor(height)}px`;
 
-			const ctx = this.canvas.getContext('2d')!;
+			// drawn where the PDF's fonts are, then copied to the canvas on the page
+			const shown = this.canvas;
+			const stage = pdfCanvas(shown.width, shown.height, this.container.ownerDocument);
+			const ctx = stage.getContext('2d')!;
 			ctx.scale(outputScale, outputScale);
 
 			this.renderTask = this.pdfPage.render({
 				canvasContext: ctx,
 				viewport: this.viewport,
-				canvas: this.canvas,
+				canvas: stage,
 				annotationCanvasMap: this.annotationCanvasMap,
 				...(this.forms?.enableScripting ? { annotationMode: ANNOTATION_MODE_FORMS } : {})
 			});
 
 			await this.renderTask.promise;
 			this.renderTask = null;
+			shown.getContext('2d')!.drawImage(stage, 0, 0);
+			stage.width = 0;
 			if (offstage && drawing === this.drawing && this.canvasWrapper) this.div.prepend(this.canvasWrapper);
 		} catch (error) {
 			this.failed(error);

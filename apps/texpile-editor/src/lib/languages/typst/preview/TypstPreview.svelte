@@ -20,6 +20,7 @@
 	import { resolvedMode, themeEpoch } from '$lib/theme';
 	import { settings, updateSettings } from '$lib/settings';
 	import { followScrollTick, guestJumpFreezeTick } from './followSignal';
+	import { typstPreviewPaused } from './previewPause';
 	import { scrollbarRadius, textColour, themeColour } from './themeColour';
 	import { askForProgram, tinymistMissing } from '$lib/modals/window/missingProgram/missingProgram.svelte';
 	import { m } from '$lib/paraglide/messages';
@@ -127,6 +128,11 @@
 		};
 	});
 
+	// a pane opened while paused (popped out, docked back) has no pages to keep, so the preview runs again
+	$effect(() => {
+		if (typstPreviewPaused.current && !host && !frameUrl) typstPreviewPaused.current = false;
+	});
+
 	/** what the framed page reports about itself; see the bridge in electron/src/typstPreviewPage.ts */
 	type FrameStatus = {
 		pages: number;
@@ -204,6 +210,13 @@
 		frame?.contentWindow?.postMessage({ channel: CHANNEL, type: 'invert', value: on }, '*');
 	});
 
+	// guests keep the preview running through this window's pause, so the page is told to take no new frames
+	$effect(() => {
+		const held = typstPreviewPaused.current;
+		void status;
+		frame?.contentWindow?.postMessage({ channel: CHANNEL, type: 'hold', value: held }, '*');
+	});
+
 	/** `dir` is +1 to zoom in, -1 out; the far side steps through tinymist's own zoom ladder. */
 	function stepZoom(dir: 1 | -1): void {
 		frame?.contentWindow?.postMessage({ channel: CHANNEL, type: 'zoom', value: dir }, '*');
@@ -238,11 +251,13 @@
 				<span class="text-muted truncate font-mono text-[10px]">{stallDetail}</span>
 			{:else}
 				<span class="truncate text-sm"
-					>{frameUrl
-						? m.typst_preview_live()
-						: tinymistMissing.current
-							? m.typst_preview_not_running()
-							: m.typst_preview_connecting()}</span
+					>{typstPreviewPaused.current && frameUrl
+						? m.wsview_paused_label()
+						: frameUrl
+							? m.typst_preview_live()
+							: tinymistMissing.current
+								? m.typst_preview_not_running()
+								: m.typst_preview_connecting()}</span
 				>
 			{/if}
 		{/if}
@@ -290,7 +305,7 @@
 	{#snippet vision(place: PreviewToolbarPlace)}
 		<ColorVisionMenu {place} />
 	{/snippet}
-	<!-- no close button: Layout closes it docked, the OS window popped out, the Live button either way -->
+	<!-- no close button: Layout closes it docked, the OS window popped out -->
 	{#snippet popout()}
 		<button onclick={() => onPopout?.()} use:tip={m.wsview_popout_preview()} aria-label={m.wsview_popout_preview()}>
 			<PictureInPicture2 size={16} />

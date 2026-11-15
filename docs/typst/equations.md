@@ -20,10 +20,10 @@ Type a name such as `alpha` or `arrow.r` and a space, and it becomes the symbol.
 
 ## Number and label
 
-![The settings of a display equation: Label and Number all equations](../../landing/src/lib/assets/showcase/docs/typst/equation-settings.png)
+![The settings of a display equation: Number all equations and Advanced Options](../../landing/src/lib/assets/showcase/docs/typst/equation-settings.png)
 
 1. Hover a display equation and click its settings icon.
-2. Give it a **Label**, and turn on **Number all equations**.
+2. Turn on **Number all equations**. The label is under **Advanced Options**.
 
 The switch applies to every equation in the document. A reference to an equation needs the numbering on. Type @ anywhere to reference it.
 

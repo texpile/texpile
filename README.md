@@ -45,8 +45,8 @@ Texpile has the most complete visual editor coverage for LaTeX and Typst.
     <th>Source</th>
   </tr>
   <tr>
-    <td><img alt="A LaTeX paper in the visual editor" src="landing/src/lib/assets/showcase/editor-latex-visual.webp" /></td>
-    <td><img alt="The same paper in the source editor" src="landing/src/lib/assets/showcase/editor-latex-source.webp" /></td>
+    <td><img alt="A LaTeX paper in the visual editor" src="docs/images/editor-latex-visual.webp" /></td>
+    <td><img alt="The same paper in the source editor" src="docs/images/editor-latex-source.webp" /></td>
   </tr>
 </table>
 
@@ -56,7 +56,7 @@ Texpile has the most complete visual editor coverage for LaTeX and Typst.
 
 - A TikZ or CeTZ picture opens on a canvas. Texpile renders it with real TeX and Typst, so the editor is WYSIWYG.
 
-![The figure editor with a TikZ picture on its canvas and the PDF beside it](landing/src/lib/assets/showcase/figure-editor.webp)
+![The figure editor with a TikZ picture on its canvas and the PDF beside it](docs/images/figure-editor.webp)
 
 ### IntelliSense
 

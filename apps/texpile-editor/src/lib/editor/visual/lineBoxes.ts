@@ -98,6 +98,40 @@ export function lineBoxesOf(block: HTMLElement): LineBox[] {
 	return linesFromBoxes(inlineBoxes(block));
 }
 
+/**
+ * How far the text and inline boxes of a block run past the end of its lines. `scrollWidth` also counts what takes no
+ * room on a line, such as a peer's name label beside a caret near the edge. `hanging` names the elements left out
+ */
+export function inlineOverrun(block: HTMLElement, hanging: string): number {
+	const zoom = cssZoomOf(block);
+	const style = getComputedStyle(block);
+	const box = block.getBoundingClientRect();
+	const rtl = style.direction === 'rtl';
+	const edge = rtl
+		? box.left + lengths(zoom, style.paddingLeft, style.borderLeftWidth)
+		: box.right - lengths(zoom, style.paddingRight, style.borderRightWidth);
+	let over = 0;
+	const range = document.createRange();
+	function reach(rect: DOMRect): void {
+		if (rect.width > 0) over = Math.max(over, rtl ? edge - rect.left : rect.right - edge);
+	}
+	function visit(parent: Element): void {
+		for (const child of parent.childNodes) {
+			if (child.nodeType === Node.TEXT_NODE) {
+				range.selectNodeContents(child);
+				for (const rect of range.getClientRects()) reach(rect);
+			} else if (child instanceof Element && !child.classList.contains(hanging)) {
+				const own = getComputedStyle(child);
+				if (own.display === 'none' || own.position === 'absolute' || own.position === 'fixed' || own.float !== 'none') continue;
+				if (own.display === 'contents' || (own.display === 'inline' && !REPLACED.has(child.tagName.toUpperCase()))) visit(child);
+				else reach(child.getBoundingClientRect());
+			}
+		}
+	}
+	visit(block);
+	return over / zoom;
+}
+
 export function contentWidth(block: HTMLElement): number {
 	const style = getComputedStyle(block);
 	const box = block.getBoundingClientRect().width / cssZoomOf(block);

@@ -39,7 +39,7 @@ export type BlobChunkPayload = {
 
 export type ControlPayload =
 	| { kind: 'compile-request' }
-	| { kind: 'compile-status'; state: 'started' | 'done' | 'failed' }
+	| { kind: 'compile-stop' }
 	| { kind: 'session-end' }
 	// SyncTeX, resolved host-side (it holds the .synctex data) and replied to the asking guest
 	| { kind: 'synctex-inverse'; reqId: number; page: number; x: number; y: number }

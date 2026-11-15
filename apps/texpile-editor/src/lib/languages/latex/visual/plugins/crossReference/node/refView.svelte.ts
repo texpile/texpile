@@ -1,6 +1,7 @@
-import type { EditorView, NodeView } from 'prosemirror-view';
+import type { Decoration, EditorView, NodeView } from 'prosemirror-view';
 import type { Node as PMNode } from 'prosemirror-model';
 import { mount, unmount } from 'svelte';
+import { countedLabelsOf, type LabelNumbers } from '$lib/languages/latex/visual/core';
 import RefDisplay from './RefDisplay.svelte';
 
 export class RefView implements NodeView {
@@ -9,12 +10,13 @@ export class RefView implements NodeView {
 	private componentProps = $state<{
 		node: PMNode;
 		view: EditorView;
+		counted: LabelNumbers | null;
 		onJumpToLabel?: (name: string) => boolean;
 	}>();
 	node: PMNode;
 	private view: EditorView;
 
-	constructor(node: PMNode, view: EditorView, onJumpToLabel?: (name: string) => boolean) {
+	constructor(node: PMNode, view: EditorView, decorations: readonly Decoration[], onJumpToLabel?: (name: string) => boolean) {
 		this.node = node;
 		this.view = view;
 
@@ -24,6 +26,7 @@ export class RefView implements NodeView {
 		this.componentProps = {
 			node: this.node,
 			view: this.view,
+			counted: countedLabelsOf(decorations),
 			onJumpToLabel
 		};
 
@@ -33,14 +36,17 @@ export class RefView implements NodeView {
 		});
 	}
 
-	update(node: PMNode) {
+	update(node: PMNode, decorations: readonly Decoration[]) {
 		if (node.type !== this.node.type) {
 			return false;
 		}
 
 		this.node = node;
 
-		if (this.componentProps) this.componentProps.node = node;
+		if (this.componentProps) {
+			this.componentProps.node = node;
+			this.componentProps.counted = countedLabelsOf(decorations);
+		}
 
 		return true;
 	}

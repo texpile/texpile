@@ -1,5 +1,7 @@
 import type { Fragment, Node, Schema } from 'prosemirror-model';
 import { NodeSelection, Selection, TextSelection, type EditorState, type Transaction } from 'prosemirror-state';
+import type { EditorView } from 'prosemirror-view';
+import { drawnChipOf } from '../extensions/drawnChips/DrawnChipView';
 import type { BlockInsertItem, InsertItem } from './insertItem';
 
 type Placed = Pick<BlockInsertItem, 'make' | 'select' | 'neverIn'>;
@@ -29,6 +31,13 @@ function selectInserted(tr: Transaction, at: number, item: Placed): Transaction 
 				? NodeSelection.create(tr.doc, at)
 				: TextSelection.near(tr.doc.resolve(item.select === 'cell' ? firstCellStart(tr, at) : at + 1));
 	return tr.setSelection(sel).scrollIntoView();
+}
+
+/** a call just put in with an argument still empty is selected, and the next key would replace it: its panel opens
+ *  with the caret in that argument */
+export function openEmptyChip(view: EditorView): void {
+	const { selection } = view.state;
+	if (selection instanceof NodeSelection && selection.node.textContent.includes('{}')) drawnChipOf(selection.node)?.openPanel();
 }
 
 /** a block put in over the selection splits the paragraph there: the half after it loses its leading space, which the saved file drops */

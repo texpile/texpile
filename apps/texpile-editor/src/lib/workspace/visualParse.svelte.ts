@@ -82,8 +82,8 @@ export class VisualParser {
 
 	/** The failure is RETURNED rather than handled here: only the caller knows whether its parse is
 	 * still the current one, and a superseded parse must not yank the user out of visual mode.
-	 * `shown` false: a parked editor's file, whose parse puts up no loading bar */
-	async parse(text: string, format: 'tex' | 'md' | 'typ' = 'tex', shown = true): Promise<ParseOutcome> {
+	 * `shown` false: a parked editor's file, whose parse puts up no loading bar. `abandon` settles a parse nobody waits for */
+	async parse(text: string, format: 'tex' | 'md' | 'typ' = 'tex', shown = true, abandon?: AbortSignal): Promise<ParseOutcome> {
 		mark('parse');
 		if (text.length > MAX_VISUAL_BYTES) return { failure: { timeout: false, tooLarge: text.length, message: 'too-large' } };
 		if (format === 'typ') return this.parseTypst(text, shown);
@@ -92,7 +92,7 @@ export class VisualParser {
 			if (shown) this.progress = 'parsing';
 			const progress = shown ? (p: ParsePhase) => (this.progress = p) : undefined;
 			const table = await tableFor(text, format);
-			return { parsed: await parseLatexFileAsync(text, this.getMacros(), timeoutMs, progress, MAX_VISUAL_NODES, format, table) };
+			return { parsed: await parseLatexFileAsync(text, this.getMacros(), timeoutMs, progress, MAX_VISUAL_NODES, format, table, abandon) };
 		} catch (e) {
 			const msg = e instanceof Error ? e.message : String(e);
 			const timeout = msg === PARSE_TIMEOUT;

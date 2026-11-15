@@ -54,6 +54,9 @@ export function renderEquationNumbers(
 	// CSS ::after reads this for single-line equations
 	if (numberOf(0)) dom.setAttribute('data-equation-number', numberOf(0));
 	else dom.removeAttribute('data-equation-number');
+	// what Typst printed, for a number its own rule writes, as an equation without an environment has none of LaTeX's
+	if (compiled?.[0]) dom.setAttribute('data-printed-number', compiled[0]);
+	else dom.removeAttribute('data-printed-number');
 
 	const isSingleLabelEnv = isSingleLabelEnvironment(environment || '');
 
@@ -81,8 +84,6 @@ export function syncBlockMathData(dom: HTMLElement, node: Node, syntax: MathSynt
 	dom.setAttribute('data-environment', node.attrs.environment || '');
 	dom.setAttribute('data-numbering', environmentNumbering(node.attrs.environment || ''));
 	dom.setAttribute('data-line-count', String((node.attrs.lineLabels as string[])?.length || 1));
-	// typst has no live "(1)", so a labeled equation shows its <label> where LaTeX shows the number (CSS in TypstEditorView)
-	if (syntax === 'typst') dom.setAttribute('data-typst-label', node.attrs.label || '');
 	// Typst and Markdown start a new paragraph after every display
-	else if (!node.type.spec.plainDisplay) dom.setAttribute('data-continues', String(node.attrs.continuesAfter !== false));
+	if (syntax !== 'typst' && !node.type.spec.plainDisplay) dom.setAttribute('data-continues', String(node.attrs.continuesAfter !== false));
 }

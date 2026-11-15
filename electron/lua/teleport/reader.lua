@@ -129,6 +129,16 @@ return function(T)
 		local entry = input and T.entries[rel]
 		if entry then T.entries[rel] = nil end
 		function r.reader()
+			-- the process waits here for its next command, with every printed level closed (serve.lua)
+			if T.wait and T.stack[#T.stack] == r then
+				local w = T.wait
+				T.wait = nil
+				local line = T.take_command(w)
+				if line then
+					tex.inputlineno = r.pos
+					return line
+				end
+			end
 			if r.drain then return nil end
 			-- past \end{document} a served run parks; a file still open there ends
 			if T.ended then
@@ -138,6 +148,8 @@ return function(T)
 					return "\\directlua{texpile_tele_park()}%"
 				end
 			end
+			-- back on the main vertical list after the edited lines: the edited paragraph is on its pages
+			if T.edit_read and not T.edit_page and tex.nest.ptr == 0 then T.edit_page = T.shipped + 1 end
 			T.poll_cut()
 			if r.jump then
 				r.pos, r.depth = r.jump - 1, 0
@@ -188,6 +200,16 @@ return function(T)
 				tex.inputlineno = nextl - 1
 				return "\\par\\directlua{texpile_tele_settle_end()}%"
 			end
+			if T.serving and T.edit and T.stage and r.rel == T.stage.f then
+				-- a stage found no point at the line it reads on to: it has nowhere to wait
+				if T.to_stage and nextl >= T.stage.l then
+					T.to_stage = nil
+					T.wind_down()
+				end
+				-- `p`: the edited paragraph's first line, past the stage line when that opens an environment around it
+				if not T.reached and nextl >= (T.stage.p or T.stage.l) then T.reach_edit() end
+				if nextl > T.edit.newTo then T.edit_read = true end
+			end
 			r.pos = nextl
 			if l == nil then return nil end
 			r.depth = l:find("^%s*$") and 0 or math.max(0, r.depth + brace_delta(l))
@@ -202,6 +224,7 @@ return function(T)
 					break
 				end
 			end
+			if r.opened_by then T.release_point(r.opened_by) end
 		end
 		return r
 	end
@@ -307,7 +330,10 @@ return function(T)
 		end
 		local r = is_source(rel) and source_reader(name, rel, input) or plain_reader(name, rel, input)
 		if not r then return nil end
-		if T.base and r.source and input then T.entered(rel) end
+		if T.base and r.source and input then
+			T.entered(rel)
+			r.opened_by = T.opened_by(T.stack[#T.stack])
+		end
 		if input then T.stack[#T.stack + 1] = r end
 		return { reader = r.reader, close = r.close }
 	end, "texpile.tele.reader")

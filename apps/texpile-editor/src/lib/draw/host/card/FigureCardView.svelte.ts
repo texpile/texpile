@@ -2,6 +2,7 @@ import { mount, unmount } from 'svelte';
 import type { Node } from 'prosemirror-model';
 import type { EditorView as PMView, NodeView } from 'prosemirror-view';
 import type { FigureLanguage } from '$lib/draw/editor';
+import { drawChipNode, undrawChipNode, type ChipNodeView } from '$lib/editor/visual/extensions/drawnChips/DrawnChipView';
 import { cachedDrawing, loadSavedDrawing, onDrawingsChange, pictureKey } from '../drawingCache';
 import { onCompiledChange, resolveCardPicture } from './compiled/compiledPictures.svelte';
 import type { PictureCrop } from './compiled/renderPictureCrop';
@@ -30,8 +31,10 @@ function pictureIndex(language: FigureLanguage, view: PMView, pos: number): numb
 	return index;
 }
 
-export class FigureCardView implements NodeView {
+export class FigureCardView implements NodeView, ChipNodeView {
 	dom: HTMLElement;
+	readonly ownLine = true;
+	readonly character = false;
 	private node: Node;
 	private readonly card = $state({
 		svg: null as string | null,
@@ -60,23 +63,25 @@ export class FigureCardView implements NodeView {
 		this.dom = document.createElement('div');
 		this.dom.className = 'figure-card group relative my-2 flex justify-center rounded-base border border-transparent p-2';
 		this.dom.contentEditable = 'false';
-		const open = () => {
-			const detail: OpenFigureDetail = {
-				index: this.index(),
-				source: pictureOf(language, this.node.textContent) ?? ''
-			};
-			window.dispatchEvent(new CustomEvent(OPEN_FIGURE, { detail }));
-		};
 		this.dom.addEventListener('dblclick', (e) => {
 			e.preventDefault();
-			open();
+			this.openPanel();
 		});
 		this.card.title = title;
-		this.card.onedit = open;
+		this.card.onedit = () => this.openPanel();
+		drawChipNode(node, this);
 		this.mounted = mount(FigureCard, { target: this.dom, props: this.card });
 		this.stopListening = onDrawingsChange(() => this.show());
 		this.stopWatchingCompiles = fromPdf ? onCompiledChange(() => this.show()) : () => {};
 		this.show();
+	}
+
+	openPanel(): void {
+		const detail: OpenFigureDetail = {
+			index: this.index(),
+			source: pictureOf(this.language, this.node.textContent) ?? ''
+		};
+		window.dispatchEvent(new CustomEvent(OPEN_FIGURE, { detail }));
 	}
 
 	private show(): void {
@@ -103,7 +108,9 @@ export class FigureCardView implements NodeView {
 
 	update(node: Node): boolean {
 		if (node.type !== this.node.type || !isFigureBlock(this.language, node.textContent)) return false;
+		undrawChipNode(this.node, this);
 		this.node = node;
+		drawChipNode(node, this);
 		this.show();
 		return true;
 	}
@@ -125,6 +132,7 @@ export class FigureCardView implements NodeView {
 	}
 
 	destroy(): void {
+		undrawChipNode(this.node, this);
 		this.stopListening();
 		this.stopWatchingCompiles();
 		this.looked++;
