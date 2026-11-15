@@ -128,6 +128,15 @@ describe('two chips on lines of their own', () => {
 		return state.selection;
 	}
 
+	// the browser put the caret inside the chip on Up, where it showed nowhere, and took three keys to leave a selected one
+	it('Up and Down select a chip on a line of its own and go on past it in one key', () => {
+		const after = lines[1] + spaced.nodeAt(lines[1])!.nodeSize;
+		expect(pressFrom(TextSelection.create(spaced, after), 'ArrowUp')).toMatchObject({ from: lines[1], to: after });
+		expect(pressFrom(NodeSelection.create(spaced, lines[1]), 'ArrowUp')).toMatchObject({ from: lines[0], to: lines[1] });
+		expect(pressFrom(NodeSelection.create(spaced, lines[0]), 'ArrowUp')).toMatchObject({ empty: true, head: lines[0] });
+		expect(pressFrom(NodeSelection.create(spaced, lines[1]), 'ArrowDown')).toMatchObject({ empty: true, head: after });
+	});
+
 	it('Right past the first selects the second, and Left from the second selects the first', () => {
 		expect(lines).toHaveLength(2);
 		const second = pressFrom(TextSelection.create(spaced, lines[0]), 'ArrowRight');

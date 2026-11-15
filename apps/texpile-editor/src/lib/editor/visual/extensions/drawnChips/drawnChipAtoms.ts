@@ -62,6 +62,25 @@ function lineChipPast(state: EditorState, side: Side): Selection | null {
 	return passedLine && $past.depth > 0 ? Selection.findFrom(state.doc.resolve(side > 0 ? $past.after() : $past.before()), side) : null;
 }
 
+// up and down beside a chip on a line of its own: the browser put the caret inside the chip, where it shows nowhere,
+// and took a few keys to leave it. The chip is selected, and from it the line past it
+function lineChipVertical(state: EditorState, side: Side): Selection | null {
+	const { selection, doc } = state;
+	if (selection instanceof TextSelection && selection.empty) {
+		const chip = side < 0 ? selection.$head.nodeBefore : selection.$head.nodeAfter;
+		return chip && drawnChipOf(chip)?.ownLine
+			? NodeSelection.create(doc, side < 0 ? selection.head - chip.nodeSize : selection.head)
+			: null;
+	}
+	if (!(selection instanceof NodeSelection) || !selection.node.isInline || !drawnChipOf(selection.node)?.ownLine) return null;
+	const edge = side < 0 ? selection.from : selection.to;
+	const $edge = doc.resolve(edge);
+	const next = side < 0 ? $edge.nodeBefore : $edge.nodeAfter;
+	if (next?.isText) return TextSelection.create(doc, edge);
+	if (next) return NodeSelection.isSelectable(next) ? NodeSelection.create(doc, side < 0 ? edge - next.nodeSize : edge) : null;
+	return $edge.depth > 0 ? Selection.findFrom(doc.resolve(side < 0 ? $edge.before() : $edge.after()), side) : null;
+}
+
 function onlyWordKey(event: KeyboardEvent): boolean {
 	return isMac ? event.altKey && !event.ctrlKey && !event.metaKey : event.ctrlKey && !event.altKey && !event.metaKey;
 }
@@ -153,6 +172,8 @@ function onKey(view: EditorView, event: KeyboardEvent): boolean {
 		}
 		case 'ArrowUp':
 		case 'ArrowDown': {
+			const line = event.shiftKey ? null : lineChipVertical(state, side);
+			if (line) return select(view, state.tr.setSelection(line));
 			// from the far edge of a selected chip, which is not one the caret passes
 			const across = event.shiftKey ? null : blockAcross(view, side);
 			if (across) {
