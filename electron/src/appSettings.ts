@@ -84,6 +84,7 @@ function systemUiLocale(): UiLocale {
 	for (const raw of tags) {
 		const tag = raw.toLowerCase();
 		if (tag.startsWith('de')) return (cachedLocale = 'de');
+		if (tag.startsWith('es')) return (cachedLocale = 'es');
 		// the only Portuguese we ship, so pt-PT lands here rather than in English
 		if (tag.startsWith('pt')) return (cachedLocale = 'pt-BR');
 		// an explicit script subtag wins over region: zh-Hans-HK is Simplified despite the HK region.
