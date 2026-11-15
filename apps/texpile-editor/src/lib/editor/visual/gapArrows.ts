@@ -1,8 +1,8 @@
 // the gap cursor plugin with its arrow keys changed: a gap stays where no text lies beside it, and an arrow walks on to the text otherwise
 import { gapCursor, GapCursor } from 'prosemirror-gapcursor';
-import { NodeSelection, TextSelection, type Plugin, type Selection, type Transaction } from 'prosemirror-state';
+import { NodeSelection, TextSelection, type EditorState, type Plugin, type Selection, type Transaction } from 'prosemirror-state';
 import type { ResolvedPos } from 'prosemirror-model';
-import type { EditorView } from 'prosemirror-view';
+import { Decoration, DecorationSet, type EditorView } from 'prosemirror-view';
 import { drawnChipOf } from '$lib/editor/visual/extensions/drawnChips/DrawnChipView';
 
 export function textBeside($pos: ResolvedPos, dir: -1 | 1): boolean {
@@ -54,8 +54,25 @@ function selectDrawnBeside(view: EditorView, gap: GapCursor, dir: -1 | 1): boole
 	return true;
 }
 
-export function gapCursorWithArrows(): Plugin {
+function gapBar(): HTMLElement {
+	return Object.assign(document.createElement('div'), { className: 'ProseMirror-gapcursor' });
+}
+
+function drawGapCursor(state: EditorState): DecorationSet | null {
+	if (!(state.selection instanceof GapCursor)) return null;
+	// the bar holds the browser's range (holdHiddenSelection). ProseMirror read it and wrote its own between the blocks
+	// again, and WebKit moved that into the next editable block: Down from a formula went to a code block further on
+	return DecorationSet.create(state.doc, [Decoration.widget(state.selection.head, gapBar, { key: 'gapcursor', ignoreSelection: true })]);
+}
+
+export function heldGapCursor(): Plugin {
 	const plugin = gapCursor();
+	plugin.props.decorations = drawGapCursor;
+	return plugin;
+}
+
+export function gapCursorWithArrows(): Plugin {
+	const plugin = heldGapCursor();
 	const stock = plugin.props.handleKeyDown!;
 	plugin.props.handleKeyDown = (view, event) => {
 		const dir = ARROWS[event.key];

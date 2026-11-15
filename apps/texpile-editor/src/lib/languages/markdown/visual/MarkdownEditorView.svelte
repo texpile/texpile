@@ -15,7 +15,7 @@
 	import { baseKeymap, toggleMark } from 'prosemirror-commands';
 	import { history } from 'prosemirror-history';
 	import { undoVisual, redoVisual } from '$lib/editor/visual/visualUndo';
-	import { gapCursor } from 'prosemirror-gapcursor';
+	import { heldGapCursor } from '$lib/editor/visual/gapArrows';
 	import { hiddenSelectionPlugin } from '$lib/editor/visual/highlight/hiddenSelection';
 	import { visualCaretDoctor } from '$lib/debug/visualCaretDoctor';
 	import { caretClearOfFormatBar } from '$lib/editor/visual/formatBarScroll';
@@ -196,7 +196,7 @@
 		const plugins = [
 			parseCarryPlugin,
 			markdownCopyPlugin,
-			gapCursor(),
+			heldGapCursor(),
 			hiddenSelectionPlugin(),
 			...visualCaretDoctor(),
 			caretClearOfFormatBar(),

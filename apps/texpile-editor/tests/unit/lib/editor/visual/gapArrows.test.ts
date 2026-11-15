@@ -1,7 +1,10 @@
 // @vitest-environment jsdom
 import { describe, expect, it } from 'vitest';
 import { Schema } from 'prosemirror-model';
-import { textBeside } from '$lib/editor/visual/gapArrows';
+import { EditorState } from 'prosemirror-state';
+import { GapCursor } from 'prosemirror-gapcursor';
+import type { DecorationSet } from 'prosemirror-view';
+import { heldGapCursor, textBeside } from '$lib/editor/visual/gapArrows';
 
 const schema = new Schema({
 	nodes: {
@@ -41,4 +44,13 @@ describe('text beside a gap', () => {
 		expect(textBeside(between, 1)).toBe(false);
 		expect(textBeside(between, -1)).toBe(false);
 	});
+});
+
+// ProseMirror wrote its own range over the one held in the bar, and Safari moved that into a code block further down
+it("draws the gap cursor's bar as a widget whose range ProseMirror leaves alone", () => {
+	const doc = schema.node('doc', null, [math.create(null, words('a')), math.create(null, words('b'))]);
+	const state = EditorState.create({ doc, selection: new GapCursor(doc.resolve(3)) });
+	const plugin = heldGapCursor();
+	const [bar] = (plugin.props.decorations!.call(plugin, state) as DecorationSet).find();
+	expect(bar.spec.ignoreSelection).toBe(true);
 });
