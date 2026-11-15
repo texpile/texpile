@@ -5,7 +5,18 @@ Release notes for Texpile Desktop. Add notes under `## [Unreleased]` as you work
 
 ## [Unreleased]
 
+## [2.0.1] - 2026-11-15
+
 - feat: Spanish interface language (by @nicolobos77)
+- fix: Typst preview can be paused (by @louisqli)
+- fix: guests see the host's main file and a running compile (by @louisqli)
+- fix: visual editor cursor bugs (by @louisqli)
+- fix: live mode engines stop when the folder closes (by @louisqli)
+- fix: live mode sometimes jumps to the wrong position (by @louisqli)
+- fix: improved live mode start up UI (by @louisqli)
+- fix: visual editor table consistency (by @louisqli)
+- fix: a file that turns unreadable on disk now asks before saving (by @louisqli)
+- fix: significantly improved performance and memory usage (by @louisqli)
 
 ## [2.0.0] - 2026-11-10
 
