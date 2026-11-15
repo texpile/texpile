@@ -77,6 +77,7 @@ import { PlaceholderRawView } from '$lib/editor/visual/extensions/raw-latex/plac
 import { placeholderCaret } from '$lib/editor/visual/extensions/raw-latex/placeholderCaret';
 import { visualCaretDoctor } from '$lib/debug/visualCaretDoctor';
 import { caretClearOfFormatBar } from '$lib/editor/visual/formatBarScroll';
+import { verticalArrowStall } from '$lib/editor/visual/verticalArrowStall';
 import { BibliographyNodeView, latexBibliography } from '$lib/editor/visual/extensions/bibliography/bibliographyNodeView.svelte';
 import { environmentView } from '$lib/languages/latex/visual/extensions/environment/environmentView.svelte';
 import { createBoundaryClickPlugin } from '$lib/editor/visual/extensions/boundary-click-plugin';
@@ -151,6 +152,7 @@ export function latexEditorPlugins(setup: LatexEditorSetup): Plugin[] {
 		hiddenSelectionPlugin(),
 		...visualCaretDoctor(),
 		caretClearOfFormatBar(),
+		verticalArrowStall(),
 		// drop cursor is inline-styled (not CSS-targetable) and its default black vanishes on dark
 		dropCursor({ color: 'var(--color-primary-500)', width: 2, class: 'pm-drop-cursor' }),
 		// TableView without the drag: a LaTeX column width lives in the colspec and only exists
