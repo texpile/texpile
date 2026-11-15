@@ -10,7 +10,7 @@ one, or with keeping one of these current.
 | Chinese (Traditional) | `zh-Hant` | Maintained by [@louisqli](https://github.com/louisqli)                  |
 | German                | `de`      | Machine translated, review welcome                                      |
 | Portuguese (Brazil)   | `pt-BR`   | Reviewed by [@ale4-dev](https://github.com/ale4-dev)                    |
-| Español               | `es`      | Maintained by [@nicolobos77](https://github.com/nicolobos77)            |
+| Spanish               | `es`      | Partial, maintained by [@nicolobos77](https://github.com/nicolobos77)   |
 
 ## Translating
 

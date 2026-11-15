@@ -48,6 +48,7 @@
 		en: { sync: '@max-[12rem]:hidden', publish: '@max-[13rem]:hidden' },
 		de: { sync: '@max-[16.5rem]:hidden', publish: '@max-[16.5rem]:hidden' },
 		'pt-BR': { sync: '@max-[14.5rem]:hidden', publish: '@max-[13.5rem]:hidden' },
+		es: { sync: '@max-[12rem]:hidden', publish: '@max-[13rem]:hidden' },
 		'zh-Hans': { sync: '@max-[12rem]:hidden', publish: '@max-[10.5rem]:hidden' },
 		'zh-Hant': { sync: '@max-[13.5rem]:hidden', publish: '@max-[10.5rem]:hidden' }
 	};
