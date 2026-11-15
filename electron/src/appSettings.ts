@@ -66,7 +66,7 @@ const DEFAULT_SETTINGS = {
 };
 
 // The UI languages we ship. Anything else, or a failed probe, falls back to English.
-type UiLocale = 'en' | 'de' | 'zh-Hans' | 'zh-Hant' | 'pt-BR';
+type UiLocale = 'en' | 'de' | 'zh-Hans' | 'zh-Hant' | 'pt-BR' | 'es';
 let cachedLocale: UiLocale | null = null;
 /** first-run UI language from the OS. A stored uiLocale always wins (readSettings' merge order),
  *  so a deliberate choice is never overridden on a later launch. */
