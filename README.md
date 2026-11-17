@@ -9,6 +9,8 @@
 
 A modern, desktop editor for LaTeX, Typst, and Markdown. For Windows, macOS, and Linux. Edit visually, or in source with advanced intellisense. 100% offline, no account.
 
+English | [简体中文](readme/README.zh-Hans.md) | [繁體中文](readme/README.zh-Hant.md) | [Deutsch](readme/README.de.md) | [Português (Brasil)](readme/README.pt-BR.md) | [Español](readme/README.es.md)
+
 [![Version](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fdl.texpile.com%2Flatest.json&query=%24.version&label=version&prefix=v&color=blue)](https://texpile.com/download)
 [![Platforms](https://img.shields.io/badge/platform-Windows%20%7C%20macOS%20%7C%20Linux-green)](https://texpile.com/download)
 [![License](https://img.shields.io/badge/license-AGPL--3.0-blue)](LICENSE)
