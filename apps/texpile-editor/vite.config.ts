@@ -88,7 +88,8 @@ export default defineConfig(({ mode, command }) => ({
 					paraglideVitePlugin({
 						project: './project.inlang',
 						outdir: './src/lib/paraglide',
-						emitTsDeclarations: true
+						emitTsDeclarations: true,
+						outputStructure: 'locale-modules'
 					})
 				]),
 		// the spelling dictionaries for languages other than English
