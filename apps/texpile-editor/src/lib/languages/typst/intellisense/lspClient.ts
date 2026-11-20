@@ -96,14 +96,7 @@ function createTransport(): Transport {
 	};
 }
 
-/**
- * The settings, on the `initialize` request itself.
- *
- * tinymist reads some settings only when it builds the project, and a later didChangeConfiguration
- * does not rebuild it for them - the lint switch is one, so pushed after the handshake it never took
- * effect. @codemirror/lsp-client has no initializationOptions of its own, so they are added here, on
- * the way out.
- */
+// @codemirror/lsp-client has no initializationOptions of its own
 function withInitializationOptions(message: string): string {
 	if (!message.includes('"initialize"')) return message;
 	const msg = JSON.parse(message) as { method?: string; params?: Record<string, unknown> };
@@ -210,17 +203,10 @@ observe(
 const serverSettings: {
 	/** tinymist ships with the formatter disabled; typstyle is the one its VS Code extension binds */
 	formatterMode: 'typstyle';
-	/**
-	 * tinymist's own checks beyond the compiler's: a font family that does not exist (with the
-	 * nearest names), a `#set`/`#show` rule that cannot take effect where it stands, a value a
-	 * function silently throws away. Off unless asked for, and read only at startup (see
-	 * withInitializationOptions). `onType` because nothing here ever sends didSave - on its
-	 * `onSave` default the checks would never run at all.
-	 */
-	lint: { enabled: boolean; when: 'onType' };
+	// no lint: in tinymist 0.15 its jobs deadlock the thread pool and compiles stop until a restart (issue 166)
 	/** where an export writes; set per export (see typstClientForExport) */
 	outputPath?: string;
-} = { formatterMode: 'typstyle', lint: { enabled: true, when: 'onType' } };
+} = { formatterMode: 'typstyle' };
 
 function pushSettings(client: LSPClient): void {
 	client.notification('workspace/didChangeConfiguration', { settings: serverSettings });

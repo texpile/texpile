@@ -61,11 +61,7 @@ describe('requestTypstExport', () => {
 	it('pushes the destination with every other setting, then runs the command as given', async () => {
 		const res = await requestTypstExport('/p', JOB, 60_000);
 		const pushes = sent.filter((m) => m.method === 'workspace/didChangeConfiguration');
-		expect(pushes.at(-1)!.params!.settings).toEqual({
-			formatterMode: 'typstyle',
-			lint: { enabled: true, when: 'onType' },
-			outputPath: '/out/p-{0p}'
-		});
+		expect(pushes.at(-1)!.params!.settings).toEqual({ formatterMode: 'typstyle', outputPath: '/out/p-{0p}' });
 		const run = sent.find((m) => m.params?.command === 'tinymist.exportPng')!;
 		expect(run.params!.arguments).toEqual(JOB.arguments);
 		// the push is on the pipe before the command that reads it
