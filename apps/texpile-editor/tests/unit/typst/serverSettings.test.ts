@@ -51,14 +51,11 @@ afterEach(() => {
 });
 
 describe('tinymist settings', () => {
-	it('turns the formatter and the lints on in initialize, which is when tinymist reads the lint switch', async () => {
+	it('turns the formatter on in initialize and leaves the lints off', async () => {
 		const client = await typstClient('/p');
 		await client!.initializing;
 		expect(sent[0].method).toBe('initialize');
-		expect((sent[0].params as { initializationOptions?: unknown }).initializationOptions).toEqual({
-			formatterMode: 'typstyle',
-			lint: { enabled: true, when: 'onType' }
-		});
+		expect((sent[0].params as { initializationOptions?: unknown }).initializationOptions).toEqual({ formatterMode: 'typstyle' });
 	});
 
 	it('pins the main once the handshake is done', async () => {
@@ -69,14 +66,10 @@ describe('tinymist settings', () => {
 		expect(sent.findIndex((m) => m.params?.command === 'tinymist.pinMain')).toBeGreaterThan(0);
 	});
 
-	it('keeps the formatter and the lints in the push an export makes', async () => {
+	it('keeps the formatter in the push an export makes', async () => {
 		await typstClient('/p');
 		await typstClientForExport('/p', '/out/thesis');
-		expect(pushes().at(-1)).toEqual({
-			formatterMode: 'typstyle',
-			lint: { enabled: true, when: 'onType' },
-			outputPath: '/out/thesis'
-		});
+		expect(pushes().at(-1)).toEqual({ formatterMode: 'typstyle', outputPath: '/out/thesis' });
 	});
 
 	it('re-pins when the main file changes, and unpins for a main that is not Typst', async () => {
