@@ -3,8 +3,8 @@
 // gesture ends) and differ only in bounds and where the value is stored.
 //
 // The PDF pane is persisted as a FRACTION of window width rather than a pixel count, so the pane
-// stays proportional across window sizes, and it is re-clamped on every window resize: a width
-// saved on a wide screen must not squeeze the editor out in a small window.
+// stays proportional across window sizes, and it is placed again from that fraction on every window
+// resize: a width saved on a wide screen must not squeeze the editor out in a small window.
 import { browser } from '$lib/runtime';
 import { layout as layoutStore, updateLayout } from '$lib/storage/layout';
 import { startDrag, nudgeOnKey, clampTo, SNAP_SLACK } from '$lib/workspace/paneResize';
@@ -223,10 +223,10 @@ export class PaneLayout {
 		if (browser && typeof window !== 'undefined') updateLayout({ pdfPaneFraction: this.pdfPaneWidth / window.innerWidth });
 	};
 
-	/** re-clamp when the window shrinks so the preview can't squeeze the editor out */
+	/** the window resized: the preview keeps its saved share of the window, clamped so the editor keeps its room */
 	reclampPdf = () => {
 		this.makeRoomForAside();
-		this.pdfPaneWidth = this.clampPdf(this.pdfPaneWidth);
+		this.pdfPaneWidth = this.clampPdf(pdfWidthOf(layoutStore.current, this.windowWidth()));
 	};
 
 	startPdfResize = (e: MouseEvent) => {

@@ -17,7 +17,7 @@
 /** main viewer managing all pages in a scroll container; derivative work based on PDF.js pdf_viewer.js. */
 import type { PDFDocumentProxy } from 'pdfjs-dist/legacy/build/pdf.mjs';
 import { EventBus } from './EventBus';
-import { PDFPageView, RenderingStates } from './PDFPageView';
+import { PDFPageView, PX_PER_PT_AT_100, RenderingStates } from './PDFPageView';
 import { SimpleLinkService } from './SimpleLinkService';
 import { PdfScripting } from './PdfScripting';
 import { wheelZoomFactor } from '$lib/preview/zoom/wheelZoom';
@@ -207,7 +207,7 @@ export class PDFViewerCore {
 
 		for (const page of pdfPages) {
 			const viewport = page.getViewport({
-				scale: this.currentScale,
+				scale: this.currentScale * PX_PER_PT_AT_100,
 				rotation: this.currentRotation
 			});
 

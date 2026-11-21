@@ -96,6 +96,16 @@ describe('the injected payload', () => {
 		expect(out).toContain('texpile-bridge');
 	});
 
+	it('reads the zoom with the side gaps only when the spacing patch applied, or 100% is not the printed size', () => {
+		const spaced = `${SERVED}<script>const computedScale = container.width ? container.width / maxWidth : 1;
+const heightMargin = this.isContentPreview ? 6 * scale : 5 * scale;
+const widthMargin = 0;
+const calculatedPaddedY = accumulatedHeight + (i == 0 ? 0 : heightMargin);
+const newHeight = accumulatedHeight;</script>`;
+		expect(preparePreviewPage(spaced, OPTS)).toContain('var GAPS = 40;');
+		expect(preparePreviewPage(SERVED, OPTS)).toContain('var GAPS = 0;');
+	});
+
 	it('leaves the rest of the page untouched', () => {
 		// it is a 1.6MB page we did not write; the less we rewrite, the less can rot
 		const out = preparePreviewPage(SERVED, OPTS);
