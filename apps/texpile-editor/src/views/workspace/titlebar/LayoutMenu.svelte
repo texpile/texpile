@@ -72,9 +72,15 @@
 <svelte:window onkeydowncapture={closeOnEscape} />
 
 <div class="app-no-drag relative flex items-center self-center">
-	<button class="title-bar-button gap-1" onclick={() => (open ? close() : (open = true))} aria-haspopup="menu" aria-expanded={open}>
+	<button
+		class="title-bar-button gap-1"
+		onclick={() => (open ? close() : (open = true))}
+		aria-haspopup="menu"
+		aria-expanded={open}
+		aria-label={m.groups_layout()}
+		use:tip={open ? undefined : m.groups_layout()}
+	>
 		<LayoutDashboard class="size-3.5" />
-		<span class="cap-center">{m.groups_layout()}</span>
 		<ChevronDown class="size-3 opacity-60" />
 	</button>
 	{#if open}

@@ -13,6 +13,7 @@
 	import type { Component, ComponentProps } from 'svelte';
 	import { m } from '$lib/paraglide/messages';
 	import EditModePicker from './EditModePicker.svelte';
+	import { titleBarLayout } from '$lib/chrome/titleBarLayout.svelte';
 	import OpenAgentButton from '$lib/ai/agentPanel/ui/OpenAgentButton.svelte';
 	import {
 		ArrowRight,
@@ -302,9 +303,15 @@
 		{/if}
 		{#if showPdf}
 			<!-- unboxed like Layout beside it: a border made it the heaviest thing in the title bar -->
-			<button class="title-bar-button gap-1" onclick={onTogglePdf}>
+			<button
+				class="title-bar-button gap-1"
+				onclick={onTogglePdf}
+				aria-label={m.wsview_show_pdf()}
+				use:tip={titleBarLayout.pdfIconOnly ? m.wsview_show_pdf() : undefined}
+			>
 				<PanelRight class="size-3.5" />
-				<span class="cap-center">{m.wsview_show_pdf()}</span>
+				<!-- in the layout while hidden, so the title bar can measure what the label costs -->
+				<span class={titleBarLayout.pdfIconOnly ? 'invisible absolute' : 'cap-center'} data-title-bar-label>{m.wsview_show_pdf()}</span>
 			</button>
 		{/if}
 	</div>
