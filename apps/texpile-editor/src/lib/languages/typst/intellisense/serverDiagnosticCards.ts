@@ -6,6 +6,7 @@ import { LSPPlugin, type LSPClientExtension } from '@codemirror/lsp-client';
 import { mountDiagnosticCard } from '$lib/editor/source/diagnostics/mountDiagnosticCard';
 import { m } from '$lib/paraglide/messages';
 import type { TypstDiagnostic } from './lspClient';
+import { TypstWorkspace } from './typstWorkspace';
 
 export type Problem = Pick<Diagnostic, 'from' | 'to' | 'severity' | 'message'>;
 type Published = { uri: string; version?: number | null; diagnostics: TypstDiagnostic[] };
@@ -39,6 +40,7 @@ export function typstDiagnosticCards(): LSPClientExtension {
 		clientCapabilities: { textDocument: { publishDiagnostics: { versionSupport: true } } },
 		notificationHandlers: {
 			'textDocument/publishDiagnostics': (client, params: Published) => {
+				if (client.workspace instanceof TypstWorkspace) client.workspace.diagnosticsArrived();
 				const file = client.workspace.getFile(params.uri);
 				if (!file || (params.version != null && params.version !== file.version)) return false;
 				const view = file.getView();

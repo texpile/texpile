@@ -285,7 +285,7 @@ export async function typstClient(root: string | null): Promise<LSPClient | null
 		rootUri: root ? fileUri(root) : undefined,
 		extensions: typstServerExtensions(),
 		sanitizeHTML: sanitizeDocHtml,
-		workspace: (c) => new TypstWorkspace(c),
+		workspace: (c) => new TypstWorkspace(c, () => pinMain(c, mainFile.current)),
 		notificationHandlers: {
 			// tinymist's click-to-jump: the framed preview reports the span the user clicked over its
 			// own websocket, the server resolves it to a file and range, and it lands here. Same
