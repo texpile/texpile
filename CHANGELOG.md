@@ -5,9 +5,9 @@ Release notes for Texpile Desktop. Add notes under `## [Unreleased]` as you work
 
 ## [Unreleased]
 
-- fix: Typst preview keeps its place and zoom after a pause (by @louisqli)
-- fix: preview keeps its share of the window when the window is resized (by @louisqli)
-- fix: 100% zoom shows the page at its printed size in both previews (by @louisqli)
+- fix: Typst preview losing its scroll and zoom after a pause (by @louisqli)
+- fix: preview too narrow after maximizing the window (by @louisqli)
+- fix: same zoom showing different page sizes in the two previews (by @louisqli)
 
 ## [2.0.1] - 2026-11-15
 
