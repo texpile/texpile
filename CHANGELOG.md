@@ -5,7 +5,7 @@ Release notes for Texpile Desktop. Add notes under `## [Unreleased]` as you work
 
 ## [Unreleased]
 
-- fix: Typst error dots clear after the error is fixed (by @louisqli)
+- fix: Typst error dots not clearing (by @louisqli)
 
 ## [2.0.1] - 2026-11-15
 
