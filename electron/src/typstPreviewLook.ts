@@ -4,16 +4,19 @@ export function pageShadow(dark: boolean): string {
 		: 'drop-shadow(0 2px 8px rgb(0 0 0 / 0.12)) drop-shadow(0 1px 3px rgb(0 0 0 / 0.08))';
 }
 
+/** px between a page and the pane's side at fit width, as the PDF viewer leaves */
+export const PAGE_SIDE_GAP = 20;
+
 const PDF_SPACING: [string, string][] = [
 	[
 		'const computedScale = container.width ? container.width / maxWidth : 1;',
-		'const computedScale = container.width ? (container.width - 40) / maxWidth : 1;'
+		`const computedScale = container.width ? (container.width - ${2 * PAGE_SIDE_GAP}) / maxWidth : 1;`
 	],
 	[
 		'const heightMargin = this.isContentPreview ? 6 * scale : 5 * scale;',
 		'const heightMargin = this.isContentPreview ? 6 * scale : 8 * scale;'
 	],
-	['const widthMargin = 0;', 'const widthMargin = 20 * scale;'],
+	['const widthMargin = 0;', `const widthMargin = ${PAGE_SIDE_GAP} * scale;`],
 	[
 		'const calculatedPaddedY = accumulatedHeight + (i == 0 ? 0 : heightMargin);',
 		'const calculatedPaddedY = accumulatedHeight + (i == 0 ? 20 * scale : heightMargin);'

@@ -261,7 +261,7 @@
 		frame?.contentWindow?.postMessage({ channel: CHANNEL, type: 'invert', value: on }, '*');
 	});
 
-	/** `dir` is +1 to zoom in, -1 out; the far side steps through tinymist's own zoom ladder. */
+	/** `dir` is +1 to zoom in, -1 out */
 	function stepZoom(dir: 1 | -1): void {
 		frame?.contentWindow?.postMessage({ channel: CHANNEL, type: 'zoom', value: dir }, '*');
 	}

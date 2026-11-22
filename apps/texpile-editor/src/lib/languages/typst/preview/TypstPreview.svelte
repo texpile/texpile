@@ -9,7 +9,10 @@
 	// channel between us is postMessage, and the bridge on the far side is one we injected. That is
 	// what lets the zoom control below drive a viewer we cannot otherwise touch.
 	import { tip } from '$lib/components/tooltip.svelte';
-	import { ZoomIn, ZoomOut, Crosshair, FileOutput, PictureInPicture2 } from '@lucide/svelte';
+	import { ZoomIn, ZoomOut, Crosshair, FileOutput, PictureInPicture2, MoveHorizontal } from '@lucide/svelte';
+	import ZoomMenu from '$lib/preview/zoom/ZoomMenu.svelte';
+	import { mainFile } from '$lib/workspace/workspaceStore';
+	import { previewPlaceFor, rememberPreviewPlace } from './previewPlace';
 	import { typstExport } from '../export/dialog/typstExportState.svelte';
 	import type { Snippet } from 'svelte';
 	import PreviewToolbar, { type PreviewToolbarPlace } from '$lib/preview/PreviewToolbar.svelte';
@@ -163,6 +166,7 @@
 			const d = e.data;
 			if (!d || typeof d !== 'object' || d.channel !== CHANNEL) return;
 			if (d.type === 'zoom' && typeof d.value === 'number') zoom = d.value;
+			else if (d.type === 'place') rememberPreviewPlace(mainFile.current, d.value);
 			else if (d.type === 'status' && d.value) {
 				status = d.value as FrameStatus;
 				if (typeof status.zoom === 'number') zoom = status.zoom;
@@ -217,9 +221,19 @@
 		frame?.contentWindow?.postMessage({ channel: CHANNEL, type: 'hold', value: held }, '*');
 	});
 
-	/** `dir` is +1 to zoom in, -1 out; the far side steps through tinymist's own zoom ladder. */
+	/** `dir` is +1 to zoom in, -1 out */
 	function stepZoom(dir: 1 | -1): void {
 		frame?.contentWindow?.postMessage({ channel: CHANNEL, type: 'zoom', value: dir }, '*');
+	}
+
+	/** a percent of the printed page, or 'fit' for fit width */
+	function zoomTo(value: number | 'fit'): void {
+		frame?.contentWindow?.postMessage({ channel: CHANNEL, type: 'zoomTo', value }, '*');
+	}
+
+	function restorePlace(): void {
+		const place = previewPlaceFor(mainFile.current);
+		if (place) frame?.contentWindow?.postMessage({ channel: CHANNEL, type: 'restore', value: place }, '*');
 	}
 
 	// A follow scroll was just sent: tell the framed viewer to swallow the jump ripple it is
@@ -268,7 +282,15 @@
 		<button onclick={() => stepZoom(-1)} disabled={!frameUrl} use:tip={m.draft_toolbar_zoom_out()} aria-label={m.draft_toolbar_zoom_out()}>
 			<ZoomOut size={16} />
 		</button>
-		<span class="preview-toolbar-readout">{zoom !== null ? `${zoom}%` : '—'}</span>
+		{#if zoom !== null}
+			<ZoomMenu
+				scale={zoom / 100}
+				fits={[{ label: m.draft_toolbar_fit_width(), icon: MoveHorizontal, run: () => zoomTo('fit') }]}
+				onscale={(scale) => zoomTo(Math.round(scale * 100))}
+			/>
+		{:else}
+			<span class="preview-toolbar-readout">—</span>
+		{/if}
 		<button onclick={() => stepZoom(1)} disabled={!frameUrl} use:tip={m.draft_toolbar_zoom_in()} aria-label={m.draft_toolbar_zoom_in()}>
 			<ZoomIn size={16} />
 		</button>
@@ -343,6 +365,7 @@
 					class="h-full border-0"
 					class:pointer-events-none={frozenWidth !== null}
 					style:width={frozenWidth !== null ? `${frozenWidth}px` : '100%'}
+					onload={restorePlace}
 					onerror={() => (error = m.typst_preview_frame_failed())}
 				></iframe>
 			</ColorVisionFilter>
