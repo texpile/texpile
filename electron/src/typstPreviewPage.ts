@@ -11,7 +11,8 @@
 //
 // Kept free of electron imports so it can be unit tested as plain string work.
 
-import { pageShadow, withPdfSpacing } from './typstPreviewLook';
+import { PAGE_SIDE_GAP, pageShadow, withPdfSpacing } from './typstPreviewLook';
+import { zoomScript } from './typstPreviewZoom';
 
 /** how the prepared page should look and what it should talk to */
 export type PreparePageOptions = {
@@ -45,16 +46,9 @@ const PLACEHOLDER_WS = 'ws://127.0.0.1:23625';
 /** Raised rather than returning a broken page: a silent miss here is a preview that never loads. */
 export class PreviewPageError extends Error {}
 
-/**
- * Colour the page through the variables it already exposes, and open a channel we can drive it
- * with.
- *
- * The bridge deliberately steers the viewer through its OWN keyboard handler rather than poking at
- * its internals: dispatching the ctrl+= it already listens for keeps its zoom ladder, its anchor
- * maths and its re-render path intact, and leaves us reading one value back out.
- */
-function injection(opts: PreparePageOptions): string {
-	return `
+/** Colour the page through the variables it already exposes, and open a channel we can drive it with. */
+function injection(opts: PreparePageOptions, sideGap: number): string {
+	return `${zoomScript(sideGap)}
 <style id="texpile-theme">
 	/* !important is load-bearing: the page sets these as INLINE styles on <html> from its own
 	   script, and an inline declaration beats any stylesheet rule that is not important. Without
@@ -148,22 +142,6 @@ function injection(opts: PreparePageOptions): string {
 		for (var i = list.length - 1; i >= 0; i--) if (list[i] && list[i].impl) return list[i];
 		return null;
 	}
-	function zoomPercent() {
-		var v = view();
-		return v ? Math.round(v.impl.currentScaleRatio * 100) : null;
-	}
-	// their own shortcut: ctrl/cmd + '=' zooms in, '-' zooms out
-	function step(dir) {
-		var mac = /Mac|iPhone|iPad/.test(navigator.platform || '');
-		var ev = new KeyboardEvent('keydown', {
-			key: dir > 0 ? '=' : '-',
-			ctrlKey: !mac,
-			metaKey: mac,
-			bubbles: true,
-			cancelable: true
-		});
-		document.body.dispatchEvent(ev);
-	}
 	function reply(type, value) {
 		try { parent.postMessage({ channel: CHANNEL, type: type, value: value }, '*'); } catch (e) {}
 	}
@@ -218,7 +196,7 @@ function injection(opts: PreparePageOptions): string {
 			secureContext: !!window.isSecureContext,
 			viewer: !!v,
 			initialized: v ? !!v.impl.moduleInitialized : false,
-			zoom: zoomPercent()
+			zoom: window.texpileZoomPercent ? window.texpileZoomPercent() : null
 		};
 	}
 	// tinymist takes one zoom step per 20px of ctrl+wheel, and a trackpad pinch covers one of its steps in about 13px,
@@ -239,18 +217,10 @@ function injection(opts: PreparePageOptions): string {
 			passingPinch = false;
 		}
 	}, { capture: true, passive: false });
-	// a pinch or ctrl+wheel zooms the viewer by its own handler; the toolbar's readout follows it
-	var wheelZoomReport = 0;
-	window.addEventListener('wheel', function (e) {
-		if (!e.ctrlKey && !e.metaKey) return;
-		clearTimeout(wheelZoomReport);
-		wheelZoomReport = setTimeout(function () { reply('zoom', zoomPercent()); }, 50);
-	}, { capture: true, passive: true });
 	window.addEventListener('message', function (e) {
 		var m = e.data;
 		if (!m || typeof m !== 'object' || m.channel !== CHANNEL) return;
-		if (m.type === 'zoom') { step(m.value); setTimeout(function () { reply('zoom', zoomPercent()); }, 0); }
-		else if (m.type === 'quiet') quietUntil = Date.now() + (typeof m.value === 'number' ? m.value : 500);
+		if (m.type === 'quiet') quietUntil = Date.now() + (typeof m.value === 'number' ? m.value : 500);
 		else if (m.type === 'freeze') jumpFreezeUntil = Date.now() + (typeof m.value === 'number' ? m.value : 1500);
 		else if (m.type === 'hold') held = !!m.value;
 		else if (m.type === 'query') reply('status', status());
@@ -399,10 +369,12 @@ export function preparePreviewPage(html: string, opts: PreparePageOptions): stri
 		throw new PreviewPageError('tinymist preview page has neither the derived nor the placeholder websocket address');
 	}
 
-	out = withPdfSpacing(out);
+	const spaced = withPdfSpacing(out);
+	const sideGap = spaced === out ? 0 : PAGE_SIDE_GAP;
+	out = spaced;
 
 	// last thing in the body, so the viewer's own script has already defined everything we reach for
-	const inject = injection(opts);
+	const inject = injection(opts, sideGap);
 	const close = out.lastIndexOf('</body>');
 	return close >= 0 ? out.slice(0, close) + inject + out.slice(close) : out + inject;
 }

@@ -31,6 +31,9 @@ async function ensurePdfJsLoaded() {
 	}
 }
 
+/** 100% is the page at its printed size: 96 CSS px and 72 pt to the inch */
+export const PX_PER_PT_AT_100 = 96 / 72;
+
 export type PDFPageViewOptions = {
 	container: HTMLElement;
 	id: number;
@@ -139,7 +142,7 @@ export class PDFPageView {
 
 		const totalRotation = (this.rotation + this.pdfPageRotate) % 360;
 		this.viewport = this.pdfPage.getViewport({
-			scale: this.scale,
+			scale: this.scale * PX_PER_PT_AT_100,
 			rotation: totalRotation
 		});
 		this.setDimensions();
