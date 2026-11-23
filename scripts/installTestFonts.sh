@@ -18,4 +18,4 @@ sudo tee /etc/fonts/conf.d/56-prefer-inter.conf > /dev/null <<'CONF'
 </fontconfig>
 CONF
 sudo fc-cache -f
-fc-match system-ui
+for family in system-ui monospace serif emoji sans-serif:lang=zh-cn sans-serif:lang=ja sans-serif:lang=ko sans-serif:lang=hi; do echo "$family: $(fc-match "$family")"; done
