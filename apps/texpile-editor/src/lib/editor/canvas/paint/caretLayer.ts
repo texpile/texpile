@@ -176,7 +176,9 @@ export function paintCaretDraws(ctx: CanvasRenderingContext2D, carets: readonly 
 	const px = devicePixelsOf(ctx);
 	for (const caret of carets) {
 		if (!caret.visible) continue;
-		const { x, y, width, height } = snapRect(caret.rect, px);
+		const { x, y, height } = snapRect(caret.rect, px);
+		// one width wherever it stands, rounded up: edges rounded apart made it 1 or 2 device pixels at 125 percent
+		const width = Math.max(1, Math.ceil(caret.rect.width * px.sx - 0.01)) / px.sx;
 		Object.assign(ctx, { fillStyle: caret.color });
 		ctx.fillRect(x, y, width, height);
 		if (caret.flag) paintPeerFlag(ctx, caret.flag);
