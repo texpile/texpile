@@ -130,7 +130,11 @@ export class PointerMachine {
 		};
 		// a right press starts no face handler and no node view: it selects what it lands on and the menu acts on that (A4)
 		const claimed = event.button !== 2 && (runFaceHandlers(view, 'press', retargeted, hit, capture) || viewsStopEvent(retargeted));
-		if (claimed || hooks.mousedown(retargeted)) return true;
+		if (claimed || hooks.mousedown(retargeted)) {
+			// the DOM's dblclick reached a face whatever took its presses (a figure card in a selected chip)
+			if (click === 'double' && event.button === 0) runFaceHandlers(view, 'dblclick', retargeted, hit, () => {});
+			return true;
+		}
 		if (!view.hasFocus()) view.focus();
 		if (click === 'single') this.pressOnce(event, hit);
 		else if (click === 'double') this.pressTwice(event, hit, retargeted);

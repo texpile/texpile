@@ -12,6 +12,6 @@
 	const props: FrameChromeOverlayProps = $props();
 </script>
 
-<div class="beamer-frame-chrome">
+<div class="absolute top-2 right-2">
 	<FrameChrome node={props.node} updateAttrs={props.updateAttrs} addPart={props.addPart} titleSlide={props.titleSlide} />
 </div>
