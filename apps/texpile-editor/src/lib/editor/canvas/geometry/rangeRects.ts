@@ -2,7 +2,7 @@
 import type { DocRect, LineBox, LineFragment } from '../contracts/layoutTypes';
 import type { DocumentModel } from '../contracts/engineTypes';
 import { caretRectAt, caretSpotOf, type GeometryTools } from './caretRects';
-import { blockOnModel, hasPositions, lineEnd, type BlockOnModel, type PlacedBox, type PlacedTextblock } from './lineIndex';
+import { blockOnModel, hasPositions, lineEnd, lineStartX, type BlockOnModel, type PlacedBox, type PlacedTextblock } from './lineIndex';
 import { textX } from './positionMap';
 
 type Span = { left: number; right: number };
@@ -76,15 +76,21 @@ function lineRects(block: BlockOnModel, textblock: PlacedTextblock, range: Range
 	const clip = clipOf(textblock, block.frame.top);
 	const { reach } = range;
 	const top = block.frame.top + textblock.y;
-	for (const line of textblock.lines) {
+	textblock.lines.forEach((line, index) => {
 		const end = lineEnd(line);
-		if (range.to < line.from || range.from > end || (range.from === end && range.to > end && line !== textblock.lines.at(-1))) continue;
+		if (range.to < line.from || range.from > end || (range.from === end && range.to > end && line !== textblock.lines.at(-1))) return;
 		const [y, height] = reach === 'line' ? [line.y, line.height] : [line.textTop, line.textBottom - line.textTop];
-		for (const span of spansOnLine(block, line, range, tools)) {
+		const spans = spansOnLine(block, line, range, tools);
+		// an empty line the range runs through shows a newline's width, as the DOM editor's selected <br> did
+		if (!spans.length && !line.fragments.some(hasPositions) && range.from <= line.from && range.to > end) {
+			const left = lineStartX(textblock, index);
+			spans.push({ left, right: left + (line.textBottom - line.textTop) / 4 });
+		}
+		for (const span of spans) {
 			const rect = clipped({ x: textblock.x + span.left, y: top + y, width: Math.max(0, span.right - span.left), height }, clip);
 			if (rect) rects.push(rect);
 		}
-	}
+	});
 	return rects;
 }
 
