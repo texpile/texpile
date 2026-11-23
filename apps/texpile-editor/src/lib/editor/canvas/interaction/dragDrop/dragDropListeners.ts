@@ -76,7 +76,10 @@ export class DragDropListeners {
 		event.preventDefault();
 		const at = dropPosAt(this.view, { x: event.clientX, y: event.clientY });
 		const slice = at === null ? null : (this.view.dragging?.slice ?? null);
-		this.indicator.show(at === null ? null : dropBarAt(this.view, at, slice));
+		const root = this.dom.ownerDocument.documentElement;
+		// the block handle draws its own drop line, and a refused drop shows none
+		const own = root.classList.contains('pm-handle-drag') || root.classList.contains('pm-drop-refused');
+		this.indicator.show(at === null || own ? null : dropBarAt(this.view, at, slice));
 	}
 
 	private drop(event: DragEvent): void {

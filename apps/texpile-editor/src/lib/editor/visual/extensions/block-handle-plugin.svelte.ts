@@ -17,7 +17,7 @@ import { blockSettingsAt } from './blockHandle/blockSettings';
 import { dividerDragging, onDividerGrab } from '$lib/resizing/edgeDrag';
 import { handleLineMiddle } from './blockHandle/handleLine';
 import { handleTop, pointerStaysWithBlock } from './blockHandle/handleReach';
-import { blockHandlePluginKey, handleDropEvents, handleDropLine, handleDropState, setHandleDragActive } from './blockHandle/handleDrop';
+import { blockHandlePluginKey, handleDropEvents, handleDropState, setHandleDragActive } from './blockHandle/handleDrop';
 
 type ItemsOf = () => readonly InsertItem[];
 
@@ -322,7 +322,6 @@ export function createBlockHandlePlugin(opts: { items?: ItemsOf } = {}) {
 		key: blockHandlePluginKey,
 		state: handleDropState,
 		props: {
-			decorations: (state) => handleDropLine(blockHandlePluginKey.getState(state), state.doc),
 			handleDOMEvents: handleDropEvents,
 			// a block directly in an editor with a handle leaves its gear to the handle (app.css)
 			attributes: { 'data-block-handle': 'true' }

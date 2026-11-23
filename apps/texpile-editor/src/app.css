@@ -1892,18 +1892,3 @@ math-field[data-macro-selected] {
 .floating-bar-room .source-editor > .cm-editor > .cm-scroller > .cm-content {
 	padding-top: 2.875rem !important;
 }
-html.pm-handle-drag .pm-drop-cursor:not(.pm-handle-drop-line) {
-	display: none;
-}
-.pm-handle-drop-line {
-	position: relative;
-	height: 0;
-	pointer-events: none;
-}
-.pm-handle-drop-line::before {
-	content: '';
-	position: absolute;
-	inset: -1px 0 auto;
-	height: 2px;
-	background-color: var(--color-primary-500);
-}

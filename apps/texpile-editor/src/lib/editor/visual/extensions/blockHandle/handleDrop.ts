@@ -1,53 +1,29 @@
 // ProseMirror's own drop spot is picked by character offset and lands inside wrappers
 import { NodeSelection, PluginKey, type Transaction } from 'prosemirror-state';
-import { Decoration, DecorationSet, type EditorView } from 'prosemirror-view';
+import type { EditorView } from 'prosemirror-view';
 import type { Node as PMNode } from 'prosemirror-model';
-import { setLook, type CanvasWidget } from '$lib/editor/canvas';
+import { DropIndicator, dropBarAt } from '$lib/editor/canvas';
 import { handleUnitAt } from './handleUnit';
 
-export type HandleDropState = { active: boolean; line: number | null };
-type HandleDropMeta = { active: boolean } | { line: number | null };
+export type HandleDropState = { active: boolean };
 
 export const blockHandlePluginKey = new PluginKey<HandleDropState>('block-handle');
 
 export const handleDropState = {
-	init: (): HandleDropState => ({ active: false, line: null }),
+	init: (): HandleDropState => ({ active: false }),
 	apply(tr: Transaction, value: HandleDropState): HandleDropState {
-		const meta = tr.getMeta(blockHandlePluginKey) as HandleDropMeta | undefined;
-		if (meta && 'active' in meta) return { active: meta.active, line: null };
-		if (meta) return { ...value, line: meta.line };
-		return value.line !== null && tr.docChanged ? { ...value, line: tr.mapping.map(value.line) } : value;
+		const meta = tr.getMeta(blockHandlePluginKey) as HandleDropState | undefined;
+		return meta ?? value;
 	}
 };
+
+// an overlay: a line widget inside the next block was lost when that block is drawn as code
+let dropLine: DropIndicator | null = null;
 
 export function setHandleDragActive(view: EditorView, active: boolean) {
+	if (!active) dropLine?.hide();
 	if (blockHandlePluginKey.getState(view.state)?.active === active) return;
 	view.dispatch(view.state.tr.setMeta(blockHandlePluginKey, { active }));
-}
-
-function dropLineElement(): HTMLElement {
-	const line = document.createElement('div');
-	line.className = 'pm-drop-cursor pm-handle-drop-line';
-	line.contentEditable = 'false';
-	return line;
-}
-
-const DROP_LINE: CanvasWidget = {
-	kind: 'block',
-	build(ctx) {
-		const line = ctx.el('div', 'pm-handle-drop-line');
-		setLook(line, { position: 'relative', height: '0', pointerEvents: 'none' });
-		const bar = line.appendChild(ctx.el('div'));
-		setLook(bar, { position: 'absolute', top: '-1px', left: '0', right: '0', height: '2px', backgroundColor: 'var(--color-primary-500)' });
-		return line;
-	}
-};
-
-export function handleDropLine(state: HandleDropState | undefined, doc: PMNode): DecorationSet | null {
-	if (!state || state.line === null) return null;
-	return DecorationSet.create(doc, [
-		Decoration.widget(state.line, dropLineElement, { key: 'handle-drop-line', side: -1, canvas: DROP_LINE })
-	]);
 }
 
 function dropSpotAt(view: EditorView, node: PMNode, source: { from: number; to: number }, x: number, y: number): number | null {
@@ -73,8 +49,8 @@ function draggedUnit(view: EditorView) {
 }
 
 function showLine(view: EditorView, line: number | null) {
-	if (blockHandlePluginKey.getState(view.state)?.line === line) return;
-	view.dispatch(view.state.tr.setMeta(blockHandlePluginKey, { line }));
+	dropLine ??= new DropIndicator(view.dom.ownerDocument);
+	dropLine.show(line === null ? null : dropBarAt(view, line, null));
 }
 
 export const handleDropEvents = {
@@ -91,6 +67,7 @@ export const handleDropEvents = {
 		const dragged = draggedUnit(view);
 		if (!dragged) return false;
 		event.preventDefault();
+		dropLine?.hide();
 		// eslint-disable-next-line no-param-reassign -- ProseMirror reads view.dragging to know its own drag is running
 		(view as unknown as { dragging: unknown }).dragging = null;
 		const at = dropSpotAt(view, dragged.node, dragged, event.clientX, event.clientY);

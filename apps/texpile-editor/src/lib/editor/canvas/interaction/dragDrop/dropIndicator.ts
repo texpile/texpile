@@ -33,9 +33,6 @@ export class DropIndicator {
 
 	show(at: DropBar | null): void {
 		if (!at) return this.hide();
-		const root = this.doc.documentElement;
-		// the block handle draws its own drop line, and a refused drop shows none
-		if (root.classList.contains('pm-handle-drag') || root.classList.contains('pm-drop-refused')) return this.hide();
 		const bar = (this.bar ??= this.doc.body.appendChild(this.doc.createElement('div')));
 		bar.className = 'canvas-drop-indicator';
 		Object.assign(bar.style, {

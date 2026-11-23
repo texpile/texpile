@@ -36,6 +36,7 @@ export { windowInvalidation } from './document/invalidation';
 export { countOf } from './document/documentCounters';
 export { windowEngine } from './engine/windowEngine';
 export { SELECTION_EVENT } from './interaction/focus/selectionSignal';
+export { DropIndicator, dropBarAt } from './interaction/dragDrop/dropIndicator';
 export { decorationAttrsOf } from './decorations/decorationAttrs';
 export { registerDecorationLook, registerDecorationLookPrefix } from './decorations/decorationLooks';
 export { formulaElement, formulaSourceOf } from './math/mathReplaced';
