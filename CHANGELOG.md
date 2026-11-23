@@ -8,6 +8,7 @@ Release notes for Texpile Desktop. Add notes under `## [Unreleased]` as you work
 - fix: Typst preview losing its scroll and zoom after a pause (by @louisqli)
 - fix: preview too narrow after maximizing the window (by @louisqli)
 - fix: same zoom showing different page sizes in the two previews (by @louisqli)
+- fix: more of the interface in Spanish (by @nicolobos77)
 
 ## [2.0.1] - 2026-11-15
 
