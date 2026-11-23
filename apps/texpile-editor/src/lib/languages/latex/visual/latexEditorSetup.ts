@@ -75,7 +75,8 @@ import { primarySelectionPlugin } from '$lib/editor/visual/extensions/primarySel
 import { heldWidthPlugin } from '$lib/editor/visual/extensions/heldWidth';
 import { islandKeysPlugin } from '$lib/editor/canvas/islands/islandKeys';
 import { islandCompletionPlugin } from '$lib/editor/visual/extensions/raw-latex/completion/islandCompletion';
-import { numbersPlugin } from './extensions/numbers/numbersPlugin';
+import { numbersKey, numbersPlugin } from './extensions/numbers/numbersPlugin';
+import { unnumberHeading } from '$lib/editor/visual/unnumberHeading';
 import { proofEndMarkPlugin } from './extensions/environment/canvas/proofEndMark';
 import { onDrawnInputs } from './core/drawnInputs.svelte';
 import { chipCounts } from './core/plugin/chipCounts';
@@ -149,6 +150,7 @@ export function latexEditorPlugins(setup: LatexEditorSetup): Plugin[] {
 		heldWidthPlugin(),
 		islandKeysPlugin(),
 		// before the list keymap, whose Backspace and Delete act at a block edge: they would join the block after an empty one into it, and a block into a figure
+		keymap({ Backspace: unnumberHeading((state) => numbersKey.getState(state)?.set) }),
 		keymap({ Backspace: liftFromStyleEnvironment }),
 		keymap({ Backspace: deleteEmptyBlockBackward, Delete: deleteEmptyBlockForward }),
 		keymap({ Backspace: selectFigureBackward, Delete: selectFigureForward }),

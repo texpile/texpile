@@ -85,7 +85,8 @@ import { islandKeysPlugin } from '$lib/editor/canvas/islands/islandKeys';
 import { islandCompletionPlugin } from '$lib/editor/visual/extensions/raw-latex/completion/islandCompletion';
 import { footnoteNumbersPlugin } from '$lib/editor/visual/extensions/drawnChips/footnote/footnoteNumbers';
 import { typstChipCounts } from './core/plugin/chipCounts';
-import { typstNumbersPlugin } from './extensions/numbers/typstNumbersPlugin';
+import { typstNumbersKey, typstNumbersPlugin } from './extensions/numbers/typstNumbersPlugin';
+import { unnumberHeading } from '$lib/editor/visual/unnumberHeading';
 import { pmComments } from '$lib/editor/visual/extensions/pmComments';
 import type { CommentAnchor } from '$lib/comments/anchor';
 import type { SourceAnchorFn } from '$lib/editor/visual/extensions/pmComments';
@@ -208,6 +209,7 @@ export function typstEditorPlugins(setup: TypstEditorSetup): Plugin[] {
 		heldWidthPlugin(),
 		islandKeysPlugin(),
 		// before the list keymap, whose Backspace and Delete act at a block edge: they would join the block after an empty one into it, and a block into a figure
+		keymap({ Backspace: unnumberHeading((state) => typstNumbersKey.getState(state)?.set) }),
 		keymap({ Backspace: liftFromStyleEnvironment }),
 		keymap({ Backspace: deleteEmptyBlockBackward, Delete: deleteEmptyBlockForward }),
 		keymap({ Backspace: selectFigureBackward, Delete: selectFigureForward }),
