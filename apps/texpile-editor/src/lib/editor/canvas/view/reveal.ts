@@ -16,8 +16,8 @@ export type RevealHost = {
 	frames(): { readonly anchor: { smoothScrollStarted(): void }; requestFrame(): void };
 };
 
-// keyed: a key moved the head (a margin of lines kept); edge: shown at the band's edges; nudged: an edit moved it
-type RevealMode = 'keyed' | 'edge' | 'nudged';
+// keyed: a key moved the head (a margin of lines kept); settle: a keyed reveal read again, moved only past a few pixels; edge: shown at the band's edges; nudged: an edit moved it
+type RevealMode = 'keyed' | 'settle' | 'edge' | 'nudged';
 type ScrollCounted = EditorState & { scrollToSelection?: number };
 type ScrollMarginProp = number | { top: number; right: number; bottom: number; left: number };
 
@@ -31,6 +31,7 @@ const REVEAL_RETRIES = 4;
 const MARGIN_LINES = 3;
 const MARGIN_SHARE = 0.2;
 const SIDE_MARGIN = 12;
+const SETTLE_SLACK = 3;
 
 function scrollCount(state: EditorState): number {
 	return (state as ScrollCounted).scrollToSelection ?? 0;
@@ -88,8 +89,8 @@ export class RevealPolicy {
 		this.revealSideways();
 		if (mode === 'nudged' || !this.headEstimated()) this.retries = 0;
 		else if (this.retries++ < REVEAL_RETRIES) {
-			// a retry keeps no margin: read again from a measured line height, it moved every shown row a pixel or two
-			this.pending = mode === 'keyed' ? 'edge' : mode;
+			// a retry leaves the pixel or two a measured line height moves every row by
+			this.pending = mode === 'keyed' ? 'settle' : mode;
 			this.host.frames().requestFrame();
 		} else this.retries = 0;
 	}
@@ -154,9 +155,10 @@ export class RevealPolicy {
 		const box = this.host.view.canvas.clientRect(rect);
 		const height = Math.min(box.height, band.bottom - band.top);
 		const keyed = mode !== 'nudged';
-		const margin = mode === 'keyed' ? this.keptMargin(box.height, band) : 0;
-		const top = band.top + (band.bar ? margin : 0);
-		const bottom = band.bottom - margin;
+		const slack = mode === 'settle' ? SETTLE_SLACK : 0;
+		const margin = mode === 'keyed' || mode === 'settle' ? this.keptMargin(box.height, band) : 0;
+		const top = band.top + (band.bar ? margin : 0) - slack;
+		const bottom = band.bottom - margin + slack;
 		if (box.top < top && (keyed || (band.bar && box.bottom > band.area.top))) this.scrollBy(box.top - top, behavior);
 		else if (box.top + height > bottom && (keyed || box.top < band.bottom + BELOW)) this.scrollBy(box.top + height - bottom, behavior);
 	}
