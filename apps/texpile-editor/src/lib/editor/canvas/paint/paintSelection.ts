@@ -47,6 +47,16 @@ export function selectionShade(
 	return { under, over };
 }
 
+/** the range runs over the picture: past the node's edge on the picture's side and into its text beyond it */
+function passesOver(block: BlockOnModel, picture: PlacedBox, start: number, end: number, from: number, to: number): boolean {
+	const text = block.placement.textblocks.filter((each) => each.offset >= start && each.offset < end);
+	const first = text.find((each) => each.lines.length);
+	if (!first) return false;
+	if (picture.y < first.y + first.lines[0].y) return from <= start + 1 && to > first.offset;
+	const last = text.at(-1)!;
+	return to >= end - 1 && from < last.offset + last.node.nodeSize;
+}
+
 /** a picture drawn inside a node that also holds text (a figure and its caption): the text tints by line, the picture by its box */
 function pictures(block: BlockOnModel, from: number, to: number): DocRect[] {
 	const rects: DocRect[] = [];
@@ -55,8 +65,7 @@ function pictures(block: BlockOnModel, from: number, to: number): DocRect[] {
 		let owner: PlacedBox | null = placed;
 		while (owner && !owner.box.node) owner = owner.parent;
 		const node = owner?.box.node;
-		if (!node || node.offset < from || node.offset + node.node.nodeSize > to) continue;
-		if (!block.placement.textblocks.some((each) => each.offset >= node.offset && each.offset < node.offset + node.node.nodeSize)) continue;
+		if (!node || !passesOver(block, placed, node.offset, node.offset + node.node.nodeSize, from, to)) continue;
 		rects.push({ x: placed.x, y: block.frame.top + placed.y, width: placed.box.width, height: placed.box.height });
 	}
 	return rects;

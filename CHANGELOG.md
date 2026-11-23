@@ -5,6 +5,7 @@ Release notes for Texpile Desktop. Add notes under `## [Unreleased]` as you work
 
 ## [Unreleased]
 
+- fix: figure picture not tinted when a selection runs into its caption (by @louisqli)
 - fix: table guides showing on half of one cell under the pointer (by @louisqli)
 - fix: scrolling stopping while the pointer is on the block handle (by @louisqli)
 - fix: figure resize frame showing while hovering the caption (by @louisqli)
