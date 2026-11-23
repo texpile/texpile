@@ -35,7 +35,7 @@
 		"@eslint/js": "^10.0.1",
 		"@modelcontextprotocol/sdk": "^1.32.2",
 		"@types/node": "^24.13.3",
-		"chokidar": "^5.0.0",
+		"chokidar": "^6.0.0",
 		"concurrently": "^10.0.6",
 		"cross-env": "^10.1.0",
 		"electron": "^44.9.3",
