@@ -63,7 +63,7 @@
 		</Popover.Trigger>
 		<Portal>
 			<Popover.Positioner class="z-floating-ui">
-				<Popover.Content class="card bg-surface-50-950 border-surface-300-700 w-72 border shadow-lg">
+				<Popover.Content class="card bg-surface-50-950 border-surface-300-700 flex w-72 flex-col border shadow-lg">
 					{#if state.popoverOpen}
 						<BlockInsertMenu items={items()} {onInsert} />
 					{/if}

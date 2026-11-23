@@ -5,6 +5,7 @@ Release notes for Texpile Desktop. Add notes under `## [Unreleased]` as you work
 
 ## [Unreleased]
 
+- fix: two scrollbars in the insert menu beside a block (by @louisqli)
 - feat: Delete block moves from the gutter into a menu that clicking the drag handle opens (by @louisqli)
 - fix: figure picture not tinted when a selection runs into its caption (by @louisqli)
 - fix: table guides showing on half of one cell under the pointer (by @louisqli)
