@@ -82,7 +82,7 @@ export function gridLook(width: { fixed: boolean; total: number } | null, natura
 
 type CellOptions = { printed: boolean; header: boolean; edges: CellEdges | null; guide: boolean };
 
-/** a cell as it prints: its own rules as solid sides, a dashed guide on the others that shows under the pointer or around the caret */
+/** a cell as it prints: its own rules as solid sides, a dashed guide on the others that shows while the pointer or the caret is in the table */
 export function cellLook({ printed, header, edges, guide }: CellOptions): StyleLook {
 	const base: Record<string, string> = {
 		position: 'relative',

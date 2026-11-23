@@ -52,6 +52,8 @@ export function tableGridView(
 	const holder = el('div', 'tableWrapper');
 	setLook(holder, GRID_HOLDER_LOOK);
 	const table = holder.appendChild(el('table'));
+	// the pointer between cells still relays the cells' guide
+	table.states = { hover: {} };
 	const colgroup = table.appendChild(el('colgroup'));
 	const body = table.appendChild(el('tbody'));
 	const dragged = view.canvas.build.read(COLUMN_RESIZE_KEY, () => columnResizeKey.getState(view.state)?.displayWidths.get(getPos() ?? -1));

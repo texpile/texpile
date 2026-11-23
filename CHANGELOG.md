@@ -2,6 +2,10 @@
 
 Release notes for Texpile Desktop. Add notes under `## [Unreleased]` as you work; run
 `pnpm --filter texpile-editor release <patch|minor|major>` to cut a dated, numbered release.
+
+## [Unreleased]
+
+- fix: table guides showing on half of one cell under the pointer (by @louisqli)
 - fix: scrolling stopping while the pointer is on the block handle (by @louisqli)
 - fix: figure resize frame showing while hovering the caption (by @louisqli)
 - feat: image Crop and Settings bar shows on hover (by @louisqli)
@@ -15,9 +19,6 @@ Release notes for Texpile Desktop. Add notes under `## [Unreleased]` as you work
 - fix: double-click not opening a TikZ figure in the visual editor (by @louisqli)
 - fix: slide column width shown as plain text in the visual editor (by @louisqli)
 - fix: slide settings button missing in the visual editor (by @louisqli)
-
-## [Unreleased]
-
 - feat: canvas visual editor (by @louisqli)
 - feat: title bar search box stays centered on the window (by @louisqli)
 - feat: Layout button shows its icon only (by @louisqli)

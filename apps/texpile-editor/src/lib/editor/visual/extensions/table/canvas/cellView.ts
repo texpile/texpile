@@ -1,7 +1,7 @@
 // a cell styles itself from its node decorations: the rules it prints, its side, the guide under the caret and a selected cell's wash
 import type { Decoration, EditorView } from 'prosemirror-view';
-import type { CanvasNodeViewConstructor, FaceElement, OverlaySpec, VisualView } from '$lib/editor/canvas';
-import { decorationAttrsOf, faceElement, renderFaceSpec, setLook } from '$lib/editor/canvas';
+import type { CanvasNodeViewConstructor, OverlaySpec, VisualView } from '$lib/editor/canvas';
+import { decorationAttrsOf, FaceElement, faceElement, renderFaceSpec, setLook } from '$lib/editor/canvas';
 import type { CellEdges, TableRuleSpec } from '../rules/tableRules';
 import { cellHoverLook, cellLook, SELECTED_CELL_LOOK } from './tableLooks';
 import ColumnResizeHandle from './ColumnResizeHandle.svelte';
@@ -46,6 +46,12 @@ function resizeHandle(view: VisualView, getPos: () => number | undefined): reado
 	return [handle];
 }
 
+function gridOf(cell: FaceElement): FaceElement | null {
+	let at = cell.parentNode;
+	while (at instanceof FaceElement && at.tagName !== 'TABLE') at = at.parentNode;
+	return at instanceof FaceElement ? at : null;
+}
+
 /** `printed`: the language prints the table's own rules (LaTeX, Typst); Markdown cells carry a plain border */
 export function tableCellView(printed: boolean): CanvasNodeViewConstructor {
 	return (node, view, getPos, decorations) => {
@@ -57,6 +63,8 @@ export function tableCellView(printed: boolean): CanvasNodeViewConstructor {
 			setLook(dom, cellLook({ printed, header, edges, guide: outer.some((d) => (d.spec as { caretGuide?: boolean }).caretGuide) }));
 			dom.generatedAfter = washOf(outer);
 		}
+		// the guide shows on every cell while the pointer is anywhere in the table
+		if (printed) Object.defineProperty(dom, 'statesFrom', { get: () => gridOf(dom) });
 		dress(decorations);
 		return {
 			dom,
