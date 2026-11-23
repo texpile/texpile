@@ -42,14 +42,13 @@ function pictureContent(picture: Picture): ReplacedContent {
 	};
 }
 
-/** P0's fit: the width written scaled to the column, less the image margins, and never past it */
+/** P0's fit: the width written scaled to the column, and never past it */
 export function pictureLook(node: PMNode, settings: ImagePluginSettings): StyleLook {
-	const column = `(100% - ${settings.imageMargin * 2}px)`;
 	const width = Number(node.attrs.width) || 0;
 	const height = Number(node.attrs.height) || 0;
 	const written = Number(node.attrs.maxWidth) || 0;
-	const base: StyleLook = { ...IMAGE_LOOK, maxWidth: `calc${column}` };
-	if (width && written && settings.scaleImage) return { ...base, width: `calc(${column} * ${width / written})` };
+	const base: StyleLook = { ...IMAGE_LOOK, maxWidth: '100%' };
+	if (width && written && settings.scaleImage) return { ...base, width: `calc(100% * ${width / written})` };
 	if (width) return { ...base, width: `${width}px` };
 	// without resizing (Markdown) the stylesheet's width: 100% drew every picture across the column
 	if (!settings.enableResize) return { ...IMAGE_LOOK, width: '100%', maxWidth: '100%' };

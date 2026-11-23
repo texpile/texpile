@@ -60,7 +60,6 @@ const sharedImageSettings = {
 	defaultAlt: 'Image',
 	enableResize: true,
 	isBlock: true,
-	imageMargin: 15,
 	minSize: 50,
 	maxSize: 2000,
 	scaleImage: true,

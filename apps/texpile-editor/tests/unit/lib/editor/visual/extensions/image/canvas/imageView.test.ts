@@ -14,10 +14,10 @@ function image(attrs: Record<string, unknown>) {
 	return schema.nodes.image.create({ src: 'figs/plot.png', ...attrs }, schema.text('A plot.'));
 }
 
-it('scales a written width to the column less its margins, and caps every picture at it', () => {
-	expect(pictureLook(image({ width: 300, maxWidth: 600 }), settings).width).toBe('calc((100% - 30px) * 0.5)');
+it('scales a written width to the column, and caps every picture at it', () => {
+	expect(pictureLook(image({ width: 300, maxWidth: 600 }), settings).width).toBe('calc(100% * 0.5)');
 	expect(pictureLook(image({ width: 300 }), settings).width).toBe('300px');
-	expect(pictureLook(image({}), settings).maxWidth).toBe('calc(100% - 30px)');
+	expect(pictureLook(image({}), settings).maxWidth).toBe('100%');
 });
 
 it('draws a picture with no size across the column where resizing is off, as the Markdown editor did', () => {

@@ -33,7 +33,6 @@ export type ImagePluginSettings<T = any> = {
 	defaultAlt: string;
 	enableResize: boolean;
 	isBlock: boolean;
-	imageMargin: number;
 	minSize: number;
 	maxSize: number;
 	scaleImage: boolean;

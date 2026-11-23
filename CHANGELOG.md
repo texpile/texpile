@@ -18,6 +18,7 @@ Release notes for Texpile Desktop. Add notes under `## [Unreleased]` as you work
 - fix: reference suggestion after @ drawn without its color in the visual editor (by @louisqli)
 - fix: bibliography heading drawn as a list bullet in the visual editor (by @louisqli)
 - fix: bibliography divider lines missing in the visual editor (by @louisqli)
+- fix: full width images narrower than the text in the visual editor (by @louisqli)
 - fix: typing in an unclosed environment slow on large files (by @louisqli)
 - fix: undo freezing on large files (by @louisqli)
 - fix: switching between Source and Visual freezing after edits (by @louisqli)

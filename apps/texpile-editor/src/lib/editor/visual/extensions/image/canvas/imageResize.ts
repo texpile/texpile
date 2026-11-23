@@ -70,7 +70,7 @@ export function dragResize(
 	const block = view.canvas.geometry.nodeRect(pos)?.rect;
 	if (!shown || !block) return;
 	const start = { width: shown.width || settings.minSize, height: shown.height || settings.minSize };
-	const maxWidth = Math.min(Math.max(block.width - settings.imageMargin * 2, settings.minSize), settings.maxSize);
+	const maxWidth = Math.min(Math.max(block.width, settings.minSize), settings.maxSize);
 	let drawn = start;
 	const doc = view.dom.ownerDocument;
 	function move(event: MouseEvent): void {

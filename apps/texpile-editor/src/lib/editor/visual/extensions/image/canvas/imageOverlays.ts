@@ -33,7 +33,7 @@ function startCrop({ view, getPos, settings, picture }: ImageOverlayParts): void
 		pos,
 		url: picture.url,
 		shownWidth: shown?.width ?? picture.width,
-		maxWidth: (block?.width ?? picture.width) - settings.imageMargin * 2,
+		maxWidth: block?.width ?? picture.width,
 		height: shown?.height ?? picture.height,
 		format
 	});
