@@ -138,6 +138,7 @@ function coreRows(recording: ReturnType<typeof loadRecording>, doc: PMNode, type
 for (const entry of CASES) {
 	const path = parityDocumentPath(entry.folder, entry.file);
 	describe.skipIf(!path)(`core base against the ${entry.name} recording`, () => {
+		if (!path) return;
 		const { doc } = PARSERS[entry.language](readFileSync(path!, 'utf8')) as { doc: PMNode };
 		const recording = loadRecording(entry.recording);
 		const { styles, elementAt } = setup(doc, entry.language, 'light', { viewportWidth: entry.viewportWidth ?? 1280 });

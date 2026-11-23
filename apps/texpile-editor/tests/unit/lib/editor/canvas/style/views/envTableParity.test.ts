@@ -123,6 +123,7 @@ function distinct(failures: string[]): string[] {
 for (const scheme of ['light', 'dark'] as const) {
 	const theorems = parityDocumentPath('parity-tex-theorems', 'main.tex');
 	describe.skipIf(!theorems)(`environments against the ${scheme} recording`, async () => {
+		if (!theorems) return;
 		const { view, styles, rows } = await opened('parity-tex-theorems', scheme, `parity-tex-theorems__main_tex@${scheme}.json`);
 		it('styles the head, its name and the body as recorded', () => {
 			const found = compare(
@@ -141,6 +142,7 @@ for (const scheme of ['light', 'dark'] as const) {
 	});
 
 	describe.skipIf(!theorems)(`the end of proof square against the ${scheme} recording`, async () => {
+		if (!theorems) return;
 		const { view, styles, rows } = await opened('parity-tex-theorems', scheme, `parity-tex-theorems__main_tex@${scheme}.json`);
 		it('floats the square after the last paragraph of a proof as recorded', () => {
 			const squares = rows.filter((row) => row.nodeType === 'paragraph' && row.pseudo === 'after' && row.path === '');
@@ -161,6 +163,7 @@ for (const scheme of ['light', 'dark'] as const) {
 
 	const tables = parityDocumentPath('parity-tex-tables', 'main.tex');
 	describe.skipIf(!tables)(`tables against the ${scheme} recording`, async () => {
+		if (!tables) return;
 		const { view, styles, rows } = await opened('parity-tex-tables', scheme, `parity-tex-tables__main_tex@${scheme}.json`);
 		it('styles the float, its caption, the grid, rows and cells as recorded', () => {
 			const found = compare(

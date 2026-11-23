@@ -125,6 +125,7 @@ function elementOfPath(root: FaceElement, path: string): FaceElement | null {
 for (const entry of CASES) {
 	const path = parityDocumentPath(entry.folder, entry.file);
 	describe.skipIf(!path)(`the chip looks against the ${entry.name} recording`, () => {
+		if (!path) return;
 		const doc = parse(entry, readFileSync(path!, 'utf8'));
 		const recording = loadRecording(entry.recording);
 		const nodeViews = rawChipViews(islandNodeViews());
