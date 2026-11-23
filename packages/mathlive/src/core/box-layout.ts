@@ -408,6 +408,7 @@ class BoxLayout {
     if (box.type === 'latex') {
       draft.family = MONO_STACK;
       draft.size *= 0.8;
+      draft.color = { role: 'latex' };
     }
     const look: Look = { ...draft, em: draft.size };
     this.looks.set(box, look);
