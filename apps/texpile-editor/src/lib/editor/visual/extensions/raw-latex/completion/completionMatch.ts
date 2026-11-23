@@ -47,7 +47,8 @@ export function matchOptions(results: readonly CompletionResult[], doc: string, 
 			}
 		}
 	}
-	found.sort((a, b) => b.score - a.score || a.option.label.localeCompare(b.option.label));
+	// among equal matches the shorter name first: \textb offers \textbf before \textbackslash
+	found.sort((a, b) => b.score - a.score || a.option.label.length - b.option.label.length || a.option.label.localeCompare(b.option.label));
 	const kept = found.filter((match, i) => {
 		const before = found[i - 1]?.option;
 		return !before || before.label !== match.option.label || before.detail !== match.option.detail || before.type !== match.option.type;

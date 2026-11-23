@@ -1,5 +1,5 @@
 // the platform table's intent carried out on the canvas, where Chromium would have moved or deleted natively (10.3)
-import { NodeSelection, TextSelection } from 'prosemirror-state';
+import { TextSelection } from 'prosemirror-state';
 import { GapCursor } from 'prosemirror-gapcursor';
 import type { KeyIntent, Platform } from '$lib/editor/keys/platformKeys';
 import type { CaretPlace } from '../../contracts/geometryTypes';
@@ -9,7 +9,7 @@ import { killTr, yankTr, type KillRing } from '../editing/killRing';
 import { openLineTr } from '../editing/openLine';
 import { blockIslandOf } from '../../islands/islandCode';
 import { transposeTr } from '../editing/transpose';
-import { caretEdgeFrom } from '../motion/caretTextblocks';
+import { caretEdgeFrom, contentEdge, textblockAround } from '../motion/caretTextblocks';
 import { dispatchMove } from '../motion/extendSelection';
 import { startFromNode } from '../motion/extendFromNode';
 import type { GoalColumn } from '../motion/goalColumn';
@@ -44,7 +44,7 @@ function documentEdge(view: VisualView, dir: -1 | 1, extend: boolean): CaretPlac
 }
 
 function columnTarget(view: VisualView, intent: MoveIntent, state: NativeKeyState, from: CaretPlace): VerticalTarget | null {
-	return paragraphTarget(view, state.goal, intent.dir, from);
+	return paragraphTarget(view, state.platform, intent.dir, intent.extend, from);
 }
 
 /** from a gap cursor the move starts at the facing edge of the text beyond it; Shift keeps that edge as the anchor */
@@ -60,21 +60,8 @@ function runColumnMove(view: VisualView, intent: MoveIntent, state: NativeKeySta
 	if (view.state.selection instanceof GapCursor) return leaveGap(view, view.state.selection, intent, state);
 	// Chromium moves a range's line from its focus, as P0 did, Shift or not
 	const target = columnTarget(view, intent, state, view.canvas.head());
-	if (!target) return;
-	const bounds = islandBounds(view, intent);
-	if (target.select !== undefined && !intent.extend && !bounds) {
-		view.dispatch(view.state.tr.setSelection(NodeSelection.create(view.state.doc, target.select)).scrollIntoView());
-		state.goal.keep(target.x, view.state.selection.head);
-		return;
-	}
-	dispatchMove(
-		view,
-		within(target.place, bounds),
-		intent.extend,
-		intent.by === 'line' ? { x: target.x, dir: intent.dir } : undefined,
-		anchor
-	);
-	state.goal.keep(target.x, view.state.selection.head);
+	state.goal.reset();
+	if (target) dispatchMove(view, within(target.place, islandBounds(view, intent)), intent.extend, undefined, anchor);
 }
 
 /** a Shift word move beside a leaf (a citation) ranges over it whole and stays a range, as a Shift arrow does */
@@ -103,6 +90,15 @@ function runPlaceMove(view: VisualView, intent: MoveIntent, state: NativeKeyStat
 	if (target) dispatchMove(view, within(target, islandBounds(view, intent)), extend, undefined, anchor);
 }
 
+/** a paragraph key moves within its paragraph first, to the edge it goes to */
+function atParagraphEdge(view: VisualView, dir: -1 | 1, platform: Platform): boolean {
+	const { selection } = view.state;
+	if (!(selection instanceof TextSelection) || !selection.empty) return true;
+	const here = textblockAround(selection.$head);
+	if (!here || (dir > 0 && platform === 'windows')) return true;
+	return selection.head === contentEdge(here, dir);
+}
+
 function runMove(view: VisualView, intent: MoveIntent, state: NativeKeyState): void {
 	const start = intent.extend ? startFromNode(view, intent.dir) : null;
 	if (start?.head != null) dispatchMove(view, { pos: start.head, affinity: 1 }, true, undefined, start.anchor);
@@ -112,7 +108,13 @@ function runMove(view: VisualView, intent: MoveIntent, state: NativeKeyState): v
 	else if (intent.by === 'line') arrowMove(view, 'vertical', intent.dir, intent.extend, state.platform, start?.anchor);
 	// a word or paragraph key on a gap or a selected block, or at a textblock's edge before an atom, crosses as an arrow
 	else if (!intent.extend && intent.by === 'word' && crossAsArrow(view, 'horizontal', intent.dir)) return;
-	else if (!intent.extend && intent.by === 'paragraph' && crossAsArrow(view, 'vertical', intent.dir)) return;
+	else if (
+		!intent.extend &&
+		intent.by === 'paragraph' &&
+		atParagraphEdge(view, intent.dir, state.platform) &&
+		crossAsArrow(view, 'vertical', intent.dir)
+	)
+		return;
 	// Shift and a word key from a gap leave it as the plain key does, never onto another gap
 	else if (intent.extend && intent.by === 'word' && view.state.selection instanceof GapCursor) crossAsArrow(view, 'horizontal', intent.dir);
 	else if (intent.by === 'paragraph') runColumnMove(view, intent, state, start?.anchor);

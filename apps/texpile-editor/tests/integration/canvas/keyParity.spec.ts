@@ -17,7 +17,6 @@ import {
 	LEFT_OUT,
 	LIVE_DOM,
 	SKIPPED_STARTS,
-	decisionWant,
 	type ExcuseId,
 	type SkippedStart
 } from './keyParityRules';
@@ -116,6 +115,7 @@ const LINE_ENDS_KEYS = /^line-(start|end)/;
 const VERTICAL_KEYS = /^(line-(up|down)|paragraph-)/;
 // the page keys follow the rule recorded in pointer/ (pageKeys.spec), not these rows
 const PAGE_KEYS = /^page-/;
+const PARAGRAPH_KEYS = /^paragraph-/;
 
 /** a text start whose Shift character rows move the anchor was set inside a cluster, where the DOM editor moved the caret */
 function movedByDom(start: KeyStart, keys: KeyFixture['keys']): boolean {
@@ -141,6 +141,7 @@ const emptyLeftOut = (): LeftOut => ({
 	unstableStart: 0,
 	unstableRow: 0,
 	pageKeys: 0,
+	paragraphKeys: 0,
 	accident: 0,
 	movedByDom: 0,
 	selectedFormula: 0,
@@ -169,15 +170,17 @@ function planFixture(rel: string, data: KeyFixture, left: LeftOut): PlannedRow[]
 				? 'unstableRow'
 				: PAGE_KEYS.test(key.id)
 					? 'pageKeys'
-					: ACCIDENTS.some((a) => a.cat.test(start.cat) && a.key.test(key.id) && (!a.docs || a.docs.test(rel)))
-						? 'accident'
-						: null;
+					: PARAGRAPH_KEYS.test(key.id)
+						? 'paragraphKeys'
+						: ACCIDENTS.some((a) => a.cat.test(start.cat) && a.key.test(key.id) && (!a.docs || a.docs.test(rel)))
+							? 'accident'
+							: null;
 			if (skipped) {
 				left[skipped]++;
 				continue;
 			}
 			const recorded = `${type} ${anchor} ${head}`;
-			const want = LIVE_DOM[rel]?.[label] ?? decisionWant(key.id, start, data.keys, recorded) ?? recorded;
+			const want = LIVE_DOM[rel]?.[label] ?? recorded;
 			rows.push({
 				label,
 				cat: start.cat,

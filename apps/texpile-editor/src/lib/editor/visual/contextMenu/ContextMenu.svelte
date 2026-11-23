@@ -16,6 +16,7 @@
 	import type { ShowInOutput } from './showInOutput';
 	import { selectionBox } from './selectionBox';
 	import { menuPoint } from './menuPoint';
+	import { formulaCopyAsItem } from './formulaCopyAs';
 
 	type Props = {
 		/** dialect-aware chrome (see lib/editor/dialect.ts): feature flags derive from this. */
@@ -137,6 +138,8 @@
 		const hasTextSelection = sel instanceof TextSelection && !sel.empty;
 
 		const items: ContextMenuItem[] = menuItems.map(entry);
+		const copyAs = formulaCopyAsItem(editorViewStore.current!);
+		if (copyAs) items.splice(2, 0, copyAs);
 		const refine = refineMenuItems(hasTextSelection, () => selectionBox(editorViewStore.current!));
 		if (refine.length) items.push({ separator: true }, ...refine);
 		if (onAddComment) {

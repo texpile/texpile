@@ -19,6 +19,16 @@
 
 	function closeBar(): void {
 		display.current = false;
+		editorViewStore.current?.focus();
+	}
+
+	/** a selection on one line is what the bar opens searching for */
+	function takeSelection(): void {
+		const view = editorViewStore.current;
+		if (!view) return;
+		const { from, to, empty } = view.state.selection;
+		const text = empty ? '' : view.state.doc.textBetween(from, to, '\n');
+		if (text && !text.includes('\n')) query = text;
 	}
 
 	function handleKeydown(e: KeyboardEvent): void {
@@ -33,6 +43,7 @@
 	// the bar opens and closes from the menu and the keyboard alike
 	$effect(() => {
 		if (!display.current) return void visualFind.close();
+		untrack(takeSelection);
 		untrack(commit);
 		setTimeout(() => bar?.focusQuery(), 0);
 	});

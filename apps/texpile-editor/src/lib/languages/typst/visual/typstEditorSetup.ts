@@ -29,6 +29,7 @@ import { caretArrowsPlugin } from '$lib/editor/canvas';
 import { tableEditing, goToNextCell } from 'prosemirror-tables';
 import { wholeTableEdits } from '$lib/editor/visual/extensions/table/wholeTableEdits';
 import { tabThroughCells } from '$lib/editor/visual/extensions/table/rows/addTableRow';
+import { enterInTable } from '$lib/editor/visual/extensions/table/rows/cellEnter';
 import { crossBlockEdits } from '$lib/editor/visual/extensions/crossBlockEdits';
 import { columnResize } from '$lib/editor/visual/extensions/table/canvas/columnResize';
 import { captureColumnWidths } from '$lib/editor/visual/extensions/table/captureColumnWidths';
@@ -241,7 +242,7 @@ export function typstEditorPlugins(setup: TypstEditorSetup): Plugin[] {
 			'Mod-End': selectDocEnd,
 			'Shift-Mod-Home': extendToDocStart,
 			'Shift-Mod-End': extendToDocEnd,
-			Enter: splitBlockWithoutDuplicates,
+			Enter: (state, dispatch, view) => enterInTable(state, dispatch, view) || splitBlockWithoutDuplicates(state, dispatch),
 			// table cell first, then list indent; always consume so focus stays in the editor
 			Tab: (state, dispatch, view) => tabThroughCells(state, dispatch, view) || indentListItem()(state, dispatch) || true,
 			'Shift-Tab': (state, dispatch) => goToNextCell(-1)(state, dispatch) || createDedentListCommand()(state, dispatch) || true

@@ -15,6 +15,7 @@ import { pictureFor, pictureKey, type Picture } from './imagePicture';
 import { RESIZE_KEY, resizeAt, type CanvasResize } from './imageResize';
 import { imageSettingsOffer } from './imageSettingsOffer';
 import { watchPictureFiles } from './pictureFileWatch';
+import { commandSizeLook } from './commandSize';
 
 const ROOT_LOOK: StyleLook = { display: 'flex', flexDirection: 'column', position: 'relative', borderRadius: 'var(--radius-base)' };
 // on white in dark mode, as a drawn figure is: a picture's ink is made for paper
@@ -42,7 +43,7 @@ function pictureContent(picture: Picture): ReplacedContent {
 	};
 }
 
-/** P0's fit: the width written scaled to the column, and never past it */
+/** P0's fit: the width written scaled to the column, else the command's own size, and never past it */
 export function pictureLook(node: PMNode, settings: ImagePluginSettings): StyleLook {
 	const width = Number(node.attrs.width) || 0;
 	const height = Number(node.attrs.height) || 0;
@@ -50,6 +51,8 @@ export function pictureLook(node: PMNode, settings: ImagePluginSettings): StyleL
 	const base: StyleLook = { ...IMAGE_LOOK, maxWidth: '100%' };
 	if (width && written && settings.scaleImage) return { ...base, width: `calc(100% * ${width / written})` };
 	if (width) return { ...base, width: `${width}px` };
+	const given = commandSizeLook(node.attrs.options);
+	if (given) return { ...base, ...given };
 	// without resizing (Markdown) the stylesheet's width: 100% drew every picture across the column
 	if (!settings.enableResize) return { ...IMAGE_LOOK, width: '100%', maxWidth: '100%' };
 	return height ? { ...base, height: `${height}px` } : base;
@@ -80,10 +83,10 @@ function figureNumberOf(view: VisualView, node: PMNode, pos: number, decorations
 	return String(view.canvas.build.counters.at(pos, 'figure'));
 }
 
-/** what a rebuild changes: the picture, its size, the caption's switch, its letter and its number */
+/** what a rebuild changes: the picture, its size and options, the caption's switch, its letter and its number */
 function drawnWith(node: PMNode, settings: ImagePluginSettings, grouped: boolean, letter: string | null, number: string | null): string {
-	const { width, height, maxWidth, showCaption } = node.attrs;
-	return JSON.stringify([pictureKey(node, settings.cropFormat), width, height, maxWidth, showCaption, grouped, letter, number]);
+	const { width, height, maxWidth, options, showCaption } = node.attrs;
+	return JSON.stringify([pictureKey(node, settings.cropFormat), width, height, maxWidth, options, showCaption, grouped, letter, number]);
 }
 
 function imageView(...[node, view, getPos, decorations]: Parameters<CanvasNodeViewConstructor>): ReturnType<CanvasNodeViewConstructor> {

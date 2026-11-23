@@ -29,6 +29,7 @@ import { menuUpdatePlugin } from '$lib/editor/visual/extensions/toolbarlistenerp
 import { tableEditing, goToNextCell } from 'prosemirror-tables';
 import { wholeTableEdits } from '$lib/editor/visual/extensions/table/wholeTableEdits';
 import { tabThroughCells } from '$lib/editor/visual/extensions/table/rows/addTableRow';
+import { enterInTable } from '$lib/editor/visual/extensions/table/rows/cellEnter';
 import { crossBlockEdits } from '$lib/editor/visual/extensions/crossBlockEdits';
 import { imagePlugin } from '$lib/editor/visual/extensions/image';
 import { createCursorPlugin } from '$lib/editor/visual/extensions/cursor-plugin';
@@ -37,7 +38,14 @@ import { remoteCursorsPlugin } from '$lib/editor/visual/extensions/remoteCursors
 import { pasteUuidFixPlugin } from '$lib/editor/visual/extensions/paste-uuid-fix';
 import { latexClipboardPlugin, pasteLatexText } from '$lib/editor/visual/extensions/latexClipboard';
 import { visualSmartPaste } from '$lib/editor/paste/visualSmartPaste';
-import { createListEventPlugin, listInputRules, listKeymap, createDedentListCommand } from 'prosemirror-flat-list';
+import {
+	createListEventPlugin,
+	bulletListInputRule,
+	orderedListInputRule,
+	wrappingListInputRule,
+	listKeymap,
+	createDedentListCommand
+} from 'prosemirror-flat-list';
 import { indentListItem } from '$lib/editor/visual/extensions/listIndent/listIndent';
 import { inputRules, InputRule, smartQuotes, ellipsis, undoInputRule } from 'prosemirror-inputrules';
 import { selectFigureBackward, selectFigureForward } from '$lib/editor/visual/figureDeleteGuard';
@@ -148,7 +156,10 @@ export function latexEditorPlugins(setup: LatexEditorSetup): Plugin[] {
 		keymap(listKeymap),
 		inputRules({
 			rules: [
-				...listInputRules.map(listRuleWithoutIndent),
+				// a LaTeX list holds bullets and numbers only: a task or toggle item saved as a plain \item
+				...[bulletListInputRule, orderedListInputRule].map(({ regexp, getAttrs }) =>
+					listRuleWithoutIndent(wrappingListInputRule(regexp, getAttrs))
+				),
 				...smartQuotes,
 				emDashRule,
 				enDashRule,
@@ -190,7 +201,8 @@ export function latexEditorPlugins(setup: LatexEditorSetup): Plugin[] {
 			'Mod-End': selectDocEnd,
 			'Shift-Mod-Home': extendToDocStart,
 			'Shift-Mod-End': extendToDocEnd,
-			Enter: splitBlockWithoutDuplicates,
+			Enter: (state: EditorState, dispatch?: (tr: Transaction) => void, view?: EditorView) =>
+				enterInTable(state, dispatch, view) || splitBlockWithoutDuplicates(state, dispatch),
 			// table cell, then list nesting (as markdown and typst do), and only outside both does Tab
 			// cycle the paragraph indent. Without the list step it wrote \indent into the \item
 			// instead of sinking it. always consume Tab so focus stays in the editor

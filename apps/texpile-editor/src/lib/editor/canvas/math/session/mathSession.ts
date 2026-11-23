@@ -415,11 +415,18 @@ export class CanvasMathSession implements MathSession {
 	}
 
 	clipboard(event: ClipboardEvent): boolean {
+		// nothing selected inside: the copy or cut is of the formula, as the editor's own clip
+		if (event.type !== 'paste' && this.field.selectionIsCollapsed && this.wholeSelected()) return false;
 		if (event.type === 'copy') this.field.onCopy(event);
 		else if (event.type === 'cut') this.field.onCut(event);
 		else this.field.onPaste(event);
 		event.preventDefault();
 		return true;
+	}
+
+	private wholeSelected(): boolean {
+		const { selection } = this.view.state;
+		return selection instanceof NodeSelection && selection.from === this.pos;
 	}
 
 	/** T4 and T6: an emptied formula goes, unless it was just made and never typed in */

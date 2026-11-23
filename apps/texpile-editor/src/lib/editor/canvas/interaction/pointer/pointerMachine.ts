@@ -113,6 +113,10 @@ export class PointerMachine {
 		return canvas.geometry.hit(canvas.docPoint({ x: event.clientX, y: event.clientY }));
 	}
 
+	private selectsNode(event: MouseEvent): boolean {
+		return this.mac ? event.metaKey : event.ctrlKey;
+	}
+
 	/** true when the default is to be prevented */
 	press(event: MouseEvent): boolean {
 		const { view, hooks } = this;
@@ -129,8 +133,10 @@ export class PointerMachine {
 			this.faceDrag = drag;
 			this.state = { kind: 'face', owner };
 		};
-		// a right press starts no face handler and no node view: it selects what it lands on and the menu acts on that (A4)
-		const claimed = event.button !== 2 && (runFaceHandlers(view, 'press', retargeted, hit, capture) || viewsStopEvent(retargeted));
+		// a right press starts no face handler and no node view: it selects what it lands on and the menu acts on that (A4);
+		// Ctrl+click (Cmd on macOS) selects the node, so it opens no chip's form either
+		const faces = event.button !== 2 && !(event.button === 0 && this.selectsNode(event));
+		const claimed = faces && (runFaceHandlers(view, 'press', retargeted, hit, capture) || viewsStopEvent(retargeted));
 		if (claimed || hooks.mousedown(retargeted)) {
 			// the DOM's dblclick reached a face whatever took its presses (a figure card in a selected chip)
 			if (click === 'double' && event.button === 0) runFaceHandlers(view, 'dblclick', retargeted, hit, () => {});
@@ -160,7 +166,7 @@ export class PointerMachine {
 			client: { x: event.clientX, y: event.clientY },
 			hit,
 			click: 'single',
-			selectNode: this.mac ? event.metaKey : event.ctrlKey,
+			selectNode: this.selectsNode(event),
 			allowDefault: event.shiftKey,
 			mightDrag,
 			inRange: event.button === 0 && !event.shiftKey && inRange,
@@ -270,7 +276,12 @@ export class PointerMachine {
 			if (!hit) return;
 			const retargeted = this.hooks.retarget(event, hit);
 			if (state.button === 2 && contextHandled) return;
-			if (state.button !== 2 && (runFaceHandlers(view, 'click', retargeted, hit, () => {}) || viewsStopEvent(retargeted))) return;
+			if (
+				state.button !== 2 &&
+				!state.selectNode &&
+				(runFaceHandlers(view, 'click', retargeted, hit, () => {}) || viewsStopEvent(retargeted))
+			)
+				return;
 			const inside = state.selectNode ? hit.inside : pressedNode(view.state.doc, hit);
 			if (handleSingleClick(view, hit.pos, inside, asMouseEvent(retargeted), state.selectNode)) return;
 			if (owed && state.button === 0) this.placeCaret(hit.caret);

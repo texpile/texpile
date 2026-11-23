@@ -12,17 +12,22 @@ import { caretArrowsPlugin } from '$lib/editor/canvas';
 import { tableEditing, goToNextCell } from 'prosemirror-tables';
 import { wholeTableEdits } from '$lib/editor/visual/extensions/table/wholeTableEdits';
 import { tabThroughCells } from '$lib/editor/visual/extensions/table/rows/addTableRow';
+import { enterInTable } from '$lib/editor/visual/extensions/table/rows/cellEnter';
 import { crossBlockEdits } from '$lib/editor/visual/extensions/crossBlockEdits';
 import {
 	createListClipboardPlugin,
 	createListEventPlugin,
-	listInputRules,
+	bulletListInputRule,
+	orderedListInputRule,
+	taskListInputRule,
+	wrappingListInputRule,
 	listKeymap,
 	createIndentListCommand,
 	createDedentListCommand
 } from 'prosemirror-flat-list';
 import { inputRules, textblockTypeInputRule, wrappingInputRule, InputRule, undoInputRule } from 'prosemirror-inputrules';
 import { selectFigureBackward, selectFigureForward } from '$lib/editor/visual/figureDeleteGuard';
+import { liftFromStyleEnvironment } from '$lib/editor/visual/liftFromStyleEnvironment';
 import { deleteEmptyBlockBackward, deleteEmptyBlockForward } from '$lib/editor/visual/emptyBlockDelete';
 import { visualFindPlugin } from '$lib/editor/visual/find/visualFindPlugin';
 import { parseCarryPlugin } from '$lib/editor/visual/parseCarry';
@@ -134,13 +139,22 @@ export function markdownEditorPlugins(setup: MarkdownEditorSetup): Plugin[] {
 		listAttrInheritance,
 		history(),
 		// before the list keymap, whose Backspace and Delete act at a block edge: they would join the block after an empty one into it, and a block into a figure
+		keymap({ Backspace: liftFromStyleEnvironment }),
 		keymap({ Backspace: deleteEmptyBlockBackward, Delete: deleteEmptyBlockForward }),
 		keymap({ Backspace: selectFigureBackward, Delete: selectFigureForward }),
 		primarySelectionPlugin(),
 		heldWidthPlugin(),
 		islandKeysPlugin(),
 		keymap(listKeymap),
-		inputRules({ rules: [...listInputRules, ...mdInputRules] }),
+		// no toggle item: Markdown has no syntax for one
+		inputRules({
+			rules: [
+				...[bulletListInputRule, orderedListInputRule, taskListInputRule].map(({ regexp, getAttrs }) =>
+					wrappingListInputRule(regexp, getAttrs)
+				),
+				...mdInputRules
+			]
+		}),
 		pmCommandKeys({
 			'editor.bold': toggleMark(mdSchema.marks.strong),
 			'editor.italic': toggleMark(mdSchema.marks.em),
@@ -168,6 +182,7 @@ export function markdownEditorPlugins(setup: MarkdownEditorSetup): Plugin[] {
 			'Mod-End': selectDocEnd,
 			'Shift-Mod-Home': extendToDocStart,
 			'Shift-Mod-End': extendToDocEnd,
+			Enter: enterInTable,
 			'Shift-Enter': insertHardBreak,
 			// table cell first, then list indent; always consume so focus stays in the editor
 			Tab: (state, dispatch, view) => tabThroughCells(state, dispatch, view) || createIndentListCommand()(state, dispatch) || true,

@@ -2,7 +2,7 @@
 // comment toggle), run on a CodeMirror state of the island's text and written back as one ProseMirror change
 import { keydownHandler } from 'prosemirror-keymap';
 import { exitCode } from 'prosemirror-commands';
-import { Plugin, Selection, TextSelection } from 'prosemirror-state';
+import { NodeSelection, Plugin, Selection, TextSelection } from 'prosemirror-state';
 import type { Node as PMNode } from 'prosemirror-model';
 import type { EditorView } from 'prosemirror-view';
 import {
@@ -58,10 +58,11 @@ const LINE_KEYS: Record<string, CodeCommand> = {
 	'Mod-/': toggleComment as unknown as CodeCommand
 };
 
+/** a code block that names no language is plain text here: as Markdown, Mod+/ wrapped its lines in <!-- --> */
 function languageOf(island: PMNode) {
-	const name =
-		island.type.name === 'code_block' ? codeBlockLanguageName(island.attrs.lang) : rawLanguageName(island.attrs.lang, island.textContent);
-	return languageNow(name);
+	if (island.type.name !== 'code_block') return languageNow(rawLanguageName(island.attrs.lang, island.textContent));
+	const name = codeBlockLanguageName(island.attrs.lang);
+	return name === 'Markdown' && !/^(md|markdown)$/i.test(String(island.attrs.lang ?? '')) ? null : languageNow(name);
 }
 
 export function runIslandCommand(view: EditorView, command: CodeCommand, lines: boolean): boolean {
@@ -112,6 +113,14 @@ function inlineEnter(view: EditorView): boolean {
 	return !!found && !found.island.isBlock && exitIsland(view);
 }
 
+/** Enter on a selected source chip goes into it at its end */
+function enterSelectedChip(view: EditorView): boolean {
+	const { selection, doc } = view.state;
+	if (!(selection instanceof NodeSelection) || selection.node.type.name !== 'inline_latex') return false;
+	view.dispatch(view.state.tr.setSelection(TextSelection.create(doc, selection.to - 1)).scrollIntoView());
+	return true;
+}
+
 /** Ctrl+Home and Ctrl+End go to the island's own start and end, as its CodeMirror did; the setup's keymap would leave it */
 function islandEdge(dir: -1 | 1, extend: boolean) {
 	return (_state: unknown, _dispatch: unknown, view?: EditorView): boolean => {
@@ -134,7 +143,7 @@ const MOVE_KEYS = {
 const EDGE_KEYS: Record<string, (view: EditorView) => boolean> = {
 	'Mod-Enter': exitIsland,
 	'Ctrl-Enter': exitIsland,
-	Enter: inlineEnter,
+	Enter: (view) => inlineEnter(view) || enterSelectedChip(view),
 	Backspace: (view) => deleteEmptyIsland(view) || holdAtIslandEdge(-1)(view),
 	'Mod-Backspace': holdAtIslandEdge(-1),
 	'Alt-Backspace': holdAtIslandEdge(-1),

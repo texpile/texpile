@@ -1,29 +1,33 @@
-// Ctrl+Up and Ctrl+Down as Chromium's paragraph moves: line by line at the goal x until the textblock changes
-import type { CaretPlace, LineRef } from '../../contracts/geometryTypes';
+// Ctrl+Up and Ctrl+Down: Up goes to the paragraph's start, Down to its end (Windows: the next paragraph's start), and
+// from that edge to the same edge of the next paragraph
+import type { Platform } from '$lib/editor/keys/platformKeys';
+import type { CaretPlace } from '../../contracts/geometryTypes';
 import type { VisualView } from '../../contracts/viewTypes';
-import type { GoalColumn } from './goalColumn';
+import { contentEdge, facingEdgeBeyond, textblockAround } from './caretTextblocks';
 
-/** `select`: a chip on a line of its own the move comes to, which it selects whole */
-export type VerticalTarget = { place: CaretPlace; x: number; select?: number };
+export type VerticalTarget = { place: CaretPlace; x: number };
+
+function paragraphEdge(view: VisualView, platform: Platform, dir: -1 | 1, extend: boolean, from: number): number | null {
+	const here = textblockAround(view.state.doc.resolve(from));
+	if (!here) return null;
+	const side = dir > 0 && platform !== 'windows' ? 1 : -1;
+	const edge = contentEdge(here, side);
+	if (dir < 0 ? from > edge : side > 0 && from < edge) return edge;
+	const beyond = facingEdgeBeyond(view, here, dir, extend);
+	if (beyond === null) return contentEdge(here, dir);
+	const next = textblockAround(view.state.doc.resolve(beyond));
+	return next ? contentEdge(next, side) : beyond;
+}
 
 export function paragraphTarget(
 	view: VisualView,
-	goal: GoalColumn,
+	platform: Platform,
 	dir: -1 | 1,
+	extend: boolean,
 	head: CaretPlace = view.canvas.head()
 ): VerticalTarget | null {
-	const { geometry } = view.canvas;
-	const line = geometry.lineOf(head);
-	if (!line) return null;
-	const x = goal.xFor(view.state.selection) ?? geometry.caretRect(head)?.x ?? line.left;
-	for (let ref: LineRef | null = line.ref; ref;) {
-		const next = geometry.adjacentLine(ref, dir);
-		if (next && next.textblock !== line.ref.textblock) return { place: geometry.placeOnLine(next, x), x };
-		if (!next) {
-			const edge = geometry.linesOf(line.ref.textblock).at(dir < 0 ? 0 : -1);
-			return edge ? { place: dir < 0 ? { pos: edge.from, affinity: 1 } : { pos: edge.to, affinity: -1 }, x } : null;
-		}
-		ref = next;
-	}
-	return null;
+	const pos = paragraphEdge(view, platform, dir, extend, head.pos);
+	if (pos === null) return null;
+	const place: CaretPlace = { pos, affinity: dir > 0 && platform !== 'windows' ? -1 : 1 };
+	return { place, x: view.canvas.geometry.caretRect(place)?.x ?? 0 };
 }

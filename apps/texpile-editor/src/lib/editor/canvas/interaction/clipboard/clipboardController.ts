@@ -4,6 +4,8 @@ import type { VisualView } from '../../contracts/viewTypes';
 import { NodeSelection } from 'prosemirror-state';
 import { wholeBlockOf } from '$lib/editor/visual/extensions/wholeBlockDrag';
 import { runDomHandlers } from '../../view/domEvents';
+import { islandOf } from '../../islands/islandCode';
+import { isTexpileCopy, texpileCopyText } from '$lib/editor/paste/texpileCopy';
 import { clipboardText, pasteSlice, pastesPlain } from './pasteSlice';
 
 type ClipboardNesting = Pick<KeyNesting, 'active'> & { stopsEvent(event: ClipboardEvent): boolean };
@@ -17,8 +19,10 @@ export class ClipboardController {
 	/** true when the canvas took the event */
 	handle(event: ClipboardEvent): boolean {
 		const { view } = this;
-		if (this.nested.active()?.clipboard(event)) return true;
-		if (this.nested.stopsEvent(event)) return false;
+		const nested = this.nested.active();
+		if (nested?.clipboard(event)) return true;
+		// a formula that leaves a copy or cut to the editor (selected whole) leaves it to the editor's own clip
+		if (!nested && this.nested.stopsEvent(event)) return false;
 		if (runDomHandlers(view, event)) return true;
 		if (event.type === 'copy') return this.copy(event);
 		if (!view.editable) return false;
@@ -32,11 +36,15 @@ export class ClipboardController {
 		if (view.state.selection.empty || !clipboard) return false;
 		const blockPos = wholeBlockOf(view.state.selection);
 		const selection = blockPos === null ? view.state.selection : NodeSelection.create(view.state.doc, blockPos);
-		const { dom, text } = view.serializeForClipboard(selection.content());
 		event.preventDefault();
 		clipboard.clearData();
-		clipboard.setData('text/html', dom.innerHTML);
-		clipboard.setData('text/plain', text);
+		// inside a code or raw block it is the code alone, as its CodeMirror copied it
+		if (islandOf(view)) clipboard.setData('text/plain', view.state.doc.textBetween(selection.from, selection.to));
+		else {
+			const { dom, text } = view.serializeForClipboard(selection.content());
+			clipboard.setData('text/html', dom.innerHTML);
+			clipboard.setData('text/plain', text);
+		}
 		if (event.type !== 'cut') return true;
 		if (selection !== view.state.selection) view.dispatch(view.state.tr.setSelection(selection));
 		view.dispatch(view.state.tr.deleteSelection().scrollIntoView().setMeta('uiEvent', 'cut'));
@@ -48,7 +56,13 @@ export class ClipboardController {
 		const clipboard = event.clipboardData;
 		// prosemirror-view leaves a paste during a composition to the browser
 		if (view.composing || !clipboard) return false;
-		if (!pasteSlice(view, clipboardText(clipboard), clipboard.getData('text/html'), pastesPlain(view.input), event)) return false;
+		const html = clipboard.getData('text/html');
+		// into code a copy from the editor goes as the words it showed, where its plain text is the file's source
+		const text =
+			html && isTexpileCopy(html) && view.state.selection.$from.parent.type.spec.code
+				? texpileCopyText(view, html)
+				: clipboardText(clipboard);
+		if (!pasteSlice(view, text, html, pastesPlain(view.input), event)) return false;
 		event.preventDefault();
 		return true;
 	}
