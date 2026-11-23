@@ -75,7 +75,7 @@ export function imageOverlays(parts: ImageOverlayParts): (ui: FaceUiState) => re
 				props: { onpress: (direction: ResizeDirection, event: MouseEvent) => pressHandle(parts, direction, event) },
 				anchor: { part: 'picture' },
 				placement: 'inFlow',
-				when: resizing ? 'always' : 'hovered'
+				when: resizing ? 'always' : 'anchorHovered'
 			}
 		: null;
 	return (ui) => (ui.readOnly || !frame ? [] : [frame]);

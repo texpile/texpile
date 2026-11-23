@@ -2,6 +2,9 @@
 
 Release notes for Texpile Desktop. Add notes under `## [Unreleased]` as you work; run
 `pnpm --filter texpile-editor release <patch|minor|major>` to cut a dated, numbered release.
+- fix: scrolling stopping while the pointer is on the block handle (by @louisqli)
+- fix: figure resize frame showing while hovering the caption (by @louisqli)
+- feat: image Crop and Settings bar shows on hover (by @louisqli)
 - fix: sideways scrollbar under the visual editor at 125 percent display scale (by @louisqli)
 - fix: selection skipping empty lines between paragraphs in the visual editor (by @louisqli)
 - fix: caret drawn thinner in some places than others at 125 percent display scale (by @louisqli)

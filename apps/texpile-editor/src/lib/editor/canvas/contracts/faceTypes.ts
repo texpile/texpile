@@ -119,6 +119,8 @@ export type FaceBuildContext = FaceQueryContext & {
 export type FaceUiState = {
 	selected: boolean;
 	hovered: boolean;
+	/** the face part under the pointer while this node is hovered */
+	hoveredPart: string | null;
 	caretInside: boolean;
 	focused: boolean;
 	readOnly: boolean;
@@ -141,5 +143,6 @@ export type OverlaySpec = {
 	/** a FaceElement.anchor of this node, or the node itself */
 	anchor: { part?: string };
 	placement: 'inFlow' | 'floating';
-	when: 'always' | 'hovered' | 'selected' | 'caretInside' | 'hoveredOrCaretInside';
+	/** anchorHovered: the pointer is on the anchor part itself (a figure's picture, not its caption) */
+	when: 'always' | 'hovered' | 'anchorHovered' | 'selected' | 'caretInside' | 'hoveredOrCaretInside';
 };

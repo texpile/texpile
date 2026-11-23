@@ -113,6 +113,7 @@ class BlockHandleView {
 		this.lane.addEventListener('mouseleave', this.onMouseLeave);
 		this.host.addEventListener('mouseenter', this.cancelHide);
 		this.host.addEventListener('mouseleave', this.scheduleHide);
+		this.host.addEventListener('wheel', this.onWheel, { passive: true });
 		// capture, because scroll does not bubble: this has to catch the editor's scroller and any
 		// nested one (a wide table's wrapper) without knowing which exists
 		view.dom.ownerDocument.addEventListener('dragend', this.onDragEnd, true);
@@ -135,6 +136,12 @@ class BlockHandleView {
 		const buttons = { top, bottom: top + handleHeight(this.state.stacked, this.state.settings !== null) };
 		return pointerStaysWithBlock({ x, y }, this.view.canvas.sheetClientRect(), block, buttons);
 	}
+
+	// the gutter stands on the body outside the pane: a wheel over it scrolls the pane it serves
+	private onWheel = (event: WheelEvent) => {
+		const unit = event.deltaMode === 1 ? 16 : event.deltaMode === 2 ? window.innerHeight : 1;
+		scrollParent(this.view.dom)?.scrollBy({ left: event.deltaX * unit, top: event.deltaY * unit });
+	};
 
 	private onMouseLeave = () => {
 		this.pointerInside = false;
@@ -308,6 +315,7 @@ class BlockHandleView {
 		this.lane.removeEventListener('mouseleave', this.onMouseLeave);
 		this.host.removeEventListener('mouseenter', this.cancelHide);
 		this.host.removeEventListener('mouseleave', this.scheduleHide);
+		this.host.removeEventListener('wheel', this.onWheel);
 		this.view.dom.ownerDocument.removeEventListener('dragend', this.onDragEnd, true);
 		this.view.dom.ownerDocument.documentElement.classList.remove('pm-handle-drag');
 		this.view.dom.ownerDocument.removeEventListener('scroll', this.onScroll, { capture: true });

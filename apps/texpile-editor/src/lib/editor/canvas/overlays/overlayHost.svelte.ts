@@ -18,12 +18,14 @@ export type PlacedOverlay = {
 	readonly owner: NodeViewDesc;
 };
 
-function shown(when: OverlaySpec['when'], ui: FaceUiState): boolean {
-	switch (when) {
+function shown(spec: OverlaySpec, ui: FaceUiState, held: boolean): boolean {
+	switch (spec.when) {
 		case 'always':
 			return true;
 		case 'hovered':
 			return ui.hovered;
+		case 'anchorHovered':
+			return held || (ui.hovered && ui.hoveredPart === (spec.anchor.part ?? null));
 		case 'selected':
 			return ui.selected;
 		case 'caretInside':
@@ -92,9 +94,11 @@ export class OverlayHost {
 		const { selection } = view.state;
 		const pos = desc.pos();
 		const end = pos + desc.node.nodeSize;
+		const hovered = this.held === desc || hover.blockFor === pos || hover.chain.includes(desc.nodeDOM);
 		return {
 			selected: selection instanceof NodeSelection && selection.from === pos,
-			hovered: this.held === desc || hover.blockFor === pos || hover.chain.includes(desc.nodeDOM),
+			hovered,
+			hoveredPart: hovered && hover.pos === pos ? hover.part : null,
 			caretInside: selection.from > pos && selection.to < end,
 			focused: view.hasFocus(),
 			readOnly: !view.editable,
@@ -112,7 +116,7 @@ export class OverlayHost {
 			const ui = this.uiOf(desc);
 			const pos = desc.pos();
 			for (const spec of desc.spec?.overlays?.(ui) ?? []) {
-				if (!shown(spec.when, ui)) continue;
+				if (!shown(spec, ui, this.held === desc)) continue;
 				const rect = spec.anchor.part ? geometry.partRect(pos, spec.anchor.part) : (geometry.nodeRect(pos)?.rect ?? null);
 				if (!rect) continue;
 				const box = this.view.canvas.clientRect(rect);
