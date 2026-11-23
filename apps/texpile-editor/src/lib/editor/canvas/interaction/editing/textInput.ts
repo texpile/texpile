@@ -17,6 +17,9 @@ export function typedTextTr(state: EditorState, text: string, from: number, to: 
 	}
 	tr.insertText(text, from, to);
 	if (selection instanceof NodeSelection && text) tr.setSelection(TextSelection.near(tr.doc.resolve(from + text.length)));
+	// a selection the text replaced (all of an empty document, say) maps onto the text; the caret goes after it
+	else if (!tr.selection.empty && selection.from === from && selection.to === to)
+		tr.setSelection(TextSelection.near(tr.doc.resolve(tr.mapping.map(to)), -1));
 	return tr;
 }
 
