@@ -129,7 +129,11 @@ export function createCanvasPainter(model: DocumentModel, repaintCarets: () => v
 		},
 		sessionKey(block, frame) {
 			if (frame.focus !== 'editor') return '';
-			const rects = [...formulaRectsIn(model, block, 'selectionRects'), ...formulaRectsIn(model, block, 'outlineRects')];
+			const rects = [
+				...formulaRectsIn(model, block, 'selectionRects'),
+				...formulaRectsIn(model, block, 'outlineRects'),
+				...islandFrameRects(model, host.geometry, block)
+			];
 			return rects.map(({ x, y, width, height }) => `${x},${y},${width},${height}`).join(';');
 		},
 		paintKey() {

@@ -21,11 +21,25 @@ export function islandFrameRects(model: DocumentModel, geometry: CanvasGeometry,
 		const from = $head.before(depth);
 		const end = block.pos + model.block(block.index).node.nodeSize;
 		if (from < block.pos || from >= end) return [];
-		return geometry
-			.rangeRects(from + 1, from + node.nodeSize - 1, 'text')
-			.map((rect) => ({ x: rect.x - OUT, y: rect.y - block.top - OUT, width: rect.width + 2 * OUT, height: rect.height + 2 * OUT }));
+		const lines = geometry.rangeRects(from + 1, from + node.nodeSize - 1, 'text');
+		// a block is framed whole, an inline chip line by line
+		const rects = node.isBlock && lines.length ? [boundsOf(lines)] : lines;
+		return rects.map((rect) => ({
+			x: rect.x - OUT,
+			y: rect.y - block.top - OUT,
+			width: rect.width + 2 * OUT,
+			height: rect.height + 2 * OUT
+		}));
 	}
 	return [];
+}
+
+function boundsOf(rects: readonly DocRect[]): DocRect {
+	const left = Math.min(...rects.map((rect) => rect.x));
+	const top = Math.min(...rects.map((rect) => rect.y));
+	const right = Math.max(...rects.map((rect) => rect.x + rect.width));
+	const bottom = Math.max(...rects.map((rect) => rect.y + rect.height));
+	return { x: left, y: top, width: right - left, height: bottom - top };
 }
 
 export function islandFrameColor(surface: Rgba): Rgba {
