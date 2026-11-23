@@ -39,6 +39,17 @@
 		position: absolute;
 		inset: -10px;
 	}
+	/* the grab area reaches over the picture only: below it the caption takes clicks, above it the text before */
+	.top::before,
+	.topLeft::before,
+	.topRight::before {
+		top: 0;
+	}
+	.bottom::before,
+	.bottomLeft::before,
+	.bottomRight::before {
+		bottom: 0;
+	}
 	.topLeft {
 		cursor: nw-resize;
 		left: -5px;

@@ -15,6 +15,7 @@ import {
 	handleDoubleClick,
 	handleSingleClick,
 	handleTripleClick,
+	pressedNode,
 	selectionForTripleClick,
 	updateSelection
 } from './clickRules';
@@ -145,7 +146,8 @@ export class PointerMachine {
 	private pressOnce(event: MouseEvent, hit: CanvasHit): void {
 		const { view } = this;
 		const { doc, selection } = view.state;
-		const inside = hit.inside > -1 ? hit.inside : null;
+		const pressed = pressedNode(doc, hit);
+		const inside = pressed > -1 ? pressed : null;
 		const target = inside !== null ? doc.nodeAt(inside) : null;
 		const draggable = !!target && !!target.type.spec.draggable && target.type.spec.selectable !== false;
 		const inNodeSelection = selection instanceof NodeSelection && inside !== null && selection.from <= inside && selection.to > inside;
@@ -269,7 +271,8 @@ export class PointerMachine {
 			const retargeted = this.hooks.retarget(event, hit);
 			if (state.button === 2 && contextHandled) return;
 			if (state.button !== 2 && (runFaceHandlers(view, 'click', retargeted, hit, () => {}) || viewsStopEvent(retargeted))) return;
-			if (handleSingleClick(view, hit.pos, hit.inside, asMouseEvent(retargeted), state.selectNode)) return;
+			const inside = state.selectNode ? hit.inside : pressedNode(view.state.doc, hit);
+			if (handleSingleClick(view, hit.pos, inside, asMouseEvent(retargeted), state.selectNode)) return;
 			if (owed && state.button === 0) this.placeCaret(hit.caret);
 			return;
 		}

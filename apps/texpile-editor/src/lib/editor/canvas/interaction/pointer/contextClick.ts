@@ -3,6 +3,7 @@ import { NodeSelection, type EditorState, type Selection } from 'prosemirror-sta
 import { PLATFORM_RULES, type Platform } from '$lib/editor/keys/platformKeys';
 import type { CanvasHit } from '../../contracts/geometryTypes';
 import type { VisualView } from '../../contracts/viewTypes';
+import { pressedNode } from './clickRules';
 
 export type ContextClickPlan = { kind: 'keep' } | { kind: 'node'; pos: number } | { kind: 'caret' } | { kind: 'word' };
 
@@ -11,8 +12,9 @@ const nodeSelected = new WeakMap<VisualView, Selection>();
 
 /** the node a right press selects: a formula, an island chip or a leaf that is selectable */
 function atomUnder(state: EditorState, hit: CanvasHit): number | null {
-	if (hit.inside < 0) return null;
-	const node = state.doc.nodeAt(hit.inside);
+	const pressed = pressedNode(state.doc, hit);
+	if (pressed < 0) return null;
+	const node = state.doc.nodeAt(pressed);
 	if (!node || node.isText || node.type.spec.selectable === false) return null;
 	const target = hit.target.kind === 'cell' ? hit.target.inner : hit.target;
 	const drawn =
@@ -20,7 +22,7 @@ function atomUnder(state: EditorState, hit: CanvasHit): number | null {
 		target.kind === 'formula' ||
 		(target.kind === 'island' && node.isInline) ||
 		(target.kind === 'leaf' && target.policy !== 'text' && target.policy !== 'island');
-	return drawn ? hit.inside : null;
+	return drawn ? pressed : null;
 }
 
 function insideSelection(selection: Selection, hit: CanvasHit, atom: number | null, state: EditorState): boolean {

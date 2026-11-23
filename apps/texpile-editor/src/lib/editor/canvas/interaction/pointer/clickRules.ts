@@ -1,5 +1,7 @@
 // prosemirror-view's click handling (PMV/input.ts), ported over VisualView
+import type { Node as PMNode } from 'prosemirror-model';
 import { NodeSelection, TextSelection, type Selection } from 'prosemirror-state';
+import type { CanvasHit } from '../../contracts/geometryTypes';
 import type { VisualView } from '../../contracts/viewTypes';
 
 type ContextProp = 'handleClickOn' | 'handleDoubleClickOn' | 'handleTripleClickOn';
@@ -15,6 +17,12 @@ function runHandlerOnContext(view: VisualView, prop: ContextProp, pos: number, i
 		if (view.someProp(prop, (f) => f(view, pos, node, at, event, direct))) return true;
 	}
 	return false;
+}
+
+/** prosemirror-view's inside, except on a figure's caption: its text takes the caret though the figure is an atom */
+export function pressedNode(doc: PMNode, hit: CanvasHit): number {
+	const target = hit.target.kind === 'cell' ? hit.target.inner : hit.target;
+	return target.kind === 'text' && doc.nodeAt(target.textblock)?.isAtom ? -1 : hit.inside;
 }
 
 export function updateSelection(view: VisualView, selection: Selection): void {

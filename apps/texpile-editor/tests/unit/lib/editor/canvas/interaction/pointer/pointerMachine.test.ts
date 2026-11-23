@@ -19,6 +19,13 @@ describe('PointerMachine', () => {
 		expect([selected.from, selected.to, selected.toJSON().type]).toEqual([labelPos, labelPos + 1, 'node']);
 	});
 
+	it('a click on a figure caption puts the caret in it, though the figure is an atom', () => {
+		const figure = schema.nodes.image.create({ src: 'a.png' }, schema.text('caption words'));
+		const doc = schema.nodes.doc.create(null, [figure]);
+		const pointer = pointerOn(doc, caretAt(1));
+		expect(pointer.click(pointAt(pointer.geometry, 5)).toJSON()).toEqual({ type: 'text', anchor: 5, head: 5 });
+	});
+
 	it('Ctrl-click selects the enclosing paragraph, and on the same spot again its parent', () => {
 		const quoted = blockquote.create(null, paragraph.create(null, schema.text('inner words')));
 		const doc = schema.nodes.doc.create(null, [quoted]);

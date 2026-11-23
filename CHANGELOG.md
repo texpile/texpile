@@ -13,6 +13,8 @@ Release notes for Texpile Desktop. Add notes under `## [Unreleased]` as you work
 - feat: Layout button shows its icon only (by @louisqli)
 - feat: improved Spanish translation (by @nicolobos77)
 - feat: improved Português translation (by @rodrigo-alessantos)
+- fix: clicking a figure caption selecting the whole figure in the visual editor (by @louisqli)
+- fix: pressing on a caption just under a picture resizing the picture (by @louisqli)
 - fix: Typst preview losing its scroll and zoom after a pause (by @louisqli)
 - fix: preview too narrow after maximizing the window (by @louisqli)
 - fix: same zoom showing different page sizes in the two previews (by @louisqli)
