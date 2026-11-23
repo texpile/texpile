@@ -2,6 +2,7 @@
 
 Release notes for Texpile Desktop. Add notes under `## [Unreleased]` as you work; run
 `pnpm --filter texpile-editor release <patch|minor|major>` to cut a dated, numbered release.
+- fix: raw LaTeX command over several lines outlined line by line in the visual editor (by @louisqli)
 - fix: caret ending at the bottom edge of the pane after Ctrl+End in the visual editor (by @louisqli)
 - fix: double-click not opening a TikZ figure in the visual editor (by @louisqli)
 - fix: slide column width shown as plain text in the visual editor (by @louisqli)

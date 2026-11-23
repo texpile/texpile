@@ -22,14 +22,16 @@ export function islandFrameRects(model: DocumentModel, geometry: CanvasGeometry,
 		const end = block.pos + model.block(block.index).node.nodeSize;
 		if (from < block.pos || from >= end) return [];
 		const lines = geometry.rangeRects(from + 1, from + node.nodeSize - 1, 'text');
-		// a block is framed whole, an inline chip line by line
-		const rects = node.isBlock && lines.length ? [boundsOf(lines)] : lines;
-		return rects.map((rect) => ({
-			x: rect.x - OUT,
-			y: rect.y - block.top - OUT,
-			width: rect.width + 2 * OUT,
-			height: rect.height + 2 * OUT
-		}));
+		if (!lines.length) return [];
+		const rect = boundsOf(lines);
+		return [
+			{
+				x: rect.x - OUT,
+				y: rect.y - block.top - OUT,
+				width: rect.width + 2 * OUT,
+				height: rect.height + 2 * OUT
+			}
+		];
 	}
 	return [];
 }
