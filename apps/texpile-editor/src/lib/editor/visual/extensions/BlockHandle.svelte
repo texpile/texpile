@@ -2,7 +2,8 @@
 	import { tip } from '$lib/components/tooltip.svelte';
 	import { inEditorPane } from '$lib/editor/visual/editorPanePositioning';
 	import { Popover, Portal } from '@skeletonlabs/skeleton-svelte';
-	import { Plus, GripVertical, Settings, Trash2 } from '@lucide/svelte';
+	import { Plus, Settings } from '@lucide/svelte';
+	import BlockHandleMenu from './blockHandle/BlockHandleMenu.svelte';
 	import BlockInsertMenu from '$lib/editor/visual/insert/BlockInsertMenu.svelte';
 	import type { BlockInsertItem } from '$lib/editor/visual/insert/insertItem';
 	import { m } from '$lib/paraglide/messages';
@@ -12,9 +13,10 @@
 		top: number;
 		left: number;
 		right: number;
-		/** comments crowd the pane: one column on the left, delete included, and no right gutter */
+		/** comments crowd the pane: one column on the left and no right gutter */
 		stacked: boolean;
 		popoverOpen: boolean;
+		menuOpen: boolean;
 		/** the hint of the gear, for a block that has settings */
 		settings: string | null;
 	};
@@ -70,21 +72,18 @@
 		</Portal>
 	</Popover>
 
-	<button
-		type="button"
-		class="block-handle-btn cursor-grab"
-		aria-label={m.blockhandle_drag_move()}
-		use:tip={m.blockhandle_drag_move()}
-		draggable="true"
-		ondragstart={onDragStart}
-	>
-		<GripVertical class="size-4" />
-	</button>
-	{#if state.stacked}{@render deleteButton()}{@render settingsButton()}{/if}
+	<BlockHandleMenu
+		onOpenChange={(open) => {
+			state.menuOpen = open;
+			if (!open) focusEditor();
+		}}
+		{onDragStart}
+		{onDelete}
+	/>
+	{#if state.stacked}{@render settingsButton()}{/if}
 </div>
 
-<!-- right gutter, the left one mirrored: the block's settings by the text and delete at the outer edge, where it
-     stays on a block with no settings. Same visibility rules as the left; with the gutters stacked both are in the left one -->
+<!-- right gutter: the block's settings by the text. Same visibility rules as the left; with the gutters stacked it is in the left one -->
 {#if !state.stacked}
 	<div
 		class="block-handle-gutter fixed z-10 flex w-[46px] items-center justify-end gap-0.5"
@@ -92,25 +91,9 @@
 			? 'auto'
 			: 'none'}; top: {state.top}px; left: {state.right}px;"
 	>
-		{@render settingsButton()}{@render deleteButton()}
+		{@render settingsButton()}
 	</div>
 {/if}
-
-{#snippet deleteButton()}
-	<button
-		type="button"
-		class="block-handle-btn block-handle-btn-danger"
-		aria-label={m.blockhandle_delete_block()}
-		use:tip={m.blockhandle_delete_block()}
-		onmousedown={(e) => {
-			// preventDefault keeps focus on PM; delete runs, then PM refocuses itself
-			e.preventDefault();
-			onDelete();
-		}}
-	>
-		<Trash2 class="size-4" />
-	</button>
-{/snippet}
 
 {#snippet settingsButton()}
 	{#if state.settings}

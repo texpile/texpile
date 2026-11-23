@@ -1,4 +1,4 @@
-// notion-style block handle: floating insert/drag/delete gutters beside the hovered block
+// notion-style block handle: floating insert and drag gutters beside the hovered block
 import { caretAfterDelete } from './blockHandle/caretAfterDelete';
 import { Plugin, NodeSelection, type EditorState } from 'prosemirror-state';
 import { mount, unmount } from 'svelte';
@@ -31,9 +31,9 @@ const GUTTER_OFFSET_LEFT_STACKED = 30;
 const HANDLE_W = 22;
 const HANDLE_GAP = 2;
 
-// the buttons from the first one's top to the last one's foot: one row, or a column with the delete icon and the gear in it
+// the buttons from the first one's top to the last one's foot: one row, or a column with the gear in it
 function handleHeight(stacked: boolean, settings: boolean): number {
-	const buttons = stacked ? (settings ? 4 : 3) : 1;
+	const buttons = stacked ? (settings ? 3 : 2) : 1;
 	return buttons * HANDLE_W + (buttons - 1) * HANDLE_GAP;
 }
 
@@ -60,6 +60,7 @@ class BlockHandleView {
 		right: number;
 		stacked: boolean;
 		popoverOpen: boolean;
+		menuOpen: boolean;
 		settings: string | null;
 	}>({
 		visible: false,
@@ -68,6 +69,7 @@ class BlockHandleView {
 		right: 0,
 		stacked: false,
 		popoverOpen: false,
+		menuOpen: false,
 		settings: null
 	});
 	private hoveredPos: number | null = null;
@@ -83,7 +85,7 @@ class BlockHandleView {
 	// a pane made wider or narrower moves its blocks from under a handle the pointer is resting beside
 	private readonly laneSize = new ResizeObserver(([lane]) => {
 		const { width } = lane.contentRect;
-		if (this.laneWidth >= 0 && width !== this.laneWidth && !this.state.popoverOpen) this.state.visible = false;
+		if (this.laneWidth >= 0 && width !== this.laneWidth && !this.menuShown) this.state.visible = false;
 		this.laneWidth = width;
 	});
 
@@ -120,10 +122,14 @@ class BlockHandleView {
 		view.dom.ownerDocument.addEventListener('scroll', this.onScroll, { capture: true, passive: true });
 	}
 
+	private get menuShown(): boolean {
+		return this.state.popoverOpen || this.state.menuOpen;
+	}
+
 	private onMouseMove = (event: MouseEvent) => {
 		this.pointerInside = true;
 		this.lastPointerY = event.clientY;
-		if (this.state.popoverOpen) return; // frozen while the insert menu is open
+		if (this.menuShown) return; // frozen while a menu is open
 		if (this.staysWithBlock(event.clientX, event.clientY)) this.cancelHide();
 		else this.queueUpdate(event.clientY);
 	};
@@ -154,7 +160,7 @@ class BlockHandleView {
 	 * a fixed-positioned gutter on document.body is clipped by nothing, so it lands on the toolbar.
 	 */
 	private onScroll = () => {
-		if (this.state.popoverOpen || !this.state.visible) return;
+		if (this.menuShown || !this.state.visible) return;
 		// no pointer to re-anchor to (scrolling with the gutter itself hovered, say): hide rather
 		// than leave it pointing at a block that has moved
 		if (!this.pointerInside || this.lastPointerY == null) {
@@ -230,12 +236,12 @@ class BlockHandleView {
 		}
 	};
 	private scheduleHide = () => {
-		if (this.state.popoverOpen) return; // don't hide while the menu is open
+		if (this.menuShown) return; // don't hide while the menu is open
 		this.cancelHide();
 		this.hideTimer = window.setTimeout(() => {
 			// re-check at fire time: the menu may have opened during the wait, and hiding now
 			// would collapse the trigger rect Floating-UI anchors the popover to
-			if (this.state.popoverOpen) return;
+			if (this.menuShown) return;
 			this.state.visible = false;
 		}, 120);
 	};
@@ -298,7 +304,7 @@ class BlockHandleView {
 	update(view: EditorView, prevState: EditorState) {
 		view.dom.ownerDocument.documentElement.classList.toggle('pm-handle-drag', blockHandlePluginKey.getState(view.state)?.active === true);
 		if (view.state.doc === prevState.doc) return;
-		if (this.state.popoverOpen) {
+		if (this.menuShown) {
 			this.hoveredPos = this.hoveredNode ? positionOf(view.state.doc, this.hoveredNode) : null;
 			return;
 		}

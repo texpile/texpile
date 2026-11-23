@@ -230,7 +230,7 @@ test('the handle waits for the pointer in the margin beside a tall block', async
 	const block = { x: box.left, y: box.top, width: box.right - box.left, height: box.bottom - box.top };
 	const middle = block.y + block.height / 2;
 	await page.mouse.move(block.x + block.width / 2, middle, { steps: 4 });
-	const remove = page.locator('.block-handle-btn-danger');
+	const remove = page.locator('.block-handle-settings');
 	await expect(remove).toBeVisible();
 	// sideways into the margin, level with the block's middle and well under the button, then up to it
 	await page.mouse.move(block.x + block.width + 19, middle, { steps: 8 });

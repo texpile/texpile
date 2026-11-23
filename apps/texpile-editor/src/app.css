@@ -497,14 +497,6 @@ select.input {
 	background: light-dark(var(--color-surface-200), var(--color-surface-700));
 	color: var(--color-surface-950-50);
 }
-/* destructive, so tint red on hover */
-.block-handle-btn-danger:hover {
-	background: light-dark(
-		color-mix(in srgb, var(--color-error-500) 15%, transparent),
-		color-mix(in srgb, var(--color-error-500) 22%, transparent)
-	);
-	color: var(--error-ink);
-}
 
 /* a preview or a visual editor is covered while its width moves and names itself, so split panes stay told apart
    (resizeCover). The solid ground: a see-through window clears the usual one */
