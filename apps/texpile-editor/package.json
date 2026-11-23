@@ -79,7 +79,7 @@
 		"@xterm/xterm": "^6.0.0",
 		"cspell-dictionary": "10.4.1",
 		"diff": "^9.0.0",
-		"entities": "^8.1.0",
+		"entities": "^9.0.0",
 		"esm-env": "^1.2.2",
 		"harper.js": "^2.13.0",
 		"jsonc-parser": "^3.3.1",
