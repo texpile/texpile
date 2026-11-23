@@ -6,8 +6,9 @@
 // editor's text, or by both at once. The server sees one open document throughout; a mode switch
 // only moves who writes to it, so it is never closed and reopened and its versions keep climbing.
 import { ChangeSet, Text } from '@codemirror/state';
-import { LSPPlugin, Workspace, type WorkspaceFile } from '@codemirror/lsp-client';
+import { LSPPlugin, Workspace, type LSPClient, type WorkspaceFile } from '@codemirror/lsp-client';
 import type { EditorView } from '@codemirror/view';
+import { QuietRecheck } from './quietRecheck';
 
 type WorkspaceFileUpdate = ReturnType<Workspace['syncFiles']>[number];
 
@@ -97,6 +98,13 @@ export class TypstWorkspace extends Workspace {
 	files: OpenTypstDocument[] = [];
 	/** kept for the client's whole life, so a document closed and reopened never goes back a version */
 	private versions = new Map<string, number>();
+	private recheck: QuietRecheck;
+
+	/** `recompile` asks tinymist to compile the project again, its text unchanged */
+	constructor(client: LSPClient, recompile: () => void) {
+		super(client);
+		this.recheck = new QuietRecheck(recompile);
+	}
 
 	override getFile(uri: string): OpenTypstDocument | null {
 		return this.files.find((f) => f.uri === uri) ?? null;
@@ -109,7 +117,16 @@ export class TypstWorkspace extends Workspace {
 			const update = view ? this.syncView(file, view) : this.syncPending(file);
 			if (update) updates.push(update);
 		}
+		if (updates.length) this.recheck.edited();
 		return updates;
+	}
+
+	diagnosticsArrived(): void {
+		this.recheck.published();
+	}
+
+	override disconnected(): void {
+		this.recheck.stop();
 	}
 
 	/** a source editor mounted on the document */
