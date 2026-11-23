@@ -119,7 +119,13 @@ async function closePopups(page: Page): Promise<void> {
 
 for (const scale of [1.25, 1.5]) {
 	test.describe(`at ${scale * 100} percent`, () => {
-		const texpile = useTexpile({ files: FILES, settings: { spellcheck: true }, scale });
+		const texpile = useTexpile({
+			files: FILES,
+			settings: { spellcheck: true },
+			scale,
+			// a commenter git can name, so the composer opens without asking for one
+			env: { GIT_CONFIG_COUNT: '1', GIT_CONFIG_KEY_0: 'user.name', GIT_CONFIG_VALUE_0: 'Writer' }
+		});
 
 		for (const file of Object.keys(FILES)) {
 			test(`${file}: pop-ups land beside their anchors`, async () => {
