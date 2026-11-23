@@ -50,6 +50,7 @@ jobs:
       - run: sudo apt-get update && sudo apt-get install -y --no-install-recommends texlive-luatex texlive-latex-base texlive-latex-recommended texlive-pictures fonts-lmodern
       # the guest projects run the web build in Firefox and WebKit
       - run: bash scripts/installGuestBrowsers.sh
+      - run: bash scripts/installTestFonts.sh
       - run: xvfb-run -a -s '-screen 0 1400x900x24' pnpm --filter texpile-editor test:integration
         env:
           CI: true
