@@ -21,9 +21,9 @@ const SELECTED_FRAME: StyleLook = {
 	...NO_FRAME,
 	outline: '1px solid var(--mathfield-focus-border)',
 	outlineOffset: '2px',
-	borderRadius: '3px'
+	borderRadius: '1px'
 };
-const EMPTY_FRAME: StyleLook = { ...NO_FRAME, outline: '1px solid var(--color-error-500)', outlineOffset: '2px', borderRadius: '3px' };
+const EMPTY_FRAME: StyleLook = { ...NO_FRAME, outline: '1px solid var(--color-error-500)', outlineOffset: '2px', borderRadius: '1px' };
 const PENDING_FRAME: StyleLook = { ...EMPTY_FRAME, backgroundColor: 'color-mix(in srgb, var(--math-empty-tint) 10%, transparent)' };
 
 /** the number after a single-number display, beside the column's edge */
