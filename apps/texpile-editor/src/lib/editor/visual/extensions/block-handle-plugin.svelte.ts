@@ -296,7 +296,8 @@ class BlockHandleView {
 			return;
 		}
 		if (!this.state.visible) return;
-		if (this.pointerInside && this.lastPointerY != null) this.queueUpdate(this.lastPointerY);
+		// typing hides it until the pointer moves again; an edit made from the gutter keeps it
+		if (this.host.matches(':hover') && this.lastPointerY != null) this.queueUpdate(this.lastPointerY);
 		else this.state.visible = false;
 	}
 
