@@ -5,6 +5,8 @@ Release notes for Texpile Desktop. Add notes under `## [Unreleased]` as you work
 
 ## [Unreleased]
 
+- feat: title bar search box stays centered on the window (by @louisqli)
+- feat: Layout button shows its icon only (by @louisqli)
 - fix: Typst preview losing its scroll and zoom after a pause (by @louisqli)
 - fix: preview too narrow after maximizing the window (by @louisqli)
 - fix: same zoom showing different page sizes in the two previews (by @louisqli)

@@ -21,8 +21,8 @@
 	import { commandPalette } from '$lib/workspace/commandPalette.svelte';
 	import { syncWindowOverlay } from './windowOverlay';
 	import Kbd from '$lib/components/Kbd.svelte';
-	import { titleBarLayout } from './titleBarLayout.svelte';
-	import { commandCenterWidth, MIN_WIDTH, SIDE_GAP } from './commandCenterWidth';
+	import { measureTitleBarLabels, titleBarLayout } from './titleBarLayout.svelte';
+	import { betweenWidth, centeredWidth } from './commandCenterWidth';
 	import iconUrl from '$branding/Logo-icon.svg';
 	import { m } from '$lib/paraglide/messages';
 
@@ -50,13 +50,6 @@
 	// no workspace actions registered, so there it stays plain text.
 	const palettable = $derived(!!commandPalette.actions);
 
-	/*
-	 * The menus give way to the command center: they compact while the left side is wider than a box of MIN_WIDTH on
-	 * the window's center allows.
-	 *
-	 * Measured, not guessed at with pixel breakpoints: the left side is eight localized menu labels
-	 * plus the app icon, so its width depends on the UI language, and no constant would survive that.
-	 */
 	const BADGE_FROM = 320; // below this the Ctrl+K badge is dropped so the title keeps its room
 
 	let winWidth = $state(1280);
@@ -64,37 +57,23 @@
 	let rightW = $state(0); // window controls
 
 	/**
-	 * The widest the left block may be while a MIN_WIDTH box can still sit centred, from rearranging the
-	 * inequality above. This is the budget the menu bar spends: it drops menus into an overflow button
-	 * until it is under it, one at a time, so the bar degrades as `File Edit View ⋯` rather than
-	 * collapsing wholesale.
-	 */
-	const menuBudget = $derived((winWidth - MIN_WIDTH) / 2 - SIDE_GAP);
-
-	/**
 	 * One fit step per MEASUREMENT, which is what makes the degradation progressive.
 	 *
-	 * fit() both reads and writes visibleMenus, so tracking those reads would make this effect a
-	 * dependency of its own output: it would re-run the instant fit() wrote - while leftW still held
-	 * the PRE-change width, because clientWidth only updates once the DOM has re-rendered. It would
-	 * then step again on that stale number, and again, dropping all eight menus in a single flush and
-	 * writing the same stale width into every slot of the cache on the way down. That poisons the
-	 * grow-back test permanently, which is why the bar collapsed at once and never came back.
-	 *
-	 * The frame's wait cuts the cycle: the effect depends only on the two measurements, so each render
-	 * produces exactly one step, and the bar sheds one menu at a time. A step taken at once is a
-	 * ResizeObserver loop.
+	 * fit() reads and writes what it lays out, so a step taken at once would run again on the width from before the
+	 * re-render and drop every menu in one flush. The frame's wait gives each step a fresh measurement; a step taken at
+	 * once is a ResizeObserver loop.
 	 */
 	$effect(() => {
-		const w = leftW;
-		const b = menuBudget;
-		const frame = requestAnimationFrame(() => titleBarLayout.fit(w, b));
+		const [w, l, r] = [winWidth, leftW, rightW];
+		void titleBarLayout.pdfIconOnly; // a step that changes no width still needs the next one
+		const frame = requestAnimationFrame(() => titleBarLayout.fit(w, l, r, measureTitleBarLabels(barEl)));
 		return () => cancelAnimationFrame(frame);
 	});
 
-	// width to actually render at, from the CURRENT left side, so the bar gets the room the overflow
-	// just freed. 0 means it does not fit even with every menu hidden, and it is dropped entirely.
-	const centerW = $derived(commandCenterWidth(winWidth, leftW, rightW));
+	// on the window's center while both sides leave it room, else in the middle of the room between them; 0 drops it
+	const centeredW = $derived(centeredWidth(winWidth, leftW, rightW));
+	const centerW = $derived(centeredW || betweenWidth(winWidth, leftW, rightW));
+	const between = $derived(palettable && !centeredW);
 
 	// Mirror the document title rather than take it as a prop: it is already computed (in
 	// WorkspaceView's <svelte:head>) and threading the same string down two more components to
@@ -105,6 +84,8 @@
 	$effect(() => (barEl ? syncWindowOverlay(barEl) : undefined));
 
 	let title = $state('Texpile');
+	// the app's name is the icon beside it
+	const fieldTitle = $derived(title.replace(/ - Texpile$/, ''));
 	onMount(() => {
 		const el = document.querySelector('title');
 		if (!el) return;
@@ -188,13 +169,11 @@
 			{/if}
 		</div>
 
-		<!-- In the middle of the room between the two sides; the start screen's plain title keeps the window's center, over
-		     a page laid out on it. Out of flow, so a click-through layer over the drag region underneath; centerW is 0,
-		     and this renders nothing, when even a compacted menu bar leaves no room. -->
+		<!-- Out of flow, so a click-through layer over the drag region underneath -->
 		<div
 			class="pointer-events-none absolute inset-0 flex items-center justify-center"
-			style:padding-left={palettable ? `${leftW}px` : null}
-			style:padding-right={palettable ? `${rightW}px` : null}
+			style:padding-left={between ? `${leftW}px` : null}
+			style:padding-right={between ? `${rightW}px` : null}
 		>
 			{#if palettable && centerW > 0}
 				<!--
@@ -216,7 +195,7 @@
 					<!-- centred, not left-aligned: the field is sized to the window rather than to the
 					     filename, so a left-aligned title dumps all the slack on the right and looks
 					     lopsided. Centring splits it either side and the control reads as deliberate. -->
-					<span class="min-w-0 flex-1 truncate text-center">{title}</span>
+					<span class="min-w-0 flex-1 truncate text-center">{fieldTitle}</span>
 					<!-- the badge costs ~45px of a box that may only be 200 wide, and a filename truncated to
 					     nothing to make room for a hint about a shortcut is the wrong trade. Below this the
 					     shortcut lives in Help and the tooltip; the field itself is still clickable. -->

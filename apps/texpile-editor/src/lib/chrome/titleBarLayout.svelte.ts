@@ -1,9 +1,7 @@
-// How many top-level menus fit in the title bar, shared between the bar and the menus inside it.
-//
-// The menu bar cannot work this out alone: it depends on how much room the command center needs to
-// stay centred on the WINDOW, and only TitleBar knows the width of the row, of the menus and of the
-// window controls. TitleBar measures and drives; WorkspaceMenuBar reads `visibleMenus` and renders
-// the rest behind an overflow button.
+import { askedWidth, menuBudget, SIDE_GAP } from './commandCenterWidth';
+
+// What gives way in the title bar so the command center keeps the window's center: first the Show PDF label, then the
+// menus, one at a time. TitleBar measures and drives; the menu bar and the buttons read the result.
 //
 // A module singleton for the same reason the palette registry is one: one window, one title bar, and
 // the alternative is threading a prop through a snippet that WorkspaceChrome owns.
@@ -13,6 +11,8 @@ class TitleBarLayout {
 	totalMenus = $state(0);
 	/** how many render inline. The remainder go behind the overflow button; 0 means all of them do. */
 	visibleMenus = $state(0);
+	/** Show PDF draws its icon alone */
+	pdfIconOnly = $state(false);
 
 	/**
 	 * Width of the whole left block last observed at each visible count.
@@ -43,8 +43,15 @@ class TitleBarLayout {
 	 * fresh `leftW` on the next flush, which calls this again. It converges in at most totalMenus
 	 * steps, and every step is based on a real measurement rather than a predicted one.
 	 */
-	fit(leftW: number, budget: number): void {
-		if (leftW <= 0 || budget <= 0 || this.totalMenus === 0) return;
+	fit(winW: number, leftW: number, rightW: number, labelsW: number): void {
+		if (winW <= 0 || leftW <= 0) return;
+		const iconOnly = winW / 2 - (this.pdfIconOnly ? rightW + labelsW : rightW) < askedWidth(winW) / 2 + SIDE_GAP;
+		if (iconOnly !== this.pdfIconOnly) {
+			this.pdfIconOnly = iconOnly;
+			return;
+		}
+		const budget = menuBudget(winW, rightW);
+		if (budget <= 0 || this.totalMenus === 0) return;
 		this.widthAt[this.visibleMenus] = leftW;
 
 		if (leftW > budget) {
@@ -61,3 +68,13 @@ class TitleBarLayout {
 }
 
 export const titleBarLayout = new TitleBarLayout();
+
+const TITLE_BAR_LABEL = 'data-title-bar-label';
+const LABEL_GAP = 4; // gap-1 between a button's icon and its label
+
+/** what the labels add to the right side, measured while hidden too */
+export function measureTitleBarLabels(bar: HTMLElement | null): number {
+	let width = 0;
+	for (const label of bar?.querySelectorAll<HTMLElement>(`[${TITLE_BAR_LABEL}]`) ?? []) width += label.offsetWidth + LABEL_GAP;
+	return width;
+}
