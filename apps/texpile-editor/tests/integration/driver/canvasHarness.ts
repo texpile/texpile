@@ -40,8 +40,12 @@ function sharedBrowser(name: HarnessBrowser): Promise<Browser> {
 	const executablePath = EXECUTABLES[name] || undefined;
 	browser =
 		name === 'chromium'
-			? // containers run as root, where Chromium refuses its sandbox
-				chromium.launch({ args: process.platform === 'linux' ? ['--no-sandbox'] : [], executablePath })
+			? // containers run as root, where Chromium refuses its sandbox; full Chromium, as the headless shell sets text a pixel apart
+				chromium.launch({
+					args: process.platform === 'linux' ? ['--no-sandbox'] : [],
+					executablePath,
+					channel: executablePath ? undefined : 'chromium'
+				})
 			: (name === 'firefox' ? firefox : webkit).launch({ executablePath });
 	shared.set(name, browser);
 	return browser;
