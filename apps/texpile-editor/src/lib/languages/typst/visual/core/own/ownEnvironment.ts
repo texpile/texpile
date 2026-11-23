@@ -1,25 +1,26 @@
 // a theorem-style call whose maker only Typst can run (`#let lemma = thmbox(..)`), drawn as its name over its content
 import type { SyntaxNode } from '@lezer/common';
-import { faceElement } from '$lib/editor/visual/extensions/drawnChips/chipFace';
+import { appendTo, elementMode, type PartElement } from '$lib/editor/visual/extensions/drawnChips/faces/partElements';
 import type { OwnLet } from '../../../knowledge';
 import { isMakerCall } from '../../../knowledge/scan/dictionaryFields';
 import { partsOf, textOf } from '../../../knowledge/scan/syntax';
+import { typstElement } from '../looks/typstLooks';
 import { environmentCard } from '../parts/environmentCard';
 import type { MarkupDrawing } from '../parts/drawingFace';
 import type { TypstDrawer } from '../plugin/typstPlugin';
 import type { OwnUse } from './ownUse';
 import { drawTheoremHead, theoremHead } from './theoremHead';
 
-function printedHead(use: OwnUse): HTMLElement | null {
+function printedHead(use: OwnUse): PartElement | null {
 	const { call } = use;
 	const args = call?.open != null && call.close != null ? call.source.slice(call.open + 1, call.close) : null;
 	const printed = theoremHead(use.own, args);
 	const drawn = printed ? drawTheoremHead(printed) : null;
 	if (!drawn) return null;
-	const head = faceElement('span', 'env-head');
+	const mode = elementMode(typstElement);
+	const head = mode.make('span', 'env-head');
 	head.dataset.look = 'theorem';
-	head.appendChild(drawn);
-	return head;
+	return appendTo(head, drawn);
 }
 
 function isMadeFunction(node: SyntaxNode, own: OwnLet): boolean {

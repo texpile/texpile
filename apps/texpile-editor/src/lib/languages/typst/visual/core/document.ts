@@ -68,4 +68,4 @@ export { isTypstLength, typstLengthOf } from './reading/typstLength';
 export { typstScopeOfDrawing } from './scope/fileScopeNow.svelte';
 export { fieldValue, otherArguments, readSetRule, writeSetField, type FieldValue, type SetRule } from './setup/setRuleCall';
 export { nameElement } from './setup/setupLines';
-export type { DrawnLength } from '$lib/editor/visual/extensions/drawnChips/spaceFace';
+export type { DrawnLength } from '$lib/editor/visual/extensions/drawnChips/space/spaceFace';

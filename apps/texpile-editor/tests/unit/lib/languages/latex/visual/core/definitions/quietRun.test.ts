@@ -1,5 +1,6 @@
 // @vitest-environment jsdom
 import { describe, expect, it } from 'vitest';
+import { domOf } from '$lib/editor/visual/extensions/drawnChips/chipFace';
 import { latexFace } from '$lib/languages/latex/visual/core/walk/drawUnits';
 
 const names = (dom: HTMLElement | undefined) => [...(dom?.querySelectorAll('.drawn-definition-name') ?? [])].map((el) => el.textContent);
@@ -12,7 +13,7 @@ describe('definitions and settings', () => {
 		);
 		expect(face?.line).toBe(true);
 		expect(face?.dom.classList.contains('drawn-definitions')).toBe(true);
-		expect(names(face?.dom)).toEqual(['\\mA', '\\vect#1', '\\myTitle']);
+		expect(names(face ? domOf(face) : undefined)).toEqual(['\\mA', '\\vect#1', '\\myTitle']);
 		expect(face?.dom.querySelectorAll('[role="math"]')).toHaveLength(2);
 		expect(face?.dom.textContent).toContain('A Thesis');
 	});

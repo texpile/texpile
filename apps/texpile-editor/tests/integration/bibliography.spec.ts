@@ -2,6 +2,7 @@ import { expect, test } from '@playwright/test';
 import { Disk } from './driver/disk';
 import { useTexpile } from './driver/useTexpile';
 import { VisualEditor } from './driver/visualEditor';
+import { inCanvas } from './canvas/canvasPage';
 
 const PAPER = `\\documentclass{article}
 \\begin{document}
@@ -22,13 +23,14 @@ test('Enter ends an entry and starts one whose key is typed into its chip', asyn
 	const visual = new VisualEditor(page, root);
 	const disk = new Disk(root);
 	await visual.open('bib.tex');
-	await expect(page.getByRole('heading', { name: 'References' })).toBeVisible();
+	await expect.poll(() => inCanvas(page, ({ probe }) => probe.query('h1.bibliography-heading')[0]?.text ?? '')).toBe('References');
 	await visual.caretAtEndOf('The Art of Computer Programming');
 	await visual.press('Enter');
 	await visual.type('L. Lamport. LaTeX. 1986.');
-	const chips = page.locator('.bib-key button');
-	await expect(chips).toHaveCount(2);
-	await chips.nth(1).click();
+	const chips = () => inCanvas(page, ({ probe }) => probe.query('.bib-key .text-chip').map((chip) => chip.rect));
+	await expect.poll(async () => (await chips()).length).toBe(2);
+	const second = (await chips())[1];
+	await page.mouse.click(second.left + second.width / 2, second.top + second.height / 2);
 	const source = page.locator('.drawn-chip-panel .cm-content');
 	await expect(source).toBeFocused();
 	await page.keyboard.press('ControlOrMeta+a');

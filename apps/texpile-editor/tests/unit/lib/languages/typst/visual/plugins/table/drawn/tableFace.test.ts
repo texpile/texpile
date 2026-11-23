@@ -1,6 +1,7 @@
 // @vitest-environment jsdom
 // a table the editor has no table node for (a vertical line, a grid with a body) drawn as the table Typst makes of it
 import { describe, it, expect } from 'vitest';
+import { domOf } from '$lib/editor/visual/extensions/drawnChips/chipFace';
 import { typstFace } from '$lib/languages/typst/visual/core/walk/typstFace';
 import { typstScopeNow } from '$lib/languages/typst/visual/core/scope/fileScopeNow.svelte';
 
@@ -9,7 +10,7 @@ typstScopeNow.current = null;
 function cells(chip: string): HTMLElement[] {
 	const face = typstFace(chip);
 	if (!face) throw new Error(`not drawn: ${chip}`);
-	return [...face.dom.querySelectorAll<HTMLElement>('.drawn-typst-cell')];
+	return [...domOf(face).querySelectorAll<HTMLElement>('.drawn-typst-cell')];
 }
 
 describe('a table with lines', () => {

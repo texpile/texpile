@@ -19,6 +19,12 @@ export type LaunchOptions = {
 	file?: string;
 	/** more environment for the app and the programs it starts */
 	env?: Record<string, string>;
+	/** the display scale the window draws at, as a Windows desktop at 125 or 150 percent gives it */
+	scale?: number;
+	/** Chromium command line switches, such as --enable-features=MiddleClickAutoscroll */
+	switches?: string[];
+	/** the canvas harness pages only: the window has no EditContext, so the textarea input surface is used (11.1) */
+	hideEditContext?: boolean;
 };
 
 export type TexpileWindow = {
@@ -33,17 +39,22 @@ export type TexpileWindow = {
 };
 
 // noise from the dev server and Chromium, never from the app
-const IGNORED = [/Download the React DevTools/, /\[vite\]/, /Electron Security Warning/, /favicon/];
+export const IGNORED = [/Download the React DevTools/, /\[vite\]/, /Electron Security Warning/, /favicon/];
 
-export async function launchTexpile(options: LaunchOptions = {}): Promise<TexpileWindow> {
+/** a temp folder holding the fixture and `options.files`, the one a window opens */
+export function copyFixtureFolder(options: Pick<LaunchOptions, 'files'>): { tmp: string; root: string; userData: string } {
 	const tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'texpile-it-'));
 	const root = path.join(tmp, 'folder');
-	const userData = path.join(tmp, 'profile');
 	fs.cpSync(FIXTURE, root, { recursive: true });
 	for (const [rel, text] of Object.entries(options.files ?? {})) {
 		fs.mkdirSync(path.dirname(path.join(root, rel)), { recursive: true });
 		fs.writeFileSync(path.join(root, rel), text);
 	}
+	return { tmp, root, userData: path.join(tmp, 'profile') };
+}
+
+export async function launchTexpile(options: LaunchOptions = {}): Promise<TexpileWindow> {
+	const { tmp, root, userData } = copyFixtureFolder(options);
 	fs.mkdirSync(userData, { recursive: true });
 	if (options.settings) fs.writeFileSync(path.join(userData, 'settings.json'), JSON.stringify(options.settings));
 
@@ -56,6 +67,8 @@ export async function launchTexpile(options: LaunchOptions = {}): Promise<Texpil
 			// containers run as root, where Chromium refuses its sandbox
 			args: [
 				...(process.platform === 'linux' ? ['--no-sandbox'] : []),
+				...(options.switches ?? []),
+				...(options.scale ? [`--force-device-scale-factor=${options.scale}`] : []),
 				REPO,
 				...(options.startScreen ? [] : [options.file ? path.join(root, options.file) : root])
 			],

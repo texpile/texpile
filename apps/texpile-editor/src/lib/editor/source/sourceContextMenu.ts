@@ -18,7 +18,7 @@ import { copySelection, cutSelection, pasteAtCursor } from '$lib/editor/source/c
 import { hasSourcePaste, pasteIntoSource } from '$lib/editor/source/paste/cmSourcePaste';
 import { showContextMenu, type ContextMenuItem } from '$lib/menus/contextMenu.svelte';
 import { m } from '$lib/paraglide/messages';
-import { refineMenuItems } from '$lib/ai/refineMenu';
+import { domSelectionRect, refineMenuItems } from '$lib/ai/refineMenu';
 import { renameAtCursor, renameLabelOf, renameTargetOf } from '$lib/languages/latex/intellisense/rename/renameCommand';
 
 export type SourceMenuDeps = {
@@ -53,7 +53,7 @@ export function openSourceContextMenu(event: MouseEvent, view: CMView, deps: Sou
 			}
 		}
 	];
-	const refine = refineMenuItems(!!selection);
+	const refine = refineMenuItems(!!selection, domSelectionRect);
 	if (refine.length) items.push({ separator: true }, ...refine);
 	// the same gesture the margin pill offers, for people who reach for the menu instead; disabled
 	// rather than hidden with nothing selected, so it is discoverable

@@ -1,7 +1,7 @@
 // @vitest-environment jsdom
 import { afterEach, expect, it } from 'vitest';
 import { latexFace } from '$lib/languages/latex/visual/core/walk/drawUnits';
-import { scanMacroDefinitions } from '$lib/editor/source/extensions/math-preview/userMacros';
+import { scanMacroDefinitions } from '$lib/editor/source/extensions/math-preview/macroScan';
 import { templateFeaturesStore } from '$lib/stores/editorStore';
 
 afterEach(() => {

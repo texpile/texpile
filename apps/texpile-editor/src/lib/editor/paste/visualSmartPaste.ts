@@ -19,6 +19,7 @@ import { convertPastedMathHtml, schemaMathSyntax } from './pastedMath';
 import { convertDollarMathHtml } from './pastedDollarMath';
 import { convertPastedRawBlocksHtml } from './pastedRawBlocks';
 import { selectionAfterBlockCut } from './block/blockCutSelection';
+import { closedBlockPasteSlice } from './block/closedBlockPaste';
 import { blockMathClipboard } from './block/blockMathClipboard';
 
 // LaTeX has no header cell its file can hold, so a pasted table's header row comes in as ordinary cells
@@ -56,6 +57,8 @@ export function pasteMarkdownSource(view: EditorView, text: string): boolean {
 
 export function visualSmartPaste(dialect: PasteDialect, schema: Schema, pasteSource: SourceTextPaste): Plugin {
 	let fromTexpile = false;
+	// the closed block of a whole-paragraph copy, for the paste whose HTML it came in
+	let htmlFromTexpile = false;
 	// set by the latest paste's transform, told only once that paste is the one going in
 	let leftOut = false;
 	const imageSaving = pastedImageSaving();
@@ -84,7 +87,7 @@ export function visualSmartPaste(dialect: PasteDialect, schema: Schema, pasteSou
 				}
 			}),
 			transformPastedHTML(html) {
-				fromTexpile = isTexpileCopy(html);
+				fromTexpile = htmlFromTexpile = isTexpileCopy(html);
 				const cleaned = fromTexpile ? html : cleanPastedHtml(html);
 				// a Texpile copy holds its math as math already, and a dollar in its text is a dollar
 				const own = fromTexpile ? cleaned : convertDollarMathHtml(cleaned);
@@ -92,7 +95,9 @@ export function visualSmartPaste(dialect: PasteDialect, schema: Schema, pasteSou
 			},
 			transformPasted(slice, view, plain) {
 				leftOut = leavesOutImages(slice, dialect);
-				const kept = keepSavableImages(slice, view, dialect, !plain && !view.dragging && !fromTexpile);
+				const placed = htmlFromTexpile && !plain && !view.dragging ? closedBlockPasteSlice(view.state, slice) : slice;
+				htmlFromTexpile = false;
+				const kept = keepSavableImages(placed, view, dialect, !plain && !view.dragging && !fromTexpile);
 				return dialect === 'latex' ? withoutHeaderCells(kept, view.state.schema) : kept;
 			},
 			handleDrop(_view, _event, _slice, moved) {

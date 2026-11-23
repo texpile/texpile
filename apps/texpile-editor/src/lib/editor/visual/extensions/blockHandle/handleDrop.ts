@@ -2,6 +2,7 @@
 import { NodeSelection, PluginKey, type Transaction } from 'prosemirror-state';
 import { Decoration, DecorationSet, type EditorView } from 'prosemirror-view';
 import type { Node as PMNode } from 'prosemirror-model';
+import { setLook, type CanvasWidget } from '$lib/editor/canvas';
 import { handleUnitAt } from './handleUnit';
 
 export type HandleDropState = { active: boolean; line: number | null };
@@ -31,19 +32,31 @@ function dropLineElement(): HTMLElement {
 	return line;
 }
 
+const DROP_LINE: CanvasWidget = {
+	kind: 'block',
+	build(ctx) {
+		const line = ctx.el('div', 'pm-handle-drop-line');
+		setLook(line, { position: 'relative', height: '0', pointerEvents: 'none' });
+		const bar = line.appendChild(ctx.el('div'));
+		setLook(bar, { position: 'absolute', top: '-1px', left: '0', right: '0', height: '2px', backgroundColor: 'var(--color-primary-500)' });
+		return line;
+	}
+};
+
 export function handleDropLine(state: HandleDropState | undefined, doc: PMNode): DecorationSet | null {
 	if (!state || state.line === null) return null;
-	return DecorationSet.create(doc, [Decoration.widget(state.line, dropLineElement, { key: 'handle-drop-line', side: -1 })]);
+	return DecorationSet.create(doc, [
+		Decoration.widget(state.line, dropLineElement, { key: 'handle-drop-line', side: -1, canvas: DROP_LINE })
+	]);
 }
 
 function dropSpotAt(view: EditorView, node: PMNode, source: { from: number; to: number }, x: number, y: number): number | null {
-	const box = view.dom.getBoundingClientRect();
+	const box = view.canvas.sheetClientRect();
 	const unitPos = handleUnitAt(view, Math.min(Math.max(x, box.left + 1), box.right - 1), y);
 	const { doc } = view.state;
 	const unit = unitPos === null ? null : doc.nodeAt(unitPos);
-	const dom = unitPos === null ? null : view.nodeDOM(unitPos);
-	if (unitPos === null || !unit || !(dom instanceof HTMLElement)) return null;
-	const rect = dom.getBoundingClientRect();
+	const rect = unitPos === null ? null : view.canvas.nodeClientRect(unitPos)?.rect;
+	if (unitPos === null || !unit || !rect) return null;
 	const before = y < (rect.top + rect.bottom) / 2;
 	let at = before ? unitPos : unitPos + unit.nodeSize;
 	let $at = doc.resolve(at);

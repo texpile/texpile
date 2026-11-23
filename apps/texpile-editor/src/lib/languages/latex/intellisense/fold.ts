@@ -45,9 +45,9 @@ export function displayMathFoldOf(state: EditorState, math: SyntaxNode): FoldRan
 	return state.doc.lineAt(open.to).number < state.doc.lineAt(close.from).number ? { from: open.to, to: close.from } : null;
 }
 
-function environmentFoldRange(state: EditorState, lineStart: number, lineEnd: number): FoldRange | null {
+function environmentFoldRange(state: EditorState, tree: Tree, lineStart: number, lineEnd: number): FoldRange | null {
 	let range: FoldRange | null = null;
-	foldTree(state).iterate({
+	tree.iterate({
 		from: lineStart,
 		to: lineEnd,
 		enter(ref) {
@@ -88,8 +88,8 @@ function headingsOf(state: EditorState, tree: Tree): Heading[] {
 	return found;
 }
 
-function sectionFoldRange(state: EditorState, lineStart: number, lineEnd: number): { from: number; to: number } | null {
-	const headings = headingsOf(state, foldTree(state));
+function sectionFoldRange(state: EditorState, tree: Tree, lineStart: number, lineEnd: number): { from: number; to: number } | null {
+	const headings = headingsOf(state, tree);
 	let index = 0;
 	for (let high = headings.length; index < high;) {
 		const mid = (index + high) >> 1;
@@ -111,15 +111,16 @@ function sectionFoldRange(state: EditorState, lineStart: number, lineEnd: number
 		const prevLine = state.doc.line(line.number - 1);
 		return prevLine.to <= lineEnd ? null : { from: lineEnd, to: prevLine.to };
 	}
+	// the next heading may be past what the editor has read so far
+	if (tree.length < state.doc.length) return null;
 	const lastLine = state.doc.line(state.doc.lines);
 	return lastLine.to <= lineEnd ? null : { from: lineEnd, to: lastLine.to };
 }
 
 /** the preamble folds on the \documentclass line, down to the line before \begin{document} */
-function preambleFoldRange(state: EditorState, lineStart: number, lineEnd: number): { from: number; to: number } | null {
+function preambleFoldRange(state: EditorState, tree: Tree, lineStart: number, lineEnd: number): { from: number; to: number } | null {
 	const line = state.doc.sliceString(lineStart, lineEnd);
 	const first = lineStart + line.length - line.trimStart().length;
-	const tree = foldTree(state);
 	const word = tree.resolveInner(first, 1);
 	// at the line's start only, so a commented-out class is left alone
 	if (word.name !== 'ControlWord' || word.from !== first || state.sliceDoc(word.from, word.to) !== '\\documentclass') return null;
@@ -129,12 +130,15 @@ function preambleFoldRange(state: EditorState, lineStart: number, lineEnd: numbe
 	return prevLine.to > lineEnd ? { from: lineEnd, to: prevLine.to } : null;
 }
 
-/** combined fold-range lookup, exported for unit testing without a DOM-backed EditorView. */
+/** combined fold-range lookup, exported for unit testing without a DOM-backed EditorView. The gutter asks it for every
+ *  line it shows, so it reads the tree parsed so far: forcing the rest cost 100 ms a line in a long file, and a fold
+ *  that ends further down shows once the editor's own parse gets there */
 export function foldRangeAt(state: EditorState, lineStart: number, lineEnd: number): { from: number; to: number } | null {
+	const tree = syntaxTree(state);
 	return (
-		preambleFoldRange(state, lineStart, lineEnd) ??
-		environmentFoldRange(state, lineStart, lineEnd) ??
-		sectionFoldRange(state, lineStart, lineEnd)
+		preambleFoldRange(state, tree, lineStart, lineEnd) ??
+		environmentFoldRange(state, tree, lineStart, lineEnd) ??
+		sectionFoldRange(state, tree, lineStart, lineEnd)
 	);
 }
 

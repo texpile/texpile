@@ -9,6 +9,8 @@ import { EditorView as CMView } from '@codemirror/view';
 import { ySyncFacet } from 'y-codemirror.next';
 import { fileHistoryKeymap } from '$lib/editor/source/cmUndoKeys';
 import { undoVisual, redoVisual } from '$lib/editor/visual/visualUndo';
+import { selectAllScoped } from '$lib/editor/visual/selectAllScoped';
+import { selectAll as cmSelectAll } from '@codemirror/commands';
 import { toggleMark } from 'prosemirror-commands';
 import { replaceSelectionWithBlock } from '$lib/editor/visual/insert/insertRun';
 import { toggleHeading, toggleBlockQuote } from '$lib/editor/visual/helperCommands';
@@ -87,7 +89,17 @@ export function cmReplace(cm: CMView, before: string, after = '') {
 	cm.focus();
 }
 
+// the menu's Select All is Mod-A in the focused editor; a field or a PDF selects its own text, as the native role did
+function selectAllFocused(): void {
+	const visual = editorViewStore.current;
+	if (visual?.hasFocus()) return runVisualCommand(selectAllScoped);
+	const cm = activeCm();
+	if (cm?.hasFocus) return void cmSelectAll(cm);
+	document.execCommand('selectAll');
+}
+
 export function editSelect(value: string) {
+	if (value === 'selectAll') return selectAllFocused();
 	// a .pdf tab has no editor: Find is the viewer's, the rest has nothing to act on. A PDF view with the focus
 	// takes Find from the editor beside it. Not while typing somewhere else (the macOS accelerator fires
 	// wherever focus is), same rule as the window shortcut

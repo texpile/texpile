@@ -6,6 +6,7 @@ import { Disk } from './driver/disk';
 import { answerNextMessageBox } from './driver/preferences';
 import { useTexpile } from './driver/useTexpile';
 import { VisualEditor } from './driver/visualEditor';
+import { inCanvas, settled } from './canvas/canvasPage';
 
 // a plain RGB picture of this size, colored so a crop changes what is left
 function png(w: number, h: number): Buffer {
@@ -54,10 +55,15 @@ function placeImage(root: string): void {
 }
 
 async function cropFromTheLeft(page: Page): Promise<void> {
-	const image = page.locator('.imagePluginRoot > img').first();
-	await image.scrollIntoViewIfNeeded();
-	await image.hover();
-	await page.locator('.imagePluginRoot button[aria-label="Crop"]').first().click();
+	const picture = await inCanvas(page, ({ probe, view }) => {
+		const found = probe.query('.imagePluginImg')[0];
+		view.canvas.revealPos(found.pos!, 'center');
+		return found.pos!;
+	});
+	await settled(page);
+	const shown = await inCanvas(page, ({ probe }, pos) => probe.query('.imagePluginImg').find((el) => el.pos === pos)!.rect, picture);
+	await page.mouse.click(shown.left + shown.width / 2, shown.top + shown.height / 2);
+	await page.locator('.block-bar').getByRole('button', { name: 'Crop' }).click();
 	const box = page.locator('.paper-cropper .crop-box');
 	await expect(box).toBeVisible();
 	const handle = await page.locator('.paper-cropper .crop-handle-w').boundingBox();
@@ -80,6 +86,33 @@ test('a crop in the LaTeX paper is written as trim and clip, and undo takes it b
 	const cropped = await disk.expectFile('crop.tex', (t) => /trim=\d/.test(t), 'the crop on disk');
 	expect(cropped).toContain('\\includegraphics[width=0.8\\linewidth, trim=');
 	expect(cropped).toMatch(/trim=[\d.]+ 0 0 0, clip\]\{shot\.png\}/);
+	await visual.editor.click({ position: { x: 5, y: 5 } });
+	await page.keyboard.press('ControlOrMeta+z');
+	await disk.expectFile('crop.tex', (t) => t === LATEX, 'the file after undo');
+});
+
+test("dragging a figure's handle writes its width in tenths of the text width, and undo takes it back", async () => {
+	const { page, root } = texpile();
+	placeImage(root);
+	const visual = new VisualEditor(page, root);
+	const disk = new Disk(root);
+	await visual.open('crop.tex');
+	const shown = await inCanvas(page, ({ probe, view }) => {
+		const found = probe.query('.imagePluginImg')[0];
+		view.canvas.revealPos(found.pos!, 'center');
+		return found.pos!;
+	}).then(async (pos) => {
+		await settled(page);
+		return inCanvas(page, ({ probe }, at) => probe.query('.imagePluginImg').find((el) => el.pos === at)!.rect, pos);
+	});
+	await page.mouse.move(shown.left + shown.width / 2, shown.top + shown.height / 2);
+	const handle = await page.locator('.image-resize-handle.right').boundingBox();
+	if (!handle) throw new Error('the resize handle is not on screen');
+	await page.mouse.move(handle.x + handle.width / 2, handle.y + handle.height / 2);
+	await page.mouse.down();
+	await page.mouse.move(handle.x - shown.width * 0.15, handle.y + handle.height / 2, { steps: 8 });
+	await page.mouse.up();
+	await disk.expectFile('crop.tex', (t) => /includegraphics\[width=0\.3\\textwidth\]/.test(t), 'the narrower width on disk');
 	await visual.editor.click({ position: { x: 5, y: 5 } });
 	await page.keyboard.press('ControlOrMeta+z');
 	await disk.expectFile('crop.tex', (t) => t === LATEX, 'the file after undo');
@@ -123,15 +156,20 @@ test("pictures side by side in a Typst figure keep their shape, and the handle's
 	placeImage(root);
 	const v = new VisualEditor(page, root);
 	await v.open('grid.typ');
-	const image = page.locator('.typ-grid-cell > .imagePluginRoot > img').first();
+	const boxes = () =>
+		inCanvas(page, ({ probe }) => ({
+			picture: probe.query('.imagePluginImg')[0]?.rect ?? null,
+			cell: probe.query('.typ-grid-cell')[0]?.rect ?? null
+		}));
 	await expect
 		.poll(async () => {
-			const shown = await image.boundingBox();
-			return shown && shown.height > 10 ? Math.round((shown.width / shown.height) * 10) : 0;
+			const { picture } = await boxes();
+			return picture && picture.height > 10 ? Math.round((picture.width / picture.height) * 10) : 0;
 		})
 		.toBe(15);
-	const [cell, shown] = [(await page.locator('.typ-grid-cell').first().boundingBox())!, (await image.boundingBox())!];
-	expect(shown.width).toBeLessThanOrEqual(cell.width + 1);
+	const { picture, cell } = await boxes();
+	expect(picture!.width).toBeLessThanOrEqual(cell!.width + 1);
+	const shown = { x: picture!.left, y: picture!.top, width: picture!.width, height: picture!.height };
 	await v.openBlockSettings(shown.x + shown.width / 2, shown.y + shown.height / 2);
 	await expect(page.getByText('Columns', { exact: true })).toBeVisible();
 });

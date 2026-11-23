@@ -2,10 +2,11 @@
 import type { Node as PMNode } from 'prosemirror-model';
 import { Plugin, PluginKey } from 'prosemirror-state';
 import { Decoration, DecorationSet } from 'prosemirror-view';
-import type { ChipCountsOf } from '$lib/editor/visual/extensions/drawnChips/footnoteNumbers';
+import type { ChipCountsOf } from '$lib/editor/visual/extensions/drawnChips/footnote/footnoteNumbers';
 import { typedInParagraph } from '$lib/editor/visual/extensions/nodeNumbers';
 import { referencesLabel, referencesRange } from '$lib/languages/latex/knowledge/calls/citeCommands';
 import { documentCount, type LabelNumbers, type NumberingContext } from './documentNumbers';
+import { readChipsAhead } from './numberEvents';
 
 export type NumbersSetup = {
 	/** what the last compile wrote to the .aux, and how the document numbers */
@@ -15,7 +16,10 @@ export type NumbersSetup = {
 	onInputs: (redraw: () => void) => () => void;
 };
 
-export const numbersKey = new PluginKey<DecorationSet>('texpile-numbers');
+// counted: false until the first count, which runs in the task after the state is made, apart from building the editor
+type Numbers = { set: DecorationSet; counted: boolean };
+
+export const numbersKey = new PluginKey<Numbers>('texpile-numbers');
 
 const REFERENCE = /\\([A-Za-z]+)\*?\s*(?:\[[^\]]*\]\s*)*\{([^{}]*)\}(?:\s*\{([^{}]*)\})?/g;
 const referenced = new WeakMap<PMNode, readonly string[]>();
@@ -70,24 +74,53 @@ function decorate(doc: PMNode, setup: NumbersSetup): DecorationSet {
 	return DecorationSet.create(doc, decorations);
 }
 
-export function numbersPlugin(setup: NumbersSetup): Plugin<DecorationSet> {
-	return new Plugin<DecorationSet>({
+export function numbersPlugin(setup: NumbersSetup): Plugin<Numbers> {
+	return new Plugin<Numbers>({
 		key: numbersKey,
 		state: {
-			init: (_, state) => decorate(state.doc, setup),
-			apply: (tr, set) => {
-				if (!tr.docChanged && !tr.getMeta(numbersKey)) return set;
-				return !tr.getMeta(numbersKey) && typedInParagraph(tr) ? set.map(tr.mapping, tr.doc) : decorate(tr.doc, setup);
+			init: () => ({ set: DecorationSet.empty, counted: false }),
+			apply: (tr, numbers) => {
+				const asked = !!tr.getMeta(numbersKey);
+				if (!tr.docChanged && !asked) return numbers;
+				if (!numbers.counted && !asked) return numbers;
+				if (!asked && typedInParagraph(tr)) return { set: numbers.set.map(tr.mapping, tr.doc), counted: true };
+				return { set: decorate(tr.doc, setup), counted: true };
 			}
 		},
 		props: {
-			decorations: (state) => numbersKey.getState(state)
+			decorations: (state) => numbersKey.getState(state)?.set
 		},
 		view(view) {
-			const stop = setup.onInputs(() => {
+			function count(): void {
 				if (!view.isDestroyed) view.dispatch(view.state.tr.setMeta(numbersKey, true).setMeta('addToHistory', false));
+			}
+			let reading: (() => void) | null = null;
+			// the chips are read in slices first, so the count itself is one walk
+			function countSoon(): void {
+				if (reading !== null || numbersKey.getState(view.state)?.counted) return;
+				reading = readChipsAhead(view.state.doc, () => {
+					reading = null;
+					if (!numbersKey.getState(view.state)?.counted) count();
+				});
+			}
+			let again: ReturnType<typeof setTimeout> | null = null;
+			// a change of what the count reads counts again in a task of its own, apart from the dispatch that changed it
+			const stop = setup.onInputs(() => {
+				if (again !== null) return;
+				again = setTimeout(() => {
+					again = null;
+					count();
+				});
 			});
-			return { destroy: stop };
+			countSoon();
+			return {
+				update: countSoon,
+				destroy: () => {
+					stop();
+					reading?.();
+					if (again !== null) clearTimeout(again);
+				}
+			};
 		}
 	});
 }

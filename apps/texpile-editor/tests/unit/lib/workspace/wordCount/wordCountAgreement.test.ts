@@ -15,8 +15,15 @@ import { latexProse, latexCount, tallyTotal, typstCount } from '$lib/workspace/w
 import { parseLatexFile } from '$lib/workspace/latexRoundtrip';
 import { parseMarkdownFile } from '$lib/languages/markdown/visual/roundtrip';
 
-function topBar(path: string, text: string): number {
+// the worker's count, run here
+vi.mock('$lib/workspace/wordCount/latexCountClient', async () => {
+	const words = await import('$lib/workspace/wordCount/proseWords');
+	return { countLatexInWorker: async (text: string) => words.countProse(words.latexProse(text, true)) };
+});
+
+async function topBar(path: string, text: string): Promise<number> {
 	countOpenFile(path, text);
+	await new Promise((settled) => setTimeout(settled));
 	return documentCountStore.words;
 }
 
@@ -54,36 +61,41 @@ The end.
 `;
 
 describe('the top bar counts a file as the details do', () => {
-	it('leaves out the comma and full stop a citation leaves behind', () => {
+	it('leaves out the comma and full stop a citation leaves behind', async () => {
 		const details = tallyTotal(latexCount(CITED, true).words);
 		expect(details).toBe(11);
-		expect(topBar('/p/chapters/model.tex', CITED)).toBe(details);
+		expect(await topBar('/p/chapters/model.tex', CITED)).toBe(details);
 	});
 
-	it('agrees on a paper with a title, references, a footnote, a caption, maths, a table and a bibliography', () => {
+	it('agrees on a paper with a title, references, a footnote, a caption, maths, a table and a bibliography', async () => {
 		const details = latexCount(PAPER, true);
-		expect(topBar('/p/main.tex', PAPER)).toBe(tallyTotal(details.words));
+		expect(await topBar('/p/main.tex', PAPER)).toBe(tallyTotal(details.words));
 		expect(documentCountStore.charactersWithSpaces).toBe(details.characters);
 	});
 
-	it('agrees for Typst', () => {
+	it('agrees for Typst', async () => {
 		const details = typstCount(TYPST);
-		expect(topBar('/p/main.typ', TYPST)).toBe(tallyTotal(details.words));
+		expect(await topBar('/p/main.typ', TYPST)).toBe(tallyTotal(details.words));
 		expect(documentCountStore.charactersWithSpaces).toBe(details.characters);
 	});
 
-	it('counts a new file at once and edits to it once typing settles', () => {
+	it('counts a new file at once and edits to it once typing settles', async () => {
 		vi.useFakeTimers();
 		try {
-			expect(topBar('/p/a.tex', 'One two three.')).toBe(3);
-			countOpenFile('/p/a.tex', 'One two three four.');
+			countOpenFile('/p/a.tex', 'One two three.');
+			await vi.advanceTimersByTimeAsync(0);
 			expect(documentCountStore.words).toBe(3);
-			vi.advanceTimersByTime(300);
+			countOpenFile('/p/a.tex', 'One two three four.');
+			await vi.advanceTimersByTimeAsync(0);
+			expect(documentCountStore.words).toBe(3);
+			await vi.advanceTimersByTimeAsync(300);
 			expect(documentCountStore.words).toBe(4);
 			// a pending count of the last file never lands on the next one
 			countOpenFile('/p/a.tex', 'One two three four five.');
-			expect(topBar('/p/b.tex', 'Six.')).toBe(1);
-			vi.advanceTimersByTime(300);
+			countOpenFile('/p/b.tex', 'Six.');
+			await vi.advanceTimersByTimeAsync(0);
+			expect(documentCountStore.words).toBe(1);
+			await vi.advanceTimersByTimeAsync(300);
 			expect(documentCountStore.words).toBe(1);
 		} finally {
 			vi.useRealTimers();

@@ -1,4 +1,4 @@
-import { TreeFragment, type Tree } from '@lezer/common';
+import { TreeFragment, type PartialParse, type Tree } from '@lezer/common';
 import type { LRParser } from '@lezer/lr';
 import { parser } from './parser';
 import { AT_LETTER, openConstructsFor } from './tokens/openConstructs';
@@ -55,10 +55,24 @@ function trimFiles(): void {
 	while (files.size > KEPT_FILES && fileChars > KEPT_FILE_CHARS) dropFile((replaced.size ? replaced : files).keys().next().value!);
 }
 
+// the parse is asked every this many steps whether its slice is spent
+const STEPS_PER_CHECK = 512;
+
+/** a reading that stops after a slice is spent, to go on in the next task: undefined `spent` reads it through */
+type Spent = (() => boolean) | undefined;
+
+function* advanceThrough(parse: PartialParse, spent: Spent): Generator<void, Tree> {
+	for (let step = 1; ; step++) {
+		const done = parse.advance();
+		if (done) return done;
+		if (spent && step % STEPS_PER_CHECK === 0 && spent()) yield;
+	}
+}
+
 /** `text` as `by` reads it. A file goes on from the tree of the kept file nearest to it, so a typed character rereads
  *  the nodes around it and the rest of the tree is the old one */
-function read(by: LRParser, text: string): Tree {
-	if (text.length < FILE_CHARS) return by.parse(text);
+function* read(by: LRParser, text: string, spent: Spent): Generator<void, Tree> {
+	if (text.length < FILE_CHARS) return yield* advanceThrough(by.startParse(text), spent);
 	let near: { old: string; tree: Tree; from: number; toA: number; toB: number } | null = null;
 	// the newest first: the reading of the text one key ago is the nearest there is, and the search ends on it
 	for (const [old, reading] of [...files].reverse()) {
@@ -76,11 +90,11 @@ function read(by: LRParser, text: string): Tree {
 		}
 		if (!near || Math.max(toA, toB) - from < Math.max(near.toA, near.toB) - near.from) near = { old, tree, from, toA, toB };
 	}
-	if (!near || Math.max(near.toA, near.toB) - near.from > NEAR_CHARS) return by.parse(text);
+	if (!near || Math.max(near.toA, near.toB) - near.from > NEAR_CHARS) return yield* advanceThrough(by.startParse(text), spent);
 	replaced.delete(near.old);
 	replaced.add(near.old);
 	const change = { fromA: near.from, toA: near.toA, fromB: near.from, toB: near.toB };
-	return by.parse(text, TreeFragment.applyChanges(TreeFragment.addTree(near.tree), [change]));
+	return yield* advanceThrough(by.startParse(text, TreeFragment.applyChanges(TreeFragment.addTree(near.tree), [change])), spent);
 }
 
 // a package or class file read as text says so near its top
@@ -110,8 +124,7 @@ export function latexTreeAtLetter(text: string): Tree {
 	return latexParserFor(true).parse(text);
 }
 
-/** the tree of `text`, read with the verbatim environments and commands it defines itself */
-export function latexTreeOf(text: string): Tree {
+function* readLatexTree(text: string, spent: Spent): Generator<void, Tree> {
 	const found = kept(text);
 	if (found) {
 		replaced.delete(text);
@@ -119,13 +132,34 @@ export function latexTreeOf(text: string): Tree {
 	}
 	const packageFile = PACKAGE_FILE.test(text.slice(0, 4000));
 	const plain = latexParserFor(packageFile);
-	const first: Reading = { tree: read(plain, text), by: plain };
+	const first: Reading = { tree: yield* read(plain, text, spent), by: plain };
 	keep(text, first);
+	if (spent) yield;
 	const own: OwnSyntax = { math: NO_OWN_SYNTAX.math, literals: ownLiteralsIn(text) };
 	const by = ownSyntaxTokensKey(own) === noLiterals() ? null : latexParserFor(packageFile, own);
-	const tree = by ? keep(text, { tree: read(by, text), by, plain: first }) : first.tree;
+	const tree = by ? keep(text, { tree: yield* read(by, text, spent), by, plain: first }) : first.tree;
 	trimFiles();
 	return tree;
+}
+
+/** the tree of `text`, read with the verbatim environments and commands it defines itself */
+export function latexTreeOf(text: string): Tree {
+	const reading = readLatexTree(text, undefined);
+	return reading.next().value as Tree;
+}
+
+const SLICE_MS = 25;
+
+/** the same tree, read in tasks of a few milliseconds each, so a long file holds the thread for none of it */
+export async function latexTreeInSlices(text: string): Promise<Tree> {
+	let end = 0;
+	const reading = readLatexTree(text, () => performance.now() >= end);
+	for (;;) {
+		end = performance.now() + SLICE_MS;
+		const step = reading.next();
+		if (step.done) return step.value;
+		await new Promise((next) => setTimeout(next));
+	}
 }
 
 /** an editor's finished parse, so readers of the same text skip parsing it again */

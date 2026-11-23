@@ -1,6 +1,6 @@
 // a glossary or acronym call drawn as the term it prints, read from the entries the project registers
 import {
-	tip,
+	chipElement,
 	sourceHint,
 	type ChipFace,
 	withoutTrailingLabel,
@@ -39,18 +39,15 @@ function readGlossaryCall(entry: TypstEntry, call: TypstCall): GlossaryCall | nu
 }
 
 function drawGlossary(written: string, used: GlossaryCall, scope: TypstFileScope | null): ChipFace {
-	const dom = document.createElement('span');
+	const dom = chipElement('span');
 	const entry = scope ? registeredEntry(scope, used.key) : undefined;
 	const later = entry ? fillTemplate(used.flag ? used.forms.flags![used.flag] : used.forms.next, entry) : null;
 	const missing = used.display === null && entry === null;
 	showGlossaryTerm(dom, used.display ?? later ?? used.key, missing);
 	// the first use prints the long form, which the later uses leave out
 	const first = entry ? fillTemplate(used.forms.first, entry) : null;
-	const tipped = tip(
-		dom,
-		missing ? m.glossary_entry_not_found({ key: used.key }) : first && first !== dom.textContent ? first : sourceHint(written)
-	);
-	return { dom, destroy: () => tipped.destroy() };
+	dom.hint = missing ? m.glossary_entry_not_found({ key: used.key }) : first && first !== dom.textContent ? first : sourceHint(written);
+	return { dom };
 }
 
 export function glossaryFace(source: string): ChipFace | null {

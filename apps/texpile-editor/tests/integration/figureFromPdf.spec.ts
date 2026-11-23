@@ -4,6 +4,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { useTexpile } from './driver/useTexpile';
 import { VisualEditor } from './driver/visualEditor';
+import { inCanvas } from './canvas/canvasPage';
 
 function hasProgram(name: string): boolean {
 	try {
@@ -38,24 +39,32 @@ test('a picture in an input file shows as the compiled PDF prints it, and keeps 
 	compile(root);
 	const visual = new VisualEditor(page, root);
 	await visual.open('part.tex');
-	const crop = page.locator('.figure-card img.compiled-picture');
-	await expect(crop).toBeVisible({ timeout: 60_000 });
-	await expect(crop).toHaveAttribute('src', /^blob:/);
-	const box = (await crop.boundingBox())!;
-	expect(box.width).toBeGreaterThan(80);
-	expect(box.height).toBeGreaterThan(20);
+	// the card's picture: what it was drawn from and its size, or its placeholder's words
+	const card = () =>
+		inCanvas(page, ({ probe }) => {
+			const picture = probe.query('.figure-card .compiled-picture')[0];
+			return {
+				source: picture?.attrs['data-source'] ?? null,
+				width: picture?.rect.width ?? 0,
+				height: picture?.rect.height ?? 0,
+				words: probe.query('.figure-card')[0]?.text ?? ''
+			};
+		});
+	await expect.poll(async () => (await card()).source, { timeout: 60_000 }).toBe('pdf');
+	const crop = await card();
+	expect(crop.width).toBeGreaterThan(80);
+	expect(crop.height).toBeGreaterThan(20);
 
 	// the file saved after the compile, its picture as it was: the card had nothing to show until the next compile
 	const later = new Date(Date.now() + 60_000);
 	fs.utimesSync(path.join(root, 'part.tex'), later, later);
 	await visual.open('paper.tex');
 	await visual.open('part.tex');
-	await expect(page.locator('.figure-card svg image')).toBeVisible();
-	await expect(crop).toHaveCount(0);
+	await expect.poll(async () => (await card()).source, { timeout: 60_000 }).toBe('drawing');
 
 	fs.writeFileSync(path.join(root, 'part.tex'), PART.replace('{B}', '{C}'));
 	const laterStill = new Date(later.getTime() + 60_000);
 	fs.utimesSync(path.join(root, 'part.tex'), laterStill, laterStill);
-	await expect(page.locator('.figure-card')).toContainText('TikZ figure');
-	await expect(page.locator('.figure-card svg image')).toHaveCount(0);
+	await expect.poll(async () => (await card()).words).toContain('TikZ figure');
+	expect((await card()).source).toBeNull();
 });

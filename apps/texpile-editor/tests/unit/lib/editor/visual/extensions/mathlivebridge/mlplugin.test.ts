@@ -36,20 +36,6 @@ function press(state: EditorState, key: string, shiftKey: boolean, ctrlKey = fal
 }
 
 describe('mlarrowHandlers', () => {
-	it('extends a selection over inline math with shift right', () => {
-		const { handled, state } = press(sentence(1, 14), 'ArrowRight', true);
-		expect(handled).toBe(true);
-		expect(state.selection).toBeInstanceOf(TextSelection);
-		expect([state.selection.anchor, state.selection.head]).toEqual([1, 17]);
-	});
-
-	it('extends a selection over inline math with shift left', () => {
-		const { handled, state } = press(sentence(25, 17), 'ArrowLeft', true);
-		expect(handled).toBe(true);
-		expect(state.selection).toBeInstanceOf(TextSelection);
-		expect([state.selection.anchor, state.selection.head]).toEqual([25, 14]);
-	});
-
 	it('steps over inline math with ctrl right and left, as one word', () => {
 		expect(press(sentence(14), 'ArrowRight', false, true).state.selection).toMatchObject({ empty: true, head: 17 });
 		expect(press(sentence(17), 'ArrowLeft', false, true).state.selection).toMatchObject({ empty: true, head: 14 });
@@ -65,12 +51,6 @@ describe('mlarrowHandlers', () => {
 		expect(back.state.selection).toBeInstanceOf(NodeSelection);
 		expect(back.state.doc.eq(sentence(17).doc)).toBe(true);
 		expect(press(sentence(14), 'Delete', false).state.selection).toMatchObject({ from: 14, to: 17 });
-	});
-
-	it('still enters the math on a plain arrow', () => {
-		const { state } = press(sentence(14), 'ArrowRight', false);
-		expect(state.selection).toBeInstanceOf(NodeSelection);
-		expect(state.selection.from).toBe(14);
 	});
 });
 

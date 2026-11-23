@@ -66,7 +66,7 @@ function isPointerEvent(evt: Event | null): evt is PointerEvent {
   );
 }
 
-function pointInRect(x: number, y: number, rect: DOMRect): boolean {
+function pointInRect(x: number, y: number, rect: Rect): boolean {
   return x >= rect.left && x <= rect.right && y >= rect.top && y <= rect.bottom;
 }
 
@@ -97,18 +97,19 @@ export function onPointerDown(mathfield: _Mathfield, evt: PointerEvent): void {
   const anchorX = evt.clientX;
   const anchorY = evt.clientY;
   const anchorTime = Date.now();
-  const field = that.field!;
+  const { geometry } = that;
   const scrollInterval = setInterval(() => {
-    if (scrollLeft) field.scroll({ top: 0, left: field.scrollLeft - 16 });
-    else if (scrollRight) field.scroll({ top: 0, left: field.scrollLeft + 16 });
+    if (scrollLeft) geometry.scrollBy(-16);
+    else if (scrollRight) geometry.scrollBy(16);
   }, 32);
 
   function endPointerTracking(): void {
-    PointerTracker.stop();
+    if (that.pointerCapture) that.pointerCapture.stop();
+    else PointerTracker.stop();
 
     trackingPointer = false;
     clearInterval(scrollInterval);
-    mathfield.element!.classList.remove('tracking');
+    mathfield.element?.classList.remove('tracking');
     if (evt) evt.preventDefault();
   }
 
@@ -135,7 +136,7 @@ export function onPointerDown(mathfield: _Mathfield, evt: PointerEvent): void {
       return;
     }
 
-    const fieldBounds = field.getBoundingClientRect();
+    const fieldBounds = geometry.fieldRect();
     scrollRight = x > fieldBounds.right;
     scrollLeft = x < fieldBounds.left;
     let actualAnchor = anchor;
@@ -179,12 +180,9 @@ export function onPointerDown(mathfield: _Mathfield, evt: PointerEvent): void {
     gTapCount = 1;
   }
 
-  const bounds = field.getBoundingClientRect();
-  const containerBounds =
-    mathfield.container?.getBoundingClientRect() ??
-    mathfield.element.getBoundingClientRect();
-  const hostBounds =
-    mathfield.element?.getBoundingClientRect() ?? containerBounds;
+  const bounds = geometry.fieldRect();
+  const containerBounds = geometry.hostRect();
+  const hostBounds = containerBounds;
   const anchorInsideField = pointInRect(anchorX, anchorY, bounds);
   const anchorInsideContainer =
     !anchorInsideField && containerBounds
@@ -227,7 +225,7 @@ export function onPointerDown(mathfield: _Mathfield, evt: PointerEvent): void {
     if (anchor >= 0) {
       // Set a `tracking` class to avoid triggering the hover of the virtual
       // keyboard toggle, for example
-      mathfield.element!.classList.add('tracking');
+      mathfield.element?.classList.add('tracking');
 
       if (evt.shiftKey) {
         // If the Shift key is down, extend the selection
@@ -307,7 +305,15 @@ export function onPointerDown(mathfield: _Mathfield, evt: PointerEvent): void {
       } else if (!trackingPointer) {
         trackingPointer = true;
 
-        PointerTracker.start(field, evt, onPointerMove, endPointerTracking);
+        if (mathfield.pointerCapture)
+          mathfield.pointerCapture.start(onPointerMove, endPointerTracking);
+        else
+          PointerTracker.start(
+            mathfield.field,
+            evt,
+            onPointerMove,
+            endPointerTracking
+          );
 
         if (evt.detail === 2 || gTapCount === 2) {
           // This is a double-click
@@ -515,10 +521,7 @@ export function offsetFromPoint(
   //
   // 1/ Check if we're inside the mathfield bounding box
   //
-  const bounds = mathfield.field
-    .querySelector('.ML__latex')!
-    .getBoundingClientRect();
-  if (!bounds) return 0;
+  const bounds = mathfield.geometry.contentRect();
   if (x > bounds.right || y > bounds.bottom + 8)
     return mathfield.model.lastOffset;
 

@@ -122,12 +122,6 @@
 		display: none;
 	}
 
-	/* a table as a paper sets it: the caption line over the cells, no box around them */
-	:global(.table-wrapper) {
-		position: relative;
-		margin: calc(var(--spacing) * 4) 0;
-	}
-
 	/* flex: the editor keeps white space, and a space between the parts would stand as a line of its own */
 	.table-chrome {
 		display: flex;
@@ -143,25 +137,6 @@
 		display: flex;
 		align-items: center;
 		gap: calc(var(--spacing) * 1);
-	}
-
-	/* the tableWrapper boundary breaks drag selection (posAtCoords fails there and the selection
-	   collapses), so make it transparent to mouse events. wide tables just overflow, no scrollbar. */
-	:global(.ProseMirror .tableWrapper) {
-		pointer-events: none;
-		overflow: visible !important;
-		margin: 0 !important;
-		padding: 0 !important;
-	}
-
-	:global(.ProseMirror .tableWrapper > *) {
-		pointer-events: auto;
-	}
-
-	/* over-wide tables scroll inside their own box, the page never gets a horizontal scrollbar */
-	:global(.table-wrapper-content) {
-		max-width: 100%;
-		overflow-x: auto;
 	}
 
 	.table-caption-warning {
@@ -198,55 +173,7 @@
 		background: var(--color-surface-200);
 	}
 
-	:global(.table-wrapper-content) {
-		display: flex;
-		flex-direction: column;
-		gap: calc(var(--spacing) * 2);
-	}
-
-	/* the number stands before the caption as it prints, drawn from the wrapper (tableWrapperView) */
-	:global(.table-caption) {
-		text-align: center;
-		padding: 0 calc(var(--spacing) * 8);
-		cursor: text;
-		min-height: calc(var(--spacing) * 6);
-	}
-	:global(.table-caption::before) {
-		content: var(--table-prefix, '');
-		font-weight: 600;
-		color: var(--muted-text);
-		margin-right: 0.25em;
-	}
-	:global(.table-caption[data-starred='true']::before) {
-		content: none;
-	}
-	:global(.TexpileEditor .table-wrapper-content table) {
-		margin: 0;
-	}
-
-	:global(.table-notes) {
-		font-size: 0.75rem;
-		margin-top: calc(var(--spacing) * 2);
-		color: var(--muted-text);
-		font-style: italic;
-		padding: calc(var(--spacing) * 1) calc(var(--spacing) * 2);
-		border-radius: var(--radius-base);
-		cursor: text;
-		min-height: calc(var(--spacing) * 6);
-	}
-
-	:global(.table-wrapper-content.hide-notes .table-notes) {
-		display: none;
-	}
-
-	:global(.table-wrapper-content table th) {
-		font-weight: 600;
-	}
-
 	/* the surfaces above are hardcoded light, flip them under data-mode=dark */
-	:global([data-mode='dark'] .table-notes) {
-		color: var(--faint-text);
-	}
 	:global([data-mode='dark'] .table-settings-btn button:hover) {
 		background: var(--color-surface-700);
 	}

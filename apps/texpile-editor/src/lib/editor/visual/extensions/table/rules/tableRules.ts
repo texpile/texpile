@@ -5,7 +5,6 @@ import { Decoration, DecorationSet, type EditorView } from 'prosemirror-view';
 import type { Node } from 'prosemirror-model';
 import { TableMap } from 'prosemirror-tables';
 import { typedInParagraph } from '$lib/editor/visual/extensions/nodeNumbers';
-import './tableRules.css';
 
 export type RuleWeight = 'light' | 'heavy' | 'double';
 export type CellAlign = 'left' | 'center' | 'right';
@@ -17,6 +16,8 @@ export type TableLook = {
 	edgesOf(table: Node, inFloat: boolean): Map<number, CellEdges>;
 	/** the table states a width and fills it; any other is as wide as its cells */
 	fillsWidth(table: Node): boolean;
+	/** the side the blocks around a table as wide as its cells put it on, innermost first; a float centers it */
+	sideIn(holders: readonly Node[]): CellAlign | null;
 	/** the choice the table's lines amount to, or null when they are a pattern of its own */
 	linesOf(table: Node): TableLines | null;
 	/** gives the table at `pos` every line, the three of a formal table, or none */
@@ -47,7 +48,12 @@ export function linesOfEdges(table: Node, edges: ReadonlyMap<number, CellEdges>)
 	return closed && (!everyRow || map.height <= 2) ? 'formal' : null;
 }
 
-type Mark = { from: number; to: number; cls: string };
+type Mark = { from: number; to: number; cls: string; spec: TableRuleSpec };
+
+/** what the canvas grid and cell views read off their node decorations; flat so a decoration set compares equal when nothing changed */
+export type TableRuleSpec = Partial<
+	{ fillsWidth: boolean; side: CellAlign } & { [K in keyof CellEdges as `edge${Capitalize<K>}`]: CellEdges[K] }
+>;
 
 const WEIGHTS: RuleWeight[] = ['light', 'double', 'heavy'];
 
@@ -56,11 +62,17 @@ export function heavierRule(a: RuleWeight | null, b: RuleWeight | null): RuleWei
 	return WEIGHTS.indexOf(a) >= WEIGHTS.indexOf(b) ? a : b;
 }
 
-function tableMarks(look: TableLook, table: Node, at: number, inFloat: boolean, out: Mark[]): void {
+function ruleSpecOf(edges: CellEdges): TableRuleSpec {
+	return { edgeTop: edges.top, edgeBottom: edges.bottom, edgeLeft: edges.left, edgeRight: edges.right, edgeAlign: edges.align };
+}
+
+function tableMarks(look: TableLook, table: Node, at: number, holders: readonly Node[], out: Mark[]): void {
+	const inFloat = holders[0]?.type.name === 'table_wrapper';
 	out.push({
 		from: at,
 		to: at + table.nodeSize,
-		cls: look.fillsWidth(table) ? 'rules-as-printed' : 'rules-as-printed table-natural-width'
+		cls: look.fillsWidth(table) ? 'rules-as-printed' : 'rules-as-printed table-natural-width',
+		spec: { fillsWidth: look.fillsWidth(table), side: inFloat ? 'center' : (look.sideIn(holders) ?? 'left') }
 	});
 	for (const [cell, edges] of look.edgesOf(table, inFloat)) {
 		const names = [
@@ -71,7 +83,7 @@ function tableMarks(look: TableLook, table: Node, at: number, inFloat: boolean, 
 			edges.align && `cell-${edges.align}`
 		].filter(Boolean);
 		const from = at + 1 + cell;
-		if (names.length) out.push({ from, to: from + table.nodeAt(cell)!.nodeSize, cls: names.join(' ') });
+		if (names.length) out.push({ from, to: from + table.nodeAt(cell)!.nodeSize, cls: names.join(' '), spec: ruleSpecOf(edges) });
 	}
 }
 
@@ -84,11 +96,13 @@ export function tableRulesPlugin(look: TableLook): Plugin<DecorationSet> {
 		if (marks) return marks;
 		marks = [];
 		const found = marks;
-		if (block.type.name === 'table') tableMarks(look, block, 0, false, found);
+		if (block.type.name === 'table') tableMarks(look, block, 0, [], found);
 		else
-			block.descendants((node, pos, parent) => {
+			block.descendants((node, pos) => {
 				if (node.type.name !== 'table') return !node.isTextblock;
-				tableMarks(look, node, pos + 1, (parent ?? block).type.name === 'table_wrapper', found);
+				const $pos = block.resolve(pos);
+				const holders = Array.from({ length: $pos.depth + 1 }, (_, i) => $pos.node($pos.depth - i));
+				tableMarks(look, node, pos + 1, holders, found);
 				return false;
 			});
 		inBlock.set(block, marks);
@@ -98,7 +112,8 @@ export function tableRulesPlugin(look: TableLook): Plugin<DecorationSet> {
 	function decorate(doc: Node): DecorationSet {
 		const decorations: Decoration[] = [];
 		doc.forEach((block, offset) => {
-			for (const mark of marksIn(block)) decorations.push(Decoration.node(offset + mark.from, offset + mark.to, { class: mark.cls }));
+			for (const mark of marksIn(block))
+				decorations.push(Decoration.node(offset + mark.from, offset + mark.to, { class: mark.cls }, mark.spec));
 		});
 		return decorations.length ? DecorationSet.create(doc, decorations) : DecorationSet.empty;
 	}
@@ -118,22 +133,34 @@ export function tableRulesPlugin(look: TableLook): Plugin<DecorationSet> {
 	return plugin;
 }
 
-function tableAround(state: EditorState): { from: number; to: number } | null {
+function tableAround(state: EditorState): { from: number; to: number; node: Node } | null {
 	const { $from } = state.selection;
 	for (let depth = $from.depth; depth > 0; depth--) {
 		const node = $from.node(depth);
-		if (node.type.name === 'table') return { from: $from.before(depth), to: $from.after(depth) };
+		if (node.type.name === 'table') return { from: $from.before(depth), to: $from.after(depth), node };
 	}
 	return null;
 }
 
-/** the table holding the caret shows the edges that print no rule, as it does under the pointer */
+/** the table holding the caret shows the edges that print no rule, as it does under the pointer; its cells carry it for the canvas */
 export function tableCaretPlugin(): Plugin {
+	let last: { doc: Node; from: number; set: DecorationSet } | null = null;
 	return new Plugin({
 		props: {
 			decorations(state) {
 				const table = tableAround(state);
-				return table ? DecorationSet.create(state.doc, [Decoration.node(table.from, table.to, { class: 'table-has-caret' })]) : null;
+				if (!table) return null;
+				if (last?.doc === state.doc && last.from === table.from) return last.set;
+				const spec = { caretGuide: true };
+				const marks = [Decoration.node(table.from, table.to, { class: 'table-has-caret' }, spec)];
+				table.node.forEach((row, rowAt) =>
+					row.forEach((cell, cellAt) => {
+						const from = table.from + 2 + rowAt + cellAt;
+						marks.push(Decoration.node(from, from + cell.nodeSize, {}, spec));
+					})
+				);
+				last = { doc: state.doc, from: table.from, set: DecorationSet.create(state.doc, marks) };
+				return last.set;
 			}
 		}
 	});

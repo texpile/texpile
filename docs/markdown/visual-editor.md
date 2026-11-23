@@ -13,7 +13,6 @@ Things that work differently from a word processor:
 - A code block's settings icon sets its language.
 - Tables always have a header row.
 - Front matter at the top of the file is kept. Edit it in the source editor.
-- Files over 800 KB open in the source editor.
 
 ## Typing shortcuts
 
@@ -27,6 +26,8 @@ At the start of a line, type the marker and a space.
 | `>`             | Block quote     |
 | ` ``` `         | Code block      |
 | `---`           | Horizontal rule |
+
+Typing `$x^2$` anywhere in a paragraph makes an inline equation. In an empty paragraph `$$` opens a display equation.
 
 ## Keyboard shortcuts
 

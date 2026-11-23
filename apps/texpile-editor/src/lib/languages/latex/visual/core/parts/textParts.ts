@@ -1,11 +1,11 @@
+import { faceElement as canvasElement, setLook } from '$lib/editor/canvas';
 import { faceOfParts, type ChipFace } from '$lib/editor/visual/extensions/drawnChips/chipFace';
 import type { Look } from '$lib/languages/latex/drawnCommands';
+import { coreElement } from '../looks/coreLooks';
 import { cssColor } from '../reading/texColor';
 
 export function textPart(text: string): ChipFace {
-	const dom = document.createElement('span');
-	dom.textContent = text;
-	return { dom };
+	return { dom: coreElement('span', '', text) };
 }
 
 export function characterPart(text: string): ChipFace {
@@ -15,10 +15,10 @@ export function characterPart(text: string): ChipFace {
 export function styledPart(look: Look, parts: ChipFace[], block: boolean): ChipFace | null {
 	if (parts.some((part) => part.line)) return null;
 	const face = faceOfParts(parts, block);
-	const dom = document.createElement('span');
-	Object.assign(dom.style, look);
+	const dom = canvasElement('span');
+	setLook(dom, look);
 	dom.appendChild(face.dom);
-	return { dom, decorate: face.decorate, destroy: face.destroy };
+	return { dom, mixed: face.mixed, decorate: face.decorate, destroy: face.destroy };
 }
 
 export function coloredPart(color: string, parts: ChipFace[] | null): ChipFace | null {

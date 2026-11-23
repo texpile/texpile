@@ -14,7 +14,7 @@ Type math as you would in Typst and see it typeset as you go.
 
 ## Insert an equation
 
-Press Ctrl M for an inline equation, or Ctrl Shift M for a display equation.
+Press Ctrl M for an inline equation, or Ctrl Shift M for a display equation. Typing `$x^2$` also makes an inline equation, and `$ x^2 $` with spaces inside makes a display equation.
 
 Type a name such as `alpha` or `arrow.r` and a space, and it becomes the symbol. A name and `(`, such as `frac(`, builds a fraction with places to fill. Esc opens a box to type the Typst directly.
 

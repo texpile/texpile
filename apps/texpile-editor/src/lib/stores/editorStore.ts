@@ -1,4 +1,4 @@
-import type { DocumentHyphenation } from '$lib/editor/visual/linebreak/documentHyphenationLanguage';
+import type { DocumentHyphenation } from '$lib/editor/canvas/layout/linebreak/documentHyphenationLanguage';
 import type { CrossRefNames } from '$lib/languages/latex/visual/core/references/crossRefNames';
 import type { EnvironmentHeads } from '$lib/languages/latex/visual/extensions/environment/environmentHeads';
 import type { MacroDef } from '$lib/editor/source/extensions/math-preview/userMacros';

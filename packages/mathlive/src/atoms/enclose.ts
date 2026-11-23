@@ -164,7 +164,7 @@ export class EncloseAtom extends Atom {
     const base = Atom.createBox(context, this.body);
     if (!base) return null;
 
-    const borderWidth = borderDim(this.borderStyle);
+    const borderStyle = withBorderWidth(this.borderStyle);
 
     // Calculate the padding on each side
     const padding = context.toEm(
@@ -197,7 +197,7 @@ export class EncloseAtom extends Atom {
     if (this.notation.horizontalstrike) {
       // Position at x-height for text strike-through
       // X-height is typically around the middle of lowercase letters
-      const y = 2 * padding + base.height - X_HEIGHT / 2;
+      const y = padding + base.height - X_HEIGHT / 2;
       svg += this.line(
         (padding + margin).toString(),
         y.toString(),
@@ -335,54 +335,45 @@ export class EncloseAtom extends Atom {
     notation.height = base.height + 2 * padding;
     notation.depth = base.depth;
     notation.setStyle('box-sizing', 'border-box');
-    notation.setStyle('left', `calc(-1 * ${borderWidth} - ${padding}em)`);
+    notation.setStyle('left', -padding, 'em');
     // notation.setStyle('height', `${Math.floor(100 * h) / 100}em`);
-    notation.setStyle(
-      'height',
-      `calc( ${base.height + base.depth + 2 * padding}em + ${borderWidth})`
-    );
-    // );
+    notation.setStyle('height', base.height + base.depth + 2 * padding, 'em');
     // Symmetric positioning: no top offset, padding is in height
     notation.setStyle('top', `0em`);
-    notation.setStyle(
-      'width',
-      `calc(${base.width + 2 * padding}em + ${borderWidth})`
-    );
+    notation.setStyle('width', base.width + 2 * padding + wDelta, 'em');
 
     if (this.backgroundcolor)
       notation.setStyle('background-color', this.backgroundcolor);
 
-    if (this.notation.box) notation.setStyle('border', '1px solid red');
+    if (this.notation.box) notation.setStyle('border', borderStyle);
 
     if (this.notation.actuarial) {
-      notation.setStyle('border-top', this.borderStyle);
-      notation.setStyle('border-right', this.borderStyle);
+      notation.setStyle('border-top', borderStyle);
+      notation.setStyle('border-right', borderStyle);
     }
 
     if (this.notation.madruwb) {
-      notation.setStyle('border-bottom', this.borderStyle);
-      notation.setStyle('border-right', this.borderStyle);
+      notation.setStyle('border-bottom', borderStyle);
+      notation.setStyle('border-right', borderStyle);
     }
 
     if (this.notation.roundedbox) {
       notation.setStyle('border-radius', '8px');
-      notation.setStyle('border', this.borderStyle);
+      notation.setStyle('border', borderStyle);
     }
 
     if (this.notation.circle) {
       notation.setStyle('border-radius', '50%');
-      notation.setStyle('border', this.borderStyle);
+      notation.setStyle('border', borderStyle);
     }
 
-    if (this.notation.top) notation.setStyle('border-top', this.borderStyle);
+    if (this.notation.top) notation.setStyle('border-top', borderStyle);
 
-    if (this.notation.left) notation.setStyle('border-left', this.borderStyle);
+    if (this.notation.left) notation.setStyle('border-left', borderStyle);
 
-    if (this.notation.right)
-      notation.setStyle('border-right', this.borderStyle);
+    if (this.notation.right) notation.setStyle('border-right', borderStyle);
 
-    if (this.notation.bottom)
-      notation.setStyle('border-bottom', this.borderStyle);
+    if (this.notation.bottom) notation.setStyle('border-bottom', borderStyle);
 
     if (svg) {
       let svgStyle = '';
@@ -444,11 +435,11 @@ function coord(c: string | number): string {
   return c;
 }
 
-function borderDim(s: string | undefined): string {
-  if (!s) return '1px';
-  const m = s.match(/([0-9][a-zA-Z\%]+)/);
-  if (m === null) return '1px';
-  return m[1];
+/** a border with no width is `medium` in CSS: a hairline instead */
+function withBorderWidth(s: string | undefined): string | undefined {
+  return s && !/(^|\s)(thin|medium|thick|-?\d*\.?\d+[a-z]*)(\s|$)/i.test(s)
+    ? `1px ${s.trim()}`
+    : s;
 }
 
 function getRuleThickness(ctx: Context): string {

@@ -27,6 +27,18 @@ const suggestReference: TexpileSuggester = {
 	maxQueryLength: 30,
 	suggestClassName:
 		'bg-primary-tint text-primary-ink rounded-base px-0.5 underline decoration-wavy decoration-primary-500 dark:decoration-primary-400',
+	suggestLook: {
+		look: {
+			backgroundColor: 'var(--color-primary-tint)',
+			color: 'var(--color-primary-ink)',
+			borderRadius: 'var(--radius-base)',
+			paddingLeft: '0.125rem',
+			paddingRight: '0.125rem',
+			textDecorationLine: 'underline',
+			textDecorationStyle: 'wavy',
+			textDecorationColor: 'light-dark(var(--color-primary-500), var(--color-primary-400))'
+		}
+	},
 	onChange: (params) => {
 		const { query, range, view } = params;
 

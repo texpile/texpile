@@ -4,30 +4,23 @@
 	import type { SpellLanguage } from '$lib/editor/spellcheck/languages/spellLanguages';
 	import { onDestroy, onMount, untrack } from 'svelte';
 	import { EditorState, Transaction } from 'prosemirror-state';
-	import { EditorView } from 'prosemirror-view';
+	import type { EditorView } from 'prosemirror-view';
 	import type { Node as PMNode } from 'prosemirror-model';
 	import { schema } from '$lib/languages/latex/schema/latexPMSchema';
-	import { latexEditorPlugins, latexNodeViews } from './latexEditorSetup';
+	import { latexEditorPlugins } from './latexEditorSetup';
+	import { latexNodeViews } from './latexNodeViews';
 	import { documentMainFile } from '$lib/workspace/workspaceStore';
 	import { samePath } from '$lib/workspace/fileSystem';
-	import { isLargeDocument } from './largeDocument';
 	import { loadMathlive, mathliveLoaded, type MathlivePlugin } from '$lib/languages/mathliveLoad';
 	import { swapParsedDoc, swapDocForNewFile, docSwapKind } from '$lib/editor/visual/docSwap';
 	import { referenceStore } from '$lib/stores/editorStore';
 	import { deckPreamble } from './core/title/deckPreamble.svelte';
 	import { groupView } from '$lib/editor/visual/groupView.svelte';
-	import { revealBuiltEditor, BUILDING_CLASS } from '$lib/editor/visual/revealBuiltEditor';
 	import { preferences } from '$lib/stores/preferencesStore.svelte';
 	import { padTablesInState } from '$lib/editor/visual/padTables';
-	import 'prosemirror-view/style/prosemirror.css';
-	import 'prosemirror-tables/style/tables.css';
-	import 'prosemirror-gapcursor/style/gapcursor.css';
-	import '$lib/editor/visual/extensions/image/styles/common.css';
-	import '$lib/editor/visual/extensions/image/styles/withResize.css';
-	import '$lib/editor/visual/extensions/image/styles/sideResize.css';
-	import '$lib/editor/visual/styles/cursor.css';
-	import '$lib/editor/visual/styles/document.css';
-	import 'prosemirror-flat-list/dist/style.css';
+	import { createCanvasView } from '$lib/editor/canvas';
+	import { canvasMount } from '$lib/editor/visual/mount/canvasMount.svelte';
+	import '$lib/editor/canvas/frame/canvasRoot.css';
 	import { syncPmComments } from '$lib/editor/visual/extensions/pmCommentsSync.svelte';
 	import type { CommentAnchor } from '$lib/comments/anchor';
 	import type { SourceAnchorFn } from '$lib/editor/visual/extensions/pmComments';
@@ -49,9 +42,8 @@
 		// where inserted images go (an images/ subfolder)
 		imageDir?: string;
 		placeholder?: string;
-		/** Fired once the ProseMirror view exists and is on screen. Building it is a long synchronous
-		 * block on a large document, and it starts only after the dynamic import below resolves - well
-		 * after this component's own mount - so callers cannot infer it from mounting. */
+		/** after the view's first painted frame with its fonts and formulas, and again for each file swapped in.
+		 * The build starts only after the dynamic import below resolves, so callers cannot infer it from mounting */
 		onReady?: () => void;
 		/** the file's threads as ranges of its text, placed here through the map */
 		commentRanges?: CommentRange[];
@@ -134,6 +126,18 @@
 	let editor: HTMLElement | null = $state(null);
 	let editorView: EditorView | null = $state(null);
 	const group = groupView({ view: () => editorView, live: () => live, path: () => docPath ?? null });
+	function isMainFile(): boolean {
+		const main = documentMainFile();
+		return !main || !docPath || samePath(main, docPath);
+	}
+	const mount = canvasMount({
+		view: () => editorView,
+		path: () => docPath ?? null,
+		imageDirectory: () => imageDir ?? '',
+		cropFormat: 'latex',
+		isMainFile,
+		onReady: () => onReady?.()
+	});
 	const isLive = $derived(live);
 	let editorState: EditorState | null = $state(null);
 
@@ -157,10 +161,7 @@
 			addCommentLabel,
 			spellLanguage: () => spellLanguage,
 			jumpToDefinition: (name) => void onJumpToDefinition?.(name),
-			isMainFile: () => {
-				const main = documentMainFile();
-				return !main || !docPath || samePath(main, docPath);
-			},
+			isMainFile,
 			filePath: () => docPath ?? null
 		});
 
@@ -173,44 +174,41 @@
 		});
 		editorState = padTablesInState(editorState);
 
-		editorView = new EditorView(editor, {
-			// headings and figures show their numbers from numbersPlugin
-			attributes: (state) => ({
-				class: isLargeDocument(state.doc) ? 'TexpileEditor TexpileEditor-large' : 'TexpileEditor',
-				spellcheck: 'false',
-				'data-compiled-numbers': 'true'
-			}),
-			state: editorState,
-			nodeViews: latexNodeViews(() => imageDir ?? '', onJumpToLabel, onJumpToDefinition),
-			editable: group.editable,
-			dispatchTransaction(this: EditorView, transaction: Transaction) {
-				// A plugin that finishes asynchronously can dispatch into a view that was destroyed while
-				// it was working - the spellchecker does exactly this when a tab switch tears the editor
-				// down mid-check. destroy() nulls docView, and updateState then throws reading
-				// docView.matchesNode, which surfaces as an unhandled rejection on every switch.
-				// Dropping is right: only async plugins can reach here after destroy (user input needs a
-				// live view), and what they carry is decorations for a document nobody is looking at.
-				if (this.isDestroyed) return;
-				const newState = this.state.apply(transaction);
-				this.updateState(newState);
+		function dispatchTransaction(this: EditorView, transaction: Transaction): void {
+			// the spellchecker can finish into a view a tab switch destroyed: what it carries is for a document nobody sees
+			if (this.isDestroyed) return;
+			const newState = this.state.apply(transaction);
+			this.updateState(newState);
 
-				// collabRemotePatch: a collaborator's edit patched in from the shared doc; it's already
-				// the serialized truth, so it must not re-enter the save pipeline as a local change
-				if (onLocalChange && transaction.docChanged && !transaction.getMeta('collabRemotePatch')) {
-					onLocalChange(newState.doc);
-				}
-				if (transaction.getMeta('collabRemotePatch')) remotePatches++;
-				if (onSelectionChange && (transaction.selectionSet || transaction.docChanged)) onSelectionChange();
+			// collabRemotePatch: a collaborator's edit patched in from the shared doc; it's already
+			// the serialized truth, so it must not re-enter the save pipeline as a local change
+			if (onLocalChange && transaction.docChanged && !transaction.getMeta('collabRemotePatch')) {
+				onLocalChange(newState.doc);
 			}
-		});
+			if (transaction.getMeta('collabRemotePatch')) remotePatches++;
+			if (onSelectionChange && (transaction.selectionSet || transaction.docChanged)) onSelectionChange();
+		}
+
+		editorView = createCanvasView(
+			editor,
+			{
+				// headings and figures show their numbers from numbersPlugin
+				attributes: () => ({
+					class: untrack(() => preferences.pageView) ? 'TexpileEditor page-view' : 'TexpileEditor',
+					spellcheck: 'false',
+					'data-compiled-numbers': 'true'
+				}),
+				state: editorState,
+				language: 'latex',
+				...latexNodeViews({ imageDir: () => imageDir ?? '', onJumpToLabel, onJumpToDefinition }),
+				editable: group.editable,
+				dispatchTransaction
+			},
+			mount.setup(editor)
+		);
 
 		group.claim(editorView);
-
-		// before onReady, which takes the loading bar down: the reveal is what turns the stand-ins on
-		// screen into the real thing, so announcing readiness first would show a document mid-upgrade
-		revealBuiltEditor(editor);
 		if (live) editorView.focus();
-		onReady?.();
 	}
 
 	let mountedDoc: PMNode | null = null;
@@ -248,10 +246,8 @@
 		if (kind === 'newFile') swapDocForNewFile(editorView, schema, next);
 		else swapParsedDoc(editorView, schema, next);
 		docEpoch++;
-		// another file's formulas drawn in this frame, as a fresh build draws them, not as blanks for one
 		if (kind === 'newFile') {
-			revealBuiltEditor(editor);
-			onReady?.();
+			mount.swappedFile(editorView);
 			if (takesFocus) editorView.focus();
 		}
 	});
@@ -273,20 +269,11 @@
 		pendingActive: () => commentPendingActive
 	});
 
+	// page view is a class on the root and its style mirror, which the attributes prop puts on both
 	$effect(() => {
-		if (editorView?.dom) {
-			(editorView.dom as HTMLElement).style.setProperty('zoom', `${preferences.zoom}`, 'important');
-		}
-	});
-
-	$effect(() => {
-		if (editorView?.dom) {
-			if (preferences.pageView) {
-				editorView.dom.classList.add('page-view');
-			} else {
-				editorView.dom.classList.remove('page-view');
-			}
-		}
+		void preferences.pageView;
+		const view = editorView;
+		if (view) untrack(() => view.setProps({}));
 	});
 
 	onDestroy(() => {
@@ -297,9 +284,7 @@
 	});
 </script>
 
-<!-- invisible, not hidden: display:none gives it no box, and an element with no box intersects
-     nothing, so the viewport upgrades could not run until after it was already on screen -->
-<main bind:this={editor} class={BUILDING_CLASS}></main>
+<main bind:this={editor}></main>
 
 <ContextMenu {onAddComment} {sourceAnchor} {onInsertCitation} {onCiteByDoi} {showInOutput} />
 

@@ -3,9 +3,12 @@
 import type { Node as PMNode } from 'prosemirror-model';
 import type { ParsedLatexFile } from '$lib/workspace/latexRoundtrip';
 import type { SourceMap } from '$lib/editor/visual/sourceSpans';
+import type { FileKind } from '$lib/workspace/documentBuffer.svelte';
 
 export type ShownVisualDoc = {
 	loadedPath: string;
+	/** the editor that shows it */
+	kind: FileKind;
 	visualDoc: PMNode;
 	docMeta: Pick<ParsedLatexFile, 'preamble' | 'postamble' | 'hadDocumentEnv' | 'table'> | null;
 	texSource: string;
@@ -23,8 +26,8 @@ type PaneDoc = Omit<ShownVisualDoc, 'loadedPath' | 'visualDoc'> & {
 const HOLD_MS = 400;
 
 function shownOf(p: PaneDoc): ShownVisualDoc | null {
-	const { loadedPath, visualDoc, docMeta, texSource, sourceMap } = p;
-	return loadedPath && visualDoc ? { loadedPath, visualDoc, docMeta, texSource, sourceMap } : null;
+	const { loadedPath, kind, visualDoc, docMeta, texSource, sourceMap } = p;
+	return loadedPath && visualDoc ? { loadedPath, kind, visualDoc, docMeta, texSource, sourceMap } : null;
 }
 
 /** called during component init: it runs effects */
@@ -46,7 +49,8 @@ export function heldVisualDoc(pane: () => PaneDoc) {
 	return {
 		/** what the visual editor shows: the pane's document, or the last one while the next is parsed */
 		get current(): ShownVisualDoc | null {
-			return shownOf(pane()) ?? (waiting && !expired ? last : null);
+			// another kind's editor would draw the last document in its own faces until the next one swaps in
+			return shownOf(pane()) ?? (waiting && !expired && last?.kind === pane().kind ? last : null);
 		},
 		/** the pane's own document is the one shown, so the editor takes typing and draws its comments */
 		get own(): boolean {

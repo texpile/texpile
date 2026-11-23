@@ -3,6 +3,7 @@ import { argumentText, calleePath, type OwnLet, type TypstEntry } from '../../..
 import { letParts } from '../../../knowledge/scan/readEntry';
 import { partsOf, strValue, textOf } from '../../../knowledge/scan/syntax';
 import { readTypstCall } from '../reading/typstCall';
+import type { PartElement } from '$lib/editor/visual/extensions/drawnChips/faces/partElements';
 import { escapedMarkup } from './expansion/printedText';
 import { drawTypstMarkup } from './markupDrawing';
 
@@ -54,11 +55,6 @@ export function theoremHead(own: OwnLet | null | undefined, args: string | null)
 	return /\{[^{}]+\}/.test(filled) ? null : filled.trim();
 }
 
-export function drawTheoremHead(markup: string): HTMLElement | null {
+export function drawTheoremHead(markup: string): PartElement | null {
 	return drawTypstMarkup(markup, () => null)?.dom ?? null;
-}
-
-export function showTheoremHead(node: HTMLElement, head: HTMLElement) {
-	node.replaceChildren(head);
-	return { update: (next: HTMLElement) => node.replaceChildren(next) };
 }

@@ -18,7 +18,7 @@
 		EDITOR_TEXT_PAD,
 		EDITOR_TEXT_PAD_STACKED
 	} from '$lib/workspace/paneGeometry';
-	import { RailGeometry } from './railGeometry.svelte';
+	import { RailGeometry, watchMutations } from './railGeometry.svelte';
 	import { RailGlide } from './railGlide.svelte';
 	import { cmTextExtent, measureCmAnchors, measurePmAnchors, PENDING_ANCHOR } from './railAnchors';
 	import { stackRailItems, type RailBounds, type RailItem } from './railLayout';
@@ -64,7 +64,8 @@
 			const view = pmView;
 			if (!view) return;
 			return geometry.observe({
-				mutate: view.dom,
+				changes: (moved) => view.canvas.onLayout(moved),
+				framed: true,
 				resize: view.dom,
 				scroll: scroller,
 				// with nothing to place, no layout read on every key and every scroll frame
@@ -77,7 +78,7 @@
 		const view = cmView;
 		if (!view) return;
 		return geometry.observe({
-			mutate: view.contentDOM,
+			changes: (moved) => watchMutations(view.contentDOM, moved),
 			resize: view.scrollDOM,
 			scroll: view.scrollDOM,
 			measure: () => {
@@ -152,11 +153,21 @@
 			ceiling: el.clientHeight - EDGE_GAP + Math.max(0, s.scrollHeight - s.clientHeight - s.scrollTop)
 		};
 	}
+	let lastScrollTop = -1;
+	let snapFrame = 0;
 	$effect(() => {
 		void anchors;
 		void placed;
 		void composing;
 		void ctl.selected;
+		const top = mode === 'visual' ? (scroller?.scrollTop ?? 0) : 0;
+		// the canvas moves the scroll to hold the rows while heights above settle: the cards follow at once
+		if (lastScrollTop >= 0 && top !== lastScrollTop && rail) {
+			rail.dataset.snap = '';
+			cancelAnimationFrame(snapFrame);
+			snapFrame = requestAnimationFrame(() => delete rail?.dataset.snap);
+		}
+		lastScrollTop = top;
 		untrack(relayout);
 	});
 	function setHeight(id: string, h: number) {
@@ -311,7 +322,8 @@
 
 <aside
 	bind:this={rail}
-	class="comment-rail shrink-0 {mode === 'source' ? 'comment-rail-source' : 'relative z-[1]'} {showing && inflow < COMMENT_RAIL_WIDTH
+	class="comment-rail shrink-0 {mode === 'source' ? 'comment-rail-source' : 'comment-rail-visual relative z-[1]'} {showing &&
+	inflow < COMMENT_RAIL_WIDTH
 		? 'comment-rail-narrow'
 		: ''}"
 	style="width: {showing ? inflow : 0}px; --comment-rail-tail: {tail}px; --comment-card-shift: {shift}px"

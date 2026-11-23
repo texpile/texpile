@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { EditorState } from 'prosemirror-state';
 import { parseLatexFile } from '$lib/workspace/latexRoundtrip';
-import { numbersPlugin } from '$lib/languages/latex/visual/extensions/numbers/numbersPlugin';
+import { numbersKey, numbersPlugin } from '$lib/languages/latex/visual/extensions/numbers/numbersPlugin';
 import { numberingSchemeOf } from '$lib/languages/latex/visual/extensions/numbers/numberingScheme';
 import { chipCounts } from '$lib/languages/latex/visual/core/plugin/chipCounts';
 
@@ -16,8 +16,11 @@ function setup() {
 		counts: chipCounts,
 		onInputs: () => () => {}
 	});
-	const state = EditorState.create({ doc: parseLatexFile(TEX).doc, plugins: [plugin] });
-	return { state, counted: () => counts };
+	const made = EditorState.create({ doc: parseLatexFile(TEX).doc, plugins: [plugin] });
+	const before = counts;
+	// the view asks for the first count in the task after
+	const state = made.apply(made.tr.setMeta(numbersKey, true));
+	return { state, counted: () => counts, before };
 }
 
 function posOf(state: EditorState, text: string): number {
@@ -29,6 +32,11 @@ function posOf(state: EditorState, text: string): number {
 }
 
 describe('numbers while typing', () => {
+	// counting a 1.9 MB paper with the editor's build held the main thread for 1.8 s at open
+	it('counts nothing while the editor is built', () => {
+		expect(setup().before).toBe(0);
+	});
+
 	it('counts again for a new heading, and only moves the numbers for words typed in a paragraph', () => {
 		const { state, counted } = setup();
 		const typed = state.apply(state.tr.insertText('more ', posOf(state, 'words')));

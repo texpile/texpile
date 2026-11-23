@@ -3,7 +3,8 @@ import { mount, unmount } from 'svelte';
 import type { Node } from 'prosemirror-model';
 import { TextSelection, type Plugin } from 'prosemirror-state';
 import type { EditorView } from 'prosemirror-view';
-import { blockSettingsPlugin, gearPlaceBeside, type GearPlace } from '$lib/editor/visual/extensions/blockHandle/blockSettings';
+import { blockSettingsPlugin, type GearPlace } from '$lib/editor/visual/extensions/blockHandle/blockSettings';
+import { gearPlaceAt } from '$lib/editor/visual/extensions/blockHandle/settingsPanelOffer.svelte';
 import { captionIn } from '$lib/editor/visual/tableUtils';
 import { tableLookOf, type TableLines } from '../rules/tableRules';
 import { withColumnSizes } from '../columns/typstColumnSizes';
@@ -131,8 +132,8 @@ export function bareTableSettingsPlugin(dialect: 'latex' | 'typst'): Plugin {
 		return {
 			label: () => m.tablewrap_settings_button(),
 			open(gear) {
-				const dom = view.nodeDOM(pos);
-				if (dom instanceof Element) openBareTableSettings({ view, pos, dialect, place: gearPlaceBeside(dom, gear) });
+				const place = gearPlaceAt(view, pos, gear?.getBoundingClientRect());
+				if (place) openBareTableSettings({ view, pos, dialect, place });
 			}
 		};
 	});

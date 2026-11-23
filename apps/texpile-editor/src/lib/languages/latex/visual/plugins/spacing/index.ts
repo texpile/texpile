@@ -1,3 +1,4 @@
+import { faceElement, setLook, type FaceElement } from '$lib/editor/canvas';
 import { printedCharacter } from '$lib/languages/latex/knowledge/commands/texCharacters';
 import { HORIZONTAL_SPACES, VERTICAL_SKIPS, type LatexPlugin } from '$lib/languages/latex/visual/core';
 import { spacingPart } from './spacingParts';
@@ -8,6 +9,13 @@ import { spacingDocument } from './document';
 import { spacingInserts } from './spacingInsert';
 
 const BREAKS = ['\\', 'newline'];
+
+// a block of no height inside the line ends the line there, as a <br> does
+function lineBreak(): FaceElement {
+	const dom = faceElement('span', 'drawn-newline');
+	setLook(dom, { display: 'block', height: '0' });
+	return dom;
+}
 
 export const spacing: LatexPlugin = {
 	commands: [
@@ -28,7 +36,7 @@ export const spacing: LatexPlugin = {
 		const space = spacingPart(part.name, part.call, core.src, core.source);
 		if (space) return space;
 		// the package data has no reading of the kernel's \newline
-		if (BREAKS.includes(part.name)) return { dom: document.createElement('br') };
+		if (BREAKS.includes(part.name)) return { dom: lineBreak() };
 		if (insertsSkip(part.name) && !part.call.args.some((a) => a.present)) return valueSkipPart(part.name, core.source);
 		return undefined;
 	},

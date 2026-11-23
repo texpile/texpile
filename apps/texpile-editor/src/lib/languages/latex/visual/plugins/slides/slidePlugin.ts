@@ -1,9 +1,9 @@
-import './slides.css';
 import type { Node } from 'prosemirror-model';
 import { keymap } from 'prosemirror-keymap';
 import { Plugin, PluginKey, Selection, type EditorState, type Transaction } from 'prosemirror-state';
 import { Decoration, DecorationSet } from 'prosemirror-view';
 import { m } from '$lib/paraglide/messages';
+import { itemPill, markPills } from './canvas/overlayPills';
 
 const HINTS: Record<string, () => string> = {
 	frame_title: () => m.slide_title_placeholder(),
@@ -20,16 +20,16 @@ function decorationsOf(doc: Node): DecorationSet {
 			if (node.content.size === 0) decorations.push(Decoration.node(pos, pos + node.nodeSize, { class: 'is-empty', 'data-hint': hint() }));
 			return false;
 		}
-		if (node.isTextblock) return false;
+		if (node.isTextblock) {
+			decorations.push(...markPills(node, pos));
+			return false;
+		}
 		if (node.type.name === 'frame' && !/\bnoframenumbering\b/.test(String(node.attrs.options))) {
 			decorations.push(Decoration.node(pos, pos + node.nodeSize, { 'data-slide': String(++slide) }));
 		}
 		const first = node.firstChild;
-		if (node.type.name === 'list' && node.attrs.overlay && first?.isTextblock) {
-			decorations.push(
-				Decoration.node(pos + 1, pos + 1 + first.nodeSize, { class: 'beamer-item-overlay', 'data-overlay': String(node.attrs.overlay) })
-			);
-		}
+		if (node.type.name === 'list' && node.attrs.overlay && first?.isTextblock)
+			decorations.push(itemPill(first, pos + 1, String(node.attrs.overlay)));
 		return true;
 	});
 	return DecorationSet.create(doc, decorations);

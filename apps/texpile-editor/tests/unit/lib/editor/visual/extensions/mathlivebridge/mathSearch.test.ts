@@ -2,7 +2,7 @@
 // The math search Tab opens in an equation: it finds the toolbar's structures by name or by the
 // commands they are made of, and takes the keys typed while it is open.
 import { afterEach, describe, expect, it, vi } from 'vitest';
-import type { MathfieldElement } from 'mathlive';
+import type { HeadlessMathfield } from 'mathlive';
 
 vi.mock('$lib/editor/visual/toolbar/mathInsert', () => ({ insertSymbol: vi.fn() }));
 // MathLive's own list never arrives, so only the structures are listed
@@ -14,11 +14,11 @@ vi.mock('$lib/editor/visual/extensions/mathlivebridge/mathSearch/mathEntries', (
 const { insertSymbol } = await import('$lib/editor/visual/toolbar/mathInsert');
 const { mathStructures, searchStructures } = await import('$lib/editor/visual/extensions/mathlivebridge/mathSearch/mathStructures');
 const { mathSearch } = await import('$lib/editor/visual/extensions/mathlivebridge/mathSearch/mathSearch.svelte');
-const { mathSearchKeydown } = await import('$lib/editor/visual/extensions/mathlivebridge/mathSearch/mathSearchKeys');
+const { mathSearchKey } = await import('$lib/editor/visual/extensions/mathlivebridge/mathSearch/mathSearchKeys');
 const { searchMathEntries } = await import('$lib/editor/visual/extensions/mathlivebridge/mathSearch/mathEntries');
 
 /** `after` is the field's LaTeX past the caret */
-function fakeField(mode: string, after = ''): MathfieldElement {
+function fakeField(mode: string, after = ''): HeadlessMathfield {
 	const field = Object.assign(document.createElement('div'), {
 		mode,
 		syntax: 'typst',
@@ -28,12 +28,20 @@ function fakeField(mode: string, after = ''): MathfieldElement {
 		getValue: () => after,
 		executeCommand: vi.fn()
 	});
-	field.addEventListener('keydown', mathSearchKeydown, { capture: true });
+	const headless = field as unknown as HeadlessMathfield;
+	// the formula session's key route asks the search before MathLive
+	field.addEventListener(
+		'keydown',
+		(event) => {
+			if (mathSearchKey(event, headless, false, () => ({ left: 0, top: 0 }))) event.preventDefault();
+		},
+		{ capture: true }
+	);
 	document.body.append(field);
-	return field as unknown as MathfieldElement;
+	return headless;
 }
 
-function press(field: MathfieldElement, key: string): KeyboardEvent {
+function press(field: HeadlessMathfield, key: string): KeyboardEvent {
 	const event = new KeyboardEvent('keydown', { key, bubbles: true, cancelable: true });
 	field.dispatchEvent(event);
 	return event;

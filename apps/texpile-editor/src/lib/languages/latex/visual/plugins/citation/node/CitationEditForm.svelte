@@ -3,6 +3,7 @@
 		CitationPagesField,
 		CitationReferenceField,
 		citationVariantKind,
+		isReadOnly,
 		splitCitationKeys,
 		templateFeaturesStore
 	} from '$lib/languages/latex/visual/core';
@@ -15,13 +16,12 @@
 		node,
 		onUpdate,
 		onChangeKey,
-		// eslint-disable-next-line no-useless-assignment -- write-only $bindable: the parent reads it
-		dropdownOpen = $bindable()
+		onClose
 	}: {
 		node: PMNode;
 		onUpdate: (attrs: Record<string, unknown>) => void;
 		onChangeKey?: (key: string) => void;
-		dropdownOpen: boolean;
+		onClose: () => void;
 	} = $props();
 
 	const key = $derived(node.textContent);
@@ -89,63 +89,69 @@
 	function handleKeydown(e: KeyboardEvent) {
 		if (e.key === 'Escape') {
 			e.preventDefault();
-			dropdownOpen = false;
+			onClose();
 		}
 	}
 </script>
 
 <div class="citation-edit-form" role="dialog" aria-label={m.citation_dialog_aria_label()} tabindex="-1" onkeydown={handleKeydown}>
-	<CitationReferenceField citeKey={key} {keys} {onChangeKey} />
+	<fieldset disabled={isReadOnly.current} class="contents">
+		<CitationReferenceField citeKey={key} {keys} {onChangeKey} />
 
-	<CitationPagesField
-		bind:value={postnote}
-		label={m.citation_page_numbers_label()}
-		placeholder={m.citation_page_numbers_placeholder()}
-		hint={m.citation_page_numbers_hint()}
-	/>
+		<CitationPagesField
+			bind:value={postnote}
+			label={m.citation_page_numbers_label()}
+			placeholder={m.citation_page_numbers_placeholder()}
+			hint={m.citation_page_numbers_hint()}
+		/>
 
-	<button
-		type="button"
-		class="text-muted hover:text-surface-900-100 mb-3 flex w-full items-center gap-2 text-sm transition-colors"
-		onclick={() => (showAdvanced = !showAdvanced)}
-	>
-		<ChevronDown class="h-4 w-4 transition-transform {showAdvanced ? 'rotate-180' : ''}" />
-		<span class="cap-center">{m.citation_advanced_options()}</span>
-	</button>
+		<button
+			type="button"
+			class="text-muted hover:text-surface-900-100 mb-3 flex w-full items-center gap-2 text-sm transition-colors"
+			onclick={() => (showAdvanced = !showAdvanced)}
+		>
+			<ChevronDown class="h-4 w-4 transition-transform {showAdvanced ? 'rotate-180' : ''}" />
+			<span class="cap-center">{m.citation_advanced_options()}</span>
+		</button>
 
-	{#if showAdvanced}
-		<div class="border-surface-300-700 mb-3 space-y-4 pl-6">
-			{#if showCitationStyleSelector}
-				<label class="block">
-					<span class="text-surface-900-100 text-sm font-medium">{m.citation_style_label()}</span>
-					<select bind:value={variant} class="input mt-1.5 w-full text-sm">
-						{#each variantOptions as opt (opt.value)}
-							<option value={opt.value}>
-								{opt.label}: {opt.desc}
-							</option>
-						{/each}
-					</select>
-				</label>
-			{/if}
+		{#if showAdvanced}
+			<div class="border-surface-300-700 mb-3 space-y-4 pl-6">
+				{#if showCitationStyleSelector}
+					<label class="block">
+						<span class="text-surface-900-100 text-sm font-medium">{m.citation_style_label()}</span>
+						<select bind:value={variant} class="input mt-1.5 w-full text-sm">
+							{#each variantOptions as opt (opt.value)}
+								<option value={opt.value}>
+									{opt.label}: {opt.desc}
+								</option>
+							{/each}
+						</select>
+					</label>
+				{/if}
 
-			<div>
-				<span class="text-surface-900-100 mb-1.5 block text-sm font-medium">{m.citation_add_prefix_label()}</span>
-				<div class="mb-2 flex flex-wrap gap-2">
-					<button type="button" class="btn btn-xs preset-outlined-surface-200-800 hover:preset-tonal" onclick={() => (prenote = 'see')}>
-						see
-					</button>
-					<button type="button" class="btn btn-xs preset-outlined-surface-200-800 hover:preset-tonal" onclick={() => (prenote = 'cf.')}>
-						cf.
-					</button>
-					<button type="button" class="btn btn-xs preset-outlined-surface-200-800 hover:preset-tonal" onclick={() => (prenote = 'compare')}>
-						compare
-					</button>
+				<div>
+					<span class="text-surface-900-100 mb-1.5 block text-sm font-medium">{m.citation_add_prefix_label()}</span>
+					<div class="mb-2 flex flex-wrap gap-2">
+						<button type="button" class="btn btn-xs preset-outlined-surface-200-800 hover:preset-tonal" onclick={() => (prenote = 'see')}>
+							see
+						</button>
+						<button type="button" class="btn btn-xs preset-outlined-surface-200-800 hover:preset-tonal" onclick={() => (prenote = 'cf.')}>
+							cf.
+						</button>
+						<button
+							type="button"
+							class="btn btn-xs preset-outlined-surface-200-800 hover:preset-tonal"
+							onclick={() => (prenote = 'compare')}
+						>
+							compare
+						</button>
+					</div>
+					<input type="text" bind:value={prenote} placeholder={m.citation_prefix_placeholder()} class="input w-full text-sm" />
+					<span class="text-muted mt-1 block text-xs"> {m.citation_prefix_hint()} </span>
 				</div>
-				<input type="text" bind:value={prenote} placeholder={m.citation_prefix_placeholder()} class="input w-full text-sm" />
-				<span class="text-muted mt-1 block text-xs"> {m.citation_prefix_hint()} </span>
 			</div>
-		</div>
-	{/if}
+		{/if}
+	</fieldset>
 </div>
 
 <style lang="postcss">

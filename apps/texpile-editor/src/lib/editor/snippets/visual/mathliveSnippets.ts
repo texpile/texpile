@@ -1,5 +1,5 @@
 // equation snippets: auto ones as MathLive shortcuts, the rest in the math search
-import type { InlineShortcutDefinitions, MathfieldElement, TypstShortcut } from 'mathlive';
+import type { HeadlessMathfield, InlineShortcutDefinitions, TypstShortcut } from 'mathlive';
 import type { MathStructure } from '$lib/editor/visual/extensions/mathlivebridge/mathSearch/mathStructures';
 import type { MathSyntax } from '$lib/editor/visual/extensions/mathlivebridge/mathFieldFactory';
 import { toMathLiveLatex, toTypstSlots } from '../expand/body/mathliveBody';
@@ -72,7 +72,7 @@ export function followSnippetShortcuts(target: SnippetShortcutTarget): () => voi
 }
 
 /** MathLive's own Tab leaves the equation when no #? slot follows */
-export function placeholderAhead(field: MathfieldElement): boolean {
+export function placeholderAhead(field: Pick<HeadlessMathfield, 'selection' | 'getValue' | 'lastOffset'>): boolean {
 	const end = Math.max(...field.selection.ranges.flat());
 	return field.getValue(end, field.lastOffset, 'latex').includes('\\placeholder');
 }

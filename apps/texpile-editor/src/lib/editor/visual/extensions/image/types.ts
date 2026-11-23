@@ -1,5 +1,4 @@
 import type { DecorationSet, EditorView } from 'prosemirror-view';
-import type { Node as PMNode } from 'prosemirror-model';
 import type { EditorState, StateField } from 'prosemirror-state';
 import type { ImageCropFormat } from './crop/imageCropFormat';
 
@@ -20,9 +19,6 @@ export type ImagePluginAction = InsertImagePlaceholder | RemoveImagePlaceholder;
 
 export type ImagePlaceholderObject = { src?: string; className?: string };
 
-/** an image refitted to its column: the width read first, for every image, and only then the sizes written */
-export type ImageFit = { measure: () => number; apply: (maxWidth: number) => void };
-
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type ImagePluginSettings<T = any> = {
 	downloadImage?: (url: string) => Promise<string>;
@@ -33,13 +29,10 @@ export type ImagePluginSettings<T = any> = {
 	deleteSrc: (src: string) => Promise<void>;
 	hasTitle: boolean;
 	extraAttributes: Record<string, string | null>;
-	createOverlay: (node: PMNode, getPos: () => number | undefined, view: EditorView) => Node | undefined;
-	updateOverlay: (overlayRoot: Node, getPos: () => number | undefined, view: EditorView, node: PMNode) => void;
 	defaultTitle: string;
 	defaultAlt: string;
 	enableResize: boolean;
 	isBlock: boolean;
-	resizeCallback: (el: Element, fit: ImageFit) => () => void;
 	imageMargin: number;
 	minSize: number;
 	maxSize: number;
@@ -63,10 +56,6 @@ export enum ResizeDirection {
 }
 
 export enum ImagePluginClassName {
-	IMAGE_RESIZE_BOX_WRAPPER = 'imageResizeBoxWrapper',
-	IMAGE_RESIZE_BOX_CENTER = 'imageResizeBoxCenter',
-	IMAGE_RESIZE_BOX = 'imageResizeBox',
-	IMAGE_RESIZE_BOX_CONTROL = 'imageResizeBoxControl',
 	IMAGE_PLUGIN_ROOT = 'imagePluginRoot',
 	IMAGE_PLUGIN_IMG = 'imagePluginImg'
 }

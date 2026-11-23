@@ -4,6 +4,7 @@
 import { fileService } from '$lib/files/service/fileService';
 import { addLocalHistory } from '$lib/workspace/localHistory/localHistory.svelte';
 import { untrack } from 'svelte';
+import { on } from 'svelte/events';
 import { noParse, parseOf } from '$lib/editor/visual/parseOrigins';
 import { FileWriter } from '$lib/buffers/fileWriter';
 import { fileCacheConflicts } from '$lib/files/sync/conflictQueue.svelte';
@@ -102,6 +103,8 @@ export class WorkspaceEditFlow {
 				})
 			)
 		);
+		// a reload or a closed window leaves the file too
+		$effect(() => on(window, 'pagehide', () => this.rememberVisualCaret()));
 		// load the active file whenever it changes. Everything but the store read is untracked, so
 		// this runs exactly once per path change (doc.path updating mid-load must not re-fire it).
 		$effect(() => {

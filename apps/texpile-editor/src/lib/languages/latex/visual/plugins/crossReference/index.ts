@@ -6,7 +6,7 @@ import { referenceFace } from './referenceFace';
 import CrossRefSettings from './settings/CrossRefSettings.svelte';
 import HyperrefSettings from './settings/HyperrefSettings.svelte';
 import { crossReferenceDocument } from './document';
-import { RefView } from './node/refView.svelte';
+import { refCanvasView } from './node/refCanvasView';
 
 export const crossReference: LatexPlugin = {
 	commands: [...REFERENCES, 'texorpdfstring'],
@@ -21,5 +21,5 @@ export const crossReference: LatexPlugin = {
 		return readHyperref(source) ? HyperrefSettings : null;
 	},
 	document: crossReferenceDocument,
-	views: (setup) => ({ ref: (node, view, _getPos, decorations) => new RefView(node, view, decorations, setup.onJumpToLabel) })
+	canvasViews: (setup) => ({ nodeViews: { ref: refCanvasView(setup.onJumpToLabel) } })
 };

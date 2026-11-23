@@ -36,9 +36,13 @@
 		untrack(commit);
 		setTimeout(() => bar?.focusQuery(), 0);
 	});
-	// another editor taking over is searched afresh
+	// another editor taking over is searched afresh; the store is poked on every transaction of the same one too
+	let searchedView: unknown = null;
 	$effect(() => {
-		if (editorViewStore.current && untrack(() => display.current)) untrack(commit);
+		const view = editorViewStore.current;
+		if (!view || view === searchedView) return;
+		searchedView = view;
+		if (untrack(() => display.current)) untrack(commit);
 	});
 
 	onMount(() => window.addEventListener('keydown', handleKeydown));

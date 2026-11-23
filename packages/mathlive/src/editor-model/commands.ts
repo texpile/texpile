@@ -1,3 +1,4 @@
+import { boxIdOf } from 'editor-mathfield/geometry';
 import type { _Model } from './model-private';
 import { Atom, isCellBranch } from '../core/atom-class';
 import { ArrayAtom } from '../atoms/array';
@@ -7,7 +8,6 @@ import { LETTER_AND_DIGITS } from '../latex-commands/definitions-utils';
 import type { Offset, Selection } from '../public/core-types';
 import { getCommandSuggestionRange } from '../editor-mathfield/mode-editor-latex';
 import { PromptAtom } from '../atoms/prompt';
-import { getLocalDOMRect } from 'editor-mathfield/utils';
 import { _Mathfield } from 'editor-mathfield/mathfield-private';
 import { deleteRange } from './delete';
 
@@ -404,11 +404,12 @@ function getClosestAtomToXPosition(
   let i = 0;
   for (; i < search.length; i++) {
     const atom = search[i];
-    const el = mathfield.getHTMLElement(atom);
+    const id = boxIdOf(atom);
+    const rect = id ? mathfield.geometry.atomOffsetRect(id) : null;
 
-    if (!el) continue;
+    if (!rect) continue;
 
-    const toX = getLocalDOMRect(el).right;
+    const toX = rect.right;
     const abs = Math.abs(x - toX);
 
     if (abs <= prevX) {
@@ -436,7 +437,13 @@ function moveToClosestAtomVertically(
     : toAtoms.filter((a) => a.type === 'prompt' && !a.captureSelection);
 
   // calculate best atom to put cursor at based on real x coordinate
-  const fromX = getLocalDOMRect(model.mathfield.getHTMLElement(fromAtom)).right;
+  const fromId = boxIdOf(fromAtom);
+  const fromRect = fromId
+    ? model.mathfield.geometry.atomOffsetRect(fromId)
+    : null;
+  // Texpile: an atom drawn inside a captured macro has no box, and the DOM field threw here and stayed put
+  if (!fromRect) return;
+  const fromX = model.mathfield.verticalGoalX ?? fromRect.right;
   const targetSelection =
     model.offsetOf(
       getClosestAtomToXPosition(model.mathfield, editableAtoms, fromX)

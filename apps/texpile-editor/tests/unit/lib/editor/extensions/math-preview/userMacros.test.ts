@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { scanMacroDefinitions, withoutLoops } from '../../../../../../src/lib/editor/source/extensions/math-preview/userMacros';
+import { scanMacroDefinitions, withoutLoops } from '../../../../../../src/lib/editor/source/extensions/math-preview/macroScan';
 
 describe('scanMacroDefinitions (math preview macro dictionary)', () => {
 	it('captures \\newcommand bodies with nested braces and arg counts', () => {

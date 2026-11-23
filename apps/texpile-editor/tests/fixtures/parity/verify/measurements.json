@@ -1,0 +1,924 @@
+{
+ "fonts": {
+  "latexDocument": {
+   "probes": [
+    {
+     "kind": "inline chip",
+     "wrapperClass": "noautofocus inline-latex-wrapper inline-block align-baseline",
+     "scroller": {
+      "fontFamily": "system-ui",
+      "fontSize": "17.072px",
+      "lineHeight": "27.991px"
+     },
+     "content": {
+      "fontFamily": "system-ui",
+      "fontSize": "17.072px",
+      "lineHeight": "27.991px",
+      "paddingTop": "0px",
+      "paddingBottom": "0px",
+      "tabSize": "4",
+      "whiteSpace": "break-spaces"
+     },
+     "line": {
+      "fontSize": "17.072px",
+      "paddingLeft": "0px",
+      "paddingRight": "0px",
+      "height": "56px"
+     },
+     "charWidth": 10.4296875
+    },
+    {
+     "kind": "code block",
+     "wrapperClass": "noautofocus cm-wrapper relative border-surface-300-700 bg-surface-50-950 m-1 rounded-md border p-2 pr-9 pm-line-caret",
+     "scroller": {
+      "fontFamily": "monospace",
+      "fontSize": "13px",
+      "lineHeight": "18.2px"
+     },
+     "content": {
+      "fontFamily": "monospace",
+      "fontSize": "13px",
+      "lineHeight": "18.2px",
+      "paddingTop": "4px",
+      "paddingBottom": "4px",
+      "tabSize": "4",
+      "whiteSpace": "pre"
+     },
+     "line": {
+      "fontSize": "13px",
+      "paddingLeft": "2px",
+      "paddingRight": "2px",
+      "height": "18.1875px"
+     },
+     "charWidth": 7.828125
+    },
+    {
+     "kind": "code block",
+     "wrapperClass": "noautofocus cm-wrapper relative border-surface-300-700 bg-surface-50-950 m-1 rounded-md border p-2 pr-9",
+     "scroller": {
+      "fontFamily": "monospace",
+      "fontSize": "13px",
+      "lineHeight": "18.2px"
+     },
+     "content": {
+      "fontFamily": "monospace",
+      "fontSize": "13px",
+      "lineHeight": "18.2px",
+      "paddingTop": "4px",
+      "paddingBottom": "4px",
+      "tabSize": "4",
+      "whiteSpace": "pre"
+     },
+     "line": {
+      "fontSize": "13px",
+      "paddingLeft": "2px",
+      "paddingRight": "2px",
+      "height": "18.1875px"
+     },
+     "charWidth": 7.828125
+    }
+   ],
+   "editorRoot": {
+    "fontFamily": "system-ui",
+    "fontSize": "16px",
+    "lineHeight": "26px"
+   },
+   "firstParagraph": {
+    "fontFamily": "system-ui",
+    "fontSize": "17.072px",
+    "lineHeight": "27.991px"
+   }
+  },
+  "markdown": {
+   "probes": [
+    {
+     "kind": "code block",
+     "wrapperClass": "noautofocus cm-wrapper relative border-surface-300-700 bg-surface-50-950 m-1 rounded-md border p-2 pr-9",
+     "scroller": {
+      "fontFamily": "monospace",
+      "fontSize": "13px",
+      "lineHeight": "18.2px"
+     },
+     "content": {
+      "fontFamily": "monospace",
+      "fontSize": "13px",
+      "lineHeight": "18.2px",
+      "paddingTop": "4px",
+      "paddingBottom": "4px",
+      "tabSize": "4",
+      "whiteSpace": "pre"
+     },
+     "line": {
+      "fontSize": "13px",
+      "paddingLeft": "2px",
+      "paddingRight": "2px",
+      "height": "18.1875px"
+     },
+     "charWidth": 7.828125
+    },
+    {
+     "kind": "raw block",
+     "wrapperClass": "noautofocus raw-latex-wrapper my-1 pm-line-caret",
+     "scroller": {
+      "fontFamily": "system-ui",
+      "fontSize": "16px",
+      "lineHeight": "26px"
+     },
+     "content": {
+      "fontFamily": "system-ui",
+      "fontSize": "16px",
+      "lineHeight": "26px",
+      "paddingTop": "0px",
+      "paddingBottom": "0px",
+      "tabSize": "4",
+      "whiteSpace": "break-spaces"
+     },
+     "line": {
+      "fontSize": "16px",
+      "paddingLeft": "0px",
+      "paddingRight": "0px",
+      "height": "52px"
+     },
+     "charWidth": null
+    }
+   ],
+   "editorRoot": {
+    "fontFamily": "system-ui",
+    "fontSize": "16px",
+    "lineHeight": "26px"
+   },
+   "firstParagraph": {
+    "fontFamily": "system-ui",
+    "fontSize": "17.072px",
+    "lineHeight": "27.991px"
+   }
+  },
+  "typst": {
+   "probes": [
+    {
+     "kind": "code block",
+     "wrapperClass": "noautofocus cm-wrapper relative border-surface-300-700 bg-surface-50-950 m-1 rounded-md border p-2 pr-9",
+     "scroller": {
+      "fontFamily": "monospace",
+      "fontSize": "13px",
+      "lineHeight": "18.2px"
+     },
+     "content": {
+      "fontFamily": "monospace",
+      "fontSize": "13px",
+      "lineHeight": "18.2px",
+      "paddingTop": "4px",
+      "paddingBottom": "4px",
+      "tabSize": "4",
+      "whiteSpace": "pre"
+     },
+     "line": {
+      "fontSize": "13px",
+      "paddingLeft": "2px",
+      "paddingRight": "2px",
+      "height": "18.1875px"
+     },
+     "charWidth": 7.828125
+    }
+   ],
+   "editorRoot": {
+    "fontFamily": "system-ui",
+    "fontSize": "16px",
+    "lineHeight": "26px"
+   },
+   "firstParagraph": {
+    "fontFamily": "system-ui",
+    "fontSize": "17.072px",
+    "lineHeight": "27.991px"
+   }
+  }
+ },
+ "screenshots": {
+  "codeBlockLight": "code-block.png",
+  "typRef": "typ-ref.png"
+ },
+ "scrollerBorder": [
+  {
+   "kind": "inline chip",
+   "lineWrapping": true,
+   "scrollerBorderRight": "3px solid rgba(0, 0, 0, 0)",
+   "scrollerBorderBox": 760,
+   "scrollerClientWidth": 757,
+   "scrollerScrollWidth": 757,
+   "contentBorderBoxWidth": 757,
+   "contentLeft": 381.5,
+   "contentRight": 1138.5,
+   "wrapperContentBoxWidth": 760,
+   "wrapperBorderBoxWidth": 760,
+   "wrapperPaddingRight": "0px",
+   "widestGlyphRight": 1138.5
+  },
+  {
+   "kind": "code block",
+   "lineWrapping": false,
+   "scrollerBorderRight": "3px solid rgba(0, 0, 0, 0)",
+   "scrollerBorderBox": 734,
+   "scrollerClientWidth": 731,
+   "scrollerScrollWidth": 731,
+   "contentBorderBoxWidth": 731,
+   "contentLeft": 394.5,
+   "contentRight": 1125.5,
+   "wrapperContentBoxWidth": 734,
+   "wrapperBorderBoxWidth": 752,
+   "wrapperPaddingRight": "8px",
+   "widestGlyphRight": 631.328125
+  },
+  {
+   "kind": "code block",
+   "lineWrapping": false,
+   "scrollerBorderRight": "3px solid rgba(0, 0, 0, 0)",
+   "scrollerBorderBox": 734,
+   "scrollerClientWidth": 731,
+   "scrollerScrollWidth": 731,
+   "contentBorderBoxWidth": 731,
+   "contentLeft": 394.5,
+   "contentRight": 1125.5,
+   "wrapperContentBoxWidth": 734,
+   "wrapperBorderBoxWidth": 752,
+   "wrapperPaddingRight": "8px",
+   "widestGlyphRight": 498.25
+  }
+ ],
+ "tabs": {
+  "tabSize": 4,
+  "computedTabSize": "4",
+  "doc": "def f(x):\n    return x  # a comment line\n\ttab_indented = 1",
+  "line1Before": "def f(x):",
+  "afterTabAtStart": "\"  def f(x):\"",
+  "afterTabAtColumn3": "\"  d ef f(x):\"",
+  "tabWidth": {
+   "tabAdvance": 31.3125,
+   "charAdvance": 7.828125,
+   "lineText": "\"\\ttab_indented \""
+  }
+ },
+ "readOnly": {
+  "before": "  d ef f(x):",
+  "after": {
+   "pmEditable": false,
+   "cmContentEditableAttr": "true",
+   "cmFirstLine": " Q d ef f(x):",
+   "pmCodeBlockFirstLine": " Q d ef f(x):",
+   "cmEditableFacetState": false,
+   "cmViewEditable": true
+  }
+ },
+ "disabledGear": {
+  "enabled": {
+   "opacity": "1",
+   "cursor": "pointer",
+   "color": "oklab(0.3863 -0.00439155 -0.00898411 / 0.4)",
+   "backgroundColor": "rgba(0, 0, 0, 0)",
+   "filter": "none",
+   "pointerEvents": "auto",
+   "borderColor": "oklab(0.3863 -0.00439155 -0.00898411 / 0.4)"
+  },
+  "disabled": {
+   "opacity": "0.5",
+   "cursor": "pointer",
+   "color": "oklab(0.3863 -0.00439155 -0.00898411 / 0.4)",
+   "backgroundColor": "rgba(0, 0, 0, 0)",
+   "filter": "none",
+   "pointerEvents": "auto",
+   "borderColor": "oklab(0.3863 -0.00439155 -0.00898411 / 0.4)"
+  },
+  "className": "codeblock-settings-btn svelte-1y1al9k",
+  "ariaLabel": "Code block settings"
+ },
+ "outline": {
+  "focused": {
+   "focusWithin": true,
+   "wrapperStyle": {
+    "outlineStyle": "solid",
+    "outlineWidth": "1px",
+    "outlineColor": "color(srgb 0.487815 0.549877 0.611702 / 0.45)",
+    "outlineOffset": "1px",
+    "borderRadius": "2px",
+    "display": "inline-block",
+    "verticalAlign": "baseline"
+   },
+   "wrapperRects": [
+    {
+     "x": 381.5,
+     "y": 166,
+     "width": 760,
+     "height": 56,
+     "top": 166,
+     "right": 1141.5,
+     "bottom": 222,
+     "left": 381.5
+    }
+   ],
+   "wrapperRectCount": 1,
+   "visualLines": 2,
+   "lineHeightPx": 27.991,
+   "cmEditorOutline": "none",
+   "rawCssRule": [
+    ".ProseMirror .inline-latex-wrapper:focus-within, .ProseMirror .raw-latex-wrapper:focus-within { outline: var(--default-border-width) solid #73737373; }",
+    ".ProseMirror .inline-latex-wrapper:focus-within, .ProseMirror .raw-latex-wrapper:focus-within { outline: var(--default-border-width) solid color-mix(in srgb, var(--color-surface-500) 45%, transparent); }",
+    ".ProseMirror .inline-latex-wrapper:focus-within, .ProseMirror .raw-latex-wrapper:focus-within { outline-offset: 1px; border-radius: calc(var(--radius-base) * .5); }"
+   ]
+  },
+  "screenshot": "wrapped-chip-focused.png",
+  "chipBox": {
+   "x": 381.5,
+   "y": 166,
+   "width": 760,
+   "height": 56
+  }
+ },
+ "tab": {
+  "before": {
+   "chip": "\\mycommand{with a long argument that wil",
+   "sel": {
+    "type": "text",
+    "anchor": 33,
+    "head": 33
+   }
+  },
+  "afterTab": {
+   "tag": "DIV",
+   "className": "cm-content",
+   "ariaLabel": null,
+   "insideChip": false,
+   "insideEditor": true,
+   "insideCodeBlockGear": true,
+   "isBody": false,
+   "chipText": "\\mycommand{with a long argument that wil",
+   "selection": {
+    "type": "text",
+    "anchor": 290,
+    "head": 290
+   }
+  },
+  "afterShiftTab": {
+   "tag": "DIV",
+   "className": "cm-content cm-lineWrapping",
+   "ariaLabel": null,
+   "insideChip": true,
+   "insideEditor": true,
+   "insideCodeBlockGear": false,
+   "isBody": false,
+   "chipText": "\\mycommand{with a long argument that wil",
+   "selection": {
+    "type": "text",
+    "anchor": 33,
+    "head": 33
+   }
+  }
+ },
+ "rawBlockInLatex": {
+  "opened": false
+ },
+ "peers": {
+  "latex": [
+   {
+    "target": {
+     "type": "paragraph",
+     "pos": 0,
+     "size": 246,
+     "text": "Paragraph with an inline chip ",
+     "isLeaf": false
+    },
+    "peerAt": {
+     "anchor": 5,
+     "head": 8
+    },
+    "caretElements": [
+     {
+      "inIsland": false,
+      "inWrapper": null,
+      "rect": {
+       "x": 444.453125,
+       "y": 141,
+       "width": 0,
+       "height": 21,
+       "top": 141,
+       "right": 444.453125,
+       "bottom": 162,
+       "left": 444.453125
+      }
+     }
+    ],
+    "selectionElements": [
+     {
+      "inIsland": false,
+      "tag": "SPAN",
+      "rect": {
+       "x": 417.984375,
+       "y": 138.015625,
+       "width": 26.46875,
+       "height": 27.953125,
+       "top": 138.015625,
+       "right": 444.453125,
+       "bottom": 165.96875,
+       "left": 417.984375
+      }
+     }
+    ]
+   },
+   {
+    "target": {
+     "type": "inline_latex",
+     "pos": 31,
+     "size": 157,
+     "text": "\\mycommand{with a long argumen",
+     "isLeaf": false
+    },
+    "peerAt": {
+     "anchor": 36,
+     "head": 39
+    },
+    "caretElements": [],
+    "selectionElements": []
+   },
+   {
+    "target": {
+     "type": "code_block",
+     "pos": 289,
+     "size": 63,
+     "text": "  d ef f(x):\n    return x  # a",
+     "isLeaf": false
+    },
+    "peerAt": {
+     "anchor": 294,
+     "head": 297
+    },
+    "caretElements": [],
+    "selectionElements": []
+   },
+   {
+    "target": {
+     "type": "raw_latex",
+     "pos": 563,
+     "size": 12,
+     "text": "\\maketitle",
+     "isLeaf": false
+    },
+    "peerAt": {
+     "anchor": 568,
+     "head": 571
+    },
+    "caretElements": [],
+    "selectionElements": []
+   }
+  ],
+  "markdown": [
+   {
+    "target": {
+     "type": "paragraph",
+     "pos": 9,
+     "size": 22,
+     "text": "Paragraph text here.",
+     "isLeaf": false
+    },
+    "peerAt": {
+     "anchor": 14,
+     "head": 17
+    },
+    "caretElements": [
+     {
+      "inIsland": false,
+      "inWrapper": null,
+      "rect": {
+       "x": 444.453125,
+       "y": 201.796875,
+       "width": 0,
+       "height": 21,
+       "top": 201.796875,
+       "right": 444.453125,
+       "bottom": 222.796875,
+       "left": 444.453125
+      }
+     }
+    ],
+    "selectionElements": [
+     {
+      "inIsland": false,
+      "tag": "SPAN",
+      "rect": {
+       "x": 417.984375,
+       "y": 198.8125,
+       "width": 26.46875,
+       "height": 27.953125,
+       "top": 198.8125,
+       "right": 444.453125,
+       "bottom": 226.765625,
+       "left": 417.984375
+      }
+     }
+    ]
+   },
+   {
+    "target": {
+     "type": "code_block",
+     "pos": 31,
+     "size": 24,
+     "text": "def f(x):\n    return x",
+     "isLeaf": false
+    },
+    "peerAt": {
+     "anchor": 36,
+     "head": 39
+    },
+    "caretElements": [],
+    "selectionElements": []
+   },
+   {
+    "target": {
+     "type": "raw_latex",
+     "pos": 75,
+     "size": 154,
+     "text": "<div class=\"x\">raw html block ",
+     "isLeaf": false
+    },
+    "peerAt": {
+     "anchor": 80,
+     "head": 83
+    },
+    "caretElements": [],
+    "selectionElements": []
+   }
+  ],
+  "typst": [
+   {
+    "target": {
+     "type": "paragraph",
+     "pos": 9,
+     "size": 17,
+     "text": "Paragraph text.",
+     "isLeaf": false
+    },
+    "peerAt": {
+     "anchor": 14,
+     "head": 17
+    },
+    "caretElements": [
+     {
+      "inIsland": false,
+      "inWrapper": null,
+      "rect": {
+       "x": 444.453125,
+       "y": 221.859375,
+       "width": 0,
+       "height": 21,
+       "top": 221.859375,
+       "right": 444.453125,
+       "bottom": 242.859375,
+       "left": 444.453125
+      }
+     }
+    ],
+    "selectionElements": [
+     {
+      "inIsland": false,
+      "tag": "SPAN",
+      "rect": {
+       "x": 417.984375,
+       "y": 218.875,
+       "width": 26.46875,
+       "height": 27.953125,
+       "top": 218.875,
+       "right": 444.453125,
+       "bottom": 246.828125,
+       "left": 417.984375
+      }
+     }
+    ]
+   },
+   {
+    "target": {
+     "type": "code_block",
+     "pos": 26,
+     "size": 24,
+     "text": "def f(x):\n    return x",
+     "isLeaf": false
+    },
+    "peerAt": {
+     "anchor": 31,
+     "head": 34
+    },
+    "caretElements": [],
+    "selectionElements": []
+   }
+  ]
+ },
+ "pageView": {
+  "light": {
+   "classes": "ProseMirror TexpileEditor pm-block-carets ProseMirror-focused ProseMirror-hideselection page-view",
+   "pageSheetToken": "light-dark(#fff,oklch(98.5% .002 247.839))",
+   "surface50": "oklch(98.51% 0 none)",
+   "surface950": "oklch(38.63% .01 243.95)",
+   "sheetBackground": "rgb(255, 255, 255)",
+   "sheetColor": "oklch(0.3863 0.01 243.95)",
+   "sheetShadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0",
+   "sheetWidth": 652.796875,
+   "sheetRadius": "4px",
+   "paneBackground": "rgba(0, 0, 0, 0)",
+   "colorScheme": "light",
+   "dataMode": "light"
+  },
+  "shots": [
+   "page-view-light.png",
+   "page-view-dark.png"
+  ],
+  "dark": {
+   "classes": "ProseMirror TexpileEditor pm-block-carets ProseMirror-focused ProseMirror-hideselection page-view",
+   "pageSheetToken": "light-dark(#fff,oklch(98.5% .002 247.839))",
+   "surface50": "oklch(98.51% 0 none)",
+   "surface950": "oklch(38.63% .01 243.95)",
+   "sheetBackground": "oklch(0.985 0.002 247.839)",
+   "sheetColor": "oklch(0.9851 0 none)",
+   "sheetShadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0",
+   "sheetWidth": 652.796875,
+   "sheetRadius": "4px",
+   "paneBackground": "rgba(0, 0, 0, 0)",
+   "colorScheme": "dark",
+   "dataMode": "dark"
+  },
+  "darkTextOnSheet": "oklch(0.9851 0 none)"
+ },
+ "styleSheetScan": {
+  "latexDocument": {
+   "sheetsRead": 16,
+   "selectorsMatching": {
+    "typ-ref": [],
+    "texpile-template-block": [
+     ".texpile-template-block",
+     ".texpile-template-block .template-block-content",
+     ".texpile-template-block::before",
+     ".texpile-template-block[data-style=\"style-1\"], .texpile-template-block[data-style=\"style-blue\"]",
+     ".texpile-template-block[data-style=\"style-1\"], .texpile-template-block[data-style=\"style-blue\"]",
+     ".texpile-template-block[data-style=\"style-1\"] .template-block-label, .texpile-template-block[data-style=\"style-blue\"] .t",
+     ".texpile-template-block[data-style=\"style-1\"]:hover, .texpile-template-block[data-style=\"style-blue\"]:hover",
+     ".texpile-template-block[data-style=\"style-1\"]:hover, .texpile-template-block[data-style=\"style-blue\"]:hover",
+     ".texpile-template-block[data-style=\"style-2\"], .texpile-template-block[data-style=\"style-green\"]",
+     ".texpile-template-block[data-style=\"style-2\"], .texpile-template-block[data-style=\"style-green\"]",
+     ".texpile-template-block[data-style=\"style-2\"] .template-block-label, .texpile-template-block[data-style=\"style-green\"] .",
+     ".texpile-template-block[data-style=\"style-2\"]:hover, .texpile-template-block[data-style=\"style-green\"]:hover",
+     ".texpile-template-block[data-style=\"style-2\"]:hover, .texpile-template-block[data-style=\"style-green\"]:hover",
+     ".texpile-template-block[data-style=\"style-3\"], .texpile-template-block[data-style=\"style-cyan\"]",
+     ".texpile-template-block[data-style=\"style-3\"], .texpile-template-block[data-style=\"style-cyan\"]",
+     ".texpile-template-block[data-style=\"style-3\"] .template-block-label, .texpile-template-block[data-style=\"style-cyan\"] .t",
+     ".texpile-template-block[data-style=\"style-3\"]:hover, .texpile-template-block[data-style=\"style-cyan\"]:hover",
+     ".texpile-template-block[data-style=\"style-3\"]:hover, .texpile-template-block[data-style=\"style-cyan\"]:hover",
+     ".texpile-template-block[data-style=\"style-4\"], .texpile-template-block[data-style=\"style-yellow\"]",
+     ".texpile-template-block[data-style=\"style-4\"], .texpile-template-block[data-style=\"style-yellow\"]",
+     ".texpile-template-block[data-style=\"style-4\"] .template-block-label, .texpile-template-block[data-style=\"style-yellow\"] ",
+     ".texpile-template-block[data-style=\"style-4\"]:hover, .texpile-template-block[data-style=\"style-yellow\"]:hover",
+     ".texpile-template-block[data-style=\"style-4\"]:hover, .texpile-template-block[data-style=\"style-yellow\"]:hover",
+     ".texpile-template-block[data-style=\"style-5\"], .texpile-template-block[data-style=\"style-gray\"]",
+     ".texpile-template-block[data-style=\"style-5\"], .texpile-template-block[data-style=\"style-gray\"]",
+     ".texpile-template-block[data-style=\"style-5\"] .template-block-label, .texpile-template-block[data-style=\"style-gray\"] .t",
+     ".texpile-template-block[data-style=\"style-5\"]:hover, .texpile-template-block[data-style=\"style-gray\"]:hover",
+     ".texpile-template-block[data-style=\"style-5\"]:hover, .texpile-template-block[data-style=\"style-gray\"]:hover",
+     ".texpile-template-block[data-style=\"style-6\"], .texpile-template-block[data-style=\"style-red\"]",
+     ".texpile-template-block[data-style=\"style-6\"], .texpile-template-block[data-style=\"style-red\"]",
+     ".texpile-template-block[data-style=\"style-6\"] .template-block-label, .texpile-template-block[data-style=\"style-red\"] .te",
+     ".texpile-template-block[data-style=\"style-6\"]:hover, .texpile-template-block[data-style=\"style-red\"]:hover",
+     ".texpile-template-block[data-style=\"style-6\"]:hover, .texpile-template-block[data-style=\"style-red\"]:hover",
+     ".texpile-template-block[data-orphaned=\"true\"]",
+     ".texpile-template-block[data-orphaned=\"true\"]",
+     ".texpile-template-block[data-orphaned=\"true\"] .template-block-label",
+     ".texpile-template-block[data-orphaned=\"true\"]::before",
+     ".texpile-template-block[data-orphaned=\"true\"]::after",
+     ".texpile-template-block[data-orphaned=\"true\"]::after",
+     ".texpile-template-block[data-orphaned=\"true\"]::after",
+     ".ProseMirror[data-template-loading=\"true\"] .texpile-template-block[data-orphaned=\"true\"]",
+     ".ProseMirror[data-template-loading=\"true\"] .texpile-template-block[data-orphaned=\"true\"]",
+     ".ProseMirror[data-template-loading=\"true\"] .texpile-template-block[data-orphaned=\"true\"]::before",
+     ".ProseMirror[data-template-loading=\"true\"] .texpile-template-block[data-orphaned=\"true\"]::after",
+     ".ProseMirror[data-template-loading=\"true\"] .texpile-template-block[data-orphaned=\"true\"]::after",
+     ".texpile-template-block[data-duplicate=\"true\"]",
+     ".texpile-template-block[data-duplicate=\"true\"]",
+     ".texpile-template-block[data-duplicate=\"true\"]::before",
+     ".texpile-template-block[data-duplicate=\"true\"]::after",
+     ".texpile-template-block[data-duplicate=\"true\"]::after",
+     ".texpile-template-block[data-duplicate=\"true\"]::after"
+    ]
+   },
+   "elements": {
+    "typ-ref": 0,
+    "texpile-template-block": 0,
+    "template-block-content": 0,
+    "noautofocus": 3
+   }
+  },
+  "markdown": {
+   "sheetsRead": 16,
+   "selectorsMatching": {
+    "typ-ref": [],
+    "texpile-template-block": [
+     ".texpile-template-block",
+     ".texpile-template-block .template-block-content",
+     ".texpile-template-block::before",
+     ".texpile-template-block[data-style=\"style-1\"], .texpile-template-block[data-style=\"style-blue\"]",
+     ".texpile-template-block[data-style=\"style-1\"], .texpile-template-block[data-style=\"style-blue\"]",
+     ".texpile-template-block[data-style=\"style-1\"] .template-block-label, .texpile-template-block[data-style=\"style-blue\"] .t",
+     ".texpile-template-block[data-style=\"style-1\"]:hover, .texpile-template-block[data-style=\"style-blue\"]:hover",
+     ".texpile-template-block[data-style=\"style-1\"]:hover, .texpile-template-block[data-style=\"style-blue\"]:hover",
+     ".texpile-template-block[data-style=\"style-2\"], .texpile-template-block[data-style=\"style-green\"]",
+     ".texpile-template-block[data-style=\"style-2\"], .texpile-template-block[data-style=\"style-green\"]",
+     ".texpile-template-block[data-style=\"style-2\"] .template-block-label, .texpile-template-block[data-style=\"style-green\"] .",
+     ".texpile-template-block[data-style=\"style-2\"]:hover, .texpile-template-block[data-style=\"style-green\"]:hover",
+     ".texpile-template-block[data-style=\"style-2\"]:hover, .texpile-template-block[data-style=\"style-green\"]:hover",
+     ".texpile-template-block[data-style=\"style-3\"], .texpile-template-block[data-style=\"style-cyan\"]",
+     ".texpile-template-block[data-style=\"style-3\"], .texpile-template-block[data-style=\"style-cyan\"]",
+     ".texpile-template-block[data-style=\"style-3\"] .template-block-label, .texpile-template-block[data-style=\"style-cyan\"] .t",
+     ".texpile-template-block[data-style=\"style-3\"]:hover, .texpile-template-block[data-style=\"style-cyan\"]:hover",
+     ".texpile-template-block[data-style=\"style-3\"]:hover, .texpile-template-block[data-style=\"style-cyan\"]:hover",
+     ".texpile-template-block[data-style=\"style-4\"], .texpile-template-block[data-style=\"style-yellow\"]",
+     ".texpile-template-block[data-style=\"style-4\"], .texpile-template-block[data-style=\"style-yellow\"]",
+     ".texpile-template-block[data-style=\"style-4\"] .template-block-label, .texpile-template-block[data-style=\"style-yellow\"] ",
+     ".texpile-template-block[data-style=\"style-4\"]:hover, .texpile-template-block[data-style=\"style-yellow\"]:hover",
+     ".texpile-template-block[data-style=\"style-4\"]:hover, .texpile-template-block[data-style=\"style-yellow\"]:hover",
+     ".texpile-template-block[data-style=\"style-5\"], .texpile-template-block[data-style=\"style-gray\"]",
+     ".texpile-template-block[data-style=\"style-5\"], .texpile-template-block[data-style=\"style-gray\"]",
+     ".texpile-template-block[data-style=\"style-5\"] .template-block-label, .texpile-template-block[data-style=\"style-gray\"] .t",
+     ".texpile-template-block[data-style=\"style-5\"]:hover, .texpile-template-block[data-style=\"style-gray\"]:hover",
+     ".texpile-template-block[data-style=\"style-5\"]:hover, .texpile-template-block[data-style=\"style-gray\"]:hover",
+     ".texpile-template-block[data-style=\"style-6\"], .texpile-template-block[data-style=\"style-red\"]",
+     ".texpile-template-block[data-style=\"style-6\"], .texpile-template-block[data-style=\"style-red\"]",
+     ".texpile-template-block[data-style=\"style-6\"] .template-block-label, .texpile-template-block[data-style=\"style-red\"] .te",
+     ".texpile-template-block[data-style=\"style-6\"]:hover, .texpile-template-block[data-style=\"style-red\"]:hover",
+     ".texpile-template-block[data-style=\"style-6\"]:hover, .texpile-template-block[data-style=\"style-red\"]:hover",
+     ".texpile-template-block[data-orphaned=\"true\"]",
+     ".texpile-template-block[data-orphaned=\"true\"]",
+     ".texpile-template-block[data-orphaned=\"true\"] .template-block-label",
+     ".texpile-template-block[data-orphaned=\"true\"]::before",
+     ".texpile-template-block[data-orphaned=\"true\"]::after",
+     ".texpile-template-block[data-orphaned=\"true\"]::after",
+     ".texpile-template-block[data-orphaned=\"true\"]::after",
+     ".ProseMirror[data-template-loading=\"true\"] .texpile-template-block[data-orphaned=\"true\"]",
+     ".ProseMirror[data-template-loading=\"true\"] .texpile-template-block[data-orphaned=\"true\"]",
+     ".ProseMirror[data-template-loading=\"true\"] .texpile-template-block[data-orphaned=\"true\"]::before",
+     ".ProseMirror[data-template-loading=\"true\"] .texpile-template-block[data-orphaned=\"true\"]::after",
+     ".ProseMirror[data-template-loading=\"true\"] .texpile-template-block[data-orphaned=\"true\"]::after",
+     ".texpile-template-block[data-duplicate=\"true\"]",
+     ".texpile-template-block[data-duplicate=\"true\"]",
+     ".texpile-template-block[data-duplicate=\"true\"]::before",
+     ".texpile-template-block[data-duplicate=\"true\"]::after",
+     ".texpile-template-block[data-duplicate=\"true\"]::after",
+     ".texpile-template-block[data-duplicate=\"true\"]::after"
+    ]
+   },
+   "elements": {
+    "typ-ref": 0,
+    "texpile-template-block": 0,
+    "template-block-content": 0,
+    "noautofocus": 2
+   }
+  },
+  "typst": {
+   "sheetsRead": 16,
+   "selectorsMatching": {
+    "typ-ref": [],
+    "texpile-template-block": [
+     ".texpile-template-block",
+     ".texpile-template-block .template-block-content",
+     ".texpile-template-block::before",
+     ".texpile-template-block[data-style=\"style-1\"], .texpile-template-block[data-style=\"style-blue\"]",
+     ".texpile-template-block[data-style=\"style-1\"], .texpile-template-block[data-style=\"style-blue\"]",
+     ".texpile-template-block[data-style=\"style-1\"] .template-block-label, .texpile-template-block[data-style=\"style-blue\"] .t",
+     ".texpile-template-block[data-style=\"style-1\"]:hover, .texpile-template-block[data-style=\"style-blue\"]:hover",
+     ".texpile-template-block[data-style=\"style-1\"]:hover, .texpile-template-block[data-style=\"style-blue\"]:hover",
+     ".texpile-template-block[data-style=\"style-2\"], .texpile-template-block[data-style=\"style-green\"]",
+     ".texpile-template-block[data-style=\"style-2\"], .texpile-template-block[data-style=\"style-green\"]",
+     ".texpile-template-block[data-style=\"style-2\"] .template-block-label, .texpile-template-block[data-style=\"style-green\"] .",
+     ".texpile-template-block[data-style=\"style-2\"]:hover, .texpile-template-block[data-style=\"style-green\"]:hover",
+     ".texpile-template-block[data-style=\"style-2\"]:hover, .texpile-template-block[data-style=\"style-green\"]:hover",
+     ".texpile-template-block[data-style=\"style-3\"], .texpile-template-block[data-style=\"style-cyan\"]",
+     ".texpile-template-block[data-style=\"style-3\"], .texpile-template-block[data-style=\"style-cyan\"]",
+     ".texpile-template-block[data-style=\"style-3\"] .template-block-label, .texpile-template-block[data-style=\"style-cyan\"] .t",
+     ".texpile-template-block[data-style=\"style-3\"]:hover, .texpile-template-block[data-style=\"style-cyan\"]:hover",
+     ".texpile-template-block[data-style=\"style-3\"]:hover, .texpile-template-block[data-style=\"style-cyan\"]:hover",
+     ".texpile-template-block[data-style=\"style-4\"], .texpile-template-block[data-style=\"style-yellow\"]",
+     ".texpile-template-block[data-style=\"style-4\"], .texpile-template-block[data-style=\"style-yellow\"]",
+     ".texpile-template-block[data-style=\"style-4\"] .template-block-label, .texpile-template-block[data-style=\"style-yellow\"] ",
+     ".texpile-template-block[data-style=\"style-4\"]:hover, .texpile-template-block[data-style=\"style-yellow\"]:hover",
+     ".texpile-template-block[data-style=\"style-4\"]:hover, .texpile-template-block[data-style=\"style-yellow\"]:hover",
+     ".texpile-template-block[data-style=\"style-5\"], .texpile-template-block[data-style=\"style-gray\"]",
+     ".texpile-template-block[data-style=\"style-5\"], .texpile-template-block[data-style=\"style-gray\"]",
+     ".texpile-template-block[data-style=\"style-5\"] .template-block-label, .texpile-template-block[data-style=\"style-gray\"] .t",
+     ".texpile-template-block[data-style=\"style-5\"]:hover, .texpile-template-block[data-style=\"style-gray\"]:hover",
+     ".texpile-template-block[data-style=\"style-5\"]:hover, .texpile-template-block[data-style=\"style-gray\"]:hover",
+     ".texpile-template-block[data-style=\"style-6\"], .texpile-template-block[data-style=\"style-red\"]",
+     ".texpile-template-block[data-style=\"style-6\"], .texpile-template-block[data-style=\"style-red\"]",
+     ".texpile-template-block[data-style=\"style-6\"] .template-block-label, .texpile-template-block[data-style=\"style-red\"] .te",
+     ".texpile-template-block[data-style=\"style-6\"]:hover, .texpile-template-block[data-style=\"style-red\"]:hover",
+     ".texpile-template-block[data-style=\"style-6\"]:hover, .texpile-template-block[data-style=\"style-red\"]:hover",
+     ".texpile-template-block[data-orphaned=\"true\"]",
+     ".texpile-template-block[data-orphaned=\"true\"]",
+     ".texpile-template-block[data-orphaned=\"true\"] .template-block-label",
+     ".texpile-template-block[data-orphaned=\"true\"]::before",
+     ".texpile-template-block[data-orphaned=\"true\"]::after",
+     ".texpile-template-block[data-orphaned=\"true\"]::after",
+     ".texpile-template-block[data-orphaned=\"true\"]::after",
+     ".ProseMirror[data-template-loading=\"true\"] .texpile-template-block[data-orphaned=\"true\"]",
+     ".ProseMirror[data-template-loading=\"true\"] .texpile-template-block[data-orphaned=\"true\"]",
+     ".ProseMirror[data-template-loading=\"true\"] .texpile-template-block[data-orphaned=\"true\"]::before",
+     ".ProseMirror[data-template-loading=\"true\"] .texpile-template-block[data-orphaned=\"true\"]::after",
+     ".ProseMirror[data-template-loading=\"true\"] .texpile-template-block[data-orphaned=\"true\"]::after",
+     ".texpile-template-block[data-duplicate=\"true\"]",
+     ".texpile-template-block[data-duplicate=\"true\"]",
+     ".texpile-template-block[data-duplicate=\"true\"]::before",
+     ".texpile-template-block[data-duplicate=\"true\"]::after",
+     ".texpile-template-block[data-duplicate=\"true\"]::after",
+     ".texpile-template-block[data-duplicate=\"true\"]::after"
+    ]
+   },
+   "elements": {
+    "typ-ref": 1,
+    "texpile-template-block": 0,
+    "template-block-content": 0,
+    "noautofocus": 1
+   }
+  }
+ },
+ "rawBlock": {
+  "opened": true,
+  "peersWhileOpen": [
+   {
+    "target": {
+     "type": "raw_latex",
+     "pos": 75,
+     "size": 154,
+     "text": "<div class=\"x\">raw html block ",
+     "isLeaf": false
+    },
+    "peerAt": {
+     "anchor": 80,
+     "head": 83
+    },
+    "caretElements": [],
+    "selectionElements": []
+   }
+  ],
+  "probe": {
+   "kind": "raw block",
+   "wrapperClass": "noautofocus raw-latex-wrapper my-1 pm-line-caret",
+   "scroller": {
+    "fontFamily": "system-ui",
+    "fontSize": "16px",
+    "lineHeight": "26px"
+   },
+   "content": {
+    "fontFamily": "system-ui",
+    "fontSize": "16px",
+    "lineHeight": "26px",
+    "paddingTop": "0px",
+    "paddingBottom": "0px",
+    "tabSize": "4",
+    "whiteSpace": "break-spaces"
+   },
+   "line": {
+    "fontSize": "16px",
+    "paddingLeft": "0px",
+    "paddingRight": "0px",
+    "height": "52px"
+   },
+   "charWidth": null
+  },
+  "border": {
+   "scrollerBorderRight": "3px solid",
+   "scrollerBorderBox": 760,
+   "scrollerClientWidth": 757,
+   "contentBorderBoxWidth": 757,
+   "wrapperWidth": 760,
+   "lineWrapping": true,
+   "wrapperOutline": "solid",
+   "wrapperText": "<div class=\"x\">raw html block with a lon"
+  },
+  "screenshot": "raw-block-focused.png"
+ },
+ "typRef": [
+  {
+   "text": "@nope",
+   "className": "typ-ref rounded-base cursor-pointer transition-colors text-ref-broken-fg hover:bg-ref-broken-bg",
+   "style": {
+    "display": "block",
+    "color": "oklch(0.505 0.213 27.518)",
+    "backgroundColor": "rgba(0, 0, 0, 0)",
+    "paddingTop": "0px",
+    "paddingBottom": "0px",
+    "marginTop": "0px",
+    "marginBottom": "0px",
+    "borderRadius": "4px",
+    "cursor": "pointer",
+    "fontSize": "17.072px",
+    "fontFamily": "system-ui",
+    "textDecorationLine": "none",
+    "transitionProperty": "color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, --tw-gradient-from, --tw-gradient-via, --tw-gradient-to"
+   },
+   "dataset": {
+    "tip": "nope"
+   },
+   "parentClass": "inline-flex cursor-pointer items-center"
+  }
+ ]
+}

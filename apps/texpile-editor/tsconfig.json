@@ -3,7 +3,8 @@
 		"paths": {
 			"$lib": ["./src/lib"],
 			"$lib/*": ["./src/lib/*"],
-			"$branding/*": ["../../branding/*"]
+			"$branding/*": ["../../branding/*"],
+			"prosemirror-view": ["./src/lib/editor/canvas/contracts/typings/prosemirrorView.d.ts"]
 		},
 		"verbatimModuleSyntax": true,
 		"isolatedModules": true,
@@ -31,6 +32,8 @@
 		"src/**/*.js",
 		"src/**/*.ts",
 		"src/**/*.svelte",
+		"harness/**/*.ts",
+		"harness/**/*.svelte",
 		"tests/**/*.js",
 		"tests/**/*.ts",
 		"tests/**/*.svelte"

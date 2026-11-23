@@ -1,7 +1,8 @@
-import { faceElement, tippedFace, type ChipFace } from '$lib/editor/visual/extensions/drawnChips/chipFace';
+import { tippedFace, type ChipFace } from '$lib/editor/visual/extensions/drawnChips/chipFace';
 import { latexTreeOf } from '$lib/languages/latex/syntax/latexTrees';
 import { sourceUnitsIn } from '$lib/languages/latex/parser/tree/walk/sourceUnits';
 import { bodyOf } from '$lib/languages/latex/parser/tree/walk/stretch';
+import { coreElement } from '../looks/coreLooks';
 import './leaders.css';
 
 const LEADERS = new Set(['leaders', 'cleaders', 'xleaders']);
@@ -22,6 +23,6 @@ export function leadersFace(body: string, source: string): ChipFace | null {
 		.map((u) => body.slice(u.piece.from, u.piece.to))
 		.join('');
 	if (!text.trim()) return null;
-	const dom = faceElement('span', 'drawn-leaders', Array(SHOWN).fill(text.trim()).join(' '));
+	const dom = coreElement('span', 'drawn-leaders', Array(SHOWN).fill(text.trim()).join(' '));
 	return tippedFace(dom, source);
 }

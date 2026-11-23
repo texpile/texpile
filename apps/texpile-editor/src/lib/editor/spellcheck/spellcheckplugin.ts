@@ -9,6 +9,8 @@ import type { SpellLanguage } from '$lib/editor/spellcheck/languages/spellLangua
 import { blockSpellText, chipLetters, harperReading } from '$lib/editor/spellcheck/blockSpellText';
 import { createHarperSuggestionBox } from '$lib/editor/spellcheck/suggestionBoxFactory';
 import { nextProblem } from './problemNav';
+import { heldProofreadRanges, typedWordKey } from './proofreadHold';
+import { registerProofreadLooks } from './proofreadLooks';
 import './suggestion.css';
 import { editorConfigStore, editorViewStore } from '$lib/stores/editorStore';
 import { activeCompare } from '$lib/workspace/workspaceStore';
@@ -40,21 +42,19 @@ observe(
 const WORD_CHAR = /[\p{L}\p{N}]/u;
 
 /** struck words take a click for the caret beside them (pmOldWordsCaret), never for the squiggle they touch */
-function onOldWords(event: MouseEvent): boolean {
-	return event.target instanceof Element && event.target.closest('.pm-suggest-old') !== null;
+function onOldWords(view: EditorView, event: MouseEvent): boolean {
+	return view.canvas.geometry.hit(view.canvas.docPoint({ x: event.clientX, y: event.clientY }))?.target.kind === 'widget';
 }
 
-/** the element holding the character just before `pos`, or null when it cannot be resolved */
-function elementBefore(view: EditorView, pos: number): HTMLElement | null {
-	if (pos <= 0) return null;
-	try {
-		const { node, offset } = view.domAtPos(pos - 1);
-		const raw = node.nodeType === 3 ? node.parentNode : (node.childNodes[offset] ?? node);
-		const el = raw instanceof HTMLElement ? raw : (raw?.parentElement ?? null);
-		return el;
-	} catch {
-		return null; // a position the view cannot map; leave the click alone
-	}
+/** the flagged word the character before `pos` belongs to: the proofread decorations carry their lint's errors */
+function flaggedBefore(view: EditorView, pos: number): { from: number; to: number } | null {
+	let found: { from: number; to: number } | null = null;
+	view.someProp('decorations', (f) =>
+		f(view.state)?.forEachSet((set) => {
+			found ??= set.find(pos - 1, pos, (spec: { errors?: unknown }) => !!spec.errors).find((d) => d.from < pos && d.to >= pos) ?? null;
+		})
+	);
+	return found;
 }
 
 /**
@@ -69,14 +69,14 @@ function elementBefore(view: EditorView, pos: number): HTMLElement | null {
  * Deliberately does NOT look at event.target. Clicking past the final letter to place the caret
  * lands outside the flagged span's own box, so the target is the paragraph or heading around it and
  * a target-based test never fires - which is exactly how the first attempt at this missed. The
- * document decides instead: a word character behind the caret, none in front. The DOM is consulted
- * only to confirm that letter is inside a flagged span, so ordinary end-of-word clicks stay
+ * document decides instead: a word character behind the caret, none in front. The decorations are
+ * consulted only to confirm that letter is inside a flagged word, so ordinary end-of-word clicks stay
  * untouched (returning true here would eat them for every other click handler too).
  */
 export const spellClickBoundaryPlugin = new Plugin({
 	props: {
 		handleClick(view, pos, event) {
-			if (onOldWords(event)) return false;
+			if (onOldWords(view, event)) return false;
 			const $pos = view.state.doc.resolve(pos);
 			// a link's text is an address, not prose, and its own tooltip owns this click
 			const linkType = view.state.schema.marks.link;
@@ -89,12 +89,11 @@ export const spellClickBoundaryPlugin = new Plugin({
 			// leading edge, which matches how source mode behaves
 			if (!prev || !WORD_CHAR.test(prev)) return false;
 			if (next && WORD_CHAR.test(next)) return false;
-			const flagged = elementBefore(view, pos)?.closest('[class*="proofread-"]');
+			const flagged = flaggedBefore(view, pos);
 			if (!flagged) return false;
 			// the caret resolves after the last letter from anywhere on its right half, which on a
 			// short word is most of it: only a click past the word's own box is caret placement
-			const rects = flagged.getClientRects();
-			const box = rects[rects.length - 1];
+			const box = view.canvas.rangeClientRects(flagged.from, pos, 'text').at(-1);
 			if (!box || box.width === 0) return true;
 			return event.clientX > box.right || event.clientY < box.top || event.clientY > box.bottom;
 		}
@@ -125,6 +124,7 @@ async function lintTextAfterComposition(block: string, language: SpellLanguage |
 }
 
 const proofreadPlugins = new WeakSet<Plugin>();
+registerProofreadLooks();
 
 function proofreadOf(state: EditorState): Plugin | undefined {
 	return state.plugins.find((plugin) => proofreadPlugins.has(plugin));
@@ -164,10 +164,17 @@ export function proofreadPlugin(language: () => SpellLanguage | null): Plugin {
 		},
 		props: {
 			...libraryPlugin.spec.props,
+			decorations(state) {
+				const marks = libraryPlugin.spec.props?.decorations?.call(this, state) as DecorationSet | null | undefined;
+				const word = typedWordKey.getState(state) ?? null;
+				if (!marks || !word) return marks ?? null;
+				const held = heldProofreadRanges(marks.find(word.from, word.to), word);
+				return held.length ? marks.remove(held) : marks;
+			},
 			// the library searches the whole page for its own suggestion box on every key; the box here is Texpile's
 			handleKeyDown: undefined,
 			handleClick(view, pos, event) {
-				return !onOldWords(event) && !!libraryPlugin.spec.props?.handleClick?.call(this, view, pos, event);
+				return !onOldWords(view, event) && !!libraryPlugin.spec.props?.handleClick?.call(this, view, pos, event);
 			}
 		}
 	});

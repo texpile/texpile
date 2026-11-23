@@ -1,8 +1,8 @@
 import type { TypstPlugin } from '$lib/languages/typst/visual/core';
 import { figureDocument } from './document';
-import { typstFigureView } from './typstFigureView';
+import { typstFigureViews } from './typstFigureCanvasView';
 
 export const figure: TypstPlugin = {
 	document: figureDocument,
-	views: () => ({ typ_figure: (node, _view, _getPos, decorations) => typstFigureView(node, decorations) })
+	canvasViews: typstFigureViews
 };

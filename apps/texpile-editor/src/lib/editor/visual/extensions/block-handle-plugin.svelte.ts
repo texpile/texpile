@@ -40,10 +40,11 @@ function handleHeight(stacked: boolean, settings: boolean): number {
 // a \noindent paragraph prints its own label in this same left margin, at the block's top edge
 // (app.css). Drop the gutter clear of it rather than have the two draw over each other.
 const NOINDENT_LABEL_DROP = 22;
-function dropsForLabel(dom: HTMLElement) {
-	if (dom.tagName === 'P') return dom.dataset.indent === 'noindent';
+function dropsForLabel(node: PMNode | null): boolean {
+	if (node?.type.name === 'paragraph') return node.attrs.indent === 'noindent';
 	// a list item's first paragraph prints its label out past the bullet, which is this margin too
-	return dom.querySelector(":scope > .list-content > p:first-child[data-indent='noindent']") !== null;
+	const first = node?.type.name === 'list' ? node.firstChild : null;
+	return first?.type.name === 'paragraph' && first.attrs.indent === 'noindent';
 }
 
 class BlockHandleView {
@@ -128,11 +129,11 @@ class BlockHandleView {
 
 	private staysWithBlock(x: number, y: number): boolean {
 		if (!this.state.visible || this.hoveredPos == null) return false;
-		const dom = this.view.nodeDOM(this.hoveredPos);
-		if (!(dom instanceof HTMLElement)) return false;
+		const block = this.view.canvas.nodeClientRect(this.hoveredPos)?.rect;
+		if (!block) return false;
 		const { top } = this.state;
 		const buttons = { top, bottom: top + handleHeight(this.state.stacked, this.state.settings !== null) };
-		return pointerStaysWithBlock({ x, y }, this.view.dom.getBoundingClientRect(), dom.getBoundingClientRect(), buttons);
+		return pointerStaysWithBlock({ x, y }, this.view.canvas.sheetClientRect(), block, buttons);
 	}
 
 	private onMouseLeave = () => {
@@ -166,7 +167,7 @@ class BlockHandleView {
 
 	// x is pinned to the editor's center so horizontal mouse movement never re-anchors the
 	private blockAt(y: number): number | null {
-		const containerRect = this.view.dom.getBoundingClientRect();
+		const containerRect = this.view.canvas.sheetClientRect();
 		return handleUnitAt(this.view, containerRect.left + containerRect.width / 2, y);
 	}
 
@@ -178,20 +179,20 @@ class BlockHandleView {
 		}
 		const blockPos = this.blockAt(y);
 		if (blockPos == null) return; // over padding or outside the doc, leave the gutter as-is
+		const rect = this.view.canvas.nodeClientRect(blockPos)?.rect;
+		if (!rect) return;
 		this.hoveredPos = blockPos;
 		this.hoveredNode = this.view.state.doc.nodeAt(blockPos);
 
-		const dom = this.view.nodeDOM(blockPos);
-		if (!(dom instanceof HTMLElement)) return;
-
-		const rect = dom.getBoundingClientRect();
 		const stacked = this.view.dom.closest('[data-gutter-stacked]') !== null;
-		const settings = (this.view.editable && blockSettingsAt(this.view, blockPos, dom)?.label()) || null;
+		const settings = (this.view.editable && blockSettingsAt(this.view, blockPos)?.label()) || null;
 		const height = handleHeight(stacked, settings !== null);
-		const top = dropsForLabel(dom) ? rect.top + NOINDENT_LABEL_DROP : handleTop(handleLineMiddle(dom), rect, height, HANDLE_W);
+		const top = dropsForLabel(this.hoveredNode)
+			? rect.top + NOINDENT_LABEL_DROP
+			: handleTop(handleLineMiddle(this.view, blockPos, rect), rect, height, HANDLE_W);
 		// anchor horizontal to view.dom, not the block: per-node indents (lists, quotes,
 		// centered figures) would make the gutter jump around
-		const containerRect = this.view.dom.getBoundingClientRect();
+		const containerRect = this.view.canvas.sheetClientRect();
 		const left = containerRect.left - (stacked ? GUTTER_OFFSET_LEFT_STACKED : GUTTER_OFFSET_LEFT);
 		// null scroller = nothing can scroll, so nothing can be out of view
 		const area = scrollParent(this.view.dom)?.getBoundingClientRect();
@@ -282,9 +283,7 @@ class BlockHandleView {
 	};
 
 	private openSettings = (gear: HTMLElement) => {
-		if (this.hoveredPos == null) return;
-		const dom = this.view.nodeDOM(this.hoveredPos);
-		if (dom instanceof HTMLElement) blockSettingsAt(this.view, this.hoveredPos, dom)?.open(gear);
+		if (this.hoveredPos != null) blockSettingsAt(this.view, this.hoveredPos)?.open(gear);
 	};
 
 	private onDragEnd = () => setHandleDragActive(this.view, false);

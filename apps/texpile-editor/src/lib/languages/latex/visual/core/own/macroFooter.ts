@@ -1,4 +1,4 @@
-import type { ChipPanelFooter } from '$lib/editor/visual/extensions/drawnChips/chipPanel.svelte';
+import type { ChipPanelFooter } from '$lib/editor/visual/extensions/drawnChips/chipPanel/chipPanel.svelte';
 import { m } from '$lib/paraglide/messages';
 import { ownMacroDefinition } from './ownMacroFace.svelte';
 import { macroCallName } from './ownMacroCall';

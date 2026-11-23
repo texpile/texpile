@@ -43,8 +43,8 @@ export function captureVisualAnchor(map: SourceMap): VisualAnchor | null {
 	// scroll anchor: the topmost visible block
 	let scroll: number | null = null;
 	for (const b of map.blocks) {
-		const dom = v.nodeDOM(b.pmFrom);
-		if (dom instanceof HTMLElement && dom.getBoundingClientRect().bottom > scTop) {
+		const rect = v.canvas.nodeClientRect(b.pmFrom)?.rect;
+		if (rect && rect.bottom > scTop) {
 			scroll = b.srcFrom;
 			break;
 		}
@@ -117,6 +117,9 @@ function caretVisible(v: EditorView, pos: number): boolean {
  * same flush; ours must land after it or the anchor scroll gets overwritten.
  */
 export function resolveVisualAnchor(v: EditorView & { isDestroyed?: boolean }, anchor: SourceAnchor, map: SourceMap): void {
+	// the rows show once at the anchor's place, never first at the place the editor was left at
+	const { promise, resolve: placed } = Promise.withResolvers<void>();
+	if (!anchor.caretOnly) v.canvas.holdWhilePlacing(promise);
 	requestAnimationFrame(() =>
 		requestAnimationFrame(() => {
 			try {
@@ -124,8 +127,7 @@ export function resolveVisualAnchor(v: EditorView & { isDestroyed?: boolean }, a
 				// an offset in the preamble, or past the end, still lands on a block: the switch must move
 				const scrollHit = blockAtOrBefore(map, anchor.scroll);
 				if (scrollHit && !anchor.caretOnly) {
-					const dom = v.nodeDOM(scrollHit.pmFrom);
-					if (dom instanceof HTMLElement) dom.scrollIntoView({ block: 'start' });
+					v.canvas.revealPos(scrollHit.pmFrom, 'start');
 				}
 				// caret: the source cursor's own position, falling back to the scroll block. The scroll
 				// anchor owns the viewport while the caret lands inside it; a caret it leaves outside
@@ -147,6 +149,8 @@ export function resolveVisualAnchor(v: EditorView & { isDestroyed?: boolean }, a
 				if (flashBlock) flashNodeAt(v, flashBlock.pmFrom);
 			} catch {
 				/* best-effort; never break the mode switch over a scroll */
+			} finally {
+				placed();
 			}
 		})
 	);

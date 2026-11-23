@@ -1201,7 +1201,6 @@
 	"figure_needs_tinymist": "Las figuras de Typst requieren tinymist.",
 	"drawn_chip_typst_crop_definition": "Definición de recorte de imagen",
 	"imageoverlay_crop": "Recortar",
-	"imageoverlay_crop_unreadable": "La función de recorte requiere opciones para el ajuste básico y el ángulo.",
 	"image_crop_turn_left": "Girar a la izquierda",
 	"image_crop_turn_right": "Girar a la derecha",
 	"image_crop_reset": "Reiniciar",

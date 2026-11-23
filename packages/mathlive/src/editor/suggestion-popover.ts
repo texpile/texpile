@@ -9,7 +9,7 @@ import {
   Context,
 } from '../core/core';
 
-import { getCaretPoint } from '../editor-mathfield/utils';
+import { getCaretPoint, isValidMathfield } from '../editor-mathfield/utils';
 import type { _Mathfield } from '../editor-mathfield/mathfield-private';
 
 import { getKeybindingsForCommand } from './keybindings';
@@ -90,7 +90,7 @@ export function openSuggestionPopover(mf: _Mathfield, html: string): HTMLElement
 
   setTimeout(() => {
     // the mathfield was removed before the popover could show
-    if (!mf.element || mf.element.mathfield !== mf) return;
+    if (!isValidMathfield(mf)) return;
     if (panel && !isSuggestionPopoverVisible()) {
       panel.classList.add('is-visible');
       updateSuggestionPopoverPosition(mf);
@@ -115,7 +115,7 @@ export function updateSuggestionPopoverPosition(
   // Check that the mathfield is still valid
   // (we're calling ourselves from requestAnimationFrame() and the mathfield
   // could have gotten destroyed
-  if (!mf.element || mf.element.mathfield !== mf) return;
+  if (!isValidMathfield(mf)) return;
 
   if (!isSuggestionPopoverVisible()) return;
 
@@ -136,7 +136,7 @@ export function updateSuggestionPopoverPosition(
     return;
   }
 
-  const position = getCaretPoint(mf.field!);
+  const position = getCaretPoint(mf);
   if (!position) return;
 
   // Get screen width & height (browser compatibility)

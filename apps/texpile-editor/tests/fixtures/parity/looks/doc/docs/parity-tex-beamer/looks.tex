@@ -1,0 +1,67 @@
+\documentclass[aspectratio=169,handout,notes,draft]{beamer}
+
+\usetheme{Madrid}
+\usecolortheme{beaver}
+\usefonttheme{professionalfonts}
+\useinnertheme{rounded}
+\useoutertheme{infolines}
+
+\setbeamertemplate{navigation symbols}{}
+\setbeamercolor{structure}{fg=blue!60!black}
+\setbeamerfont{frametitle}{size=\Large,series=\bfseries}
+\setbeameroption{show notes}
+
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{booktabs}
+\usepackage{tikz}
+\usepackage{listings}
+\usepackage[style=authoryear]{biblatex}
+\addbibresource{refs.bib}
+
+\newtheorem{claim}{Claim}
+
+\title[Short title]{A talk about slides}
+\subtitle{Frames, columns, blocks and overlays}
+\author[A. Writer]{Ada Writer\inst{1} \and Ben Reader\inst{2}}
+\institute[Univ.]{\inst{1}University of Somewhere \and \inst{2}Institute of Elsewhere}
+\date{\today}
+\titlegraphic{\includegraphics[height=1cm]{images/logo}}
+
+\begin{document}
+
+\begin{frame}{Blocks with and without titles}
+\begin{block}{Block with title}
+Plain block text.
+\end{block}
+\begin{block}{}
+Block with an empty title.
+\end{block}
+\begin{alertblock}{}
+Alert block with an empty title.
+\end{alertblock}
+\begin{exampleblock}{Example with title}
+Example text.
+\end{exampleblock}
+\begin{block}<2->{Block with overlay}
+Overlay block.
+\end{block}
+\begin{exampleblock}<3>{Example overlay}
+Example overlay text.
+\end{exampleblock}
+\end{frame}
+
+\begin{frame}<2->{Frame overlay and title}
+Frame with an overlay specification and a title argument.
+\end{frame}
+
+\begin{frame}{Overlay theorem}
+\begin{theorem}<2->[Named]
+A theorem with an overlay and a name.
+\end{theorem}
+\begin{lemma}<3>
+A lemma on slide three.
+\end{lemma}
+\end{frame}
+
+\end{document}

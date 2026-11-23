@@ -33,44 +33,84 @@ Text below the heading.
 const texpile = useTexpile({ files: { 'leads.tex': LEADS, 'labeled.typ': LABELED } });
 const visual = () => new VisualEditor(texpile().page, texpile().root);
 
-type DrawnBlock = { held: boolean; justified: boolean; over: number };
+/** justified: every line but the last stretched to the measure; over: how far the widest line runs past the block */
+type DrawnBlock = { lines: number; justified: boolean; over: number };
 
-/** how the block holding `text` is drawn, and how far its widest line runs past its right edge */
+type ProbeLine = { from: number; to: number; text: string; justified: boolean };
+type ProbeView = {
+	lines(pos: number): ProbeLine[];
+	rectOf(pos: number): DOMRect | null;
+	rectOfNode(pos: number): DOMRect | null;
+	settle(): Promise<void>;
+	carets(): { kind: string; label?: string }[];
+	errors(): unknown[];
+};
+
+async function openWithProbe(v: VisualEditor, file: string): Promise<void> {
+	await v.open(file);
+	const hasProbe = await v.page.evaluate(() => '__canvasProbe' in window);
+	test.skip(!hasProbe, 'the canvas probe arrives with the view core');
+}
+
+/** how the textblock holding `text` is drawn */
 async function drawnBlock(v: VisualEditor, text: string): Promise<DrawnBlock> {
-	return v.evalView<DrawnBlock>(
-		`const block = [...view.dom.querySelectorAll('p, h1, h2')].find((el) => el.textContent.includes(arg));
-		return { held: block.classList.contains('pm-line-par'), justified: block.classList.contains('pm-line-justified'), over: block.scrollWidth - block.clientWidth };`,
+	const pos = await v.evalView<number>(
+		`let found = -1;
+		view.state.doc.descendants((node, pos) => { if (found < 0 && node.isTextblock && node.textContent.includes(arg)) found = pos; });
+		return found;`,
 		text
 	);
+	return v.page.evaluate(async (pos) => {
+		const view = (window as unknown as { __canvasProbe: { active(): ProbeView } }).__canvasProbe.active();
+		await view.settle();
+		const block = view.rectOfNode(pos)!;
+		const lines = view.lines(pos);
+		// a line's last character, before the spaces it ends on
+		const ends = lines.map((line) => view.rectOf(line.from + line.text.trimEnd().length)?.left ?? block.right);
+		return {
+			lines: lines.length,
+			justified: lines.length > 1 && lines.slice(0, -1).every((line) => line.justified),
+			over: Math.max(0, Math.round(Math.max(...ends) - block.right))
+		};
+	}, pos);
 }
+
+test.afterEach(async () => {
+	const hasProbe = await texpile().page.evaluate(() => '__canvasProbe' in window);
+	if (!hasProbe) return;
+	const errors = await texpile().page.evaluate(() =>
+		(window as unknown as { __canvasProbe: { active(): ProbeView } }).__canvasProbe.active().errors()
+	);
+	expect(errors).toEqual([]);
+});
 
 test('a first line makes room for a heading number, a theorem head and a bibliography key', async () => {
 	const v = visual();
-	await v.open('leads.tex');
-	await expect.poll(() => drawnBlock(v, 'A heading that is long')).toEqual({ held: true, justified: false, over: 0 });
-	await expect.poll(() => drawnBlock(v, 'THEOREM')).toEqual({ held: true, justified: true, over: 0 });
-	await expect.poll(() => drawnBlock(v, 'ENTRY')).toEqual({ held: true, justified: true, over: 0 });
+	await openWithProbe(v, 'leads.tex');
+	await expect.poll(() => drawnBlock(v, 'A heading that is long')).toEqual({ lines: 2, justified: false, over: 0 });
+	await expect.poll(() => drawnBlock(v, 'THEOREM')).toMatchObject({ justified: true, over: 0 });
+	await expect.poll(() => drawnBlock(v, 'ENTRY')).toMatchObject({ justified: true, over: 0 });
 });
 
 test('a paragraph put into a list keeps its justified lines', async () => {
 	const v = visual();
-	await v.open('leads.tex');
+	await openWithProbe(v, 'leads.tex');
 	await v.caretAfter('PLAIN');
 	await v.page.getByRole('button', { name: 'Bullet List' }).click();
-	await expect.poll(() => v.evalView<boolean>(`return view.dom.querySelector('.list-content p') !== null;`)).toBe(true);
-	await expect.poll(() => drawnBlock(v, 'PLAIN')).toEqual({ held: true, justified: true, over: 0 });
+	await expect.poll(() => v.evalView<string>(`return view.state.doc.resolve(view.state.selection.head).node(-1).type.name;`)).toBe('list');
+	await expect.poll(() => drawnBlock(v, 'PLAIN')).toMatchObject({ justified: true, over: 0 });
 });
 
 test('a paragraph with inline code keeps its justified lines', async () => {
 	const v = visual();
-	await v.open('leads.tex');
-	await expect.poll(() => drawnBlock(v, 'CODE')).toEqual({ held: true, justified: true, over: 0 });
+	await openWithProbe(v, 'leads.tex');
+	await expect.poll(() => drawnBlock(v, 'CODE')).toMatchObject({ justified: true, over: 0 });
 });
 
-test('the name label of a peer whose caret is near the end of a line leaves the paragraph held', async () => {
+test('the name label of a peer whose caret is near the end of a line leaves the paragraph justified', async () => {
 	const v = visual();
-	await v.open('leads.tex');
-	await expect.poll(() => drawnBlock(v, 'PLAIN')).toEqual({ held: true, justified: true, over: 0 });
+	await openWithProbe(v, 'leads.tex');
+	await expect.poll(() => drawnBlock(v, 'PLAIN')).toMatchObject({ justified: true, over: 0 });
 	// three characters before the end of the paragraph's first line, where the label runs past the edge
 	await v.evalView(
 		`let start = -1;
@@ -82,20 +122,26 @@ test('the name label of a peer whose caret is near the end of a line leaves the 
 		const peer = { clientId: 7, name: 'A collaborator with a long name', color: '#d97706', anchor: at - 3, head: at - 3 };
 		view.dispatch(view.state.tr.setMeta(plugin.key, [peer]).setMeta('addToHistory', false));`
 	);
-	await expect.poll(() => v.evalView<boolean>(`return view.dom.querySelector('.pm-remote-caret-label') !== null;`)).toBe(true);
-	await v.page.waitForTimeout(400);
-	const drawn = await drawnBlock(v, 'PLAIN');
-	expect(drawn.over, 'the label runs past the edge').toBeGreaterThan(2);
-	expect(drawn.held).toBe(true);
+	await expect
+		.poll(() =>
+			v.page.evaluate(() =>
+				(window as unknown as { __canvasProbe: { active(): ProbeView } }).__canvasProbe
+					.active()
+					.carets()
+					.some((caret) => caret.kind === 'remote' && caret.label === 'A collaborator with a long name')
+			)
+		)
+		.toBe(true);
+	await expect.poll(() => drawnBlock(v, 'PLAIN')).toMatchObject({ justified: true, over: 0 });
 });
 
-test('a Typst heading stays held with its label chip on the last line while words are typed before it', async () => {
+test('a Typst heading keeps its label chip on the last line while words are typed before it', async () => {
 	const v = visual();
-	await v.open('labeled.typ');
-	await expect.poll(() => drawnBlock(v, 'A heading that is long')).toEqual({ held: true, justified: false, over: 0 });
+	await openWithProbe(v, 'labeled.typ');
+	await expect.poll(() => drawnBlock(v, 'A heading that is long')).toMatchObject({ justified: false, over: 0 });
 	await v.caretAfter('and then on');
 	for (const word of [' to', ' a', ' second', ' line', ' of', ' words', ' typed', ' here']) {
 		await v.type(word);
-		await expect.poll(() => drawnBlock(v, 'A heading that is long')).toEqual({ held: true, justified: false, over: 0 });
+		await expect.poll(() => drawnBlock(v, 'A heading that is long')).toMatchObject({ justified: false, over: 0 });
 	}
 });

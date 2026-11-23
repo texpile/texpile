@@ -9,14 +9,14 @@ import { it } from 'vitest';
 import fs from 'node:fs';
 import path from 'node:path';
 import { parseLatexFile } from '$lib/workspace/latexRoundtrip';
-import { blockChipView, inlineChipView } from '$lib/languages/latex/visual/extensions/chipViewKind';
+import { blockChipShows, inlineChipShows } from '$lib/languages/latex/visual/extensions/chipViewKind';
 import { latexFace } from '$lib/languages/latex/visual/core/walk/drawUnits';
 import { parsedPackages } from '$lib/languages/latex/intellisense/packages/loadedPackages';
 import { packageTableOf } from '$lib/languages/latex/parser/signatures/packageTable';
 import { documentTable } from '$lib/languages/latex/visual/core/title/documentTable.svelte';
 import { templateFeaturesStore } from '$lib/stores/editorStore';
 import { scanGlossary } from '$lib/languages/latex/intellisense/completion/glossary';
-import { scanMacroDefinitions, scanRegisterDefinitions } from '$lib/editor/source/extensions/math-preview/userMacros';
+import { scanMacroDefinitions, scanRegisterDefinitions } from '$lib/editor/source/extensions/math-preview/macroScan';
 import { definedHeads } from '$lib/languages/latex/visual/extensions/environment/environmentHeads';
 import { refreshProjectIntel } from '$lib/workspace/projectIntel';
 import { forgetIndexedTexts } from '$lib/files/index/indexedTexts';
@@ -145,7 +145,7 @@ function ownDefinitionsOf(files: string[]): Set<string> {
 }
 
 function isDrawn(text: string, block: boolean): boolean {
-	if ((block ? blockChipView(text) : inlineChipView(text)) !== 'chip') return true;
+	if ((block ? blockChipShows(text) : inlineChipShows(text)) !== 'face') return true;
 	return latexFace(text, block) !== null;
 }
 

@@ -1,6 +1,7 @@
 // one watch over what drawn chips are drawn from (the compile's .aux, the definitions, the preamble's names) for every
 // drawn chip on the page; a reactive root per chip was most of what a reference cost to draw
 import { untrack } from 'svelte';
+import { liveRefProblems } from '$lib/workspace/document/liveRefChecks.svelte';
 import { projectIntelStore } from '$lib/stores/projectIntel';
 import { referenceStore, templateFeaturesStore } from '$lib/stores/editorStore';
 import { undefinedRefs } from '../extensions/ref/undefinedRefs.svelte';
@@ -17,6 +18,7 @@ export function onDrawnInputs(redraw: () => void): () => void {
 			void templateFeaturesStore.current;
 			void undefinedRefs.current;
 			void referenceStore.current;
+			void liveRefProblems.current;
 			untrack(() => redraws.forEach((fn) => fn()));
 		});
 	});

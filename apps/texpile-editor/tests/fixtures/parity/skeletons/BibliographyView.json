@@ -1,0 +1,842 @@
+{
+ "environment": {
+  "tool": "jsdom",
+  "userAgent": "Mozilla/5.0 (linux) AppleWebKit/537.36 (KHTML, like Gecko) jsdom/30.1.3",
+  "node": "v22.23.4",
+  "document": null,
+  "scrollPositionIndex": null,
+  "window": null,
+  "devicePixelRatio": null,
+  "zoom": null,
+  "electron": null,
+  "chromium": null,
+  "os": "linux",
+  "domEditorCommit": "6ec0389c61ffc889078a95517ee770740f556c7e",
+  "live": "crosscheck.json"
+ },
+ "component": "BibliographyView",
+ "source": "src/lib/editor/visual/extensions/bibliography/BibliographyView.svelte",
+ "mountsInEditorAs": "div.bibliography-preview inside the bibliography block node view (Markdown and Typst)",
+ "states": {
+  "empty": {
+   "roots": [
+    {
+     "tag": "div",
+     "class": [
+      "bibliography-preview",
+      "rounded-base",
+      "my-4",
+      "select-none"
+     ],
+     "children": [
+      {
+       "tag": "h2",
+       "class": [
+        "mt-0",
+        "mb-2",
+        "text-2xl",
+        "font-semibold"
+       ],
+       "children": [
+        "Bibliography"
+       ]
+      },
+      " ",
+      {
+       "tag": "p",
+       "class": [
+        "text-muted",
+        "italic"
+       ],
+       "children": [
+        "Add references to a .bib file."
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  "six-entries": {
+   "roots": [
+    {
+     "tag": "div",
+     "class": [
+      "bibliography-preview",
+      "rounded-base",
+      "my-4",
+      "select-none"
+     ],
+     "children": [
+      {
+       "tag": "h2",
+       "class": [
+        "mt-0",
+        "mb-2",
+        "text-2xl",
+        "font-semibold"
+       ],
+       "children": [
+        "{heading}"
+       ]
+      },
+      " ",
+      {
+       "tag": "div",
+       "class": [
+        "flex",
+        "flex-col",
+        "gap-1.5"
+       ],
+       "children": [
+        {
+         "tag": "p",
+         "class": [
+          "m-0",
+          "pl-8",
+          "-indent-8"
+         ],
+         "children": [
+          {
+           "tag": "span",
+           "children": [
+            "A One "
+           ]
+          },
+          {
+           "tag": "span",
+           "class": [
+            "text-muted"
+           ],
+           "children": [
+            "(2001). "
+           ]
+          },
+          {
+           "tag": "em",
+           "children": [
+            "T1. "
+           ]
+          },
+          {
+           "tag": "span",
+           "children": [
+            "J1. "
+           ]
+          }
+         ]
+        },
+        {
+         "tag": "p",
+         "class": [
+          "m-0",
+          "pl-8",
+          "-indent-8"
+         ],
+         "children": [
+          {
+           "tag": "span",
+           "children": [
+            "B Two "
+           ]
+          },
+          {
+           "tag": "span",
+           "class": [
+            "text-muted"
+           ],
+           "children": [
+            "(2002). "
+           ]
+          },
+          {
+           "tag": "em",
+           "children": [
+            "T2. "
+           ]
+          },
+          {
+           "tag": "span",
+           "children": [
+            "J2. "
+           ]
+          }
+         ]
+        },
+        {
+         "tag": "p",
+         "class": [
+          "m-0",
+          "pl-8",
+          "-indent-8"
+         ],
+         "children": [
+          {
+           "tag": "span",
+           "children": [
+            "C Three "
+           ]
+          },
+          {
+           "tag": "span",
+           "class": [
+            "text-muted"
+           ],
+           "children": [
+            "(2003). "
+           ]
+          },
+          {
+           "tag": "em",
+           "children": [
+            "T3. "
+           ]
+          }
+         ]
+        },
+        {
+         "tag": "p",
+         "class": [
+          "m-0",
+          "pl-8",
+          "-indent-8"
+         ],
+         "children": [
+          {
+           "tag": "span",
+           "children": [
+            "D Four "
+           ]
+          },
+          {
+           "tag": "span",
+           "class": [
+            "text-muted"
+           ],
+           "children": [
+            "(2004). "
+           ]
+          },
+          {
+           "tag": "em",
+           "children": [
+            "T4. "
+           ]
+          }
+         ]
+        },
+        {
+         "tag": "p",
+         "class": [
+          "m-0",
+          "pl-8",
+          "-indent-8"
+         ],
+         "children": [
+          {
+           "tag": "span",
+           "children": [
+            "Donald E. Knuth "
+           ]
+          },
+          {
+           "tag": "span",
+           "class": [
+            "text-muted"
+           ],
+           "children": [
+            "(1984). "
+           ]
+          },
+          {
+           "tag": "em",
+           "children": [
+            "The TeXbook. "
+           ]
+          },
+          {
+           "tag": "span",
+           "class": [
+            "text-muted"
+           ],
+           "children": [
+            "Addison-Wesley."
+           ]
+          }
+         ]
+        },
+        {
+         "tag": "p",
+         "class": [
+          "m-0",
+          "pl-8",
+          "-indent-8"
+         ],
+         "children": [
+          {
+           "tag": "span",
+           "children": [
+            "Leslie Lamport and Someone Else "
+           ]
+          },
+          {
+           "tag": "span",
+           "class": [
+            "text-muted"
+           ],
+           "children": [
+            "(1994). "
+           ]
+          },
+          {
+           "tag": "em",
+           "children": [
+            "LaTeX: A Document Preparation System. "
+           ]
+          }
+         ]
+        }
+       ]
+      },
+      " "
+     ]
+    }
+   ]
+  },
+  "seven-entries-show-all": {
+   "roots": [
+    {
+     "tag": "div",
+     "class": [
+      "bibliography-preview",
+      "rounded-base",
+      "my-4",
+      "select-none",
+      "ring-primary-500",
+      "ring-2"
+     ],
+     "children": [
+      {
+       "tag": "h2",
+       "class": [
+        "mt-0",
+        "mb-2",
+        "text-2xl",
+        "font-semibold"
+       ],
+       "children": [
+        "References"
+       ]
+      },
+      " ",
+      {
+       "tag": "div",
+       "class": [
+        "flex",
+        "flex-col",
+        "gap-1.5"
+       ],
+       "children": [
+        {
+         "tag": "p",
+         "class": [
+          "m-0",
+          "pl-8",
+          "-indent-8"
+         ],
+         "children": [
+          {
+           "tag": "span",
+           "children": [
+            "A One "
+           ]
+          },
+          {
+           "tag": "span",
+           "class": [
+            "text-muted"
+           ],
+           "children": [
+            "(2001). "
+           ]
+          },
+          {
+           "tag": "em",
+           "children": [
+            "T1. "
+           ]
+          },
+          {
+           "tag": "span",
+           "children": [
+            "J1. "
+           ]
+          }
+         ]
+        },
+        {
+         "tag": "p",
+         "class": [
+          "m-0",
+          "pl-8",
+          "-indent-8"
+         ],
+         "children": [
+          {
+           "tag": "span",
+           "children": [
+            "B Two "
+           ]
+          },
+          {
+           "tag": "span",
+           "class": [
+            "text-muted"
+           ],
+           "children": [
+            "(2002). "
+           ]
+          },
+          {
+           "tag": "em",
+           "children": [
+            "T2. "
+           ]
+          },
+          {
+           "tag": "span",
+           "children": [
+            "J2. "
+           ]
+          }
+         ]
+        },
+        {
+         "tag": "p",
+         "class": [
+          "m-0",
+          "pl-8",
+          "-indent-8"
+         ],
+         "children": [
+          {
+           "tag": "span",
+           "children": [
+            "C Three "
+           ]
+          },
+          {
+           "tag": "span",
+           "class": [
+            "text-muted"
+           ],
+           "children": [
+            "(2003). "
+           ]
+          },
+          {
+           "tag": "em",
+           "children": [
+            "T3. "
+           ]
+          }
+         ]
+        },
+        {
+         "tag": "p",
+         "class": [
+          "m-0",
+          "pl-8",
+          "-indent-8"
+         ],
+         "children": [
+          {
+           "tag": "span",
+           "children": [
+            "D Four "
+           ]
+          },
+          {
+           "tag": "span",
+           "class": [
+            "text-muted"
+           ],
+           "children": [
+            "(2004). "
+           ]
+          },
+          {
+           "tag": "em",
+           "children": [
+            "T4. "
+           ]
+          }
+         ]
+        },
+        {
+         "tag": "p",
+         "class": [
+          "m-0",
+          "pl-8",
+          "-indent-8"
+         ],
+         "children": [
+          {
+           "tag": "span",
+           "children": [
+            "Donald E. Knuth "
+           ]
+          },
+          {
+           "tag": "span",
+           "class": [
+            "text-muted"
+           ],
+           "children": [
+            "(1984). "
+           ]
+          },
+          {
+           "tag": "em",
+           "children": [
+            "The TeXbook. "
+           ]
+          },
+          {
+           "tag": "span",
+           "class": [
+            "text-muted"
+           ],
+           "children": [
+            "Addison-Wesley."
+           ]
+          }
+         ]
+        },
+        {
+         "tag": "p",
+         "class": [
+          "m-0",
+          "pl-8",
+          "-indent-8"
+         ],
+         "children": [
+          {
+           "tag": "span",
+           "children": [
+            "E Five "
+           ]
+          },
+          {
+           "tag": "span",
+           "class": [
+            "text-muted"
+           ],
+           "children": [
+            "(2005). "
+           ]
+          },
+          {
+           "tag": "em",
+           "children": [
+            "T5. "
+           ]
+          }
+         ]
+        }
+       ]
+      },
+      " ",
+      {
+       "tag": "button",
+       "class": [
+        "anchor",
+        "mt-2",
+        "text-sm"
+       ],
+       "children": [
+        "Show all 7"
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  "seven-entries-expanded": {
+   "roots": [
+    {
+     "tag": "div",
+     "class": [
+      "bibliography-preview",
+      "rounded-base",
+      "my-4",
+      "select-none"
+     ],
+     "children": [
+      {
+       "tag": "h2",
+       "class": [
+        "mt-0",
+        "mb-2",
+        "text-2xl",
+        "font-semibold"
+       ],
+       "children": [
+        "References"
+       ]
+      },
+      " ",
+      {
+       "tag": "div",
+       "class": [
+        "flex",
+        "flex-col",
+        "gap-1.5"
+       ],
+       "children": [
+        {
+         "tag": "p",
+         "class": [
+          "m-0",
+          "pl-8",
+          "-indent-8"
+         ],
+         "children": [
+          {
+           "tag": "span",
+           "children": [
+            "A One "
+           ]
+          },
+          {
+           "tag": "span",
+           "class": [
+            "text-muted"
+           ],
+           "children": [
+            "(2001). "
+           ]
+          },
+          {
+           "tag": "em",
+           "children": [
+            "T1. "
+           ]
+          },
+          {
+           "tag": "span",
+           "children": [
+            "J1. "
+           ]
+          }
+         ]
+        },
+        {
+         "tag": "p",
+         "class": [
+          "m-0",
+          "pl-8",
+          "-indent-8"
+         ],
+         "children": [
+          {
+           "tag": "span",
+           "children": [
+            "B Two "
+           ]
+          },
+          {
+           "tag": "span",
+           "class": [
+            "text-muted"
+           ],
+           "children": [
+            "(2002). "
+           ]
+          },
+          {
+           "tag": "em",
+           "children": [
+            "T2. "
+           ]
+          },
+          {
+           "tag": "span",
+           "children": [
+            "J2. "
+           ]
+          }
+         ]
+        },
+        {
+         "tag": "p",
+         "class": [
+          "m-0",
+          "pl-8",
+          "-indent-8"
+         ],
+         "children": [
+          {
+           "tag": "span",
+           "children": [
+            "C Three "
+           ]
+          },
+          {
+           "tag": "span",
+           "class": [
+            "text-muted"
+           ],
+           "children": [
+            "(2003). "
+           ]
+          },
+          {
+           "tag": "em",
+           "children": [
+            "T3. "
+           ]
+          }
+         ]
+        },
+        {
+         "tag": "p",
+         "class": [
+          "m-0",
+          "pl-8",
+          "-indent-8"
+         ],
+         "children": [
+          {
+           "tag": "span",
+           "children": [
+            "D Four "
+           ]
+          },
+          {
+           "tag": "span",
+           "class": [
+            "text-muted"
+           ],
+           "children": [
+            "(2004). "
+           ]
+          },
+          {
+           "tag": "em",
+           "children": [
+            "T4. "
+           ]
+          }
+         ]
+        },
+        {
+         "tag": "p",
+         "class": [
+          "m-0",
+          "pl-8",
+          "-indent-8"
+         ],
+         "children": [
+          {
+           "tag": "span",
+           "children": [
+            "Donald E. Knuth "
+           ]
+          },
+          {
+           "tag": "span",
+           "class": [
+            "text-muted"
+           ],
+           "children": [
+            "(1984). "
+           ]
+          },
+          {
+           "tag": "em",
+           "children": [
+            "The TeXbook. "
+           ]
+          },
+          {
+           "tag": "span",
+           "class": [
+            "text-muted"
+           ],
+           "children": [
+            "Addison-Wesley."
+           ]
+          }
+         ]
+        },
+        {
+         "tag": "p",
+         "class": [
+          "m-0",
+          "pl-8",
+          "-indent-8"
+         ],
+         "children": [
+          {
+           "tag": "span",
+           "children": [
+            "E Five "
+           ]
+          },
+          {
+           "tag": "span",
+           "class": [
+            "text-muted"
+           ],
+           "children": [
+            "(2005). "
+           ]
+          },
+          {
+           "tag": "em",
+           "children": [
+            "T5. "
+           ]
+          }
+         ]
+        },
+        {
+         "tag": "p",
+         "class": [
+          "m-0",
+          "pl-8",
+          "-indent-8"
+         ],
+         "children": [
+          {
+           "tag": "span",
+           "children": [
+            "Leslie Lamport and Someone Else "
+           ]
+          },
+          {
+           "tag": "span",
+           "class": [
+            "text-muted"
+           ],
+           "children": [
+            "(1994). "
+           ]
+          },
+          {
+           "tag": "em",
+           "children": [
+            "LaTeX: A Document Preparation System. "
+           ]
+          }
+         ]
+        }
+       ]
+      },
+      " "
+     ]
+    }
+   ]
+  }
+ }
+}

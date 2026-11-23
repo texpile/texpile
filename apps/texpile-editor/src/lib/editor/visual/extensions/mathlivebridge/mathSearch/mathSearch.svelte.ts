@@ -1,7 +1,7 @@
 // The math search's state: one panel for the window, opened in an equation and listing everything
 // MathLive has for the equation's syntax. The equation keeps the focus throughout, so a pick goes in
 // at its caret.
-import type { MathfieldElement } from 'mathlive';
+import type { HeadlessMathfield } from 'mathlive';
 import type { EditorView as CMView } from '@codemirror/view';
 import { insertIntoSource } from '$lib/editor/source/extensions/math-search/sourceMathInsert';
 import { insertSymbol } from '$lib/editor/visual/toolbar/mathInsert';
@@ -30,7 +30,9 @@ function entryIn(section: string, entry: MathEntry): MathSearchResult {
 }
 
 class MathSearchState {
-	field = $state.raw<MathfieldElement | null>(null);
+	field = $state.raw<HeadlessMathfield | null>(null);
+	/** where the open equation's caret and line are now */
+	private placeOf: (() => MathSearchPlace | null) | null = null;
 	/** the source editor it was opened in, when it was not an equation's field */
 	source = $state.raw<CMView | null>(null);
 	syntax = $state<MathSyntax>('latex');
@@ -76,9 +78,10 @@ class MathSearchState {
 		return (this.field !== null || this.source !== null) && this.place !== null;
 	}
 
-	open(field: MathfieldElement, syntax: MathSyntax, display: boolean): void {
+	open(field: HeadlessMathfield, syntax: MathSyntax, display: boolean, place: () => MathSearchPlace | null): void {
 		this.field = field;
-		this.start(syntax, display, placeUnder(field));
+		this.placeOf = place;
+		this.start(syntax, display, place());
 		field.addEventListener('blur', this.close, { once: true });
 		// placed at the caret, so a click elsewhere in the equation closes it
 		field.addEventListener('selection-change', this.close, { once: true });
@@ -93,7 +96,7 @@ class MathSearchState {
 
 	/** after a scroll or a resize: the panel moves with its equation or caret, and goes once that has left the window */
 	follow = (): void => {
-		const place = this.field ? placeUnder(this.field) : this.source ? placeAtCaret(this.source) : null;
+		const place = this.field ? (this.placeOf?.() ?? null) : this.source ? placeAtCaret(this.source) : null;
 		if (place) this.place = place;
 		else this.close();
 	};
@@ -117,6 +120,7 @@ class MathSearchState {
 		this.field?.removeEventListener('selection-change', this.close);
 		this.source?.contentDOM.removeEventListener('blur', this.close);
 		this.field = null;
+		this.placeOf = null;
 		this.source = null;
 		this.place = null;
 	};
@@ -189,25 +193,17 @@ function pickInSource(view: CMView, result: MathSearchResult, loaded: MathEntrie
 	loaded.set.remember(symbol.id);
 }
 
-function placeUnder(field: MathfieldElement): MathSearchPlace | null {
-	const box = field.getBoundingClientRect();
-	if (!onScreen(box.top, box.bottom)) return null;
-	// MathLive draws its caret in the field's own tree and has no public way to say where it is
-	const caret = field.shadowRoot?.querySelector('.ML__caret')?.getBoundingClientRect();
-	return placeAt(caret?.left ?? box.left, box.top, box.bottom);
-}
-
 function placeAtCaret(view: CMView): MathSearchPlace | null {
 	const caret = view.coordsAtPos(view.state.selection.main.head);
 	return caret && onScreen(caret.top, caret.bottom) ? placeAt(caret.left, caret.top, caret.bottom) : null;
 }
 
-function onScreen(top: number, bottom: number): boolean {
+export function onScreen(top: number, bottom: number): boolean {
 	return bottom > 0 && top < window.innerHeight;
 }
 
 /** under the line from `top` to `bottom`, or above it when there is no room below */
-function placeAt(caretLeft: number, top: number, bottom: number): MathSearchPlace {
+export function placeAt(caretLeft: number, top: number, bottom: number): MathSearchPlace {
 	const left = Math.max(8, Math.min(caretLeft - 16, window.innerWidth - PANEL_WIDTH - 8));
 	if (window.innerHeight - bottom >= PANEL_ROOM || top < PANEL_ROOM) return { left, top: bottom + 4 };
 	return { left, bottom: window.innerHeight - top + 4 };

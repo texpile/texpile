@@ -1,120 +1,20 @@
-// user macro definitions as a MathLive macro dictionary, so the math preview and
-// \ref hover render custom macros instead of erroring on them. bodies keep LaTeX's native #1
-// placeholders, which is exactly MathLive's MacroDefinition format.
+// the macros formulas are typeset with: the document's own over the project's
 import { projectIntelStore } from '$lib/stores/projectIntel';
-import { callsIn, rolesOf, type CommandCall } from '$lib/languages/latex/knowledge/calls/commandCalls';
-import type { Argument, Role } from '$lib/languages/latex/knowledge/types';
-import { blankComments, codeOnly } from '$lib/languages/latex/texCode';
-import { definedIn, primitiveDefsIn } from '$lib/languages/latex/userDefinitions';
+import { scanMacroDefinitions, withoutLoops, type MacroDef } from './macroScan';
 
-export type MacroDef = {
-	def: string;
-	args?: number;
-	/** the default of #1, which makes it optional: \newcommand{\a}[2][10]{...} */
-	optional?: string;
-};
-
-const MAX_BODY = 500; // a "macro" body longer than this is not something a preview should inline
-
-// \newcommand{\a}[2][10]{...}: every argument is mandatory except an optional first one, the only shape MathLive inlines
-function inlinable(args: Argument[]): boolean {
-	return args.every((a, i) => a.kind === 'm' || (i === 0 && a.kind === 'o' && a.default !== undefined));
-}
-
-// what a definer expands to instead of inlining its body, from the arguments after its name by role
-const EXPANSIONS: Record<string, (star: boolean, parts: Partial<Record<Role, string>>) => MacroDef | null> = {
-	DeclareMathOperator: (star, { body }) => (body === undefined ? null : { def: `\\operatorname${star ? '*' : ''}{${body}}`, args: 0 }),
-	DeclarePairedDelimiter: (_, { begin, end }) => (begin === undefined || end === undefined ? null : { def: `${begin}#1${end}`, args: 1 })
-};
-
-type FoundMacro = { at: number; name: string; def: MacroDef; provide: boolean };
-
-function expansionOf(code: string, call: CommandCall | undefined): MacroDef | null {
-	const named = call?.args.find((a) => a.arg.defines && rolesOf(a.arg).includes('macro'));
-	if (!call || !named) return null;
-	const parts: Partial<Record<Role, string>> = {};
-	for (const a of call.args) {
-		if (a.index > named.index && a.arg.kind === 'm') for (const role of rolesOf(a.arg)) parts[role] = code.slice(a.from, a.to);
-	}
-	if (Object.values(parts).some((p) => p.length > MAX_BODY)) return null;
-	return (
-		EXPANSIONS[call.command]?.(
-			call.args.some((a) => a.arg.kind === 's'),
-			parts
-		) ?? null
-	);
-}
-
-/** `original` is the unmasked text, which gives back the verbatim body of a macro */
-export function scanMacroBodies(code: string, original?: string): Record<string, MacroDef> {
-	const found: FoundMacro[] = [];
-	let unmasked: string | undefined;
-	function bodyOf(at: number, body: string): string {
-		if (!original || !/^\s+|\s{2}/.test(body)) return body;
-		const from = code.indexOf(`{${body}}`, at) + 1;
-		if (from < 1) return body;
-		unmasked ??= blankComments(original);
-		return unmasked.slice(from, from + body.length);
-	}
-	let calls: Map<number, CommandCall> | null = null;
-	for (const d of definedIn(code, 'macro')) {
-		let def: MacroDef | null = null;
-		if (d.command in EXPANSIONS) {
-			calls ??= new Map(callsIn(code, ['macro']).map((c) => [c.at, c]));
-			def = expansionOf(code, calls.get(d.at));
-		} else if (d.body !== undefined) {
-			const first = d.args[0];
-			if (d.body.length <= MAX_BODY && inlinable(d.args)) {
-				def = { def: bodyOf(d.at, d.body), args: d.args.length, ...(first?.kind === 'o' ? { optional: first.default } : {}) };
-			}
-		}
-		if (def) found.push({ at: d.at, name: d.name, def, provide: d.defines === 'provide' });
-	}
-	for (const d of primitiveDefsIn(code)) {
-		if (d.body !== null && d.body.length <= MAX_BODY)
-			found.push({ at: d.at, name: d.name, def: { def: d.body, args: d.params ?? 0 }, provide: false });
-	}
-	const out: Record<string, MacroDef> = {};
-	for (const f of found.sort((a, b) => a.at - b.at)) if (!(f.provide && f.name in out)) out[f.name] = f.def;
-	return out;
-}
-
-/** scans text for renderable macro definitions. pure; cross-file merging happens in mathMacrosFor. */
-export function scanMacroDefinitions(text: string): Record<string, MacroDef> {
-	return scanMacroBodies(codeOnly(text), text);
-}
-
-export function scanRegisterDefinitions(text: string): string[] {
-	return definedIn(codeOnly(text), 'macro').flatMap((d) => (d.register ? [d.name] : []));
-}
-
-const CALLED = /\\([a-zA-Z@]+)/g;
-
-/** without the definitions that reach themselves, as a class's \def\small{\@setsize\small...} does: MathLive expands one without end */
-export function withoutLoops(macros: Record<string, MacroDef>): Record<string, MacroDef> {
-	function reaches(from: string, target: string, seen: Set<string>): boolean {
-		for (const [, called] of macros[from].def.matchAll(CALLED)) {
-			if (called === target) return true;
-			if (!Object.hasOwn(macros, called) || seen.has(called)) continue;
-			seen.add(called);
-			if (reaches(called, target, seen)) return true;
-		}
-		return false;
-	}
-	return Object.fromEntries(Object.entries(macros).filter(([name]) => !reaches(name, name, new Set([name]))));
-}
+export type { MacroDef };
 
 let cache: { text: string; intel: unknown; macros: Record<string, MacroDef> } | null = null;
 
-/** buffer definitions merged over cross-file ones (buffer wins), cached per doc text. */
-export function mathMacrosFor(docText: string): Record<string, MacroDef> {
+/** buffer definitions merged over cross-file ones (buffer wins), cached per doc text; `scanned`: what scanMacroDefinitions reads in it */
+export function mathMacrosFor(docText: string, scanned?: Record<string, MacroDef>): Record<string, MacroDef> {
 	const intel = projectIntelStore.current;
 	if (cache && cache.text === docText && cache.intel === intel) return cache.macros;
 	const macros: Record<string, MacroDef> = {};
 	for (const m of intel.macros) {
 		if (m.definition !== undefined) macros[m.name] = { def: m.definition, args: m.argCount ?? 0, optional: m.optional };
 	}
-	const usable = withoutLoops(Object.assign(macros, scanMacroDefinitions(docText)));
+	const usable = withoutLoops(Object.assign(macros, scanned ?? scanMacroDefinitions(docText)));
 	cache = { text: docText, intel, macros: usable };
 	return usable;
 }

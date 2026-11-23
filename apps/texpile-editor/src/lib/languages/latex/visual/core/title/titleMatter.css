@@ -19,3 +19,7 @@
 	white-space: pre-wrap;
 	cursor: pointer;
 }
+/* shown with the canvas rows, in the frame that shows the file at its caret */
+.texpile-main-editor > :is(.title-field, .title-field-source):not([data-canvas-shown] *) {
+	visibility: hidden;
+}

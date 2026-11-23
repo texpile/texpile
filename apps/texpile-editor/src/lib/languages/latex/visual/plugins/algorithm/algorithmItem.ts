@@ -1,4 +1,5 @@
-import { faceElement, mandatoryArgs, optionalArg, type ChipFace, type TreeCall } from '$lib/languages/latex/visual/core';
+import { faceElement } from '$lib/editor/canvas';
+import { mandatoryArgs, optionalArg, type ChipFace, type TreeCall } from '$lib/languages/latex/visual/core';
 import { isItemCommand } from '$lib/languages/latex/knowledge/environments/envFacts';
 import { algorithmStep } from './algorithmSteps';
 import { keywordPart, type AlgorithmDrawer } from './algorithmFace';
@@ -27,7 +28,7 @@ export function itemPart(call: TreeCall, src: string, drawer: AlgorithmDrawer): 
 	}
 	if (step?.say && !head) return null;
 	const dom = faceElement('span', 'drawn-algorithm-item');
-	dom.append(document.createElement('br'));
+	dom.append(faceElement('br'));
 	if (head) dom.append(head.dom);
 	return { dom, mixed: true, destroy: () => head?.destroy?.() };
 }

@@ -1,6 +1,6 @@
-import type { ChipSettings } from '$lib/editor/visual/extensions/drawnChips/chipPanel.svelte';
-import { readComment } from '$lib/editor/visual/extensions/drawnChips/commentLines';
-import CommentSettings from '$lib/editor/visual/extensions/drawnChips/CommentSettings.svelte';
+import type { ChipSettings } from '$lib/editor/visual/extensions/drawnChips/chipPanel/chipPanel.svelte';
+import { readComment } from '$lib/editor/visual/extensions/drawnChips/comment/commentLines';
+import CommentSettings from '$lib/editor/visual/extensions/drawnChips/comment/CommentSettings.svelte';
 import { HEAD } from '$lib/languages/latex/drawnCommands';
 import { ownMacroBody } from './own/ownMacroFace.svelte';
 import { macroCallName } from './own/ownMacroCall';

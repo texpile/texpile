@@ -3,6 +3,7 @@ import js from '@eslint/js';
 import { includeIgnoreFile } from '@eslint/compat';
 import svelte from 'eslint-plugin-svelte';
 import globals from 'globals';
+import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import ts from 'typescript-eslint';
 import svelteConfig from './svelte.config.js';
@@ -162,8 +163,9 @@ const banOtherPlugins = (depth) => ({
 	message: 'a plugin imports its own folder and the core entry, never another plugin; what two share belongs in the core'
 });
 const pluginImportsCore = {
-	regex: '^\\$lib/(?!languages/latex/visual/core(/document)?$|languages/latex/knowledge/|paraglide/messages$)',
-	message: 'a plugin reaches the app through the core entry, $lib/languages/latex/visual/core or its document half'
+	regex: '^\\$lib/(?!languages/latex/visual/core(/document)?$|languages/latex/knowledge/|paraglide/messages$|editor/canvas$)',
+	message:
+		'a plugin reaches the app through the core entry, $lib/languages/latex/visual/core or its document half, and the canvas through $lib/editor/canvas'
 };
 // the same from inside languages/latex, where a relative path can reach a plugin folder
 const banPluginFolders = {
@@ -181,8 +183,9 @@ const banOtherTypstPlugins = (depth) => ({
 	message: 'a plugin imports its own folder and the core entry, never another plugin; what two share belongs in the core'
 });
 const typstPluginImportsCore = {
-	regex: '^\\$lib/(?!languages/typst/visual/core(/document)?$|languages/typst/knowledge(/|$)|paraglide/messages$)',
-	message: 'a plugin reaches the app through the core entry, $lib/languages/typst/visual/core or its document half'
+	regex: '^\\$lib/(?!languages/typst/visual/core(/document)?$|languages/typst/knowledge(/|$)|paraglide/messages$|editor/canvas$)',
+	message:
+		'a plugin reaches the app through the core entry, $lib/languages/typst/visual/core or its document half, and the canvas through $lib/editor/canvas'
 };
 const banTypstPluginFolders = {
 	regex: '^\\.{1,2}/(\\.\\./)*(visual/)?plugins/',
@@ -200,8 +203,8 @@ const banOtherMarkdownPlugins = (depth) => ({
 	message: 'a plugin imports its own folder and the core entry, never another plugin; what two share belongs in the core'
 });
 const markdownPluginImportsCore = {
-	regex: '^\\$lib/(?!languages/markdown/visual/core$|paraglide/messages$)',
-	message: 'a plugin reaches the app through the core entry, $lib/languages/markdown/visual/core'
+	regex: '^\\$lib/(?!languages/markdown/visual/core$|paraglide/messages$|editor/canvas$)',
+	message: 'a plugin reaches the app through the core entry, $lib/languages/markdown/visual/core, and the canvas through $lib/editor/canvas'
 };
 const banMarkdownPluginFolders = {
 	regex: '^\\.{1,2}/(\\.\\./)*(visual/)?plugins/',
@@ -212,6 +215,164 @@ const markdownPluginBoundary = [1, 2, 3].map((depth) => ({
 	rules: languageBoundary([banLatex, banTypst, banOtherMarkdownPlugins(depth), markdownPluginImportsCore])
 }));
 
+// the canvas rewrite (design 2.1, 8.2, 8.7): faces and editor plugins reach the canvas through its entry, build no DOM
+// and measure none. A local plugin, so these sit beside no-restricted-syntax instead of replacing its options
+const LIB_ROOT = fileURLToPath(new URL('./src/lib', import.meta.url));
+const CANVAS_ROOT = path.join(LIB_ROOT, 'editor/canvas');
+/** an import, $lib or relative, that lands inside editor/canvas past its entry */
+function reachesCanvasInternals(source, filename) {
+	const relative = source.startsWith('.') ? path.resolve(path.dirname(filename), source) : null;
+	const target = source.startsWith('$lib/') ? path.join(LIB_ROOT, source.slice(5)) : relative;
+	const inside = target === null ? '..' : path.relative(CANVAS_ROOT, target);
+	return inside !== '' && !inside.startsWith('..') && !path.isAbsolute(inside) && !/^index(\.ts)?$/.test(inside);
+}
+const MEASUREMENT = new Set(['offsetWidth', 'clientWidth', 'offsetParent']);
+const canvasPlugin = {
+	rules: {
+		'entry-only': {
+			meta: {
+				type: 'problem',
+				messages: { banned: 'the canvas is reached through its entry, $lib/editor/canvas (editor/canvas/index.ts)' }
+			},
+			create(context) {
+				const check = (node) => {
+					const value = node.source?.type === 'Literal' ? node.source.value : null;
+					if (typeof value === 'string' && reachesCanvasInternals(value, context.filename))
+						context.report({ node: node.source, messageId: 'banned' });
+				};
+				return { ImportDeclaration: check, ExportNamedDeclaration: check, ExportAllDeclaration: check, ImportExpression: check };
+			}
+		},
+		'no-new-editor-view': {
+			meta: {
+				type: 'problem',
+				messages: { banned: 'the visual editors draw on the canvas: build a canvas view, never an EditorView of prosemirror-view' }
+			},
+			create(context) {
+				const names = new Set();
+				return {
+					ImportDeclaration(node) {
+						if (node.source.value !== 'prosemirror-view') return;
+						for (const s of node.specifiers) if (s.type === 'ImportSpecifier' && s.imported.name === 'EditorView') names.add(s.local.name);
+					},
+					NewExpression(node) {
+						if (node.callee.type === 'Identifier' && names.has(node.callee.name)) context.report({ node, messageId: 'banned' });
+					}
+				};
+			}
+		},
+		'no-document-in-faces': {
+			meta: {
+				type: 'problem',
+				messages: { banned: 'a face builds FaceElements (faceElement, ctx.el) and mounts nothing; controls are overlays' }
+			},
+			create(context) {
+				return {
+					'MemberExpression[object.type="Identifier"][object.name="document"]': (node) => context.report({ node, messageId: 'banned' }),
+					'CallExpression[callee.type="Identifier"][callee.name="mount"]': (node) => context.report({ node, messageId: 'banned' })
+				};
+			}
+		},
+		'no-computed-style': {
+			meta: {
+				type: 'problem',
+				messages: {
+					banned: 'the canvas holds its own styles (S1): only the theme token probe (style/theme/themeTokens.ts) reads computed CSS'
+				}
+			},
+			create(context) {
+				return {
+					Identifier(node) {
+						if (node.name === 'getComputedStyle') context.report({ node, messageId: 'banned' });
+					},
+					Literal(node) {
+						if (typeof node.value === 'string' && node.value.includes('data-canvas-mirror')) context.report({ node, messageId: 'banned' });
+					}
+				};
+			}
+		},
+		'no-class-lookup': {
+			meta: {
+				type: 'problem',
+				messages: { banned: 'a class on a canvas element names it and draws nothing: the resolver reads looks, never classes' }
+			},
+			create(context) {
+				const LOOKUPS = new Set(['classList', 'className', 'matches', 'closest', 'querySelector', 'querySelectorAll']);
+				return {
+					MemberExpression(node) {
+						if (!node.computed && node.property.type === 'Identifier' && LOOKUPS.has(node.property.name))
+							context.report({ node, messageId: 'banned' });
+					}
+				};
+			}
+		},
+		'no-dom-measurement': {
+			meta: { type: 'problem', messages: { banned: 'the canvas lays the document out; read geometry from view.canvas, never the DOM' } },
+			create(context) {
+				return {
+					MemberExpression(node) {
+						if (!node.computed && node.property.type === 'Identifier' && MEASUREMENT.has(node.property.name))
+							context.report({ node, messageId: 'banned' });
+					}
+				};
+			}
+		}
+	}
+};
+// TRANSITIONAL: existing code the rules above would flag, each entry removed by the package that ports or deletes it
+const FACE_FOLDERS = [
+	'src/lib/editor/visual/extensions/drawnChips/**/*.ts',
+	'src/lib/editor/visual/extensions/*/canvas/**/*.ts',
+	'src/lib/languages/*/visual/core/**/*.ts',
+	'src/**/*Face.ts',
+	'src/**/*Faces.ts',
+	'src/**/*Face.svelte.ts',
+	'src/**/*Part.ts',
+	'src/**/*Parts.ts'
+];
+const FACES_STILL_ON_DOM = [
+	'src/lib/editor/visual/extensions/drawnChips/chipFace.ts', // W11
+	'src/lib/editor/visual/extensions/drawnChips/chipPanel/chipPanel.svelte.ts', // W11
+	'src/lib/editor/visual/extensions/drawnChips/titleBlock/titleLine.ts', // W11
+	'src/lib/languages/latex/visual/core/own/ownMathRun.ts', // W11
+	'src/lib/languages/latex/visual/core/parts/textParts.ts', // W11
+	'src/lib/languages/latex/visual/core/title/titleLines.ts', // W11
+	'src/lib/languages/latex/visual/plugins/algorithm/algorithmFace.ts', // W12
+	'src/lib/languages/latex/visual/plugins/citation/citeFace.svelte.ts', // W12
+	'src/lib/languages/latex/visual/plugins/glossary/glossaryFace.svelte.ts', // W12
+	'src/lib/languages/latex/visual/plugins/list/listEnvironmentFace.ts', // W12
+	'src/lib/languages/latex/visual/plugins/picture/figureCardFace.svelte.ts', // W12
+	'src/lib/languages/latex/visual/plugins/picture/pictureFace.ts', // W12
+	'src/lib/languages/typst/visual/core/code/silentFace.ts', // W13
+	'src/lib/languages/typst/visual/core/own/markupDrawing.ts', // W13
+	'src/lib/languages/typst/visual/core/parts/argumentDrawing.ts', // W13
+	'src/lib/languages/typst/visual/core/parts/environmentCard.ts', // W13
+	'src/lib/languages/typst/visual/core/scope/scopeFollowingFace.ts', // W13
+	'src/lib/languages/typst/visual/core/setup/titleBlockFace.ts', // W13
+	'src/lib/languages/typst/visual/plugins/date/dateFace.ts', // W13
+	'src/lib/languages/typst/visual/plugins/element/elementFace.ts', // W13
+	'src/lib/languages/typst/visual/plugins/glossary/glossaryFace.ts', // W13
+	'src/lib/languages/typst/visual/plugins/picture/pictureFace.ts', // W13
+	'src/lib/languages/typst/visual/plugins/printedCode/printedFace.ts' // W13
+];
+const DOM_MEASUREMENT_READERS = [
+	'src/lib/editor/visual/extensions/table/columnResizing.ts', // W6
+	'src/lib/editor/visual/extensions/table/captureColumnWidths.ts', // W6
+	'src/lib/editor/visual/extensions/image/plugin/imageNodeView.ts', // W6
+	'src/lib/editor/visual/extensions/image/plugin/resize/createResizeControls.ts', // W6
+	'src/lib/editor/visual/extensions/image/plugin/resize/getMaxWidth.ts', // W6
+	'src/lib/editor/visual/extensions/image/ImageSettingsPanel.svelte', // W6
+	'src/lib/editor/visual/extensions/mathlivebridge/macroArgs/mathMacroPanel.ts' // W8
+];
+// HTML that measures itself, not the document
+const MEASURING_ITS_OWN_HTML = [
+	'src/lib/editor/visual/extensions/cmSelectionToolbar.ts',
+	'src/lib/editor/visual/extensions/pmSelectionToolbar.ts',
+	'src/lib/editor/visual/extensions/mathlivebridge/mathSearch/query/keepInSight.ts',
+	'src/lib/editor/visual/toolbar/ToolbarOverflow.svelte',
+	'src/lib/editor/visual/toolbar/MathSymbolPanel.svelte'
+];
+
 export default ts.config(
 	includeIgnoreFile(gitignorePath),
 	// vendored pdf.js modules keep upstream style (see src/lib/draft/type1/README.md)
@@ -219,6 +380,10 @@ export default ts.config(
 	{ ignores: ['src/lib/draft/type1/*.js'] },
 	// generated by lezer-generator from syntax/latex.grammar, never hand-edited
 	{ ignores: ['src/lib/languages/latex/syntax/parser*.ts'] },
+	// prosemirror-view's own declarations with EditorView narrowed (design D2), checked against the installed ones by a test
+	{ ignores: ['src/lib/editor/canvas/contracts/typings/*.d.ts'] },
+	// vendored bidi-js keeps upstream's code (see its README.md)
+	{ ignores: ['src/lib/editor/canvas/layout/text/bidi/*.js'] },
 	// generated by the Paraglide compiler (paraglideVitePlugin in vite.config.ts), never hand-edited
 	{ ignores: ['src/lib/paraglide/**'] },
 	// generated by scripts/gen-typst-symbols.mjs, never hand-edited
@@ -441,5 +606,32 @@ export default ts.config(
 				{ selector: 'typeLike', format: ['StrictPascalCase'] }
 			]
 		}
+	},
+	{ plugins: { canvas: canvasPlugin } },
+	{ files: ['src/**/*.ts', 'src/**/*.svelte'], rules: { 'canvas/no-new-editor-view': 'error' } },
+	{
+		files: FACE_FOLDERS,
+		ignores: ['src/lib/languages/*/visual/core/plugin/**', ...FACES_STILL_ON_DOM],
+		rules: { 'canvas/no-document-in-faces': 'error' }
+	},
+	{
+		files: [
+			'src/lib/editor/canvas/**/*.{ts,svelte}',
+			'src/lib/editor/visual/**/*.{ts,svelte}',
+			'src/lib/languages/*/visual/**/*.{ts,svelte}'
+		],
+		ignores: [...DOM_MEASUREMENT_READERS, ...MEASURING_ITS_OWN_HTML],
+		rules: { 'canvas/no-dom-measurement': 'error' }
+	},
+	{
+		files: ['src/lib/editor/canvas/**/*.{ts,svelte}'],
+		ignores: ['src/lib/editor/canvas/style/theme/themeTokens.ts'],
+		rules: { 'canvas/no-computed-style': 'error' }
+	},
+	{ files: ['src/lib/editor/canvas/style/**/*.ts'], rules: { 'canvas/no-class-lookup': 'error' } },
+	// editor plugins, the language cores and element plugins reach the canvas through its entry; the mounts build it
+	{
+		files: ['src/lib/editor/visual/**', 'src/lib/draw/host/card/**', 'src/lib/languages/*/visual/{core,plugins}/**'],
+		rules: { 'canvas/entry-only': 'error' }
 	}
 );

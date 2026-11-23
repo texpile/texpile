@@ -1,7 +1,7 @@
 // @vitest-environment jsdom
 import { describe, expect, it } from 'vitest';
 import { EditorState, TextSelection } from 'prosemirror-state';
-import { EditorView } from 'prosemirror-view';
+import { DecorationSet, EditorView } from 'prosemirror-view';
 import type { Node as PMNode } from 'prosemirror-model';
 import { slidePlugins } from '$lib/languages/latex/visual/plugins/slides/slidePlugin';
 import { schema } from '$lib/languages/latex/schema/latexPMSchema';
@@ -76,5 +76,29 @@ describe('Enter at the end of a frame subtitle', () => {
 		expect(view.state.selection.$from.parent.type.name).toBe('paragraph');
 		expect(view.state.doc.firstChild!.child(2).type.name).toBe('paragraph');
 		view.destroy();
+	});
+});
+
+describe('overlay pills', () => {
+	it('a pill opens each overlay mark, naming its command unless it is \\only', () => {
+		const overlay = (command: string, spec: string) => schema.marks.overlay.create({ command, spec });
+		const doc = n.doc.create(null, [
+			n.frame.create(null, [
+				n.paragraph.create(null, [
+					schema.text('Only '),
+					schema.text('only text', [overlay('only', '<2->')]),
+					schema.text(' then '),
+					schema.text('uncover text', [overlay('uncover', '<3->')])
+				])
+			])
+		]);
+		const state = EditorState.create({ doc, plugins: slidePlugins() });
+		const pills = (state.plugins[0].props.decorations!.call(state.plugins[0], state) as ReturnType<typeof DecorationSet.create>)
+			.find()
+			.filter((d) => (d.spec as { canvas?: unknown }).canvas);
+		expect(pills.map((d) => [d.from, (d.spec as { key: string }).key])).toEqual([
+			[textAt(doc, 'only text'), 'overlay-<2->'],
+			[textAt(doc, 'uncover text'), 'overlay-uncover <3->']
+		]);
 	});
 });

@@ -15,8 +15,6 @@ Edit the document as formatted text. Texpile writes the Typst, and untouched par
 
 A reference shows its label in place of its number. Click a reference, a label or a code chip to edit it.
 
-Files over 800 KB open in the source editor.
-
 ## Set rules
 
 ![The Page set rule open: Paper, Margins, Columns and Numbers](../../landing/src/lib/assets/showcase/docs/typst/set-rule.png)

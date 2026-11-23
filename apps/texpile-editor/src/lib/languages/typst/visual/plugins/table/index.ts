@@ -1,10 +1,4 @@
-import {
-	bareTableSettingsPlugin,
-	tableCaretPlugin,
-	tableRulesPlugin,
-	typstTableWrapperView,
-	type TypstPlugin
-} from '$lib/languages/typst/visual/core';
+import { bareTableSettingsPlugin, tableCaretPlugin, tableRulesPlugin, type TypstPlugin } from '$lib/languages/typst/visual/core';
 import { tableDocument } from './document';
 import { tableFace } from './drawn/tableFace';
 import { isTablexName } from './drawn/tablexWords';
@@ -22,9 +16,6 @@ export const table: TypstPlugin = {
 	},
 	face: (core) => tableFace(core.source, core),
 	document: tableDocument,
-	views: () => ({
-		table_wrapper: (node, view, getPos, decorations) => typstTableWrapperView(node, view, getPos as () => number, decorations)
-	}),
 	editorPlugins: {
 		atStart: tableKeys,
 		afterTableEditing: () => [typstHeaderRows, tableRulesPlugin(typstTableLook), tableCaretPlugin(), bareTableSettingsPlugin('typst')]

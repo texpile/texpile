@@ -27,6 +27,8 @@ const tableNodeSpecs = tableNodes({
 // carry the exact LaTeX table architecture (env name, verbatim colspec, tabularx width,
 // \hline/\bottomrule rules) so a parsed table round-trips render-identically instead of being
 // reflowed into the default tabularx style. DOM copy/paste falls back to defaults
+tableNodeSpecs.table_cell.paragraphSpacing = 'cell';
+tableNodeSpecs.table_header.paragraphSpacing = 'cell';
 tableNodeSpecs.table.attrs = {
 	...(tableNodeSpecs.table.attrs ?? {}),
 	env: { default: null },

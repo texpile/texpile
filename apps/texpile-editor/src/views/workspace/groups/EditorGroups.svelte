@@ -26,7 +26,6 @@
 	import { cellOf, tracksOf } from '$lib/workspace/groups/layouts';
 	import { carrySplitViewState } from '../pane/splitViewState.svelte';
 	import { switchParkedMode } from '../pane/parkedModeSwitch';
-	import { rebreakResizedEditors } from '$lib/editor/visual/linebreak/lineBreakPlugin';
 	import { m } from '$lib/paraglide/messages';
 
 	type Props = { live: EditorPaneProps; host: Omit<GroupHost, 'capture'> };
@@ -175,12 +174,6 @@
 		return () => cells.delete(id);
 	}
 	carrySplitViewState(cells, (id) => editorGroups.activeOf(id)?.path ?? null);
-	// a layout picked or a divider moved: lines broken for the new widths before the frame shows, not a frame after
-	$effect(() => {
-		void editorGroups.layout;
-		void editorGroups.split;
-		untrack(rebreakResizedEditors);
-	});
 	let scroller = $state<HTMLElement>();
 	function revealFocused(): void {
 		const el = cells.get(editorGroups.focusedId);
