@@ -42,6 +42,22 @@ export function selectionShade(
 		const shown = clipped(rect, placed.inLine ? clipOf(placed.inLine, block.frame.top) : null);
 		if (shown) over.push(shown);
 	}
+	over.push(...pictures(block, from, to));
 	over.push(...struckInRange(block, widgets, range));
 	return { under, over };
+}
+
+/** a picture drawn inside a node that also holds text (a figure and its caption): the text tints by line, the picture by its box */
+function pictures(block: BlockOnModel, from: number, to: number): DocRect[] {
+	const rects: DocRect[] = [];
+	for (const placed of block.placement.boxes) {
+		if (placed.box.kind !== 'replaced' || placed.inLine) continue;
+		let owner: PlacedBox | null = placed;
+		while (owner && !owner.box.node) owner = owner.parent;
+		const node = owner?.box.node;
+		if (!node || node.offset < from || node.offset + node.node.nodeSize > to) continue;
+		if (!block.placement.textblocks.some((each) => each.offset >= node.offset && each.offset < node.offset + node.node.nodeSize)) continue;
+		rects.push({ x: placed.x, y: block.frame.top + placed.y, width: placed.box.width, height: placed.box.height });
+	}
+	return rects;
 }
