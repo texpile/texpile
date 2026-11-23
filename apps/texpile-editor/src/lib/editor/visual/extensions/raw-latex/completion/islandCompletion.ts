@@ -103,9 +103,10 @@ class IslandCompletion {
 			(result): result is CompletionResult => !!result
 		);
 		if (asked !== this.asked || this.view.isDestroyed || this.codeNow(found) !== code) return;
-		this.matches = matchOptions(results, code.doc.toString(), pos);
+		const matches = matchOptions(results, code.doc.toString(), pos);
+		if (!matches.length) return this.close();
+		this.matches = matches;
 		this.selected = 0;
-		if (!this.matches.length) return this.close();
 		showCompletionMenu(this.view, found.start + this.matches[0].from, this.matches, (index) => this.accept(index));
 	}
 
