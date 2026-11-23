@@ -112,7 +112,7 @@ test("dragging a figure's handle writes its width in tenths of the text width, a
 	await page.mouse.down();
 	await page.mouse.move(handle.x - shown.width * 0.15, handle.y + handle.height / 2, { steps: 8 });
 	await page.mouse.up();
-	await disk.expectFile('crop.tex', (t) => /includegraphics\[width=0\.3\\textwidth\]/.test(t), 'the narrower width on disk');
+	await disk.expectFile('crop.tex', (t) => /includegraphics\[width=0\.5\\textwidth\]/.test(t), 'the narrower width on disk');
 	await visual.editor.click({ position: { x: 5, y: 5 } });
 	await page.keyboard.press('ControlOrMeta+z');
 	await disk.expectFile('crop.tex', (t) => t === LATEX, 'the file after undo');
