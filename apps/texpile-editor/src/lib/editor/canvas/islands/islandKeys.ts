@@ -53,10 +53,10 @@ const LINE_KEYS: Record<string, CodeCommand> = {
 	'Alt-ArrowDown': moveLineDown,
 	'Shift-Alt-ArrowUp': copyLineUp,
 	'Shift-Alt-ArrowDown': copyLineDown,
-	'Shift-Mod-k': deleteIslandLine
+	'Shift-Mod-k': deleteIslandLine,
+	// line comments only: in an inline chip one would comment out the rest of the paragraph
+	'Mod-/': toggleComment as unknown as CodeCommand
 };
-
-const ANY_KEYS: Record<string, CodeCommand> = { 'Mod-/': toggleComment as unknown as CodeCommand };
 
 function languageOf(island: PMNode) {
 	const name =
@@ -173,6 +173,6 @@ function chained(...maps: Record<string, (state: unknown, dispatch: unknown, vie
 
 export function islandKeysPlugin(): Plugin {
 	return new Plugin({
-		props: { handleKeyDown: keydownHandler(chained(MOVE_KEYS, edgeBindings(), bindings(LINE_KEYS, true), bindings(ANY_KEYS, false))) }
+		props: { handleKeyDown: keydownHandler(chained(MOVE_KEYS, edgeBindings(), bindings(LINE_KEYS, true))) }
 	});
 }

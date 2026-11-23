@@ -18,6 +18,8 @@ Release notes for Texpile Desktop. Add notes under `## [Unreleased]` as you work
 - feat: Layout button shows its icon only (by @louisqli)
 - feat: improved Spanish translation (by @nicolobos77)
 - feat: improved Português translation (by @rodrigo-alessantos)
+- fix: End in a code block going to the start of the next line in the visual editor (by @louisqli)
+- fix: Ctrl+/ in an inline raw LaTeX chip commenting out the rest of the paragraph in the visual editor (by @louisqli)
 - fix: clicking a figure caption selecting the whole figure in the visual editor (by @louisqli)
 - fix: pressing on a caption just under a picture resizing the picture (by @louisqli)
 - fix: Typst preview losing its scroll and zoom after a pause (by @louisqli)

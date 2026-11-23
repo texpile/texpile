@@ -16,5 +16,13 @@ export function lineBoundaryTarget(view: VisualView, dir: -1 | 1): CaretPlace | 
 	if (selection instanceof GapCursor) return fromGap(view, selection);
 	const line = view.canvas.geometry.lineOf(view.canvas.head());
 	if (!line) return null;
-	return dir < 0 ? { pos: line.from, affinity: 1 } : { pos: line.to, affinity: -1 };
+	return dir < 0 ? { pos: line.from, affinity: 1 } : { pos: beforeLineBreak(view, line.from, line.to), affinity: -1 };
+}
+
+/** a line ended by a newline in code or a hard break holds that break; End stays in front of it */
+function beforeLineBreak(view: VisualView, from: number, to: number): number {
+	if (to <= from) return to;
+	const before = view.state.doc.resolve(to).nodeBefore;
+	if (before?.type.name === 'hard_break' || (before?.isText && before.text!.endsWith('\n'))) return to - 1;
+	return to;
 }
