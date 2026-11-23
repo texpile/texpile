@@ -689,6 +689,8 @@ export class _Model implements Model {
           parent = parent.parent;
         }
       }
+      // Texpile: an anchor left behind made a range read as collapsed
+      this._anchor = this.normalizeOffset(anchor);
       this._position = this.normalizeOffset(position);
       this._selection = {
         ranges: [[start, end]],

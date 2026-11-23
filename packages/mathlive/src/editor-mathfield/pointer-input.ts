@@ -483,6 +483,16 @@ function nearestAtomFromPointRecursive(
     }
   }
 
+  // Texpile: \ang draws its ° after the body, so a point past the body is the atom's own
+  if (atom.command === '\\ang' && result[1] && atom.body) {
+    const body = atom.body;
+    const end = getRangeBoundingRect(mathfield, [
+      model.offsetOf(body[0]),
+      model.offsetOf(body[body.length - 1]),
+    ]);
+    if (x > end.right) result = [distance(x, y, bounds), atom];
+  }
+
   //
   // 2. If no children matched (or there were no children), this atom matches
   //
@@ -553,6 +563,14 @@ export function offsetFromPoint(
     }
   }
 
+  // Texpile: the root's own box is one px narrower than the content: a point between them is past the end
+  if (atom === mathfield.model.root) {
+    const root = getAtomBounds(mathfield, atom);
+    return root && x < (root.left + root.right) / 2
+      ? 0
+      : mathfield.model.lastOffset;
+  }
+
   let result = mathfield.model.offsetOf(atom);
 
   if (result < 0) return -1;
@@ -561,8 +579,11 @@ export function offsetFromPoint(
   // 4/ Account for the desired bias
   //
   if (atom.leftSibling) {
+    // Texpile: \ang is found only past its body, on its °
     const skipMidlineBias =
-      atom.type === 'placeholder' || atom.type === 'prompt';
+      atom.type === 'placeholder' ||
+      atom.type === 'prompt' ||
+      atom.command === '\\ang';
     if (options.bias === 0 && !skipMidlineBias) {
       // If the point clicked is to the left of the vertical midline,
       // adjust the offset to *before* the atom (i.e. after the
