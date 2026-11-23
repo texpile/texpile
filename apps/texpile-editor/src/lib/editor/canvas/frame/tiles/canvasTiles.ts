@@ -147,7 +147,8 @@ export class CanvasTiles {
 	private columns(): { x: number; width: number } {
 		const { left, width, dpr, snap } = this.grid;
 		const x = Math.floor(left * dpr - snap.x);
-		return { x, width: Math.ceil((left + width) * dpr - snap.x) - x };
+		// the right edge rounds in: a fraction of a pixel past the pane gave it a sideways scrollbar at 125 percent
+		return { x, width: Math.floor((left + width) * dpr - snap.x) - x };
 	}
 
 	private fit(tile: CanvasTile): void {
