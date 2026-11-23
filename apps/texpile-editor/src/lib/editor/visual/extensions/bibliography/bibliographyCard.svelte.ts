@@ -22,16 +22,24 @@ function watchReferences(): void {
 	});
 }
 
-// the DOM card's own classes lost to document.css: an editor h2 at 1.2x the text, and every paragraph with its bottom margin
+// the DOM card's own classes lost to document.css: an editor h2 at 1.2x the text, and every paragraph with its bottom margin;
+// the DOM card also drew a blank line after the heading
 const TITLE_LOOK = {
 	display: 'block',
-	margin: 'calc(var(--spacing) * 5) 0 calc(var(--spacing) * 2)',
+	margin: 'calc(var(--spacing) * 5) 0 calc(var(--spacing) * 2 + var(--leading-relaxed) * 1rem)',
 	fontSize: 'calc(var(--text-base) * 1.2)',
 	lineHeight: '1.375',
 	fontWeight: '600',
 	fontFamily: 'var(--typo-heading--font-family)'
 };
-const ENTRY_LOOK = { display: 'block', margin: '0 0 calc(var(--spacing) * 3)', paddingLeft: '2rem', textIndent: '-2rem' };
+const ENTRY_LOOK = {
+	display: 'block',
+	margin: '0 0 calc(var(--spacing) * 3)',
+	paddingLeft: '2rem',
+	textIndent: '-2rem',
+	fontSize: 'var(--text-base)',
+	lineHeight: 'var(--text-base--line-height)'
+};
 
 function entry(r: ReturnType<typeof sortedReferences>[number]): FaceElement {
 	const line = faceElement('p', 'bibliography-entry');

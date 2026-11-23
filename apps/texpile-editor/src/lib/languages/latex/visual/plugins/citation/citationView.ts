@@ -1,7 +1,7 @@
 // a citation drawn as the DOM editor's CitationDisplay: its text in the reference color, red when a key is not found
 import type { Node as PMNode } from 'prosemirror-model';
 import type { CanvasNodeViewConstructor, StyleLook } from '$lib/editor/canvas';
-import { setLook } from '$lib/editor/canvas';
+import { caretToChip, setLook } from '$lib/editor/canvas';
 import { citationLookOf } from './node/citationLook';
 import { openCitationForm } from './citationForm';
 
@@ -21,7 +21,9 @@ export function citationView(...[node, view, getPos]: Parameters<CanvasNodeViewC
 	draw(node);
 	dom.on.click = () => {
 		const pos = getPos();
-		if (pos !== undefined) openCitationForm(view, pos);
+		if (pos === undefined) return true;
+		caretToChip(view, pos);
+		openCitationForm(view, pos);
 		return true;
 	};
 	return {

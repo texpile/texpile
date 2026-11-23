@@ -30,6 +30,17 @@ describe('the style epoch', () => {
 		expect([still.paint, still.layout, still.styles]).toEqual([0, 0, 0]);
 	});
 
+	it('reads the tokens again when a theme stylesheet finishes loading', () => {
+		const epoch = epochOf(true);
+		const link = document.createElement('link');
+		document.head.appendChild(link);
+		const before = epoch.layout;
+		link.dispatchEvent(new Event('load'));
+		expect(epoch.layout).toBe(before + 1);
+		epoch.destroy();
+		link.remove();
+	});
+
 	it('bumps layout for a setting, and for the window width only across 768', () => {
 		const epoch = epochOf(false);
 		epoch.setSettings(SETTINGS);

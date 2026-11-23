@@ -173,9 +173,9 @@ function vertical(view: VisualView, dir: -1 | 1, extend: boolean, platform: Plat
 	const x = goal.xFor(selection) ?? geometry.caretRect(head)?.x ?? blockX ?? 0;
 	// a range moved by a plain Up or Down collapses at the line past its head, in text as a range's end would be
 	const textOnly = extend || (selection instanceof TextSelection && !selection.empty);
-	const target = keptInIsland(view, verticalStop(view, dir, x, textOnly), extend);
+	const target = keptInIsland(view, verticalStop(view, dir, x, textOnly, !extend), extend);
 	if (!target) {
-		// the first line going up, or the last going down: a Mac goes to its edge, Windows and Linux stay
+		// the first line going up, or the last going down
 		const line = geometry.lineOf(head);
 		if (!line || !PLATFORM_RULES[platform].edgeLineGoesToEnd) return true;
 		dispatchMove(view, dir < 0 ? { pos: line.from, affinity: 1 } : { pos: line.to, affinity: -1 }, extend, undefined, anchor);

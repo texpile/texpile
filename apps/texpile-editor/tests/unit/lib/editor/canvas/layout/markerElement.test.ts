@@ -17,3 +17,12 @@ it('places the marker text right of the margin column and level with the first l
 	expect(marker.y).toBe(0);
 	expect(marker.lines).toHaveLength(1);
 });
+
+it('draws no marker for an item set display: block (a bibliography entry)', () => {
+	const root = faceElement('div', 'item');
+	root.appendChild(faceElement('p', undefined, 'one two'));
+	root.generatedMarker = generatedPart('• ', { position: 'absolute', right: '100%' });
+	const rules: FixedStyleRule[] = [{ selector: '.item', look: { display: 'block', position: 'relative' } }];
+	const layout = layoutTestBlock(schema.nodes.paragraph.create(), { root, rules, width: 300 });
+	expect(layout.box.children.some((child) => child.pseudo === 'marker')).toBe(false);
+});

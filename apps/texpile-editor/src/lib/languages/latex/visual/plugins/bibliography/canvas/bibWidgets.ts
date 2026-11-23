@@ -17,6 +17,14 @@ const CHIP_LOOK: StyleLook = {
 };
 const ICON_LOOK: StyleLook = { flex: 'none', alignSelf: 'center', width: '0.75em', height: '0.75em', color: 'var(--muted-text)' };
 const NAME_LOOK: StyleLook = { fontFamily: 'var(--font-mono, monospace)', fontSize: '0.85em' };
+// document.css's h1, which the DOM heading took
+const HEADING_LOOK: StyleLook = {
+	margin: 'calc(var(--spacing) * 5) 0 calc(var(--spacing) * 2)',
+	fontSize: 'calc(var(--text-base) * 1.4)',
+	lineHeight: '1.375',
+	fontWeight: '600',
+	fontFamily: 'var(--typo-heading--font-family)'
+};
 
 /** the key before the entry's text; `pos` is the widget's, two inside the entry */
 export function keyChipForm(entry: KeyedEntry): CanvasWidget {
@@ -51,7 +59,7 @@ export const headingForm: CanvasWidget = {
 		);
 		const heading = ctx.el('h1', 'bibliography-heading', name);
 		heading.setAttribute('data-unnumbered', 'true');
-		if (!name) setLook(heading, { display: 'none' });
+		setLook(heading, name ? HEADING_LOOK : { display: 'none' });
 		return heading;
 	}
 };

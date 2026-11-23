@@ -2,10 +2,12 @@
 import { NodeSelection, TextSelection, type Selection } from 'prosemirror-state';
 import type { Node as PMNode } from 'prosemirror-model';
 import { isMac } from '$lib/platform';
+import { PLATFORM_RULES, currentPlatform } from '$lib/editor/keys/platformKeys';
 import type { CanvasPointerEvent, FaceDrag } from '../../contracts/faceTypes';
 import { CARET_AFFINITY_META, type CanvasHit, type CaretPlace } from '../../contracts/geometryTypes';
 import type { ViewInputFacts, VisualView } from '../../contracts/viewTypes';
 import type { FaceElement } from '../../tree/faceElement';
+import { withTrailingSpaces } from '../../geometry/wordRanges';
 import { Autoscroll, POINTER_DRAG_META, type ScrollTarget } from './autoscroll';
 import { ClickCounter, type ClickKind } from './clickCounter';
 import {
@@ -196,7 +198,10 @@ export class PointerMachine {
 			return;
 		}
 		if (event.button !== 0) return;
-		const word = view.canvas.geometry.wordRange(hit.caret);
+		const near = view.canvas.geometry.wordRange(hit.caret);
+		const word = PLATFORM_RULES[currentPlatform].doubleClickTakesTrailingSpace
+			? withTrailingSpaces(view.state.doc.resolve(hit.caret.pos), near)
+			: near;
 		updateSelection(view, TextSelection.create(view.state.doc, word.from, word.to));
 		this.state = { kind: 'selecting', by: 'word', anchor: { pos: word.from, affinity: 1 }, anchorRange: word };
 	}

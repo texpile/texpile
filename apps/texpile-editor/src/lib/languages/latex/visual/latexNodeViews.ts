@@ -1,5 +1,13 @@
 // the LaTeX node views the mount passes to the view (8.7): the core's, the plugins' canvasViews, formulas and raw chips
-import { canvasViewProps, composeNodeViews, coreNodeViews, islandNodeViews, mathNodeViews, type CanvasViewProps } from '$lib/editor/canvas';
+import {
+	canvasViewProps,
+	composeNodeViews,
+	coreMarkViews,
+	coreNodeViews,
+	islandNodeViews,
+	mathNodeViews,
+	type CanvasViewProps
+} from '$lib/editor/canvas';
 import { MATH_SETTINGS } from '$lib/editor/canvas/math/mathSettingsOffer';
 import { CODE_SETTINGS } from '$lib/editor/canvas/islands/codeSettingsOffer';
 import { rawChipViews } from '$lib/editor/visual/extensions/raw-latex/rawChipViews';
@@ -32,6 +40,7 @@ export function latexNodeViews(setup: LatexViewSetup): CanvasViewProps {
 			}),
 			code_block: islandNodeViews().code_block
 		},
+		markViews: coreMarkViews(),
 		blockSettings: { block_math: MATH_SETTINGS, code_block: CODE_SETTINGS }
 	};
 	return canvasViewProps(composeNodeViews(core, pluginCanvasViews(setup), tableViews('latex'), environmentViews(), imageViews('latex')));

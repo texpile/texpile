@@ -1,6 +1,6 @@
 // W6's slice (design 20.2): a 3 by 3 table typed into and walked with Tab and arrows in LaTeX, Typst and Markdown. The
-// cells stand side by side as the DOM editor laid them out, and every key lands where the DOM editor's did: the walks
-// were recorded live from canvas/p0-dom at 1280 by 860, the window P0 captured in
+// cells stand side by side as the DOM editor laid them out, and the walks were recorded live from canvas/p0-dom at 1280 by
+// 860, the window P0 captured in, then Up and Down keep the column (Louis, 2026-11-22)
 import { expect, test } from '@playwright/test';
 import { useTexpile } from '../../driver/useTexpile';
 import { VisualEditor } from '../../driver/visualEditor';
@@ -63,18 +63,18 @@ const SLICES: Slice[] = [
 			'Tab 70 71 d',
 			'ArrowLeft 70 70 d',
 			'ArrowRight 71 71 d',
-			'ArrowDown 87 87 g',
-			'ArrowDown 104 104 -',
-			'ArrowUp 97 97 i',
-			'ArrowRight 98 98 i',
-			'ArrowRight 104 104 -',
-			'ArrowRight 105 105 -',
-			'ArrowUp 97 97 i',
-			'Shift+Tab 92 93 h',
-			'Shift+Tab 87 88 g',
-			'ArrowDown 92 92 h',
-			'ArrowDown 104 104 -',
-			'ArrowDown 128 128 one'
+			'ArrowDown 88 88 g',
+			'ArrowDown 123 123 -',
+			'ArrowUp 88 88 g',
+			'ArrowRight 92 92 h',
+			'ArrowRight 93 93 h',
+			'ArrowRight 97 97 i',
+			'ArrowUp 80 80 f',
+			'Shift+Tab 75 76 e',
+			'Shift+Tab 70 71 d',
+			'ArrowDown 88 88 g',
+			'ArrowDown 123 123 -',
+			'ArrowDown 142 142 three'
 		]
 	},
 	{
@@ -115,16 +115,16 @@ const SLICES: Slice[] = [
 			'Tab 54 55 d',
 			'ArrowLeft 54 54 d',
 			'ArrowRight 55 55 d',
-			'ArrowDown 71 71 g',
+			'ArrowDown 72 72 g',
 			'ArrowDown 87 87 -',
-			'ArrowUp 81 81 i',
-			'ArrowRight 82 82 i',
-			'ArrowRight 87 87 -',
-			'ArrowRight 88 88 -',
-			'ArrowUp 81 81 i',
-			'Shift+Tab 76 77 h',
-			'Shift+Tab 71 72 g',
-			'ArrowDown 76 76 h',
+			'ArrowUp 72 72 g',
+			'ArrowRight 76 76 h',
+			'ArrowRight 77 77 h',
+			'ArrowRight 81 81 i',
+			'ArrowUp 64 64 f',
+			'Shift+Tab 59 60 e',
+			'Shift+Tab 54 55 d',
+			'ArrowDown 72 72 g',
 			'ArrowDown 87 87 -',
 			'ArrowDown 123 123 -'
 		]
@@ -153,17 +153,17 @@ const SLICES: Slice[] = [
 			'Tab 53 54 d',
 			'ArrowLeft 53 53 d',
 			'ArrowRight 54 54 d',
-			'ArrowDown 70 70 g',
-			'ArrowDown 86 86 -',
-			'ArrowUp 80 80 i',
-			'ArrowRight 81 81 i',
-			'ArrowRight 86 86 -',
-			'ArrowRight 87 87 -',
-			'ArrowUp 80 80 i',
-			'Shift+Tab 75 76 h',
-			'Shift+Tab 70 71 g',
-			'ArrowDown 75 75 h',
-			'ArrowDown 86 86 -',
+			'ArrowDown 71 71 g',
+			'ArrowDown 88 88 -',
+			'ArrowUp 71 71 g',
+			'ArrowRight 75 75 h',
+			'ArrowRight 76 76 h',
+			'ArrowRight 80 80 i',
+			'ArrowUp 63 63 f',
+			'Shift+Tab 58 59 e',
+			'Shift+Tab 53 54 d',
+			'ArrowDown 71 71 g',
+			'ArrowDown 88 88 -',
 			'ArrowDown 104 104 -'
 		]
 	}

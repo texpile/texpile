@@ -100,6 +100,8 @@ export const COLOR_TOKENS = [
 	'--tertiary-tonal',
 	'--tertiary-tonal-hover',
 	'--tonal-hover',
+	'--typo-anchor--color-dark',
+	'--typo-anchor--color-light',
 	'--warning-ink',
 	'--warning-on-tonal',
 	'--warning-tonal',
@@ -133,7 +135,8 @@ export const TEXT_TOKENS = [
 	'--text-base--line-height',
 	'--text-scaling',
 	'--text-sm--line-height',
-	'--text-xs--line-height'
+	'--text-xs--line-height',
+	'--typo-anchor--text-decoration-line'
 ] as const;
 
 export type ColorToken = (typeof COLOR_TOKENS)[number];

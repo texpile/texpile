@@ -21,6 +21,8 @@ const texpile = useTexpile({
 		'chapters/results.tex': RESULTS,
 		'panel.tex': doc('Last paragraph of the text.\n\n\\bibliographystyle{plainnat}\n\\bibliography{refs}'),
 		'popover.tex': doc('Alpha words \\cite{knuth84} and \\label{sec:a} beta.'),
+		'renamed.tex': doc('Alpha \\label{sec:old} and see \\ref{sec:old}.'),
+		'headed.tex': doc('\\section{Intro}\\label{sec:x}\nBefore words.\n\nCite \\cite{knuth84} and more.'),
 		'lonechip.tex': doc('\\subsection*{Details}\n\\label{app:details}\n\nAfter the label.'),
 		'math.tex': doc('Before the formula.\n\n\\[ x+y \\]\n\nAfter the formula.'),
 		'rawchip.tex': doc('Text with \\mysterymacro{eq:one} inside it.'),
@@ -77,6 +79,22 @@ test('a click after a chip that ends its paragraph puts the caret there, and typ
 	await disk().expectFile('lonechip.tex', (t) => t.includes('\\label{app:details}X'), 'the letter lands after the label');
 });
 
+test('a click on a label chip opens its name, and a rename there moves its references', async () => {
+	const v = visual();
+	await v.open('renamed.tex');
+	const r = await boxOf(v, await nodePos(v, 'label'));
+	await v.page.mouse.click((r.left + r.right) / 2, (r.top + r.bottom) / 2);
+	await expect(v.page.locator('.drawn-chip-panel .cm-content')).toBeVisible();
+	await v.page.keyboard.press('ControlOrMeta+a');
+	await v.page.keyboard.type('\\label{sec:new}');
+	await v.page.keyboard.press('Enter');
+	await disk().expectFile(
+		'renamed.tex',
+		(t) => t.includes('Alpha \\label{sec:new} and see \\ref{sec:new}.'),
+		'the label and its reference take the new name'
+	);
+});
+
 test("Escape on a citation chip's popover gives the typing back to the text", async () => {
 	const v = visual();
 	await v.open('popover.tex');
@@ -93,6 +111,22 @@ test("Escape on a citation chip's popover gives the typing back to the text", as
 	expect(await nodePos(v, 'citation'), `the citation chip is still there`).toBeGreaterThan(0);
 	await v.press('Backspace');
 	await v.press('Backspace');
+});
+
+test("closing a citation's panel opened by a click keeps the caret at the chip", async () => {
+	const v = visual();
+	await v.open('headed.tex');
+	const r = await boxOf(v, await nodePos(v, 'citation'));
+	await v.page.mouse.click((r.left + r.right) / 2, (r.top + r.bottom) / 2);
+	await expect(v.page.locator('.citation-edit-form')).toBeVisible();
+	await v.page.keyboard.press('Escape');
+	await v.page.waitForTimeout(200);
+	await v.type('Q');
+	await disk().expectFile(
+		'headed.tex',
+		(t) => t.includes('\\cite{knuth84}Q and') && t.includes('\\section{Intro}'),
+		'the letter lands after the chip'
+	);
 });
 
 test("Find in Files opened over a citation chip's popover keeps the typing", async () => {

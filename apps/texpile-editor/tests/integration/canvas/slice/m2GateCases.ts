@@ -58,7 +58,9 @@ export const GATE_CASES: GateCase[] = [
 				id: 'formula-extend',
 				start: { needle: 'the formula ', end: true },
 				keys: ['Shift+ArrowRight', 'Shift+ArrowRight', 'Shift+ArrowLeft'],
-				rows: ['start text 74 74', 'Shift+ArrowRight text 74 84', 'Shift+ArrowRight text 74 85', 'Shift+ArrowLeft node 74 84']
+				rows: ['start text 74 74', 'Shift+ArrowRight text 74 84', 'Shift+ArrowRight text 74 85', 'Shift+ArrowLeft node 74 84'],
+				canvas: { '3': 'Shift+ArrowLeft text 74 84' },
+				why: 'a range over a formula stays a range (caretMoves); the DOM editor read its range back as the formula selected'
 			},
 			{
 				id: 'formula-extend-left',
@@ -98,7 +100,14 @@ export const GATE_CASES: GateCase[] = [
 					'ArrowRight text 235 235',
 					'ArrowLeft text 234 234',
 					'Shift+ArrowLeft text 234 234'
-				]
+				],
+				canvas: {
+					'5': 'ArrowRight text 228 228',
+					'6': 'ArrowRight text 234 234',
+					'7': 'ArrowLeft text 228 228',
+					'8': 'Shift+ArrowLeft text 228 227'
+				},
+				why: 'an arrow collapses a range at its end, as in text; the DOM editor jumped to the next cell and ignored Shift+ArrowLeft'
 			},
 			{
 				id: 'table-down',
@@ -106,7 +115,14 @@ export const GATE_CASES: GateCase[] = [
 				keys: ['ArrowDown', 'ArrowDown'],
 				rows: ['start text 222 222', 'ArrowDown text 239 239', 'ArrowDown text 256 256']
 			},
-			{ id: 'table-up', start: { cellText: 'a' }, keys: ['ArrowUp'], rows: ['start text 217 217', 'ArrowUp text 212 212'] }
+			{
+				id: 'table-up',
+				start: { cellText: 'a' },
+				keys: ['ArrowUp'],
+				rows: ['start text 217 217', 'ArrowUp text 212 212'],
+				canvas: { '1': 'ArrowUp text 198 198' },
+				why: 'Up and Down keep the column, in a table too (Louis, 2026-11-22)'
+			}
 		]
 	},
 	{
@@ -166,7 +182,9 @@ export const GATE_CASES: GateCase[] = [
 				id: 'formula-extend',
 				start: { needle: 'the formula ', end: true },
 				keys: ['Shift+ArrowRight', 'Shift+ArrowRight', 'Shift+ArrowLeft'],
-				rows: ['start text 143 143', 'Shift+ArrowRight text 143 154', 'Shift+ArrowRight text 143 155', 'Shift+ArrowLeft node 143 154']
+				rows: ['start text 143 143', 'Shift+ArrowRight text 143 154', 'Shift+ArrowRight text 143 155', 'Shift+ArrowLeft node 143 154'],
+				canvas: { '3': 'Shift+ArrowLeft text 143 154' },
+				why: 'a range over a formula stays a range (caretMoves); the DOM editor read its range back as the formula selected'
 			},
 			{
 				id: 'formula-extend-left',
@@ -206,7 +224,14 @@ export const GATE_CASES: GateCase[] = [
 					'ArrowRight text 285 285',
 					'ArrowLeft text 284 284',
 					'Shift+ArrowLeft text 284 284'
-				]
+				],
+				canvas: {
+					'5': 'ArrowRight text 278 278',
+					'6': 'ArrowRight text 284 284',
+					'7': 'ArrowLeft text 278 278',
+					'8': 'Shift+ArrowLeft text 278 277'
+				},
+				why: 'an arrow collapses a range at its end, as in text; the DOM editor jumped to the next cell and ignored Shift+ArrowLeft'
 			},
 			{
 				id: 'table-down',
@@ -251,7 +276,9 @@ export const GATE_CASES: GateCase[] = [
 				id: 'formula-extend',
 				start: { needle: 'the formula ', end: true },
 				keys: ['Shift+ArrowRight', 'Shift+ArrowRight', 'Shift+ArrowLeft'],
-				rows: ['start text 76 76', 'Shift+ArrowRight text 76 86', 'Shift+ArrowRight text 76 87', 'Shift+ArrowLeft node 76 86']
+				rows: ['start text 76 76', 'Shift+ArrowRight text 76 86', 'Shift+ArrowRight text 76 87', 'Shift+ArrowLeft node 76 86'],
+				canvas: { '3': 'Shift+ArrowLeft text 76 86' },
+				why: 'a range over a formula stays a range (caretMoves); the DOM editor read its range back as the formula selected'
 			},
 			{
 				id: 'formula-extend-left',
@@ -291,13 +318,22 @@ export const GATE_CASES: GateCase[] = [
 					'ArrowRight text 220 220',
 					'ArrowLeft text 219 219',
 					'Shift+ArrowLeft text 219 219'
-				]
+				],
+				canvas: {
+					'5': 'ArrowRight text 213 213',
+					'6': 'ArrowRight text 219 219',
+					'7': 'ArrowLeft text 213 213',
+					'8': 'Shift+ArrowLeft text 213 212'
+				},
+				why: 'an arrow collapses a range at its end, as in text; the DOM editor jumped to the next cell and ignored Shift+ArrowLeft'
 			},
 			{
 				id: 'table-down',
 				start: { cellText: 'b' },
 				keys: ['ArrowDown', 'ArrowDown'],
-				rows: ['start text 207 207', 'ArrowDown text 224 224', 'ArrowDown text 241 241']
+				rows: ['start text 207 207', 'ArrowDown text 224 224', 'ArrowDown text 241 241'],
+				canvas: { '1': 'ArrowDown text 225 225', '2': 'ArrowDown text 242 242' },
+				why: 'Up and Down keep the column, in a table too (Louis, 2026-11-22)'
 			}
 		]
 	}

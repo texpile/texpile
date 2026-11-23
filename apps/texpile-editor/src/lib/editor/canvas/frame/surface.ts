@@ -1,4 +1,5 @@
 // the view's DOM: the root div.ProseMirror, the content rows and the caret canvas (2.5)
+import { m } from '$lib/paraglide/messages';
 import type { PaintFrame } from '../contracts/engineTypes';
 import type { DocPoint, DocRect } from '../contracts/layoutTypes';
 import type { LayoutStyle } from '../contracts/styleTypes';
@@ -55,6 +56,10 @@ export class CanvasSurface {
 		const doc = place.ownerDocument;
 		this.dom = doc.createElement('div');
 		this.dom.setAttribute('data-canvas-root', '');
+		// the canvas holds no text a screen reader can read (D32), so the editor names where the text is
+		this.dom.setAttribute('role', 'textbox');
+		this.dom.setAttribute('aria-multiline', 'true');
+		this.dom.setAttribute('aria-label', m.canvas_screen_reader_label());
 		this.tiles = new CanvasTiles(doc);
 		this.caret = doc.createElement('canvas');
 		this.caret.setAttribute('data-canvas-caret', '');

@@ -20,7 +20,7 @@ export { renderToDom } from './views/viewRegistry';
 export { faceDocument, renderFaceSpec, serializeFaceFragment, type FaceDocument } from './tree/faceDocument';
 export { canvasViewProps, composeNodeViews, type CanvasViewProps } from './views/composeNodeViews';
 export { mathNodeViews } from './math/mathViews';
-export { coreNodeViews } from './nodes/coreNodeViews';
+export { coreMarkViews, coreNodeViews } from './nodes/coreNodeViews';
 export { generatedPart } from './nodes/generatedPart';
 export { islandNodeViews } from './islands/islandViews';
 export { ISLANDS, blockIslandOf, islandCodeState, islandOf, writeBack, type FoundIsland } from './islands/islandCode';
@@ -32,6 +32,7 @@ export { caretPolicyAt, drawnWithoutContent, takesCaret } from './geometry/caret
 export { goalColumnOf } from './interaction/motion/goalColumn';
 export { blockRoleOf, blockStopFrom, documentStop, selectionOfStop, stopBeyond, type BlockRole, type BlockStop } from './caret/blockStops';
 export { caretArrowsPlugin } from './caret/caretArrows';
+export { caretToChip } from './caret/chipCaret';
 export { windowInvalidation } from './document/invalidation';
 export { countOf } from './document/documentCounters';
 export { windowEngine } from './engine/windowEngine';

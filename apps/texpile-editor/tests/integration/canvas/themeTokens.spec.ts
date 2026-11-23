@@ -55,3 +55,25 @@ test('theme tokens are read in a batch and bump the right epoch', async () => {
 	expect(result.widened).toBe(9);
 	expect(result.afterLength.layout).toBeGreaterThan(result.afterTheme.layout);
 });
+
+// a preset's stylesheet loads after its data-theme flip: the canvas painted Times New Roman until a mode toggle
+test('a theme preset repaints the canvas with its font once its stylesheet loads', async () => {
+	const visual = new VisualEditor(texpile().page, texpile().root);
+	await visual.open('tokens.tex');
+	await settled(visual.page);
+	const fontOf = (): Promise<string> =>
+		inCanvas(visual.page, async ({ probe }) => {
+			await probe.settle();
+			return probe.drawList(probe.posOf('Text.') - 1).find((op) => op.op === 'fillText')?.font ?? '';
+		});
+	await visual.page.evaluate(async () => {
+		const theme = await import(/* @vite-ignore */ '/src/lib/theme.ts' as string);
+		theme.setThemeName('modern');
+	});
+	await expect.poll(() => visual.page.evaluate(() => !!document.querySelector<HTMLLinkElement>('#texpile-theme')?.sheet)).toBe(true);
+	await expect.poll(fontOf).not.toMatch(/Times/);
+	await visual.page.evaluate(async () => {
+		const theme = await import(/* @vite-ignore */ '/src/lib/theme.ts' as string);
+		theme.setThemeName('theme');
+	});
+});

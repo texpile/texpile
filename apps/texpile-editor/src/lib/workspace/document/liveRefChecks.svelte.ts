@@ -19,6 +19,7 @@ import { conditionalUseNames, readingOf, usesInReadingOrder, type FileReading } 
 import { NO_OPTIONS, optionNamesOf, type OptionNames } from '$lib/languages/latex/intellisense/checks/reading/optionNames';
 import { NO_POSSIBLE_NAMES, possibleNamesOf } from '$lib/languages/latex/intellisense/checks/reading/possibleNames';
 import type { Engine } from '../compileCommand';
+import { readSourceTrees } from '../sourceTrees';
 
 /** checks: what the LaTeX checks that are on found, besides the reference problems */
 export type LiveRefProblems = { path: string; text: string; problems: RefProblem[]; checks: SourceProblem[] };
@@ -226,6 +227,9 @@ export class LiveRefChecks {
 			liveRefProblems.current = null;
 			return;
 		}
+		// an undo across far places rereads the whole file: read it in slices first, so the checks find it read
+		await readSourceTrees(open.text);
+		if (my !== this.checkSeq) return;
 		const doc = this.document && samePath(this.document.path, open.path) ? this.document : null;
 		const files = this.deps.files();
 		const have = new Set(files.map(pathKey));

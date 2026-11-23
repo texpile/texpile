@@ -95,6 +95,10 @@ export class NodeViewDesc {
 		return this.placement.parent;
 	}
 
+	get isDestroyed(): boolean {
+		return this.destroyed;
+	}
+
 	/** from the parent's content start; 0 for a top-level block */
 	get offset(): number {
 		return this.placement.offset;

@@ -55,6 +55,12 @@ export class StyleEpoch {
 		this.observer.observe(doc.documentElement, watched);
 		if (doc.body) this.observer.observe(doc.body, watched);
 		this.observer.observe(doc.head, { childList: true, subtree: true, characterData: true });
+		// a theme preset's <link> is added before its sheet loads, so the mutation above reads the old tokens
+		const sheetLoaded = (event: Event): void => {
+			if (event.target instanceof view.HTMLLinkElement) this.bump('sheets');
+		};
+		doc.head.addEventListener('load', sheetLoaded, true);
+		this.cleanups.push(() => doc.head.removeEventListener('load', sheetLoaded, true));
 		this.adopted = [...(doc.adoptedStyleSheets ?? [])];
 		const list = view.matchMedia('(prefers-color-scheme: dark)');
 		const listener = (): void => this.bump('media');

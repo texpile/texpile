@@ -48,7 +48,12 @@ ${Array.from({ length: 60 }, (_, i) => `a_{${i}}`).join(' + ')}
 
 const STACKED = '$ M = mat(1, 2; 3, 4) $\n\n$ x &= a + b \\\n  y &= c \\\n  z &= d $\n\nAfter the displays.\n';
 
-const texpile = useTexpile({ files: { 'flows.tex': FLOWS, 'typed.tex': FLOWS, 'emptied.tex': FLOWS, 'stacked.typ': STACKED } });
+// the reference's block is built again once the names it reads land, after the formula's session started
+const REFERENCED = 'With math $a^2+b^2$ inline and a label @knuth1984 end.\n';
+
+const texpile = useTexpile({
+	files: { 'flows.tex': FLOWS, 'typed.tex': FLOWS, 'emptied.tex': FLOWS, 'stacked.typ': STACKED, 'referenced.typ': REFERENCED }
+});
 const visual = () => new VisualEditor(texpile().page, texpile().root);
 const disk = () => new Disk(texpile().root);
 
@@ -173,6 +178,26 @@ test('a click places the math caret where it lands, typing reaches the file and 
 	await v.page.keyboard.press('ControlOrMeta+z');
 	await disk().expectFile('flows.tex', (text) => text === FLOWS, 'undo restores the file');
 	expect(await session(v.page), 'undo keeps the writer in the formula').toMatchObject({ pos });
+});
+
+test('a Typst inline formula beside a reference takes a click and the arrows, and typing reaches the file', async () => {
+	const v = visual();
+	await v.open('referenced.typ');
+	await settled(v.page);
+	const { pos, end } = await formula(v, 'inline_math');
+	await caretAt(v, end);
+	await v.press('ArrowLeft');
+	await expect.poll(() => session(v.page)).toMatchObject({ pos });
+	await v.press('Escape');
+	const box = await inCanvas(v.page, ({ probe }, at) => probe.rectOfNode(at)!.toJSON() as DOMRect, pos);
+	await v.page.mouse.click(box.right - 2, box.top + box.height / 2);
+	await expect.poll(() => session(v.page)).toMatchObject({ pos });
+	await v.page.keyboard.type('+c');
+	await disk().expectFile(
+		'referenced.typ',
+		(text) => /\+ ?c\)?\$ inline and a label @knuth1984 end\./.test(text),
+		'the typed letters are saved in the formula'
+	);
 });
 
 test('a composition commits at the math caret', async () => {

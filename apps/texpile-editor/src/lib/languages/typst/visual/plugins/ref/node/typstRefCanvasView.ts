@@ -3,7 +3,7 @@
 import type { Node as PMNode } from 'prosemirror-model';
 import type { Component } from 'svelte';
 import type { CanvasNodeViewConstructor, StyleLook, ViewElementRef } from '$lib/editor/canvas';
-import { setLook } from '$lib/editor/canvas';
+import { caretToChip, setLook } from '$lib/editor/canvas';
 import { isReadOnly, referenceStore, settingsPanelOffer, type PanelProps } from '$lib/languages/typst/visual/core';
 import TypstRefPopover from './TypstRefPopover.svelte';
 import { refNumbersOf } from './refNumbers.svelte';
@@ -59,7 +59,9 @@ export function typstRefCanvasView(parse: (source: string) => PMNode): CanvasNod
 		dom.on.click = () => {
 			const pos = getPos();
 			const box = pos === undefined ? null : (view.nodeDOM(pos) as ViewElementRef | null)?.getBoundingClientRect();
-			if (pos !== undefined && box && !isReadOnly.current) form.open(pos, view, box);
+			if (pos === undefined || !box || isReadOnly.current) return true;
+			caretToChip(view, pos);
+			form.open(pos, view, box);
 			return true;
 		};
 		const drawn = JSON.stringify(face);

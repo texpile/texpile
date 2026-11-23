@@ -30,7 +30,7 @@ export type TypstTyping = {
   /** a space was the last key: what comes next is apart from what came before */
   spaced: boolean;
   /** the mode a key switches to once its step is over: a step's selection change would undo it */
-  switchTo?: 'text' | 'latex';
+  switchTo?: 'text' | 'latex' | 'command';
   /** a string being typed after `after`; its first character starts a string of its own */
   string?: { after: Atom; apart: boolean };
   /** the content the last undo step holds, so a step that changed nothing takes none */

@@ -1647,5 +1647,6 @@
 	"keybindings_column_source": "Fuente",
 	"keybindings_source_default": "Predeterminado",
 	"keybindings_copy": "Copiar",
-	"keybindings_sort_precedence": "Ordenar por precedencia"
+	"keybindings_sort_precedence": "Ordenar por precedencia",
+	"canvas_screen_reader_label": "Editor visual. Cambie al modo Fuente para leer este archivo con un lector de pantalla."
 }

@@ -34,6 +34,11 @@ import type { Node as PMNode } from 'prosemirror-model';
 
 export type MenuDialect = 'tex' | 'md' | 'typ';
 
+// the menu refocuses its button after the select returns, which would take the focus the command gave the editor
+export function afterMenuCloses(run: () => void): void {
+	setTimeout(run);
+}
+
 /** runs a PM command against the main editor, then refocuses it. */
 export function runVisualCommand(cmd: Command) {
 	const v = editorViewStore.current;

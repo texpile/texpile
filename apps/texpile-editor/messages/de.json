@@ -3326,5 +3326,6 @@
 	"keybindings_source_builtin": "Integriert",
 	"keybindings_copy": "Kopieren",
 	"keybindings_copy_title": "Befehlstitel kopieren",
-	"keybindings_sort_precedence": "Nach Vorrang sortieren"
+	"keybindings_sort_precedence": "Nach Vorrang sortieren",
+	"canvas_screen_reader_label": "Visueller Editor. Wechseln Sie in den Quelltextmodus, um diese Datei mit einem Bildschirmleser zu lesen."
 }

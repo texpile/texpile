@@ -31,11 +31,13 @@ test('a middle press starts autoscroll and the pane scrolls', async () => {
 	await page.mouse.down({ button: 'middle' });
 	await page.mouse.up({ button: 'middle' });
 	await page.mouse.move(pane.x, pane.y + 250, { steps: 5 });
-	await page.waitForTimeout(1000);
-	const top = await inCanvas(page, ({ view }) => view.canvas.scroller.scrollTop);
+	// autoscroll moves per frame, so a loaded machine needs longer than a fixed wait gives it
+	await expect
+		.poll(() => inCanvas(page, ({ view }) => view.canvas.scroller.scrollTop), { message: 'the pane autoscrolled', timeout: 10_000 })
+		.toBeGreaterThan(pane.top + 100);
+	expect(await inCanvas(page, ({ view }) => view.state.selection.from), 'the middle press left the caret').toBe(caret);
+	// ends the autoscroll; on a loaded machine it may have ended already, and then the click places the caret
 	await page.mouse.click(pane.x, pane.y + 250);
 	expect(await page.evaluate(() => (window as unknown as { middleDown: boolean }).middleDown), 'the press kept its default').toBe(false);
-	expect(top - pane.top, 'the pane autoscrolled').toBeGreaterThan(100);
-	expect(await inCanvas(page, ({ view }) => view.state.selection.from)).toBe(caret);
 	expect(await probeErrors(page)).toEqual([]);
 });

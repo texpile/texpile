@@ -1,6 +1,7 @@
 // flex rows and columns: grow and shrink, wrapping, order, reversed rows, auto margins and alignment
 import { describe, expect, it } from 'vitest';
 import { faceElement } from '$lib/editor/canvas';
+import { generatedPart } from '$lib/editor/canvas/nodes/generatedPart';
 import { schema } from '$lib/languages/latex/schema/latexPMSchema';
 import type { FixedStyleRule } from '../../testing/fixedStyles';
 import { layoutTestBlock } from '../layoutFixture';
@@ -19,6 +20,19 @@ function flexBox(container: Record<string, string>, items: Record<string, string
 }
 
 describe('a row', () => {
+	it('takes an empty ::before and ::after as items (a divider rule either side of its label)', () => {
+		const root = faceElement('div', 'row');
+		root.appendChild(faceElement('div', 'item', ''));
+		root.generatedBefore = generatedPart('', { flex: '1', borderTop: '1px solid' });
+		root.generatedAfter = generatedPart('', { flex: '1', borderTop: '1px solid' });
+		const { box } = layoutTestBlock(schema.nodes.paragraph.create(), { root, rules: BASE, width: 300, justify: false });
+		expect(box.children.map((child) => [child.x, child.width])).toEqual([
+			[0, 120],
+			[120, 60],
+			[180, 120]
+		]);
+	});
+
 	it('shares the free space by grow weight', () => {
 		const box = flexBox({}, [{ flexGrow: '1' }, { flexGrow: '3' }]);
 		const [a, b] = box.children;

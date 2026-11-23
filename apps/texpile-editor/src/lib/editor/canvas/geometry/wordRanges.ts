@@ -83,6 +83,18 @@ export function wordBoundaryIn($pos: ResolvedPos, dir: -1 | 1, rule: 'previousSt
 	return start + (dir < 0 ? previousWordStop(text, breaks, offset) : nextWordStop(text, breaks, offset, rule === 'nextStart'));
 }
 
+/** a word range grown over the spaces after it, as a double click selects on Windows */
+export function withTrailingSpaces($pos: ResolvedPos, range: { from: number; to: number }): { from: number; to: number } {
+	const textblock = textblockOf($pos);
+	if (!textblock || range.from === range.to) return range;
+	const text = textblockText(textblock.node);
+	const from = range.from - textblock.start;
+	let to = range.to - textblock.start;
+	if (!/\S/.test(text.slice(from, to))) return range;
+	while (to < text.length && (text[to] === ' ' || text[to] === '\t')) to++;
+	return { from: range.from, to: textblock.start + to };
+}
+
 /** the word at the place; at the edge of a word and something else, the word; between two words, the affinity's side */
 export function wordRangeIn($pos: ResolvedPos, place: CaretPlace, language: string): { from: number; to: number } {
 	const textblock = textblockOf($pos);

@@ -52,6 +52,8 @@ export class PressRouting {
 	private readonly drags: DragDropListeners;
 	/** the canvas element a press made draggable, for the browser to start a native drag from */
 	private dragElement: HTMLElement | null = null;
+	/** a handler took the middle press: Chromium pastes PRIMARY on the release unless it is prevented too */
+	private middleTaken = false;
 	private readonly onDown = (event: MouseEvent): void => {
 		if (this.parts.surface.isCanvas(event.target)) this.press(event);
 	};
@@ -116,13 +118,14 @@ export class PressRouting {
 	/** the pointer machine runs face handlers, then handleDOMEvents.mousedown, then its own click rules */
 	press(event: MouseEvent): void {
 		this.hover.hideHint();
-		if (pressPreventsDefault(event, this.pointer.press(event))) event.preventDefault();
+		const handled = this.pointer.press(event);
+		this.middleTaken = event.button === 1 && event.defaultPrevented;
 		this.endDrag();
-		// Chromium starts a draggable element's drag though the press prevented its default; Firefox does not
+		// a press that prevents its default starts no native drag
 		if (this.pointer.dragSource() && event.target instanceof HTMLElement) {
 			this.dragElement = event.target;
 			this.dragElement.draggable = true;
-		}
+		} else if (pressPreventsDefault(event, handled)) event.preventDefault();
 	}
 
 	private endDrag(): void {
@@ -141,7 +144,11 @@ export class PressRouting {
 		const { root } = this.parts;
 		if (root.listening('mouseup')) root.dispatchEvent(this.retarget(event) as unknown as Event);
 		this.pointer.release(event);
+		// the press that armed a drag kept its default, which blurs the textarea surface
+		if (this.dragElement && !this.parts.exposed.hasFocus()) this.parts.exposed.focus();
 		this.endDrag();
+		if (event.button === 1 && this.middleTaken) event.preventDefault();
+		this.middleTaken = false;
 	}
 
 	destroy(): void {

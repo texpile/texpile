@@ -5,6 +5,7 @@ import { AT_LETTER, openConstructsFor } from './tokens/openConstructs';
 import { NO_OWN_SYNTAX, ownSyntaxTokensKey, type OwnSyntax } from './tokens/ownSyntax';
 import { structureTokens, structureTokensFor } from './tokens/structureTokens';
 import { ownLiteralsIn } from '../userDefinitions';
+import { changedRanges } from './changedRanges';
 
 // a text this long is a file or a reading of one (its code alone, its body): the short ones are captions and
 // arguments cut from it, kept apart so that a file's own readings stay
@@ -90,11 +91,13 @@ function* read(by: LRParser, text: string, spent: Spent): Generator<void, Tree> 
 		}
 		if (!near || Math.max(toA, toB) - from < Math.max(near.toA, near.toB) - near.from) near = { old, tree, from, toA, toB };
 	}
-	if (!near || Math.max(near.toA, near.toB) - near.from > NEAR_CHARS) return yield* advanceThrough(by.startParse(text), spent);
+	if (!near) return yield* advanceThrough(by.startParse(text), spent);
+	// an undo across far places changes a few lines here and there
+	const changes = changedRanges(near.old, text, NEAR_CHARS);
+	if (!changes) return yield* advanceThrough(by.startParse(text), spent);
 	replaced.delete(near.old);
 	replaced.add(near.old);
-	const change = { fromA: near.from, toA: near.toA, fromB: near.from, toB: near.toB };
-	return yield* advanceThrough(by.startParse(text, TreeFragment.applyChanges(TreeFragment.addTree(near.tree), [change])), spent);
+	return yield* advanceThrough(by.startParse(text, TreeFragment.applyChanges(TreeFragment.addTree(near.tree), changes)), spent);
 }
 
 // a package or class file read as text says so near its top

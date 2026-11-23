@@ -2,6 +2,7 @@ import { expect, test, type Page } from '@playwright/test';
 import { Disk } from './driver/disk';
 import { useTexpile } from './driver/useTexpile';
 import { VisualEditor } from './driver/visualEditor';
+import { inCanvas } from './canvas/canvasPage';
 
 const ARTICLE =
 	'\\documentclass{article}\n\\usepackage{amsthm}\n\\newtheorem{theorem}{Theorem}\n\\newtheorem{lemma}{Lemma}\n\\begin{document}\n\n' +
@@ -11,7 +12,9 @@ const texpile = useTexpile({
 	files: {
 		'menu-table.tex': ARTICLE,
 		'menu-figure.tex': ARTICLE,
-		'vspace.tex': ARTICLE
+		'vspace.tex': ARTICLE,
+		'menu-math.tex': ARTICLE,
+		'menu-math.typ': 'A label @knuth1984 here.\n'
 	}
 });
 
@@ -86,4 +89,21 @@ test('Ctrl+Z typed in a chip panel steps the file history', async () => {
 	await page.locator('.drawn-chip-panel').click();
 	await page.keyboard.press('ControlOrMeta+z');
 	await disk.expectFile('vspace.tex', (t) => t === ARTICLE, 'undo restores the file');
+});
+
+test('Insert > Math > Inline Equation takes the typing into the formula', async () => {
+	const { v, page, disk } = await setup('menu-math.tex', 'First paragraph alpha beta gamma.');
+	await insertFrom(page, ['Math', 'Inline Equation']);
+	// the menu runs its item a task after the click, which a key typed at once can beat
+	await expect.poll(() => inCanvas(page, ({ probe }) => !!probe.math.active())).toBe(true);
+	await v.type('k^2');
+	await disk.expectFile('menu-math.tex', (t) => t.includes('gamma.$k^2$'), 'the typing is the formula');
+});
+
+test('Insert > Math > Inline Equation in a Typst line holding a reference takes the typing into the formula', async () => {
+	const { v, page, disk } = await setup('menu-math.typ', 'here.');
+	await insertFrom(page, ['Math', 'Inline Equation']);
+	await expect.poll(() => inCanvas(page, ({ probe }) => !!probe.math.active())).toBe(true);
+	await v.type('k^2');
+	await disk.expectFile('menu-math.typ', (t) => /here\.\$k\^2 ?\$/.test(t), 'the typing is the formula');
 });

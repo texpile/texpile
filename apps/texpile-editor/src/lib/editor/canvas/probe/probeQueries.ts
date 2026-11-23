@@ -176,16 +176,19 @@ export function createProbeView(host: ProbeHost): ProbeView {
 		const at = index.indexAt(blockPos);
 		const block = { index: at, pos: index.blocks[at].pos, top: model.top(at).y, layout: model.layout(at) };
 		const last = host.frames.lastPainted;
-		const frame: PaintFrame = last ?? {
-			state: view.state,
-			viewport: { x: 0, y: block.top, width: model.width, height: block.layout.height },
-			zoom: 1,
-			dpr: 1,
-			blocks: [block],
-			decorations: { inline: [], nodes: new Map(), widgets: [] },
-			focus: view.canvas.focusState(),
-			head: view.canvas.head()
-		};
+		const whole = { x: 0, y: block.top, width: model.width, height: block.layout.height };
+		const frame: PaintFrame = last
+			? { ...last, viewport: whole }
+			: {
+					state: view.state,
+					viewport: whole,
+					zoom: 1,
+					dpr: 1,
+					blocks: [block],
+					decorations: { inline: [], nodes: new Map(), widgets: [] },
+					focus: view.canvas.focusState(),
+					head: view.canvas.head()
+				};
 		const recorder = new DrawListRecorder(host.measure, { x: 0, y: block.top });
 		host.painter.paintBlock(recorder.context, block, frame);
 		return recorder.ops;

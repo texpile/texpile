@@ -56,15 +56,9 @@ export function labelCanvasView(
 	...[node, view, getPos, decorations]: Parameters<CanvasNodeViewConstructor>
 ): ReturnType<CanvasNodeViewConstructor> {
 	const { el, read, icon } = view.canvas.build;
-	const name = String(node.attrs.name ?? '');
-	const twice = read(
-		{ kind: 'store', name: 'drawnInputs' },
-		() => liveRefProblems.current?.problems.find((p) => p.kind === 'label-twice' && p.name === name) ?? null
-	);
 	const glued = gluedOf(decorations);
 	// sized 0 so the template's whitespace takes no room, its chip at the text's size
 	const dom = el('span', 'chip-host');
-	dom.setAttribute('data-label', name);
 	setLook(dom, {
 		...(glued.includes('before') ? { marginLeft: GLUE } : {}),
 		...(glued.includes('after') ? { marginRight: GLUE } : {})
@@ -73,19 +67,32 @@ export function labelCanvasView(
 	const inHeading = view.state.doc.resolve(getPos() ?? 0).parent.type.name === 'heading';
 	setLook(chip, inHeading ? { ...CHIP_LOOK, ...HEADING_LOOK } : CHIP_LOOK);
 	chip.states = { hover: { backgroundColor: 'color-mix(in oklab, currentColor 14%, transparent)' } };
-	chip.hint = twice ? refProblemText(twice) : m.label_chip_title({ name });
 	const tag = chip.appendChild(icon('tag', 16));
-	setLook(tag, twice ? { ...ICON_LOOK, ...TWICE } : ICON_LOOK);
-	const shown = chip.appendChild(el('span', 'text-chip-name', name));
-	setLook(shown, twice ? { ...NAME_LOOK, ...TWICE } : NAME_LOOK);
+	const shown = chip.appendChild(el('span', 'text-chip-name'));
+	// drawn in place on a rename, so the panel's getPos keeps answering while the name is typed
+	function draw(next: PMNode): void {
+		const name = String(next.attrs.name ?? '');
+		const twice = read(
+			{ kind: 'store', name: 'drawnInputs' },
+			() => liveRefProblems.current?.problems.find((p) => p.kind === 'label-twice' && p.name === name) ?? null
+		);
+		dom.setAttribute('data-label', name);
+		chip.hint = twice ? refProblemText(twice) : m.label_chip_title({ name });
+		setLook(tag, twice ? { ...ICON_LOOK, ...TWICE } : ICON_LOOK);
+		shown.textContent = name;
+		setLook(shown, twice ? { ...NAME_LOOK, ...TWICE } : { ...NAME_LOOK, color: '' });
+	}
+	draw(node);
 	chip.on.click = () => {
 		openNamePanel(view, getPos);
 		return true;
 	};
-	const drawn = JSON.stringify([name, glued]);
 	return {
 		dom,
-		update: (next: PMNode, nextDecorations) =>
-			next.type === node.type && JSON.stringify([String(next.attrs.name ?? ''), gluedOf(nextDecorations)]) === drawn
+		update(next: PMNode, nextDecorations) {
+			if (next.type !== node.type || gluedOf(nextDecorations) !== glued) return false;
+			draw(next);
+			return true;
+		}
 	};
 }

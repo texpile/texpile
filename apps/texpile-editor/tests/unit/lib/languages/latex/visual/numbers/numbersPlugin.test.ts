@@ -45,4 +45,13 @@ describe('numbers while typing', () => {
 		typed.apply(typed.tr.insert(0, heading));
 		expect(counted()).toBe(2);
 	});
+
+	// keys in a heading or a chip counted the whole document each, 100 ms a key on 2.2 MB
+	it('counts keys typed in a heading again after a pause, not on each key', () => {
+		const { state, counted } = setup();
+		const once = state.apply(state.tr.insertText('x', posOf(state, 'One') + 1));
+		const twice = once.apply(once.tr.insertText('y', posOf(once, 'Oxne') + 2));
+		expect(counted()).toBe(1);
+		expect(numbersKey.getState(twice)?.stale).toBe(true);
+	});
 });

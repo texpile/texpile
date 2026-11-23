@@ -10,6 +10,7 @@ import { devicePixelsOf, snapRect, snapWidth, type DevicePixels } from './device
 import { borderBoxOf, boxOps, contentBoxOf, outlineOp } from './paintBoxes';
 import { inlineBackgroundOps, lineTextOps, type TextPaintTools } from './paintText';
 import { maxScrollLeft, scrollLeftOf } from '../layout/scrollBox';
+import { inkBandOf, type InkBand } from './displayListDiff';
 
 export type PaintOp =
 	| { kind: 'fill'; rect: DocRect; color: string; radii: Corners<number> | null }
@@ -198,10 +199,18 @@ export function replayDisplayList(
 	ctx: PaintContext,
 	ops: readonly PaintOp[],
 	token: ThemeTokenColor,
-	px: DevicePixels = devicePixelsOf(ctx)
+	px: DevicePixels = devicePixelsOf(ctx),
+	within: InkBand | null = null
 ): void {
 	let text: TextState | null = null;
+	// a transformed group's ops are in its own space, so their bands say nothing of where they ink
+	const turnedGroups: boolean[] = [];
+	let turned = 0;
 	for (const op of ops) {
+		if (within && !turned) {
+			const ink = inkBandOf(op);
+			if (ink && (ink.to < within.from || ink.from > within.to)) continue;
+		}
 		if (op.kind !== 'text') text = null;
 		switch (op.kind) {
 			case 'fill': {
@@ -243,6 +252,8 @@ export function replayDisplayList(
 				ctx.restore();
 				break;
 			case 'push':
+				turnedGroups.push(!!(op.frame || op.content));
+				if (turnedGroups.at(-1)) turned++;
 				ctx.save();
 				if (op.alpha < 1) Object.assign(ctx, { globalAlpha: ctx.globalAlpha * op.alpha });
 				if (op.frame) ctx.transform(...op.frame);
@@ -255,6 +266,7 @@ export function replayDisplayList(
 				if (op.content) ctx.transform(...op.content);
 				break;
 			case 'pop':
+				if (turnedGroups.pop()) turned--;
 				ctx.restore();
 				break;
 		}

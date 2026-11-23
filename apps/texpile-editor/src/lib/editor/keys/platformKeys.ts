@@ -25,6 +25,8 @@ export type PlatformRules = {
 	pageKeysMoveCaret: boolean;
 	caretBlinkHalfPeriodMs: number;
 	wordRightStopsAt: 'nextStart' | 'nextEnd';
+	/** a double click takes the spaces after the word too */
+	doubleClickTakesTrailingSpace: boolean;
 };
 
 function move(by: Granularity, dir: -1 | 1, rule?: WordRule): KeyIntent {
@@ -114,28 +116,32 @@ export const PLATFORM_KEYS: Readonly<Record<Platform, readonly PlatformKeyRow[]>
 	mac: MAC_ROWS
 };
 
-// linux as P0 recorded it (tests/fixtures/parity/keys/platforms.json); windows and mac are Chromium's defaults until recorded
+// linux as P0 recorded it (tests/fixtures/parity/keys/platforms.json); windows edge lines, word right and double click
+// read off a contenteditable on Windows 11; the rest and mac are Chromium's defaults until recorded
 export const PLATFORM_RULES: Readonly<Record<Platform, PlatformRules>> = {
 	linux: {
 		edgeLineGoesToEnd: true,
 		contextClickSelectsWord: false,
 		pageKeysMoveCaret: true,
 		caretBlinkHalfPeriodMs: 500,
-		wordRightStopsAt: 'nextEnd'
+		wordRightStopsAt: 'nextEnd',
+		doubleClickTakesTrailingSpace: false
 	},
 	windows: {
-		edgeLineGoesToEnd: false,
+		edgeLineGoesToEnd: true,
 		contextClickSelectsWord: false,
 		pageKeysMoveCaret: true,
 		caretBlinkHalfPeriodMs: 530,
-		wordRightStopsAt: 'nextStart'
+		wordRightStopsAt: 'nextStart',
+		doubleClickTakesTrailingSpace: true
 	},
 	mac: {
 		edgeLineGoesToEnd: true,
 		contextClickSelectsWord: true,
 		pageKeysMoveCaret: false,
 		caretBlinkHalfPeriodMs: 500,
-		wordRightStopsAt: 'nextEnd'
+		wordRightStopsAt: 'nextEnd',
+		doubleClickTakesTrailingSpace: false
 	}
 };
 

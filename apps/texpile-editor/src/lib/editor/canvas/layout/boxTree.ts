@@ -44,6 +44,7 @@ export type OutOfFlowBox = {
 };
 
 const ZERO = { px: 0, percent: 0 };
+const FLEX_DISPLAYS: ReadonlySet<LayoutStyle['display']> = new Set(['flex', 'inline-flex', 'grid', 'inline-grid']);
 const BOX_KINDS: Partial<Record<LayoutStyle['display'], LayoutBoxKind>> = {
 	'inline-block': 'inline-block',
 	inline: 'inline-block',
@@ -178,7 +179,7 @@ export class BoxTree {
 		const holder = !containing || isPositioned(style) ? { box, path: [] } : { box: containing.box, path: [...containing.path, box] };
 		this.positionPseudo(element, holder, 'before');
 		this.positionPseudo(element, holder, 'after');
-		this.positionPseudo(element, holder, 'marker');
+		if (layout.display === 'list-item') this.positionPseudo(element, holder, 'marker');
 		this.floatAfter(element, box);
 		const textblock = this.textblockOf(element) ?? (isBlockLevel(layout) ? this.wrappedTextblockOf(element) : null);
 		if (textblock) {
@@ -351,8 +352,9 @@ export class BoxTree {
 
 	private childItems(element: FaceElement, style: ComputedStyle, holder: Holder): ChildItem[] {
 		const items: ChildItem[] = [];
-		const before = this.generated(element, 'before', this.ownerOffset(element));
-		if (before) items.push({ kind: 'pseudo', piece: before, style: before.style });
+		const flexed = FLEX_DISPLAYS.has(style.layout.display);
+		const before = flexed ? this.flexItemOf(element, 'before') : this.pseudoItemOf(element, 'before');
+		if (before) items.push(before);
 		const visit = (parent: FaceElement, parentStyle: ComputedStyle): void => {
 			const atomText = this.atomTextOf(parent);
 			if (atomText !== null) {
@@ -375,9 +377,22 @@ export class BoxTree {
 			}
 		};
 		visit(element, style);
-		const after = this.generated(element, 'after', this.ownerOffset(element));
-		if (after) items.push({ kind: 'pseudo', piece: after, style: after.style });
+		const after = flexed ? this.flexItemOf(element, 'after') : this.pseudoItemOf(element, 'after');
+		if (after) items.push(after);
 		return items;
+	}
+
+	private pseudoItemOf(element: FaceElement, pseudo: 'before' | 'after'): ChildItem | null {
+		const piece = this.generated(element, pseudo, this.ownerOffset(element));
+		return piece && { kind: 'pseudo', piece, style: piece.style };
+	}
+
+	/** a flex or grid container's ::before and ::after are items of their own, an empty one too (a divider's rule) */
+	private flexItemOf(element: FaceElement, pseudo: 'before' | 'after'): ChildItem | null {
+		const part = element[GENERATED_FIELDS[pseudo]];
+		const style = part ? this.styleOf(element, pseudo) : null;
+		if (!part || !style || style.layout.display === 'none' || style.layout.position === 'absolute') return null;
+		return { kind: 'element', element: part, style };
 	}
 
 	/** an in-flow inline generated part with its text; floated ones are W5's */

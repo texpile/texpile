@@ -36,6 +36,10 @@ async function dragPastBottom(visual: VisualEditor, past: number, holdMs: number
 	const { page } = visual;
 	const box = await inCanvas(page, ({ view }) => {
 		const { left, top, width, height } = view.canvas.scroller.getBoundingClientRect();
+		// the last drag's range is still selected, and a press inside it starts a text drag
+		const { selection, doc } = view.state;
+		const start = (selection.constructor as unknown as { atStart(at: typeof doc): typeof selection }).atStart(doc);
+		view.dispatch(view.state.tr.setSelection(start));
 		view.canvas.scroller.scrollTop = 0;
 		return { left, top, width, height };
 	});
@@ -156,5 +160,32 @@ test('the pointer over text shows the text cursor, the hover state follows the n
 	expect((await reads()) - before, 'style reads for twenty hover moves').toBeLessThan(400);
 	await visual.page.mouse.move(2, 2);
 	await expect.poll(() => inCanvas(visual.page, ({ view }) => view.canvas.hover.chain.length)).toBe(0);
+	expect(await probeErrors(visual.page)).toEqual([]);
+});
+
+test('dragging a selected word onto another paragraph moves it there', async () => {
+	const visual = new VisualEditor(texpile().page, texpile().root);
+	await visual.open('pointer.tex');
+	await settled(visual.page);
+	const word = await inCanvas(visual.page, ({ probe }) => probe.posOf('fill every'));
+	await visual.evalView(
+		'const S = view.state.selection.constructor; view.dispatch(view.state.tr.setSelection(S.create(view.state.doc, arg, arg + 4)));',
+		word
+	);
+	const at = await inCanvas(visual.page, ({ probe }) => ({
+		from: probe.clientPointOf(probe.posOf('fill every') + 2, 1),
+		to: probe.clientPointOf(probe.posOf('Paragraph 2'), 1)
+	}));
+	await settled(visual.page);
+	await visual.page.mouse.move(at.from.x, at.from.y);
+	await visual.page.mouse.down();
+	await visual.page.mouse.move(at.to.x, at.to.y, { steps: 12 });
+	await visual.page.mouse.up();
+	await settled(visual.page);
+	const lines = await visual.evalView<string[]>(
+		"return view.state.doc.textBetween(0, view.state.doc.content.size, '\\n', '#').split('\\n');"
+	);
+	expect(lines[0]).toContain('Plain words  every paragraph');
+	expect(lines[2]).toContain('line. fillParagraph 2.');
 	expect(await probeErrors(visual.page)).toEqual([]);
 });

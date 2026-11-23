@@ -3326,5 +3326,6 @@
 	"keybindings_source_builtin": "Built-in",
 	"keybindings_copy": "Copy",
 	"keybindings_copy_title": "Copy Command Title",
-	"keybindings_sort_precedence": "Sort by Precedence"
+	"keybindings_sort_precedence": "Sort by Precedence",
+	"canvas_screen_reader_label": "Visual editor. Switch to Source mode to read this file with a screen reader."
 }

@@ -104,12 +104,23 @@ function clipsOverflow(placed: PlacedBox): boolean {
 	return overflowX !== 'visible' || overflowY !== 'visible';
 }
 
+/** an inline-block inside an inline element of a face sits on its lines, not among its children */
+function inlineBoxesIn(placement: BlockOnModel['placement'], at: PlacedBox): PlacedBox[] {
+	const found: PlacedBox[] = [];
+	for (const line of at.box.lines ?? [])
+		for (const fragment of line.fragments) {
+			const placed = fragment.kind === 'atomic' ? placement.placed.get(fragment.box) : undefined;
+			if (placed) found.push(placed);
+		}
+	return found;
+}
+
 /** the element under the point inside a face drawn whole: its handlers, hint and cursor answer, though the caret stops at the
  *  face; as in Chromium, an element placed past its parent's box answers there unless the parent clips */
 function deepestInFace(placement: BlockOnModel['placement'], face: PlacedBox, q: Point): PlacedBox | null {
 	function under(at: PlacedBox): PlacedBox | null {
 		if (clipsOverflow(at) && !contains(at, q)) return null;
-		const children = placement.children.get(at) ?? [];
+		const children = [...(placement.children.get(at) ?? []), ...inlineBoxesIn(placement, at)];
 		for (let i = children.length - 1; i >= 0; i--) {
 			const found = under(children[i]);
 			if (found) return found;
@@ -165,19 +176,27 @@ function textCaret(textblock: PlacedTextblock, index: number, x: number, block: 
 	return { pos: block.frame.pos + stop, affinity: stop === end && !last ? -1 : 1 };
 }
 
-/** rule 5: over a drawn block, the nearest stop in the nearest textblock by vertical distance (this block first) */
-function nearestTextCaret(model: DocumentModel, block: BlockOnModel, q: Point, tools: GeometryTools): CaretPlace {
+function isInside(placed: PlacedBox, owner: PlacedBox): boolean {
+	for (let at: PlacedBox | null = placed; at; at = at.parent) if (at === owner) return true;
+	return false;
+}
+
+/** rule 5: over a drawn block, the nearest stop in the nearest textblock by vertical distance (this block first). In a cell's
+ *  padding that is the cell's own text: the cells of a row tie, and a cell drag's head jumped to the first of them */
+function nearestTextCaret(model: DocumentModel, block: BlockOnModel, q: Point, tools: GeometryTools, cell: PlacedBox | null): CaretPlace {
 	const docY = block.frame.top + q.y;
 	let best: { block: BlockOnModel; textblock: PlacedTextblock; index: number; distance: number } | null = null;
-	function consider(candidate: BlockOnModel | null): void {
+	function consider(candidate: BlockOnModel | null, within: PlacedBox | null = null): void {
 		for (const textblock of candidate?.placement.textblocks ?? [])
-			textblock.lines.forEach((line, index) => {
-				const top = candidate!.frame.top + textblock.y + line.y;
-				const distance = Math.max(0, top - docY, docY - (top + line.height));
-				if (!best || distance < best.distance) best = { block: candidate!, textblock, index, distance };
-			});
+			if (!within || isInside(textblock, within))
+				textblock.lines.forEach((line, index) => {
+					const top = candidate!.frame.top + textblock.y + line.y;
+					const distance = Math.max(0, top - docY, docY - (top + line.height));
+					if (!best || distance < best.distance) best = { block: candidate!, textblock, index, distance };
+				});
 	}
-	consider(block);
+	if (cell) consider(block, cell);
+	if (!best) consider(block);
 	for (let step = 1; !best && step <= 3; step++) {
 		consider(blockOnModel(model, block.index - step));
 		consider(blockOnModel(model, block.index + step));
@@ -248,11 +267,16 @@ function cursorOf(kind: CursorKind | 'auto', editableText: boolean): CursorKind 
 	return kind === 'auto' ? (editableText ? 'text' : 'default') : kind;
 }
 
+function roleOf(placed: PlacedBox): unknown {
+	return placed.box.node!.node.type.spec.tableRole;
+}
+
+function cellBoxOf(path: readonly PlacedBox[]): PlacedBox | null {
+	return path.findLast((placed) => roleOf(placed) === 'cell' || roleOf(placed) === 'header_cell') ?? null;
+}
+
 function cellOf(path: readonly PlacedBox[], block: BlockOnModel): { cellPos: number; tablePos: number } | null {
-	function roleOf(placed: PlacedBox): unknown {
-		return placed.box.node!.node.type.spec.tableRole;
-	}
-	const cell = path.findLast((placed) => roleOf(placed) === 'cell' || roleOf(placed) === 'header_cell');
+	const cell = cellBoxOf(path);
 	const table = path.findLast((placed) => roleOf(placed) === 'table');
 	if (!cell || !table) return null;
 	return { cellPos: block.frame.pos + cell.box.node!.offset, tablePos: block.frame.pos + table.box.node!.offset };
@@ -386,7 +410,7 @@ export function hitAt(model: DocumentModel, tools: HitTools, p: DocPoint): Canva
 	else
 		caret =
 			(terminal.kind === 'leaf' && (leafCaret(terminal.placed, clamped, block) || formulaBlockCaret(terminal.placed, block, view))) ||
-			nearestTextCaret(model, block, clamped, tools);
+			nearestTextCaret(model, block, clamped, tools, cellBoxOf(path));
 	const caretWalk = terminal.kind === 'box' ? (caretPath(block, caret.pos) ?? path) : path;
 	const pos = above ? 0 : below ? view.state.doc.content.size : pmPos(caretWalk, q, caret.pos, block);
 	const atPoint = x === p.x ? descent : descend(block, q, view);

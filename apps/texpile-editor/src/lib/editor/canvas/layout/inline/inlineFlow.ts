@@ -171,7 +171,8 @@ export function layoutInlineFlow(
 ): number {
 	const style = draft.style.layout;
 	const profile = breakProfileOf(source.node, style, { justify: context.justify, hyphenate: context.hyphenator !== null });
-	const indent = style.textIndent.px + (style.textIndent.percent / 100) * contentWidth;
+	// an inline element drawn as a box of its own (a widget's root) starts no line, so the text-indent it inherits stays out
+	const indent = style.display === 'inline' ? 0 : style.textIndent.px + (style.textIndent.percent / 100) * contentWidth;
 	const inset = firstLineInset(draft);
 	const lines: PlacedLine[] = [];
 	let first = true;

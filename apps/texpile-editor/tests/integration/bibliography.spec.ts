@@ -18,6 +18,23 @@ Intro.
 
 const texpile = useTexpile({ files: { 'bib.tex': PAPER } });
 
+test('the heading and each key line up with the text column, with no list bullet', async () => {
+	const { page, root } = texpile();
+	const visual = new VisualEditor(page, root);
+	await visual.open('bib.tex');
+	await expect.poll(() => inCanvas(page, ({ probe }) => probe.query('.bib-key .text-chip').length)).toBe(1);
+	const drawn = await inCanvas(page, ({ probe }) => ({
+		column: probe.query('p')[0].rect.left,
+		heading: probe.query('h1.bibliography-heading')[0].rect,
+		chip: probe.query('.bib-key .text-chip')[0].rect.left,
+		bullets: probe.paintedLines().lines.filter((line) => line.text.includes('\u2022')).length
+	}));
+	expect(drawn.heading.left).toBe(drawn.column);
+	expect(drawn.heading.height).toBeGreaterThan(30);
+	expect(drawn.chip).toBe(drawn.column);
+	expect(drawn.bullets).toBe(0);
+});
+
 test('Enter ends an entry and starts one whose key is typed into its chip', async () => {
 	const { page, root } = texpile();
 	const visual = new VisualEditor(page, root);

@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { Schema } from 'prosemirror-model';
 import { schema } from '$lib/languages/latex/schema/latexPMSchema';
-import { faceElement, type LineBox, type LineFragment } from '$lib/editor/canvas';
+import { FaceElement, faceElement, type LineBox, type LineFragment } from '$lib/editor/canvas';
 import type { FixedStyleRule } from '../testing/fixedStyles';
 import { Decoration, DecorationSet } from 'prosemirror-view';
 import { createCanvasGeometry } from '$lib/editor/canvas/geometry/canvasGeometry';
@@ -186,6 +186,27 @@ describe('hit rules in cells and face parts (7.4)', () => {
 		const { geometry: cells } = testModel(tableDoc);
 		const found = cells.hit(pointAt(cells, 5, 3))!;
 		expect(found.target).toEqual({ kind: 'cell', cellPos: 2, tablePos: 0, inner: { kind: 'text', textblock: 3 } });
+	});
+
+	it('7 cells: on an element of the cell past its text, as the column edge, the caret stays in that cell', () => {
+		const rules: FixedStyleRule[] = [
+			{ selector: '.row', look: { display: 'flex' } },
+			{ selector: '.cell', look: { width: '100px' } },
+			{ selector: '.edge', look: { height: '30px' } }
+		];
+		const tableDoc = tableSchema.nodes.doc.create(null, [
+			table.create(null, row.create(null, [cell.create(null, text('one')), cell.create(null, text('two'))]))
+		]);
+		const prepare = (root: FaceElement) => {
+			for (const at of root.querySelectorAll('.cell')) at.appendChild(new FaceElement('div')).className = 'edge';
+		};
+		const { geometry: cells } = testModel(tableDoc, { rules, prepare });
+		const second = 2 + tableDoc.firstChild!.firstChild!.firstChild!.nodeSize;
+		const { y } = pointAt(cells, 5);
+		const found = cells.hit({ x: 130, y: y + 20 })!;
+		expect(found.target).toMatchObject({ kind: 'cell', cellPos: second });
+		expect(found.caret.pos).toBeGreaterThan(second + 1);
+		expect(found.pos).toBeGreaterThan(second);
 	});
 
 	it('8 face parts: an anchor under the point, a resize handle by its name, pointer-events none passed through', () => {

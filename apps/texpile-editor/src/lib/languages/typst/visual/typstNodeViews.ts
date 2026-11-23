@@ -1,5 +1,13 @@
 // the Typst node views the mount passes to the view (8.7): the core's, the plugins' canvasViews, formulas and raw chips
-import { canvasViewProps, composeNodeViews, coreNodeViews, islandNodeViews, mathNodeViews, type CanvasViewProps } from '$lib/editor/canvas';
+import {
+	canvasViewProps,
+	composeNodeViews,
+	coreMarkViews,
+	coreNodeViews,
+	islandNodeViews,
+	mathNodeViews,
+	type CanvasViewProps
+} from '$lib/editor/canvas';
 import { registerChipDrawing } from '$lib/editor/visual/extensions/drawnChips/chipShows';
 import { MATH_SETTINGS } from '$lib/editor/canvas/math/mathSettingsOffer';
 import { CODE_SETTINGS } from '$lib/editor/canvas/islands/codeSettingsOffer';
@@ -32,6 +40,7 @@ export function typstNodeViews(docDir: () => string): CanvasViewProps {
 			code_block: islandNodeViews().code_block,
 			includedoc: includeDocCanvasView(docDir)
 		},
+		markViews: coreMarkViews(),
 		blockSettings: { block_math: MATH_SETTINGS, code_block: CODE_SETTINGS }
 	};
 	return canvasViewProps(

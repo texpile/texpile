@@ -88,7 +88,8 @@ export class RevealPolicy {
 		this.revealSideways();
 		if (mode === 'nudged' || !this.headEstimated()) this.retries = 0;
 		else if (this.retries++ < REVEAL_RETRIES) {
-			this.pending = mode;
+			// a retry keeps no margin: read again from a measured line height, it moved every shown row a pixel or two
+			this.pending = mode === 'keyed' ? 'edge' : mode;
 			this.host.frames().requestFrame();
 		} else this.retries = 0;
 	}

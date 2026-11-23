@@ -160,7 +160,8 @@ export function createCanvasPainter(model: DocumentModel, repaintCarets: () => v
 				placement
 			};
 			const px = devicePixelsOf(ctx);
-			replayDisplayList(ctx, list.under, token, px);
+			const within = { from: frame.viewport.y - block.top, to: frame.viewport.y + frame.viewport.height - block.top };
+			replayDisplayList(ctx, list.under, token, px, within);
 			paintBlockDecorations(ctx, onBlock, frame.decorations.inline, { styles, measure: host.measure, metrics: host.metrics }, px);
 			const held = frame.focus !== 'editor' && heldPassageShown(frame.decorations.inline);
 			const shade = selectionShade(onBlock, held ? null : shadedRange(frame.state.selection), host, frame.decorations.widgets);
@@ -168,10 +169,10 @@ export function createCanvasPainter(model: DocumentModel, repaintCarets: () => v
 			const selection = shade.under.length || shade.over.length || formula.length ? canvasFill(styles.token(SELECTION_FILL_TOKEN)) : '';
 			fillRects(ctx, shade.under, selection, px);
 			fillRects(ctx, formula, selection, px);
-			replayDisplayList(ctx, list.over, token, px);
+			replayDisplayList(ctx, list.over, token, px, within);
 			if (frame.composition) paintCompositionUnderlines(ctx, onBlock, frame.composition, { measure: host.measure, run: runNow }, px);
 			fillRects(ctx, shade.over, selection, px);
-			replayDisplayList(ctx, list.outlines, token, px);
+			replayDisplayList(ctx, list.outlines, token, px, within);
 			const calls = frame.focus === 'editor' ? formulaRectsIn(model, block, 'outlineRects') : [];
 			if (calls.length) strokeInside(ctx, calls, canvasFill(styles.token(MACRO_OUTLINE_TOKEN)), px);
 			const island = frame.focus === 'editor' ? islandFrameRects(model, host.geometry, block) : [];

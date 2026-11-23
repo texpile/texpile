@@ -12,7 +12,7 @@ function fontSize(font: string): number {
 }
 
 /** the y extent an op may ink, generous at glyph tops, descenders, shadows and outlines */
-function bandOf(op: PaintOp): InkBand | typeof WHOLE {
+export function inkBandOf(op: PaintOp): InkBand | typeof WHOLE {
 	switch (op.kind) {
 		case 'text': {
 			const size = fontSize(op.font);
@@ -36,9 +36,17 @@ function bandOf(op: PaintOp): InkBand | typeof WHOLE {
 	}
 }
 
+const mathKeys = new WeakMap<object, string | null>();
+
 function mathKeyOf(op: PaintOp & { kind: 'replaced' }): string | null {
-	const { keys } = op.content;
-	return keys?.length && keys.every((key) => key.kind === 'math') ? JSON.stringify(keys) : null;
+	const { content } = op;
+	let key = mathKeys.get(content);
+	if (key === undefined) {
+		const { keys } = content;
+		key = keys?.length && keys.every((each) => each.kind === 'math') ? JSON.stringify(keys) : null;
+		mathKeys.set(content, key);
+	}
+	return key;
 }
 
 /** a formula draws what its math key names, so two layouts of one paragraph rebuild it and still draw the same; other
@@ -86,7 +94,7 @@ export function inkChanges(before: BlockDisplayList, after: BlockDisplayList): I
 	for (const part of ['under', 'over', 'outlines'] as const) changed.push(...middleOf(before[part], after[part]));
 	const bands: InkBand[] = [];
 	for (const op of changed) {
-		const band = bandOf(op);
+		const band = inkBandOf(op);
 		if (!band) return WHOLE;
 		bands.push(band);
 	}

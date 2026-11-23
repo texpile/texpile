@@ -3326,5 +3326,6 @@
 	"keybindings_source_builtin": "内置",
 	"keybindings_copy": "复制",
 	"keybindings_copy_title": "复制命令标题",
-	"keybindings_sort_precedence": "按优先级排序"
+	"keybindings_sort_precedence": "按优先级排序",
+	"canvas_screen_reader_label": "可视化编辑器。切换到源代码模式即可用屏幕阅读器阅读此文件。"
 }

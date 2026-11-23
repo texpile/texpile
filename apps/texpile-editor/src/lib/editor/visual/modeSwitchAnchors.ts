@@ -40,14 +40,24 @@ export function captureVisualAnchor(map: SourceMap): VisualAnchor | null {
 	const scRect = findScrollParent(v.dom)?.getBoundingClientRect();
 	const scTop = (scRect?.top ?? 0) + 4;
 
-	// scroll anchor: the topmost visible block
+	// scroll anchor: the topmost visible block, searched by halves because each block asked is laid out
+	function bottomOf(i: number): number | null {
+		return v!.canvas.nodeClientRect(map.blocks[i].pmFrom)?.rect.bottom ?? null;
+	}
+	let low = 0;
+	let high = map.blocks.length;
+	while (low < high) {
+		const mid = (low + high) >> 1;
+		let at = mid;
+		let bottom = bottomOf(at);
+		while (bottom === null && at + 1 < high) bottom = bottomOf(++at);
+		if (bottom !== null && bottom > scTop) high = mid;
+		else low = at + 1;
+	}
 	let scroll: number | null = null;
-	for (const b of map.blocks) {
-		const rect = v.canvas.nodeClientRect(b.pmFrom)?.rect;
-		if (rect && rect.bottom > scTop) {
-			scroll = b.srcFrom;
-			break;
-		}
+	for (let i = low; i < map.blocks.length && scroll === null; i++) {
+		const bottom = bottomOf(i);
+		if (bottom !== null && bottom > scTop) scroll = map.blocks[i].srcFrom;
 	}
 
 	// cursor anchor: the caret, wherever it is. The source editor keeps the reading position when

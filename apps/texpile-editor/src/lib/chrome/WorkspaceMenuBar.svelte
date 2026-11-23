@@ -10,7 +10,7 @@
 	import { isMac } from '$lib/platform';
 	import { setSpellcheckEnabled } from '$lib/editor/spellcheck/config/spellcheckConfig';
 	import { hasVisualMode, isRawTextKind, formatOf, type FileKind } from '$lib/workspace/documentBuffer.svelte';
-	import { editSelect, formatSelect } from './menuBarCommands';
+	import { afterMenuCloses, editSelect, formatSelect } from './menuBarCommands';
 	import { preferencesOpen, openPreferencesAt } from '$lib/stores/dialogStore';
 	import { commandPalette } from '$lib/workspace/commandPalette.svelte';
 	import { attachNativeMenu, publishMenuState } from '$lib/workspace/nativeMenu';
@@ -310,7 +310,14 @@
 		/>
 	{/if}
 	{#if showAt(2, overflow)}
-		<InsertMenu index={2} select={(v) => void insertSelect(v)} {mathSelect} {structured} {dialect} canInsertImage={!!imageDir} />
+		<InsertMenu
+			index={2}
+			select={(v) => afterMenuCloses(() => void insertSelect(v))}
+			mathSelect={(v) => afterMenuCloses(() => mathSelect(v))}
+			{structured}
+			{dialect}
+			canInsertImage={!!imageDir}
+		/>
 	{/if}
 	{#if showAt(3, overflow)}
 		<FormatMenu index={3} select={formatMenuSelect} {structured} {dialect} {fileKind} canFormatDocument={!!onFormatDocument} />

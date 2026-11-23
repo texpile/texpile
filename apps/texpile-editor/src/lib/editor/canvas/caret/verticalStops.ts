@@ -58,25 +58,25 @@ function fromCell(view: VisualView, at: CellAt, dir: -1 | 1, x: number): Vertica
 	return text ? { place: placeAt(view, text.head, x) } : toStop(view, blockStopFrom(view, edge, dir), x);
 }
 
-function fromLine(view: VisualView, line: LineGeometry, dir: -1 | 1, x: number, extend: boolean): VerticalStop | null {
+function fromLine(view: VisualView, line: LineGeometry, dir: -1 | 1, x: number, extend: boolean, byCell: boolean): VerticalStop | null {
 	const { geometry } = view.canvas;
 	const nextRef = geometry.adjacentLine(line.ref, dir);
 	if (nextRef && nextRef.textblock === line.ref.textblock) return { place: geometry.placeOnLine(nextRef, x) };
 	const { selection } = view.state;
 	const cell = cellAround(selection.$head);
-	if (cell && !extend) return fromCell(view, cell, dir, x);
+	if (cell && byCell) return fromCell(view, cell, dir, x);
 	return toStop(view, stopBeyond(view, selection, dir, { extend }), x);
 }
 
 /** Up or Down from the selection at goal `x`; null when nothing lies that way. `extend`: a range's head, which stands in
- *  text only */
-export function verticalStop(view: VisualView, dir: -1 | 1, x: number, extend = false): VerticalStop | null {
+ *  text only. `byCell`: a table's grid moves the head to the cell above or below */
+export function verticalStop(view: VisualView, dir: -1 | 1, x: number, extend = false, byCell = !extend): VerticalStop | null {
 	const { selection } = view.state;
 	const head = view.canvas.head();
 	// a selected block's head stands after it, on no line of its own
 	if (selection instanceof TextSelection || (selection instanceof NodeSelection && selection.node.isInline)) {
 		const line = view.canvas.geometry.lineOf(head);
-		if (line) return fromLine(view, line, dir, x, extend);
+		if (line) return fromLine(view, line, dir, x, extend, byCell);
 	}
 	return toStop(view, stopBeyond(view, selection, dir, { extend }), x);
 }
