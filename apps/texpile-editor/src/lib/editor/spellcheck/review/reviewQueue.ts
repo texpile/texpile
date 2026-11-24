@@ -89,7 +89,7 @@ function sendVisible(): void {
 	timer = null;
 	if (!proofreadOn() || Date.now() < pausedUntil) return;
 	// the agent is one program run at a time
-	const most = settings.current.proofreadWith === 'agent' ? 1 : 2;
+	const most = settings.current.aiService === 'agent' ? 1 : 2;
 	const pending = pendingOnScreen();
 	while (inFlight < most && pending.length) void send(nextBatch(pending));
 }

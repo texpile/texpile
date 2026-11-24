@@ -25,7 +25,7 @@ export const PREFS_TABS: TabDef[] = [
 	{ id: 'typst', label: () => m.prefs_group_typst() },
 	{ id: 'snippets', label: () => m.prefs_group_snippets() },
 	{ id: 'keybindings', label: () => m.menubar_keyboard_shortcuts() },
-	// named as the Spelling menu, which leads here
+	// the Spelling menu leads here
 	{ id: 'proofing', label: () => m.prefs_group_proofing(), sections: ['spellFolder', 'spellAll'] },
 	{ id: 'vcs', label: () => m.prefs_group_history(), desktopOnly: true, sections: ['git', 'localHistory'] },
 	{ id: 'collaboration', label: () => m.prefs_group_collaboration() },

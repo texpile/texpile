@@ -32,7 +32,7 @@ Find the message you see. [LaTeX](latex.md), [Typst](typst.md), [Git](git.md) an
 | A comment shows **Check placement**     | The sentence appears more than once. Check which copy the comment is on.                              |
 | Pasted text loses its formatting        | Turn on Preferences › Editor › Smart paste.                                                           |
 | The editor is justified, the PDF is not | Preferences › Editor › Justify text changes only the editor.                                          |
-| No spelling underlines                  | Turn on Preferences › Spelling › Check spelling and grammar.                                          |
+| No spelling underlines                  | Turn on Preferences › Spelling & Grammar › Check spelling and grammar.                                |
 
 ## Citations
 

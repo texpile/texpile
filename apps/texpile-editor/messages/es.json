@@ -93,7 +93,7 @@
 	"prefs_mcp_copy": "Copiar mensaje",
 	"prefs_mcp_copied": "Copiar al portapapeles",
 	"prefs_spellcheck": "Revisa la ortografía y la gramática",
-	"prefs_group_proofing": "Ortografía",
+	"prefs_group_proofing": "Ortografía y gramática",
 	"prefs_english_variant": "Variante del inglés",
 	"prefs_english_variant_note": "¿Qué grafías se consideran correctas: 'colour' o 'color', 'analyse' o 'analyze'?",
 	"prefs_dictionary_note": "El corrector ortográfico de palabras las toma como correctas. Agrégalo aquí, o a partir de la sugerencia de una palabra marcada.",

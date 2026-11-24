@@ -54,10 +54,10 @@ const DEFAULT_SETTINGS = {
 	refineAgents: null as string[] | null,
 	// Harper's findings checked and added to by a model: the paragraphs on screen, sent with the writer's own key
 	proofreadAi: false,
-	proofreadWith: 'anthropic', // 'anthropic' | 'openai' (any OpenAI-compatible service) | 'agent' (Refine's agent)
-	proofreadAnthropicModel: '', // '' = claude-haiku-5-5
-	proofreadOpenAiUrl: '', // the service's base URL, such as https://api.openai.com/v1 or http://localhost:11434/v1
-	proofreadOpenAiModel: '',
+	aiService: 'anthropic', // 'anthropic' | 'openai' (any OpenAI-compatible service) | 'agent' (Refine's agent)
+	aiAnthropicModel: '', // '' = claude-haiku-5-5
+	aiOpenAiUrl: '', // the service's base URL, such as https://api.openai.com/v1 or http://localhost:11434/v1
+	aiOpenAiModel: '',
 	proofreadAddTerms: false, // names and field terms the model recognizes go into the dictionary
 	aiAgentCommand: '', // the command line for the 'custom' agent; the prompt goes on its stdin
 	aiAgentModels: {} as Record<string, string>, // each preset's --model, from the list it gives (agentModels.ts); '' = its own default

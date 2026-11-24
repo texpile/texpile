@@ -173,6 +173,21 @@ const STATIC_ROWS = [
 	{ id: 'keybindings', tab: 'keybindings', label: () => m.menubar_keyboard_shortcuts() },
 
 	{ id: 'spellcheck', tab: 'proofing', label: () => m.prefs_spellcheck() },
+	{ id: 'ai-proofread', tab: 'proofing', label: () => m.prefs_proofread_ai(), note: () => m.prefs_proofread_ai_note() },
+	{
+		id: 'ai-proofread-wording',
+		tab: 'proofing',
+		label: () => m.prefs_proofread_wording(),
+		note: () => m.prefs_proofread_wording_note(),
+		shown: () => settings.current.proofreadAi
+	},
+	{
+		id: 'ai-proofread-terms',
+		tab: 'proofing',
+		label: () => m.prefs_proofread_terms(),
+		note: () => m.prefs_proofread_terms_note(),
+		shown: () => settings.current.proofreadAi
+	},
 	{
 		id: 'folder-language',
 		tab: 'proofing',
@@ -252,27 +267,11 @@ const STATIC_ROWS = [
 	{ id: 'ai-off', tab: 'ai', label: () => m.prefs_ai_off(), note: () => m.prefs_ai_off_note() },
 	{ id: 'mcp', tab: 'ai', label: () => m.prefs_mcp(), note: () => m.prefs_mcp_note() },
 	{ id: 'ai-agent', tab: 'ai', label: () => m.prefs_ai_agent(), note: () => m.prefs_ai_agent_note() },
-	{ id: 'ai-proofread', tab: 'ai', label: () => m.prefs_proofread_ai(), note: () => m.prefs_proofread_ai_note() },
 	{
-		id: 'ai-proofread-with',
+		id: 'ai-service',
 		tab: 'ai',
 		label: () => m.prefs_proofread_with(),
-		note: () => m.prefs_proofread_with_note(),
-		shown: () => settings.current.proofreadAi
-	},
-	{
-		id: 'ai-proofread-wording',
-		tab: 'ai',
-		label: () => m.prefs_proofread_wording(),
-		note: () => m.prefs_proofread_wording_note(),
-		shown: () => settings.current.proofreadAi
-	},
-	{
-		id: 'ai-proofread-terms',
-		tab: 'ai',
-		label: () => m.prefs_proofread_terms(),
-		note: () => m.prefs_proofread_terms_note(),
-		shown: () => settings.current.proofreadAi
+		note: () => m.prefs_proofread_with_note()
 	},
 	{ id: 'agent-panel', tab: 'ai', label: () => m.prefs_agent_panel(), note: () => m.prefs_agent_panel_note() }
 ] as const satisfies readonly PrefsRowDef[];

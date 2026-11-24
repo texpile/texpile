@@ -1,5 +1,5 @@
 <script lang="ts">
-	// one setting of the proofreading service: its name, a hint, and the field across the row
+	// one setting of the AI service: its name, a hint, and the field across the row
 	import type { Snippet } from 'svelte';
 
 	type Props = {

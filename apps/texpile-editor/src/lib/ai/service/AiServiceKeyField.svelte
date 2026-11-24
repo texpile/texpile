@@ -1,8 +1,8 @@
 <script lang="ts">
 	// the API key a service is sent with: typed here, kept by main, never shown again
 	import { m } from '$lib/paraglide/messages';
-	import ProofreadField from './ProofreadField.svelte';
-	import { proofreadBridge, type KeyProvider, type KeysKept } from './proofreadBridge';
+	import AiServiceField from './AiServiceField.svelte';
+	import { proofreadBridge, type KeyProvider, type KeysKept } from '$lib/ai/proofread/proofreadBridge';
 
 	type Props = { provider: KeyProvider; note?: string };
 	const props: Props = $props();
@@ -21,7 +21,7 @@
 	}
 </script>
 
-<ProofreadField
+<AiServiceField
 	label={m.prefs_proofread_key()}
 	note={kept && !kept.lasting ? m.prefs_proofread_key_session() : props.note}
 	value={typed}
@@ -38,4 +38,4 @@
 			</button>
 		{/if}
 	{/snippet}
-</ProofreadField>
+</AiServiceField>
