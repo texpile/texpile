@@ -55,6 +55,7 @@ const steps: Array<[DeferredStep, () => Promise<void>]> = [
 	['zotero', async () => (await import('../zotero.js')).registerZotero()],
 	['doi', async () => (await import('./doiIpc.js')).registerDoiIpc()],
 	['agent', async () => (await import('./agentIpc.js')).registerAgentIpc()],
+	['proofread', async () => (await import('./proofreadIpc.js')).registerProofreadIpc()],
 	[
 		'acp',
 		async () => {

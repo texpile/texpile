@@ -9,6 +9,9 @@ import type { SpellLanguage } from '$lib/editor/spellcheck/languages/spellLangua
 import { blockSpellText, chipLetters, harperReading } from '$lib/editor/spellcheck/blockSpellText';
 import { createHarperSuggestionBox } from '$lib/editor/spellcheck/suggestionBoxFactory';
 import { nextProblem } from './problemNav';
+import { reviewedMatches } from './review/reviewStore';
+import { registerReviewSource, reviewSoon } from './review/reviewQueue';
+import { noteFindings, pmReviewSource, pmTarget } from './review/pmReviewSource';
 import './suggestion.css';
 import { editorConfigStore, editorViewStore } from '$lib/stores/editorStore';
 import { activeCompare } from '$lib/workspace/workspaceStore';
@@ -121,7 +124,15 @@ async function lintTextAfterComposition(block: string, language: SpellLanguage |
 	const text = reading?.text ?? block;
 	const res = text.trim() ? await proofreadIn(language, text) : { matches: [] };
 	for (let i = 0; i < 100 && editorViewStore.current?.composing; i++) await sleep(150);
-	return reading ? { ...res, matches: res.matches.map((match) => ({ ...match, ...reading.blockSpan(match.offset, match.length) })) } : res;
+	let matches = res.matches;
+	if (language && !res.failed && text.trim()) {
+		noteFindings(language, text, matches);
+		matches = reviewedMatches(pmTarget(language, text, matches));
+		reviewSoon();
+	}
+	return reading
+		? { ...res, matches: matches.map((match) => ({ ...match, ...reading.blockSpan(match.offset, match.length) })) }
+		: { ...res, matches };
 }
 
 const proofreadPlugins = new WeakSet<Plugin>();
@@ -147,6 +158,7 @@ export function proofreadPlugin(language: () => SpellLanguage | null): Plugin {
 			const inner = libraryPlugin.spec.view?.(view);
 			// another English, another set of rules or another language: what was found is out of date
 			const stopRules = onLintRulesChanged(() => invalidateProofreadCache(view));
+			const stopReview = registerReviewSource(pmReviewSource(view, plugin, language));
 			let checkedIn = language();
 			const stopLanguage = observe(language, (now) => {
 				if (now === checkedIn) return;
@@ -158,6 +170,7 @@ export function proofreadPlugin(language: () => SpellLanguage | null): Plugin {
 				destroy() {
 					stopRules();
 					stopLanguage();
+					stopReview();
 					inner?.destroy?.();
 				}
 			};

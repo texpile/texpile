@@ -9,20 +9,9 @@ import { agentArgv, PRESET_AGENTS, type PresetAgent } from '../ai/agentCommand';
 import { runAgent } from '../ai/runAgent';
 import { agentStdio } from '../ai/agentStdio';
 import { listAgentModels } from '../ai/agentModels';
+import { agentModelOf, refineAgentsAllowed } from '../ai/agentChoice';
 
 const running = new Map<string, AbortController>();
-
-/** the agent Refine may run, as the renderer's refineAgents.svelte.ts reads it: the one picked, none before that */
-function refineAgentsAllowed(s: Record<string, unknown>): string[] {
-	if (s.aiOff === true) return [];
-	return Array.isArray(s.refineAgents) ? s.refineAgents.filter((a): a is string => typeof a === 'string').slice(0, 1) : [];
-}
-
-/** a preset's model; '' is its own default */
-function modelOf(s: Record<string, unknown>, agent: string): string {
-	const own = s.aiAgentModels && typeof s.aiAgentModels === 'object' ? (s.aiAgentModels as Record<string, unknown>)[agent] : '';
-	return typeof own === 'string' ? own : '';
-}
 
 export function registerAgentIpc(): void {
 	ipcMain.handle('agent:detect', async () => {
@@ -43,7 +32,7 @@ export function registerAgentIpc(): void {
 		const s = readSettings();
 		await shellEnvReady();
 		if (!refineAgentsAllowed(s).includes(req.agent)) return { ok: false, error: 'that agent is not ticked in Preferences' };
-		const argv = agentArgv(req.agent, s.aiAgentCommand, modelOf(s, req.agent));
+		const argv = agentArgv(req.agent, s.aiAgentCommand, agentModelOf(s, req.agent));
 		if (!argv) return { ok: false, error: 'no agent is set in Preferences' };
 		const abort = new AbortController();
 		running.set(req.id, abort);

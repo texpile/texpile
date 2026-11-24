@@ -18,6 +18,10 @@ import { clearOfOldWords, liveSuggestionRanges } from '$lib/editor/source/cmSugg
 import { nextProblem, type Span } from './problemNav';
 import './suggestion.css';
 import { cmCommandKeys } from '$lib/keybindings/editors/cmCommandKeys';
+import { reviewedMatches } from './review/reviewStore';
+import { registerReviewSource, reviewSoon } from './review/reviewQueue';
+import { sourceReading } from './review/sourceReading';
+import type { ReviewTarget } from './review/reviewTypes';
 
 type SpellMarkup = 'plaintext' | 'markdown' | 'typst';
 
@@ -106,8 +110,15 @@ class SpellPlugin {
 	private cachedIn: SpellLanguage | null = null;
 	private masked: TexMask | null = null;
 	private stopLanguage: () => void;
+	private stopReview: () => void;
+	// the last pass's paragraphs, for the review to find the ones on screen
+	private drawn: { src: string; paras: Paragraph[]; spans: [number, number][]; language: SpellLanguage | null } | null = null;
 
 	constructor(private view: EditorView) {
+		this.stopReview = registerReviewSource({
+			visible: () => this.reviewTargetsOnScreen(),
+			redraw: () => this.schedule(0)
+		});
 		this.unsubscribe = observe(
 			() => editorConfigStore.current,
 			(c) => {
@@ -153,6 +164,7 @@ class SpellPlugin {
 		this.unsubscribe();
 		this.stopRules();
 		this.stopLanguage();
+		this.stopReview();
 		if (this.timer) clearTimeout(this.timer);
 		this.gen++;
 	}
@@ -160,6 +172,22 @@ class SpellPlugin {
 	ignore(p: Problem) {
 		this.ignored.add(`${p.type}:${p.text}`);
 		this.schedule(0);
+	}
+
+	private reviewTarget(p: Paragraph): ReviewTarget | null {
+		const drawn = this.drawn;
+		const matches = this.cache.get(p.text);
+		if (!drawn?.language || !matches) return null;
+		return { language: drawn.language, linted: p.text, matches, reading: () => sourceReading(drawn.src, p.from, p.text, drawn.spans) };
+	}
+
+	private reviewTargetsOnScreen(): ReviewTarget[] {
+		if (!this.enabled || !this.drawn?.language) return [];
+		const ranges = this.view.visibleRanges;
+		return this.drawn.paras
+			.filter((p) => ranges.some((r) => p.from < r.to && p.from + p.text.length > r.from))
+			.map((p) => this.reviewTarget(p))
+			.filter((t) => t !== null);
 	}
 
 	/** dictionary changed: cached paragraph results are stale, re-lint from scratch */
@@ -271,9 +299,11 @@ class SpellPlugin {
 		// rebuild decorations from the full cache: absolute offset = paragraph start + relative
 		const builder = new RangeSetBuilder<Decoration>();
 		const live = new Set<string>();
+		this.drawn = { src, paras, spans, language: spelling };
 		for (const p of paras) {
 			live.add(p.text);
-			const cached = this.cache.get(p.text);
+			const target = this.reviewTarget(p);
+			const cached = target ? reviewedMatches(target) : this.cache.get(p.text);
 			if (!cached) continue;
 			for (const m of cached) {
 				const from = p.from + m.offset;
@@ -307,6 +337,7 @@ class SpellPlugin {
 		this.decorations = builder.finish();
 		this.shown = clearOfOldWords(this.decorations, this.view.state);
 		this.view.dispatch({});
+		if (stale.length) reviewSoon();
 	}
 }
 
