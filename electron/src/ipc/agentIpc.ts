@@ -5,11 +5,10 @@ import { app, ipcMain } from 'electron';
 import { readSettings } from '../appSettings';
 import { shellEnvReady } from '../shell/shellEnv';
 import { findProgram } from '../shell/findProgram';
-import { agentArgv, PRESET_AGENTS, type PresetAgent } from '../ai/agentCommand';
-import { runAgent } from '../ai/runAgent';
-import { agentStdio } from '../ai/agentStdio';
+import { PRESET_AGENTS, type PresetAgent } from '../ai/agentCommand';
 import { listAgentModels } from '../ai/agentModels';
-import { agentModelOf, refineAgentsAllowed } from '../ai/agentChoice';
+import { refineAgentsAllowed } from '../ai/agentChoice';
+import { askAgent } from '../ai/warm/warmAgents';
 
 const running = new Map<string, AbortController>();
 
@@ -30,10 +29,7 @@ export function registerAgentIpc(): void {
 			return { ok: false, error: 'bad request' };
 		const system = typeof req.system === 'string' ? req.system : '';
 		const s = readSettings();
-		await shellEnvReady();
 		if (!refineAgentsAllowed(s).includes(req.agent)) return { ok: false, error: 'that agent is not ticked in Preferences' };
-		const argv = agentArgv(req.agent, s.aiAgentCommand, agentModelOf(s, req.agent));
-		if (!argv) return { ok: false, error: 'no agent is set in Preferences' };
 		const abort = new AbortController();
 		running.set(req.id, abort);
 		// a window that closed can no longer cancel its own run
@@ -42,7 +38,7 @@ export function registerAgentIpc(): void {
 		}
 		e.sender.once('destroyed', stop);
 		try {
-			return await runAgent(argv, { system, request: req.prompt }, abort.signal, agentStdio(req.agent));
+			return await askAgent('refine', req.agent, s, { system, request: req.prompt }, abort.signal);
 		} finally {
 			running.delete(req.id);
 			e.sender.removeListener('destroyed', stop);
