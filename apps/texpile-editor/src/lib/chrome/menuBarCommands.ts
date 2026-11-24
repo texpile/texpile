@@ -11,7 +11,7 @@ import { fileHistoryKeymap } from '$lib/editor/source/cmUndoKeys';
 import { undoVisual, redoVisual } from '$lib/editor/visual/visualUndo';
 import { selectAllScoped } from '$lib/editor/visual/selectAllScoped';
 import { selectAll as cmSelectAll } from '@codemirror/commands';
-import { toggleMark } from 'prosemirror-commands';
+import { chainCommands, selectAll, toggleMark } from 'prosemirror-commands';
 import { replaceSelectionWithBlock } from '$lib/editor/visual/insert/insertRun';
 import { toggleHeading, toggleBlockQuote } from '$lib/editor/visual/helperCommands';
 import { editorViewStore, displaySearchBarStore, pdfFindToggle, viewMode, sourceCmView } from '$lib/stores/editorStore';
@@ -97,7 +97,7 @@ export function cmReplace(cm: CMView, before: string, after = '') {
 // the menu's Select All is Mod-A in the focused editor; a field or a PDF selects its own text, as the native role did
 function selectAllFocused(): void {
 	const visual = editorViewStore.current;
-	if (visual?.hasFocus()) return runVisualCommand(selectAllScoped);
+	if (visual?.hasFocus()) return runVisualCommand(chainCommands(selectAllScoped, selectAll));
 	const cm = activeCm();
 	if (cm?.hasFocus) return void cmSelectAll(cm);
 	document.execCommand('selectAll');
