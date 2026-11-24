@@ -1075,7 +1075,7 @@
 	"session_cancel": "Cancelar",
 	"session_error_host_outdated": "El anfitrión utiliza Texpile {version} que no puede compartir una sesión con esta versión. Pide al anfitrión que actualice Texpile.",
 	"session_error_app_outdated": "Esta sesión requiere Texpile {version} o una versión más reciente. Actualiza Texpile para unirte.",
-	"session_error_guest_outdated": "Un invitado en esta sesión utiliza Texpile {versión}, la cual no es compatible con la versión actual para compartir una sesión. Únete una vez que haya actualizado Texpile o haya abandonado la sesión.",
+	"session_error_guest_outdated": "Un invitado en esta sesión utiliza Texpile {version}, la cual no es compatible con la versión actual para compartir una sesión. Únete una vez que haya actualizado Texpile o haya abandonado la sesión.",
 	"session_web_updated_title": "Texpile fue actualizado",
 	"session_web_updated_reload": "Recargar",
 	"session_pdf_waiting": "Aún no hay un PDF compilado. Aparecerá aquí una vez que el sistema realice la compilación.",
