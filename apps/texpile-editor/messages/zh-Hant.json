@@ -73,7 +73,7 @@
 	"prefs_proofread_key_save": "儲存",
 	"prefs_proofread_key_remove": "移除",
 	"prefs_proofread_key_saved": "已儲存金鑰",
-	"prefs_proofread_key_session": "這台電腦沒有鑰匙圈，Texpile 結束時會忘記這個金鑰。每次重新啟動後需要重新輸入。",
+	"prefs_proofread_key_session": "這台電腦沒有系統密碼儲存，Texpile 結束時會忘記這個金鑰。每次重新啟動後需要重新輸入。",
 	"prefs_proofread_model": "模型",
 	"prefs_proofread_base_url": "服務位址",
 	"prefs_proofread_base_url_note": "以 https 開頭、以 /v1 結尾，例如 https://api.openai.com/v1。適用於 OpenAI、OpenRouter、Gemini、Groq、DeepSeek 和 Mistral，也適用於本機上的 Ollama 或 LM Studio。",
