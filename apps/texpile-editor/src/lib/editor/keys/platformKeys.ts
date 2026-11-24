@@ -98,6 +98,7 @@ const MAC_ROWS: readonly PlatformKeyRow[] = [
 	[{ key: 'End' }, { kind: 'scroll', to: 'end' }],
 	[{ key: 'Backspace' }, remove('character', -1)],
 	[{ key: 'h', ctrl: true }, remove('character', -1)],
+	[{ key: 'Backspace', ctrl: true }, remove('character', -1)],
 	[{ key: 'Delete' }, remove('character', 1)],
 	[{ key: 'd', ctrl: true }, remove('character', 1)],
 	[{ key: 'Backspace', alt: true }, remove('word', -1)],

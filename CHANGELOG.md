@@ -6,6 +6,7 @@ Release notes for Texpile Desktop. Add notes under `## [Unreleased]` as you work
 ## [Unreleased]
 
 - fix: Edit > Select All doing nothing in the visual editor (by @louisqli)
+- fix: Ctrl+Backspace not deleting on macOS in the visual editor (by @louisqli)
 - fix: empty last line of the document not shown as selected (by @louisqli)
 - fix: Restore original menu staying open after restoring an image (by @louisqli)
 - fix: arrow pointer instead of the text cursor over formulas in the visual editor (by @louisqli)

@@ -109,6 +109,14 @@ const SOURCE_ONLY: Record<Platform, Record<string, readonly string[]>> = {
 	}
 };
 
+/** the chords the canvas binds beyond the source editor's */
+const CANVAS_ONLY: Record<Platform, Record<string, readonly string[]>> = {
+	windows: {},
+	linux: {},
+	// CodeMirror leaves macOS's Ctrl-Backspace to the browser, which deletes a character
+	mac: { 'delete character -1': ['Ctrl-Backspace'] }
+};
+
 describe('the canvas key table and the source editor keymap', () => {
 	for (const platform of PLATFORMS) {
 		it(`bind the same chords for every intent both have on ${platform}`, () => {
@@ -118,7 +126,8 @@ describe('the canvas key table and the source editor keymap', () => {
 			expect(shared.length).toBeGreaterThan(10);
 			for (const name of shared) {
 				const sourceOnly = new Set(SOURCE_ONLY[platform][name] ?? []);
-				const ours = canvas.get(name)!;
+				const canvasOnly = new Set(CANVAS_ONLY[platform][name] ?? []);
+				const ours = new Set([...canvas.get(name)!].filter((chord) => !canvasOnly.has(chord)));
 				const theirs = new Set([...source.get(name)!].filter((chord) => !sourceOnly.has(chord)));
 				expect([...ours].sort(), `${platform}: ${name}`).toEqual([...theirs].sort());
 			}
