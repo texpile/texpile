@@ -376,7 +376,10 @@ function detailsOf(descent: Descent, caret: CaretPlace, q: Point, block: BlockOn
 	const editableText =
 		view.editable &&
 		(terminal.kind === 'box' ||
-			(terminal.kind === 'text' && ['text', 'island', 'caption'].includes(caretPolicyOf(view, terminal.textblock.node))));
+			(terminal.kind === 'text' && ['text', 'island', 'caption'].includes(caretPolicyOf(view, terminal.textblock.node))) ||
+			(terminal.kind === 'leaf' &&
+				!!terminal.placed.box.node &&
+				['formula', 'island'].includes(caretPolicyOf(view, terminal.placed.box.node.node))));
 	const decorations: DecorationHit[] = views.map((d) => ({
 		from: d.from,
 		to: d.to,

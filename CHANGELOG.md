@@ -5,6 +5,7 @@ Release notes for Texpile Desktop. Add notes under `## [Unreleased]` as you work
 
 ## [Unreleased]
 
+- fix: arrow pointer instead of the text cursor over formulas in the visual editor (by @louisqli)
 - fix: degree sign of \ang left out of a formula's selection and clicks (by @louisqli)
 - fix: click just after a formula's last symbol not placing the caret (by @louisqli)
 - fix: double-click on a word in \text in a formula selecting the letters around it (by @louisqli)
