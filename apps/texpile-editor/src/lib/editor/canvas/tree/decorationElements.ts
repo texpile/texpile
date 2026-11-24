@@ -150,7 +150,7 @@ export function outerLevelsOf(outer: readonly DecorationAttrs[], wrapsText = fal
 	return levels;
 }
 
-const STYLE_PROPERTY = /\s*([\w\-\xa1-\uffff]+)\s*:(?:"(?:\\.|[^"])*"|'(?:\\.|[^'])*'|\(.*?\)|[^;])*/g;
+const STYLE_PROPERTY = /\s*([\w\-\xa1-\uffff]+)\s*:(?:"(?:\\.|[^"\\])*"|'(?:\\.|[^'\\])*'|\(.*?\)|[^;])*/g;
 
 /** a face element, or view.dom for the attributes prop */
 export type AttributeTarget = {
