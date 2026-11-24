@@ -32,14 +32,13 @@ const CODEX_TOOL_FEATURES = [
 // Codex's instructions are replaced by the rules (experimental_instructions_file is the older name), its notes on the
 // sandbox and folder go, and so do the features that hand it tools: a rewrite calls none, and describing them was most
 // of every request. Settings with -c, which a version lacking one passes over
-const CODEX_SETTINGS = [
-	`model_instructions_file='${SYSTEM_FILE}'`,
-	`experimental_instructions_file='${SYSTEM_FILE}'`,
+const CODEX_QUIET = [
 	'include_environment_context=false',
 	'include_permissions_instructions=false',
 	'include_apps_instructions=false',
 	...CODEX_TOOL_FEATURES.map((feature) => `features.${feature}=false`)
 ];
+const CODEX_SETTINGS = [`model_instructions_file='${SYSTEM_FILE}'`, `experimental_instructions_file='${SYSTEM_FILE}'`, ...CODEX_QUIET];
 
 const PRESETS: Record<PresetAgent, string[]> = {
 	// no tools and none of the reader's MCP servers: a rewrite needs neither, and each slows the start. Its own system
@@ -74,6 +73,28 @@ const PRESETS: Record<PresetAgent, string[]> = {
 	// commands are off, or a passage whose line begins with one would be read as a command of its own
 	agy: ['agy', '--input-format', 'stream-json', '--output-format', 'stream-json', '--disable-slash-commands']
 };
+
+/** Claude Code kept running between requests: its rules in system.txt, a turn at a time in stream JSON */
+export function claudeWarmArgs(model: string): string[] {
+	return [
+		...(model ? [`--model=${model}`] : []),
+		'-p',
+		'--input-format',
+		'stream-json',
+		'--output-format',
+		'stream-json',
+		'--verbose',
+		'--tools',
+		'',
+		'--strict-mcp-config',
+		'--no-session-persistence',
+		'--system-prompt-file',
+		'system.txt'
+	];
+}
+
+/** Codex's app server, quiet in the same ways as a run; each thread brings its own rules and model */
+export const CODEX_WARM_ARGS = ['app-server', '--listen', 'stdio://', ...CODEX_QUIET.flatMap((setting) => ['-c', setting])];
 
 /** where --model goes: Codex takes it after exec, which has options of its own */
 const MODEL_AT: Record<PresetAgent, number> = { claude: 1, codex: 2, agy: 1 };

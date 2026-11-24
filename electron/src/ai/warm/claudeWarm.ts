@@ -1,0 +1,72 @@
+// Claude Code kept running between requests, a turn at a time over stream JSON. It reads its rules once, at start;
+// /clear after each turn starts the next request without the last one
+import type { AgentPrompt, AgentResult } from '../runAgent';
+import { startHeldProcess, watchStop, type HeldProcess, type WarmAgent } from './heldProcess';
+import { onJsonLines, writeJsonLine, type JsonMessage } from './jsonLines';
+
+/** its result message, or why the process ended */
+type TurnEnd = JsonMessage | string;
+
+function answerOf(end: TurnEnd): AgentResult {
+	if (typeof end === 'string') return { ok: false, error: end };
+	const text = typeof end.result === 'string' ? end.result : '';
+	if (end.subtype === 'success' && end.is_error !== true && text.trim()) return { ok: true, text };
+	const errors = Array.isArray(end.errors) ? end.errors.filter((e) => typeof e === 'string').join('. ') : '';
+	return { ok: false, error: text || errors || 'claude gave no answer' };
+}
+
+export class ClaudeWarm implements WarmAgent {
+	private proc: HeldProcess;
+	private waiting: ((end: TurnEnd) => void) | null = null;
+	private queue: Promise<unknown> = Promise.resolve();
+
+	constructor(program: string, args: string[], system: string, onExit: () => void) {
+		this.proc = startHeldProcess(program, args, { 'system.txt': system }, (error) => {
+			this.endTurn(error);
+			onExit();
+		});
+		onJsonLines(this.proc.child.stdout, (msg) => {
+			if (msg.type === 'result') this.endTurn(msg);
+		});
+	}
+
+	private endTurn(end: TurnEnd): void {
+		const waiting = this.waiting;
+		this.waiting = null;
+		waiting?.(end);
+	}
+
+	private send(content: string): Promise<TurnEnd> {
+		if (this.proc.exitError !== null) return Promise.resolve(this.proc.exitError);
+		return new Promise((resolve) => {
+			this.waiting = resolve;
+			writeJsonLine(this.proc.child.stdin, { type: 'user', message: { role: 'user', content }, parent_tool_use_id: null, session_id: '' });
+		});
+	}
+
+	get alive(): boolean {
+		return this.proc.alive;
+	}
+
+	ask(prompt: AgentPrompt, signal: AbortSignal): Promise<AgentResult> {
+		const turn = this.queue.then(() => this.turn(prompt.request, signal));
+		this.queue = turn.then(
+			() => (this.proc.alive ? this.send('/clear') : null),
+			() => {}
+		);
+		return turn;
+	}
+
+	private async turn(request: string, signal: AbortSignal): Promise<AgentResult> {
+		const stop = watchStop(signal, 'claude', this.proc.lastWords);
+		const answer = await Promise.race([this.send(request).then(answerOf), stop.stopped]);
+		stop.end();
+		// a turn cannot be taken back, and a sign-in or limit error is better met by a fresh start
+		if (!answer.ok) this.close();
+		return answer;
+	}
+
+	close(): void {
+		this.proc.close();
+	}
+}

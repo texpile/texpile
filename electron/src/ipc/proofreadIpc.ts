@@ -2,11 +2,8 @@
 // The service, its address and the key come from main, never from the request
 import { ipcMain } from 'electron';
 import { readSettings } from '../appSettings';
-import { shellEnvReady } from '../shell/shellEnv';
-import { agentArgv } from '../ai/agentCommand';
-import { agentModelOf, refineAgentsAllowed } from '../ai/agentChoice';
-import { agentStdio } from '../ai/agentStdio';
-import { runAgent } from '../ai/runAgent';
+import { refineAgentsAllowed } from '../ai/agentChoice';
+import { askAgent } from '../ai/warm/warmAgents';
 import { anthropicProofread, openAiProofread } from '../ai/proofread/aiSdkProofread';
 import { KEY_PROVIDERS, proofreadKey, proofreadKeysKept, setProofreadKey, type KeyProvider } from '../ai/proofread/proofreadKeys';
 import type { ProofreadAnswer, ProofreadPrompt } from '../ai/proofread/proofreadAnswer';
@@ -33,10 +30,8 @@ function text(s: Record<string, unknown>, key: string): string {
 
 async function proofreadWithAgent(s: Record<string, unknown>, prompt: ProofreadPrompt): Promise<ProofreadAnswer> {
 	const agent = refineAgentsAllowed(s)[0];
-	const argv = agent ? agentArgv(agent, s.aiAgentCommand, agentModelOf(s, agent)) : null;
-	if (!agent || !argv) return { ok: false, error: 'No agent is picked under Refine with.' };
-	await shellEnvReady();
-	const result = await runAgent(argv, prompt, AbortSignal.timeout(AGENT_TIMEOUT_MS), agentStdio(agent));
+	if (!agent) return { ok: false, error: 'No agent is picked under Refine with.' };
+	const result = await askAgent('proofread', agent, s, prompt, AbortSignal.timeout(AGENT_TIMEOUT_MS));
 	return result.ok ? result : { ok: false, error: result.error };
 }
 

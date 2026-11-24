@@ -6,6 +6,7 @@ Release notes for Texpile Desktop. Add notes under `## [Unreleased]` as you work
 ## [Unreleased]
 
 - feat: proofread with AI over the spell check (by @louisqli)
+- fix: Refine with Claude Code or Codex slow to answer (by @louisqli)
 - feat: title bar search box stays centered on the window (by @louisqli)
 - feat: Layout button shows its icon only (by @louisqli)
 - feat: improved Spanish translation (by @nicolobos77)
