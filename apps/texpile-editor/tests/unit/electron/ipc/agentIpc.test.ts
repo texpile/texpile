@@ -16,8 +16,8 @@ vi.mock('electron', () => ({
 }));
 vi.mock('../../../../../../electron/src/appSettings', () => ({ readSettings: () => ({ refineAgents: ['claude'], aiAgentModels: {} }) }));
 vi.mock('../../../../../../electron/src/shell/shellEnv', () => ({ shellEnvReady: () => Promise.resolve() }));
-vi.mock('../../../../../../electron/src/ai/runAgent', () => ({
-	runAgent: (_argv: string[], _prompt: unknown, signal: AbortSignal) => {
+vi.mock('../../../../../../electron/src/ai/warm/warmAgents', () => ({
+	askAgent: (_task: string, _agent: string, _s: unknown, _prompt: unknown, signal: AbortSignal) => {
 		h.signals.push(signal);
 		return new Promise((resolve) => signal.addEventListener('abort', () => resolve({ ok: false, error: 'cancelled', cancelled: true })));
 	}

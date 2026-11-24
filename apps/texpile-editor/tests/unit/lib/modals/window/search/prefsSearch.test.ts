@@ -38,7 +38,12 @@ function sourceFiles(dir: string): string[] {
 }
 
 describe('the rows on screen', () => {
-	const files = [...sourceFiles(root), resolve(root, '../../../lib/ai/agentPanel/ui/AgentPanelPrefs.svelte')];
+	const files = [
+		...sourceFiles(root),
+		resolve(root, '../../../lib/ai/agentPanel/ui/AgentPanelPrefs.svelte'),
+		resolve(root, '../../../lib/ai/proofread/ProofreadPrefs.svelte'),
+		resolve(root, '../../../lib/ai/service/AiServicePrefs.svelte')
+	];
 	const text = files.map((f) => readFileSync(f, 'utf8')).join('\n');
 	// the snippets panel hands its ids to a snippet, not to the row component
 	const used = [
