@@ -73,7 +73,7 @@
 	"prefs_proofread_key_save": "Speichern",
 	"prefs_proofread_key_remove": "Entfernen",
 	"prefs_proofread_key_saved": "Ein Schlüssel ist gespeichert",
-	"prefs_proofread_key_session": "Texpile behält den Schlüssel bis zum Beenden, weil dieser Computer keinen sicheren Speicher dafür hat.",
+	"prefs_proofread_key_session": "Texpile vergisst den Schlüssel beim Beenden, weil dieser Computer keinen Schlüsselbund hat. Gib ihn nach jedem Neustart erneut ein.",
 	"prefs_proofread_model": "Modell",
 	"prefs_proofread_base_url": "Adresse des Dienstes",
 	"prefs_proofread_base_url_note": "Beginnt mit https und endet auf /v1, etwa https://api.openai.com/v1. Funktioniert mit OpenAI, OpenRouter, Gemini, Groq, DeepSeek und Mistral. Ollama und LM Studio auf diesem Computer funktionieren auch.",
