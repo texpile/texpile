@@ -102,12 +102,15 @@ class IslandCompletion {
 		const results = (await Promise.all([latexCompletionSource(new CompletionContext(code, pos, explicit))])).filter(
 			(result): result is CompletionResult => !!result
 		);
-		if (asked !== this.asked || this.view.isDestroyed || this.codeNow(found) !== code) return;
+		if (asked !== this.asked || this.view.isDestroyed) return;
+		// typing while the sources ran leaves the island found before the wait stale
+		const now = latexIsland(this.view);
+		if (!now || this.codeNow(now) !== code) return;
 		const matches = matchOptions(results, code.doc.toString(), pos);
 		if (!matches.length) return this.close();
 		this.matches = matches;
 		this.selected = 0;
-		showCompletionMenu(this.view, found.start + this.matches[0].from, this.matches, (index) => this.accept(index));
+		showCompletionMenu(this.view, now.start + this.matches[0].from, this.matches, (index) => this.accept(index));
 	}
 
 	close(): void {

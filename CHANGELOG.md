@@ -86,6 +86,7 @@ Release notes for Texpile Desktop. Add notes under `## [Unreleased]` as you work
 - fix: links in the visual editor showing as plain text (by @louisqli)
 - fix: Down on a selected table cell not leaving the cell (by @louisqli)
 - fix: visual editor rows shifting when coming back to a file (by @louisqli)
+- fix: error when pressing Enter or undo while LaTeX suggestions load in a raw LaTeX block (by @louisqli)
 
 ## [2.0.1] - 2026-11-15
 
