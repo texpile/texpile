@@ -1,9 +1,8 @@
 # Parity fixtures: key outcomes and pointer rules
 
 What the DOM visual editor (v2.0.1, `canvas/p0-dom`, see `environment.domEditorCommit` in every file) does for keys and for the
-pointer on Linux, recorded by `perf-drive/parity/keys/` in texpile-tools. The canvas replays them in `keyParity.spec.ts`,
-`hitParity.spec.ts` (right click, multi click), `caretParity.spec.ts` (caret blink) and `mathCaretParity.spec.ts` where a start
-sits beside math. macOS and Windows rows are in `platforms.json` as pending.
+pointer on Linux, recorded by `perf-drive/parity/keys/` in texpile-tools. `keyRules.spec.ts` and the
+slice specs read them. macOS and Windows rows are in `platforms.json` as pending.
 
 ## Environment block
 

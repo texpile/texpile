@@ -1,8 +1,8 @@
 # Parity geometry from the DOM editor
 
 Recorded from the DOM visual editor (texpile v2.0.1 plus the capture hook of branch `canvas/p0-dom`) by
-`perf-drive/parity/geometry/` in texpile-tools. The canvas replays these files in `lineParity`, `hitParity`, `caretParity`
-and the face oracle. Everything here is the DOM editor's answer, so a difference in the canvas is a failure unless a
+`perf-drive/parity/geometry/` in texpile-tools. The line, hit and caret recordings left with the parity sweeps on
+2026-11-24; the decoration marks stay for `reachRule.test.ts`. Everything here is the DOM editor's answer, so a difference in the canvas is a failure unless a
 decision lists it.
 
 ## Files
@@ -131,7 +131,6 @@ The first capture after a cold window start can differ in a few `browserPos` poi
 The supplement files were captured twice from fresh windows (beamer, apa and the rest) and the repeats are byte-identical.
 
 Class paths leave out the theme classes CodeMirror generates (`ͼ1`, `ͼ18`), because CodeMirror numbers them per session.
-`lineParity.spec.ts` reads them with a `DOCUMENTS` entry per file (fixture `<folder>__<file with / and . as _>`); its engine half passed on all 27.
 
 ## Decoration marks (`<doc>@marks.json`)
 

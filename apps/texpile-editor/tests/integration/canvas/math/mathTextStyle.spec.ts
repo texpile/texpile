@@ -1,10 +1,11 @@
 // inline formulas laid out in text style (A11): the inline fixtures against MathLive's own markup in text style, and a
 // line holding a fraction against the line P0 drew, where every formula stood at display size
+import fs from 'node:fs';
+import path from 'node:path';
 import { expect, test } from '@playwright/test';
 import { useTexpile } from '../../driver/useTexpile';
 import { VisualEditor } from '../../driver/visualEditor';
 import { inCanvas, settled } from '../canvasPage';
-import { mathFixtures } from './mathCaretReplay';
 
 const DOC = [
 	'\\documentclass{article}',
@@ -25,9 +26,15 @@ const P0_LINE = { plain: 28, frac: 31.77, displaystyle: 31.77 };
 
 const texpile = useTexpile({ files: { 'style.tex': DOC } });
 
+type RecordedFormula = { formula: { type: string; source: string; document: { file: string } } };
+const FIXTURES = path.resolve(import.meta.dirname, '../../../fixtures/parity/math');
+
 const inlineSources = [
 	...new Set(
-		mathFixtures()
+		fs
+			.readdirSync(FIXTURES)
+			.filter((name) => name.endsWith('.json'))
+			.map((name) => JSON.parse(fs.readFileSync(path.join(FIXTURES, name), 'utf8')) as RecordedFormula)
 			.filter((fixture) => fixture.formula.type === 'inline_math' && !fixture.formula.document.file.endsWith('.typ'))
 			.map((fixture) => fixture.formula.source)
 	)

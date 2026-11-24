@@ -1,6 +1,6 @@
 # MathLive caret outcomes
 
-What today's live `<math-field>` does in the DOM editor, for 52 formulas of the parity documents (40 from the first documents, 12 added from parity-tex-body, parity-tex-beamer, parity-typ-body and parity-md-body). The canvas branch replays it in `mathCaretParity` (design 13.10, W8): the same keys and clicks on the canvas session, offsets compared exactly, caret rects within 1 px.
+What today's live `<math-field>` does in the DOM editor, for 52 formulas of the parity documents (40 from the first documents, 12 added from parity-tex-body, parity-tex-beamer, parity-typ-body and parity-md-body). `mathTextStyle.spec.ts` reads the inline formulas.
 
 One JSON file per formula, named `<id>.json`. Recorded by `perf-drive/parity/math/` in texpile-tools (`run.sh`), against the DOM editor commit in each file's `environment.domEditorCommit`, MathLive 0.110.0.
 
