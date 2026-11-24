@@ -5,6 +5,7 @@ Release notes for Texpile Desktop. Add notes under `## [Unreleased]` as you work
 
 ## [Unreleased]
 
+- feat: vastly improved visual editor performance, there are no longer file limits (by @louisqli)
 - fix: Edit > Select All doing nothing in the visual editor (by @louisqli)
 - fix: Ctrl+Backspace not deleting on macOS in the visual editor (by @louisqli)
 - fix: empty last line of the document not shown as selected (by @louisqli)
