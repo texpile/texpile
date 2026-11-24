@@ -44,12 +44,11 @@ async function proofread(prompt: ProofreadPrompt): Promise<ProofreadAnswer> {
 	const s = readSettings();
 	if (s.aiOff === true || s.proofreadAi !== true) return { ok: false, error: 'Proofread with AI is off.' };
 	if (!underDailyLimit()) return { ok: false, error: `The daily limit of ${DAILY_LIMIT} requests is reached.` };
-	if (s.proofreadWith === 'agent') return proofreadWithAgent(s, prompt);
-	if (s.proofreadWith === 'openai')
-		return openAiProofread(text(s, 'proofreadOpenAiUrl'), proofreadKey('openai'), text(s, 'proofreadOpenAiModel'), prompt);
+	if (s.aiService === 'agent') return proofreadWithAgent(s, prompt);
+	if (s.aiService === 'openai') return openAiProofread(text(s, 'aiOpenAiUrl'), proofreadKey('openai'), text(s, 'aiOpenAiModel'), prompt);
 	const key = proofreadKey('anthropic');
 	if (!key) return { ok: false, error: 'No Anthropic API key is saved.' };
-	return anthropicProofread(key, text(s, 'proofreadAnthropicModel'), prompt);
+	return anthropicProofread(key, text(s, 'aiAnthropicModel'), prompt);
 }
 
 export function registerProofreadIpc(): void {

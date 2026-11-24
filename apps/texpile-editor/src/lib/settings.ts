@@ -104,13 +104,13 @@ export type AppSettings = {
 	refineAgents: ('claude' | 'codex' | 'agy' | 'custom')[] | null;
 	/** Harper's findings on the paragraphs on screen checked and added to by a model. Main reads it, see electron/src/ipc/proofreadIpc.ts */
 	proofreadAi: boolean;
-	/** the service that proofreads: an Anthropic key, any OpenAI-compatible service, or Refine's agent */
-	proofreadWith: 'anthropic' | 'openai' | 'agent';
+	/** the AI service set up under AI Assistant: an Anthropic key, any OpenAI-compatible service, or Refine's agent */
+	aiService: 'anthropic' | 'openai' | 'agent';
 	/** '' = claude-haiku-5-5 */
-	proofreadAnthropicModel: string;
+	aiAnthropicModel: string;
 	/** the OpenAI-compatible service's base URL, such as https://api.openai.com/v1 */
-	proofreadOpenAiUrl: string;
-	proofreadOpenAiModel: string;
+	aiOpenAiUrl: string;
+	aiOpenAiModel: string;
 	/** names, abbreviations and field terms the model recognizes go into the dictionary */
 	proofreadAddTerms: boolean;
 	/** the command line for Refine's custom agent; the prompt goes on its stdin */
@@ -183,10 +183,10 @@ const DEFAULTS: AppSettings = {
 	aiOff: false,
 	refineAgents: null,
 	proofreadAi: false,
-	proofreadWith: 'anthropic',
-	proofreadAnthropicModel: '',
-	proofreadOpenAiUrl: '',
-	proofreadOpenAiModel: '',
+	aiService: 'anthropic',
+	aiAnthropicModel: '',
+	aiOpenAiUrl: '',
+	aiOpenAiModel: '',
 	proofreadAddTerms: false,
 	aiAgentCommand: '',
 	aiAgentModels: {},

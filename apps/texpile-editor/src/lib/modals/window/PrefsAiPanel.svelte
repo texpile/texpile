@@ -1,5 +1,5 @@
 <script lang="ts">
-	// The AI category: the MCP server an assistant connects to, the agent Refine runs, proofreading, and the Agent tab's.
+	// The AI category: the MCP server an assistant connects to, the agent Refine runs, the AI service, and the Agent tab's.
 	import { settings, updateSettings, setMcpEnabled } from '$lib/settings';
 	import { agentName, isPresetAgent, PRESET_AGENTS, type RefineAgent } from '$lib/ai/selectionRefiner';
 	import { lookUpRefineAgents, refineAgentsTicked, refineInstalled } from '$lib/ai/refineAgents.svelte';
@@ -8,7 +8,7 @@
 	import CheckChoiceList from './CheckChoiceList.svelte';
 	import AgentModelChoice from './AgentModelChoice.svelte';
 	import AgentPanelPrefs from '$lib/ai/agentPanel/ui/AgentPanelPrefs.svelte';
-	import ProofreadPrefs from '$lib/ai/proofread/ProofreadPrefs.svelte';
+	import AiServicePrefs from '$lib/ai/service/AiServicePrefs.svelte';
 	import { setAiOff } from '$lib/ai/aiSwitch';
 	import PrefsRow from './rows/PrefsRow.svelte';
 	import PrefsSwitchRow from './rows/PrefsSwitchRow.svelte';
@@ -127,7 +127,7 @@
 		{/if}
 	{/each}
 
-	<ProofreadPrefs />
+	<AiServicePrefs />
 
 	<AgentPanelPrefs />
 </div>

@@ -32,7 +32,7 @@ const TABS = [
 	'Typst',
 	'Snippets',
 	'Keyboard Shortcuts',
-	'Spelling',
+	'Spelling & Grammar',
 	'Version Control',
 	'Collaboration',
 	'Programs & Compiler',
