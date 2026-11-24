@@ -9,8 +9,8 @@ one, or with keeping one of these current.
 | Chinese (Simplified)  | `zh-Hans` | 100%       | Maintained by [@louisqli](https://github.com/louisqli)                  |
 | Chinese (Traditional) | `zh-Hant` | 100%       | Maintained by [@louisqli](https://github.com/louisqli)                  |
 | German                | `de`      | 100%       | Machine translated, review welcome                                      |
-| Portuguese (Brazil)   | `pt-BR`   | 100%       | Reviewed by [@rodrigo-alessantos](https://github.com/rodrigo-alessantos) |
-| Spanish               | `es`      | 50%        | Maintained by [@nicolobos77](https://github.com/nicolobos77)            |
+| Portuguese (Brazil)   | `pt-BR`   | 100%       | Reviewed by [@rodrigo-alessantos](https://github.com/rodrigo-alessantos)|
+| Spanish               | `es`      | 72%        | Maintained by [@nicolobos77](https://github.com/nicolobos77)            |
 
 ## Translating
 
