@@ -1,6 +1,6 @@
 // the selection layer (6.4): a range fills the line boxes under its text in every focus state; crossed inline chips
 // and drawn blocks are shaded once, by their box, over them
-import { AllSelection, TextSelection, type Selection } from 'prosemirror-state';
+import { AllSelection, Selection, TextSelection } from 'prosemirror-state';
 import type { WidgetDecorationView } from '../contracts/decorationTypes';
 import type { DocRect } from '../contracts/layoutTypes';
 import { struckInRange } from '../decorations/struckInRange';
@@ -15,7 +15,10 @@ const NONE: SelectionShade = { under: [], over: [] };
 /** the range a selection shades; a node or cell selection draws through its classes, an empty one not at all */
 export function shadedRange(selection: Selection): { from: number; to: number } | null {
 	if (selection.empty || !(selection instanceof TextSelection || selection instanceof AllSelection)) return null;
-	return { from: selection.from, to: selection.to };
+	const { $to } = selection;
+	// an empty last line has no position past it, so a range ending there shades it as select all does
+	const endsOnEmptyLast = $to.parent.isTextblock && !$to.parent.content.size && $to.pos === Selection.atEnd($to.doc).to;
+	return { from: selection.from, to: endsOnEmptyLast ? $to.doc.content.size : selection.to };
 }
 
 /** in the block's space when its frame top is 0 */

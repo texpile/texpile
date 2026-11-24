@@ -5,6 +5,7 @@ Release notes for Texpile Desktop. Add notes under `## [Unreleased]` as you work
 
 ## [Unreleased]
 
+- fix: empty last line of the document not shown as selected (by @louisqli)
 - fix: Restore original menu staying open after restoring an image (by @louisqli)
 - fix: arrow pointer instead of the text cursor over formulas in the visual editor (by @louisqli)
 - fix: degree sign of \ang left out of a formula's selection and clicks (by @louisqli)
