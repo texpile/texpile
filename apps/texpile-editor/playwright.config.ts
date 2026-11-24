@@ -7,11 +7,8 @@ const GUEST_SPECS = /^(?!.*canvas[\\/]).*[\\/]guest\w*\.spec\.ts$/;
 const BROWSER_SPECS = /canvas[\\/](ime|guestSmoke)\.spec\.ts$/;
 const GUEST_PORT = VITE_PORT + 1;
 
-// the canvas specs that also run on the harness page in Chromium (project canvas-web), which launches no Electron
-const HARNESS_SPECS =
-	/canvas[\\/](coreSmoke|caretChecks|keyParity|keyRules|caretMargin|themeTokens|darkModeRepaint|scrollAnchoring|firstScreenStyles)\.spec\.ts$|canvas[\\/]math[\\/]\w+\.spec\.ts$|canvas[\\/]slice[\\/](w2|w4|w5|w7|w9)\.spec\.ts$|canvas[\\/]feedback[\\/](typingLatency|scrollSmooth)\.spec\.ts$|canvas[\\/](pointer|ime|hitParity|guestSmoke)\.spec\.ts$|[\\/]caretWalk\.spec\.ts$|(chipsAndMath|macroArguments)\.spec\.ts$/;
-// the slice specs whose looks Firefox and WebKit draw from the same canvas code
-const HARNESS_GUEST_SPECS = /canvas[\\/]slice[\\/](w4|w7|w9)\.spec\.ts$|canvas[\\/](coreSmoke|firstScreenStyles)\.spec\.ts$/;
+// the guest's engines draw the same canvas: one smoke of it in Firefox and WebKit
+const HARNESS_GUEST_SPECS = /canvas[\\/]coreSmoke\.spec\.ts$/;
 
 /** a run that names only the harness project needs no Electron build */
 function runsOnlyHarness(args: readonly string[]): boolean {
@@ -41,7 +38,6 @@ export default defineConfig({
 	globalSetup: runsOnlyHarness(process.argv.slice(2)) ? undefined : './tests/integration/driver/globalSetup.ts',
 	projects: [
 		{ name: 'app', testIgnore: GUEST_SPECS },
-		{ name: 'canvas-web', testMatch: HARNESS_SPECS, use: { browserName: 'chromium' } },
 		{ name: 'canvas-web-firefox', testMatch: HARNESS_GUEST_SPECS, use: { browserName: 'firefox' } },
 		{ name: 'canvas-web-webkit', testMatch: HARNESS_GUEST_SPECS, use: { browserName: 'webkit' } },
 		{ name: 'canvas-textarea', testMatch: BROWSER_SPECS, use: { browserName: 'chromium' } },

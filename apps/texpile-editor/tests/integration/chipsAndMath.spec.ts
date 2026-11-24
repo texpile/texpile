@@ -130,7 +130,6 @@ test("closing a citation's panel opened by a click keeps the caret at the chip",
 });
 
 test("Find in Files opened over a citation chip's popover keeps the typing", async () => {
-	test.skip(test.info().project.name.startsWith('canvas-web'), "Find in Files is the app window's");
 	const v = visual();
 	await v.open('popover.tex');
 	const original = disk().read('popover.tex');
@@ -205,7 +204,6 @@ test('arrows select a figure card from the paragraphs around it, and Backspace r
 });
 
 test('a reference shows the number drawn on what it names, with no compile', async () => {
-	test.skip(test.info().project.name !== 'app', 'the harness page counts no labels: its numbering loads from a blob it cannot fetch');
 	const v = visual();
 	await v.open('chapters/results.tex');
 	// the section and the figure are counted here, the equation in the main file that reads this one in

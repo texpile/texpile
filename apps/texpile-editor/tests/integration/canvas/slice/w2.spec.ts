@@ -116,10 +116,9 @@ for (const [language, rel] of Object.entries(SWEEP)) {
 		test.setTimeout(240_000);
 		const fixture = JSON.parse(fs.readFileSync(path.join(KEYS, `pointer/pointer-docs.pointer.${language}.json`), 'utf8')) as ClickFixture;
 		const { page, root } = texpile();
-		const app = test.info().project.name === 'canvas-web' ? null! : texpile().app;
+		const { app } = texpile();
 		const [width, height] = fixture.environment.window;
-		if (test.info().project.name === 'canvas-web') await page.setViewportSize({ width, height });
-		else await app.evaluate(({ BrowserWindow }, [w, h]) => BrowserWindow.getAllWindows()[0].setContentSize(w, h), [width, height]);
+		await app.evaluate(({ BrowserWindow }, [w, h]) => BrowserWindow.getAllWindows()[0].setContentSize(w, h), [width, height]);
 		const visual = new VisualEditor(page, root);
 		await visual.open(rel);
 		await settled(page);
