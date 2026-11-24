@@ -133,7 +133,7 @@ export function callInline(im: TreeImport, call: ImportCall, ctx: ConversionCont
 	if (hasUnclosedGroup(call)) return [chipOf(im, call, ctx)];
 	if (ignoredMacros.has(call.name)) return null;
 	const handler = commandImports.get(call.name);
-	if (handler) {
+	if (typeof handler === 'function') {
 		const result = handler(im, call, ctx);
 		// a block made here (\includegraphics to an image) has no place in inline content, so the call stays a chip
 		if (!result || result.every((n) => n.isInline)) return result && spanFromCall(result, call);
