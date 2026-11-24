@@ -74,6 +74,8 @@ class BlockHandleView {
 	});
 	private hoveredPos: number | null = null;
 	private hoveredNode: PMNode | null = null;
+	// where the text stood when the handle was placed: a glide or a shift under a resting pointer leaves it behind
+	private placedAt: { sheetLeft: number; blockTop: number } | null = null;
 	private hideTimer: number | null = null;
 	private rafId: number | null = null;
 	// the last pointer y over the editor, so a scroll can re-anchor without a new mouse event
@@ -138,9 +140,11 @@ class BlockHandleView {
 		if (!this.state.visible || this.hoveredPos == null) return false;
 		const block = this.view.canvas.nodeClientRect(this.hoveredPos)?.rect;
 		if (!block) return false;
+		const sheet = this.view.canvas.sheetClientRect();
+		if (sheet.left !== this.placedAt?.sheetLeft || block.top !== this.placedAt.blockTop) return false;
 		const { top } = this.state;
 		const buttons = { top, bottom: top + handleHeight(this.state.stacked, this.state.settings !== null) };
-		return pointerStaysWithBlock({ x, y }, this.view.canvas.sheetClientRect(), block, buttons);
+		return pointerStaysWithBlock({ x, y }, sheet, block, buttons);
 	}
 
 	// the gutter stands on the body outside the pane: a wheel over it scrolls the pane it serves
@@ -221,6 +225,7 @@ class BlockHandleView {
 			return;
 		}
 		this.cancelHide();
+		this.placedAt = { sheetLeft: containerRect.left, blockTop: rect.top };
 		this.state.visible = true;
 		this.state.top = held;
 		this.state.stacked = stacked;
