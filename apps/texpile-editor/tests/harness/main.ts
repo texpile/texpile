@@ -1,7 +1,7 @@
 // one visual editor on its own: ?lang=latex|typst|markdown names the document opened from ?doc=<served path>, and
 // window.__harness is what tests drive
 import { mount } from 'svelte';
-import '../src/app.css';
+import '../../src/app.css';
 import '$lib/theme';
 import { loadSettings } from '$lib/settings';
 import { installKeyDispatch } from '$lib/keybindings/keybindings.svelte';

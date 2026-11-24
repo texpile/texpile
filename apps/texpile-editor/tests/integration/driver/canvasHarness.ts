@@ -75,7 +75,7 @@ export async function openCanvasHarness(
 		await page.exposeFunction('__harnessWrote', (abs: string, text: string) => {
 			if (abs.startsWith(root)) fs.writeFileSync(abs, text);
 		});
-		await page.goto('/harness/index.html', { waitUntil: 'domcontentloaded', timeout: 180_000 });
+		await page.goto('/tests/harness/index.html', { waitUntil: 'domcontentloaded', timeout: 180_000 });
 		await page.waitForFunction(() => '__harness' in window, undefined, { timeout: 180_000 });
 		const { files, binary } = readFolder(root);
 		await page.evaluate((load) => (window as unknown as { __harness: { load(o: unknown): void } }).__harness.load(load), {

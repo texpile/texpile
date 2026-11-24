@@ -22,7 +22,7 @@ export class MemoryFolder {
 	) {}
 
 	absolute(path: string): string {
-		return path.startsWith('/') ? path : `${this.root}/${path}`;
+		return path.startsWith('/') || path.startsWith(this.root) ? path : `${this.root}/${path}`;
 	}
 
 	setText(path: string, text: string): void {

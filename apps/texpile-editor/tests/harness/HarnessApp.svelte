@@ -1,5 +1,5 @@
 <script lang="ts">
-	import VisualEditorHost from '../src/views/workspace/VisualEditorHost.svelte';
+	import VisualEditorHost from '../../src/views/workspace/VisualEditorHost.svelte';
 	import { references } from '$lib/workspace/citations';
 	import type { HarnessSession } from './harnessSession.svelte';
 
