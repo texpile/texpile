@@ -38,8 +38,9 @@ export class HarnessSession {
 		clearPendingAnchor: () => {},
 		projectMacros: () => this.projectMacros
 	});
-	// the parse worker loads its modules on the first parse, which a loaded machine can hold past the parse timeout
-	private readonly warmed = this.parser.parse('\\documentclass{article}\n\\begin{document}\nx\n\\end{document}\n', 'tex', false);
+	// the parse worker loads its modules on the first parse, which a loaded machine can hold past the parse timeout, and
+	// a timeout drops the worker, so warm it until one parse comes back
+	private readonly warmed = this.warm();
 
 	constructor(private readonly onWrite: (path: string, text: string) => void) {}
 
@@ -98,6 +99,11 @@ export class HarnessSession {
 		await this.warmed;
 		await this.parseOpen();
 		await ready;
+	}
+
+	private async warm(): Promise<void> {
+		for (let tries = 0; tries < 5; tries++)
+			if ((await this.parser.parse('\\documentclass{article}\n\\begin{document}\nx\n\\end{document}\n', 'tex', false)).parsed) return;
 	}
 
 	private async parseOpen(): Promise<void> {

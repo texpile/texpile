@@ -55,10 +55,9 @@ async function renameInTree(from: string, to: string): Promise<void> {
 
 test('renaming the open file keeps the visual editor, its text and its caret', async () => {
 	test.skip(process.platform === 'darwin', 'the tree context menu is native on macOS');
-	const { source, page, root } = texpile();
+	const { page, root } = texpile();
 	const visual = new VisualEditor(page, root);
-	await source.open('vis.tex');
-	await visual.modeButtons.visual.click();
+	await visual.open('vis.tex');
 	await visual.caretAtEndOf('Visual caret rename text.');
 	await visual.type(' END');
 	const caret = () => visual.evalView<number>('return view.state.selection.head;');

@@ -252,7 +252,6 @@ test('a read-only formula takes a click and the arrows, and typing changes nothi
 });
 
 test('the math toolbar inserts into the entered formula', async () => {
-	test.skip(test.info().project.name.startsWith('canvas-web'), "the toolbar is the app window's");
 	const v = visual();
 	const { pos } = await formula(v, 'inline_math');
 	await caretAt(v, pos);
@@ -289,9 +288,11 @@ for (const [kind, nth, rows] of [
 		});
 		const x = goal.left + 300;
 		await v.page.mouse.click(x, goal.y);
+		await settled(v.page);
 		const start = await caretPlace(v.page);
 		for (let row = 0; row < rows; row++) {
 			await v.press('ArrowDown');
+			await settled(v.page);
 			const place = await caretPlace(v.page);
 			expect(place.math, `row ${row + 1} is in the formula`).toBe(true);
 			// the caret stops on the caret's own row: the same caret top
@@ -304,6 +305,7 @@ for (const [kind, nth, rows] of [
 			expect(Math.abs(place.x - start.x), `row ${row + 1} at the atom nearest the goal`).toBeLessThanOrEqual(nearest + 0.5);
 		}
 		await v.press('ArrowDown');
+		await settled(v.page);
 		const out = await caretPlace(v.page);
 		expect(out.math).toBe(false);
 		expect(out.head).toBeGreaterThan(end);
