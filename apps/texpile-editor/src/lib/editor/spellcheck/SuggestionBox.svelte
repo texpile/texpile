@@ -14,6 +14,7 @@
 	import { spellLanguageName } from '$lib/editor/spellcheck/languages/spellingLanguage.svelte';
 	import { isDictionaryLanguage, type SpellLanguage } from '$lib/editor/spellcheck/languages/spellLanguages';
 	import { ruleName, SPELLING_RULE } from '$lib/editor/spellcheck/config/grammarRules';
+	import { AI_RULES } from '$lib/editor/spellcheck/review/reviewMerge';
 	import { setGrammarRule } from '$lib/editor/spellcheck/config/spellcheckConfig';
 	import { settings } from '$lib/settings';
 	import { toaster } from '$lib/modals/toaster-svelte';
@@ -141,6 +142,7 @@
 
 	// a grammar rule can be turned off from here; spelling cannot, since one word would take all of them
 	const offRule = $derived(error.rule && error.rule !== SPELLING_RULE ? error.rule : null);
+	const byModel = $derived(Object.values(AI_RULES).some((rule) => rule === error.rule));
 
 	function turnOffRule(rule: string) {
 		const before = settings.current.grammarRules?.[rule];
@@ -242,6 +244,9 @@
 			<span class="cap-center text-xs font-semibold capitalize opacity-75">
 				{sanitizedType()}
 			</span>
+			{#if byModel}
+				<span class="badge preset-tonal-primary px-1.5 text-[10px]" use:tip={m.harper_ai_badge_tip()}>{m.harper_ai_badge()}</span>
+			{/if}
 		</div>
 		<button class="btn-icon btn-icon-xs hover:preset-tonal" onclick={onClose} aria-label={m.harper_close_button_aria_label()}>
 			<IconX size={14} />

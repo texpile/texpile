@@ -549,6 +549,13 @@ contextBridge.exposeInMainWorld('texpileAgent', {
 	cancel: (id: string) => ipcRenderer.send('agent:cancel', id)
 });
 
+// proofreading with a model; main picks the service and holds the keys, which a window can set but never read
+contextBridge.exposeInMainWorld('texpileProofread', {
+	review: (system: string, request: string) => invokeReady('proofread:review', { system, request }),
+	keys: () => invokeReady('proofread:keys'),
+	setKey: (provider: 'anthropic' | 'openai', key: string) => invokeReady('proofread:setKey', { provider, key })
+});
+
 // the agent panel's conversation over ACP; main picks the program and the folder, a window only talks
 contextBridge.exposeInMainWorld('texpileAcp', {
 	/** which preset agents are on PATH */

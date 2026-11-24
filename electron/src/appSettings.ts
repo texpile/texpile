@@ -52,6 +52,13 @@ const DEFAULT_SETTINGS = {
 	// project must never pick the program that runs, and no MCP tool writes this file. A run names one of these
 	aiOff: false, // Preferences › AI Assistant's switch: no agent runs while it is on, whatever is ticked
 	refineAgents: null as string[] | null,
+	// Harper's findings checked and added to by a model: the paragraphs on screen, sent with the writer's own key
+	proofreadAi: false,
+	proofreadWith: 'anthropic', // 'anthropic' | 'openai' (any OpenAI-compatible service) | 'agent' (Refine's agent)
+	proofreadAnthropicModel: '', // '' = claude-haiku-5-5
+	proofreadOpenAiUrl: '', // the service's base URL, such as https://api.openai.com/v1 or http://localhost:11434/v1
+	proofreadOpenAiModel: '',
+	proofreadAddTerms: false, // names and field terms the model recognizes go into the dictionary
 	aiAgentCommand: '', // the command line for the 'custom' agent; the prompt goes on its stdin
 	aiAgentModels: {} as Record<string, string>, // each preset's --model, from the list it gives (agentModels.ts); '' = its own default
 	// the agent the panel in the dock talks to over ACP ('' = not chosen yet, a preset, or 'custom'). Here
