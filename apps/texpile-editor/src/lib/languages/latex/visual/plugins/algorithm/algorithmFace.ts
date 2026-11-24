@@ -2,7 +2,6 @@ import type { SyntaxNode } from '@lezer/common';
 import {
 	documentTable,
 	environmentName,
-	faceElement,
 	mandatoryArgs,
 	optionalArg,
 	ownMacroDefinition,
@@ -16,7 +15,7 @@ import {
 } from '$lib/languages/latex/visual/core';
 import { commonEnvFacts } from '$lib/languages/latex/knowledge/environments/envFacts';
 import { algorithmStep, type AlgorithmStep } from './algorithmSteps';
-import './algorithm.css';
+import { faceElement, setLook } from '$lib/editor/canvas';
 
 export type AlgorithmDrawer = {
 	unitsOf(s: Stretch): SourceUnit[];
@@ -32,13 +31,12 @@ export function isAlgorithmEnvironment(name: string): boolean {
 
 export function keywordPart(say: string, key: string | undefined, drawer: AlgorithmDrawer): ChipFace | null {
 	if (key && ownMacroDefinition(`algorithmic${key}`)) return drawer.drawSource(`\\algorithmic${key}`);
-	const dom = document.createElement('strong');
-	dom.textContent = say;
-	return { dom };
+	return { dom: faceElement('strong', '', say) };
 }
 
-export function commentPart(parts: ChipFace[]): ChipFace {
+export function commentPart(parts: ChipFace[]): ChipFace | null {
 	const dom = faceElement('span', 'drawn-algorithm-comment');
+	setLook(dom, { color: 'var(--muted-text)' });
 	dom.append('▷ ', ...parts.map((part) => part.dom));
 	return { dom, destroy: () => parts.forEach((part) => part.destroy?.()) };
 }
@@ -77,8 +75,9 @@ function lineFace(line: Line, number: number | null, drawer: AlgorithmDrawer): C
 	}
 	function add(drawn: ChipFace[] | ChipFace | null): boolean {
 		const list = drawn === null ? null : [drawn].flat();
-		if (list?.some((part) => part.line)) list.forEach((part) => part.destroy?.());
-		if (!list || list.some((part) => part.line)) return false;
+		const usable = !!list && list.every((part) => !part.line);
+		if (list && !usable) list.forEach((part) => part.destroy?.());
+		if (!list || !usable) return false;
 		if (list.length) groups.push(list);
 		return true;
 	}
@@ -96,14 +95,21 @@ function lineFace(line: Line, number: number | null, drawer: AlgorithmDrawer): C
 		if (!drawn || !add(commentPart(drawn))) return fail();
 	}
 	const dom = faceElement('div', 'drawn-algorithm-line');
-	dom.style.paddingInlineStart = `${line.depth * 1.5}em`;
+	setLook(dom, { position: 'relative', marginLeft: '2em', paddingLeft: `${line.depth * 1.5}em` });
 	if (number !== null) {
-		const mark = faceElement('span', 'drawn-algorithm-number', `${number}:`);
-		dom.append(mark);
+		const mark = dom.appendChild(faceElement('span', 'drawn-algorithm-number', `${number}:`));
+		setLook(mark, {
+			position: 'absolute',
+			left: '-2em',
+			width: '1.6em',
+			textAlign: 'right',
+			fontSize: '0.8em',
+			color: 'var(--muted-text)'
+		});
 	}
 	groups.forEach((group, i) => {
 		if (i) dom.append(' ');
-		dom.append(...group.map((part) => part.dom));
+		dom.append(...group.map((part) => part.dom as typeof dom));
 	});
 	return { dom, destroy: () => parts().forEach((part) => part.destroy?.()) };
 }
@@ -119,6 +125,13 @@ export function algorithmPart(node: SyntaxNode, src: string, drawer: AlgorithmDr
 	const given = env.args.find((a) => a.present && a.open === '[');
 	const every = given?.body ? Number(src.slice(given.body.from, given.body.to).trim()) || 0 : 0;
 	const dom = faceElement('div', 'drawn-algorithm');
+	setLook(dom, {
+		display: 'flex',
+		flexDirection: 'column',
+		gap: '0.15em',
+		paddingTop: 'calc(var(--spacing) * 1)',
+		paddingBottom: 'calc(var(--spacing) * 1)'
+	});
 	const drawn: ChipFace[] = [];
 	for (const [i, line] of lines.entries()) {
 		const face = lineFace(line, every > 0 && (i + 1) % every === 0 ? i + 1 : null, drawer);
@@ -127,7 +140,7 @@ export function algorithmPart(node: SyntaxNode, src: string, drawer: AlgorithmDr
 			return null;
 		}
 		drawn.push(face);
-		dom.append(face.dom);
+		dom.append(face.dom as typeof dom);
 	}
 	return { dom, line: true, destroy: () => drawn.forEach((part) => part.destroy?.()) };
 }

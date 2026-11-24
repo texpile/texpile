@@ -1,8 +1,8 @@
 import type { SyntaxNode } from '@lezer/common';
 import type { Plugin } from 'prosemirror-state';
-import type { EditorProps } from 'prosemirror-view';
+import type { CanvasViewSet } from '$lib/editor/canvas';
 import type { ChipFace } from '$lib/editor/visual/extensions/drawnChips/chipFace';
-import type { ChipSettings } from '$lib/editor/visual/extensions/drawnChips/chipPanel.svelte';
+import type { ChipSettings } from '$lib/editor/visual/extensions/drawnChips/chipPanel/chipPanel.svelte';
 import type { SourceUnit } from '$lib/languages/latex/parser/tree/walk/sourceUnits';
 import type { Stretch } from '$lib/languages/latex/parser/tree/walk/stretch';
 import type { TreeArg, TreeCall } from '$lib/languages/latex/parser/tree/walk/treeArgs';
@@ -42,8 +42,6 @@ export type LatexViewSetup = {
 	onJumpToDefinition?: (name: string) => boolean;
 };
 
-export type LatexNodeViews = NonNullable<EditorProps['nodeViews']>;
-
 export type LatexEditorSlot = 'atStart' | 'beforeWordCount' | 'afterContents';
 
 export type LatexFaceAnswer = ChipFace | ChipFace[] | null | undefined;
@@ -59,7 +57,7 @@ export type LatexPlugin = {
 	counts?: Record<string, (call: LatexCountedCall) => (number | null)[]>;
 	settings?(source: string): ChipSettings | null;
 	document?: LatexDocumentPlugin;
-	views?(setup: LatexViewSetup): LatexNodeViews;
+	canvasViews?(setup: LatexViewSetup): CanvasViewSet;
 	editorPlugins?: Partial<Record<LatexEditorSlot, () => Plugin[]>>;
 	insert?(ctx: LatexInsertContext): LatexInsertOffer[];
 	arguments?: LatexArguments;

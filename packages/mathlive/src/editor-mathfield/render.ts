@@ -17,12 +17,23 @@ import { applyInterBoxSpacing } from '../core/inter-box-spacing';
 import { convertLatexToMarkup } from '../public/mathlive';
 import { hashCode } from '../common/hash-code';
 import { ModeEditor } from './mode-editor';
+import { layoutBox } from '../core/box-layout';
+import type { HeadlessHost } from './headless';
 
 export function requestUpdate(
   mathfield: _Mathfield | undefined | null,
   options?: { interactive: boolean }
 ): void {
-  if (!mathfield || mathfield.dirty || !mathfield.field) return;
+  if (!mathfield || mathfield.dirty) return;
+  if (mathfield.headless) {
+    // coalesced before the host's next frame, which reads the layout
+    mathfield.dirty = true;
+    queueMicrotask(() => {
+      if (isValidMathfield(mathfield) && mathfield.dirty) render(mathfield);
+    });
+    return;
+  }
+  if (!mathfield.field) return;
   mathfield.resizeObserver.unobserve(mathfield.field);
   mathfield.dirty = true;
   requestAnimationFrame(() => {
@@ -97,15 +108,15 @@ function makeBox(
   return wrapper;
 }
 
-export function contentMarkup(
+/** marks the atoms holding the caret or the selection, then boxes the content */
+function editingBox(
   mathfield: _Mathfield,
   renderOptions?: { forHighlighting?: boolean; interactive?: boolean }
-): string {
-  try {
-    //
-    // 1. Update selection state and blinking cursor (caret)
-    //
-    const { model } = mathfield;
+): Box {
+  //
+  // 1. Update selection state and blinking cursor (caret)
+  //
+  const { model } = mathfield;
     model.root.caret = undefined;
     model.root.isSelected = false;
     model.root.containsCaret = true;
@@ -133,13 +144,15 @@ export function contentMarkup(
     //
     // 2. Render a box representation of the mathfield content
     //
-    const box = makeBox(mathfield, renderOptions);
+    return makeBox(mathfield, renderOptions);
+}
 
-    //
-    // 3. Generate markup
-    //
-
-    return box.toMarkup();
+export function contentMarkup(
+  mathfield: _Mathfield,
+  renderOptions?: { forHighlighting?: boolean; interactive?: boolean }
+): string {
+  try {
+    return editingBox(mathfield, renderOptions).toMarkup();
   } catch (e) {
     console.error(e);
     return '<span class="ML__latex" translate="no" aria-hidden="true">🚫</span>';
@@ -160,12 +173,16 @@ export function render(
 ): void {
   if (!isValidMathfield(mathfield)) return;
   renderOptions ??= {};
+  if (mathfield.headless) {
+    renderHeadless(mathfield, mathfield.headless);
+    return;
+  }
 
   //
   // 1. Hide the virtual keyboard toggle if not applicable
   //
 
-  const keyboardToggle = mathfield.element.querySelector<HTMLElement>(
+  const keyboardToggle = mathfield.element!.querySelector<HTMLElement>(
     '[part=virtual-keyboard-toggle]'
   );
   if (keyboardToggle)
@@ -194,7 +211,7 @@ export function render(
   let content = contentMarkup(mathfield, renderOptions);
 
   const menuToggle =
-    mathfield.element.querySelector<HTMLElement>('[part=menu-toggle]');
+    mathfield.element!.querySelector<HTMLElement>('[part=menu-toggle]');
   if (menuToggle) {
     let hideMenu = false;
     if (
@@ -204,7 +221,7 @@ export function render(
     )
       hideMenu = true;
     // If the width of the mathfield element is less than 50px, hide the menu
-    if (!hideMenu && mathfield.element.offsetWidth < 50) hideMenu = true;
+    if (!hideMenu && mathfield.element!.offsetWidth < 50) hideMenu = true;
 
     menuToggle.style.display = hideMenu ? 'none' : '';
   }
@@ -237,10 +254,73 @@ export function render(
   mathfield.dirty = false;
 }
 
+function renderHeadless(mathfield: _Mathfield, host: HeadlessHost): void {
+  mathfield.dirty = false;
+  mathfield.atomBoundsCache = new Map<string, Rect>();
+  host.layoutChanged(
+    layoutBox(editingBox(mathfield), {
+      measure: host.measure,
+      extents: host.extents,
+      family: host.family(),
+      editing: true,
+    })
+  );
+  if (mathfield.model.selectionIsCollapsed)
+    updateSuggestionPopoverPosition(mathfield, { deferred: true });
+}
+
+/** the selection rects the field draws, field-relative, as the DOM path places its divs */
+export function selectionRectsOf(mathfield: _Mathfield): Rect[] {
+  if (mathfield.model.selectionIsCollapsed) return [];
+  const s = mathfield.geometry.scale;
+  return unionRects(
+    getSelectionBounds(mathfield, { excludeAtomsWithBackground: true })
+  ).map((x) => {
+    const left = x.left / s;
+    const top = x.top / s;
+    return {
+      left,
+      top,
+      right: left + Math.ceil((x.right - x.left) / s),
+      bottom: top + Math.max(1, Math.ceil((x.bottom - x.top) / s - 1)),
+    };
+  });
+}
+
+/** the zone around the caret that wears the contains highlight, field-relative */
+export function containsHighlightOf(mathfield: _Mathfield): Rect | null {
+  const { model } = mathfield;
+  if (!model.selectionIsCollapsed) return null;
+  let atom = model.at(model.position);
+  while (
+    atom &&
+    atom.type !== 'prompt' &&
+    !(atom.containsCaret && atom.displayContainsHighlight)
+  )
+    atom = atom.parent!;
+  if (!atom?.containsCaret || !atom.displayContainsHighlight) return null;
+  const s = mathfield.geometry.scale;
+  const bounds = adjustForScrolling(
+    mathfield,
+    getAtomBounds(mathfield, atom),
+    s
+  );
+  if (!bounds) return null;
+  const left = bounds.left / s + 1;
+  const top = Math.ceil(bounds.top / s);
+  return {
+    left,
+    top,
+    right: left + Math.ceil((bounds.right - bounds.left) / s),
+    bottom: top + Math.ceil((bounds.bottom - bounds.top) / s),
+  };
+}
+
 export function renderSelection(
   mathfield: _Mathfield,
   interactive?: boolean
 ): void {
+  if (mathfield.headless) return;
   const field = mathfield.field;
 
   // In some rare cases, we can get called (via a timeout) when the field
@@ -278,27 +358,6 @@ export function renderSelection(
   // the rendered nodes.
   mathfield.atomBoundsCache?.clear();
 
-  // Cache the scale factor
-  // In some cases we don't need it, so we want to avoid computing it
-  // since it can trigger a reflow
-  let _scaleFactor: number | undefined;
-  const scaleFactor = () => {
-    if (_scaleFactor !== undefined) return _scaleFactor;
-    // Logic to accommodate mathfield hosted in an isotropically scale-transformed element.
-    // Without this, the selection indicator will not be in the right place.
-
-    // 1. Inquire how big the mathfield thinks it is
-    const offsetWidth = field.offsetWidth;
-
-    // 2. Get the actual screen width of the box
-    const actualWidth = field.getBoundingClientRect().width;
-    // 3. Divide the two to get the scale factor
-    _scaleFactor = Math.floor(actualWidth) / offsetWidth;
-    if (isNaN(_scaleFactor)) _scaleFactor = 1;
-
-    return _scaleFactor;
-  };
-
   if (model.selectionIsCollapsed) {
     //
     // 1.1. Display the popover relative to the location of the caret
@@ -308,37 +367,16 @@ export function renderSelection(
     //
     // 1.2. Display the 'contains' highlight
     //
-    let atom = model.at(model.position);
-    while (
-      atom &&
-      atom.type !== 'prompt' &&
-      !(atom.containsCaret && atom.displayContainsHighlight)
-    )
-      atom = atom.parent!;
-
-    if (atom?.containsCaret && atom.displayContainsHighlight) {
-      const s = scaleFactor();
-      const bounds = adjustForScrolling(
-        mathfield,
-        getAtomBounds(mathfield, atom),
-        s
-      );
-
-      if (bounds) {
-        bounds.left /= s;
-        bounds.right /= s;
-        bounds.top /= s;
-        bounds.bottom /= s;
-
-        const element = document.createElement('div');
-        element.classList.add('ML__contains-highlight');
-        element.style.position = 'absolute';
-        element.style.left = `${bounds.left + 1}px`;
-        element.style.top = `${Math.ceil(bounds.top)}px`;
-        element.style.width = `${Math.ceil(bounds.right - bounds.left)}px`;
-        element.style.height = `${Math.ceil(bounds.bottom - bounds.top)}px`;
-        field.insertBefore(element, field.childNodes[0]);
-      }
+    const bounds = containsHighlightOf(mathfield);
+    if (bounds) {
+      const element = document.createElement('div');
+      element.classList.add('ML__contains-highlight');
+      element.style.position = 'absolute';
+      element.style.left = `${bounds.left}px`;
+      element.style.top = `${bounds.top}px`;
+      element.style.width = `${bounds.right - bounds.left}px`;
+      element.style.height = `${bounds.bottom - bounds.top}px`;
+      field.insertBefore(element, field.childNodes[0]);
     }
 
     return;
@@ -347,24 +385,14 @@ export function renderSelection(
   //
   // 2. Display the non-collapsed selection
   //
-  const s = scaleFactor();
-  const rects = unionRects(
-    getSelectionBounds(mathfield, { excludeAtomsWithBackground: true })
-  );
-
-  for (const x of rects) {
-    x.left /= s;
-    x.right /= s;
-    x.top /= s;
-    x.bottom /= s;
-
+  for (const x of selectionRectsOf(mathfield)) {
     const selectionElement = document.createElement('div');
     selectionElement.classList.add('ML__selection');
     selectionElement.style.position = 'absolute';
     selectionElement.style.left = `${x.left}px`;
     selectionElement.style.top = `${x.top}px`;
-    selectionElement.style.width = `${Math.ceil(x.right - x.left)}px`;
-    selectionElement.style.height = `${Math.max(1, Math.ceil(x.bottom - x.top - 1))}px`;
+    selectionElement.style.width = `${x.right - x.left}px`;
+    selectionElement.style.height = `${x.bottom - x.top}px`;
     field.insertBefore(selectionElement, field.childNodes[0]);
   }
 }

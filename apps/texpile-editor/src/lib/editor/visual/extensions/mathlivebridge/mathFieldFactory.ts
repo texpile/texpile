@@ -1,10 +1,6 @@
-// Builds and releases the live MathfieldElement a math node view swaps in for its static
-// placeholder once the node nears the viewport.
-import { MathfieldElement } from 'mathlive';
+// what a formula holds and the keys Texpile takes ahead of MathLive in every formula session
+import type { HeadlessMathfield } from 'mathlive';
 import type { Node } from 'prosemirror-model';
-import { isMac } from '$lib/platform';
-import { themeColorMap } from './themeBlack';
-import { mathSearchKeydown } from './mathSearch/mathSearchKeys';
 
 /** what a math node holds: LaTeX in a .tex or .md file, Typst in a .typ one */
 export type MathSyntax = 'latex' | 'typst';
@@ -19,136 +15,34 @@ export function mathFormat(syntax: MathSyntax): 'latex-expanded' | 'typst' {
 	return syntax === 'typst' ? 'typst' : 'latex-expanded';
 }
 
-export type FieldListeners = {
-	input: () => void;
-	moveOut: (e: CustomEvent<{ direction: string }>) => void;
-	focus: () => void;
-	blur: () => void;
-	keydown: (e: KeyboardEvent) => void;
-	edgeKeydown: (e: KeyboardEvent) => void;
-	/** every way of asking for the field's menu: right-click, its menu button, a long press */
-	menu: (e: MouseEvent) => void;
+/** the members the key hotfixes use */
+export type HotfixField = Pick<HeadlessMathfield, 'mode' | 'syntax' | 'executeCommand' | 'position' | 'getValue' | 'insert'> & {
+	selection: HeadlessMathfield['selection'];
 };
 
-export function buildMathField(
-	content: string,
-	editable: boolean,
-	listeners: FieldListeners,
-	syntax: MathSyntax
-): { field: MathfieldElement; origFocus: (options?: FocusOptions) => void } {
-	const field = new MathfieldElement();
-	// The document's own macros are NOT applied here: reading field.macros throws "Mathfield not
-	// mounted" until the element is in the document, and this one is built detached. The node view
-	// applies them once it has inserted the field.
-	field.mathVirtualKeyboardPolicy = 'manual';
-	field.style.border = 'none';
-	field.style.outline = 'none';
-	field.style.backgroundColor = 'transparent';
-	field.colorMap = themeColorMap;
-	field.syntax = syntax;
-
-	field.setValue(content, { format: mathFormat(syntax), mode: 'math' });
-
-	field.addEventListener('input', listeners.input);
-	field.addEventListener('move-out', listeners.moveOut as EventListener);
-	field.addEventListener('focus', listeners.focus);
-	field.addEventListener('blur', listeners.blur);
-	field.addEventListener('keydown', listeners.keydown);
-	field.addEventListener('keydown', listeners.edgeKeydown, { capture: true });
-	// capture: ahead of mathlive, which shows its own menu unless this one cancels the event
-	field.addEventListener('contextmenu', listeners.menu, { capture: true });
-	// capture: mathlive stops the Space that completes a \command
-	field.addEventListener('keydown', completeWithPlaceholder, { capture: true });
-	field.addEventListener('keydown', mathSearchKeydown, { capture: true });
-	field.addEventListener('keydown', quoteSwitchesText, { capture: true });
-
-	// mathlive doesn't fire focus events on programmatic .focus(), so wrap it
-	const origFocus = field.focus.bind(field) as (options?: FocusOptions) => void;
-	field.focus = ((options?: FocusOptions) => {
-		origFocus(options);
-		listeners.focus();
-		// bubbling event for global listeners like the toolbar
-		field.dispatchEvent(new CustomEvent('ml:focusin', { bubbles: true, cancelable: true }));
-	}) as typeof field.focus;
-
-	// undo/redo handled by prosemirror
-	field.canUndo = () => false;
-	field.canRedo = () => false;
-
-	if (!editable) {
-		field.readOnly = true;
-	}
-
-	return { field, origFocus };
+function plainKey(event: KeyboardEvent): boolean {
+	return !event.shiftKey && !event.altKey && !event.ctrlKey && !event.metaKey;
 }
 
-// hotfix for https://github.com/arnog/mathlive/issues/3066
-export function dropIntlBackslashBinding(field: MathfieldElement): void {
-	if (!isMac || !field.isConnected) return;
-	const kept = field.keybindings.filter((binding) => binding.key !== '[IntlBackslash]');
-	// eslint-disable-next-line no-param-reassign
-	if (kept.length !== field.keybindings.length) field.keybindings = kept;
-}
-
-// hotfix for https://github.com/arnog/mathlive/issues/3084
-export function completeWithPlaceholder(event: KeyboardEvent): void {
-	const field = event.currentTarget as MathfieldElement;
-	if (
-		field.mode !== 'latex' ||
-		field.syntax === 'typst' ||
-		(event.key !== ' ' && event.key !== 'Enter') ||
-		event.shiftKey ||
-		event.altKey ||
-		event.ctrlKey ||
-		event.metaKey
-	)
-		return;
-	event.preventDefault();
-	event.stopPropagation();
+// hotfix for https://github.com/arnog/mathlive/issues/3084: the command completed, the caret in its first argument
+export function completeWithPlaceholder(field: HotfixField, event: KeyboardEvent): boolean {
+	if (field.mode !== 'latex' || field.syntax === 'typst' || (event.key !== ' ' && event.key !== 'Enter') || !plainKey(event)) return false;
 	field.executeCommand(['complete', 'accept-all'] as never);
 	const at = field.position;
 	const latex = field.getValue(at - 1, at);
-	if (!/^\\(?!placeholder\b|operatorname\b)[a-zA-Z]+(\{\})+$/.test(latex)) return;
+	if (!/^\\(?!placeholder\b|operatorname\b)[a-zA-Z]+(\{\})+$/.test(latex)) return true;
 	// one offset per empty argument; walking back while getValue matches strays into a box before it (y^2\hat)
 	const emptyArgs = latex.split('{}').length - 1;
+	// eslint-disable-next-line no-param-reassign -- the field is the one being edited
 	field.selection = { ranges: [[at - 1 - emptyArgs, at]] };
 	field.insert(latex.replace(/\{\}/g, '{#?}'), { selectionMode: 'placeholder' });
+	return true;
 }
 
 // `"` goes in and out of text, \text{...}, on any keyboard: mathlive binds it only on English layouts
-export function quoteSwitchesText(event: KeyboardEvent): void {
-	const field = event.currentTarget as MathfieldElement;
-	if (
-		field.syntax === 'typst' ||
-		event.key !== '"' ||
-		event.altKey ||
-		event.ctrlKey ||
-		event.metaKey ||
-		(field.mode !== 'math' && field.mode !== 'text')
-	)
-		return;
-	event.preventDefault();
-	event.stopPropagation();
+export function quoteSwitchesText(field: HotfixField, event: KeyboardEvent): boolean {
+	if (field.syntax === 'typst' || event.key !== '"' || event.altKey || event.ctrlKey || event.metaKey) return false;
+	if (field.mode !== 'math' && field.mode !== 'text') return false;
 	field.executeCommand(['switchMode', field.mode === 'math' ? 'text' : 'math']);
-}
-
-export function releaseMathField(
-	field: MathfieldElement,
-	origFocus: ((options?: FocusOptions) => void) | undefined,
-	listeners: FieldListeners
-): void {
-	field.removeEventListener('input', listeners.input);
-	field.removeEventListener('move-out', listeners.moveOut as EventListener);
-	field.removeEventListener('focus', listeners.focus);
-	field.removeEventListener('blur', listeners.blur);
-	field.removeEventListener('keydown', listeners.keydown);
-	field.removeEventListener('keydown', listeners.edgeKeydown, { capture: true });
-	field.removeEventListener('contextmenu', listeners.menu, { capture: true });
-	field.removeEventListener('keydown', completeWithPlaceholder, { capture: true });
-	field.removeEventListener('keydown', mathSearchKeydown, { capture: true });
-	field.removeEventListener('keydown', quoteSwitchesText, { capture: true });
-	if (origFocus) {
-		// eslint-disable-next-line no-param-reassign -- restoring the focus method the build wrapped
-		field.focus = origFocus as typeof field.focus;
-	}
+	return true;
 }

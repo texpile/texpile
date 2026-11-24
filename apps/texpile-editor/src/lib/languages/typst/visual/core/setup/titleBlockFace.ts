@@ -1,5 +1,7 @@
 // a template given a title, authors, a date or an abstract, drawn as the title block LaTeX draws for \maketitle
-import { faceElement, tippedFace, type ChipFace } from '$lib/editor/visual/extensions/drawnChips/chipFace';
+import type { FaceElement } from '$lib/editor/canvas';
+import { tippedFace, type ChipFace } from '$lib/editor/visual/extensions/drawnChips/chipFace';
+import { chipElement } from '$lib/editor/visual/extensions/drawnChips/looks/chipLooks';
 import { settingRow } from '$lib/editor/visual/extensions/drawnChips/settings/settingsFace';
 import { titleLine } from '$lib/editor/visual/extensions/drawnChips/titleBlock/titleLine';
 import { m } from '$lib/paraglide/messages';
@@ -7,19 +9,18 @@ import type { TypstFileScope, TypstTitlePart } from '../../../knowledge';
 import { fieldCell, fieldItems, fieldText, type FieldNode } from '../reading/fieldText';
 import type { TemplateCall, TemplateField } from './templateCall';
 
-type TitleLineDrawing = HTMLElement | 'empty' | null;
+type TitleLineDrawing = FaceElement | 'empty' | null;
 
 const ORDER: TypstTitlePart[] = ['title', 'subtitle', 'author', 'date', 'abstract', 'keywords'];
 
-function drawTextLine(part: string, label: string | null, text: string): HTMLElement {
-	const line = titleLine(part, label);
-	line.appendChild(faceElement('span', 'title-matter-text', text));
+function drawTextLine(part: string, label: string | null, text: string): FaceElement {
+	const line = titleLine(part, label, chipElement);
+	line.appendChild(chipElement('span', 'title-matter-text', text));
 	return line;
 }
 
-function drawCodeLine(field: TemplateField, source: string): HTMLElement {
-	const line = titleLine(field.part!, null);
-	line.classList.add('title-matter-empty');
+function drawCodeLine(field: TemplateField, source: string): FaceElement {
+	const line = titleLine(field.part!, null, chipElement, true);
 	line.textContent = `${field.name}: ${source.slice(field.value.from, field.value.to).replace(/\s+/g, ' ')}`;
 	return line;
 }
@@ -29,12 +30,12 @@ function drawAuthorsLine(items: FieldNode[], scope: TypstFileScope | null): Titl
 	if (cells.some((cell) => cell === null)) return null;
 	const named = cells.filter((cell) => cell!.name);
 	if (!named.length) return 'empty';
-	const line = titleLine('author', null);
+	const line = titleLine('author', null, chipElement);
 	for (const cell of named) {
-		const box = line.appendChild(faceElement('div', 'title-matter-cell'));
+		const box = line.appendChild(chipElement('div', 'title-matter-cell'));
 		box.append(cell!.name);
 		for (const text of cell!.lines) {
-			box.appendChild(faceElement('div', 'title-matter-affiliation', text));
+			box.appendChild(chipElement('div', 'title-matter-affiliation', text));
 		}
 	}
 	return line;
@@ -57,7 +58,7 @@ function drawFieldLine(field: TemplateField, source: string, scope: TypstFileSco
 export function titleBlockFace(template: TemplateCall, source: string, scope: TypstFileScope | null, hint: string): ChipFace | null {
 	const fields = template.fields.filter((field) => field.part).sort((a, b) => ORDER.indexOf(a.part!) - ORDER.indexOf(b.part!));
 	if (!fields.length) return null;
-	const dom = document.createElement('div');
+	const dom = chipElement('div');
 	dom.appendChild(settingRow({ target: m.drawn_chip_typst_template(), values: [template.name] }));
 	for (const field of fields) {
 		const line = drawFieldLine(field, source, scope);

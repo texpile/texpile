@@ -1,4 +1,4 @@
-// notion-style block handle: floating insert/drag/delete gutters beside the hovered block
+// notion-style block handle: floating insert and drag gutters beside the hovered block
 import { caretAfterDelete } from './blockHandle/caretAfterDelete';
 import { Plugin, NodeSelection, type EditorState } from 'prosemirror-state';
 import { mount, unmount } from 'svelte';
@@ -17,7 +17,7 @@ import { blockSettingsAt } from './blockHandle/blockSettings';
 import { dividerDragging, onDividerGrab } from '$lib/resizing/edgeDrag';
 import { handleLineMiddle } from './blockHandle/handleLine';
 import { handleTop, pointerStaysWithBlock } from './blockHandle/handleReach';
-import { blockHandlePluginKey, handleDropEvents, handleDropLine, handleDropState, setHandleDragActive } from './blockHandle/handleDrop';
+import { blockHandlePluginKey, handleDropEvents, handleDropState, setHandleDragActive } from './blockHandle/handleDrop';
 
 type ItemsOf = () => readonly InsertItem[];
 
@@ -31,19 +31,20 @@ const GUTTER_OFFSET_LEFT_STACKED = 30;
 const HANDLE_W = 22;
 const HANDLE_GAP = 2;
 
-// the buttons from the first one's top to the last one's foot: one row, or a column with the delete icon and the gear in it
+// the buttons from the first one's top to the last one's foot: one row, or a column with the gear in it
 function handleHeight(stacked: boolean, settings: boolean): number {
-	const buttons = stacked ? (settings ? 4 : 3) : 1;
+	const buttons = stacked ? (settings ? 3 : 2) : 1;
 	return buttons * HANDLE_W + (buttons - 1) * HANDLE_GAP;
 }
 
 // a \noindent paragraph prints its own label in this same left margin, at the block's top edge
 // (app.css). Drop the gutter clear of it rather than have the two draw over each other.
 const NOINDENT_LABEL_DROP = 22;
-function dropsForLabel(dom: HTMLElement) {
-	if (dom.tagName === 'P') return dom.dataset.indent === 'noindent';
+function dropsForLabel(node: PMNode | null): boolean {
+	if (node?.type.name === 'paragraph') return node.attrs.indent === 'noindent';
 	// a list item's first paragraph prints its label out past the bullet, which is this margin too
-	return dom.querySelector(":scope > .list-content > p:first-child[data-indent='noindent']") !== null;
+	const first = node?.type.name === 'list' ? node.firstChild : null;
+	return first?.type.name === 'paragraph' && first.attrs.indent === 'noindent';
 }
 
 class BlockHandleView {
@@ -59,6 +60,7 @@ class BlockHandleView {
 		right: number;
 		stacked: boolean;
 		popoverOpen: boolean;
+		menuOpen: boolean;
 		settings: string | null;
 	}>({
 		visible: false,
@@ -67,10 +69,13 @@ class BlockHandleView {
 		right: 0,
 		stacked: false,
 		popoverOpen: false,
+		menuOpen: false,
 		settings: null
 	});
 	private hoveredPos: number | null = null;
 	private hoveredNode: PMNode | null = null;
+	// where the text stood when the handle was placed: a glide or a shift under a resting pointer leaves it behind
+	private placedAt: { sheetLeft: number; blockTop: number } | null = null;
 	private hideTimer: number | null = null;
 	private rafId: number | null = null;
 	// the last pointer y over the editor, so a scroll can re-anchor without a new mouse event
@@ -82,7 +87,7 @@ class BlockHandleView {
 	// a pane made wider or narrower moves its blocks from under a handle the pointer is resting beside
 	private readonly laneSize = new ResizeObserver(([lane]) => {
 		const { width } = lane.contentRect;
-		if (this.laneWidth >= 0 && width !== this.laneWidth && !this.state.popoverOpen) this.state.visible = false;
+		if (this.laneWidth >= 0 && width !== this.laneWidth && !this.menuShown) this.state.visible = false;
 		this.laneWidth = width;
 	});
 
@@ -112,28 +117,41 @@ class BlockHandleView {
 		this.lane.addEventListener('mouseleave', this.onMouseLeave);
 		this.host.addEventListener('mouseenter', this.cancelHide);
 		this.host.addEventListener('mouseleave', this.scheduleHide);
+		this.host.addEventListener('wheel', this.onWheel, { passive: true });
 		// capture, because scroll does not bubble: this has to catch the editor's scroller and any
 		// nested one (a wide table's wrapper) without knowing which exists
 		view.dom.ownerDocument.addEventListener('dragend', this.onDragEnd, true);
 		view.dom.ownerDocument.addEventListener('scroll', this.onScroll, { capture: true, passive: true });
 	}
 
+	private get menuShown(): boolean {
+		return this.state.popoverOpen || this.state.menuOpen;
+	}
+
 	private onMouseMove = (event: MouseEvent) => {
 		this.pointerInside = true;
 		this.lastPointerY = event.clientY;
-		if (this.state.popoverOpen) return; // frozen while the insert menu is open
+		if (this.menuShown) return; // frozen while a menu is open
 		if (this.staysWithBlock(event.clientX, event.clientY)) this.cancelHide();
 		else this.queueUpdate(event.clientY);
 	};
 
 	private staysWithBlock(x: number, y: number): boolean {
 		if (!this.state.visible || this.hoveredPos == null) return false;
-		const dom = this.view.nodeDOM(this.hoveredPos);
-		if (!(dom instanceof HTMLElement)) return false;
+		const block = this.view.canvas.nodeClientRect(this.hoveredPos)?.rect;
+		if (!block) return false;
+		const sheet = this.view.canvas.sheetClientRect();
+		if (sheet.left !== this.placedAt?.sheetLeft || block.top !== this.placedAt.blockTop) return false;
 		const { top } = this.state;
 		const buttons = { top, bottom: top + handleHeight(this.state.stacked, this.state.settings !== null) };
-		return pointerStaysWithBlock({ x, y }, this.view.dom.getBoundingClientRect(), dom.getBoundingClientRect(), buttons);
+		return pointerStaysWithBlock({ x, y }, sheet, block, buttons);
 	}
+
+	// the gutter stands on the body outside the pane: a wheel over it scrolls the pane it serves
+	private onWheel = (event: WheelEvent) => {
+		const unit = event.deltaMode === 1 ? 16 : event.deltaMode === 2 ? window.innerHeight : 1;
+		scrollParent(this.view.dom)?.scrollBy({ left: event.deltaX * unit, top: event.deltaY * unit });
+	};
 
 	private onMouseLeave = () => {
 		this.pointerInside = false;
@@ -146,7 +164,7 @@ class BlockHandleView {
 	 * a fixed-positioned gutter on document.body is clipped by nothing, so it lands on the toolbar.
 	 */
 	private onScroll = () => {
-		if (this.state.popoverOpen || !this.state.visible) return;
+		if (this.menuShown || !this.state.visible) return;
 		// no pointer to re-anchor to (scrolling with the gutter itself hovered, say): hide rather
 		// than leave it pointing at a block that has moved
 		if (!this.pointerInside || this.lastPointerY == null) {
@@ -166,7 +184,7 @@ class BlockHandleView {
 
 	// x is pinned to the editor's center so horizontal mouse movement never re-anchors the
 	private blockAt(y: number): number | null {
-		const containerRect = this.view.dom.getBoundingClientRect();
+		const containerRect = this.view.canvas.sheetClientRect();
 		return handleUnitAt(this.view, containerRect.left + containerRect.width / 2, y);
 	}
 
@@ -178,20 +196,20 @@ class BlockHandleView {
 		}
 		const blockPos = this.blockAt(y);
 		if (blockPos == null) return; // over padding or outside the doc, leave the gutter as-is
+		const rect = this.view.canvas.nodeClientRect(blockPos)?.rect;
+		if (!rect) return;
 		this.hoveredPos = blockPos;
 		this.hoveredNode = this.view.state.doc.nodeAt(blockPos);
 
-		const dom = this.view.nodeDOM(blockPos);
-		if (!(dom instanceof HTMLElement)) return;
-
-		const rect = dom.getBoundingClientRect();
 		const stacked = this.view.dom.closest('[data-gutter-stacked]') !== null;
-		const settings = (this.view.editable && blockSettingsAt(this.view, blockPos, dom)?.label()) || null;
+		const settings = (this.view.editable && blockSettingsAt(this.view, blockPos)?.label()) || null;
 		const height = handleHeight(stacked, settings !== null);
-		const top = dropsForLabel(dom) ? rect.top + NOINDENT_LABEL_DROP : handleTop(handleLineMiddle(dom), rect, height, HANDLE_W);
+		const top = dropsForLabel(this.hoveredNode)
+			? rect.top + NOINDENT_LABEL_DROP
+			: handleTop(handleLineMiddle(this.view, blockPos, rect), rect, height, HANDLE_W);
 		// anchor horizontal to view.dom, not the block: per-node indents (lists, quotes,
 		// centered figures) would make the gutter jump around
-		const containerRect = this.view.dom.getBoundingClientRect();
+		const containerRect = this.view.canvas.sheetClientRect();
 		const left = containerRect.left - (stacked ? GUTTER_OFFSET_LEFT_STACKED : GUTTER_OFFSET_LEFT);
 		// null scroller = nothing can scroll, so nothing can be out of view
 		const area = scrollParent(this.view.dom)?.getBoundingClientRect();
@@ -207,6 +225,7 @@ class BlockHandleView {
 			return;
 		}
 		this.cancelHide();
+		this.placedAt = { sheetLeft: containerRect.left, blockTop: rect.top };
 		this.state.visible = true;
 		this.state.top = held;
 		this.state.stacked = stacked;
@@ -222,12 +241,12 @@ class BlockHandleView {
 		}
 	};
 	private scheduleHide = () => {
-		if (this.state.popoverOpen) return; // don't hide while the menu is open
+		if (this.menuShown) return; // don't hide while the menu is open
 		this.cancelHide();
 		this.hideTimer = window.setTimeout(() => {
 			// re-check at fire time: the menu may have opened during the wait, and hiding now
 			// would collapse the trigger rect Floating-UI anchors the popover to
-			if (this.state.popoverOpen) return;
+			if (this.menuShown) return;
 			this.state.visible = false;
 		}, 120);
 	};
@@ -282,9 +301,7 @@ class BlockHandleView {
 	};
 
 	private openSettings = (gear: HTMLElement) => {
-		if (this.hoveredPos == null) return;
-		const dom = this.view.nodeDOM(this.hoveredPos);
-		if (dom instanceof HTMLElement) blockSettingsAt(this.view, this.hoveredPos, dom)?.open(gear);
+		if (this.hoveredPos != null) blockSettingsAt(this.view, this.hoveredPos)?.open(gear);
 	};
 
 	private onDragEnd = () => setHandleDragActive(this.view, false);
@@ -292,12 +309,13 @@ class BlockHandleView {
 	update(view: EditorView, prevState: EditorState) {
 		view.dom.ownerDocument.documentElement.classList.toggle('pm-handle-drag', blockHandlePluginKey.getState(view.state)?.active === true);
 		if (view.state.doc === prevState.doc) return;
-		if (this.state.popoverOpen) {
+		if (this.menuShown) {
 			this.hoveredPos = this.hoveredNode ? positionOf(view.state.doc, this.hoveredNode) : null;
 			return;
 		}
 		if (!this.state.visible) return;
-		if (this.pointerInside && this.lastPointerY != null) this.queueUpdate(this.lastPointerY);
+		// typing hides it until the pointer moves again; an edit made from the gutter keeps it
+		if (this.host.matches(':hover') && this.lastPointerY != null) this.queueUpdate(this.lastPointerY);
 		else this.state.visible = false;
 	}
 
@@ -308,6 +326,7 @@ class BlockHandleView {
 		this.lane.removeEventListener('mouseleave', this.onMouseLeave);
 		this.host.removeEventListener('mouseenter', this.cancelHide);
 		this.host.removeEventListener('mouseleave', this.scheduleHide);
+		this.host.removeEventListener('wheel', this.onWheel);
 		this.view.dom.ownerDocument.removeEventListener('dragend', this.onDragEnd, true);
 		this.view.dom.ownerDocument.documentElement.classList.remove('pm-handle-drag');
 		this.view.dom.ownerDocument.removeEventListener('scroll', this.onScroll, { capture: true });
@@ -323,7 +342,6 @@ export function createBlockHandlePlugin(opts: { items?: ItemsOf } = {}) {
 		key: blockHandlePluginKey,
 		state: handleDropState,
 		props: {
-			decorations: (state) => handleDropLine(blockHandlePluginKey.getState(state), state.doc),
 			handleDOMEvents: handleDropEvents,
 			// a block directly in an editor with a handle leaves its gear to the handle (app.css)
 			attributes: { 'data-block-handle': 'true' }

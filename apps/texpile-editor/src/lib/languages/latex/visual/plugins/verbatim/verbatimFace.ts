@@ -1,4 +1,5 @@
-import { faceElement, type ChipFace } from '$lib/languages/latex/visual/core';
+import { faceElement, setLook } from '$lib/editor/canvas';
+import type { ChipFace } from '$lib/languages/latex/visual/core';
 import { verbatimArgumentEnd, verbatimArgumentStart, verbatimCommandNames } from '$lib/languages/latex/knowledge/calls/verbatimCalls';
 
 let known: Set<string> | null = null;
@@ -15,5 +16,6 @@ export function verbatimTextOf(source: string): string | null {
 
 export function verbatimFace(text: string): ChipFace {
 	const dom = faceElement('code', 'drawn-verbatim', text);
+	setLook(dom, { whiteSpace: 'nowrap' });
 	return { dom };
 }

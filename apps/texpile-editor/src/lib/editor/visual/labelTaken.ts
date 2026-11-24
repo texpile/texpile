@@ -22,3 +22,14 @@ export function labelTaken(doc: PMNode, name: string, ownPos: number): boolean {
 	});
 	return taken;
 }
+
+/** where the anchor answering to this name stands, the first one when several do */
+export function labelPos(doc: PMNode, name: string): number | null {
+	let found: number | null = null;
+	doc.descendants((node, pos) => {
+		if (found !== null) return false;
+		const own = node.type.name === 'label' ? node.attrs.name : node.attrs.label;
+		if (own === name || (Array.isArray(node.attrs.lineLabels) && node.attrs.lineLabels.includes(name))) found = pos;
+	});
+	return found;
+}

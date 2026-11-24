@@ -1,7 +1,6 @@
 // the settings a block opens from the handle's gear or the right-click menu, kept by the element the editor draws the block as
 import { Plugin } from 'prosemirror-state';
 import type { EditorView } from 'prosemirror-view';
-import { handleLineMiddle } from './handleLine';
 
 export type BlockSettings = {
 	/** the gear's hint, such as Table settings */
@@ -64,8 +63,25 @@ export function blockSettingsPlugin(provider: BlockSettingsProvider): Plugin {
 	});
 }
 
-export function blockSettingsAt(view: EditorView, pos: number, dom: Element | null): BlockSettings | null {
-	const own = blockSettingsOf(dom);
+/** the settings the node at `pos` offers by its type (12.2); a block passing its body's settings offers its first child's */
+function faceSettingsAt(view: EditorView, pos: number): BlockSettings | null {
+	const node = view.state.doc.nodeAt(pos);
+	const offer = node && view.props.blockSettings?.[node.type.name];
+	if (!node || !offer || offer.offers?.(node) === false) return null;
+	if (offer.passesBodySettings) {
+		let inner: BlockSettings | null = null;
+		node.forEach((child, offset) => (inner ??= faceSettingsAt(view, pos + 1 + offset)));
+		return inner;
+	}
+	return {
+		label: () => offer.label(node),
+		open: (gear) => offer.open(pos, view, gear?.getBoundingClientRect()),
+		forOnlyChild: offer.forOnlyChild && (() => offer.forOnlyChild!(node))
+	};
+}
+
+export function blockSettingsAt(view: EditorView, pos: number): BlockSettings | null {
+	const own = faceSettingsAt(view, pos);
 	if (own) return own;
 	for (const provider of providers.get(view) ?? []) {
 		const found = provider(view, pos);
@@ -80,22 +96,37 @@ export function blockSettingsUnder(view: EditorView, pos: number, inside: number
 	const starts = inside >= 0 ? [inside] : [];
 	for (let depth = $pos.depth; depth > 0; depth--) starts.push($pos.before(depth));
 	for (const at of starts) {
-		const dom = view.nodeDOM(at);
-		const found = blockSettingsAt(view, at, dom instanceof Element ? dom : null);
+		const found = blockSettingsAt(view, at);
 		if (!found) continue;
 		const $at = view.state.doc.resolve(at);
-		const around = $at.depth > 0 ? view.nodeDOM($at.before()) : null;
-		const outer = around instanceof Element ? blockSettingsOf(around) : null;
+		const outer = $at.depth > 0 ? faceSettingsAt(view, $at.before()) : null;
 		return outer?.forOnlyChild?.() ? outer : found;
 	}
 	return null;
+}
+
+// a node view's own block (one not yet drawn by a face): the middle of its first drawn character's line
+function domLineMiddle(dom: Element): number {
+	const block = dom.getBoundingClientRect();
+	if (dom.classList.contains('block-math-container')) return (block.top + block.bottom) / 2;
+	const walker = dom.ownerDocument.createTreeWalker(dom, NodeFilter.SHOW_TEXT);
+	const range = dom.ownerDocument.createRange();
+	for (let node = walker.nextNode(); node; node = walker.nextNode()) {
+		if (!node.textContent?.trim()) continue;
+		range.setStart(node, 0);
+		range.setEnd(node, 1);
+		const drawn = range.getClientRects()[0];
+		if (drawn?.height && (drawn.top + drawn.bottom) / 2 - block.top <= 48) return (drawn.top + drawn.bottom) / 2;
+		if (drawn?.height) break;
+	}
+	return block.top + Math.min(block.height, 28) / 2;
 }
 
 // the gear's box from the block's top left corner
 function gearOffset(dom: Element, gear?: HTMLElement): { dx: number; dy: number; width: number; height: number } {
 	const block = dom.getBoundingClientRect();
 	if (!gear)
-		return { dx: block.width + GEAR_LEFT, dy: handleLineMiddle(dom) - GEAR_SIZE / 2 - block.top, width: GEAR_SIZE, height: GEAR_SIZE };
+		return { dx: block.width + GEAR_LEFT, dy: domLineMiddle(dom) - GEAR_SIZE / 2 - block.top, width: GEAR_SIZE, height: GEAR_SIZE };
 	const at = gear.getBoundingClientRect();
 	return { dx: at.left - block.left, dy: at.top - block.top, width: at.width, height: at.height };
 }

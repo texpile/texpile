@@ -3,19 +3,19 @@
 import {
 	countedLabelsOf,
 	DEFAULT_CROSS_REF_NAMES,
-	faceElement,
 	onDrawnInputs,
 	projectIntelStore,
+	setRefLook,
 	templateFeaturesStore,
-	tip,
 	undefinedRefs,
 	type ChipFace,
 	type LabelNumbers
 } from '$lib/languages/latex/visual/core';
+import { faceElement } from '$lib/editor/canvas';
 import { crossRefText, withCounted } from './crossRefText';
+
 export function crossRefFace(command: string, labels: string[], shown: string | null, source: string, range = false): ChipFace {
 	const dom = faceElement('span', 'drawn-crossref');
-	const tipped = tip(dom, source);
 	let counted: LabelNumbers | null = null;
 	// drawn now, so the line breaker measures it, and again whenever a compile writes a new .aux
 	function show(): void {
@@ -30,8 +30,8 @@ export function crossRefFace(command: string, labels: string[], shown: string | 
 		// change of size to the line breaker, which then breaks the chip's paragraph anew
 		if (dom.textContent !== text) dom.textContent = text;
 		const missing = labels.find((label) => undefinedRefs.current.has(label) && !counted?.has(label));
-		dom.classList.toggle('drawn-crossref-broken', unlabeled || missing !== undefined);
-		tipped.update(missing !== undefined ? `Label "${missing}" not found` : source);
+		setRefLook(dom, unlabeled || missing !== undefined);
+		dom.hint = missing !== undefined ? `Label "${missing}" not found` : source;
 	}
 	show();
 	const stop = onDrawnInputs(show);
@@ -41,9 +41,6 @@ export function crossRefFace(command: string, labels: string[], shown: string | 
 			counted = countedLabelsOf(decorations);
 			show();
 		},
-		destroy() {
-			stop();
-			tipped.destroy();
-		}
+		destroy: stop
 	};
 }

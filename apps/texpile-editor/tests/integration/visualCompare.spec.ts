@@ -1,5 +1,6 @@
 import { expect, test } from '@playwright/test';
 import { execFileSync } from 'node:child_process';
+import { inCanvas } from './canvas/canvasPage';
 import { useTexpile } from './driver/useTexpile';
 import { VisualEditor } from './driver/visualEditor';
 
@@ -34,6 +35,25 @@ test('the visual comparison marks a word typed since the last commit', async () 
 	await visual.type(' measured');
 	await page.keyboard.press('Control+Shift+G');
 	await page.locator('button[class*="@container"]', { hasText: 'compare.tex' }).click();
-	await expect(page.locator('.texpile-diff-added')).toHaveText(['measured ']);
-	await expect(page.locator('.texpile-diff-removed')).toHaveCount(0);
+	// the one tint the comparison paints in the paragraph runs from the typed word to the next one
+	await expect
+		.poll(() =>
+			inCanvas(page, ({ probe, view }) => {
+				const block = view.state.doc.resolve(probe.posOf('measured')).before(1);
+				const ops = probe.drawList(block);
+				const words = ops.filter((op) => op.op === 'fillText');
+				const from = words.find((op) => op.text === 'measured')?.rect.x ?? NaN;
+				const to = words.find((op) => op.text === 'entropy.')?.rect.x ?? NaN;
+				const near = (a: number, b: number) => Math.abs(a - b) < 0.5;
+				// a tint is painted per text run: runs that touch read as one band, as the DOM editor's one span did
+				const bands: { from: number; to: number }[] = [];
+				for (const { rect } of ops.filter((op) => op.op === 'fillRect').sort((a, b) => a.rect.x - b.rect.x)) {
+					const last = bands.at(-1);
+					if (last && near(last.to, rect.x)) last.to = rect.x + rect.width;
+					else bands.push({ from: rect.x, to: rect.x + rect.width });
+				}
+				return bands.length === 1 && near(bands[0].from, from) && near(bands[0].to, to);
+			})
+		)
+		.toBe(true);
 });

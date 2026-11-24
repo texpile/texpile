@@ -14,7 +14,7 @@ Type math as you would in LaTeX and see it typeset as you go.
 
 ## Insert an equation
 
-Press Ctrl M for an inline equation, or Ctrl Shift M for a display equation.
+Press Ctrl M for an inline equation, or Ctrl Shift M for a display equation. Typing `$x^2$` also makes an inline equation. In an empty paragraph `$$` opens a display equation.
 
 Type a command and press Space: `\frac` becomes a fraction with places to fill. Your own `\newcommand` macros show as they print.
 

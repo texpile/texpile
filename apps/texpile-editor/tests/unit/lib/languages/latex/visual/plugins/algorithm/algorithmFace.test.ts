@@ -20,9 +20,9 @@ describe('algorithms in chips', () => {
 			'\\ENDFOR',
 			'\\end{algorithmic}'
 		].join('\n');
-		const lines = [...(latexFace(source, true)?.dom.querySelectorAll<HTMLElement>('.drawn-algorithm-line') ?? [])];
+		const lines = [...(latexFace(source, true)?.dom.querySelectorAll('.drawn-algorithm-line') ?? [])];
 		expect(lines.map((line) => line.querySelector('strong')?.textContent ?? '')).toEqual(['Require:', 'for', '', 'end for']);
-		expect(lines.map((line) => line.style.paddingInlineStart)).toEqual(['0em', '0em', '1.5em', '0em']);
+		expect(lines.map((line) => line.style.paddingLeft)).toEqual(['0em', '0em', '1.5em', '0em']);
 		expect(lines[1].querySelector('.drawn-algorithm-comment')?.textContent).toBe('▷ over episodes');
 		expect(lines[3].querySelector('.drawn-algorithm-number')?.textContent).toBe('4:');
 	});

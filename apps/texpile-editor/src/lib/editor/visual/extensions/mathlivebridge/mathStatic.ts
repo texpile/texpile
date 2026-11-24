@@ -1,29 +1,13 @@
 /* eslint-disable no-param-reassign -- builds mathlive's static DOM by writing the handed elements */
-// Placeholders standing in for math node views until a real MathfieldElement is built.
-//
-// There are three stages, not two, and the middle one exists because of a measurement: typesetting
-// every placeholder at mount cost ~1.1 s of frozen UI on a 1048-equation document, which just moved
-// the freeze rather than removing it.
-//
-//   1. mount        cheap box, size estimated from the latex. Costs almost nothing.
-//   2. idle         real typeset, in document order, in slices that yield to the browser.
-//   3. hovered or reached by the caret  the actual MathfieldElement takes over (mlview.svelte.ts).
-//
-// So opening a document is never blocked on typesetting, sizes converge within a second or so, and
-// a fast scroll finds properly rendered math rather than empty boxes.
-//
-// The typeset is mathlive's own renderer, the same one the live field paints itself with, so the
-// swap at stage 3 is visually a no-op. That is the reason not to reach for KaTeX: a second engine
-// would lay the same latex out differently and every equation would twitch as it went live.
-//
-// The document's own macros are passed here AND to the live field, from the same dictionary. That
-// is not incidental: give one of them a \newcommand the other lacks and every equation using it
-// would visibly change as it went live, which is the twitch stage 3 exists to avoid.
+// formulas typeset by MathLive's own static renderer, for the DOM beside the canvas and the pictures it paints: a box of
+// estimated size first, typeset in idle slices in document order, with the same macros the live field reads
 import { convertLatexToMarkup, convertTypstToMarkup } from 'mathlive';
 import { mathMacros, mathMacrosKey } from './mathMacros.svelte';
 import { themeStaticMarkup } from './themeBlack';
+import { windowInvalidation } from '$lib/editor/canvas';
 import type { MathSyntax } from './mathFieldFactory';
 import 'mathlive/static.css';
+import { formulaElement, type FaceElement } from '$lib/editor/canvas';
 
 export const PLACEHOLDER_CLASS = 'math-static-placeholder';
 
@@ -131,17 +115,10 @@ function drain(): void {
 	scheduleDrain();
 }
 
-/**
- * Typeset now, up to `budgetMs`, rather than waiting for an idle callback.
- *
- * For the reveal, and only that: an un-typeset formula is a blank box of about the right size, so a
- * document shown before the queue has run is one that fills itself in while you watch. Bounded,
- * because the queue can be the whole document and this runs on the main thread - whatever it does
- * not reach keeps its place in the idle drain.
- */
-export function typesetNow(budgetMs: number): void {
-	drainSlice(budgetMs);
-	scheduleDrain();
+/** typeset the placeholders in root now: DOM drawn with the canvas paper, which has to have its size when the paper shows */
+export function typesetStaticMathIn(root: HTMLElement): void {
+	for (const el of [root, ...root.querySelectorAll<HTMLElement>(`.${PLACEHOLDER_CLASS}`)])
+		if (pending.delete(el)) typeset(el, latexOf.get(el) ?? '');
 }
 
 function typeset(el: HTMLElement, latex: string): void {
@@ -155,6 +132,15 @@ function typeset(el: HTMLElement, latex: string): void {
 	// what is drawn decides the box from here: the estimate's box is too narrow for a formula's source
 	el.style.width = '';
 	el.style.height = '';
+}
+
+/** a formula a face embeds, laid out and painted by the canvas from the window's formula layouts */
+export function formulaFace(latex: string, isBlock: boolean, syntax: MathSyntax = 'latex'): FaceElement {
+	const formula = formulaElement({ syntax, source: latex, display: isBlock });
+	// named for screen readers by its source, as the typeset placeholder was
+	formula.setAttribute('role', 'math');
+	formula.setAttribute('aria-label', latex);
+	return formula;
 }
 
 /** a cheap, roughly-sized stand-in, queued for typesetting once the thread is free */
@@ -184,29 +170,12 @@ export function renderStaticMath(latex: string, isBlock: boolean, syntax: MathSy
 	return el;
 }
 
-/** re-render a placeholder for an edit that landed while it was still offscreen */
-export function setStaticMath(el: HTMLElement, latex: string): void {
-	// a node view is updated for every decoration over it, a selection among them
-	if (latexOf.get(el) === latex) return;
-	el.setAttribute('aria-label', latex);
-	latexOf.set(el, latex);
-	if (pending.has(el)) {
-		// not typeset yet: just re-estimate, the queue will pick up the new latex
-		applyEstimate(el, latex, el.dataset.block === 'true');
-		return;
-	}
-	typeset(el, latex);
-}
-
-/** stop tracking a placeholder that has been replaced by a live field or removed */
-export function cancelStaticMath(el: HTMLElement): void {
-	pending.delete(el);
-}
-
 /** Re-typeset what is already on screen, for when a \newcommand changed under it. Found through
  *  the DOM rather than a registry: a placeholder that was removed without being cancelled would
  *  otherwise be held alive by it, and this only runs when a definition actually changes. */
 export function retypesetStaticMath(): void {
+	// the canvas builds the blocks again whose formulas read the macros
+	windowInvalidation(window).fire({ kind: 'store', name: 'mathMacros' });
 	for (const el of document.querySelectorAll<HTMLElement>(`.${PLACEHOLDER_CLASS}`)) {
 		const latex = latexOf.get(el);
 		// still queued: the drain will pick up the new dictionary on its own

@@ -1,7 +1,7 @@
 // source-mode live math preview: a tooltip above the math typesets it on every keystroke, rendered with
 // mathlive so it matches what visual mode will show.
 import { EditorView, keymap, showTooltip, type Rect, type Tooltip, type TooltipView } from '@codemirror/view';
-import { ensureSyntaxTree } from '@codemirror/language';
+import { syntaxTree } from '@codemirror/language';
 import { Facet, StateEffect, StateField, type EditorState, type Extension, type Transaction } from '@codemirror/state';
 import { convertLatexToMarkup } from 'mathlive';
 import 'mathlive/static.css';
@@ -16,7 +16,6 @@ import { rememberLatexTree } from '$lib/languages/latex/syntax/latexTrees';
 import { withoutKeyDefinitions } from '$lib/languages/latex/knowledge/calls/roleKeys';
 import { MAX_TEXT_BYTES } from '$lib/files/service/textLimit';
 
-const PARSE_BUDGET_MS = 100;
 const previewDismissed = StateEffect.define<null>();
 const markdownSource = Facet.define<boolean, boolean>({ combine: (values) => values[0] ?? false });
 
@@ -46,8 +45,8 @@ function regionAt(state: EditorState, pos: number): MathRegion | null {
 	if (state.facet(markdownSource)) return mathRegionAt(markdownRegions(state), pos);
 	if (state.doc.length > MAX_TEXT_BYTES) return null;
 	const text = docText(state.doc);
-	const tree = ensureSyntaxTree(state, state.doc.length, PARSE_BUDGET_MS);
-	if (tree) rememberLatexTree(text, tree);
+	// the editor's parse once it has read the whole file; forcing the rest took 100 ms a caret move in a long one
+	rememberLatexTree(text, syntaxTree(state));
 	return latexMathRegionAt(text, pos);
 }
 

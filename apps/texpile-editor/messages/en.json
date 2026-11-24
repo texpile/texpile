@@ -258,9 +258,6 @@
 	"wsview_toast_git_init_failed_title": "Could not initialize repository",
 	"wsview_toast_git_init_success_title": "Initialized empty Git repository",
 	"wsview_toast_discard_failed_title": "Could not discard changes",
-	"wsview_toast_too_complex_title": "Opened in Source mode",
-	"wsview_toast_too_complex_desc": "This document has {count} elements, too many for the visual editor to display.",
-	"wsview_toast_too_large_desc": "This file is {size} KB. Files over {limit} KB open in Source mode.",
 	"wsview_loading_parsing": "Reading LaTeX…",
 	"wsview_loading_building": "Building document…",
 	"wsview_loading_finalizing": "Finalizing…",
@@ -2464,7 +2461,6 @@
 	"figure_needs_tinymist": "Typst figures need tinymist.",
 	"drawn_chip_typst_crop_definition": "Image crop definition",
 	"imageoverlay_crop": "Crop",
-	"imageoverlay_crop_unreadable": "Crop needs plain trim and angle options.",
 	"image_crop_turn_left": "Turn left",
 	"image_crop_turn_right": "Turn right",
 	"image_crop_reset": "Reset",
@@ -3330,5 +3326,6 @@
 	"keybindings_source_builtin": "Built-in",
 	"keybindings_copy": "Copy",
 	"keybindings_copy_title": "Copy Command Title",
-	"keybindings_sort_precedence": "Sort by Precedence"
+	"keybindings_sort_precedence": "Sort by Precedence",
+	"canvas_screen_reader_label": "Visual editor. Switch to Source mode to read this file with a screen reader."
 }

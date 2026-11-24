@@ -1,0 +1,53 @@
+{
+ "environment": {
+  "tool": "jsdom",
+  "userAgent": "Mozilla/5.0 (linux) AppleWebKit/537.36 (KHTML, like Gecko) jsdom/30.1.3",
+  "node": "v22.23.4",
+  "document": null,
+  "scrollPositionIndex": null,
+  "window": null,
+  "devicePixelRatio": null,
+  "zoom": null,
+  "electron": null,
+  "chromium": null,
+  "os": "linux",
+  "domEditorCommit": "6ec0389c61ffc889078a95517ee770740f556c7e",
+  "live": "crosscheck.json"
+ },
+ "component": "PanelButton",
+ "source": "src/lib/editor/visual/extensions/drawnChips/panel/PanelButton.svelte",
+ "mountsInEditorAs": "action button of a drawn chip panel",
+ "states": {
+  "default": {
+   "roots": [
+    {
+     "tag": "button",
+     "class": [
+      "border-surface-300-700",
+      "rounded-base",
+      "hover:preset-tonal",
+      "inline-flex",
+      "h-7",
+      "items-center",
+      "gap-1.5",
+      "self-start",
+      "border",
+      "px-2.5",
+      "text-xs"
+     ],
+     "attrs": {
+      "type": "button"
+     },
+     "children": [
+      {
+       "tag": "span",
+       "children": [
+        "{children}"
+       ]
+      }
+     ]
+    }
+   ]
+  }
+ }
+}

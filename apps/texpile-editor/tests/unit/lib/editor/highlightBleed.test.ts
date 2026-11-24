@@ -9,7 +9,7 @@ import { EditorState } from '@codemirror/state';
 import { ensureSyntaxTree } from '@codemirror/language';
 import { highlightTree, tagHighlighter } from '@lezer/highlight';
 import { markdown } from '@codemirror/lang-markdown';
-import { colouredTags } from '$lib/editor/source/cmHighlight';
+import { coloredTags } from '$lib/editor/code/highlightStyle';
 
 const DOC = `# Heading
 
@@ -26,7 +26,7 @@ para with "plain prose" here
 `;
 
 // one class per coloured tag; a span reaching the callback = a span the theme would colour
-const coloured = tagHighlighter(colouredTags.map((tag, i) => ({ tag, class: `c${i}` })));
+const coloured = tagHighlighter(coloredTags.map((tag, i) => ({ tag, class: `c${i}` })));
 
 function colouredSpans(doc: string): string[] {
 	const state = EditorState.create({ doc, extensions: [markdown()] });

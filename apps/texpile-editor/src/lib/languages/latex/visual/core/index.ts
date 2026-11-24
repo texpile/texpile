@@ -2,7 +2,6 @@ export type {
 	LatexCountedCall,
 	LatexFaceAnswer,
 	LatexFaceCore,
-	LatexNodeViews,
 	LatexPart,
 	LatexPlugin,
 	LatexViewSetup,
@@ -13,27 +12,32 @@ export { argumentSlots, renameEnvironment } from './plugin/latexInsert';
 export { optionalArgumentOffers } from './plugin/argumentGroups';
 export { serializeToLatex } from '$lib/languages/latex/serializer/latexSerializer';
 export { wrapInListItems } from '../listItemIndent';
+export { editsInsideTextblocks } from '$lib/editor/visual/extensions/listNumbers/listNumbers';
 export { createTableNode } from '$lib/editor/visual/tableUtils';
 export { computeMathAttrs, numberedEquationAttrs } from '$lib/editor/visual/extensions/mathlivebridge/mathEnvironments';
 export type { BlockInsertItem, InsertArgument, InsertItem } from '$lib/editor/visual/insert/insertItem';
 
-export { faceElement, faceOfParts, tippedFace, type ChipFace } from '$lib/editor/visual/extensions/drawnChips/chipFace';
+export { domOf, faceOfParts, tippedFace, type ChipFace } from '$lib/editor/visual/extensions/drawnChips/chipFace';
 export {
 	chipPanelOpenFor,
 	dismissChipPanel,
 	openChipPanel,
 	syncChipPanel,
 	type ChipSettingsProps
-} from '$lib/editor/visual/extensions/drawnChips/chipPanel.svelte';
-export { openFieldPanel } from '$lib/editor/visual/extensions/drawnChips/fieldPanel';
+} from '$lib/editor/visual/extensions/drawnChips/chipPanel/chipPanel.svelte';
+export { openFieldPanel } from '$lib/editor/visual/extensions/drawnChips/chipPanel/fieldPanel';
+export { placedHost } from '$lib/editor/visual/extensions/blockHandle/placedHost';
 export { undoVisual, redoVisual } from '$lib/editor/visual/visualUndo';
 export * as Panel from '$lib/editor/visual/extensions/drawnChips/panel';
-export { dividerFace } from '$lib/editor/visual/extensions/drawnChips/dividerFace';
-export { footnoteFace } from '$lib/editor/visual/extensions/drawnChips/footnoteFace';
+export { dividerFace } from '$lib/editor/visual/extensions/drawnChips/faces/dividerFace';
+export { footnoteFace } from '$lib/editor/visual/extensions/drawnChips/footnote/footnoteFace';
 export { graphicFace } from '$lib/editor/visual/extensions/drawnChips/faces/graphicFace';
 export { labelFace } from '$lib/editor/visual/extensions/drawnChips/faces/labelFace';
+export { chipElement } from '$lib/editor/visual/extensions/drawnChips/looks/chipLooks';
+export { coreElement, setRefLook } from './looks/coreLooks';
+export { appendTo, elementMode } from '$lib/editor/visual/extensions/drawnChips/faces/partElements';
 export { showGlossaryTerm } from '$lib/editor/visual/extensions/drawnChips/faces/glossaryTerm';
-export { horizontalSpaceFace, verticalSpaceFace } from '$lib/editor/visual/extensions/drawnChips/spaceFace';
+export { horizontalSpaceFace, verticalSpaceFace } from '$lib/editor/visual/extensions/drawnChips/space/spaceFace';
 export { citationGroupsText, citedWorks, type CitedGroup } from '$lib/editor/visual/extensions/citation/citationText';
 export { tip } from '$lib/components/tooltip.svelte';
 export { returnFocusToText } from '$lib/editor/visual/extensions/popoverFocus/returnFocus';
@@ -72,21 +76,21 @@ export { deckPreamble } from './title/deckPreamble.svelte';
 export { documentTable } from './title/documentTable.svelte';
 
 export { splitCitationKeys } from '../extensions/citation/citationKeys';
-export { floatName } from './references/floatName';
+export { FLOAT_HEAD, floatName } from './references/floatName';
 export { undefinedRefs } from '../extensions/ref/undefinedRefs.svelte';
 
 export { referenceStore, templateFeaturesStore } from '$lib/stores/editorStore';
 export { projectIntelStore, type ProjectIntel } from '$lib/stores/projectIntel';
 
-export { cachedDrawing, loadSavedDrawing, onDrawingsChange, pictureKey } from '$lib/draw/host/drawingCache';
-export { onCompiledChange, resolveCardPicture } from '$lib/draw/host/card/compiled/compiledPictures.svelte';
+export { pictureKey } from '$lib/draw/host/drawingCache';
 export { OPEN_FIGURE, type OpenFigureDetail } from '$lib/draw/host/card/figureEvents';
 export { figureSummary } from '$lib/draw/host/card/figureSummary';
-export { default as FigureCard } from '$lib/draw/host/card/FigureCard.svelte';
-export { default as FigurePlaceholder } from '$lib/draw/host/card/FigurePlaceholder.svelte';
+export { figureCardFace } from '$lib/draw/host/card/figureCardFace';
+export { figurePlaceholderFace } from '$lib/draw/host/card/figurePlaceholderFace';
 export { tikzLanguage } from '$lib/draw/tikz/tikzLanguage';
 export { inEditorPane } from '$lib/editor/visual/editorPanePositioning';
 export { offerBlockSettings, settingsPlace, type GearPlace } from '$lib/editor/visual/extensions/blockHandle/blockSettings';
+export { settingsPanelOffer, type PanelProps } from '$lib/editor/visual/extensions/blockHandle/settingsPanelOffer.svelte';
 export { citationText } from '$lib/editor/visual/extensions/citation/citationText';
 export { citationVariantKind } from '$lib/languages/latex/visual/extensions/citation/citationVariantKind';
 export { default as CitationReferenceField } from '$lib/editor/visual/extensions/citation/CitationReferenceField.svelte';
@@ -103,7 +107,7 @@ export { repointRefs } from '$lib/editor/visual/repointRefs';
 export { bibliographyName } from '$lib/languages/latex/visual/extensions/bibliography/bibliographyName';
 export { keyedEntriesInDoc } from '$lib/languages/latex/visual/extensions/bibliography/bibliographyEntries';
 export type { KeyedEntry } from '$lib/languages/latex/visual/extensions/bibliography/bibliographyEntries';
-export { orderedRuns } from '$lib/editor/visual/extensions/listNumbers/listNumbers';
+export { bulletItems, orderedRuns } from '$lib/editor/visual/extensions/listNumbers/listNumbers';
 export type { ItemLabels } from '$lib/editor/visual/extensions/listNumbers/listNumbers';
 export { printedValue } from '$lib/languages/latex/visual/extensions/numbers/printedNumber';
 export type { NumberStyle } from '$lib/languages/latex/visual/extensions/numbers/printedNumber';
@@ -128,7 +132,5 @@ export { bareTableSettingsPlugin, openBareTableSettings } from '$lib/editor/visu
 export { adoptParse } from '$lib/editor/visual/parseOrigins';
 export { containerOriginsOf } from '$lib/editor/visual/parseOrigins';
 export { containerRecordAround } from '$lib/editor/visual/parseOrigins';
-export { CodeBlockView } from '$lib/editor/visual/extensions/codemirrorbridge/cmview.svelte';
-export { IncludeDocView } from '$lib/editor/visual/extensions/includedoc/includeDocView.svelte';
-export { tableWrapperView } from '$lib/editor/visual/extensions/table/tableWrapperView.svelte';
+export { includeDocCanvasView } from '$lib/editor/visual/extensions/includedoc/includeDocCanvasView';
 export { listNumbersPlugin } from '$lib/editor/visual/extensions/listNumbers/listNumbers';

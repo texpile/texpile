@@ -6,19 +6,20 @@
 	// live in raw islands until they get typst-aware machinery (see typSchema's comment).
 	import { onDestroy, onMount, untrack } from 'svelte';
 	import { EditorState, type Transaction } from 'prosemirror-state';
-	import { EditorView } from 'prosemirror-view';
+	import type { EditorView } from 'prosemirror-view';
 	import type { Node as PMNode } from 'prosemirror-model';
 	import { padTablesInState } from '$lib/editor/visual/padTables';
 	import { typSchema } from './schema';
-	import { typstEditorPlugins, typstNodeViews } from './typstEditorSetup';
+	import { typstEditorPlugins } from './typstEditorSetup';
+	import { typstNodeViews } from './typstNodeViews';
 	import { typstNamesNow } from './core/scope/fileScopeNow.svelte';
 	import { loadTypstParser } from '../syntax/typstTrees';
 	import { swapParsedDoc, swapDocForNewFile, docSwapKind } from '$lib/editor/visual/docSwap';
 	import { referenceStore } from '$lib/stores/editorStore';
 	import { groupView } from '$lib/editor/visual/groupView.svelte';
-	import { revealBuiltEditor, BUILDING_CLASS } from '$lib/editor/visual/revealBuiltEditor';
+	import { createCanvasView, windowInvalidation } from '$lib/editor/canvas';
+	import { canvasMount } from '$lib/editor/visual/mount/canvasMount.svelte';
 	import type { BiblatexReference } from '$lib/languages/bib/biblatex';
-	import { preferences } from '$lib/stores/preferencesStore.svelte';
 	import ContextMenu from '$lib/editor/visual/contextMenu/ContextMenu.svelte';
 	import type { ShowInOutput } from '$lib/editor/visual/contextMenu/showInOutput';
 	import type { SpellLanguage } from '$lib/editor/spellcheck/languages/spellLanguages';
@@ -27,13 +28,7 @@
 	import type { SourceAnchorFn } from '$lib/editor/visual/extensions/pmComments';
 	import type { CommentRange } from '$lib/editor/visual/extensions/comments';
 	import type { RegionParser, SourceMap } from '$lib/editor/visual/sourceSpans';
-	import 'prosemirror-view/style/prosemirror.css';
-	import 'prosemirror-tables/style/tables.css';
-	import 'prosemirror-gapcursor/style/gapcursor.css';
-	import 'prosemirror-flat-list/dist/style.css';
-	import '$lib/editor/visual/extensions/image/styles/common.css';
-	import '$lib/editor/visual/styles/cursor.css';
-	import '$lib/editor/visual/styles/document.css';
+	import '$lib/editor/canvas/frame/canvasRoot.css';
 
 	type Props = {
 		/** false in a parked editor group: no typing, and it follows the focused editor on the same file */
@@ -112,6 +107,14 @@
 	let editor: HTMLElement = $state(null!);
 	let editorView: EditorView | null = $state(null);
 	const group = groupView({ view: () => editorView, live: () => live, path: () => docPath ?? null });
+	const mount = canvasMount({
+		view: () => editorView,
+		path: () => docPath ?? null,
+		imageDirectory: () => docDir,
+		cropFormat: 'typst',
+		isMainFile: () => true,
+		onReady: () => onReady?.()
+	});
 	const isLive = $derived(live);
 
 	onMount(async () => {
@@ -141,30 +144,31 @@
 		let editorState = EditorState.create({ schema: typSchema, plugins, doc: localValue ?? undefined });
 		editorState = padTablesInState(editorState);
 
-		editorView = new EditorView(editor, {
-			attributes: { class: 'TexpileEditor TypstEditor', spellcheck: 'false' },
-			state: editorState,
-			nodeViews: typstNodeViews(() => docDir),
-			editable: group.editable,
-			dispatchTransaction(this: EditorView, transaction: Transaction) {
-				// async plugins (spellcheck) can dispatch into a destroyed view on tab switches
-				if (this.isDestroyed) return;
-				const newState = this.state.apply(transaction);
-				this.updateState(newState);
-				// collabRemotePatch: a collaborator's edit patched in from the shared doc. It is
-				// already IN the shared doc, so reporting it as a local change would echo it back
-				if (onLocalChange && transaction.docChanged && !transaction.getMeta('collabRemotePatch')) onLocalChange(newState.doc);
-				if (transaction.getMeta('collabRemotePatch')) remotePatches++;
-				if (onSelectionChange && (transaction.selectionSet || transaction.docChanged)) onSelectionChange();
-			}
-		});
+		editorView = createCanvasView(
+			editor,
+			{
+				attributes: { class: 'TexpileEditor TypstEditor', spellcheck: 'false' },
+				state: editorState,
+				language: 'typst',
+				...typstNodeViews(() => docDir),
+				editable: group.editable,
+				dispatchTransaction(this: EditorView, transaction: Transaction) {
+					// async plugins (spellcheck) can dispatch into a destroyed view on tab switches
+					if (this.isDestroyed) return;
+					const newState = this.state.apply(transaction);
+					this.updateState(newState);
+					// collabRemotePatch: a collaborator's edit patched in from the shared doc. It is
+					// already IN the shared doc, so reporting it as a local change would echo it back
+					if (onLocalChange && transaction.docChanged && !transaction.getMeta('collabRemotePatch')) onLocalChange(newState.doc);
+					if (transaction.getMeta('collabRemotePatch')) remotePatches++;
+					if (onSelectionChange && (transaction.selectionSet || transaction.docChanged)) onSelectionChange();
+				}
+			},
+			mount.setup(editor)
+		);
 
 		group.claim(editorView);
-		// before onReady, which takes the loading bar down: the reveal is what turns the stand-ins on
-		// screen into the real thing, so announcing readiness first would show a document mid-upgrade
-		revealBuiltEditor(editor);
 		if (live) editorView.focus();
-		onReady?.();
 	});
 
 	let mountedDoc: PMNode | null = null;
@@ -200,7 +204,7 @@
 		else swapParsedDoc(editorView, typSchema, next);
 		docEpoch++;
 		if (kind === 'newFile') {
-			onReady?.();
+			mount.swappedFile(editorView);
 			if (takesFocus) editorView.focus();
 		}
 	});
@@ -221,18 +225,14 @@
 		pendingActive: () => commentPendingActive
 	});
 
+	// a call drawn by a name the file's scope gives it is built again when the names change
 	let drawnNames = typstNamesNow.current;
 	$effect(() => {
 		const names = typstNamesNow.current;
 		if (names === drawnNames) return;
 		drawnNames = names;
-		untrack(() => editorView?.setProps({ nodeViews: typstNodeViews(() => docDir) }));
-	});
-
-	$effect(() => {
-		if (editorView?.dom) {
-			(editorView.dom as HTMLElement).style.setProperty('zoom', `${preferences.zoom}`, 'important');
-		}
+		const view = untrack(() => editorView);
+		if (view) windowInvalidation(view.dom.ownerDocument.defaultView ?? window).fire({ kind: 'store', name: 'typstNames' });
 	});
 
 	onDestroy(() => {
@@ -241,9 +241,7 @@
 	});
 </script>
 
-<!-- invisible, not hidden: display:none gives it no box, and an element with no box intersects
-     nothing, so the viewport upgrades could not run until after it was already on screen -->
-<main bind:this={editor} class={BUILDING_CLASS}></main>
+<main bind:this={editor}></main>
 
 <ContextMenu dialect="typst" {onAddComment} {sourceAnchor} {onInsertCitation} {onCiteByDoi} {showInOutput} />
 
@@ -261,7 +259,7 @@
 		position: absolute;
 		right: calc(var(--spacing) * 4);
 		top: 50%;
-		transform: translateY(-50%);
+		translate: 0 -50%;
 		font-weight: 500;
 		color: var(--muted-text);
 		user-select: none;

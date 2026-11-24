@@ -70,6 +70,8 @@ export async function verifiedSerialize(o: VerifyOptions): Promise<Verified> {
 	}
 	const reread = await o.reparse(o.first.text);
 	if (!reread) return { ...o.first, rung: 0, rewritten: 0, difference: null, checked: false };
+	// the comparison in a task of its own, apart from rebuilding the document the worker sent
+	await new Promise((next) => setTimeout(next));
 	const again = padTables(reread);
 	const d0 = reopenDifference(o.doc, again, o.format);
 	if (!d0) return { ...o.first, rung: 0, rewritten: 0, difference: null, checked: true };

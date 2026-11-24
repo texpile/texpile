@@ -58,6 +58,28 @@ export function documentWrapperOf(text: string): DocumentWrapper | null {
 	return documentWrapperIn(text, latexTreeOf(text));
 }
 
+const BEGIN_DOCUMENT = /\\begin[ \t]*\{document\}/g;
+// a decoy (in a comment, a verbatim environment or after \endinput) costs a longer prefix; past this the whole file is read
+const CANDIDATES = 4;
+
+function firstDocumentBegin(text: string, tree: Tree): number | null {
+	for (let c = tree.topNode.firstChild; c; c = c.nextSibling) if (isDocument(text, c)) return c.firstChild!.from;
+	return null;
+}
+
+/** where the \begin{document} the tree reads starts, found in the text up to it alone: the body is never parsed */
+export function documentBeginOf(text: string): number | null {
+	let tried = 0;
+	for (const found of text.matchAll(BEGIN_DOCUMENT)) {
+		if (tried++ === CANDIDATES) break;
+		const head = text.slice(0, found.index + found[0].length);
+		const begin = firstDocumentBegin(head, latexTreeOf(head));
+		if (begin !== null) return begin;
+	}
+	// a begin only inside a group reads as the document too, so the whole tree decides
+	return tried ? (documentWrapperOf(text)?.begin.from ?? null) : null;
+}
+
 /** where TeX stops reading the file: its \end{document}, a stray one in a fragment too; -1 when it reads to the end */
 export function documentEndOf(text: string): number {
 	const end = documentWrapperOf(text)?.end;

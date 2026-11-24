@@ -5,6 +5,7 @@ import { toggleKeystrokeCaption } from './keystroke-caption';
 import { requestUpdate } from './render';
 import { ParseMode } from '../public/core-types';
 import { updateAutocomplete } from './autocomplete';
+import { ModeEditor } from './mode-editor';
 
 // Commands that don't change content
 registerCommand({
@@ -13,10 +14,12 @@ registerCommand({
     return true;
   },
   scrollToStart: (mathfield: _Mathfield) => {
+    if (mathfield.headless) return false;
     mathfield.field!.scroll(0, 0);
     return true;
   },
   scrollToEnd: (mathfield: _Mathfield) => {
+    if (mathfield.headless) return false;
     const fieldBounds = mathfield.field!.getBoundingClientRect();
     mathfield.field!.scroll(fieldBounds.left - window.scrollX, 0);
     return true;
@@ -139,6 +142,12 @@ registerCommand(
       // copying it.
       if (mathfield.model.selectionIsCollapsed) mathfield.select();
 
+      // no keyboard sink to copy from: the field writes its own LaTeX
+      if (mathfield.headless) {
+        ModeEditor.copyToClipboard(mathfield, 'latex');
+        return false;
+      }
+
       if (
         !(
           'queryCommandSupported' in document &&
@@ -164,6 +173,11 @@ registerCommand(
     cutToClipboard: (mathfield: _Mathfield) => {
       mathfield.focus();
 
+      if (mathfield.headless) {
+        mathfield.onCut(new ClipboardEvent('cut'));
+        return true;
+      }
+
       if (
         !(
           'queryCommandSupported' in document &&
@@ -184,6 +198,7 @@ registerCommand(
     pasteFromClipboard: (mathfield: _Mathfield) => {
       mathfield.focus();
       if (
+        !mathfield.headless &&
         'queryCommandSupported' in document &&
         document.queryCommandSupported('paste')
       ) {

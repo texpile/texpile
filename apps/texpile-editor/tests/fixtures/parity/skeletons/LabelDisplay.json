@@ -1,0 +1,138 @@
+{
+ "environment": {
+  "tool": "jsdom",
+  "userAgent": "Mozilla/5.0 (linux) AppleWebKit/537.36 (KHTML, like Gecko) jsdom/30.1.3",
+  "node": "v22.23.4",
+  "document": null,
+  "scrollPositionIndex": null,
+  "window": null,
+  "devicePixelRatio": null,
+  "zoom": null,
+  "electron": null,
+  "chromium": null,
+  "os": "linux",
+  "domEditorCommit": "6ec0389c61ffc889078a95517ee770740f556c7e",
+  "live": "crosscheck.json"
+ },
+ "component": "LabelDisplay",
+ "source": "src/lib/languages/latex/visual/plugins/label/node/LabelDisplay.svelte",
+ "mountsInEditorAs": "span chip of the label (inline atom)",
+ "states": {
+  "plain": {
+   "roots": [
+    {
+     "tag": "button",
+     "class": [
+      "text-chip"
+     ],
+     "attrs": {
+      "type": "button",
+      "data-tip": "Label {name}. Click to rename it and every reference to it."
+     },
+     "children": [
+      {
+       "tag": "svg",
+       "class": [
+        "lucide",
+        "lucide-tag",
+        "lucide-icon"
+       ],
+       "attrs": {
+        "xmlns": "http://www.w3.org/2000/svg",
+        "width": "24",
+        "height": "24",
+        "viewBox": "0 0 24 24",
+        "fill": "none",
+        "stroke": "currentColor",
+        "stroke-width": "2",
+        "stroke-linecap": "round",
+        "stroke-linejoin": "round",
+        "aria-hidden": "true"
+       },
+       "children": [
+        {
+         "tag": "path"
+        },
+        {
+         "tag": "circle",
+         "attrs": {
+          "fill": "currentColor"
+         }
+        }
+       ]
+      },
+      " ",
+      {
+       "tag": "span",
+       "class": [
+        "text-chip-name"
+       ],
+       "children": [
+        "{name}"
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  "defined-twice": {
+   "roots": [
+    {
+     "tag": "button",
+     "class": [
+      "text-chip"
+     ],
+     "attrs": {
+      "type": "button",
+      "data-tip": "The label {name} is defined twice in this file"
+     },
+     "children": [
+      {
+       "tag": "svg",
+       "class": [
+        "lucide",
+        "lucide-tag",
+        "lucide-icon",
+        "text-ref-broken-fg"
+       ],
+       "attrs": {
+        "xmlns": "http://www.w3.org/2000/svg",
+        "width": "24",
+        "height": "24",
+        "viewBox": "0 0 24 24",
+        "fill": "none",
+        "stroke": "currentColor",
+        "stroke-width": "2",
+        "stroke-linecap": "round",
+        "stroke-linejoin": "round",
+        "aria-hidden": "true"
+       },
+       "children": [
+        {
+         "tag": "path"
+        },
+        {
+         "tag": "circle",
+         "attrs": {
+          "fill": "currentColor"
+         }
+        }
+       ]
+      },
+      " ",
+      {
+       "tag": "span",
+       "class": [
+        "text-chip-name",
+        "text-ref-broken-fg"
+       ],
+       "children": [
+        "{name}"
+       ]
+      }
+     ]
+    }
+   ]
+  }
+ }
+}

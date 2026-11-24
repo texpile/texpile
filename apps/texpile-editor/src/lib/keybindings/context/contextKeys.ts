@@ -63,8 +63,9 @@ function elementOf(target: EventTarget | null): Element | null {
 /** keys every press has without a scope saying so */
 function targetKeys(el: Element | null): Record<string, boolean> {
 	return {
-		inputFocus: !!el?.closest('input, textarea, select'),
-		textInputFocus: !!el?.closest('input, textarea, select, [contenteditable="true"], .xterm'),
+		// a visual editor's input surface is the editor: its EditContext root or its hidden textarea
+		inputFocus: !!el?.closest('input, textarea, select') && !el.closest('[data-canvas-input]'),
+		textInputFocus: !!el?.closest('input, textarea, select, [contenteditable="true"], [data-canvas-root], .xterm'),
 		terminalFocus: !!el?.closest('.xterm'),
 		dialogFocus: !!el?.closest('[role="dialog"], [role="alertdialog"]')
 	};

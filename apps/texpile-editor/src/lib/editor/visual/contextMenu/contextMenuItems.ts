@@ -3,7 +3,7 @@
 import type { Component } from 'svelte';
 import { deleteColumn, deleteRow, deleteTable, mergeCells, splitCell } from 'prosemirror-tables';
 import { addTableRow } from '$lib/editor/visual/extensions/table/rows/addTableRow';
-import { Copy, Clipboard, Plus, Trash2, Combine, SplitSquareHorizontal } from '@lucide/svelte';
+import { Copy, Clipboard, Plus, Scissors, Trash2, Combine, SplitSquareHorizontal } from '@lucide/svelte';
 import { editorViewStore } from '$lib/stores/editorStore';
 import { toaster } from '$lib/modals/toaster-svelte';
 import { pasteFromClipboard, pasteWithoutFormatting } from '$lib/editor/paste/visualClipboardPaste';
@@ -32,34 +32,34 @@ function editorView() {
 	return editorViewStore.current;
 }
 
+/** what Ctrl+C writes: HTML carrying the slice marker, and the text in the editor's own markup */
+function copySelection(cut: boolean): void {
+	const view = editorView()!;
+	const { from, to } = view.state.selection;
+	if (from === to) return;
+	const { doc } = view.state;
+	const { dom, text } = view.serializeForClipboard(doc.slice(from, to));
+	navigator.clipboard
+		.write([
+			new ClipboardItem({
+				'text/html': new Blob([dom.innerHTML], { type: 'text/html' }),
+				'text/plain': new Blob([text], { type: 'text/plain' })
+			})
+		])
+		.then(() => {
+			if (cut && view.editable && view.state.doc === doc)
+				view.dispatch(view.state.tr.deleteSelection().scrollIntoView().setMeta('uiEvent', 'cut'));
+			else toaster.info({ title: m.ctxmenu_copied_toast(), duration: 3000 });
+		})
+		.catch((_err) => {
+			toaster.info({ title: m.ctxmenu_copy_failed_toast(), duration: 3000 });
+		});
+}
+
 export function buildMenuItems() {
 	return [
-		{
-			type: 'item',
-			label: m.ctxmenu_copy(),
-			icon: Copy,
-			shortcut: 'Mod+C',
-			action: () => {
-				const view = editorView()!;
-				const { from, to } = view.state.selection;
-				if (from === to) return;
-				// what Ctrl+C writes: HTML carrying the slice marker, and the text in the editor's own markup
-				const { dom, text } = view.serializeForClipboard(view.state.doc.slice(from, to));
-				navigator.clipboard
-					.write([
-						new ClipboardItem({
-							'text/html': new Blob([dom.innerHTML], { type: 'text/html' }),
-							'text/plain': new Blob([text], { type: 'text/plain' })
-						})
-					])
-					.then(() => {
-						toaster.info({ title: m.ctxmenu_copied_toast(), duration: 3000 });
-					})
-					.catch((_err) => {
-						toaster.info({ title: m.ctxmenu_copy_failed_toast(), duration: 3000 });
-					});
-			}
-		},
+		{ type: 'item', label: m.tbar_ctx_cut(), icon: Scissors, shortcut: 'Mod+X', action: () => copySelection(true) },
+		{ type: 'item', label: m.ctxmenu_copy(), icon: Copy, shortcut: 'Mod+C', action: () => copySelection(false) },
 		{
 			type: 'item',
 			label: m.ctxmenu_paste(),

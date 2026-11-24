@@ -1,4 +1,4 @@
-import { closeChipPanel, type ChipPanelAction } from '$lib/editor/visual/extensions/drawnChips/chipPanel.svelte';
+import { closeChipPanel, type ChipPanelAction } from '$lib/editor/visual/extensions/drawnChips/chipPanel/chipPanel.svelte';
 import { OPEN_FIGURE, type OpenFigureDetail } from '$lib/draw/host/card/figureEvents';
 import { m } from '$lib/paraglide/messages';
 import { tikzLanguage } from '../core';

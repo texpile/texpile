@@ -1,18 +1,17 @@
 // Typst markup as drawn, and the chip it makes
-import { tip } from '$lib/components/tooltip.svelte';
-import type { ChipFace } from '$lib/editor/visual/extensions/drawnChips/chipFace';
+import { tippedFace, type ChipFace } from '$lib/editor/visual/extensions/drawnChips/chipFace';
+import type { PartElement } from '$lib/editor/visual/extensions/drawnChips/faces/partElements';
 
-export type MarkupDrawing = { dom: HTMLElement; block: boolean; empty: boolean; faces: ChipFace[] };
+export type MarkupDrawing = { dom: PartElement; block: boolean; empty: boolean; faces: ChipFace[] };
 
 export function faceOfDrawing(drawing: MarkupDrawing, source: string): ChipFace {
-	const tipped = tip(drawing.dom, source);
+	const face = tippedFace(drawing.dom, source, { line: drawing.block });
 	return {
-		dom: drawing.dom,
-		line: drawing.block,
-		decorate: (decorations) => drawing.faces.forEach((face) => face.decorate?.(decorations)),
+		...face,
+		decorate: (decorations) => drawing.faces.forEach((part) => part.decorate?.(decorations)),
 		destroy() {
-			drawing.faces.forEach((face) => face.destroy?.());
-			tipped.destroy();
+			drawing.faces.forEach((part) => part.destroy?.());
+			face.destroy?.();
 		}
 	};
 }

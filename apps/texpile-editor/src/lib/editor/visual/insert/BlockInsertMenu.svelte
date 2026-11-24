@@ -37,7 +37,7 @@
 	onEnter={() => active && props.onInsert(active)}
 	onMove={moveActive}
 />
-<div class="max-h-80 overflow-y-auto p-1">
+<div class="max-h-80 min-h-0 overflow-y-auto p-1">
 	{#each groups as group (group.key)}
 		{#if group.label}
 			<div class={menuGroupLabelClass}>{group.label}</div>

@@ -1,70 +1,41 @@
-import { keyedEntriesInDoc, type KeyedEntry } from '$lib/languages/latex/visual/core';
+import { editsInsideTextblocks, keyedEntriesInDoc, type KeyedEntry } from '$lib/languages/latex/visual/core';
 import { Plugin, PluginKey } from 'prosemirror-state';
-import { Decoration, DecorationSet, type EditorView } from 'prosemirror-view';
+import { Decoration, DecorationSet } from 'prosemirror-view';
 import type { Node } from 'prosemirror-model';
-import { mount, unmount } from 'svelte';
-import { BibKeyChipView } from './bibKeyChipView.svelte';
-import BibliographyHeading from './BibliographyHeading.svelte';
-import './bibliography.css';
+import { headOf } from './bibKeyPanel';
+import { headingForm, keyChipForm } from './canvas/bibWidgets';
 
-const mounted = new WeakMap<globalThis.Node, ReturnType<typeof mount>>();
-const keyChips = new WeakMap<globalThis.Node, BibKeyChipView>();
-const liveKeyChips = new Set<BibKeyChipView>();
+// an entry is a paragraph with a hanging indent, with no list marker
+const ENTRY_STYLE = 'display: block; margin-left: 0';
+const FIRST_LINE_STYLE = 'margin-top: 0; margin-bottom: 0.5rem; padding-left: 1.5em; text-indent: -1.5em';
 
-function unmountFrom(dom: globalThis.Node): void {
-	const component = mounted.get(dom);
-	if (component) void unmount(component);
-}
-
-function destroyKeyChip(dom: globalThis.Node): void {
-	const chip = keyChips.get(dom);
-	if (!chip) return;
-	liveKeyChips.delete(chip);
-	chip.destroy();
+function placeholder(): HTMLElement {
+	return document.createElement('span');
 }
 
 function chipWidget(entry: KeyedEntry): Decoration {
-	return Decoration.widget(
-		entry.pos + 2,
-		(view: EditorView, getPos: () => number | undefined) => {
-			const chip = new BibKeyChipView(view, () => (getPos() ?? 0) - 2, entry);
-			keyChips.set(chip.dom, chip);
-			liveKeyChips.add(chip);
-			return chip.dom;
-		},
-		{
-			side: -1,
-			key: `bib-key:${entry.pos}`,
-			stopEvent: () => true,
-			ignoreSelection: true,
-			destroy: destroyKeyChip
-		}
-	);
+	return Decoration.widget(entry.pos + 2, placeholder, {
+		side: -1,
+		// the key in the widget's key: a renamed entry draws its new chip
+		key: `bib-key:${entry.pos}:${headOf(entry.node).key}`,
+		ignoreSelection: true,
+		canvas: keyChipForm(entry)
+	});
 }
 
 function headingWidget(pos: number): Decoration {
-	return Decoration.widget(
-		pos,
-		() => {
-			const dom = document.createElement('div');
-			dom.className = 'bibliography-heading-host';
-			mounted.set(dom, mount(BibliographyHeading, { target: dom }));
-			return dom;
-		},
-		{
-			side: -1,
-			key: 'bibliography-heading',
-			ignoreSelection: true,
-			destroy: unmountFrom
-		}
-	);
+	return Decoration.widget(pos, placeholder, { side: -1, key: 'bibliography-heading', ignoreSelection: true, canvas: headingForm });
 }
 
 function decorationsOf(doc: Node): DecorationSet {
 	const decorations: Decoration[] = [];
 	for (const entry of keyedEntriesInDoc(doc)) {
-		decorations.push(Decoration.node(entry.pos, entry.pos + entry.node.nodeSize, { class: 'bib-entry' }));
-		if (entry.node.firstChild?.isTextblock) decorations.push(chipWidget(entry));
+		decorations.push(Decoration.node(entry.pos, entry.pos + entry.node.nodeSize, { class: 'bib-entry', style: ENTRY_STYLE }));
+		const first = entry.node.firstChild;
+		if (first?.isTextblock) {
+			decorations.push(Decoration.node(entry.pos + 1, entry.pos + 1 + first.nodeSize, { style: FIRST_LINE_STYLE }));
+			decorations.push(chipWidget(entry));
+		}
 		if (entry.starts && entry.cites) decorations.push(headingWidget(entry.pos));
 	}
 	return DecorationSet.create(doc, decorations);
@@ -77,19 +48,11 @@ export function bibliographyPlugin(): Plugin {
 		key: bibliographyKey,
 		state: {
 			init: (_config, state) => decorationsOf(state.doc),
-			apply: (tr, old) => (tr.docChanged ? decorationsOf(tr.doc) : old)
+			// a paper's every key: text typed into a textblock moves the entries and changes none
+			apply: (tr, old) => (!tr.docChanged ? old : editsInsideTextblocks(tr) ? old.map(tr.mapping, tr.doc) : decorationsOf(tr.doc))
 		},
 		props: {
 			decorations: (state) => bibliographyKey.getState(state)
-		},
-		view: () => ({
-			update: (view) => {
-				const entries = new Map(keyedEntriesInDoc(view.state.doc).map((entry) => [entry.pos, entry]));
-				for (const chip of liveKeyChips) {
-					const entry = entries.get(chip.pos());
-					if (entry) chip.refresh(entry);
-				}
-			}
-		})
+		}
 	});
 }

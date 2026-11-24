@@ -2,6 +2,7 @@ import { expect, test } from '@playwright/test';
 import { Disk } from './driver/disk';
 import { useTexpile } from './driver/useTexpile';
 import { VisualEditor } from './driver/visualEditor';
+import { inCanvas, settled } from './canvas/canvasPage';
 
 const TEX = `\\documentclass{article}
 \\usepackage{amsthm}
@@ -47,24 +48,103 @@ const texpile = useTexpile({
 
 type Box = { left: number; right: number; top: number; bottom: number };
 
+const PANE_OFFSET = 150;
+
+/** the nth top-level block of this type put under the pane's top, then where it shows */
+async function blockBox(v: VisualEditor, type: string, nth = 0): Promise<Box> {
+	await inCanvas(
+		v.page,
+		({ probe, view }, arg) => {
+			let index = -1;
+			let seen = 0;
+			view.state.doc.forEach((n, _p, i) => {
+				if (index < 0 && n.type.name === arg.type && seen++ === arg.nth) index = i;
+			});
+			probe.scrollToBlock(index, arg.offset);
+		},
+		{ type, nth, offset: PANE_OFFSET }
+	);
+	await settled(v.page);
+	return inCanvas(
+		v.page,
+		({ probe, view }, arg) => {
+			let at = -1;
+			let seen = 0;
+			view.state.doc.forEach((n, p) => {
+				if (at < 0 && n.type.name === arg.type && seen++ === arg.nth) at = p;
+			});
+			const r = probe.rectOfNode(at)!;
+			return { left: r.left, right: r.right, top: r.top, bottom: r.bottom };
+		},
+		{ type, nth }
+	);
+}
+
+async function scrollToWord(v: VisualEditor, word: string): Promise<number> {
+	const pos = await inCanvas(
+		v.page,
+		({ probe, view }, arg) => {
+			const f = probe.posOf(arg.word);
+			probe.scrollToBlock(view.state.doc.resolve(f).index(0), arg.offset);
+			return f;
+		},
+		{ word, offset: PANE_OFFSET }
+	);
+	await settled(v.page);
+	return pos;
+}
+
 async function wordBox(v: VisualEditor, word: string): Promise<Box> {
-	return v.evalView<Box>(
-		`let f = null; view.state.doc.descendants((n, p) => { if (f === null && n.isText) { const i = n.text.indexOf(arg); if (i >= 0) f = p + i; } });
-		 view.domAtPos(f).node.parentElement?.scrollIntoView({ block: 'center' });
-		 const c = view.coordsAtPos(f, 1); return { left: c.left, right: c.right, top: c.top, bottom: c.bottom };`,
-		word
+	const f = await scrollToWord(v, word);
+	return inCanvas(
+		v.page,
+		({ view }, pos) => {
+			const c = view.coordsAtPos(pos, 1);
+			return { left: c.left, right: c.right, top: c.top, bottom: c.bottom };
+		},
+		f
 	);
 }
 
 // the rect of the unit (top-level block or list item) holding the word
 async function unitBox(v: VisualEditor, word: string): Promise<Box> {
-	return v.evalView<Box>(
-		`let f = null; view.state.doc.descendants((n, p) => { if (f === null && n.isText && n.text.includes(arg)) f = p; });
-		 const $p = view.state.doc.resolve(f); let d = 1;
-		 for (let i = $p.depth; i > 0; i--) if ($p.node(i).type.name === 'list') { d = i; break; }
-		 const r = view.nodeDOM($p.before(d)).getBoundingClientRect(); return { left: r.left, right: r.right, top: r.top, bottom: r.bottom };`,
+	return inCanvas(
+		v.page,
+		({ probe, view }, arg) => {
+			const f = probe.posOf(arg);
+			const $p = view.state.doc.resolve(f);
+			let d = 1;
+			for (let i = $p.depth; i > 0; i--)
+				if ($p.node(i).type.name === 'list') {
+					d = i;
+					break;
+				}
+			const r = probe.rectOfNode($p.before(d))!;
+			return { left: r.left, right: r.right, top: r.top, bottom: r.bottom };
+		},
 		word
 	);
+}
+
+/** how many top-level blocks of this type the document holds */
+function countBlocks(v: VisualEditor, type: string): Promise<number> {
+	return inCanvas(
+		v.page,
+		({ view }, arg) => {
+			let n = 0;
+			view.state.doc.forEach((child) => {
+				if (child.type.name === arg) n++;
+			});
+			return n;
+		},
+		type
+	);
+}
+
+async function clickWord(v: VisualEditor, word: string, options: { button?: 'right' } = {}) {
+	const f = await scrollToWord(v, word);
+	const at = await inCanvas(v.page, ({ probe }, pos) => probe.clientPointOf(pos + 1), f);
+	await v.page.mouse.click(at.x, at.y, options);
 }
 
 async function dragHandle(v: VisualEditor, from: string, to: { word: string; half: 'upper' | 'lower' }) {
@@ -110,30 +190,31 @@ test('the handle over a theorem moves the whole theorem', async () => {
 	await undoRestores(v, disk, 'unit.tex', TEX);
 });
 
-test("the handle's gear sets a centered figure's alignment and opens an equation's settings", async () => {
+test("the handle's gear sets a centered figure's alignment", async () => {
 	const { page, root } = texpile();
 	const v = new VisualEditor(page, root);
 	const disk = new Disk(root);
 	await v.open('centered.tex');
 	const gear = page.locator('.block-handle-settings');
-
-	const card = page.locator('.figure-card').first();
-	await card.scrollIntoViewIfNeeded();
-	const c = (await card.boundingBox())!;
-	await page.mouse.move(c.x + c.width / 2, c.y + c.height / 2, { steps: 4 });
+	const card = await blockBox(v, 'environment');
+	await page.mouse.move((card.left + card.right) / 2, (card.top + card.bottom) / 2, { steps: 4 });
 	await gear.click();
 	const panel = page.locator('.drawn-chip-panel');
 	await expect(panel.getByRole('radio', { name: 'Center' })).toHaveAttribute('aria-checked', 'true');
 	await panel.getByRole('radio', { name: 'Right' }).click();
 	await expect.poll(() => disk.read('centered.tex')).toContain('\\begin{flushright}\n\\begin{tikzpicture}');
 	await page.keyboard.press('Escape');
-	await page.locator('.ProseMirror p', { hasText: 'After.' }).click();
+});
 
-	const equation = page.locator('.ProseMirror > .block-math-container');
-	const e = (await equation.boundingBox())!;
-	await page.mouse.move(e.x + e.width / 2, e.y + e.height / 2, { steps: 4 });
+test("the handle's gear opens an equation's settings", async () => {
+	const { page, root } = texpile();
+	const v = new VisualEditor(page, root);
+	await v.open('centered.tex');
+	const gear = page.locator('.block-handle-settings');
+	const e = await blockBox(v, 'block_math');
+	await page.mouse.move((e.left + e.right) / 2, (e.top + e.bottom) / 2, { steps: 4 });
 	// the equation's own gear is the handle's now
-	await expect(equation.locator('.math-settings-btn')).toBeHidden();
+	await expect(page.locator('.math-settings-btn')).toBeHidden();
 	await gear.click();
 	const settings = page.locator('[data-scope="popover"][data-part="content"][data-state="open"]');
 	await expect(settings).toBeVisible();
@@ -145,12 +226,11 @@ test('the handle waits for the pointer in the margin beside a tall block', async
 	const { page, root } = texpile();
 	const v = new VisualEditor(page, root);
 	await v.open('centered.tex');
-	const card = page.locator('.figure-card').first();
-	await card.scrollIntoViewIfNeeded();
-	const block = (await page.locator('.ProseMirror > .tex-environment').first().boundingBox())!;
+	const box = await blockBox(v, 'environment');
+	const block = { x: box.left, y: box.top, width: box.right - box.left, height: box.bottom - box.top };
 	const middle = block.y + block.height / 2;
 	await page.mouse.move(block.x + block.width / 2, middle, { steps: 4 });
-	const remove = page.locator('.block-handle-btn-danger');
+	const remove = page.locator('.block-handle-settings');
 	await expect(remove).toBeVisible();
 	// sideways into the margin, level with the block's middle and well under the button, then up to it
 	await page.mouse.move(block.x + block.width + 19, middle, { steps: 8 });
@@ -168,14 +248,15 @@ test('the handle stands level with a heading and with the middle of a formula', 
 	const v = new VisualEditor(page, root);
 	await v.open('lines.tex');
 	const plus = page.locator('.block-handle-btn').first();
-	for (const block of [page.locator('.ProseMirror > h1'), page.locator('.ProseMirror > .block-math-container')]) {
+	for (const type of ['heading', 'block_math']) {
 		await expect
 			.poll(async () => {
-				const at = (await block.boundingBox())!;
+				const at = await blockBox(v, type);
+				const middle = (at.top + at.bottom) / 2;
 				await page.mouse.move(5, 5);
-				await page.mouse.move(at.x + at.width / 2, at.y + at.height / 2, { steps: 4 });
+				await page.mouse.move((at.left + at.right) / 2, middle, { steps: 4 });
 				const button = await plus.boundingBox();
-				return button ? Math.abs(button.y + button.height / 2 - (at.y + at.height / 2)) : null;
+				return button ? Math.abs(button.y + button.height / 2 - middle) : null;
 			})
 			.toBeLessThan(3);
 	}
@@ -186,21 +267,21 @@ test("a table in center gets a caption and a number from the handle's gear", asy
 	const v = new VisualEditor(page, root);
 	const disk = new Disk(root);
 	await v.open('bare.tex');
-	const table = (await page.locator('.ProseMirror > .tex-environment').first().boundingBox())!;
-	await v.openBlockSettings(table.x + table.width / 2, table.y + table.height / 2);
+	const table = await blockBox(v, 'environment');
+	await v.openBlockSettings((table.left + table.right) / 2, (table.top + table.bottom) / 2);
 	const settings = page.locator('.bare-table-settings');
 	await expect(settings.getByRole('radio', { name: 'Center' })).toHaveAttribute('aria-checked', 'true');
 	await settings.getByText('Caption and number').click();
-	await expect(page.locator('.ProseMirror > .table-wrapper')).toHaveCount(1);
+	await expect.poll(() => countBlocks(v, 'table_wrapper')).toBe(1);
 	await expect.poll(() => disk.read('bare.tex')).toContain('\\begin{table}');
 	const saved = disk.read('bare.tex');
 	expect(saved).not.toContain('\\begin{center}');
 	expect(saved).toContain('\\begin{tabular}{|l|r|}');
 	// and back: the float's own settings take the caption and the number away
-	const float = (await page.locator('.ProseMirror > .table-wrapper').boundingBox())!;
-	await v.openBlockSettings(float.x + float.width / 2, float.y + 12);
+	const float = await blockBox(v, 'table_wrapper');
+	await v.openBlockSettings((float.left + float.right) / 2, float.top + 12);
 	await page.locator('[data-part="label"]:visible', { hasText: 'Caption and number' }).click();
-	await expect(page.locator('.ProseMirror > .table-wrapper')).toHaveCount(0);
+	await expect.poll(() => countBlocks(v, 'table_wrapper')).toBe(0);
 	await disk.expectFile(
 		'bare.tex',
 		(text) => text.includes('\\begin{center}') && !text.includes('\\begin{table}'),
@@ -215,18 +296,18 @@ test('Show notes section gives a float read from a file its notes', async () => 
 	const v = new VisualEditor(page, root);
 	const disk = new Disk(root);
 	await v.open('float.tex');
-	const float = (await page.locator('.ProseMirror > .table-wrapper').boundingBox())!;
-	await v.openBlockSettings(float.x + float.width / 2, float.y + 12);
+	const float = await blockBox(v, 'table_wrapper');
+	await v.openBlockSettings((float.left + float.right) / 2, float.top + 12);
 	await page.locator('[data-part="label"]:visible', { hasText: 'Show notes section' }).click();
 	await page.keyboard.press('Escape');
-	const notes = page.locator('.ProseMirror .table-notes');
-	await expect(notes).toBeVisible();
-	await notes.click();
+	await expect.poll(() => inCanvas(page, ({ probe }) => probe.query('.table-notes').length)).toBeGreaterThan(0);
+	const notes = await inCanvas(page, ({ probe }) => probe.query('.table-notes')[0].rect);
+	await page.mouse.click(notes.x + notes.width / 2, notes.y + notes.height / 2);
 	await page.keyboard.type('Source: survey.');
 	await disk.expectFile('float.tex', (text) => text.includes('{\\small Source: survey.}'), 'the notes are in the file');
 	// off takes the section away: hidden notes were written without their wrapper once the switch went back
-	const again = (await page.locator('.ProseMirror > .table-wrapper').boundingBox())!;
-	await v.openBlockSettings(again.x + again.width / 2, again.y + 12);
+	const again = await blockBox(v, 'table_wrapper');
+	await v.openBlockSettings((again.left + again.right) / 2, again.top + 12);
 	await page.locator('[data-part="label"]:visible', { hasText: 'Show notes section' }).click();
 	await disk.expectFile('float.tex', (text) => text === FLOAT, 'the file is as it was read');
 });
@@ -236,8 +317,7 @@ test('right-clicking a table offers its settings, which open with the alignment 
 	const { page, root } = texpile();
 	const v = new VisualEditor(page, root);
 	await v.open('held.tex');
-	const cell = (await page.locator('.ProseMirror > .tex-environment td').first().boundingBox())!;
-	await page.mouse.click(cell.x + cell.width / 2, cell.y + cell.height / 2, { button: 'right' });
+	await clickWord(v, 'Name', { button: 'right' });
 	await page.getByRole('menuitem', { name: 'Table settings', exact: true }).click();
 	const settings = page.locator('.bare-table-settings');
 	await expect(settings.getByRole('radiogroup', { name: 'Alignment' }).getByRole('radio', { name: 'Center' })).toHaveAttribute(

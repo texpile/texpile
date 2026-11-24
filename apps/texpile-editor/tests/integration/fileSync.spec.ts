@@ -55,19 +55,18 @@ async function renameInTree(from: string, to: string): Promise<void> {
 
 test('renaming the open file keeps the visual editor, its text and its caret', async () => {
 	test.skip(process.platform === 'darwin', 'the tree context menu is native on macOS');
-	const { source, page, root } = texpile();
+	const { page, root } = texpile();
 	const visual = new VisualEditor(page, root);
-	await source.open('vis.tex');
-	await visual.modeButtons.visual.click();
-	await visual.editor.locator('p', { hasText: 'Visual caret' }).click();
-	await page.keyboard.press('End');
-	await page.keyboard.type(' END');
+	await visual.open('vis.tex');
+	await visual.caretAtEndOf('Visual caret rename text.');
+	await visual.type(' END');
 	const caret = () => visual.evalView<number>('return view.state.selection.head;');
 	const before = await caret();
 	await visual.editor.evaluate((el) => el.setAttribute('data-before-rename', ''));
 	await renameInTree('vis.tex', 'vis2.tex');
 	await expect(page.getByRole('tab', { name: /vis2\.tex/ })).toBeVisible();
-	await expect(page.locator('.ProseMirror[data-before-rename]')).toHaveText('Visual caret rename text. END');
+	await expect(page.locator('.ProseMirror[data-before-rename]')).toHaveCount(1);
+	expect(await visual.evalView<string>('return view.state.doc.textContent;')).toBe('Visual caret rename text. END');
 	expect(await caret()).toBe(before);
 	// focus stays in the tree after a rename, as in VS Code
 	await visual.evalView('view.focus();');
@@ -83,7 +82,7 @@ test('a tab whose file is parsed again puts no rendering bar on the file shown b
 	await visual.open('held.tex');
 	await page.getByRole('tab', { name: /held\.tex/ }).dblclick();
 	await visual.open('before.tex');
-	await expect(visual.editor).toContainText('The file shown before.');
+	await expect.poll(() => visual.evalView<string>("return view?.state.doc.textContent ?? '';")).toContain('The file shown before.');
 	await page.evaluate(
 		async (file) => {
 			const now = await import(/* @vite-ignore */ '/src/lib/buffers/textNow.ts' as string);
@@ -92,8 +91,9 @@ test('a tab whose file is parsed again puts no rendering bar on the file shown b
 			Object.assign(window, { barSeen: seen });
 			function frame(): void {
 				for (const bar of document.querySelectorAll('.indeterminate')) {
-					const text = bar.closest('[data-handle-lane]')?.querySelector('.ProseMirror');
-					if (text?.textContent && getComputedStyle(text).visibility === 'visible') seen.onText++;
+					// the canvas rows, shown once the view lets go of its first paint
+					const text = bar.closest('[data-handle-lane]')?.querySelector('[data-canvas-tiles]:not([data-canvas-held])');
+					if (text?.querySelector('[data-canvas-content]') && getComputedStyle(text).visibility === 'visible') seen.onText++;
 				}
 				requestAnimationFrame(frame);
 			}
@@ -102,7 +102,7 @@ test('a tab whose file is parsed again puts no rendering bar on the file shown b
 		path.join(root, 'held.tex')
 	);
 	await page.getByRole('tab', { name: /held\.tex/ }).click();
-	await expect(visual.editor).toContainText('Held paragraph one ');
+	await expect.poll(() => visual.evalView<string>("return view?.state.doc.textContent ?? '';")).toContain('Held paragraph one ');
 	const onText = await page.evaluate(() => (window as unknown as { barSeen: { onText: number } }).barSeen.onText);
 	expect(onText, 'frames with the rendering bar over drawn text').toBe(0);
 });

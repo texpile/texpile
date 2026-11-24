@@ -3,12 +3,13 @@ import {
 	citedWorks,
 	onDrawnInputs,
 	referenceStore,
+	setRefLook,
 	splitCitationKeys,
 	templateFeaturesStore,
-	tip,
 	type ChipFace,
 	type CitedGroup
 } from '$lib/languages/latex/visual/core';
+import { faceElement } from '$lib/editor/canvas';
 import type { CiteCallGroups } from './citeGroups';
 
 export function citationOf(command: string, call: CiteCallGroups): { text: string; broken: boolean } | null {
@@ -27,23 +28,19 @@ export function citationOf(command: string, call: CiteCallGroups): { text: strin
 }
 
 export function citeFace(command: string, call: CiteCallGroups, source: string, raised = false): ChipFace {
-	const dom = document.createElement(raised ? 'sup' : 'span');
-	dom.className = 'drawn-crossref';
-	const tipped = tip(dom, source);
+	const dom = faceElement(raised ? 'sup' : 'span', 'drawn-crossref');
+	dom.hint = source;
 	function show(): void {
 		const cited = citationOf(command, call);
 		const text = cited ? cited.text : '(…)';
 		// written again as it was, it reads as a change of size to the line breaker
 		if (dom.textContent !== text) dom.textContent = text;
-		dom.classList.toggle('drawn-crossref-broken', cited?.broken ?? true);
+		setRefLook(dom, cited?.broken ?? true);
 	}
 	show();
 	const stop = onDrawnInputs(show);
 	return {
 		dom,
-		destroy() {
-			stop();
-			tipped.destroy();
-		}
+		destroy: stop
 	};
 }

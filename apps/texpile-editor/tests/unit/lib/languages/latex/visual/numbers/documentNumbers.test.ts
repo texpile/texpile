@@ -299,6 +299,41 @@ describe('documentNumbers', () => {
 		const scheme = numberingSchemeOf(loadedRegistry(loaded, 'counters'), loadedRegistry(loaded, 'counterForms'), main, false, [], [macros]);
 		expect(shown(main, NEVER, true, scheme)).toEqual(['heading 1', 'block_math (1.1)']);
 	});
+	it('numbers the displays of parity-tex-body as LaTeX does: a tagged row prints its tag, an unlabeled equation counts', async () => {
+		const math = String.raw`\documentclass{article}
+\begin{document}
+\begin{gather}
+a = b \\
+c = d \tag{*}
+\end{gather}
+\begin{alignat}{2}
+x &= 1 & y &= 2 \\
+z &= 3 & w &= 4 \nonumber
+\end{alignat}
+\begin{flalign}
+f &= g \notag \\
+h &= i
+\end{flalign}
+$$ e^{i\pi} + 1 = 0 $$
+Text before a display \[ s = \sum_{i=1}^{n} i \] and text after it.
+\begin{equation}
+\label{eq:one}
+\int_0^1 x \, dx = \frac{1}{2}
+\end{equation}
+\begin{equation} u \end{equation}
+\begin{equation*} v \end{equation*}
+\begin{align*} p \\ q \end{align*}
+\end{document}
+`;
+		expect(shown(math, NEVER, true, await schemeOf(math))).toEqual([
+			'block_math (1) (*)',
+			'block_math (2)',
+			'block_math (3)',
+			'block_math (4)',
+			'block_math (5)'
+		]);
+	});
+
 	it('prints a \\tag with nested braces or math in place of the number', async () => {
 		const tagged =
 			'\\documentclass{article}\n\\begin{document}\n\\begin{equation}a\\tag{$x_{1}$}\\end{equation}\n\\begin{equation}b\\end{equation}\n\\end{document}\n';

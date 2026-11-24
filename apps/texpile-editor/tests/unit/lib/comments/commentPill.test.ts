@@ -6,34 +6,29 @@
 import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
 import { flushSync } from 'svelte';
 import { EditorState, TextSelection } from 'prosemirror-state';
-import { EditorView } from 'prosemirror-view';
+import type { CanvasView } from '$lib/editor/canvas';
 import { schema } from '$lib/languages/latex/schema/latexPMSchema';
 import { settings } from '$lib/settings';
 import { pmComments } from '$lib/editor/visual/extensions/pmComments';
 import { refiner, type SelectionRefiner } from '$lib/ai/selectionRefiner';
 import { refineCard } from '$lib/ai/refineCardState.svelte';
+import { createTestCanvasView } from '../editor/canvas/testing/testCanvasView';
 
-let host: HTMLDivElement;
-let view: EditorView | null = null;
+let view: CanvasView | null = null;
 
 function mountWithSelection(): HTMLElement {
 	const doc = schema.node('doc', null, [schema.node('paragraph', null, [schema.text('hello world')])]);
 	const state = EditorState.create({ doc, plugins: pmComments({ onAdd: () => {}, sourceAnchor: () => null }) });
-	view = new EditorView(host, { state });
-	// jsdom lays nothing out, so the real coordsAtPos gives the pill nowhere to go and it hides for
-	// the wrong reason. Fixed coordinates well inside the window put the branching under test.
-	view.coordsAtPos = () => ({ top: 100, bottom: 116, left: 50, right: 60 });
+	view = createTestCanvasView(state);
 	view.dispatch(view.state.tr.setSelection(TextSelection.create(view.state.doc, 1, 6)));
-	return host.querySelector('.cm-comment-add-row') as HTMLElement;
+	return view.dom.parentElement!.querySelector('.cm-comment-add-row') as HTMLElement;
 }
 
 const press = (el: Element) => el.dispatchEvent(new MouseEvent('mousedown', { bubbles: true, cancelable: true }));
 
 beforeEach(() => {
-	host = document.createElement('div');
-	document.body.appendChild(host);
 	settings.current = { ...settings.current, commentPill: true };
-	// ResizeObserver is not in jsdom, and the plugin observes the editor to reposition
+	// ResizeObserver is not in jsdom
 	vi.stubGlobal(
 		'ResizeObserver',
 		class {
@@ -47,7 +42,6 @@ beforeEach(() => {
 afterEach(() => {
 	view?.destroy();
 	view = null;
-	host.remove();
 	vi.unstubAllGlobals();
 });
 

@@ -22,8 +22,10 @@ const WARM_MS = 600;
 
 let timer: ReturnType<typeof setTimeout> | undefined;
 let warmUntil = 0;
-let armed: HTMLElement | null = null;
-let owner: HTMLElement | null = null;
+let armed: object | null = null;
+let owner: object | null = null;
+// the hover hint of a drawn element (the canvas editor), which has no node to listen on
+const drawn = {};
 
 export function hideTip(): void {
 	clearTimeout(timer);
@@ -121,4 +123,26 @@ export function tip(node: HTMLElement, text: string | null | undefined, options?
 /** `use:unavailableTip={why}` on a grayed control: the reason shows at once, on hover or a click */
 export function unavailableTip(node: HTMLElement, text: string | null | undefined) {
 	return tip(node, text, { grayed: true });
+}
+
+/** the hint under the pointer on the canvas: shown after the same delay, or at once while another is warm; none closes it */
+export function hoverHint(hint: { text: string; rect: DOMRect; win: Window } | null): void {
+	if (!hint) {
+		if (armed === drawn) {
+			clearTimeout(timer);
+			armed = null;
+		}
+		if (owner === drawn) hideTip();
+		return;
+	}
+	clearTimeout(timer);
+	const { text, rect, win } = hint;
+	function open(): void {
+		armed = null;
+		owner = drawn;
+		shownTip.current = { text, rect, win };
+	}
+	if (owner === drawn || Date.now() < warmUntil) return open();
+	armed = drawn;
+	timer = setTimeout(open, OPEN_DELAY);
 }

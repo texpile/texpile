@@ -488,6 +488,70 @@ export function svgBodyToMarkup(svgBodyName: string): string {
   return `<span style="display:inline-block;height:${height}em;min-width:${minWidth}em;">${body}</span>`;
 }
 
+/** the paths of a stretchy body, for a canvas: each slice's path, viewBox, alignment and share of the width */
+export type SvgBodyPiece = {
+  d: string;
+  viewBox: [number, number, number, number];
+  aspect: string;
+  /** left edge and width of the slice, as fractions of the box */
+  left: number;
+  width: number;
+};
+
+export function svgBodyPieces(svgBodyName: string): {
+  height: number;
+  minWidth: number;
+  pieces: SvgBodyPiece[];
+} {
+  if (SVG_ACCENTS[svgBodyName]) {
+    const [vbWidth, vbHeight, height] = SVG_ACCENTS[svgBodyName];
+    return {
+      height,
+      minWidth: 0,
+      pieces: [
+        {
+          d: PATHS[svgBodyName],
+          viewBox: [0, 0, vbWidth, vbHeight],
+          aspect: 'none',
+          left: 0,
+          width: 1,
+        },
+      ],
+    };
+  }
+  const [paths, minWidth, viewBoxHeight, align] = SVG_BODY[svgBodyName];
+  const slices: [number, number][] =
+    paths.length === 3
+      ? [
+          [0, 0.251],
+          [0.25, 0.5],
+          [0.749, 0.251],
+        ]
+      : paths.length === 2
+        ? [
+            [0, 0.502],
+            [0.498, 0.502],
+          ]
+        : [[0, 1]];
+  const aligns =
+    paths.length === 3
+      ? ['xMinYMin', 'xMidYMin', 'xMaxYMin']
+      : paths.length === 2
+        ? ['xMinYMin', 'xMaxYMin']
+        : [align!];
+  return {
+    height: viewBoxHeight / 1000,
+    minWidth,
+    pieces: paths.map((path, i) => ({
+      d: PATHS[path],
+      viewBox: [0, 0, 400000, viewBoxHeight],
+      aspect: `${aligns[i]} slice`,
+      left: slices[i][0],
+      width: slices[i][1],
+    })),
+  };
+}
+
 export function svgBodyHeight(svgBodyName: string): number {
   if (SVG_BODY[svgBodyName]) return SVG_BODY[svgBodyName][2] / 1000;
 

@@ -2,7 +2,7 @@
 // the caret at its edge read as an empty line, typing there wrote beside the chip, and no gap showed beside it
 import type { Node, ResolvedPos } from 'prosemirror-model';
 import { GapCursor } from 'prosemirror-gapcursor';
-import { drawnChipOf } from '$lib/editor/visual/extensions/drawnChips/DrawnChipView';
+import { drawnChipOf } from '$lib/editor/visual/extensions/drawnChips/chipShows';
 
 export function isLineParagraph(node: Node | null | undefined): boolean {
 	if (!node?.isTextblock || node.childCount === 0) return false;

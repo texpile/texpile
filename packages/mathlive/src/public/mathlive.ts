@@ -34,6 +34,7 @@
 import type { VirtualKeyboardInterface } from './virtual-keyboard';
 import type { StaticRenderOptions } from './options';
 import type { MathfieldElement } from './mathfield-element';
+import type { HeadlessMathfield } from './headless-mathfield';
 export { setKeyboardLayoutLocale, setKeyboardLayout } from './keyboard-layout';
 
 export * from './commands';
@@ -44,6 +45,7 @@ export * from './mathfield-element';
 export * from './mathlive-ssr';
 export * from './virtual-keyboard';
 export * from './math-static-elements';
+export * from './headless-mathfield';
 
 export declare function renderMathInDocument(
   options?: StaticRenderOptions
@@ -74,13 +76,15 @@ export type MathfieldContext = {
     canRemoveRow: boolean;
     canAddColumn: boolean;
     canRemoveColumn: boolean;
+    /** rows hold `\\` breaks: Enter adds a row */
+    multiline: boolean;
   };
   /** the scripts of the operator at the caret, `\sum` or `\lim`; `setLimits` changes them */
   limits?: MathfieldLimits;
 };
 
 export declare function mathfieldContext(
-  field: MathfieldElement
+  field: MathfieldElement | HeadlessMathfield
 ): MathfieldContext;
 
 export declare const version: {

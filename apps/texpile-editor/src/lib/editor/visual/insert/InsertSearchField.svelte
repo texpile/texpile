@@ -10,7 +10,7 @@
 	}
 </script>
 
-<label class="border-surface-200-800 flex items-center gap-2 border-b px-2 py-1.5">
+<label class="border-surface-200-800 flex shrink-0 items-center gap-2 border-b px-2 py-1.5">
 	<Search class="text-muted size-4 shrink-0" />
 	<input
 		class="w-full bg-transparent text-sm outline-none"

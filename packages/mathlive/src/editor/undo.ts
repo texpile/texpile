@@ -86,6 +86,11 @@ export class UndoManager {
     return true;
   }
 
+  /** the snapshots, oldest first, up to the current one */
+  states(): readonly ModelState[] {
+    return this.stack.slice(0, this.index + 1);
+  }
+
   pop(): void {
     if (!this.canUndo()) return;
     this.stack.splice(this.index, this.stack.length - this.index);

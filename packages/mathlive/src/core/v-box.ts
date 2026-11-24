@@ -13,6 +13,21 @@ type VBoxElement = {
 
 export type VBoxElementAndShift = VBoxElement & { shift: number };
 
+/** a stacked child as the canvas places it: its baseline in em below the VBox's, and the wrapper's margins */
+export type VBoxRow = {
+  wrap: Box;
+  box: Box;
+  baseline: number;
+  marginLeft: number;
+  marginRight: number;
+};
+
+/** the rows a VBox stacked, recorded at construction so a layout needs no CSS `top` strings */
+export const VBOX_ROWS = new WeakMap<Box, readonly VBoxRow[]>();
+
+/** Texpile: an array's rows, as the em each row's baseline stands below the array's own; the canvas numbers a display's rows */
+export const ARRAY_ROWS = new WeakMap<Box, readonly number[]>();
+
 // A list of child or kern nodes to be stacked on top of each other (i.e. the
 // first element will be at the bottom, and the last at the top).
 export type VBoxChild = VBoxElement | number;
@@ -120,9 +135,9 @@ function getVListChildrenAndDepth(
  */
 function makeRows(
   params: VBoxParam
-): [rows: Box[], height: number, depth: number] {
+): [rows: Box[], height: number, depth: number, placed: VBoxRow[]] {
   const [children, depth] = getVListChildrenAndDepth(params);
-  if (!children) return [[], 0, 0];
+  if (!children) return [[], 0, 0, []];
 
   const pstrut = new Box(null, { classes: 'ML__pstrut' });
   // Create a strut that is taller than any list item. The strut is added to
@@ -146,6 +161,7 @@ function makeRows(
 
   // Create a new list of actual children at the correct offsets
   const realChildren: Box[] = [];
+  const placed: VBoxRow[] = [];
   let minPos = depth;
   let maxPos = depth;
   let currPos = depth;
@@ -171,6 +187,13 @@ function makeRows(
         childWrap.setStyle('margin-right', child.marginRight, 'em');
 
       realChildren.push(childWrap);
+      placed.push({
+        wrap: childWrap,
+        box,
+        baseline: -currPos - box.depth,
+        marginLeft: child.marginLeft ?? 0,
+        marginRight: child.marginRight ?? 0,
+      });
       currPos += box.height + box.depth;
       width = Math.max(width, childWrap.width);
     }
@@ -195,7 +218,12 @@ function makeRows(
   vlist.setStyle('height', maxPos, 'em');
   // A second row is used if necessary to represent the vlist's depth.
   if (minPos >= 0)
-    return [[new Box(vlist, { classes: 'ML__vlist-r' })], maxPos, -minPos];
+    return [
+      [new Box(vlist, { classes: 'ML__vlist-r' })],
+      maxPos,
+      -minPos,
+      placed,
+    ];
 
   // We will define depth in an empty box with display: table-cell.
   // It should render with the height that we define. But Chrome, in
@@ -223,6 +251,7 @@ function makeRows(
     ],
     maxPos,
     -minPos,
+    placed,
   ];
 }
 
@@ -231,7 +260,7 @@ export class VBox extends Box {
     content: VBoxParam,
     options?: { classes?: string; type?: BoxType }
   ) {
-    const [rows, height, depth] = makeRows(content);
+    const [rows, height, depth, placed] = makeRows(content);
 
     super(rows.length === 1 ? rows[0] : rows, {
       type: options?.type,
@@ -243,6 +272,7 @@ export class VBox extends Box {
 
     this.height = height;
     this.depth = depth;
+    VBOX_ROWS.set(this, placed);
     this.softWidth = rows.reduce((acc, row) => Math.max(acc, row.width), 0);
     // this.width = this.children!.reduce(
     //   (acc, row) => Math.max(acc, row.width),

@@ -21,3 +21,20 @@ describe('enumerate labels', () => {
 		).toEqual(['1.', '(a)', '', '(b)', '(iii)']);
 	});
 });
+
+describe('bullet labels by depth (A14)', () => {
+	const nest = (open: string) =>
+		`\\begin{itemize}${open}\n\\item a\n\\begin{itemize}\n\\item b\n\\begin{itemize}\n\\item c\n\\begin{itemize}\n\\item d\n\\end{itemize}\n\\end{itemize}\n\\end{itemize}\n\\end{itemize}`;
+	const bulletsOf = (body: string) => {
+		const { doc } = parseLatexFile(`\\documentclass{article}\n\\begin{document}\n${body}\n\\end{document}\n`);
+		return [...enumerateLabels(doc).values()];
+	};
+
+	it('prints the kernel marks of depths one to four', () => {
+		expect(bulletsOf(nest(''))).toEqual(['•', '–', '∗', '·']);
+	});
+
+	it('prints a plain-text enumitem label', () => {
+		expect(bulletsOf('\\begin{itemize}[label=--]\n\\item a\n\\end{itemize}')).toEqual(['–']);
+	});
+});

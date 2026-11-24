@@ -1,6 +1,6 @@
 // a TeX length as the editor draws it: in ems of the editor's font, or as a share of the text width; \fill,
 // \stretch and \hfill stretch to whatever is left
-import type { DrawnLength } from '$lib/editor/visual/extensions/drawnChips/spaceFace';
+import type { DrawnLength } from '$lib/editor/visual/extensions/drawnChips/space/spaceFace';
 import { commonRegisterSize, stretchesToFill } from '$lib/languages/latex/knowledge/commands/naturalSize';
 
 // points per unit; an em and an ex are the 10pt article class's, which is what the editor's own em stands for

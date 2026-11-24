@@ -14,4 +14,6 @@ export function stubBrowser(): void {
   })) as never;
   Element.prototype.scrollIntoView = () => {};
   Element.prototype.scroll = () => {};
+  Element.prototype.setPointerCapture = () => {};
+  Element.prototype.releasePointerCapture = () => {};
 }

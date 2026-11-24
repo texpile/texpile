@@ -83,6 +83,15 @@ describe('a file read again after an edit', () => {
 			}
 		});
 	}
+	it('reads only the changed lines of an undo across far places', () => {
+		let text = `\\documentclass{article}\n\\begin{document}\n${body}\\end{document}\n`;
+		const before = latexTreeOf(text);
+		for (const part of ['Part 2}', 'Part 20}', 'Part 38}'])
+			text = applyEdit(text, { from: at(part, text), to: at(part, text), insert: ' typed' });
+		const after = latexTreeOf(text);
+		expect(firstDifference(after, latexParserFor(false).parse(text))).toBeNull();
+		expect(sharedTrees(before, after)).toBeGreaterThan(0);
+	});
 });
 
 // twelve readings were kept whatever they were: every change to one file left another reading of it, and those pushed

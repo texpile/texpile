@@ -1,6 +1,6 @@
 // the language a document's own source names: babel, polyglossia, Typst's text lang, Markdown front matter
 import { codeOnly } from '$lib/languages/latex/texCode';
-import { documentWrapperOf } from '$lib/languages/latex/syntax/documentWrapper';
+import { documentBeginOf } from '$lib/languages/latex/syntax/documentWrapper';
 import { callsIn, rolesOf, type CommandCall } from '$lib/languages/latex/knowledge/calls/commandCalls';
 import { languageDeclarationsIn } from '$lib/languages/latex/knowledge/calls/languageDeclarations';
 import { isBabelLanguageName, isBabelPackage, languageTagsOf } from '$lib/languages/latex/knowledge/registries/languageTags';
@@ -51,7 +51,7 @@ const WRITES_COMMAND = /\\[A-Za-z]/;
 export function declaredLanguage(source: string): DeclaredLanguage | undefined {
 	if (last && source.startsWith(last.preamble) && BEGIN_DOCUMENT.test(source.slice(last.preamble.length, last.preamble.length + 40)))
 		return last.language;
-	const begin = WRITES_DOCUMENT.test(source) ? documentWrapperOf(source)?.begin.from : undefined;
+	const begin = WRITES_DOCUMENT.test(source) ? (documentBeginOf(source) ?? undefined) : undefined;
 	const head = source.slice(0, begin ?? HEAD);
 	const language = (WRITES_COMMAND.test(head) ? latexLanguageIn(head) : undefined) ?? otherLanguageIn(head);
 	last = begin === undefined ? null : { preamble: head, language };

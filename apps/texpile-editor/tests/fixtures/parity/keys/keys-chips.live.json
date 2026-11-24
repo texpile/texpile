@@ -1,0 +1,913 @@
+{
+ "note": "Recorded live from the DOM editor (canvas/p0-dom) on 2026-11-17 by W1: three tries per row, rows kept where all three agreed. Vertical keys are left out (P0 key files cover them with caret x). Positions are in keys-chips/<file>.",
+ "environment": {
+  "window": [
+   1280,
+   860
+  ],
+  "platform": "linux",
+  "domEditorCommit": "6ec0389c61ffc889078a95517ee770740f556c7e"
+ },
+ "documents": {
+  "keys-chips/chips.tex": [
+   {
+    "cat": "chip-before",
+    "chip": "label \"\"",
+    "from": 8,
+    "key": "ArrowLeft",
+    "want": "text 6 6"
+   },
+   {
+    "cat": "chip-before",
+    "chip": "label \"\"",
+    "from": 8,
+    "key": "Shift+ArrowLeft",
+    "want": "text 8 6"
+   },
+   {
+    "cat": "chip-before",
+    "chip": "label \"\"",
+    "from": 8,
+    "key": "ArrowRight",
+    "want": "text 9 9"
+   },
+   {
+    "cat": "chip-before",
+    "chip": "label \"\"",
+    "from": 8,
+    "key": "Shift+ArrowRight",
+    "want": "text 8 9"
+   },
+   {
+    "cat": "chip-before",
+    "chip": "label \"\"",
+    "from": 8,
+    "key": "Control+ArrowLeft",
+    "want": "text 6 6"
+   },
+   {
+    "cat": "chip-before",
+    "chip": "label \"\"",
+    "from": 8,
+    "key": "Shift+Control+ArrowLeft",
+    "want": "text 8 6"
+   },
+   {
+    "cat": "chip-before",
+    "chip": "label \"\"",
+    "from": 8,
+    "key": "Control+ArrowRight",
+    "want": "text 9 9"
+   },
+   {
+    "cat": "chip-before",
+    "chip": "label \"\"",
+    "from": 8,
+    "key": "Shift+Control+ArrowRight",
+    "want": "text 8 9"
+   },
+   {
+    "cat": "chip-after",
+    "chip": "label \"\"",
+    "from": 9,
+    "key": "ArrowLeft",
+    "want": "text 8 8"
+   },
+   {
+    "cat": "chip-after",
+    "chip": "label \"\"",
+    "from": 9,
+    "key": "Shift+ArrowLeft",
+    "want": "text 9 8"
+   },
+   {
+    "cat": "chip-after",
+    "chip": "label \"\"",
+    "from": 9,
+    "key": "ArrowRight",
+    "want": "text 11 11"
+   },
+   {
+    "cat": "chip-after",
+    "chip": "label \"\"",
+    "from": 9,
+    "key": "Shift+ArrowRight",
+    "want": "text 9 11"
+   },
+   {
+    "cat": "chip-after",
+    "chip": "label \"\"",
+    "from": 9,
+    "key": "Control+ArrowLeft",
+    "want": "text 8 8"
+   },
+   {
+    "cat": "chip-after",
+    "chip": "label \"\"",
+    "from": 9,
+    "key": "Shift+Control+ArrowLeft",
+    "want": "text 9 8"
+   },
+   {
+    "cat": "chip-after",
+    "chip": "label \"\"",
+    "from": 9,
+    "key": "Control+ArrowRight",
+    "want": "text 11 11"
+   },
+   {
+    "cat": "chip-after",
+    "chip": "label \"\"",
+    "from": 9,
+    "key": "Shift+Control+ArrowRight",
+    "want": "text 9 11"
+   },
+   {
+    "cat": "chip-before",
+    "chip": "inline_latex \"\\\\footnote{The no\"",
+    "from": 21,
+    "key": "ArrowLeft",
+    "want": "text 20 20"
+   },
+   {
+    "cat": "chip-before",
+    "chip": "inline_latex \"\\\\footnote{The no\"",
+    "from": 21,
+    "key": "Shift+ArrowLeft",
+    "want": "text 21 20"
+   },
+   {
+    "cat": "chip-before",
+    "chip": "inline_latex \"\\\\footnote{The no\"",
+    "from": 21,
+    "key": "ArrowRight",
+    "want": "text 43 43"
+   },
+   {
+    "cat": "chip-before",
+    "chip": "inline_latex \"\\\\footnote{The no\"",
+    "from": 21,
+    "key": "Shift+ArrowRight",
+    "want": "text 21 43"
+   },
+   {
+    "cat": "chip-before",
+    "chip": "inline_latex \"\\\\footnote{The no\"",
+    "from": 21,
+    "key": "Control+ArrowLeft",
+    "want": "text 13 13"
+   },
+   {
+    "cat": "chip-before",
+    "chip": "inline_latex \"\\\\footnote{The no\"",
+    "from": 21,
+    "key": "Shift+Control+ArrowLeft",
+    "want": "text 21 13"
+   },
+   {
+    "cat": "chip-before",
+    "chip": "inline_latex \"\\\\footnote{The no\"",
+    "from": 21,
+    "key": "Control+ArrowRight",
+    "want": "text 43 43"
+   },
+   {
+    "cat": "chip-before",
+    "chip": "inline_latex \"\\\\footnote{The no\"",
+    "from": 21,
+    "key": "Shift+Control+ArrowRight",
+    "want": "text 43 51"
+   },
+   {
+    "cat": "chip-after",
+    "chip": "inline_latex \"\\\\footnote{The no\"",
+    "from": 43,
+    "key": "ArrowLeft",
+    "want": "text 21 21"
+   },
+   {
+    "cat": "chip-after",
+    "chip": "inline_latex \"\\\\footnote{The no\"",
+    "from": 43,
+    "key": "Shift+ArrowLeft",
+    "want": "text 43 21"
+   },
+   {
+    "cat": "chip-after",
+    "chip": "inline_latex \"\\\\footnote{The no\"",
+    "from": 43,
+    "key": "ArrowRight",
+    "want": "text 44 44"
+   },
+   {
+    "cat": "chip-after",
+    "chip": "inline_latex \"\\\\footnote{The no\"",
+    "from": 43,
+    "key": "Shift+ArrowRight",
+    "want": "text 43 44"
+   },
+   {
+    "cat": "chip-after",
+    "chip": "inline_latex \"\\\\footnote{The no\"",
+    "from": 43,
+    "key": "Control+ArrowLeft",
+    "want": "text 21 21"
+   },
+   {
+    "cat": "chip-after",
+    "chip": "inline_latex \"\\\\footnote{The no\"",
+    "from": 43,
+    "key": "Shift+Control+ArrowLeft",
+    "want": "text 43 13"
+   },
+   {
+    "cat": "chip-after",
+    "chip": "inline_latex \"\\\\footnote{The no\"",
+    "from": 43,
+    "key": "Control+ArrowRight",
+    "want": "text 51 51"
+   },
+   {
+    "cat": "chip-after",
+    "chip": "inline_latex \"\\\\footnote{The no\"",
+    "from": 43,
+    "key": "Shift+Control+ArrowRight",
+    "want": "text 43 51"
+   },
+   {
+    "cat": "chip-before",
+    "chip": "inline_latex \"\\\\vspace{1em} \"",
+    "from": 105,
+    "key": "ArrowLeft",
+    "want": "text 104 104"
+   },
+   {
+    "cat": "chip-before",
+    "chip": "inline_latex \"\\\\vspace{1em} \"",
+    "from": 105,
+    "key": "Shift+ArrowLeft",
+    "want": "text 105 104"
+   },
+   {
+    "cat": "chip-before",
+    "chip": "inline_latex \"\\\\vspace{1em} \"",
+    "from": 105,
+    "key": "ArrowRight",
+    "want": "text 120 120"
+   },
+   {
+    "cat": "chip-before",
+    "chip": "inline_latex \"\\\\vspace{1em} \"",
+    "from": 105,
+    "key": "Shift+ArrowRight",
+    "want": "text 105 120"
+   },
+   {
+    "cat": "chip-before",
+    "chip": "inline_latex \"\\\\vspace{1em} \"",
+    "from": 105,
+    "key": "Control+ArrowLeft",
+    "want": "text 99 99"
+   },
+   {
+    "cat": "chip-before",
+    "chip": "inline_latex \"\\\\vspace{1em} \"",
+    "from": 105,
+    "key": "Shift+Control+ArrowLeft",
+    "want": "text 105 99"
+   },
+   {
+    "cat": "chip-before",
+    "chip": "inline_latex \"\\\\vspace{1em} \"",
+    "from": 105,
+    "key": "Control+ArrowRight",
+    "want": "text 120 120"
+   },
+   {
+    "cat": "chip-before",
+    "chip": "inline_latex \"\\\\vspace{1em} \"",
+    "from": 105,
+    "key": "Shift+Control+ArrowRight",
+    "want": "text 120 124"
+   },
+   {
+    "cat": "chip-after",
+    "chip": "inline_latex \"\\\\vspace{1em} \"",
+    "from": 120,
+    "key": "ArrowLeft",
+    "want": "text 105 105"
+   },
+   {
+    "cat": "chip-after",
+    "chip": "inline_latex \"\\\\vspace{1em} \"",
+    "from": 120,
+    "key": "Shift+ArrowLeft",
+    "want": "text 120 105"
+   },
+   {
+    "cat": "chip-after",
+    "chip": "inline_latex \"\\\\vspace{1em} \"",
+    "from": 120,
+    "key": "ArrowRight",
+    "want": "text 121 121"
+   },
+   {
+    "cat": "chip-after",
+    "chip": "inline_latex \"\\\\vspace{1em} \"",
+    "from": 120,
+    "key": "Shift+ArrowRight",
+    "want": "text 120 121"
+   },
+   {
+    "cat": "chip-after",
+    "chip": "inline_latex \"\\\\vspace{1em} \"",
+    "from": 120,
+    "key": "Control+ArrowLeft",
+    "want": "text 105 105"
+   },
+   {
+    "cat": "chip-after",
+    "chip": "inline_latex \"\\\\vspace{1em} \"",
+    "from": 120,
+    "key": "Shift+Control+ArrowLeft",
+    "want": "node 105 120"
+   },
+   {
+    "cat": "chip-after",
+    "chip": "inline_latex \"\\\\vspace{1em} \"",
+    "from": 120,
+    "key": "Control+ArrowRight",
+    "want": "text 124 124"
+   },
+   {
+    "cat": "chip-after",
+    "chip": "inline_latex \"\\\\vspace{1em} \"",
+    "from": 120,
+    "key": "Shift+Control+ArrowRight",
+    "want": "text 120 124"
+   },
+   {
+    "cat": "chip-before",
+    "chip": "ref \"intro\"",
+    "from": 177,
+    "key": "ArrowLeft",
+    "want": "text 176 176"
+   },
+   {
+    "cat": "chip-before",
+    "chip": "ref \"intro\"",
+    "from": 177,
+    "key": "Shift+ArrowLeft",
+    "want": "text 177 176"
+   },
+   {
+    "cat": "chip-before",
+    "chip": "ref \"intro\"",
+    "from": 177,
+    "key": "ArrowRight",
+    "want": "text 184 184"
+   },
+   {
+    "cat": "chip-before",
+    "chip": "ref \"intro\"",
+    "from": 177,
+    "key": "Shift+ArrowRight",
+    "want": "text 177 184"
+   },
+   {
+    "cat": "chip-before",
+    "chip": "ref \"intro\"",
+    "from": 177,
+    "key": "Control+ArrowLeft",
+    "want": "text 167 167"
+   },
+   {
+    "cat": "chip-before",
+    "chip": "ref \"intro\"",
+    "from": 177,
+    "key": "Shift+Control+ArrowLeft",
+    "want": "text 177 167"
+   },
+   {
+    "cat": "chip-before",
+    "chip": "ref \"intro\"",
+    "from": 177,
+    "key": "Control+ArrowRight",
+    "want": "text 184 184"
+   },
+   {
+    "cat": "chip-before",
+    "chip": "ref \"intro\"",
+    "from": 177,
+    "key": "Shift+Control+ArrowRight",
+    "want": "node 177 184"
+   },
+   {
+    "cat": "chip-after",
+    "chip": "ref \"intro\"",
+    "from": 184,
+    "key": "ArrowLeft",
+    "want": "text 177 177"
+   },
+   {
+    "cat": "chip-after",
+    "chip": "ref \"intro\"",
+    "from": 184,
+    "key": "Shift+ArrowLeft",
+    "want": "text 184 177"
+   },
+   {
+    "cat": "chip-after",
+    "chip": "ref \"intro\"",
+    "from": 184,
+    "key": "ArrowRight",
+    "want": "text 185 185"
+   },
+   {
+    "cat": "chip-after",
+    "chip": "ref \"intro\"",
+    "from": 184,
+    "key": "Shift+ArrowRight",
+    "want": "text 184 185"
+   },
+   {
+    "cat": "chip-after",
+    "chip": "ref \"intro\"",
+    "from": 184,
+    "key": "Control+ArrowLeft",
+    "want": "text 177 177"
+   },
+   {
+    "cat": "chip-after",
+    "chip": "ref \"intro\"",
+    "from": 184,
+    "key": "Shift+Control+ArrowLeft",
+    "want": "node 177 184"
+   },
+   {
+    "cat": "chip-after",
+    "chip": "ref \"intro\"",
+    "from": 184,
+    "key": "Control+ArrowRight",
+    "want": "text 188 188"
+   },
+   {
+    "cat": "chip-after",
+    "chip": "ref \"intro\"",
+    "from": 184,
+    "key": "Shift+Control+ArrowRight",
+    "want": "text 184 188"
+   },
+   {
+    "cat": "chip-before",
+    "chip": "citation \"knuth\"",
+    "from": 200,
+    "key": "ArrowLeft",
+    "want": "text 199 199"
+   },
+   {
+    "cat": "chip-before",
+    "chip": "citation \"knuth\"",
+    "from": 200,
+    "key": "Shift+ArrowLeft",
+    "want": "text 200 199"
+   },
+   {
+    "cat": "chip-before",
+    "chip": "citation \"knuth\"",
+    "from": 200,
+    "key": "ArrowRight",
+    "want": "text 207 207"
+   },
+   {
+    "cat": "chip-before",
+    "chip": "citation \"knuth\"",
+    "from": 200,
+    "key": "Shift+ArrowRight",
+    "want": "text 200 207"
+   },
+   {
+    "cat": "chip-before",
+    "chip": "citation \"knuth\"",
+    "from": 200,
+    "key": "Control+ArrowLeft",
+    "want": "text 191 191"
+   },
+   {
+    "cat": "chip-before",
+    "chip": "citation \"knuth\"",
+    "from": 200,
+    "key": "Shift+Control+ArrowLeft",
+    "want": "text 200 191"
+   },
+   {
+    "cat": "chip-before",
+    "chip": "citation \"knuth\"",
+    "from": 200,
+    "key": "Control+ArrowRight",
+    "want": "text 207 207"
+   },
+   {
+    "cat": "chip-before",
+    "chip": "citation \"knuth\"",
+    "from": 200,
+    "key": "Shift+Control+ArrowRight",
+    "want": "node 200 207"
+   },
+   {
+    "cat": "chip-after",
+    "chip": "citation \"knuth\"",
+    "from": 207,
+    "key": "ArrowLeft",
+    "want": "text 200 200"
+   },
+   {
+    "cat": "chip-after",
+    "chip": "citation \"knuth\"",
+    "from": 207,
+    "key": "Shift+ArrowLeft",
+    "want": "text 207 200"
+   },
+   {
+    "cat": "chip-after",
+    "chip": "citation \"knuth\"",
+    "from": 207,
+    "key": "ArrowRight",
+    "want": "text 208 208"
+   },
+   {
+    "cat": "chip-after",
+    "chip": "citation \"knuth\"",
+    "from": 207,
+    "key": "Shift+ArrowRight",
+    "want": "text 207 208"
+   },
+   {
+    "cat": "chip-after",
+    "chip": "citation \"knuth\"",
+    "from": 207,
+    "key": "Control+ArrowLeft",
+    "want": "text 200 200"
+   },
+   {
+    "cat": "chip-after",
+    "chip": "citation \"knuth\"",
+    "from": 207,
+    "key": "Shift+Control+ArrowLeft",
+    "want": "node 200 207"
+   },
+   {
+    "cat": "chip-after",
+    "chip": "citation \"knuth\"",
+    "from": 207,
+    "key": "Control+ArrowRight",
+    "want": "text 211 211"
+   },
+   {
+    "cat": "chip-after",
+    "chip": "citation \"knuth\"",
+    "from": 207,
+    "key": "Shift+Control+ArrowRight",
+    "want": "text 207 211"
+   }
+  ],
+  "keys-chips/chips.typ": [
+   {
+    "cat": "chip-before",
+    "chip": "inline_latex \"<intro>\"",
+    "from": 16,
+    "key": "ArrowLeft",
+    "want": "text 15 15"
+   },
+   {
+    "cat": "chip-before",
+    "chip": "inline_latex \"<intro>\"",
+    "from": 16,
+    "key": "Shift+ArrowLeft",
+    "want": "text 16 15"
+   },
+   {
+    "cat": "chip-before",
+    "chip": "inline_latex \"<intro>\"",
+    "from": 16,
+    "key": "ArrowRight",
+    "want": "text 25 25"
+   },
+   {
+    "cat": "chip-before",
+    "chip": "inline_latex \"<intro>\"",
+    "from": 16,
+    "key": "Shift+ArrowRight",
+    "want": "text 16 25"
+   },
+   {
+    "cat": "chip-before",
+    "chip": "inline_latex \"<intro>\"",
+    "from": 16,
+    "key": "Control+ArrowLeft",
+    "want": "text 10 10"
+   },
+   {
+    "cat": "chip-before",
+    "chip": "inline_latex \"<intro>\"",
+    "from": 16,
+    "key": "Shift+Control+ArrowLeft",
+    "want": "text 16 10"
+   },
+   {
+    "cat": "chip-before",
+    "chip": "inline_latex \"<intro>\"",
+    "from": 16,
+    "key": "Control+ArrowRight",
+    "want": "text 25 25"
+   },
+   {
+    "cat": "chip-before",
+    "chip": "inline_latex \"<intro>\"",
+    "from": 16,
+    "key": "Shift+Control+ArrowRight",
+    "want": "text 25 29"
+   },
+   {
+    "cat": "chip-after",
+    "chip": "inline_latex \"<intro>\"",
+    "from": 25,
+    "key": "ArrowLeft",
+    "want": "text 16 16"
+   },
+   {
+    "cat": "chip-after",
+    "chip": "inline_latex \"<intro>\"",
+    "from": 25,
+    "key": "Shift+ArrowLeft",
+    "want": "text 25 16"
+   },
+   {
+    "cat": "chip-after",
+    "chip": "inline_latex \"<intro>\"",
+    "from": 25,
+    "key": "ArrowRight",
+    "want": "text 26 26"
+   },
+   {
+    "cat": "chip-after",
+    "chip": "inline_latex \"<intro>\"",
+    "from": 25,
+    "key": "Shift+ArrowRight",
+    "want": "text 25 26"
+   },
+   {
+    "cat": "chip-after",
+    "chip": "inline_latex \"<intro>\"",
+    "from": 25,
+    "key": "Control+ArrowLeft",
+    "want": "text 16 16"
+   },
+   {
+    "cat": "chip-after",
+    "chip": "inline_latex \"<intro>\"",
+    "from": 25,
+    "key": "Shift+Control+ArrowLeft",
+    "want": "node 16 25"
+   },
+   {
+    "cat": "chip-after",
+    "chip": "inline_latex \"<intro>\"",
+    "from": 25,
+    "key": "Control+ArrowRight",
+    "want": "text 29 29"
+   },
+   {
+    "cat": "chip-after",
+    "chip": "inline_latex \"<intro>\"",
+    "from": 25,
+    "key": "Shift+Control+ArrowRight",
+    "want": "text 25 29"
+   },
+   {
+    "cat": "chip-before",
+    "chip": "typ_ref \"@intro\"",
+    "from": 42,
+    "key": "ArrowLeft",
+    "want": "text 41 41"
+   },
+   {
+    "cat": "chip-before",
+    "chip": "typ_ref \"@intro\"",
+    "from": 42,
+    "key": "Shift+ArrowLeft",
+    "want": "text 42 41"
+   },
+   {
+    "cat": "chip-before",
+    "chip": "typ_ref \"@intro\"",
+    "from": 42,
+    "key": "ArrowRight",
+    "want": "text 43 43"
+   },
+   {
+    "cat": "chip-before",
+    "chip": "typ_ref \"@intro\"",
+    "from": 42,
+    "key": "Shift+ArrowRight",
+    "want": "text 42 43"
+   },
+   {
+    "cat": "chip-before",
+    "chip": "typ_ref \"@intro\"",
+    "from": 42,
+    "key": "Control+ArrowLeft",
+    "want": "text 32 32"
+   },
+   {
+    "cat": "chip-before",
+    "chip": "typ_ref \"@intro\"",
+    "from": 42,
+    "key": "Shift+Control+ArrowLeft",
+    "want": "text 42 32"
+   },
+   {
+    "cat": "chip-before",
+    "chip": "typ_ref \"@intro\"",
+    "from": 42,
+    "key": "Control+ArrowRight",
+    "want": "text 43 43"
+   },
+   {
+    "cat": "chip-before",
+    "chip": "typ_ref \"@intro\"",
+    "from": 42,
+    "key": "Shift+Control+ArrowRight",
+    "want": "text 42 43"
+   },
+   {
+    "cat": "chip-after",
+    "chip": "typ_ref \"@intro\"",
+    "from": 43,
+    "key": "ArrowLeft",
+    "want": "text 42 42"
+   },
+   {
+    "cat": "chip-after",
+    "chip": "typ_ref \"@intro\"",
+    "from": 43,
+    "key": "Shift+ArrowLeft",
+    "want": "text 43 42"
+   },
+   {
+    "cat": "chip-after",
+    "chip": "typ_ref \"@intro\"",
+    "from": 43,
+    "key": "ArrowRight",
+    "want": "text 44 44"
+   },
+   {
+    "cat": "chip-after",
+    "chip": "typ_ref \"@intro\"",
+    "from": 43,
+    "key": "Shift+ArrowRight",
+    "want": "text 43 44"
+   },
+   {
+    "cat": "chip-after",
+    "chip": "typ_ref \"@intro\"",
+    "from": 43,
+    "key": "Control+ArrowLeft",
+    "want": "text 42 42"
+   },
+   {
+    "cat": "chip-after",
+    "chip": "typ_ref \"@intro\"",
+    "from": 43,
+    "key": "Shift+Control+ArrowLeft",
+    "want": "text 43 42"
+   },
+   {
+    "cat": "chip-after",
+    "chip": "typ_ref \"@intro\"",
+    "from": 43,
+    "key": "Control+ArrowRight",
+    "want": "text 47 47"
+   },
+   {
+    "cat": "chip-after",
+    "chip": "typ_ref \"@intro\"",
+    "from": 43,
+    "key": "Shift+Control+ArrowRight",
+    "want": "text 43 47"
+   },
+   {
+    "cat": "chip-before",
+    "chip": "inline_latex \"#footnote[The no\"",
+    "from": 99,
+    "key": "ArrowLeft",
+    "want": "text 98 98"
+   },
+   {
+    "cat": "chip-before",
+    "chip": "inline_latex \"#footnote[The no\"",
+    "from": 99,
+    "key": "Shift+ArrowLeft",
+    "want": "text 99 98"
+   },
+   {
+    "cat": "chip-before",
+    "chip": "inline_latex \"#footnote[The no\"",
+    "from": 99,
+    "key": "ArrowRight",
+    "want": "text 121 121"
+   },
+   {
+    "cat": "chip-before",
+    "chip": "inline_latex \"#footnote[The no\"",
+    "from": 99,
+    "key": "Shift+ArrowRight",
+    "want": "text 99 121"
+   },
+   {
+    "cat": "chip-before",
+    "chip": "inline_latex \"#footnote[The no\"",
+    "from": 99,
+    "key": "Control+ArrowLeft",
+    "want": "text 91 91"
+   },
+   {
+    "cat": "chip-before",
+    "chip": "inline_latex \"#footnote[The no\"",
+    "from": 99,
+    "key": "Shift+Control+ArrowLeft",
+    "want": "text 99 91"
+   },
+   {
+    "cat": "chip-before",
+    "chip": "inline_latex \"#footnote[The no\"",
+    "from": 99,
+    "key": "Control+ArrowRight",
+    "want": "text 121 121"
+   },
+   {
+    "cat": "chip-before",
+    "chip": "inline_latex \"#footnote[The no\"",
+    "from": 99,
+    "key": "Shift+Control+ArrowRight",
+    "want": "text 121 129"
+   },
+   {
+    "cat": "chip-after",
+    "chip": "inline_latex \"#footnote[The no\"",
+    "from": 121,
+    "key": "ArrowLeft",
+    "want": "text 99 99"
+   },
+   {
+    "cat": "chip-after",
+    "chip": "inline_latex \"#footnote[The no\"",
+    "from": 121,
+    "key": "Shift+ArrowLeft",
+    "want": "text 121 99"
+   },
+   {
+    "cat": "chip-after",
+    "chip": "inline_latex \"#footnote[The no\"",
+    "from": 121,
+    "key": "ArrowRight",
+    "want": "text 122 122"
+   },
+   {
+    "cat": "chip-after",
+    "chip": "inline_latex \"#footnote[The no\"",
+    "from": 121,
+    "key": "Shift+ArrowRight",
+    "want": "text 121 122"
+   },
+   {
+    "cat": "chip-after",
+    "chip": "inline_latex \"#footnote[The no\"",
+    "from": 121,
+    "key": "Control+ArrowLeft",
+    "want": "text 99 99"
+   },
+   {
+    "cat": "chip-after",
+    "chip": "inline_latex \"#footnote[The no\"",
+    "from": 121,
+    "key": "Shift+Control+ArrowLeft",
+    "want": "text 121 91"
+   },
+   {
+    "cat": "chip-after",
+    "chip": "inline_latex \"#footnote[The no\"",
+    "from": 121,
+    "key": "Control+ArrowRight",
+    "want": "text 129 129"
+   },
+   {
+    "cat": "chip-after",
+    "chip": "inline_latex \"#footnote[The no\"",
+    "from": 121,
+    "key": "Shift+Control+ArrowRight",
+    "want": "text 121 129"
+   }
+  ]
+ }
+}

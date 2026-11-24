@@ -14,38 +14,26 @@ const classesOf = (d: PMNode, r: Parameters<typeof paintRange>[1]) =>
 	paintRange(d, r).map((deco) => (deco as unknown as { type: { attrs?: Record<string, string> } }).type.attrs?.class ?? '');
 
 describe('paintRange', () => {
-	it('draws the formula the browser skips and leaves the text it paints alone', () => {
-		const painted = classesOf(passage, { from: 1, to: passage.content.size, tint: 'red', key: 'k', reach: 'line', nativeText: true });
-		expect(painted).toEqual(['pm-range pm-range-node']);
-	});
-
-	it('draws the words too when the browser is painting nothing, at the line box', () => {
-		const painted = classesOf(passage, { from: 1, to: passage.content.size, tint: 'red', key: 'k', reach: 'line' });
+	it('fills the words to the line box and names the formula, which is shaded by its box', () => {
+		const painted = classesOf(passage, { from: 1, to: passage.content.size, tint: 'red', reach: 'line' });
 		expect(painted).toEqual(['pm-range pm-range-text', 'pm-range pm-range-node']);
 	});
 
-	it("shades a citation in a peer's selection, which the browser paints only in our own", () => {
+	it("shades a citation in a peer's selection", () => {
 		const cite = schema.nodes.citation.create({ variant: 'cite' }, schema.text('fourier1822'));
 		const cited = doc(para(schema.text('bulk material '), cite, schema.text('. Earlier')));
-		const range = { from: 1, to: cited.content.size, tint: 'red', key: 'k', reach: 'line' as const };
+		const range = { from: 1, to: cited.content.size, tint: 'red', reach: 'line' as const };
 		expect(classesOf(cited, range)).toEqual(['pm-range pm-range-text', 'pm-range pm-range-node']);
-		expect(classesOf(cited, { ...range, nativeText: true })).toEqual([]);
 	});
 
 	it('hugs the words when the range is a thread rather than a selection', () => {
-		const painted = classesOf(passage, { from: 1, to: passage.content.size, tint: 'red', key: 'k', reach: 'text', class: 'pm-comment' });
+		const painted = classesOf(passage, { from: 1, to: passage.content.size, tint: 'red', reach: 'text', class: 'pm-comment' });
 		expect(painted).toEqual(['pm-range pm-comment', 'pm-range pm-range-node pm-comment']);
-		// only a shade meant to reach the line box is worth measuring a line for
-		expect(paintRange(passage, { from: 1, to: passage.content.size, tint: 'red', key: 'k', reach: 'text' })).toEqual(
-			expect.not.arrayContaining([
-				expect.objectContaining({ type: expect.objectContaining({ attrs: expect.objectContaining({ 'data-band': expect.anything() }) }) })
-			])
-		);
 	});
 
 	it('leaves a code block that draws the thread in its own characters unshaded as a whole', () => {
 		const withCode = doc(para(schema.text('see below')), schema.nodes.code_block.create(null, schema.text('x = 1')));
-		const thread = { from: 1, to: withCode.content.size, tint: 'red', key: 'k', reach: 'text' as const };
+		const thread = { from: 1, to: withCode.content.size, tint: 'red', reach: 'text' as const };
 		expect(classesOf(withCode, { ...thread, mirrored: true })).toEqual(['pm-range']);
 		// a selection has no such mirror, so the block it crosses is shaded whole
 		expect(classesOf(withCode, thread)).toEqual(['pm-range', 'pm-range pm-range-node']);
@@ -54,8 +42,11 @@ describe('paintRange', () => {
 	it('shades a code block a selection covers from its edges, and not one being edited inside', () => {
 		const withCode = doc(para(schema.text('see below')), schema.nodes.code_block.create(null, schema.text('x = 1')));
 		const start = withCode.content.size - withCode.lastChild!.nodeSize;
-		const range = { tint: 'red', key: 'k', reach: 'line' as const, nativeText: true };
-		expect(classesOf(withCode, { ...range, from: start, to: withCode.content.size })).toEqual(['pm-range pm-range-node']);
-		expect(classesOf(withCode, { ...range, from: start + 1, to: withCode.content.size - 1 })).toEqual([]);
+		const range = { tint: 'red', reach: 'line' as const };
+		expect(classesOf(withCode, { ...range, from: start, to: withCode.content.size })).toEqual([
+			'pm-range pm-range-text',
+			'pm-range pm-range-node'
+		]);
+		expect(classesOf(withCode, { ...range, from: start + 1, to: withCode.content.size - 1 })).toEqual(['pm-range pm-range-text']);
 	});
 });

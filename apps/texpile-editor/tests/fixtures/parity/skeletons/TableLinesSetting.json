@@ -1,0 +1,245 @@
+{
+ "environment": {
+  "tool": "jsdom",
+  "userAgent": "Mozilla/5.0 (linux) AppleWebKit/537.36 (KHTML, like Gecko) jsdom/30.1.3",
+  "node": "v22.23.4",
+  "document": null,
+  "scrollPositionIndex": null,
+  "window": null,
+  "devicePixelRatio": null,
+  "zoom": null,
+  "electron": null,
+  "chromium": null,
+  "os": "linux",
+  "domEditorCommit": "6ec0389c61ffc889078a95517ee770740f556c7e",
+  "live": "crosscheck.json"
+ },
+ "component": "TableLinesSetting",
+ "source": "src/lib/editor/visual/extensions/table/rules/TableLinesSetting.svelte",
+ "mountsInEditorAs": "row of the table settings panel",
+ "states": {
+  "formal": {
+   "roots": [
+    {
+     "tag": "div",
+     "class": [
+      "mb-3"
+     ],
+     "children": [
+      {
+       "tag": "div",
+       "class": [
+        "text-muted",
+        "mb-1.5",
+        "text-xs",
+        "font-semibold"
+       ],
+       "children": [
+        "Lines"
+       ]
+      },
+      " ",
+      {
+       "tag": "div",
+       "class": [
+        "border-surface-300-700",
+        "rounded-base",
+        "flex",
+        "h-7",
+        "overflow-hidden",
+        "border"
+       ],
+       "attrs": {
+        "role": "radiogroup",
+        "aria-label": "Lines"
+       },
+       "children": [
+        {
+         "tag": "button",
+         "class": [
+          "border-surface-300-700",
+          "min-w-0",
+          "flex-auto",
+          "truncate",
+          "border-l",
+          "px-1.5",
+          "text-xs",
+          "first:border-l-0",
+          "preset-tonal-primary"
+         ],
+         "attrs": {
+          "type": "button",
+          "role": "radio",
+          "aria-checked": "true",
+          "data-tip": "A line above the table, under its header row and below the table"
+         },
+         "children": [
+          "Formal"
+         ]
+        },
+        {
+         "tag": "button",
+         "class": [
+          "border-surface-300-700",
+          "min-w-0",
+          "flex-auto",
+          "truncate",
+          "border-l",
+          "px-1.5",
+          "text-xs",
+          "first:border-l-0",
+          "text-muted",
+          "hover:preset-tonal"
+         ],
+         "attrs": {
+          "type": "button",
+          "role": "radio",
+          "aria-checked": "false"
+         },
+         "children": [
+          "All"
+         ]
+        },
+        {
+         "tag": "button",
+         "class": [
+          "border-surface-300-700",
+          "min-w-0",
+          "flex-auto",
+          "truncate",
+          "border-l",
+          "px-1.5",
+          "text-xs",
+          "first:border-l-0",
+          "text-muted",
+          "hover:preset-tonal"
+         ],
+         "attrs": {
+          "type": "button",
+          "role": "radio",
+          "aria-checked": "false"
+         },
+         "children": [
+          "None"
+         ]
+        }
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  "pattern-of-its-own": {
+   "roots": [
+    {
+     "tag": "div",
+     "class": [
+      "mb-3"
+     ],
+     "children": [
+      {
+       "tag": "div",
+       "class": [
+        "text-muted",
+        "mb-1.5",
+        "text-xs",
+        "font-semibold"
+       ],
+       "children": [
+        "Lines"
+       ]
+      },
+      " ",
+      {
+       "tag": "div",
+       "class": [
+        "border-surface-300-700",
+        "rounded-base",
+        "flex",
+        "h-7",
+        "overflow-hidden",
+        "border"
+       ],
+       "attrs": {
+        "role": "radiogroup",
+        "aria-label": "Lines"
+       },
+       "children": [
+        {
+         "tag": "button",
+         "class": [
+          "border-surface-300-700",
+          "min-w-0",
+          "flex-auto",
+          "truncate",
+          "border-l",
+          "px-1.5",
+          "text-xs",
+          "first:border-l-0",
+          "text-muted",
+          "hover:preset-tonal"
+         ],
+         "attrs": {
+          "type": "button",
+          "role": "radio",
+          "aria-checked": "false",
+          "data-tip": "A line above the table, under its header row and below the table"
+         },
+         "children": [
+          "Formal"
+         ]
+        },
+        {
+         "tag": "button",
+         "class": [
+          "border-surface-300-700",
+          "min-w-0",
+          "flex-auto",
+          "truncate",
+          "border-l",
+          "px-1.5",
+          "text-xs",
+          "first:border-l-0",
+          "text-muted",
+          "hover:preset-tonal"
+         ],
+         "attrs": {
+          "type": "button",
+          "role": "radio",
+          "aria-checked": "false"
+         },
+         "children": [
+          "All"
+         ]
+        },
+        {
+         "tag": "button",
+         "class": [
+          "border-surface-300-700",
+          "min-w-0",
+          "flex-auto",
+          "truncate",
+          "border-l",
+          "px-1.5",
+          "text-xs",
+          "first:border-l-0",
+          "text-muted",
+          "hover:preset-tonal"
+         ],
+         "attrs": {
+          "type": "button",
+          "role": "radio",
+          "aria-checked": "false"
+         },
+         "children": [
+          "None"
+         ]
+        }
+       ]
+      }
+     ]
+    }
+   ]
+  }
+ }
+}

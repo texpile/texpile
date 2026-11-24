@@ -46,7 +46,7 @@ describe('latexFace', () => {
 		};
 		const note = draw(String.raw`\note[teal]{needs a citation}`);
 		expect(note?.dom.textContent).toBe('needs a citation');
-		expect(note?.dom.querySelector<HTMLElement>('[style]')?.style.color).toBe('rgb(0, 128, 128)');
+		expect(note?.dom.querySelector('[style]')?.style.color).toBe('rgb(0% 50% 50%)');
 		expect(text(String.raw`\todo{check}`)).toBe('[check]');
 	});
 

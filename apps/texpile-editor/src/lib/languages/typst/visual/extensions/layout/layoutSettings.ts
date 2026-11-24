@@ -1,5 +1,5 @@
 // the panel a layout call opens: one set of fields per call, or the call's Typst when it has none
-import type { ChipSettings } from '$lib/editor/visual/extensions/drawnChips/chipPanel.svelte';
+import type { ChipSettings } from '$lib/editor/visual/extensions/drawnChips/chipPanel/chipPanel.svelte';
 import { readTypstCall } from '../../core/reading/typstCall';
 import TypstLayoutSettings from './TypstLayoutSettings.svelte';
 

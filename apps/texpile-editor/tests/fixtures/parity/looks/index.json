@@ -1,0 +1,3655 @@
+[
+ {
+  "file": "math/light-inline-rest.png",
+  "clipCssPx": [
+   339.16,
+   177.2,
+   414.64,
+   49
+  ],
+  "pixels": [
+   828,
+   98
+  ],
+  "scheme": "light",
+  "appMode": "light",
+  "osScheme": "light",
+  "dpr": 2,
+  "formula": "inline",
+  "what": "G=\\left(V,E\\right) in a line of text",
+  "state": "rest"
+ },
+ {
+  "file": "math/light-inline-entered.png",
+  "clipCssPx": [
+   339.16,
+   177.2,
+   416.64,
+   49
+  ],
+  "pixels": [
+   832,
+   98
+  ],
+  "scheme": "light",
+  "appMode": "light",
+  "osScheme": "light",
+  "dpr": 2,
+  "formula": "inline",
+  "what": "G=\\left(V,E\\right) in a line of text",
+  "state": "entered",
+  "caretOffset": 4
+ },
+ {
+  "file": "math/light-inline-selection.png",
+  "clipCssPx": [
+   339.16,
+   177.2,
+   416.64,
+   49
+  ],
+  "pixels": [
+   832,
+   98
+  ],
+  "scheme": "light",
+  "appMode": "light",
+  "osScheme": "light",
+  "dpr": 2,
+  "formula": "inline",
+  "what": "G=\\left(V,E\\right) in a line of text",
+  "state": "selection",
+  "selection": "Shift+Right x3 from offset 0"
+ },
+ {
+  "file": "math/light-inline-focus-frame.png",
+  "clipCssPx": [
+   339.16,
+   177.2,
+   416.64,
+   49
+  ],
+  "pixels": [
+   832,
+   98
+  ],
+  "scheme": "light",
+  "appMode": "light",
+  "osScheme": "light",
+  "dpr": 2,
+  "formula": "inline",
+  "what": "G=\\left(V,E\\right) in a line of text",
+  "state": "focus-frame",
+  "note": "entered with the caret hidden so the frame stands alone"
+ },
+ {
+  "file": "math/light-inline-placeholder.png",
+  "clipCssPx": [
+   339.16,
+   177.2,
+   394.36,
+   49
+  ],
+  "pixels": [
+   788,
+   98
+  ],
+  "scheme": "light",
+  "appMode": "light",
+  "osScheme": "light",
+  "dpr": 2,
+  "formula": "inline",
+  "what": "G=\\left(V,E\\right) in a line of text",
+  "state": "placeholder",
+  "note": "setValue with \\placeholder{} slots, first slot selected (silenced, the document is unchanged)"
+ },
+ {
+  "file": "math/light-display-rest.png",
+  "clipCssPx": [
+   401.5,
+   227.56,
+   720,
+   64.78
+  ],
+  "pixels": [
+   1440,
+   128
+  ],
+  "scheme": "light",
+  "appMode": "light",
+  "osScheme": "light",
+  "dpr": 2,
+  "formula": "display",
+  "what": "integral with a fraction",
+  "state": "rest"
+ },
+ {
+  "file": "math/light-display-entered.png",
+  "clipCssPx": [
+   401.5,
+   227.56,
+   720,
+   78.78
+  ],
+  "pixels": [
+   1440,
+   156
+  ],
+  "scheme": "light",
+  "appMode": "light",
+  "osScheme": "light",
+  "dpr": 2,
+  "formula": "display",
+  "what": "integral with a fraction",
+  "state": "entered",
+  "caretOffset": 12
+ },
+ {
+  "file": "math/light-display-selection.png",
+  "clipCssPx": [
+   401.5,
+   227.56,
+   720,
+   78.78
+  ],
+  "pixels": [
+   1440,
+   156
+  ],
+  "scheme": "light",
+  "appMode": "light",
+  "osScheme": "light",
+  "dpr": 2,
+  "formula": "display",
+  "what": "integral with a fraction",
+  "state": "selection",
+  "selection": "Shift+Right x3 from offset 0"
+ },
+ {
+  "file": "math/light-display-focus-frame.png",
+  "clipCssPx": [
+   401.5,
+   227.56,
+   720,
+   78.78
+  ],
+  "pixels": [
+   1440,
+   156
+  ],
+  "scheme": "light",
+  "appMode": "light",
+  "osScheme": "light",
+  "dpr": 2,
+  "formula": "display",
+  "what": "integral with a fraction",
+  "state": "focus-frame",
+  "note": "entered with the caret hidden so the frame stands alone"
+ },
+ {
+  "file": "math/light-display-placeholder.png",
+  "clipCssPx": [
+   401.5,
+   227.56,
+   720,
+   73.83
+  ],
+  "pixels": [
+   1440,
+   146
+  ],
+  "scheme": "light",
+  "appMode": "light",
+  "osScheme": "light",
+  "dpr": 2,
+  "formula": "display",
+  "what": "integral with a fraction",
+  "state": "placeholder",
+  "note": "setValue with \\placeholder{} slots, first slot selected (silenced, the document is unchanged)"
+ },
+ {
+  "file": "math/light-empty-rest.png",
+  "clipCssPx": [
+   400.09,
+   460.06,
+   332,
+   49
+  ],
+  "pixels": [
+   664,
+   98
+  ],
+  "scheme": "light",
+  "appMode": "light",
+  "osScheme": "light",
+  "dpr": 2,
+  "formula": "empty",
+  "what": "an empty inline formula",
+  "state": "rest"
+ },
+ {
+  "file": "math/light-empty-entered.png",
+  "clipCssPx": [
+   400.09,
+   460.06,
+   332,
+   49
+  ],
+  "pixels": [
+   664,
+   98
+  ],
+  "scheme": "light",
+  "appMode": "light",
+  "osScheme": "light",
+  "dpr": 2,
+  "formula": "empty",
+  "what": "an empty inline formula",
+  "state": "entered",
+  "caretOffset": 0
+ },
+ {
+  "file": "math/light-empty-focus-frame.png",
+  "clipCssPx": [
+   400.09,
+   460.06,
+   332,
+   49
+  ],
+  "pixels": [
+   664,
+   98
+  ],
+  "scheme": "light",
+  "appMode": "light",
+  "osScheme": "light",
+  "dpr": 2,
+  "formula": "empty",
+  "what": "an empty inline formula",
+  "state": "focus-frame",
+  "note": "entered with the caret hidden so the frame stands alone"
+ },
+ {
+  "file": "math/light-colored-rest.png",
+  "clipCssPx": [
+   764.22,
+   460.06,
+   383.59,
+   49
+  ],
+  "pixels": [
+   766,
+   98
+  ],
+  "scheme": "light",
+  "appMode": "light",
+  "osScheme": "light",
+  "dpr": 2,
+  "formula": "colored",
+  "what": "inline formula inside \\textcolor{red}{...}",
+  "state": "rest"
+ },
+ {
+  "file": "math/light-colored-entered.png",
+  "clipCssPx": [
+   764.22,
+   460.06,
+   385.59,
+   49
+  ],
+  "pixels": [
+   770,
+   98
+  ],
+  "scheme": "light",
+  "appMode": "light",
+  "osScheme": "light",
+  "dpr": 2,
+  "formula": "colored",
+  "what": "inline formula inside \\textcolor{red}{...}",
+  "state": "entered",
+  "caretOffset": 5
+ },
+ {
+  "file": "math/light-colored-selection.png",
+  "clipCssPx": [
+   764.22,
+   460.06,
+   385.59,
+   49
+  ],
+  "pixels": [
+   770,
+   98
+  ],
+  "scheme": "light",
+  "appMode": "light",
+  "osScheme": "light",
+  "dpr": 2,
+  "formula": "colored",
+  "what": "inline formula inside \\textcolor{red}{...}",
+  "state": "selection",
+  "selection": "Shift+Right x3 from offset 0"
+ },
+ {
+  "file": "math/light-colored-focus-frame.png",
+  "clipCssPx": [
+   764.22,
+   460.06,
+   385.59,
+   49
+  ],
+  "pixels": [
+   770,
+   98
+  ],
+  "scheme": "light",
+  "appMode": "light",
+  "osScheme": "light",
+  "dpr": 2,
+  "formula": "colored",
+  "what": "inline formula inside \\textcolor{red}{...}",
+  "state": "focus-frame",
+  "note": "entered with the caret hidden so the frame stands alone"
+ },
+ {
+  "file": "math/dark-inline-rest.png",
+  "clipCssPx": [
+   339.16,
+   177.2,
+   414.64,
+   49
+  ],
+  "pixels": [
+   828,
+   98
+  ],
+  "scheme": "dark",
+  "appMode": "dark",
+  "osScheme": "dark",
+  "dpr": 2,
+  "formula": "inline",
+  "what": "G=\\left(V,E\\right) in a line of text",
+  "state": "rest"
+ },
+ {
+  "file": "math/dark-inline-entered.png",
+  "clipCssPx": [
+   339.16,
+   177.2,
+   416.64,
+   49
+  ],
+  "pixels": [
+   832,
+   98
+  ],
+  "scheme": "dark",
+  "appMode": "dark",
+  "osScheme": "dark",
+  "dpr": 2,
+  "formula": "inline",
+  "what": "G=\\left(V,E\\right) in a line of text",
+  "state": "entered",
+  "caretOffset": 4
+ },
+ {
+  "file": "math/dark-inline-selection.png",
+  "clipCssPx": [
+   339.16,
+   177.2,
+   416.64,
+   49
+  ],
+  "pixels": [
+   832,
+   98
+  ],
+  "scheme": "dark",
+  "appMode": "dark",
+  "osScheme": "dark",
+  "dpr": 2,
+  "formula": "inline",
+  "what": "G=\\left(V,E\\right) in a line of text",
+  "state": "selection",
+  "selection": "Shift+Right x3 from offset 0"
+ },
+ {
+  "file": "math/dark-inline-focus-frame.png",
+  "clipCssPx": [
+   339.16,
+   177.2,
+   416.64,
+   49
+  ],
+  "pixels": [
+   832,
+   98
+  ],
+  "scheme": "dark",
+  "appMode": "dark",
+  "osScheme": "dark",
+  "dpr": 2,
+  "formula": "inline",
+  "what": "G=\\left(V,E\\right) in a line of text",
+  "state": "focus-frame",
+  "note": "entered with the caret hidden so the frame stands alone"
+ },
+ {
+  "file": "math/dark-inline-placeholder.png",
+  "clipCssPx": [
+   339.16,
+   177.2,
+   394.36,
+   49
+  ],
+  "pixels": [
+   788,
+   98
+  ],
+  "scheme": "dark",
+  "appMode": "dark",
+  "osScheme": "dark",
+  "dpr": 2,
+  "formula": "inline",
+  "what": "G=\\left(V,E\\right) in a line of text",
+  "state": "placeholder",
+  "note": "setValue with \\placeholder{} slots, first slot selected (silenced, the document is unchanged)"
+ },
+ {
+  "file": "math/dark-display-rest.png",
+  "clipCssPx": [
+   401.5,
+   227.56,
+   720,
+   64.78
+  ],
+  "pixels": [
+   1440,
+   128
+  ],
+  "scheme": "dark",
+  "appMode": "dark",
+  "osScheme": "dark",
+  "dpr": 2,
+  "formula": "display",
+  "what": "integral with a fraction",
+  "state": "rest"
+ },
+ {
+  "file": "math/dark-display-entered.png",
+  "clipCssPx": [
+   401.5,
+   227.56,
+   720,
+   78.78
+  ],
+  "pixels": [
+   1440,
+   156
+  ],
+  "scheme": "dark",
+  "appMode": "dark",
+  "osScheme": "dark",
+  "dpr": 2,
+  "formula": "display",
+  "what": "integral with a fraction",
+  "state": "entered",
+  "caretOffset": 12
+ },
+ {
+  "file": "math/dark-display-selection.png",
+  "clipCssPx": [
+   401.5,
+   227.56,
+   720,
+   78.78
+  ],
+  "pixels": [
+   1440,
+   156
+  ],
+  "scheme": "dark",
+  "appMode": "dark",
+  "osScheme": "dark",
+  "dpr": 2,
+  "formula": "display",
+  "what": "integral with a fraction",
+  "state": "selection",
+  "selection": "Shift+Right x3 from offset 0"
+ },
+ {
+  "file": "math/dark-display-focus-frame.png",
+  "clipCssPx": [
+   401.5,
+   227.56,
+   720,
+   78.78
+  ],
+  "pixels": [
+   1440,
+   156
+  ],
+  "scheme": "dark",
+  "appMode": "dark",
+  "osScheme": "dark",
+  "dpr": 2,
+  "formula": "display",
+  "what": "integral with a fraction",
+  "state": "focus-frame",
+  "note": "entered with the caret hidden so the frame stands alone"
+ },
+ {
+  "file": "math/dark-display-placeholder.png",
+  "clipCssPx": [
+   401.5,
+   227.56,
+   720,
+   73.83
+  ],
+  "pixels": [
+   1440,
+   146
+  ],
+  "scheme": "dark",
+  "appMode": "dark",
+  "osScheme": "dark",
+  "dpr": 2,
+  "formula": "display",
+  "what": "integral with a fraction",
+  "state": "placeholder",
+  "note": "setValue with \\placeholder{} slots, first slot selected (silenced, the document is unchanged)"
+ },
+ {
+  "file": "math/dark-empty-rest.png",
+  "clipCssPx": [
+   400.09,
+   460.06,
+   332,
+   49
+  ],
+  "pixels": [
+   664,
+   98
+  ],
+  "scheme": "dark",
+  "appMode": "dark",
+  "osScheme": "dark",
+  "dpr": 2,
+  "formula": "empty",
+  "what": "an empty inline formula",
+  "state": "rest"
+ },
+ {
+  "file": "math/dark-empty-entered.png",
+  "clipCssPx": [
+   400.09,
+   460.06,
+   332,
+   49
+  ],
+  "pixels": [
+   664,
+   98
+  ],
+  "scheme": "dark",
+  "appMode": "dark",
+  "osScheme": "dark",
+  "dpr": 2,
+  "formula": "empty",
+  "what": "an empty inline formula",
+  "state": "entered",
+  "caretOffset": 0
+ },
+ {
+  "file": "math/dark-empty-focus-frame.png",
+  "clipCssPx": [
+   400.09,
+   460.06,
+   332,
+   49
+  ],
+  "pixels": [
+   664,
+   98
+  ],
+  "scheme": "dark",
+  "appMode": "dark",
+  "osScheme": "dark",
+  "dpr": 2,
+  "formula": "empty",
+  "what": "an empty inline formula",
+  "state": "focus-frame",
+  "note": "entered with the caret hidden so the frame stands alone"
+ },
+ {
+  "file": "math/dark-colored-rest.png",
+  "clipCssPx": [
+   764.22,
+   460.06,
+   383.59,
+   49
+  ],
+  "pixels": [
+   766,
+   98
+  ],
+  "scheme": "dark",
+  "appMode": "dark",
+  "osScheme": "dark",
+  "dpr": 2,
+  "formula": "colored",
+  "what": "inline formula inside \\textcolor{red}{...}",
+  "state": "rest"
+ },
+ {
+  "file": "math/dark-colored-entered.png",
+  "clipCssPx": [
+   764.22,
+   460.06,
+   385.59,
+   49
+  ],
+  "pixels": [
+   770,
+   98
+  ],
+  "scheme": "dark",
+  "appMode": "dark",
+  "osScheme": "dark",
+  "dpr": 2,
+  "formula": "colored",
+  "what": "inline formula inside \\textcolor{red}{...}",
+  "state": "entered",
+  "caretOffset": 5
+ },
+ {
+  "file": "math/dark-colored-selection.png",
+  "clipCssPx": [
+   764.22,
+   460.06,
+   385.59,
+   49
+  ],
+  "pixels": [
+   770,
+   98
+  ],
+  "scheme": "dark",
+  "appMode": "dark",
+  "osScheme": "dark",
+  "dpr": 2,
+  "formula": "colored",
+  "what": "inline formula inside \\textcolor{red}{...}",
+  "state": "selection",
+  "selection": "Shift+Right x3 from offset 0"
+ },
+ {
+  "file": "math/dark-colored-focus-frame.png",
+  "clipCssPx": [
+   764.22,
+   460.06,
+   385.59,
+   49
+  ],
+  "pixels": [
+   770,
+   98
+  ],
+  "scheme": "dark",
+  "appMode": "dark",
+  "osScheme": "dark",
+  "dpr": 2,
+  "formula": "colored",
+  "what": "inline formula inside \\textcolor{red}{...}",
+  "state": "focus-frame",
+  "note": "entered with the caret hidden so the frame stands alone"
+ },
+ {
+  "file": "math/dark-app-light-os-inline-entered.png",
+  "clipCssPx": [
+   339.16,
+   177.2,
+   416.64,
+   49
+  ],
+  "pixels": [
+   832,
+   98
+  ],
+  "scheme": "dark-app-light-os",
+  "appMode": "dark",
+  "osScheme": "light",
+  "dpr": 2,
+  "formula": "inline",
+  "what": "G=\\left(V,E\\right) in a line of text",
+  "state": "entered",
+  "caretOffset": 4
+ },
+ {
+  "file": "math/dark-app-light-os-inline-selection.png",
+  "clipCssPx": [
+   339.16,
+   177.2,
+   416.64,
+   49
+  ],
+  "pixels": [
+   832,
+   98
+  ],
+  "scheme": "dark-app-light-os",
+  "appMode": "dark",
+  "osScheme": "light",
+  "dpr": 2,
+  "formula": "inline",
+  "what": "G=\\left(V,E\\right) in a line of text",
+  "state": "selection",
+  "selection": "Shift+Right x3 from offset 0"
+ },
+ {
+  "file": "math/dark-app-light-os-display-entered.png",
+  "clipCssPx": [
+   401.5,
+   227.56,
+   720,
+   78.78
+  ],
+  "pixels": [
+   1440,
+   156
+  ],
+  "scheme": "dark-app-light-os",
+  "appMode": "dark",
+  "osScheme": "light",
+  "dpr": 2,
+  "formula": "display",
+  "what": "integral with a fraction",
+  "state": "entered",
+  "caretOffset": 12
+ },
+ {
+  "file": "math/dark-app-light-os-display-selection.png",
+  "clipCssPx": [
+   401.5,
+   227.56,
+   720,
+   78.78
+  ],
+  "pixels": [
+   1440,
+   156
+  ],
+  "scheme": "dark-app-light-os",
+  "appMode": "dark",
+  "osScheme": "light",
+  "dpr": 2,
+  "formula": "display",
+  "what": "integral with a fraction",
+  "state": "selection",
+  "selection": "Shift+Right x3 from offset 0"
+ },
+ {
+  "file": "math/dark-app-light-os-empty-entered.png",
+  "clipCssPx": [
+   400.09,
+   460.06,
+   332,
+   49
+  ],
+  "pixels": [
+   664,
+   98
+  ],
+  "scheme": "dark-app-light-os",
+  "appMode": "dark",
+  "osScheme": "light",
+  "dpr": 2,
+  "formula": "empty",
+  "what": "an empty inline formula",
+  "state": "entered",
+  "caretOffset": 0
+ },
+ {
+  "file": "math/dark-app-light-os-colored-entered.png",
+  "clipCssPx": [
+   764.22,
+   460.06,
+   385.59,
+   49
+  ],
+  "pixels": [
+   770,
+   98
+  ],
+  "scheme": "dark-app-light-os",
+  "appMode": "dark",
+  "osScheme": "light",
+  "dpr": 2,
+  "formula": "colored",
+  "what": "inline formula inside \\textcolor{red}{...}",
+  "state": "entered",
+  "caretOffset": 5
+ },
+ {
+  "file": "math/dark-app-light-os-colored-selection.png",
+  "clipCssPx": [
+   764.22,
+   460.06,
+   385.59,
+   49
+  ],
+  "pixels": [
+   770,
+   98
+  ],
+  "scheme": "dark-app-light-os",
+  "appMode": "dark",
+  "osScheme": "light",
+  "dpr": 2,
+  "formula": "colored",
+  "what": "inline formula inside \\textcolor{red}{...}",
+  "state": "selection",
+  "selection": "Shift+Right x3 from offset 0"
+ },
+ {
+  "file": "chrome/light-task-unchecked.png",
+  "clipCssPx": [
+   354,
+   192.8,
+   93,
+   37
+  ],
+  "pixels": [
+   372,
+   148
+  ],
+  "dpr": 4,
+  "scheme": "light",
+  "appMode": "light",
+  "osScheme": "light",
+  "what": "Markdown task checkbox, unchecked",
+  "state": "rest"
+ },
+ {
+  "file": "chrome/light-task-checked.png",
+  "clipCssPx": [
+   354,
+   224.8,
+   93,
+   37
+  ],
+  "pixels": [
+   372,
+   148
+  ],
+  "dpr": 4,
+  "scheme": "light",
+  "appMode": "light",
+  "osScheme": "light",
+  "what": "Markdown task checkbox, checked",
+  "state": "rest"
+ },
+ {
+  "file": "chrome/light-task-unchecked-hover.png",
+  "clipCssPx": [
+   354,
+   192.8,
+   93,
+   37
+  ],
+  "pixels": [
+   372,
+   148
+  ],
+  "dpr": 4,
+  "scheme": "light",
+  "appMode": "light",
+  "osScheme": "light",
+  "what": "Markdown task checkbox, unchecked",
+  "state": "hover"
+ },
+ {
+  "file": "chrome/light-task-checked-hover.png",
+  "clipCssPx": [
+   354,
+   224.8,
+   93,
+   37
+  ],
+  "pixels": [
+   372,
+   148
+  ],
+  "dpr": 4,
+  "scheme": "light",
+  "appMode": "light",
+  "osScheme": "light",
+  "what": "Markdown task checkbox, checked",
+  "state": "hover"
+ },
+ {
+  "file": "chrome/light-gapcursor-between-displays.png",
+  "clipCssPx": [
+   351.5,
+   208.34,
+   640,
+   140
+  ],
+  "pixels": [
+   2560,
+   560
+  ],
+  "dpr": 4,
+  "scheme": "light",
+  "appMode": "light",
+  "osScheme": "light",
+  "what": "gap cursor between two display formulas",
+  "state": "gap cursor"
+ },
+ {
+  "file": "chrome/light-gapcursor-before-table.png",
+  "clipCssPx": [
+   351.5,
+   247.06,
+   640,
+   140
+  ],
+  "pixels": [
+   2560,
+   560
+  ],
+  "dpr": 4,
+  "scheme": "light",
+  "appMode": "light",
+  "osScheme": "light",
+  "what": "gap cursor between a display formula and a table",
+  "state": "gap cursor"
+ },
+ {
+  "file": "chrome/light-remote-caret.png",
+  "clipCssPx": [
+   371.55,
+   473.06,
+   300,
+   70
+  ],
+  "pixels": [
+   1200,
+   280
+  ],
+  "dpr": 4,
+  "scheme": "light",
+  "appMode": "light",
+  "osScheme": "light",
+  "what": "remote collaborator caret with its name label (Alex, #7c3aed)",
+  "state": "remote caret"
+ },
+ {
+  "file": "chrome/light-remote-selection.png",
+  "clipCssPx": [
+   602.95,
+   473.06,
+   300,
+   70
+  ],
+  "pixels": [
+   1200,
+   280
+  ],
+  "dpr": 4,
+  "scheme": "light",
+  "appMode": "light",
+  "osScheme": "light",
+  "what": "remote collaborator selection of 28 characters, caret at its head",
+  "state": "remote caret"
+ },
+ {
+  "file": "chrome/dark-task-unchecked.png",
+  "clipCssPx": [
+   354,
+   192.8,
+   93,
+   37
+  ],
+  "pixels": [
+   372,
+   148
+  ],
+  "dpr": 4,
+  "scheme": "dark",
+  "appMode": "dark",
+  "osScheme": "dark",
+  "what": "Markdown task checkbox, unchecked",
+  "state": "rest"
+ },
+ {
+  "file": "chrome/dark-task-checked.png",
+  "clipCssPx": [
+   354,
+   224.8,
+   93,
+   37
+  ],
+  "pixels": [
+   372,
+   148
+  ],
+  "dpr": 4,
+  "scheme": "dark",
+  "appMode": "dark",
+  "osScheme": "dark",
+  "what": "Markdown task checkbox, checked",
+  "state": "rest"
+ },
+ {
+  "file": "chrome/dark-task-unchecked-hover.png",
+  "clipCssPx": [
+   354,
+   192.8,
+   93,
+   37
+  ],
+  "pixels": [
+   372,
+   148
+  ],
+  "dpr": 4,
+  "scheme": "dark",
+  "appMode": "dark",
+  "osScheme": "dark",
+  "what": "Markdown task checkbox, unchecked",
+  "state": "hover"
+ },
+ {
+  "file": "chrome/dark-task-checked-hover.png",
+  "clipCssPx": [
+   354,
+   224.8,
+   93,
+   37
+  ],
+  "pixels": [
+   372,
+   148
+  ],
+  "dpr": 4,
+  "scheme": "dark",
+  "appMode": "dark",
+  "osScheme": "dark",
+  "what": "Markdown task checkbox, checked",
+  "state": "hover"
+ },
+ {
+  "file": "chrome/dark-gapcursor-between-displays.png",
+  "clipCssPx": [
+   351.5,
+   208.34,
+   640,
+   140
+  ],
+  "pixels": [
+   2560,
+   560
+  ],
+  "dpr": 4,
+  "scheme": "dark",
+  "appMode": "dark",
+  "osScheme": "dark",
+  "what": "gap cursor between two display formulas",
+  "state": "gap cursor"
+ },
+ {
+  "file": "chrome/dark-gapcursor-before-table.png",
+  "clipCssPx": [
+   351.5,
+   247.06,
+   640,
+   140
+  ],
+  "pixels": [
+   2560,
+   560
+  ],
+  "dpr": 4,
+  "scheme": "dark",
+  "appMode": "dark",
+  "osScheme": "dark",
+  "what": "gap cursor between a display formula and a table",
+  "state": "gap cursor"
+ },
+ {
+  "file": "chrome/dark-remote-caret.png",
+  "clipCssPx": [
+   371.55,
+   473.06,
+   300,
+   70
+  ],
+  "pixels": [
+   1200,
+   280
+  ],
+  "dpr": 4,
+  "scheme": "dark",
+  "appMode": "dark",
+  "osScheme": "dark",
+  "what": "remote collaborator caret with its name label (Alex, #7c3aed)",
+  "state": "remote caret"
+ },
+ {
+  "file": "chrome/dark-remote-selection.png",
+  "clipCssPx": [
+   602.95,
+   473.06,
+   300,
+   70
+  ],
+  "pixels": [
+   1200,
+   280
+  ],
+  "dpr": 4,
+  "scheme": "dark",
+  "appMode": "dark",
+  "osScheme": "dark",
+  "what": "remote collaborator selection of 28 characters, caret at its head",
+  "state": "remote caret"
+ },
+ {
+  "file": "math/light-bd-gather-tag-rest.png",
+  "clipCssPx": [
+   401.5,
+   331.11,
+   720,
+   71.34
+  ],
+  "pixels": [
+   1440,
+   142
+  ],
+  "scheme": "light",
+  "appMode": "light",
+  "osScheme": "light",
+  "dpr": 2,
+  "formula": "bd-gather-tag",
+  "what": "gather with \\tag{*}",
+  "state": "rest"
+ },
+ {
+  "file": "math/light-bd-gather-tag-entered.png",
+  "clipCssPx": [
+   401.5,
+   331.11,
+   720,
+   85.34
+  ],
+  "pixels": [
+   1440,
+   170
+  ],
+  "scheme": "light",
+  "appMode": "light",
+  "osScheme": "light",
+  "dpr": 2,
+  "formula": "bd-gather-tag",
+  "what": "gather with \\tag{*}",
+  "state": "entered",
+  "caretOffset": 6
+ },
+ {
+  "file": "math/light-bd-gather-tag-selection.png",
+  "clipCssPx": [
+   401.5,
+   331.11,
+   720,
+   85.34
+  ],
+  "pixels": [
+   1440,
+   170
+  ],
+  "scheme": "light",
+  "appMode": "light",
+  "osScheme": "light",
+  "dpr": 2,
+  "formula": "bd-gather-tag",
+  "what": "gather with \\tag{*}",
+  "state": "selection",
+  "selection": "Shift+Right x3 from offset 0"
+ },
+ {
+  "file": "math/light-bd-gather-tag-focus-frame.png",
+  "clipCssPx": [
+   401.5,
+   331.11,
+   720,
+   85.34
+  ],
+  "pixels": [
+   1440,
+   170
+  ],
+  "scheme": "light",
+  "appMode": "light",
+  "osScheme": "light",
+  "dpr": 2,
+  "formula": "bd-gather-tag",
+  "what": "gather with \\tag{*}",
+  "state": "focus-frame",
+  "note": "entered with the caret hidden so the frame stands alone"
+ },
+ {
+  "file": "math/light-bd-alignat-rest.png",
+  "clipCssPx": [
+   401.5,
+   330.45,
+   720,
+   55.19
+  ],
+  "pixels": [
+   1440,
+   110
+  ],
+  "scheme": "light",
+  "appMode": "light",
+  "osScheme": "light",
+  "dpr": 2,
+  "formula": "bd-alignat",
+  "what": "alignat with \\nonumber",
+  "state": "rest"
+ },
+ {
+  "file": "math/light-bd-alignat-entered.png",
+  "clipCssPx": [
+   401.5,
+   330.45,
+   720,
+   65.19
+  ],
+  "pixels": [
+   1440,
+   130
+  ],
+  "scheme": "light",
+  "appMode": "light",
+  "osScheme": "light",
+  "dpr": 2,
+  "formula": "bd-alignat",
+  "what": "alignat with \\nonumber",
+  "state": "entered",
+  "caretOffset": 17
+ },
+ {
+  "file": "math/light-bd-alignat-selection.png",
+  "clipCssPx": [
+   401.5,
+   330.45,
+   720,
+   65.19
+  ],
+  "pixels": [
+   1440,
+   130
+  ],
+  "scheme": "light",
+  "appMode": "light",
+  "osScheme": "light",
+  "dpr": 2,
+  "formula": "bd-alignat",
+  "what": "alignat with \\nonumber",
+  "state": "selection",
+  "selection": "Shift+Right x3 from offset 0"
+ },
+ {
+  "file": "math/light-bd-alignat-focus-frame.png",
+  "clipCssPx": [
+   401.5,
+   330.45,
+   720,
+   65.19
+  ],
+  "pixels": [
+   1440,
+   130
+  ],
+  "scheme": "light",
+  "appMode": "light",
+  "osScheme": "light",
+  "dpr": 2,
+  "formula": "bd-alignat",
+  "what": "alignat with \\nonumber",
+  "state": "focus-frame",
+  "note": "entered with the caret hidden so the frame stands alone"
+ },
+ {
+  "file": "math/light-bd-flalign-notag-rest.png",
+  "clipCssPx": [
+   401.5,
+   330.64,
+   720,
+   63.19
+  ],
+  "pixels": [
+   1440,
+   126
+  ],
+  "scheme": "light",
+  "appMode": "light",
+  "osScheme": "light",
+  "dpr": 2,
+  "formula": "bd-flalign-notag",
+  "what": "flalign with \\notag",
+  "state": "rest"
+ },
+ {
+  "file": "math/light-bd-flalign-notag-entered.png",
+  "clipCssPx": [
+   401.5,
+   330.64,
+   720,
+   65.19
+  ],
+  "pixels": [
+   1440,
+   130
+  ],
+  "scheme": "light",
+  "appMode": "light",
+  "osScheme": "light",
+  "dpr": 2,
+  "formula": "bd-flalign-notag",
+  "what": "flalign with \\notag",
+  "state": "entered",
+  "caretOffset": 10
+ },
+ {
+  "file": "math/light-bd-flalign-notag-selection.png",
+  "clipCssPx": [
+   401.5,
+   330.64,
+   720,
+   65.19
+  ],
+  "pixels": [
+   1440,
+   130
+  ],
+  "scheme": "light",
+  "appMode": "light",
+  "osScheme": "light",
+  "dpr": 2,
+  "formula": "bd-flalign-notag",
+  "what": "flalign with \\notag",
+  "state": "selection",
+  "selection": "Shift+Right x3 from offset 0"
+ },
+ {
+  "file": "math/light-bd-flalign-notag-focus-frame.png",
+  "clipCssPx": [
+   401.5,
+   330.64,
+   720,
+   65.19
+  ],
+  "pixels": [
+   1440,
+   130
+  ],
+  "scheme": "light",
+  "appMode": "light",
+  "osScheme": "light",
+  "dpr": 2,
+  "formula": "bd-flalign-notag",
+  "what": "flalign with \\notag",
+  "state": "focus-frame",
+  "note": "entered with the caret hidden so the frame stands alone"
+ },
+ {
+  "file": "math/light-bd-dollars-rest.png",
+  "clipCssPx": [
+   401.5,
+   330.83,
+   720,
+   61.19
+  ],
+  "pixels": [
+   1440,
+   122
+  ],
+  "scheme": "light",
+  "appMode": "light",
+  "osScheme": "light",
+  "dpr": 2,
+  "formula": "bd-dollars",
+  "what": "$$ ... $$ display",
+  "state": "rest"
+ },
+ {
+  "file": "math/light-bd-dollars-entered.png",
+  "clipCssPx": [
+   401.5,
+   330.83,
+   720,
+   63.19
+  ],
+  "pixels": [
+   1440,
+   126
+  ],
+  "scheme": "light",
+  "appMode": "light",
+  "osScheme": "light",
+  "dpr": 2,
+  "formula": "bd-dollars",
+  "what": "$$ ... $$ display",
+  "state": "entered",
+  "caretOffset": 5
+ },
+ {
+  "file": "math/light-bd-dollars-selection.png",
+  "clipCssPx": [
+   401.5,
+   330.83,
+   720,
+   63.19
+  ],
+  "pixels": [
+   1440,
+   126
+  ],
+  "scheme": "light",
+  "appMode": "light",
+  "osScheme": "light",
+  "dpr": 2,
+  "formula": "bd-dollars",
+  "what": "$$ ... $$ display",
+  "state": "selection",
+  "selection": "Shift+Right x3 from offset 0"
+ },
+ {
+  "file": "math/light-bd-dollars-focus-frame.png",
+  "clipCssPx": [
+   401.5,
+   330.83,
+   720,
+   63.19
+  ],
+  "pixels": [
+   1440,
+   126
+  ],
+  "scheme": "light",
+  "appMode": "light",
+  "osScheme": "light",
+  "dpr": 2,
+  "formula": "bd-dollars",
+  "what": "$$ ... $$ display",
+  "state": "focus-frame",
+  "note": "entered with the caret hidden so the frame stands alone"
+ },
+ {
+  "file": "math/light-bd-in-paragraph-rest.png",
+  "clipCssPx": [
+   401.5,
+   331.02,
+   720,
+   87.03
+  ],
+  "pixels": [
+   1440,
+   174
+  ],
+  "scheme": "light",
+  "appMode": "light",
+  "osScheme": "light",
+  "dpr": 2,
+  "formula": "bd-in-paragraph",
+  "what": "display between two text runs of one paragraph",
+  "state": "rest"
+ },
+ {
+  "file": "math/light-bd-in-paragraph-entered.png",
+  "clipCssPx": [
+   401.5,
+   331.02,
+   720,
+   89.03
+  ],
+  "pixels": [
+   1440,
+   178
+  ],
+  "scheme": "light",
+  "appMode": "light",
+  "osScheme": "light",
+  "dpr": 2,
+  "formula": "bd-in-paragraph",
+  "what": "display between two text runs of one paragraph",
+  "state": "entered",
+  "caretOffset": 5
+ },
+ {
+  "file": "math/light-bd-in-paragraph-selection.png",
+  "clipCssPx": [
+   401.5,
+   331.02,
+   720,
+   89.03
+  ],
+  "pixels": [
+   1440,
+   178
+  ],
+  "scheme": "light",
+  "appMode": "light",
+  "osScheme": "light",
+  "dpr": 2,
+  "formula": "bd-in-paragraph",
+  "what": "display between two text runs of one paragraph",
+  "state": "selection",
+  "selection": "Shift+Right x3 from offset 0"
+ },
+ {
+  "file": "math/light-bd-in-paragraph-focus-frame.png",
+  "clipCssPx": [
+   401.5,
+   331.02,
+   720,
+   89.03
+  ],
+  "pixels": [
+   1440,
+   178
+  ],
+  "scheme": "light",
+  "appMode": "light",
+  "osScheme": "light",
+  "dpr": 2,
+  "formula": "bd-in-paragraph",
+  "what": "display between two text runs of one paragraph",
+  "state": "focus-frame",
+  "note": "entered with the caret hidden so the frame stands alone"
+ },
+ {
+  "file": "math/light-bd-equation-label-rest.png",
+  "clipCssPx": [
+   401.5,
+   331.05,
+   720,
+   67.19
+  ],
+  "pixels": [
+   1440,
+   134
+  ],
+  "scheme": "light",
+  "appMode": "light",
+  "osScheme": "light",
+  "dpr": 2,
+  "formula": "bd-equation-label",
+  "what": "equation with \\label",
+  "state": "rest"
+ },
+ {
+  "file": "math/light-bd-equation-label-entered.png",
+  "clipCssPx": [
+   401.5,
+   331.05,
+   720,
+   81.19
+  ],
+  "pixels": [
+   1440,
+   162
+  ],
+  "scheme": "light",
+  "appMode": "light",
+  "osScheme": "light",
+  "dpr": 2,
+  "formula": "bd-equation-label",
+  "what": "equation with \\label",
+  "state": "entered",
+  "caretOffset": 8
+ },
+ {
+  "file": "math/light-bd-equation-label-selection.png",
+  "clipCssPx": [
+   401.5,
+   331.05,
+   720,
+   81.19
+  ],
+  "pixels": [
+   1440,
+   162
+  ],
+  "scheme": "light",
+  "appMode": "light",
+  "osScheme": "light",
+  "dpr": 2,
+  "formula": "bd-equation-label",
+  "what": "equation with \\label",
+  "state": "selection",
+  "selection": "Shift+Right x3 from offset 0"
+ },
+ {
+  "file": "math/light-bd-equation-label-focus-frame.png",
+  "clipCssPx": [
+   401.5,
+   331.05,
+   720,
+   81.19
+  ],
+  "pixels": [
+   1440,
+   162
+  ],
+  "scheme": "light",
+  "appMode": "light",
+  "osScheme": "light",
+  "dpr": 2,
+  "formula": "bd-equation-label",
+  "what": "equation with \\label",
+  "state": "focus-frame",
+  "note": "entered with the caret hidden so the frame stands alone"
+ },
+ {
+  "file": "math/dark-bd-gather-tag-rest.png",
+  "clipCssPx": [
+   401.5,
+   331.11,
+   720,
+   71.34
+  ],
+  "pixels": [
+   1440,
+   142
+  ],
+  "scheme": "dark",
+  "appMode": "dark",
+  "osScheme": "dark",
+  "dpr": 2,
+  "formula": "bd-gather-tag",
+  "what": "gather with \\tag{*}",
+  "state": "rest"
+ },
+ {
+  "file": "math/dark-bd-gather-tag-entered.png",
+  "clipCssPx": [
+   401.5,
+   331.11,
+   720,
+   85.34
+  ],
+  "pixels": [
+   1440,
+   170
+  ],
+  "scheme": "dark",
+  "appMode": "dark",
+  "osScheme": "dark",
+  "dpr": 2,
+  "formula": "bd-gather-tag",
+  "what": "gather with \\tag{*}",
+  "state": "entered",
+  "caretOffset": 6
+ },
+ {
+  "file": "math/dark-bd-gather-tag-selection.png",
+  "clipCssPx": [
+   401.5,
+   331.11,
+   720,
+   85.34
+  ],
+  "pixels": [
+   1440,
+   170
+  ],
+  "scheme": "dark",
+  "appMode": "dark",
+  "osScheme": "dark",
+  "dpr": 2,
+  "formula": "bd-gather-tag",
+  "what": "gather with \\tag{*}",
+  "state": "selection",
+  "selection": "Shift+Right x3 from offset 0"
+ },
+ {
+  "file": "math/dark-bd-gather-tag-focus-frame.png",
+  "clipCssPx": [
+   401.5,
+   331.11,
+   720,
+   85.34
+  ],
+  "pixels": [
+   1440,
+   170
+  ],
+  "scheme": "dark",
+  "appMode": "dark",
+  "osScheme": "dark",
+  "dpr": 2,
+  "formula": "bd-gather-tag",
+  "what": "gather with \\tag{*}",
+  "state": "focus-frame",
+  "note": "entered with the caret hidden so the frame stands alone"
+ },
+ {
+  "file": "math/dark-bd-alignat-rest.png",
+  "clipCssPx": [
+   401.5,
+   330.45,
+   720,
+   55.19
+  ],
+  "pixels": [
+   1440,
+   110
+  ],
+  "scheme": "dark",
+  "appMode": "dark",
+  "osScheme": "dark",
+  "dpr": 2,
+  "formula": "bd-alignat",
+  "what": "alignat with \\nonumber",
+  "state": "rest"
+ },
+ {
+  "file": "math/dark-bd-alignat-entered.png",
+  "clipCssPx": [
+   401.5,
+   330.45,
+   720,
+   65.19
+  ],
+  "pixels": [
+   1440,
+   130
+  ],
+  "scheme": "dark",
+  "appMode": "dark",
+  "osScheme": "dark",
+  "dpr": 2,
+  "formula": "bd-alignat",
+  "what": "alignat with \\nonumber",
+  "state": "entered",
+  "caretOffset": 17
+ },
+ {
+  "file": "math/dark-bd-alignat-selection.png",
+  "clipCssPx": [
+   401.5,
+   330.45,
+   720,
+   65.19
+  ],
+  "pixels": [
+   1440,
+   130
+  ],
+  "scheme": "dark",
+  "appMode": "dark",
+  "osScheme": "dark",
+  "dpr": 2,
+  "formula": "bd-alignat",
+  "what": "alignat with \\nonumber",
+  "state": "selection",
+  "selection": "Shift+Right x3 from offset 0"
+ },
+ {
+  "file": "math/dark-bd-alignat-focus-frame.png",
+  "clipCssPx": [
+   401.5,
+   330.45,
+   720,
+   65.19
+  ],
+  "pixels": [
+   1440,
+   130
+  ],
+  "scheme": "dark",
+  "appMode": "dark",
+  "osScheme": "dark",
+  "dpr": 2,
+  "formula": "bd-alignat",
+  "what": "alignat with \\nonumber",
+  "state": "focus-frame",
+  "note": "entered with the caret hidden so the frame stands alone"
+ },
+ {
+  "file": "math/dark-bd-flalign-notag-rest.png",
+  "clipCssPx": [
+   401.5,
+   330.64,
+   720,
+   63.19
+  ],
+  "pixels": [
+   1440,
+   126
+  ],
+  "scheme": "dark",
+  "appMode": "dark",
+  "osScheme": "dark",
+  "dpr": 2,
+  "formula": "bd-flalign-notag",
+  "what": "flalign with \\notag",
+  "state": "rest"
+ },
+ {
+  "file": "math/dark-bd-flalign-notag-entered.png",
+  "clipCssPx": [
+   401.5,
+   330.64,
+   720,
+   65.19
+  ],
+  "pixels": [
+   1440,
+   130
+  ],
+  "scheme": "dark",
+  "appMode": "dark",
+  "osScheme": "dark",
+  "dpr": 2,
+  "formula": "bd-flalign-notag",
+  "what": "flalign with \\notag",
+  "state": "entered",
+  "caretOffset": 10
+ },
+ {
+  "file": "math/dark-bd-flalign-notag-selection.png",
+  "clipCssPx": [
+   401.5,
+   330.64,
+   720,
+   65.19
+  ],
+  "pixels": [
+   1440,
+   130
+  ],
+  "scheme": "dark",
+  "appMode": "dark",
+  "osScheme": "dark",
+  "dpr": 2,
+  "formula": "bd-flalign-notag",
+  "what": "flalign with \\notag",
+  "state": "selection",
+  "selection": "Shift+Right x3 from offset 0"
+ },
+ {
+  "file": "math/dark-bd-flalign-notag-focus-frame.png",
+  "clipCssPx": [
+   401.5,
+   330.64,
+   720,
+   65.19
+  ],
+  "pixels": [
+   1440,
+   130
+  ],
+  "scheme": "dark",
+  "appMode": "dark",
+  "osScheme": "dark",
+  "dpr": 2,
+  "formula": "bd-flalign-notag",
+  "what": "flalign with \\notag",
+  "state": "focus-frame",
+  "note": "entered with the caret hidden so the frame stands alone"
+ },
+ {
+  "file": "math/dark-bd-dollars-rest.png",
+  "clipCssPx": [
+   401.5,
+   330.83,
+   720,
+   61.19
+  ],
+  "pixels": [
+   1440,
+   122
+  ],
+  "scheme": "dark",
+  "appMode": "dark",
+  "osScheme": "dark",
+  "dpr": 2,
+  "formula": "bd-dollars",
+  "what": "$$ ... $$ display",
+  "state": "rest"
+ },
+ {
+  "file": "math/dark-bd-dollars-entered.png",
+  "clipCssPx": [
+   401.5,
+   330.83,
+   720,
+   63.19
+  ],
+  "pixels": [
+   1440,
+   126
+  ],
+  "scheme": "dark",
+  "appMode": "dark",
+  "osScheme": "dark",
+  "dpr": 2,
+  "formula": "bd-dollars",
+  "what": "$$ ... $$ display",
+  "state": "entered",
+  "caretOffset": 5
+ },
+ {
+  "file": "math/dark-bd-dollars-selection.png",
+  "clipCssPx": [
+   401.5,
+   330.83,
+   720,
+   63.19
+  ],
+  "pixels": [
+   1440,
+   126
+  ],
+  "scheme": "dark",
+  "appMode": "dark",
+  "osScheme": "dark",
+  "dpr": 2,
+  "formula": "bd-dollars",
+  "what": "$$ ... $$ display",
+  "state": "selection",
+  "selection": "Shift+Right x3 from offset 0"
+ },
+ {
+  "file": "math/dark-bd-dollars-focus-frame.png",
+  "clipCssPx": [
+   401.5,
+   330.83,
+   720,
+   63.19
+  ],
+  "pixels": [
+   1440,
+   126
+  ],
+  "scheme": "dark",
+  "appMode": "dark",
+  "osScheme": "dark",
+  "dpr": 2,
+  "formula": "bd-dollars",
+  "what": "$$ ... $$ display",
+  "state": "focus-frame",
+  "note": "entered with the caret hidden so the frame stands alone"
+ },
+ {
+  "file": "math/dark-bd-in-paragraph-rest.png",
+  "clipCssPx": [
+   401.5,
+   331.02,
+   720,
+   87.03
+  ],
+  "pixels": [
+   1440,
+   174
+  ],
+  "scheme": "dark",
+  "appMode": "dark",
+  "osScheme": "dark",
+  "dpr": 2,
+  "formula": "bd-in-paragraph",
+  "what": "display between two text runs of one paragraph",
+  "state": "rest"
+ },
+ {
+  "file": "math/dark-bd-in-paragraph-entered.png",
+  "clipCssPx": [
+   401.5,
+   331.02,
+   720,
+   89.03
+  ],
+  "pixels": [
+   1440,
+   178
+  ],
+  "scheme": "dark",
+  "appMode": "dark",
+  "osScheme": "dark",
+  "dpr": 2,
+  "formula": "bd-in-paragraph",
+  "what": "display between two text runs of one paragraph",
+  "state": "entered",
+  "caretOffset": 5
+ },
+ {
+  "file": "math/dark-bd-in-paragraph-selection.png",
+  "clipCssPx": [
+   401.5,
+   331.02,
+   720,
+   89.03
+  ],
+  "pixels": [
+   1440,
+   178
+  ],
+  "scheme": "dark",
+  "appMode": "dark",
+  "osScheme": "dark",
+  "dpr": 2,
+  "formula": "bd-in-paragraph",
+  "what": "display between two text runs of one paragraph",
+  "state": "selection",
+  "selection": "Shift+Right x3 from offset 0"
+ },
+ {
+  "file": "math/dark-bd-in-paragraph-focus-frame.png",
+  "clipCssPx": [
+   401.5,
+   331.02,
+   720,
+   89.03
+  ],
+  "pixels": [
+   1440,
+   178
+  ],
+  "scheme": "dark",
+  "appMode": "dark",
+  "osScheme": "dark",
+  "dpr": 2,
+  "formula": "bd-in-paragraph",
+  "what": "display between two text runs of one paragraph",
+  "state": "focus-frame",
+  "note": "entered with the caret hidden so the frame stands alone"
+ },
+ {
+  "file": "math/dark-bd-equation-label-rest.png",
+  "clipCssPx": [
+   401.5,
+   331.05,
+   720,
+   67.19
+  ],
+  "pixels": [
+   1440,
+   134
+  ],
+  "scheme": "dark",
+  "appMode": "dark",
+  "osScheme": "dark",
+  "dpr": 2,
+  "formula": "bd-equation-label",
+  "what": "equation with \\label",
+  "state": "rest"
+ },
+ {
+  "file": "math/dark-bd-equation-label-entered.png",
+  "clipCssPx": [
+   401.5,
+   331.05,
+   720,
+   81.19
+  ],
+  "pixels": [
+   1440,
+   162
+  ],
+  "scheme": "dark",
+  "appMode": "dark",
+  "osScheme": "dark",
+  "dpr": 2,
+  "formula": "bd-equation-label",
+  "what": "equation with \\label",
+  "state": "entered",
+  "caretOffset": 8
+ },
+ {
+  "file": "math/dark-bd-equation-label-selection.png",
+  "clipCssPx": [
+   401.5,
+   331.05,
+   720,
+   81.19
+  ],
+  "pixels": [
+   1440,
+   162
+  ],
+  "scheme": "dark",
+  "appMode": "dark",
+  "osScheme": "dark",
+  "dpr": 2,
+  "formula": "bd-equation-label",
+  "what": "equation with \\label",
+  "state": "selection",
+  "selection": "Shift+Right x3 from offset 0"
+ },
+ {
+  "file": "math/dark-bd-equation-label-focus-frame.png",
+  "clipCssPx": [
+   401.5,
+   331.05,
+   720,
+   81.19
+  ],
+  "pixels": [
+   1440,
+   162
+  ],
+  "scheme": "dark",
+  "appMode": "dark",
+  "osScheme": "dark",
+  "dpr": 2,
+  "formula": "bd-equation-label",
+  "what": "equation with \\label",
+  "state": "focus-frame",
+  "note": "entered with the caret hidden so the frame stands alone"
+ },
+ {
+  "file": "math/dark-app-light-os-bd-gather-tag-entered.png",
+  "clipCssPx": [
+   401.5,
+   331.11,
+   720,
+   85.34
+  ],
+  "pixels": [
+   1440,
+   170
+  ],
+  "scheme": "dark-app-light-os",
+  "appMode": "dark",
+  "osScheme": "light",
+  "dpr": 2,
+  "formula": "bd-gather-tag",
+  "what": "gather with \\tag{*}",
+  "state": "entered",
+  "caretOffset": 6
+ },
+ {
+  "file": "math/dark-app-light-os-bd-gather-tag-selection.png",
+  "clipCssPx": [
+   401.5,
+   331.11,
+   720,
+   85.34
+  ],
+  "pixels": [
+   1440,
+   170
+  ],
+  "scheme": "dark-app-light-os",
+  "appMode": "dark",
+  "osScheme": "light",
+  "dpr": 2,
+  "formula": "bd-gather-tag",
+  "what": "gather with \\tag{*}",
+  "state": "selection",
+  "selection": "Shift+Right x3 from offset 0"
+ },
+ {
+  "file": "math/dark-app-light-os-bd-alignat-entered.png",
+  "clipCssPx": [
+   401.5,
+   330.45,
+   720,
+   65.19
+  ],
+  "pixels": [
+   1440,
+   130
+  ],
+  "scheme": "dark-app-light-os",
+  "appMode": "dark",
+  "osScheme": "light",
+  "dpr": 2,
+  "formula": "bd-alignat",
+  "what": "alignat with \\nonumber",
+  "state": "entered",
+  "caretOffset": 17
+ },
+ {
+  "file": "math/dark-app-light-os-bd-alignat-selection.png",
+  "clipCssPx": [
+   401.5,
+   330.45,
+   720,
+   65.19
+  ],
+  "pixels": [
+   1440,
+   130
+  ],
+  "scheme": "dark-app-light-os",
+  "appMode": "dark",
+  "osScheme": "light",
+  "dpr": 2,
+  "formula": "bd-alignat",
+  "what": "alignat with \\nonumber",
+  "state": "selection",
+  "selection": "Shift+Right x3 from offset 0"
+ },
+ {
+  "file": "math/dark-app-light-os-bd-flalign-notag-entered.png",
+  "clipCssPx": [
+   401.5,
+   330.64,
+   720,
+   65.19
+  ],
+  "pixels": [
+   1440,
+   130
+  ],
+  "scheme": "dark-app-light-os",
+  "appMode": "dark",
+  "osScheme": "light",
+  "dpr": 2,
+  "formula": "bd-flalign-notag",
+  "what": "flalign with \\notag",
+  "state": "entered",
+  "caretOffset": 10
+ },
+ {
+  "file": "math/dark-app-light-os-bd-flalign-notag-selection.png",
+  "clipCssPx": [
+   401.5,
+   330.64,
+   720,
+   65.19
+  ],
+  "pixels": [
+   1440,
+   130
+  ],
+  "scheme": "dark-app-light-os",
+  "appMode": "dark",
+  "osScheme": "light",
+  "dpr": 2,
+  "formula": "bd-flalign-notag",
+  "what": "flalign with \\notag",
+  "state": "selection",
+  "selection": "Shift+Right x3 from offset 0"
+ },
+ {
+  "file": "math/dark-app-light-os-bd-dollars-entered.png",
+  "clipCssPx": [
+   401.5,
+   330.83,
+   720,
+   63.19
+  ],
+  "pixels": [
+   1440,
+   126
+  ],
+  "scheme": "dark-app-light-os",
+  "appMode": "dark",
+  "osScheme": "light",
+  "dpr": 2,
+  "formula": "bd-dollars",
+  "what": "$$ ... $$ display",
+  "state": "entered",
+  "caretOffset": 5
+ },
+ {
+  "file": "math/dark-app-light-os-bd-dollars-selection.png",
+  "clipCssPx": [
+   401.5,
+   330.83,
+   720,
+   63.19
+  ],
+  "pixels": [
+   1440,
+   126
+  ],
+  "scheme": "dark-app-light-os",
+  "appMode": "dark",
+  "osScheme": "light",
+  "dpr": 2,
+  "formula": "bd-dollars",
+  "what": "$$ ... $$ display",
+  "state": "selection",
+  "selection": "Shift+Right x3 from offset 0"
+ },
+ {
+  "file": "math/dark-app-light-os-bd-in-paragraph-entered.png",
+  "clipCssPx": [
+   401.5,
+   331.02,
+   720,
+   89.03
+  ],
+  "pixels": [
+   1440,
+   178
+  ],
+  "scheme": "dark-app-light-os",
+  "appMode": "dark",
+  "osScheme": "light",
+  "dpr": 2,
+  "formula": "bd-in-paragraph",
+  "what": "display between two text runs of one paragraph",
+  "state": "entered",
+  "caretOffset": 5
+ },
+ {
+  "file": "math/dark-app-light-os-bd-in-paragraph-selection.png",
+  "clipCssPx": [
+   401.5,
+   331.02,
+   720,
+   89.03
+  ],
+  "pixels": [
+   1440,
+   178
+  ],
+  "scheme": "dark-app-light-os",
+  "appMode": "dark",
+  "osScheme": "light",
+  "dpr": 2,
+  "formula": "bd-in-paragraph",
+  "what": "display between two text runs of one paragraph",
+  "state": "selection",
+  "selection": "Shift+Right x3 from offset 0"
+ },
+ {
+  "file": "math/dark-app-light-os-bd-equation-label-entered.png",
+  "clipCssPx": [
+   401.5,
+   331.05,
+   720,
+   81.19
+  ],
+  "pixels": [
+   1440,
+   162
+  ],
+  "scheme": "dark-app-light-os",
+  "appMode": "dark",
+  "osScheme": "light",
+  "dpr": 2,
+  "formula": "bd-equation-label",
+  "what": "equation with \\label",
+  "state": "entered",
+  "caretOffset": 8
+ },
+ {
+  "file": "math/dark-app-light-os-bd-equation-label-selection.png",
+  "clipCssPx": [
+   401.5,
+   331.05,
+   720,
+   81.19
+  ],
+  "pixels": [
+   1440,
+   162
+  ],
+  "scheme": "dark-app-light-os",
+  "appMode": "dark",
+  "osScheme": "light",
+  "dpr": 2,
+  "formula": "bd-equation-label",
+  "what": "equation with \\label",
+  "state": "selection",
+  "selection": "Shift+Right x3 from offset 0"
+ },
+ {
+  "file": "math/light-tb-typ-numbered-equation-rest.png",
+  "clipCssPx": [
+   401.5,
+   356.52,
+   720,
+   54
+  ],
+  "pixels": [
+   1440,
+   108
+  ],
+  "scheme": "light",
+  "appMode": "light",
+  "osScheme": "light",
+  "dpr": 2,
+  "formula": "tb-typ-numbered-equation",
+  "what": "Typst display equation with a label",
+  "state": "rest"
+ },
+ {
+  "file": "math/light-tb-typ-numbered-equation-entered.png",
+  "clipCssPx": [
+   401.5,
+   356.52,
+   720,
+   63.19
+  ],
+  "pixels": [
+   1440,
+   126
+  ],
+  "scheme": "light",
+  "appMode": "light",
+  "osScheme": "light",
+  "dpr": 2,
+  "formula": "tb-typ-numbered-equation",
+  "what": "Typst display equation with a label",
+  "state": "entered",
+  "caretOffset": 7
+ },
+ {
+  "file": "math/light-tb-typ-numbered-equation-selection.png",
+  "clipCssPx": [
+   401.5,
+   356.52,
+   720,
+   63.19
+  ],
+  "pixels": [
+   1440,
+   126
+  ],
+  "scheme": "light",
+  "appMode": "light",
+  "osScheme": "light",
+  "dpr": 2,
+  "formula": "tb-typ-numbered-equation",
+  "what": "Typst display equation with a label",
+  "state": "selection",
+  "selection": "Shift+Right x3 from offset 0"
+ },
+ {
+  "file": "math/light-tb-typ-numbered-equation-focus-frame.png",
+  "clipCssPx": [
+   401.5,
+   356.52,
+   720,
+   63.19
+  ],
+  "pixels": [
+   1440,
+   126
+  ],
+  "scheme": "light",
+  "appMode": "light",
+  "osScheme": "light",
+  "dpr": 2,
+  "formula": "tb-typ-numbered-equation",
+  "what": "Typst display equation with a label",
+  "state": "focus-frame",
+  "note": "entered with the caret hidden so the frame stands alone"
+ },
+ {
+  "file": "math/light-tb-typ-inline-sum-rest.png",
+  "clipCssPx": [
+   325.47,
+   356.7,
+   367.48,
+   49
+  ],
+  "pixels": [
+   734,
+   98
+  ],
+  "scheme": "light",
+  "appMode": "light",
+  "osScheme": "light",
+  "dpr": 2,
+  "formula": "tb-typ-inline-sum",
+  "what": "Typst inline math",
+  "state": "rest"
+ },
+ {
+  "file": "math/light-tb-typ-inline-sum-entered.png",
+  "clipCssPx": [
+   325.47,
+   357.7,
+   369.48,
+   49
+  ],
+  "pixels": [
+   738,
+   98
+  ],
+  "scheme": "light",
+  "appMode": "light",
+  "osScheme": "light",
+  "dpr": 2,
+  "formula": "tb-typ-inline-sum",
+  "what": "Typst inline math",
+  "state": "entered",
+  "caretOffset": 2
+ },
+ {
+  "file": "math/light-tb-typ-inline-sum-selection.png",
+  "clipCssPx": [
+   325.47,
+   357.7,
+   369.48,
+   49
+  ],
+  "pixels": [
+   738,
+   98
+  ],
+  "scheme": "light",
+  "appMode": "light",
+  "osScheme": "light",
+  "dpr": 2,
+  "formula": "tb-typ-inline-sum",
+  "what": "Typst inline math",
+  "state": "selection",
+  "selection": "Shift+Right x3 from offset 0"
+ },
+ {
+  "file": "math/light-tb-typ-inline-sum-focus-frame.png",
+  "clipCssPx": [
+   325.47,
+   357.7,
+   369.48,
+   49
+  ],
+  "pixels": [
+   738,
+   98
+  ],
+  "scheme": "light",
+  "appMode": "light",
+  "osScheme": "light",
+  "dpr": 2,
+  "formula": "tb-typ-inline-sum",
+  "what": "Typst inline math",
+  "state": "focus-frame",
+  "note": "entered with the caret hidden so the frame stands alone"
+ },
+ {
+  "file": "math/dark-tb-typ-numbered-equation-rest.png",
+  "clipCssPx": [
+   401.5,
+   356.52,
+   720,
+   54
+  ],
+  "pixels": [
+   1440,
+   108
+  ],
+  "scheme": "dark",
+  "appMode": "dark",
+  "osScheme": "dark",
+  "dpr": 2,
+  "formula": "tb-typ-numbered-equation",
+  "what": "Typst display equation with a label",
+  "state": "rest"
+ },
+ {
+  "file": "math/dark-tb-typ-numbered-equation-entered.png",
+  "clipCssPx": [
+   401.5,
+   356.52,
+   720,
+   63.19
+  ],
+  "pixels": [
+   1440,
+   126
+  ],
+  "scheme": "dark",
+  "appMode": "dark",
+  "osScheme": "dark",
+  "dpr": 2,
+  "formula": "tb-typ-numbered-equation",
+  "what": "Typst display equation with a label",
+  "state": "entered",
+  "caretOffset": 7
+ },
+ {
+  "file": "math/dark-tb-typ-numbered-equation-selection.png",
+  "clipCssPx": [
+   401.5,
+   356.52,
+   720,
+   63.19
+  ],
+  "pixels": [
+   1440,
+   126
+  ],
+  "scheme": "dark",
+  "appMode": "dark",
+  "osScheme": "dark",
+  "dpr": 2,
+  "formula": "tb-typ-numbered-equation",
+  "what": "Typst display equation with a label",
+  "state": "selection",
+  "selection": "Shift+Right x3 from offset 0"
+ },
+ {
+  "file": "math/dark-tb-typ-numbered-equation-focus-frame.png",
+  "clipCssPx": [
+   401.5,
+   356.52,
+   720,
+   63.19
+  ],
+  "pixels": [
+   1440,
+   126
+  ],
+  "scheme": "dark",
+  "appMode": "dark",
+  "osScheme": "dark",
+  "dpr": 2,
+  "formula": "tb-typ-numbered-equation",
+  "what": "Typst display equation with a label",
+  "state": "focus-frame",
+  "note": "entered with the caret hidden so the frame stands alone"
+ },
+ {
+  "file": "math/dark-tb-typ-inline-sum-rest.png",
+  "clipCssPx": [
+   325.47,
+   356.7,
+   367.48,
+   49
+  ],
+  "pixels": [
+   734,
+   98
+  ],
+  "scheme": "dark",
+  "appMode": "dark",
+  "osScheme": "dark",
+  "dpr": 2,
+  "formula": "tb-typ-inline-sum",
+  "what": "Typst inline math",
+  "state": "rest"
+ },
+ {
+  "file": "math/dark-tb-typ-inline-sum-entered.png",
+  "clipCssPx": [
+   325.47,
+   357.7,
+   369.48,
+   49
+  ],
+  "pixels": [
+   738,
+   98
+  ],
+  "scheme": "dark",
+  "appMode": "dark",
+  "osScheme": "dark",
+  "dpr": 2,
+  "formula": "tb-typ-inline-sum",
+  "what": "Typst inline math",
+  "state": "entered",
+  "caretOffset": 2
+ },
+ {
+  "file": "math/dark-tb-typ-inline-sum-selection.png",
+  "clipCssPx": [
+   325.47,
+   357.7,
+   369.48,
+   49
+  ],
+  "pixels": [
+   738,
+   98
+  ],
+  "scheme": "dark",
+  "appMode": "dark",
+  "osScheme": "dark",
+  "dpr": 2,
+  "formula": "tb-typ-inline-sum",
+  "what": "Typst inline math",
+  "state": "selection",
+  "selection": "Shift+Right x3 from offset 0"
+ },
+ {
+  "file": "math/dark-tb-typ-inline-sum-focus-frame.png",
+  "clipCssPx": [
+   325.47,
+   357.7,
+   369.48,
+   49
+  ],
+  "pixels": [
+   738,
+   98
+  ],
+  "scheme": "dark",
+  "appMode": "dark",
+  "osScheme": "dark",
+  "dpr": 2,
+  "formula": "tb-typ-inline-sum",
+  "what": "Typst inline math",
+  "state": "focus-frame",
+  "note": "entered with the caret hidden so the frame stands alone"
+ },
+ {
+  "file": "math/dark-app-light-os-tb-typ-numbered-equation-entered.png",
+  "clipCssPx": [
+   401.5,
+   356.52,
+   720,
+   63.19
+  ],
+  "pixels": [
+   1440,
+   126
+  ],
+  "scheme": "dark-app-light-os",
+  "appMode": "dark",
+  "osScheme": "light",
+  "dpr": 2,
+  "formula": "tb-typ-numbered-equation",
+  "what": "Typst display equation with a label",
+  "state": "entered",
+  "caretOffset": 7
+ },
+ {
+  "file": "math/dark-app-light-os-tb-typ-numbered-equation-selection.png",
+  "clipCssPx": [
+   401.5,
+   356.52,
+   720,
+   63.19
+  ],
+  "pixels": [
+   1440,
+   126
+  ],
+  "scheme": "dark-app-light-os",
+  "appMode": "dark",
+  "osScheme": "light",
+  "dpr": 2,
+  "formula": "tb-typ-numbered-equation",
+  "what": "Typst display equation with a label",
+  "state": "selection",
+  "selection": "Shift+Right x3 from offset 0"
+ },
+ {
+  "file": "math/dark-app-light-os-tb-typ-inline-sum-entered.png",
+  "clipCssPx": [
+   325.47,
+   357.7,
+   369.48,
+   49
+  ],
+  "pixels": [
+   738,
+   98
+  ],
+  "scheme": "dark-app-light-os",
+  "appMode": "dark",
+  "osScheme": "light",
+  "dpr": 2,
+  "formula": "tb-typ-inline-sum",
+  "what": "Typst inline math",
+  "state": "entered",
+  "caretOffset": 2
+ },
+ {
+  "file": "math/dark-app-light-os-tb-typ-inline-sum-selection.png",
+  "clipCssPx": [
+   325.47,
+   357.7,
+   369.48,
+   49
+  ],
+  "pixels": [
+   738,
+   98
+  ],
+  "scheme": "dark-app-light-os",
+  "appMode": "dark",
+  "osScheme": "light",
+  "dpr": 2,
+  "formula": "tb-typ-inline-sum",
+  "what": "Typst inline math",
+  "state": "selection",
+  "selection": "Shift+Right x3 from offset 0"
+ },
+ {
+  "file": "math/light-bm-equation-in-frame-rest.png",
+  "clipCssPx": [
+   401.5,
+   330.55,
+   720,
+   54
+  ],
+  "pixels": [
+   1440,
+   108
+  ],
+  "scheme": "light",
+  "appMode": "light",
+  "osScheme": "light",
+  "dpr": 2,
+  "formula": "bm-equation-in-frame",
+  "what": "equation in a frame",
+  "state": "rest"
+ },
+ {
+  "file": "math/light-bm-equation-in-frame-entered.png",
+  "clipCssPx": [
+   401.5,
+   330.55,
+   720,
+   63.19
+  ],
+  "pixels": [
+   1440,
+   126
+  ],
+  "scheme": "light",
+  "appMode": "light",
+  "osScheme": "light",
+  "dpr": 2,
+  "formula": "bm-equation-in-frame",
+  "what": "equation in a frame",
+  "state": "entered",
+  "caretOffset": 4
+ },
+ {
+  "file": "math/light-bm-equation-in-frame-selection.png",
+  "clipCssPx": [
+   401.5,
+   330.55,
+   720,
+   63.19
+  ],
+  "pixels": [
+   1440,
+   126
+  ],
+  "scheme": "light",
+  "appMode": "light",
+  "osScheme": "light",
+  "dpr": 2,
+  "formula": "bm-equation-in-frame",
+  "what": "equation in a frame",
+  "state": "selection",
+  "selection": "Shift+Right x3 from offset 0"
+ },
+ {
+  "file": "math/light-bm-equation-in-frame-focus-frame.png",
+  "clipCssPx": [
+   401.5,
+   330.55,
+   720,
+   63.19
+  ],
+  "pixels": [
+   1440,
+   126
+  ],
+  "scheme": "light",
+  "appMode": "light",
+  "osScheme": "light",
+  "dpr": 2,
+  "formula": "bm-equation-in-frame",
+  "what": "equation in a frame",
+  "state": "focus-frame",
+  "note": "entered with the caret hidden so the frame stands alone"
+ },
+ {
+  "file": "math/light-bm-display-in-frame-rest.png",
+  "clipCssPx": [
+   401.5,
+   330.73,
+   720,
+   67.19
+  ],
+  "pixels": [
+   1440,
+   134
+  ],
+  "scheme": "light",
+  "appMode": "light",
+  "osScheme": "light",
+  "dpr": 2,
+  "formula": "bm-display-in-frame",
+  "what": "\\[ ... \\] in a frame",
+  "state": "rest"
+ },
+ {
+  "file": "math/light-bm-display-in-frame-entered.png",
+  "clipCssPx": [
+   401.5,
+   330.73,
+   720,
+   81.19
+  ],
+  "pixels": [
+   1440,
+   162
+  ],
+  "scheme": "light",
+  "appMode": "light",
+  "osScheme": "light",
+  "dpr": 2,
+  "formula": "bm-display-in-frame",
+  "what": "\\[ ... \\] in a frame",
+  "state": "entered",
+  "caretOffset": 8
+ },
+ {
+  "file": "math/light-bm-display-in-frame-selection.png",
+  "clipCssPx": [
+   401.5,
+   330.73,
+   720,
+   81.19
+  ],
+  "pixels": [
+   1440,
+   162
+  ],
+  "scheme": "light",
+  "appMode": "light",
+  "osScheme": "light",
+  "dpr": 2,
+  "formula": "bm-display-in-frame",
+  "what": "\\[ ... \\] in a frame",
+  "state": "selection",
+  "selection": "Shift+Right x3 from offset 0"
+ },
+ {
+  "file": "math/light-bm-display-in-frame-focus-frame.png",
+  "clipCssPx": [
+   401.5,
+   330.73,
+   720,
+   81.19
+  ],
+  "pixels": [
+   1440,
+   162
+  ],
+  "scheme": "light",
+  "appMode": "light",
+  "osScheme": "light",
+  "dpr": 2,
+  "formula": "bm-display-in-frame",
+  "what": "\\[ ... \\] in a frame",
+  "state": "focus-frame",
+  "note": "entered with the caret hidden so the frame stands alone"
+ },
+ {
+  "file": "math/dark-bm-equation-in-frame-rest.png",
+  "clipCssPx": [
+   401.5,
+   330.55,
+   720,
+   54
+  ],
+  "pixels": [
+   1440,
+   108
+  ],
+  "scheme": "dark",
+  "appMode": "dark",
+  "osScheme": "dark",
+  "dpr": 2,
+  "formula": "bm-equation-in-frame",
+  "what": "equation in a frame",
+  "state": "rest"
+ },
+ {
+  "file": "math/dark-bm-equation-in-frame-entered.png",
+  "clipCssPx": [
+   401.5,
+   330.55,
+   720,
+   63.19
+  ],
+  "pixels": [
+   1440,
+   126
+  ],
+  "scheme": "dark",
+  "appMode": "dark",
+  "osScheme": "dark",
+  "dpr": 2,
+  "formula": "bm-equation-in-frame",
+  "what": "equation in a frame",
+  "state": "entered",
+  "caretOffset": 4
+ },
+ {
+  "file": "math/dark-bm-equation-in-frame-selection.png",
+  "clipCssPx": [
+   401.5,
+   330.55,
+   720,
+   63.19
+  ],
+  "pixels": [
+   1440,
+   126
+  ],
+  "scheme": "dark",
+  "appMode": "dark",
+  "osScheme": "dark",
+  "dpr": 2,
+  "formula": "bm-equation-in-frame",
+  "what": "equation in a frame",
+  "state": "selection",
+  "selection": "Shift+Right x3 from offset 0"
+ },
+ {
+  "file": "math/dark-bm-equation-in-frame-focus-frame.png",
+  "clipCssPx": [
+   401.5,
+   330.55,
+   720,
+   63.19
+  ],
+  "pixels": [
+   1440,
+   126
+  ],
+  "scheme": "dark",
+  "appMode": "dark",
+  "osScheme": "dark",
+  "dpr": 2,
+  "formula": "bm-equation-in-frame",
+  "what": "equation in a frame",
+  "state": "focus-frame",
+  "note": "entered with the caret hidden so the frame stands alone"
+ },
+ {
+  "file": "math/dark-bm-display-in-frame-rest.png",
+  "clipCssPx": [
+   401.5,
+   330.73,
+   720,
+   67.19
+  ],
+  "pixels": [
+   1440,
+   134
+  ],
+  "scheme": "dark",
+  "appMode": "dark",
+  "osScheme": "dark",
+  "dpr": 2,
+  "formula": "bm-display-in-frame",
+  "what": "\\[ ... \\] in a frame",
+  "state": "rest"
+ },
+ {
+  "file": "math/dark-bm-display-in-frame-entered.png",
+  "clipCssPx": [
+   401.5,
+   330.73,
+   720,
+   81.19
+  ],
+  "pixels": [
+   1440,
+   162
+  ],
+  "scheme": "dark",
+  "appMode": "dark",
+  "osScheme": "dark",
+  "dpr": 2,
+  "formula": "bm-display-in-frame",
+  "what": "\\[ ... \\] in a frame",
+  "state": "entered",
+  "caretOffset": 8
+ },
+ {
+  "file": "math/dark-bm-display-in-frame-selection.png",
+  "clipCssPx": [
+   401.5,
+   330.73,
+   720,
+   81.19
+  ],
+  "pixels": [
+   1440,
+   162
+  ],
+  "scheme": "dark",
+  "appMode": "dark",
+  "osScheme": "dark",
+  "dpr": 2,
+  "formula": "bm-display-in-frame",
+  "what": "\\[ ... \\] in a frame",
+  "state": "selection",
+  "selection": "Shift+Right x3 from offset 0"
+ },
+ {
+  "file": "math/dark-bm-display-in-frame-focus-frame.png",
+  "clipCssPx": [
+   401.5,
+   330.73,
+   720,
+   81.19
+  ],
+  "pixels": [
+   1440,
+   162
+  ],
+  "scheme": "dark",
+  "appMode": "dark",
+  "osScheme": "dark",
+  "dpr": 2,
+  "formula": "bm-display-in-frame",
+  "what": "\\[ ... \\] in a frame",
+  "state": "focus-frame",
+  "note": "entered with the caret hidden so the frame stands alone"
+ },
+ {
+  "file": "math/dark-app-light-os-bm-equation-in-frame-entered.png",
+  "clipCssPx": [
+   401.5,
+   330.55,
+   720,
+   63.19
+  ],
+  "pixels": [
+   1440,
+   126
+  ],
+  "scheme": "dark-app-light-os",
+  "appMode": "dark",
+  "osScheme": "light",
+  "dpr": 2,
+  "formula": "bm-equation-in-frame",
+  "what": "equation in a frame",
+  "state": "entered",
+  "caretOffset": 4
+ },
+ {
+  "file": "math/dark-app-light-os-bm-equation-in-frame-selection.png",
+  "clipCssPx": [
+   401.5,
+   330.55,
+   720,
+   63.19
+  ],
+  "pixels": [
+   1440,
+   126
+  ],
+  "scheme": "dark-app-light-os",
+  "appMode": "dark",
+  "osScheme": "light",
+  "dpr": 2,
+  "formula": "bm-equation-in-frame",
+  "what": "equation in a frame",
+  "state": "selection",
+  "selection": "Shift+Right x3 from offset 0"
+ },
+ {
+  "file": "math/dark-app-light-os-bm-display-in-frame-entered.png",
+  "clipCssPx": [
+   401.5,
+   330.73,
+   720,
+   81.19
+  ],
+  "pixels": [
+   1440,
+   162
+  ],
+  "scheme": "dark-app-light-os",
+  "appMode": "dark",
+  "osScheme": "light",
+  "dpr": 2,
+  "formula": "bm-display-in-frame",
+  "what": "\\[ ... \\] in a frame",
+  "state": "entered",
+  "caretOffset": 8
+ },
+ {
+  "file": "math/dark-app-light-os-bm-display-in-frame-selection.png",
+  "clipCssPx": [
+   401.5,
+   330.73,
+   720,
+   81.19
+  ],
+  "pixels": [
+   1440,
+   162
+  ],
+  "scheme": "dark-app-light-os",
+  "appMode": "dark",
+  "osScheme": "light",
+  "dpr": 2,
+  "formula": "bm-display-in-frame",
+  "what": "\\[ ... \\] in a frame",
+  "state": "selection",
+  "selection": "Shift+Right x3 from offset 0"
+ },
+ {
+  "file": "math/light-mb-display-dollars-rest.png",
+  "clipCssPx": [
+   401.5,
+   330.58,
+   720,
+   67.19
+  ],
+  "pixels": [
+   1440,
+   134
+  ],
+  "scheme": "light",
+  "appMode": "light",
+  "osScheme": "light",
+  "dpr": 2,
+  "formula": "mb-display-dollars",
+  "what": "Markdown $$ block",
+  "state": "rest"
+ },
+ {
+  "file": "math/light-mb-display-dollars-entered.png",
+  "clipCssPx": [
+   401.5,
+   330.58,
+   720,
+   81.19
+  ],
+  "pixels": [
+   1440,
+   162
+  ],
+  "scheme": "light",
+  "appMode": "light",
+  "osScheme": "light",
+  "dpr": 2,
+  "formula": "mb-display-dollars",
+  "what": "Markdown $$ block",
+  "state": "entered",
+  "caretOffset": 8
+ },
+ {
+  "file": "math/light-mb-display-dollars-selection.png",
+  "clipCssPx": [
+   401.5,
+   330.58,
+   720,
+   81.19
+  ],
+  "pixels": [
+   1440,
+   162
+  ],
+  "scheme": "light",
+  "appMode": "light",
+  "osScheme": "light",
+  "dpr": 2,
+  "formula": "mb-display-dollars",
+  "what": "Markdown $$ block",
+  "state": "selection",
+  "selection": "Shift+Right x3 from offset 0"
+ },
+ {
+  "file": "math/light-mb-display-dollars-focus-frame.png",
+  "clipCssPx": [
+   401.5,
+   330.58,
+   720,
+   81.19
+  ],
+  "pixels": [
+   1440,
+   162
+  ],
+  "scheme": "light",
+  "appMode": "light",
+  "osScheme": "light",
+  "dpr": 2,
+  "formula": "mb-display-dollars",
+  "what": "Markdown $$ block",
+  "state": "focus-frame",
+  "note": "entered with the caret hidden so the frame stands alone"
+ },
+ {
+  "file": "math/light-mb-inline-rest.png",
+  "clipCssPx": [
+   344.27,
+   330.77,
+   418.17,
+   49
+  ],
+  "pixels": [
+   836,
+   98
+  ],
+  "scheme": "light",
+  "appMode": "light",
+  "osScheme": "light",
+  "dpr": 2,
+  "formula": "mb-inline",
+  "what": "Markdown inline math",
+  "state": "rest"
+ },
+ {
+  "file": "math/light-mb-inline-entered.png",
+  "clipCssPx": [
+   344.27,
+   331.77,
+   420.17,
+   49
+  ],
+  "pixels": [
+   840,
+   98
+  ],
+  "scheme": "light",
+  "appMode": "light",
+  "osScheme": "light",
+  "dpr": 2,
+  "formula": "mb-inline",
+  "what": "Markdown inline math",
+  "state": "entered",
+  "caretOffset": 7
+ },
+ {
+  "file": "math/light-mb-inline-selection.png",
+  "clipCssPx": [
+   344.27,
+   331.77,
+   420.17,
+   49
+  ],
+  "pixels": [
+   840,
+   98
+  ],
+  "scheme": "light",
+  "appMode": "light",
+  "osScheme": "light",
+  "dpr": 2,
+  "formula": "mb-inline",
+  "what": "Markdown inline math",
+  "state": "selection",
+  "selection": "Shift+Right x3 from offset 0"
+ },
+ {
+  "file": "math/light-mb-inline-focus-frame.png",
+  "clipCssPx": [
+   344.27,
+   331.77,
+   420.17,
+   49
+  ],
+  "pixels": [
+   840,
+   98
+  ],
+  "scheme": "light",
+  "appMode": "light",
+  "osScheme": "light",
+  "dpr": 2,
+  "formula": "mb-inline",
+  "what": "Markdown inline math",
+  "state": "focus-frame",
+  "note": "entered with the caret hidden so the frame stands alone"
+ },
+ {
+  "file": "math/dark-mb-display-dollars-rest.png",
+  "clipCssPx": [
+   401.5,
+   330.58,
+   720,
+   67.19
+  ],
+  "pixels": [
+   1440,
+   134
+  ],
+  "scheme": "dark",
+  "appMode": "dark",
+  "osScheme": "dark",
+  "dpr": 2,
+  "formula": "mb-display-dollars",
+  "what": "Markdown $$ block",
+  "state": "rest"
+ },
+ {
+  "file": "math/dark-mb-display-dollars-entered.png",
+  "clipCssPx": [
+   401.5,
+   330.58,
+   720,
+   81.19
+  ],
+  "pixels": [
+   1440,
+   162
+  ],
+  "scheme": "dark",
+  "appMode": "dark",
+  "osScheme": "dark",
+  "dpr": 2,
+  "formula": "mb-display-dollars",
+  "what": "Markdown $$ block",
+  "state": "entered",
+  "caretOffset": 8
+ },
+ {
+  "file": "math/dark-mb-display-dollars-selection.png",
+  "clipCssPx": [
+   401.5,
+   330.58,
+   720,
+   81.19
+  ],
+  "pixels": [
+   1440,
+   162
+  ],
+  "scheme": "dark",
+  "appMode": "dark",
+  "osScheme": "dark",
+  "dpr": 2,
+  "formula": "mb-display-dollars",
+  "what": "Markdown $$ block",
+  "state": "selection",
+  "selection": "Shift+Right x3 from offset 0"
+ },
+ {
+  "file": "math/dark-mb-display-dollars-focus-frame.png",
+  "clipCssPx": [
+   401.5,
+   330.58,
+   720,
+   81.19
+  ],
+  "pixels": [
+   1440,
+   162
+  ],
+  "scheme": "dark",
+  "appMode": "dark",
+  "osScheme": "dark",
+  "dpr": 2,
+  "formula": "mb-display-dollars",
+  "what": "Markdown $$ block",
+  "state": "focus-frame",
+  "note": "entered with the caret hidden so the frame stands alone"
+ },
+ {
+  "file": "math/dark-mb-inline-rest.png",
+  "clipCssPx": [
+   344.27,
+   330.77,
+   418.17,
+   49
+  ],
+  "pixels": [
+   836,
+   98
+  ],
+  "scheme": "dark",
+  "appMode": "dark",
+  "osScheme": "dark",
+  "dpr": 2,
+  "formula": "mb-inline",
+  "what": "Markdown inline math",
+  "state": "rest"
+ },
+ {
+  "file": "math/dark-mb-inline-entered.png",
+  "clipCssPx": [
+   344.27,
+   331.77,
+   420.17,
+   49
+  ],
+  "pixels": [
+   840,
+   98
+  ],
+  "scheme": "dark",
+  "appMode": "dark",
+  "osScheme": "dark",
+  "dpr": 2,
+  "formula": "mb-inline",
+  "what": "Markdown inline math",
+  "state": "entered",
+  "caretOffset": 7
+ },
+ {
+  "file": "math/dark-mb-inline-selection.png",
+  "clipCssPx": [
+   344.27,
+   331.77,
+   420.17,
+   49
+  ],
+  "pixels": [
+   840,
+   98
+  ],
+  "scheme": "dark",
+  "appMode": "dark",
+  "osScheme": "dark",
+  "dpr": 2,
+  "formula": "mb-inline",
+  "what": "Markdown inline math",
+  "state": "selection",
+  "selection": "Shift+Right x3 from offset 0"
+ },
+ {
+  "file": "math/dark-mb-inline-focus-frame.png",
+  "clipCssPx": [
+   344.27,
+   331.77,
+   420.17,
+   49
+  ],
+  "pixels": [
+   840,
+   98
+  ],
+  "scheme": "dark",
+  "appMode": "dark",
+  "osScheme": "dark",
+  "dpr": 2,
+  "formula": "mb-inline",
+  "what": "Markdown inline math",
+  "state": "focus-frame",
+  "note": "entered with the caret hidden so the frame stands alone"
+ },
+ {
+  "file": "math/dark-app-light-os-mb-display-dollars-entered.png",
+  "clipCssPx": [
+   401.5,
+   330.58,
+   720,
+   81.19
+  ],
+  "pixels": [
+   1440,
+   162
+  ],
+  "scheme": "dark-app-light-os",
+  "appMode": "dark",
+  "osScheme": "light",
+  "dpr": 2,
+  "formula": "mb-display-dollars",
+  "what": "Markdown $$ block",
+  "state": "entered",
+  "caretOffset": 8
+ },
+ {
+  "file": "math/dark-app-light-os-mb-display-dollars-selection.png",
+  "clipCssPx": [
+   401.5,
+   330.58,
+   720,
+   81.19
+  ],
+  "pixels": [
+   1440,
+   162
+  ],
+  "scheme": "dark-app-light-os",
+  "appMode": "dark",
+  "osScheme": "light",
+  "dpr": 2,
+  "formula": "mb-display-dollars",
+  "what": "Markdown $$ block",
+  "state": "selection",
+  "selection": "Shift+Right x3 from offset 0"
+ },
+ {
+  "file": "math/dark-app-light-os-mb-inline-entered.png",
+  "clipCssPx": [
+   344.27,
+   331.77,
+   420.17,
+   49
+  ],
+  "pixels": [
+   840,
+   98
+  ],
+  "scheme": "dark-app-light-os",
+  "appMode": "dark",
+  "osScheme": "light",
+  "dpr": 2,
+  "formula": "mb-inline",
+  "what": "Markdown inline math",
+  "state": "entered",
+  "caretOffset": 7
+ },
+ {
+  "file": "math/dark-app-light-os-mb-inline-selection.png",
+  "clipCssPx": [
+   344.27,
+   331.77,
+   420.17,
+   49
+  ],
+  "pixels": [
+   840,
+   98
+  ],
+  "scheme": "dark-app-light-os",
+  "appMode": "dark",
+  "osScheme": "light",
+  "dpr": 2,
+  "formula": "mb-inline",
+  "what": "Markdown inline math",
+  "state": "selection",
+  "selection": "Shift+Right x3 from offset 0"
+ }
+]

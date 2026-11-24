@@ -2,6 +2,8 @@ import { expect, test, type Page } from '@playwright/test';
 import { Disk } from './driver/disk';
 import { useTexpile } from './driver/useTexpile';
 import { VisualEditor } from './driver/visualEditor';
+import { inCanvas, settled } from './canvas/canvasPage';
+import type { CanvasProbe } from '$lib/editor/canvas';
 
 const SHARED = 'One file in two panes.\n';
 const LIST = String.raw`\documentclass{article}
@@ -34,12 +36,25 @@ test('a visual split opens with the caret it was split from, and a click there t
 	const visual = new VisualEditor(page, root);
 	const disk = new Disk(root);
 	await visual.open('list.tex');
-	await page.locator('.ProseMirror .block-math-container').first().click();
-	await expect(page.locator('math-field').first()).toBeFocused();
+	const formula = await inCanvas(page, ({ probe, view }) => {
+		let at = -1;
+		view.state.doc.descendants((node, pos) => void (at < 0 && node.type.name === 'block_math' && (at = pos)));
+		const box = probe.rectOfNode(at)!;
+		return { x: box.left + box.width / 2, y: box.top + box.height / 2 };
+	});
+	await page.mouse.click(formula.x, formula.y);
+	await expect
+		.poll(() => inCanvas(page, ({ view }) => view.canvas.nested()?.kind ?? null), { message: 'the formula is being edited' })
+		.toBe('math');
 	await splitSideBySide(page);
-	const beta = page.locator('.ProseMirror').nth(1).getByText('Beta', { exact: true });
-	const box = (await beta.boundingBox())!;
-	await page.mouse.click(box.x + box.width - 1, box.y + box.height / 2, { delay: 120 });
+	// the pane on the right: the split one
+	const beta = await page.evaluate(() => {
+		const probe = (window as unknown as { __canvasProbe: CanvasProbe }).__canvasProbe;
+		const ends = probe.views().map((view) => view.rectOf(view.posOf('Beta') + 'Beta'.length)!);
+		const end = ends.reduce((right, rect) => (rect.left > right.left ? rect : right));
+		return { x: end.left, y: end.top + end.height / 2 };
+	});
+	await page.mouse.click(beta.x - 1, beta.y, { delay: 120 });
 	await visual.type('X');
 	// past the moment the editor left behind follows the edit
 	await page.waitForTimeout(1000);
@@ -83,7 +98,12 @@ test('a divider drag covers the visual editor with its file name and lets it go 
 	const v = new VisualEditor(page, root);
 	await v.open('long.tex');
 	const editor = page.locator('.ProseMirror');
-	await editor.locator('p', { hasText: 'Paragraph 30 ' }).scrollIntoViewIfNeeded();
+	const thirtieth = await inCanvas(page, ({ probe, view }) => {
+		const at = view.state.doc.resolve(probe.posOf('Paragraph 30 ')).before(1);
+		view.canvas.revealPos(at, 'center');
+		return at;
+	});
+	await settled(page);
 	const firstInView = () =>
 		v.evalView<string>(
 			`const pane = view.dom.closest('.overflow-auto').getBoundingClientRect(); const hit = view.posAtCoords({ left: pane.left + pane.width / 2, top: pane.top + 4 });
@@ -94,7 +114,14 @@ test('a divider drag covers the visual editor with its file name and lets it go 
 	const divider = (await page.locator('.cursor-col-resize').first().boundingBox())!;
 	const x = divider.x + divider.width / 2;
 	// the block handle, which stayed over the cover
-	const paragraph = (await editor.locator('p', { hasText: 'Paragraph 30 ' }).boundingBox())!;
+	const paragraph = await inCanvas(
+		page,
+		({ probe }, at) => {
+			const box = probe.rectOfNode(at)!;
+			return { x: box.left, y: box.top };
+		},
+		thirtieth
+	);
 	const handle = page.locator('.block-handle-btn:visible');
 	await expect(async () => {
 		await page.mouse.move(5, 5);

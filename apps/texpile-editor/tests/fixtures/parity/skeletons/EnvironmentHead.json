@@ -1,0 +1,268 @@
+{
+ "environment": {
+  "tool": "jsdom",
+  "userAgent": "Mozilla/5.0 (linux) AppleWebKit/537.36 (KHTML, like Gecko) jsdom/30.1.3",
+  "node": "v22.23.4",
+  "document": null,
+  "scrollPositionIndex": null,
+  "window": null,
+  "devicePixelRatio": null,
+  "zoom": null,
+  "electron": null,
+  "chromium": null,
+  "os": "linux",
+  "domEditorCommit": "6ec0389c61ffc889078a95517ee770740f556c7e",
+  "live": "crosscheck.json"
+ },
+ "component": "EnvironmentHead",
+ "source": "src/lib/languages/latex/visual/extensions/environment/EnvironmentHead.svelte",
+ "mountsInEditorAs": "head of an environment node view (`.env-header` wrapper is the node view's own)",
+ "states": {
+  "theorem-numbered": {
+   "roots": [
+    {
+     "tag": "button",
+     "class": [
+      "env-head"
+     ],
+     "attrs": {
+      "data-look": "theorem",
+      "data-style": "plain"
+     },
+     "children": [
+      {
+       "tag": "span",
+       "class": [
+        "env-head-name"
+       ],
+       "children": [
+        "Theorem {number}"
+       ]
+      },
+      "."
+     ]
+    }
+   ]
+  },
+  "theorem-note-plain": {
+   "roots": [
+    {
+     "tag": "button",
+     "class": [
+      "env-head"
+     ],
+     "attrs": {
+      "data-look": "theorem",
+      "data-style": "plain"
+     },
+     "children": [
+      {
+       "tag": "span",
+       "class": [
+        "env-head-name"
+       ],
+       "children": [
+        "Theorem {number}"
+       ]
+      },
+      " ({note})."
+     ]
+    }
+   ]
+  },
+  "theorem-note-latex": {
+   "roots": [
+    {
+     "tag": "button",
+     "class": [
+      "env-head"
+     ],
+     "attrs": {
+      "data-look": "theorem",
+      "data-style": "plain"
+     },
+     "children": [
+      {
+       "tag": "span",
+       "class": [
+        "env-head-name"
+       ],
+       "children": [
+        "Theorem {number}"
+       ]
+      },
+      " (the \\emph{big} one)."
+     ]
+    }
+   ]
+  },
+  "theorem-unnumbered-remark": {
+   "roots": [
+    {
+     "tag": "button",
+     "class": [
+      "env-head"
+     ],
+     "attrs": {
+      "data-look": "theorem",
+      "data-style": "remark"
+     },
+     "children": [
+      {
+       "tag": "span",
+       "class": [
+        "env-head-name"
+       ],
+       "children": [
+        "Remark"
+       ]
+      },
+      "."
+     ]
+    }
+   ]
+  },
+  "proof": {
+   "roots": [
+    {
+     "tag": "button",
+     "class": [
+      "env-head"
+     ],
+     "attrs": {
+      "data-look": "proof"
+     },
+     "children": [
+      "Proof."
+     ]
+    }
+   ]
+  },
+  "proof-custom-head": {
+   "roots": [
+    {
+     "tag": "button",
+     "class": [
+      "env-head"
+     ],
+     "attrs": {
+      "data-look": "proof"
+     },
+     "children": [
+      "{head}."
+     ]
+    }
+   ]
+  },
+  "align-center": {
+   "roots": [
+    {
+     "tag": "button",
+     "class": [
+      "env-gear"
+     ],
+     "attrs": {
+      "data-look": "align",
+      "data-align": "center",
+      "data-tip": "Environment settings",
+      "aria-label": "Environment settings"
+     },
+     "children": [
+      {
+       "tag": "svg",
+       "class": [
+        "lucide",
+        "lucide-settings",
+        "lucide-icon",
+        "size-3.5"
+       ],
+       "attrs": {
+        "xmlns": "http://www.w3.org/2000/svg",
+        "width": "24",
+        "height": "24",
+        "viewBox": "0 0 24 24",
+        "fill": "none",
+        "stroke": "currentColor",
+        "stroke-width": "2",
+        "stroke-linecap": "round",
+        "stroke-linejoin": "round",
+        "aria-hidden": "true"
+       },
+       "children": [
+        {
+         "tag": "path"
+        },
+        {
+         "tag": "circle"
+        }
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  "align-flushright": {
+   "roots": [
+    {
+     "tag": "button",
+     "class": [
+      "env-gear"
+     ],
+     "attrs": {
+      "data-look": "align",
+      "data-align": "right",
+      "data-tip": "Environment settings",
+      "aria-label": "Environment settings"
+     },
+     "children": [
+      {
+       "tag": "svg",
+       "class": [
+        "lucide",
+        "lucide-settings",
+        "lucide-icon",
+        "size-3.5"
+       ],
+       "attrs": {
+        "xmlns": "http://www.w3.org/2000/svg",
+        "width": "24",
+        "height": "24",
+        "viewBox": "0 0 24 24",
+        "fill": "none",
+        "stroke": "currentColor",
+        "stroke-width": "2",
+        "stroke-linecap": "round",
+        "stroke-linejoin": "round",
+        "aria-hidden": "true"
+       },
+       "children": [
+        {
+         "tag": "path"
+        },
+        {
+         "tag": "circle"
+        }
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  "box": {
+   "roots": [
+    {
+     "tag": "button",
+     "class": [
+      "env-label"
+     ],
+     "attrs": {
+      "data-look": "box"
+     },
+     "children": [
+      "{name}"
+     ]
+    }
+   ]
+  }
+ }
+}

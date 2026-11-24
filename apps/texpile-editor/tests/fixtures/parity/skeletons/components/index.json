@@ -1,0 +1,429 @@
+{
+ "environment": {
+  "userAgent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Texpile/2.0.1 Chrome/152.0.7977.167 Electron/44.9.3 Safari/537.36",
+  "devicePixelRatio": 1,
+  "window": [
+   1280,
+   860
+  ],
+  "domEditorCommit": "6ec0389c61ffc889078a95517ee770740f556c7e",
+  "os": "Linux 6.18.44-fc-v553, Xvfb :99",
+  "platform": "linux",
+  "electron": "44.9.3",
+  "chromium": "152.0.7977.167",
+  "zoom": 1,
+  "scrollPosition": "the trigger scrolled to the middle of the viewport (index not used)"
+ },
+ "components": [
+  {
+   "component": "AppendixSettings",
+   "status": "captured",
+   "scenarios": 1
+  },
+  {
+   "component": "BareTableSettings",
+   "status": "captured",
+   "scenarios": 1
+  },
+  {
+   "component": "BeamerColumnView",
+   "status": "captured",
+   "scenarios": 2
+  },
+  {
+   "component": "BibKeyChip",
+   "status": "captured",
+   "scenarios": 1
+  },
+  {
+   "component": "BibliographyHeading",
+   "status": "captured-in-crosscheck",
+   "scenarios": 0
+  },
+  {
+   "component": "BibliographySettings",
+   "status": "captured",
+   "scenarios": 2
+  },
+  {
+   "component": "BibliographyView",
+   "status": "captured",
+   "scenarios": 1
+  },
+  {
+   "component": "BlockHandle",
+   "status": "captured",
+   "scenarios": 5
+  },
+  {
+   "component": "CharacterSettings",
+   "status": "captured",
+   "scenarios": 2
+  },
+  {
+   "component": "ChipPanelFooter",
+   "status": "captured",
+   "scenarios": 1
+  },
+  {
+   "component": "ChipSourceField",
+   "status": "captured",
+   "scenarios": 5
+  },
+  {
+   "component": "CitationDisplay",
+   "status": "captured",
+   "scenarios": 1
+  },
+  {
+   "component": "CitationEditForm",
+   "status": "captured",
+   "scenarios": 1
+  },
+  {
+   "component": "CitationPagesField",
+   "status": "captured",
+   "scenarios": 2
+  },
+  {
+   "component": "CitationReferenceField",
+   "status": "captured",
+   "scenarios": 2
+  },
+  {
+   "component": "CodeBlockSettings",
+   "status": "captured",
+   "scenarios": 3
+  },
+  {
+   "component": "CommentSettings",
+   "status": "captured",
+   "scenarios": 1
+  },
+  {
+   "component": "CrossRefSettings",
+   "status": "captured",
+   "scenarios": 1
+  },
+  {
+   "component": "DrawnChipPanel",
+   "status": "captured",
+   "scenarios": 2
+  },
+  {
+   "component": "EnvironmentAlignSetting",
+   "status": "captured",
+   "scenarios": 1
+  },
+  {
+   "component": "EnvironmentHead",
+   "status": "captured",
+   "scenarios": 5
+  },
+  {
+   "component": "EnvironmentHeadText",
+   "status": "captured",
+   "scenarios": 2
+  },
+  {
+   "component": "FigureCard",
+   "status": "captured",
+   "scenarios": 1
+  },
+  {
+   "component": "FigureGroupSettings",
+   "status": "captured",
+   "scenarios": 1
+  },
+  {
+   "component": "FootnoteSettings",
+   "status": "captured",
+   "scenarios": 1
+  },
+  {
+   "component": "FrameChrome",
+   "status": "captured",
+   "scenarios": 9
+  },
+  {
+   "component": "FrameSettings",
+   "status": "captured",
+   "scenarios": 2
+  },
+  {
+   "component": "HyperrefSettings",
+   "status": "captured",
+   "scenarios": 1
+  },
+  {
+   "component": "IeeeAuthorView",
+   "status": "captured",
+   "scenarios": 1
+  },
+  {
+   "component": "ImageOverlay",
+   "status": "captured",
+   "scenarios": 3
+  },
+  {
+   "component": "ImageSettingsPanel",
+   "status": "captured",
+   "scenarios": 3
+  },
+  {
+   "component": "IncludeDocDisplay",
+   "status": "captured-in-crosscheck",
+   "scenarios": 0
+  },
+  {
+   "component": "LabelDisplay",
+   "status": "captured",
+   "scenarios": 1
+  },
+  {
+   "component": "LabelField",
+   "status": "captured",
+   "scenarios": 2
+  },
+  {
+   "component": "LatexColumnsSetting",
+   "status": "captured",
+   "scenarios": 1
+  },
+  {
+   "component": "LatexEditorView",
+   "status": "captured",
+   "scenarios": 1
+  },
+  {
+   "component": "LatexToolbar",
+   "status": "captured",
+   "scenarios": 2
+  },
+  {
+   "component": "LinkTooltip",
+   "status": "captured",
+   "scenarios": 3
+  },
+  {
+   "component": "MarkdownEditorView",
+   "status": "captured",
+   "scenarios": 1
+  },
+  {
+   "component": "MarkdownToolbar",
+   "status": "captured",
+   "scenarios": 1
+  },
+  {
+   "component": "MarkdownToolbarTable",
+   "status": "captured",
+   "scenarios": 1
+  },
+  {
+   "component": "MathLabelSetting",
+   "status": "captured",
+   "scenarios": 1
+  },
+  {
+   "component": "MathSearchPanel",
+   "status": "captured",
+   "scenarios": 1
+  },
+  {
+   "component": "MathSearchQuery",
+   "status": "captured",
+   "scenarios": 1
+  },
+  {
+   "component": "MathSettings",
+   "status": "captured",
+   "scenarios": 1
+  },
+  {
+   "component": "MathSettingsPanel",
+   "status": "captured",
+   "scenarios": 1
+  },
+  {
+   "component": "MdHeadingDropdown",
+   "status": "captured",
+   "scenarios": 1
+  },
+  {
+   "component": "PageBreakSettings",
+   "status": "captured",
+   "scenarios": 1
+  },
+  {
+   "component": "PanelButton",
+   "status": "captured",
+   "scenarios": 2
+  },
+  {
+   "component": "PanelChoices",
+   "status": "captured",
+   "scenarios": 4
+  },
+  {
+   "component": "PanelHeader",
+   "status": "captured",
+   "scenarios": 6
+  },
+  {
+   "component": "PanelRow",
+   "status": "captured",
+   "scenarios": 6
+  },
+  {
+   "component": "PanelSegments",
+   "status": "captured",
+   "scenarios": 6
+  },
+  {
+   "component": "PanelSwitch",
+   "status": "captured",
+   "scenarios": 6
+  },
+  {
+   "component": "PanelTextArea",
+   "status": "captured",
+   "scenarios": 4
+  },
+  {
+   "component": "PanelTextField",
+   "status": "captured",
+   "scenarios": 6
+  },
+  {
+   "component": "PaperCropBar",
+   "status": "captured",
+   "scenarios": 1
+  },
+  {
+   "component": "PaperCropper",
+   "status": "captured",
+   "scenarios": 1
+  },
+  {
+   "component": "RefDisplay",
+   "status": "captured-in-crosscheck",
+   "scenarios": 0
+  },
+  {
+   "component": "ReferencePickerDropdown",
+   "status": "captured",
+   "scenarios": 1
+  },
+  {
+   "component": "SpacingSettings",
+   "status": "captured",
+   "scenarios": 2
+  },
+  {
+   "component": "TableAdvancedSection",
+   "status": "captured",
+   "scenarios": 1
+  },
+  {
+   "component": "TableLinesSetting",
+   "status": "captured",
+   "scenarios": 2
+  },
+  {
+   "component": "TableSettingsPanel",
+   "status": "captured",
+   "scenarios": 3
+  },
+  {
+   "component": "TableWrapperComponent",
+   "status": "captured-in-crosscheck",
+   "scenarios": 0
+  },
+  {
+   "component": "TextStyleSettings",
+   "status": "captured",
+   "scenarios": 1
+  },
+  {
+   "component": "TypstBreakSettings",
+   "status": "captured",
+   "scenarios": 2
+  },
+  {
+   "component": "TypstColumnsSetting",
+   "status": "captured",
+   "scenarios": 1
+  },
+  {
+   "component": "TypstEditorView",
+   "status": "captured",
+   "scenarios": 1
+  },
+  {
+   "component": "TypstEnvHeader",
+   "status": "captured",
+   "scenarios": 1
+  },
+  {
+   "component": "TypstFootnoteSettings",
+   "status": "captured",
+   "scenarios": 1
+  },
+  {
+   "component": "TypstLayoutGear",
+   "status": "captured",
+   "scenarios": 1
+  },
+  {
+   "component": "TypstLayoutSettings",
+   "status": "captured",
+   "scenarios": 2
+  },
+  {
+   "component": "TypstLoremSettings",
+   "status": "captured",
+   "scenarios": 1
+  },
+  {
+   "component": "TypstOutlineSettings",
+   "status": "captured",
+   "scenarios": 1
+  },
+  {
+   "component": "TypstRefDisplay",
+   "status": "captured",
+   "scenarios": 1
+  },
+  {
+   "component": "TypstRefEditForm",
+   "status": "captured",
+   "scenarios": 2
+  },
+  {
+   "component": "TypstSetRuleField",
+   "status": "captured",
+   "scenarios": 3
+  },
+  {
+   "component": "TypstSetRuleSettings",
+   "status": "captured",
+   "scenarios": 3
+  },
+  {
+   "component": "TypstSpacingSettings",
+   "status": "captured",
+   "scenarios": 2
+  },
+  {
+   "component": "TypstToolbar",
+   "status": "captured",
+   "scenarios": 1
+  },
+  {
+   "component": "TypstToolbarTable",
+   "status": "captured",
+   "scenarios": 1
+  }
+ ]
+}

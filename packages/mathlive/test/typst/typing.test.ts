@@ -183,6 +183,14 @@ describe('typing in a Typst field', () => {
     }
   });
 
+  it('reads a backslash command as the LaTeX it spells, and a lone backslash as a line break', () => {
+    expect(typed('\\frac{1}{2} + \\alpha x')).toBe('1/2 + alpha x');
+    expect(typed('\\sqrt[3]{x}')).toBe('root(3, x)');
+    expect(typed('\\foo + 1')).toBe('foo + 1');
+    expect(typed('a \\ b')).toBe('a \\\nb');
+    expect(typed('a\\\\b')).toBe('a \\\nb');
+  });
+
   it('keeps a name open through Backspace and the suggestions', () => {
     expect(typed('alpj⌫ha + 1')).toBe('alpha + 1');
     expect(typed('alp⇥ + 1')).toBe('alpha + 1');

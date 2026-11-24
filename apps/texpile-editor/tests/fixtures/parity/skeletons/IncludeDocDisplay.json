@@ -1,0 +1,371 @@
+{
+ "environment": {
+  "tool": "jsdom",
+  "userAgent": "Mozilla/5.0 (linux) AppleWebKit/537.36 (KHTML, like Gecko) jsdom/30.1.3",
+  "node": "v22.23.4",
+  "document": null,
+  "scrollPositionIndex": null,
+  "window": null,
+  "devicePixelRatio": null,
+  "zoom": null,
+  "electron": null,
+  "chromium": null,
+  "os": "linux",
+  "domEditorCommit": "6ec0389c61ffc889078a95517ee770740f556c7e",
+  "live": "crosscheck.json"
+ },
+ "component": "IncludeDocDisplay",
+ "source": "src/lib/editor/visual/extensions/includedoc/IncludeDocDisplay.svelte",
+ "mountsInEditorAs": "inline-flex button inside the includedoc block node view",
+ "states": {
+  "latex-input": {
+   "roots": [
+    {
+     "tag": "button",
+     "class": [
+      "includedoc-chip"
+     ],
+     "attrs": {
+      "type": "button",
+      "contenteditable": "false",
+      "data-tip": "Open \\input{{path}}"
+     },
+     "children": [
+      {
+       "tag": "svg",
+       "class": [
+        "lucide",
+        "lucide-file-symlink",
+        "lucide-icon",
+        "size-3.5",
+        "shrink-0",
+        "opacity-55"
+       ],
+       "attrs": {
+        "xmlns": "http://www.w3.org/2000/svg",
+        "width": "24",
+        "height": "24",
+        "viewBox": "0 0 24 24",
+        "fill": "none",
+        "stroke": "currentColor",
+        "stroke-width": "2",
+        "stroke-linecap": "round",
+        "stroke-linejoin": "round",
+        "aria-hidden": "true"
+       },
+       "children": [
+        {
+         "tag": "path"
+        },
+        {
+         "tag": "path"
+        },
+        {
+         "tag": "path"
+        }
+       ]
+      },
+      " ",
+      {
+       "tag": "span",
+       "class": [
+        "includedoc-code"
+       ],
+       "children": [
+        {
+         "tag": "span",
+         "class": [
+          "includedoc-syntax"
+         ],
+         "children": [
+          "\\input{"
+         ]
+        },
+        {
+         "tag": "span",
+         "class": [
+          "includedoc-path"
+         ],
+         "children": [
+          "{path}"
+         ]
+        },
+        {
+         "tag": "span",
+         "class": [
+          "includedoc-syntax"
+         ],
+         "children": [
+          "}"
+         ]
+        }
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  "latex-include": {
+   "roots": [
+    {
+     "tag": "button",
+     "class": [
+      "includedoc-chip"
+     ],
+     "attrs": {
+      "type": "button",
+      "contenteditable": "false",
+      "data-tip": "Open \\include{{path}}"
+     },
+     "children": [
+      {
+       "tag": "svg",
+       "class": [
+        "lucide",
+        "lucide-file-symlink",
+        "lucide-icon",
+        "size-3.5",
+        "shrink-0",
+        "opacity-55"
+       ],
+       "attrs": {
+        "xmlns": "http://www.w3.org/2000/svg",
+        "width": "24",
+        "height": "24",
+        "viewBox": "0 0 24 24",
+        "fill": "none",
+        "stroke": "currentColor",
+        "stroke-width": "2",
+        "stroke-linecap": "round",
+        "stroke-linejoin": "round",
+        "aria-hidden": "true"
+       },
+       "children": [
+        {
+         "tag": "path"
+        },
+        {
+         "tag": "path"
+        },
+        {
+         "tag": "path"
+        }
+       ]
+      },
+      " ",
+      {
+       "tag": "span",
+       "class": [
+        "includedoc-code"
+       ],
+       "children": [
+        {
+         "tag": "span",
+         "class": [
+          "includedoc-syntax"
+         ],
+         "children": [
+          "\\include{"
+         ]
+        },
+        {
+         "tag": "span",
+         "class": [
+          "includedoc-path"
+         ],
+         "children": [
+          "{path}"
+         ]
+        },
+        {
+         "tag": "span",
+         "class": [
+          "includedoc-syntax"
+         ],
+         "children": [
+          "}"
+         ]
+        }
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  "missing": {
+   "roots": [
+    {
+     "tag": "button",
+     "class": [
+      "includedoc-chip",
+      "includedoc-missing"
+     ],
+     "attrs": {
+      "type": "button",
+      "contenteditable": "false",
+      "data-tip": "No file {path} in the project"
+     },
+     "children": [
+      {
+       "tag": "svg",
+       "class": [
+        "lucide",
+        "lucide-file-symlink",
+        "lucide-icon",
+        "size-3.5",
+        "shrink-0",
+        "opacity-55"
+       ],
+       "attrs": {
+        "xmlns": "http://www.w3.org/2000/svg",
+        "width": "24",
+        "height": "24",
+        "viewBox": "0 0 24 24",
+        "fill": "none",
+        "stroke": "currentColor",
+        "stroke-width": "2",
+        "stroke-linecap": "round",
+        "stroke-linejoin": "round",
+        "aria-hidden": "true"
+       },
+       "children": [
+        {
+         "tag": "path"
+        },
+        {
+         "tag": "path"
+        },
+        {
+         "tag": "path"
+        }
+       ]
+      },
+      " ",
+      {
+       "tag": "span",
+       "class": [
+        "includedoc-code"
+       ],
+       "children": [
+        {
+         "tag": "span",
+         "class": [
+          "includedoc-syntax"
+         ],
+         "children": [
+          "\\input{"
+         ]
+        },
+        {
+         "tag": "span",
+         "class": [
+          "includedoc-path"
+         ],
+         "children": [
+          "{path}"
+         ]
+        },
+        {
+         "tag": "span",
+         "class": [
+          "includedoc-syntax"
+         ],
+         "children": [
+          "}"
+         ]
+        }
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  "typst": {
+   "roots": [
+    {
+     "tag": "button",
+     "class": [
+      "includedoc-chip"
+     ],
+     "attrs": {
+      "type": "button",
+      "contenteditable": "false",
+      "data-tip": "Open #include \"{path}\""
+     },
+     "children": [
+      {
+       "tag": "svg",
+       "class": [
+        "lucide",
+        "lucide-file-symlink",
+        "lucide-icon",
+        "size-3.5",
+        "shrink-0",
+        "opacity-55"
+       ],
+       "attrs": {
+        "xmlns": "http://www.w3.org/2000/svg",
+        "width": "24",
+        "height": "24",
+        "viewBox": "0 0 24 24",
+        "fill": "none",
+        "stroke": "currentColor",
+        "stroke-width": "2",
+        "stroke-linecap": "round",
+        "stroke-linejoin": "round",
+        "aria-hidden": "true"
+       },
+       "children": [
+        {
+         "tag": "path"
+        },
+        {
+         "tag": "path"
+        },
+        {
+         "tag": "path"
+        }
+       ]
+      },
+      " ",
+      {
+       "tag": "span",
+       "class": [
+        "includedoc-code"
+       ],
+       "children": [
+        {
+         "tag": "span",
+         "class": [
+          "includedoc-syntax"
+         ],
+         "children": [
+          "#include \""
+         ]
+        },
+        {
+         "tag": "span",
+         "class": [
+          "includedoc-path"
+         ],
+         "children": [
+          "{path}"
+         ]
+        },
+        {
+         "tag": "span",
+         "class": [
+          "includedoc-syntax"
+         ],
+         "children": [
+          "\""
+         ]
+        }
+       ]
+      }
+     ]
+    }
+   ]
+  }
+ }
+}

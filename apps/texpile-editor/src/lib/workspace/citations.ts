@@ -154,13 +154,19 @@ async function declaredHayagriva(root: string, main: string | null, fs: Referenc
  *  The store is NOT cleared up front: it used to be, and the empty window while the folder
  *  rescanned made every citation chip downgrade to its raw key and snap back - a visible flash
  *  on each save. The old list stays up until the fresh one replaces it in a single set. */
+// a save reads the folder again: the same entries keep the list, so no chip draws again
+function publishReferences(next: BiblatexReference[]): void {
+	const was = references.current;
+	if (next.length !== was.length || next.some((ref, i) => ref !== was[i])) references.current = next;
+}
+
 export async function loadReferences(root: string, fs: ReferencesFs = nativeFs, main: string | null = null): Promise<void> {
 	const my = ++loadSeq;
 	try {
 		const files = [...(await fs.scan(root, ['bib', 'bbl'])), ...(await declaredHayagriva(root, main, fs))];
 		if (my !== loadSeq) return;
 		if (!files.length) {
-			references.current = [];
+			publishReferences([]);
 			return;
 		}
 		const ordered = [...files].sort((a, b) => precedence(a) - precedence(b));
@@ -174,9 +180,9 @@ export async function loadReferences(root: string, fs: ReferencesFs = nativeFs, 
 			}
 		}
 		if (my !== loadSeq) return;
-		references.current = dedupeByKey(lists);
+		publishReferences(dedupeByKey(lists));
 	} catch (e) {
 		console.error('Failed to load references:', e);
-		if (my === loadSeq) references.current = [];
+		if (my === loadSeq) publishReferences([]);
 	}
 }

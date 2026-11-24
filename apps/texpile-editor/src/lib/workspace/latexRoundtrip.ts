@@ -8,6 +8,7 @@ import { padTables } from '$lib/editor/visual/padTables';
 import { collectMap, lazyMap, shiftMap, type RegionParse, type SourceMap } from '$lib/editor/visual/sourceSpans';
 import { rememberParseMap, warnMapDefects, type ParseBody, type ParseOrigins } from '$lib/editor/visual/parseOrigins';
 import type { Node } from 'prosemirror-model';
+import type { DocumentScans } from './documentScans';
 import type { PackageTable } from '$lib/languages/latex/parser/signatures/packageTable';
 
 // the importer runs in max-fidelity mode: unrecognized constructs are preserved as raw/inline LaTeX
@@ -40,6 +41,8 @@ export type ParsedLatexFile = {
 	map: SourceMap;
 	/** the signatures it was parsed with, for a later parse of part of it; the base table when absent */
 	table?: PackageTable;
+	/** what the whole file defines; the Typst parse has none */
+	scans?: DocumentScans;
 	/** what the parse knew about every top-level block, for writing untouched ones back as they were */
 	origins: ParseOrigins;
 };

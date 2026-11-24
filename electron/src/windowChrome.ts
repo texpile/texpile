@@ -289,7 +289,12 @@ function template(win: BrowserWindow, s: MenuState): MenuItemConstructorOptions[
 				{ role: 'cut', label: label(s, 'cut', 'Cut') },
 				{ role: 'copy', label: label(s, 'copy', 'Copy') },
 				{ role: 'paste', label: label(s, 'paste', 'Paste') },
-				{ role: 'selectAll', label: label(s, 'selectAll', 'Select All') },
+				// the editors' own Select All: the role would select the canvas's hidden input
+				{
+					label: label(s, 'selectAll', 'Select All'),
+					accelerator: accelerator(s, 'selectAll', 'CmdOrCtrl+A'),
+					click: () => fire(win, 'edit:selectAll')
+				},
 				{ type: 'separator' },
 				{
 					enabled: s.findable ?? doc.enabled,

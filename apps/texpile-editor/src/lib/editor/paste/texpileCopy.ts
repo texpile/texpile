@@ -11,6 +11,7 @@ import {
 	type Schema,
 	type TagParseRule
 } from 'prosemirror-model';
+import type { EditorView } from 'prosemirror-view';
 import { ListDOMSerializer } from 'prosemirror-flat-list';
 import { addCopiedMathLatex } from './pastedMath';
 import { markCopiedRawLanguages } from './pastedRawBlocks';
@@ -23,6 +24,14 @@ const NODE_ATTRS = 'data-texpile-node';
 
 export function isTexpileCopy(html: string): boolean {
 	return html.includes(COPY_MARK);
+}
+
+/** the words a Texpile copy shows, where its plain text is the file's source: blocks apart by a blank line, a formula as its source */
+export function texpileCopyText(view: EditorView, html: string): string {
+	const parser = view.someProp('clipboardParser') ?? DOMParser.fromSchema(view.state.schema);
+	const body = new globalThis.DOMParser().parseFromString(html, 'text/html').body;
+	const { content } = parser.parseSlice(body, { preserveWhitespace: true });
+	return content.textBetween(0, content.size, '\n\n', (leaf) => leaf.type.spec.leafText?.(leaf) ?? '');
 }
 
 class MarkingSerializer extends ListDOMSerializer {

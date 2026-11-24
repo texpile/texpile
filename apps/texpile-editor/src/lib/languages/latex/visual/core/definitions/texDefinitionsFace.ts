@@ -1,24 +1,26 @@
-import { faceElement, type ChipFace } from '$lib/editor/visual/extensions/drawnChips/chipFace';
+import type { FaceElement } from '$lib/editor/canvas';
+import type { ChipFace } from '$lib/editor/visual/extensions/drawnChips/chipFace';
 import { definitionBody, definitionsFace, type DefinitionLine } from '$lib/editor/visual/extensions/drawnChips/definitions/definitionsFace';
-import { renderStaticMath } from '$lib/editor/visual/extensions/mathlivebridge/mathStatic';
+import { formulaFace } from '$lib/editor/visual/extensions/mathlivebridge/mathStatic';
+import { appendTo } from '$lib/editor/visual/extensions/drawnChips/faces/partElements';
+import { chipElement } from '$lib/editor/visual/extensions/drawnChips/looks/chipLooks';
 import { bodyIsMath } from './bodyIsMath';
 import type { ReadDefinition } from './readDefinition';
 import { oneLine } from './texSource';
 
 export type TextDrawer = (latex: string) => ChipFace | null;
 
-function bodyCell(definition: ReadDefinition, drawText: TextDrawer, drawn: ChipFace[]): HTMLElement {
+function bodyCell(definition: ReadDefinition, drawText: TextDrawer, drawn: ChipFace[]): FaceElement {
 	if (definition.body === null) {
-		const made = definitionBody(null, `\\${definition.command}`, drawn);
-		made.classList.add('drawn-definition-made');
-		return made;
+		return definitionBody(null, `\\${definition.command}`, drawn, true);
 	}
 	const body = definition.body.trim();
 	if (!definition.code && body && (definition.math || bodyIsMath(body))) {
-		const el = faceElement('span', 'drawn-definition-body');
 		// a parameter left as #1 typesets as an empty slot
-		el.appendChild(renderStaticMath(body.replace(/(^|[^\\#])#([1-9])/g, '$1\\mathrm{\\#$2}'), false));
-		return el;
+		return appendTo(
+			chipElement('span', 'drawn-definition-body'),
+			formulaFace(body.replace(/(^|[^\\#])#([1-9])/g, '$1\\mathrm{\\#$2}'), false)
+		);
 	}
 	return definitionBody(definition.code || !body ? null : drawText(body), oneLine(body) || '{}', drawn);
 }

@@ -3,7 +3,7 @@
 import { afterEach, describe, expect, it } from 'vitest';
 import { latexFace } from '$lib/languages/latex/visual/core/walk/drawUnits';
 import { templateFeaturesStore } from '$lib/stores/editorStore';
-import { scanMacroDefinitions } from '$lib/editor/source/extensions/math-preview/userMacros';
+import { scanMacroDefinitions } from '$lib/editor/source/extensions/math-preview/macroScan';
 import { parseLatexFile } from '$lib/workspace/latexRoundtrip';
 
 const SETUP = String.raw`\begin{thebibliography}{1}%

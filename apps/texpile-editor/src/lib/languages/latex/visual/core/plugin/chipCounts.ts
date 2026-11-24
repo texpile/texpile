@@ -1,4 +1,4 @@
-import type { ChipCounts } from '$lib/editor/visual/extensions/drawnChips/footnoteNumbers';
+import type { ChipCounts } from '$lib/editor/visual/extensions/drawnChips/footnote/footnoteNumbers';
 import { latexTreeOf } from '$lib/languages/latex/syntax/latexTrees';
 import { nextItem, wordOf } from '$lib/languages/latex/syntax/treeSiblings';
 import { startsTitleBlock } from '$lib/languages/latex/titleParts';
@@ -12,9 +12,25 @@ function counts(name: string) {
 	return commandPlugins(name).flatMap((plugin) => (plugin.counts ? [plugin.counts] : []));
 }
 
+// the count runs on every edit over every chip, and a long paper's chips outnumber the trees kept for short texts
+const KEPT_CHIPS = 20_000;
+const known = new WeakMap<object, Map<string, ChipCounts>>();
+
 export function chipCounts(source: string): ChipCounts {
+	const table = documentTable.current;
+	let memo = known.get(table);
+	if (!memo) known.set(table, (memo = new Map()));
+	let found = memo.get(source);
+	if (!found) {
+		if (memo.size > KEPT_CHIPS) memo.clear();
+		memo.set(source, (found = countsIn(source, table)));
+	}
+	return found;
+}
+
+function countsIn(source: string, table: typeof documentTable.current): ChipCounts {
 	// the title block numbers its notes with symbols and starts the page footnotes again
-	if (startsTitleBlock(source, documentTable.current)) return {};
+	if (startsTitleBlock(source, table)) return {};
 	if (![...source.matchAll(WORD)].some((m) => counts(m[1]).length)) return {};
 	const out: ChipCounts = {};
 	latexTreeOf(source).iterate({

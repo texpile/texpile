@@ -12,7 +12,7 @@ import { DocumentBuffer, fileKind, formatOf, hasVisualMode } from '$lib/workspac
 import { ViewModeSwitch } from '$lib/workspace/viewModeSwitch.svelte';
 import { DiffMode } from '$lib/workspace/diffMode.svelte';
 import { FileOpener } from '$lib/workspace/fileOpener';
-import { VisualParser, MAX_VISUAL_BYTES, type ParseFailure } from '$lib/workspace/visualParse.svelte';
+import { VisualParser, type ParseFailure } from '$lib/workspace/visualParse.svelte';
 import { followParseContext } from '$lib/collab/parse/followParseContext.svelte';
 import { compileEngine } from '$lib/languages/latex/intellisense/packages/loadedPackages';
 import { gatherProjectMacros } from '$lib/workspace/project';
@@ -76,8 +76,8 @@ export class WorkspaceDoc {
 			projectMacros: () => this.projectMacros,
 			// before the swap, so the file's formulas are made with its own macros: made with the last file's, each was
 			// typeset twice and its paragraph broken twice. What the swap leaves on the page is typeset again after it
-			adoptingText: (source) => {
-				if (setMathMacros(mathMacrosFor(source))) queueMicrotask(retypesetStaticMath);
+			adoptingText: (source, macros) => {
+				if (setMathMacros(mathMacrosFor(source, macros))) queueMicrotask(retypesetStaticMath);
 			},
 			offerInserts: offerFileInserts,
 			reparse: (text, format) => this.parser.reparse(text, format),
@@ -314,20 +314,7 @@ export class WorkspaceDoc {
 		this.doc.visualDoc = null;
 		this.doc.visualStale = false;
 		this.modes.pendingVisualAnchor = null; // never re-anchor a later visual entry off this failed switch
-		if (failure.tooComplex) {
-			toaster.warning({
-				title: m.wsview_toast_too_complex_title(),
-				description: m.wsview_toast_too_complex_desc({ count: failure.tooComplex.toLocaleString() })
-			});
-		} else if (failure.tooLarge) {
-			toaster.warning({
-				title: m.wsview_toast_too_complex_title(),
-				description: m.wsview_toast_too_large_desc({
-					size: Math.round(failure.tooLarge / 1024).toLocaleString(),
-					limit: Math.round(MAX_VISUAL_BYTES / 1024).toLocaleString()
-				})
-			});
-		} else if (failure.timeout) {
+		if (failure.timeout) {
 			toaster.warning({ title: m.wsview_toast_file_too_large_title() });
 		} else {
 			toaster.error({ title: m.wsview_toast_parse_failed_title(), description: failure.message });

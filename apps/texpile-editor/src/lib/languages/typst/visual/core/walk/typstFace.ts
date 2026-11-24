@@ -1,6 +1,6 @@
 // what a Typst chip draws as: a comment, then the plugins the name it uses reaches, then the code the core reads itself
 import type { ChipFace } from '$lib/editor/visual/extensions/drawnChips/chipFace';
-import { dividerFace } from '$lib/editor/visual/extensions/drawnChips/dividerFace';
+import { dividerFace } from '$lib/editor/visual/extensions/drawnChips/faces/dividerFace';
 import { m } from '$lib/paraglide/messages';
 import { isCropHelper } from '../../extensions/typstImageCrop';
 import { codeBlockFace } from '../code/codeBlockFace';

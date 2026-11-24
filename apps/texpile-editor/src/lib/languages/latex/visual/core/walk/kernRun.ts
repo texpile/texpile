@@ -1,6 +1,6 @@
 import type { ChipFace } from '$lib/editor/visual/extensions/drawnChips/chipFace';
 import type { SourceUnit } from '$lib/languages/latex/parser/tree/walk/sourceUnits';
-import { horizontalSpaceFace } from '$lib/editor/visual/extensions/drawnChips/spaceFace';
+import { horizontalSpaceFace } from '$lib/editor/visual/extensions/drawnChips/space/spaceFace';
 import { texLength } from '../reading/texLength';
 import { styledPart, textPart } from '../parts/textParts';
 

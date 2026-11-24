@@ -2,35 +2,33 @@
 import type { EditorView as CodeMirrorView } from '@codemirror/view';
 import type { EditorView as ProseMirrorView } from 'prosemirror-view';
 import type { CommentRange } from '$lib/editor/visual/extensions/comments';
+import { pmCommentsKey } from '$lib/editor/visual/extensions/pmComments';
+import { pmSuggestionsKey } from '$lib/editor/visual/extensions/pmSuggestionsState';
 import type { SuggestionRange } from '$lib/editor/source/cmSuggestions';
 
 export const PENDING_ANCHOR = 'pending';
 
+/** each thread's first place in the document, as its first highlighted piece stood */
 export function measurePmAnchors(view: ProseMirrorView, rail: HTMLElement, pendingWanted: boolean): Map<string, number> {
-	const root = view.dom as HTMLElement;
 	const top = rail.getBoundingClientRect().top;
+	const { state } = view;
+	const comments = pmCommentsKey.getState(state);
+	const size = state.doc.content.size;
+	const starts: { id: string; from: number }[] = [
+		...(comments?.ranges ?? []).filter((r) => !r.resolved && r.to > r.from && r.to <= size),
+		...(pmSuggestionsKey.getState(state)?.ranges ?? [])
+	].sort((a, b) => a.from - b.from);
 	const out = new Map<string, number>();
-	for (const el of root.querySelectorAll<HTMLElement>(
-		'.pm-comment[data-comment], .pm-suggest-old[data-comment], .pm-suggest-new[data-comment], .pm-suggest-partial[data-comment], .pm-suggest-break[data-comment]'
-	)) {
-		const id = el.dataset.comment;
-		if (!id || out.has(id)) continue;
-		const rect = el.getBoundingClientRect();
-		if (rect.width === 0 && rect.height === 0) continue;
-		out.set(id, Math.round(rect.top - top));
-	}
-	const pending = root.querySelector<HTMLElement>('.pm-comment-pending');
-	if (pending) out.set(PENDING_ANCHOR, Math.round(pending.getBoundingClientRect().top - top));
-	else if (pendingWanted) {
-		const at = caretCoords(view);
-		if (at) out.set(PENDING_ANCHOR, Math.round(at.top - top));
-	}
+	for (const { id, from } of starts) if (!out.has(id)) out.set(id, Math.round(view.canvas.rangeTop(from).top - top));
+	// the composer by the selected text's own top, a posted thread by its line's, as the DOM editor placed them
+	const at = pendingWanted || comments?.pending ? caretCoords(view, comments?.pending?.from ?? view.state.selection.from) : null;
+	if (at) out.set(PENDING_ANCHOR, Math.round(at.top - top));
 	return out;
 }
 
-function caretCoords(view: ProseMirrorView): { top: number } | null {
+function caretCoords(view: ProseMirrorView, pos: number): { top: number } | null {
 	try {
-		return view.coordsAtPos(view.state.selection.from);
+		return view.coordsAtPos(pos);
 	} catch {
 		return null;
 	}

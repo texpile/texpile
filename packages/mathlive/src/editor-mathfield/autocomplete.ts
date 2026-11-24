@@ -18,6 +18,7 @@ import {
 import { ModeEditor } from './mode-editor';
 import { ParseMode } from '../public/core-types';
 import { computeInsertStyle } from './styling';
+import { typedGroupValue } from '../typst/input/latex-command';
 
 export function removeSuggestion(mathfield: _Mathfield): void {
   const group = getLatexGroupBody(mathfield.model).filter(
@@ -170,9 +171,13 @@ export function complete(
     style.variantStyle = undefined;
   }
 
-  ModeEditor.insert(mathfield.model, latex, {
+  const typed =
+    mathfield.options.syntax === 'typst'
+      ? typedGroupValue(latex)
+      : { value: latex, format: 'latex' as const };
+  ModeEditor.insert(mathfield.model, typed.value, {
     selectionMode: (options?.selectItem ?? false) ? 'item' : 'placeholder',
-    format: mathfield.options.syntax === 'typst' ? 'typst' : 'latex',
+    format: typed.format,
     mode: 'math',
     style,
   });

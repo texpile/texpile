@@ -165,7 +165,7 @@
 
 	/** the visual editor is wanted, whether or not it has been built yet */
 	const visualPending = $derived(loadedPath && structured && viewMode === 'visual');
-	const held = heldVisualDoc(() => ({ loadedPath, visualDoc, docMeta, texSource, sourceMap, pending: !!visualPending }));
+	const held = heldVisualDoc(() => ({ loadedPath, kind, visualDoc, docMeta, texSource, sourceMap, pending: !!visualPending }));
 
 	/** Rendered for the whole build, but it holds itself invisible until the wait is real (see
 	 * lateReveal.ts), so a fast build never flashes a bar. Deliberately not a size threshold: that
@@ -355,7 +355,6 @@
 							<div class="isolate min-w-0 flex-1">
 								<!-- deliberately NOT keyed on the file: it takes the next document via docSwap -->
 								<VisualEditorHost
-									{kind}
 									{...held.current}
 									commentRanges={held.own ? commentRanges : []}
 									live={held.own && !parked}

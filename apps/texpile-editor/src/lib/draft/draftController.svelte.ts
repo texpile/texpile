@@ -5,6 +5,7 @@ import type DraftView from './DraftView.svelte';
 import { DraftDispatcher } from './draftDispatcher';
 import { watchDraftInputs } from './draftInputWatch';
 import { workspaceRoot, mainFile } from '$lib/workspace/workspaceStore';
+import { SELECTION_EVENT } from '$lib/editor/canvas';
 import { latexLiveMode } from '$lib/workspace/projectConfigSync.svelte';
 import { compileBaseDir } from '$lib/workspace/compileCommand';
 import { relFromRoot } from '$lib/workspace/compilePipeline.svelte';
@@ -27,6 +28,8 @@ export type DraftControllerDeps = {
 
 // the caret has come to rest once it stays this long
 const CARET_REST_MS = 250;
+// the canvas editor's selection is no DOM selection: it sends its own event
+const CARET_EVENTS = ['selectionchange', SELECTION_EVENT];
 
 export class DraftController {
 	// bump to run a full draft compile; the quiet variant announces nothing (boundary edits)
@@ -102,10 +105,10 @@ export class DraftController {
 				clearTimeout(timer);
 				timer = setTimeout(rested, CARET_REST_MS);
 			}
-			document.addEventListener('selectionchange', moved);
+			for (const type of CARET_EVENTS) document.addEventListener(type, moved);
 			return () => {
 				clearTimeout(timer);
-				document.removeEventListener('selectionchange', moved);
+				for (const type of CARET_EVENTS) document.removeEventListener(type, moved);
 			};
 		});
 

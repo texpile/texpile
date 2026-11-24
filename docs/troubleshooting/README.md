@@ -25,7 +25,6 @@ Find the message you see. [LaTeX](latex.md), [Typst](typst.md), [Git](git.md) an
 
 | You see                                 | Fix                                                                                                   |
 | --------------------------------------- | ----------------------------------------------------------------------------------------------------- |
-| "Opened in Source mode"                 | The file is too large for the visual editor. Edit it in the source editor.                            |
 | "This file is not UTF-8"                | The file opens read-only. To edit it, save it as UTF-8 in another editor.                             |
 | "Not available in single file mode"     | You opened a single file on its own. Click **Open in Workspace**.                                     |
 | A comment shows **Detached**            | The text it was on changed. Select the right text, open the thread and click **Attach to Selection**. |

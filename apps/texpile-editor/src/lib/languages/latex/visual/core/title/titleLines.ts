@@ -1,6 +1,6 @@
-import { tip } from '$lib/components/tooltip.svelte';
-import { faceElement, tippedFace, type ChipFace } from '$lib/editor/visual/extensions/drawnChips/chipFace';
-import { partLabelFace } from '$lib/editor/visual/extensions/drawnChips/partLabelFace';
+import { tippedFace, type ChipFace } from '$lib/editor/visual/extensions/drawnChips/chipFace';
+import { appendTo, elementMode, type PartElement, type PartMode } from '$lib/editor/visual/extensions/drawnChips/faces/partElements';
+import { partLabelFace } from '$lib/editor/visual/extensions/drawnChips/faces/partLabelFace';
 import type { TitlePart } from '$lib/languages/latex/knowledge/types';
 import type { TreeCall } from '$lib/languages/latex/parser/tree/walk/treeArgs';
 import type { Stretch } from '$lib/languages/latex/parser/tree/walk/stretch';
@@ -9,6 +9,7 @@ import { placeholderCommand } from '$lib/editor/visual/extensions/raw-latex/plac
 import { BLOCK_NOTE, PRINT_BLOCK } from '$lib/languages/latex/titleParts';
 import { noteArgument, titleReading, type TitleReading } from './titleReading';
 import { titleLine } from '$lib/editor/visual/extensions/drawnChips/titleBlock/titleLine';
+import { coreElement } from '../looks/coreLooks';
 import './titleMatter.css';
 
 export type TitleMarks = { next(): number };
@@ -63,46 +64,43 @@ function labelFor(reading: TitleReading): string | null {
 	return reading.part === 'running' ? (reading.named ?? m.title_running()) : null;
 }
 
-function superscript(parts: ChipFace[]): HTMLElement {
-	const sup = faceElement('sup', 'title-matter-mark');
-	parts.forEach((part) => sup.append(part.dom));
-	return sup;
+function superscript(parts: ChipFace[], mode: PartMode): PartElement {
+	return appendTo(mode.make('sup', 'title-matter-mark'), ...parts.map(mode.ofFace));
 }
 
 type ItemParts = { part: TitlePart; label: string | null; content: ChipFace[]; mark: ChipFace[]; command: string };
 
 function itemOfParts({ part, label, content, mark, command }: ItemParts): ChipFace {
-	const dom = titleLine(part, label);
+	const mode = elementMode(coreElement);
+	const dom = titleLine(part, label, mode.make, content.length === 0);
 	if (content.length === 0) {
-		dom.classList.add('title-matter-empty');
-		dom.append(command);
+		appendTo(dom, command);
 	} else if (part === 'author' || part === 'affiliation' || part === 'note') {
 		const cells = cellsOf(content);
 		cells.forEach((cell, i) => {
-			const box = faceElement('div', 'title-matter-cell');
-			if (part !== 'author' && i === 0 && mark.length) box.append(superscript(mark));
-			cell.forEach((p) => box.append(p.dom));
-			if (part === 'author' && i === cells.length - 1 && mark.length) box.append(superscript(mark));
-			dom.append(box);
+			const box = mode.make('div', 'title-matter-cell');
+			if (part !== 'author' && i === 0 && mark.length) appendTo(box, superscript(mark, mode));
+			appendTo(box, ...cell.map(mode.ofFace));
+			if (part === 'author' && i === cells.length - 1 && mark.length) appendTo(box, superscript(mark, mode));
+			appendTo(dom, box);
 		});
 	} else {
-		const text = faceElement('span', 'title-matter-text');
+		const text = mode.make('span', 'title-matter-text');
 		const glue = part === 'keywords' || part === 'classification' ? ', ' : ' ';
 		cellsOf(content).forEach((cell, i) => {
-			if (i > 0) text.append(glue);
-			cell.forEach((p) => text.append(p.dom));
+			if (i > 0) appendTo(text, glue);
+			appendTo(text, ...cell.map(mode.ofFace));
 		});
-		dom.append(text);
+		appendTo(dom, text);
 	}
-	const tipped = tip(dom, hintOf(command));
+	const face = tippedFace(dom, hintOf(command), { line: true });
 	return {
-		dom,
-		line: true,
+		...face,
 		decorate: (decorations) => [...content, ...mark].forEach((p) => p.decorate?.(decorations)),
 		destroy() {
 			destroyAll(content);
 			destroyAll(mark);
-			tipped.destroy();
+			face.destroy?.();
 		}
 	};
 }
@@ -131,9 +129,7 @@ export function addressFace(drawn: ChipFace[], command: string): ChipFace {
 
 function noteFace(note: string, marks: TitleMarks): ChipFace {
 	const at = marks.next();
-	const dom = faceElement('sup', 'title-matter-mark');
-	dom.textContent = NOTE_SYMBOLS[at] ?? String(at + 1);
-	return tippedFace(dom, hintOf(note));
+	return tippedFace(coreElement('sup', 'title-matter-mark', NOTE_SYMBOLS[at] ?? String(at + 1)), hintOf(note));
 }
 
 function printBlockFace(command: string): ChipFace | null {
@@ -143,7 +139,7 @@ function printBlockFace(command: string): ChipFace | null {
 }
 
 export function titleSeparator(): ChipFace {
-	const dom = document.createElement('span');
+	const dom = coreElement('span');
 	dom.dataset[SEPARATOR] = '';
 	return { dom };
 }
@@ -151,13 +147,13 @@ export function titleSeparator(): ChipFace {
 function inTitle(call: TreeCall, scope: TitleScope, src: string, draw: TitleDrawer): ChipFace | ChipFace[] | null | undefined {
 	if (call.name === 'and') return titleSeparator();
 	if (call.name === 'today')
-		return { dom: faceElement('span', '', new Date().toLocaleDateString(undefined, { year: 'numeric', month: 'long', day: 'numeric' })) };
+		return { dom: coreElement('span', '', new Date().toLocaleDateString(undefined, { year: 'numeric', month: 'long', day: 'numeric' })) };
 	const note = noteArgument(call);
 	if (note) return noteFace(src.slice(note.body!.from, note.body!.to), scope.marks);
 	const reading = titleReading(call);
 	if (reading?.part !== 'mark') return undefined;
 	const parts = draw(reading.text.body!, scope);
-	return parts && { dom: superscript(parts), destroy: () => destroyAll(parts) };
+	return parts && { dom: superscript(parts, elementMode(coreElement)), destroy: () => destroyAll(parts) };
 }
 
 export function titleMacro(
