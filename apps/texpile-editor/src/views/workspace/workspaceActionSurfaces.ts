@@ -13,7 +13,7 @@ import { focusScmMessage } from '$lib/workspace/scm/actions/scmHandlers.svelte';
 import { focusEditor } from '$lib/workspace/editorCommands';
 import { askForAgentBoxCaret } from '$lib/ai/agentPanel/ui/box/agentBoxCaret.svelte';
 import { agentInSide, agentSide } from '$lib/ai/agentPanel/side/agentSide.svelte';
-import { panelTabOff } from '$lib/ai/agentPanel/agentOffer.svelte';
+import { aiTurnedOff } from '$lib/ai/agent/aiAgent.svelte';
 import { agentUnavailable } from '$lib/ai/agentPanel/agentAvailability';
 import { capsOf, fileMode } from '$lib/workspace/fileMode.svelte';
 import { tabs, tabKey, type Tab } from '$lib/workspace/tabs.svelte';
@@ -373,7 +373,7 @@ export function makePaletteActions(d: ActionSurfaceDeps) {
 		sidebarOpen: () => d.layout().sidebarOpen,
 		toggleBottomPanel: () => d.termDock().togglePanel(),
 		bottomPanelOpen: () => d.termDock().visible,
-		agentTabOffered: () => !panelTabOff() && !agentUnavailable() && d.termDock().available,
+		agentTabOffered: () => !aiTurnedOff() && !agentUnavailable() && d.termDock().available,
 		agentTabOpen: () => agentTabOpen(d),
 		// after the palette has closed and given the focus back
 		toggleAgentTab: () => void setTimeout(() => toggleAgentTab(d)),

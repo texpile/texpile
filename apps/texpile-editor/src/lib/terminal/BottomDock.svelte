@@ -12,10 +12,10 @@
 	import type { DockView } from './dockView';
 	import DockTabCount from './DockTabCount.svelte';
 	import AgentPanel from '$lib/ai/agentPanel/ui/AgentPanel.svelte';
-	import AgentPicker from '$lib/ai/agentPanel/ui/strip/AgentPicker.svelte';
+	import AgentStripControls from '$lib/ai/agentPanel/ui/strip/AgentStripControls.svelte';
 	import { agentSession } from '$lib/ai/agentPanel/agentSession.svelte';
 	import { agentUnavailable } from '$lib/ai/agentPanel/agentAvailability';
-	import { panelTabOff } from '$lib/ai/agentPanel/agentOffer.svelte';
+	import { aiTurnedOff } from '$lib/ai/agent/aiAgent.svelte';
 	import { agentInSide, agentSide } from '$lib/ai/agentPanel/side/agentSide.svelte';
 	import { SquareTerminal, ChevronDown, Check, Trash2, Plus, X, FoldHorizontal, UnfoldHorizontal, PanelRight } from '@lucide/svelte';
 
@@ -71,7 +71,7 @@
 
 	const openComments = $derived(comments.filter((c) => !c.resolved).length);
 	// there until turned off; where the agent cannot run (a guest, the browser, a lone file) the tab says why
-	const agentOn = $derived(!panelTabOff() && !agentInSide());
+	const agentOn = $derived(!aiTurnedOff() && !agentInSide());
 	const agentBlocked = $derived(agentUnavailable());
 	// once opened it stays up behind the other tabs, so a message half written is still there on the way back
 	let agentOpened = $state(false);
@@ -276,7 +276,7 @@
 			</button>
 		{/if}
 		{#if view === 'agent'}
-			<AgentPicker disabled={!!agentBlocked} />
+			<AgentStripControls disabled={!!agentBlocked} />
 			{#if !agentBlocked}
 				<button
 					class="btn-icon btn-icon-xs hover:preset-tonal"

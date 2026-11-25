@@ -1,27 +1,19 @@
-// The custom service's key, which a window can set but never read, and a picture turned into LaTeX or Typst by the AI
-// service picked in Preferences
+// A picture turned into LaTeX or Typst by the agent picked in Preferences
 import { ipcMain } from 'electron';
 import { readSettings } from '../appSettings';
 import { askAi } from '../ai/askAi';
-import { serviceKeyKept, setServiceKey } from '../ai/service/serviceKey';
 
 const IMAGE_TIMEOUT_MS = 180_000;
 const IMAGE_TYPES = ['image/png', 'image/jpeg', 'image/webp', 'image/gif'];
-// about 20 MB of base64, past what any of the services takes
+// about 20 MB of base64, past what any of the agents takes
 const MOST_IMAGE_CHARS = 28_000_000;
 
 const running = new Map<string, AbortController>();
 
-type ImageRequest = { id?: unknown; system?: unknown; request?: unknown; mediaType?: unknown; base64?: unknown };
+/** strong: a drawing, which the strong model draws */
+type ImageRequest = { id?: unknown; system?: unknown; request?: unknown; mediaType?: unknown; base64?: unknown; strong?: unknown };
 
-export function registerAiServiceIpc(): void {
-	ipcMain.handle('ai:serviceKey', () => serviceKeyKept());
-
-	ipcMain.handle('ai:setServiceKey', (_e, key: unknown) => {
-		if (typeof key === 'string') setServiceKey(key.trim());
-		return serviceKeyKept();
-	});
-
+export function registerImageToLatexIpc(): void {
 	ipcMain.handle('ai:imageToLatex', async (e, req: ImageRequest) => {
 		const { id, system, request, mediaType, base64 } = req ?? {};
 		if (typeof id !== 'string' || typeof system !== 'string' || typeof request !== 'string') return { ok: false, error: 'bad request' };
@@ -35,7 +27,8 @@ export function registerAiServiceIpc(): void {
 		e.sender.once('destroyed', stop);
 		try {
 			const signal = AbortSignal.any([abort.signal, AbortSignal.timeout(IMAGE_TIMEOUT_MS)]);
-			return await askAi('image', readSettings(), { system, request, images: [{ mediaType: mediaType as string, base64 }] }, signal);
+			const task = req.strong === true ? 'convertStrong' : 'convertFast';
+			return await askAi(task, readSettings(), { system, request, images: [{ mediaType: mediaType as string, base64 }] }, signal);
 		} finally {
 			running.delete(id);
 			e.sender.removeListener('destroyed', stop);

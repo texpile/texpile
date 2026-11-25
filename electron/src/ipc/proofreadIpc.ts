@@ -1,13 +1,13 @@
-// Proofreading for the window: a paragraph batch sent to the AI service picked in Preferences. The service, its address
-// and the key come from main, never from the request
+// Proofreading for the window: a paragraph batch sent to the agent picked in Preferences. The agent comes from main,
+// never from the request
 import { ipcMain } from 'electron';
 import { readSettings } from '../appSettings';
-import { aiServiceOf, askAi } from '../ai/askAi';
-import { PROOFREAD_TIMEOUT_MS, type ProofreadAnswer, type ProofreadPrompt } from '../ai/proofread/proofreadAnswer';
+import { askAi } from '../ai/askAi';
+import type { ProofreadAnswer, ProofreadPrompt } from '../ai/proofread/proofreadAnswer';
 
 // a guard against a loop sending the same paragraphs again and again
 const DAILY_LIMIT = 2000;
-const AGENT_TIMEOUT_MS = 90_000;
+const TIMEOUT_MS = 90_000;
 
 let day = '';
 let sentToday = 0;
@@ -25,8 +25,7 @@ async function proofread(prompt: ProofreadPrompt): Promise<ProofreadAnswer> {
 	const s = readSettings();
 	if (s.aiOff === true || s.proofreadAi !== true) return { ok: false, error: 'Proofread with AI is off.' };
 	if (!underDailyLimit()) return { ok: false, error: `The daily limit of ${DAILY_LIMIT} requests is reached.` };
-	const timeout = aiServiceOf(s) === 'service' ? PROOFREAD_TIMEOUT_MS : AGENT_TIMEOUT_MS;
-	const result = await askAi('proofread', s, prompt, AbortSignal.timeout(timeout));
+	const result = await askAi('proofread', s, prompt, AbortSignal.timeout(TIMEOUT_MS));
 	return result.ok ? result : { ok: false, error: result.error };
 }
 

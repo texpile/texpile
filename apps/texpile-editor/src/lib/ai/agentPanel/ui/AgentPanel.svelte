@@ -5,7 +5,7 @@
 	import { pathLabels } from '$lib/workspace/scm/ui/changes/pathLabels';
 	import { agentSession, openAgentSession, restartAgentSession, shownAgent } from '../agentSession.svelte';
 	import { chatBlocks } from '../agentItems';
-	import { runningAgentName, signInCommand } from '../agentNames';
+	import { runningAgentName, signInCommand } from '$lib/ai/agent/aiAgents';
 	import { LoaderCircle } from '@lucide/svelte';
 	import { m } from '$lib/paraglide/messages';
 	import AgentMessage from './conversation/AgentMessage.svelte';

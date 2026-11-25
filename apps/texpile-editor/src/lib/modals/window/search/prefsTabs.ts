@@ -32,7 +32,7 @@ export const PREFS_TABS: TabDef[] = [
 	{ id: 'toolchain', label: () => m.prefs_group_toolchain(), desktopOnly: true },
 	{ id: 'integrations', label: () => m.prefs_group_integrations(), desktopOnly: true },
 	{ id: 'startup', label: () => m.prefs_group_startup(), desktopOnly: true },
-	{ id: 'ai', label: () => m.prefs_group_ai(), desktopOnly: true }
+	{ id: 'ai', label: () => m.prefs_group_ai(), desktopOnly: true, sections: ['aiAgent', 'aiModels', 'aiUses'] }
 ];
 
 /** the browser guest has no toolchain, Zotero, MCP server, folder to reopen or versions of its own */

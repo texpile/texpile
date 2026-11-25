@@ -18,7 +18,7 @@
 	import PrefsToolchainPanel from './PrefsToolchainPanel.svelte';
 	import PrefsIntegrationsPanel from './integrations/PrefsIntegrationsPanel.svelte';
 	import PrefsStartupPanel from './startup/PrefsStartupPanel.svelte';
-	import PrefsAiPanel from './PrefsAiPanel.svelte';
+	import PrefsAiPanel from './ai/PrefsAiPanel.svelte';
 	import PrefsDonateLink from './PrefsDonateLink.svelte';
 	import { PrefsNavigation } from './search/prefsNavigation.svelte';
 	import PrefsSearchField from './search/PrefsSearchField.svelte';

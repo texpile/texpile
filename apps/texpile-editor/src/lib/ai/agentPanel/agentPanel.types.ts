@@ -1,8 +1,6 @@
 // The agent panel's view of an ACP conversation. Shapes mirror what electron/src/ai/acp sends, cut down
 // to what the panel draws
-
-export type PanelAgent = 'codex' | 'claude' | 'opencode' | 'copilot' | 'gemini' | 'custom';
-export type PresetPanelAgent = Exclude<PanelAgent, 'custom'>;
+import type { AiAgent } from '$lib/ai/agent/aiAgents';
 
 export type AgentState = 'idle' | 'starting' | 'ready' | 'working' | 'signed-out' | 'missing' | 'unset' | 'no-folder' | 'failed';
 
@@ -91,4 +89,4 @@ export type ChatInfo = { id: string; title: string | null; updatedAt: string | n
 
 export type TurnChange = { path: string; kind: ChangedFile['change']; before: string | null };
 export type PromptResult = { ok: boolean; stopReason?: string; error?: string; changes: TurnChange[] };
-export type StartResult = { ok: true; agent: PanelAgent } | { ok: false; reason: 'no-folder' | 'unset' | 'missing'; program?: string };
+export type StartResult = { ok: true; agent: AiAgent } | { ok: false; reason: 'no-folder' | 'unset' | 'missing'; program?: string };

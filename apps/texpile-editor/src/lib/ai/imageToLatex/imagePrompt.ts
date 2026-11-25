@@ -1,4 +1,4 @@
-// What Convert to LaTeX asks of the AI service, and how its answer is read back
+// What Convert to LaTeX asks of the agent, and how its answer is read back
 import { CETZ_IMPORT } from '$lib/draw/cetz/source/pictures';
 
 export type ImageDialect = 'latex' | 'typst' | 'markdown';
@@ -32,6 +32,17 @@ Answer with the ${language} alone, in one fenced code block.`;
 
 export function imageRequest(dialect: ImageDialect): string {
 	return `Write the ${LANGUAGE[dialect]} for this picture.`;
+}
+
+const DRAWING = 'DRAWING';
+
+/** the fast model's request, which hands a drawing on to the strong model */
+export function imageFastRequest(dialect: ImageDialect): string {
+	return `${imageRequest(dialect)} If it is a diagram, plot, graph, circuit or drawing, answer with the single word ${DRAWING} instead.`;
+}
+
+export function handedOn(answer: string): boolean {
+	return answer.replace(/[`.\s]/g, '') === DRAWING;
 }
 
 /** asked once when the drawing does not compile, with the error */

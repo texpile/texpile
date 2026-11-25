@@ -1,6 +1,6 @@
-// Codex's app server kept running between requests. Each request is a thread of its own, which carries its rules, so
-// one server takes proofread and Refine alike
-import type { AgentPrompt, AgentResult } from '../runAgent';
+// Codex's app server kept running between requests. Each request is a thread of its own, which carries its rules and
+// model, so one server takes every task
+import type { AgentPrompt, AgentResult } from '../agentPrompt';
 import { startHeldProcess, watchStop, type HeldProcess, type WarmAgent } from './heldProcess';
 import { onJsonLines, writeJsonLine, type JsonMessage } from './jsonLines';
 
@@ -26,13 +26,7 @@ export class CodexWarm implements WarmAgent {
 	private turns = new Map<string, Turn>();
 	private ready: Promise<string | null>;
 
-	constructor(
-		program: string,
-		args: string[],
-		private model: string,
-		version: string,
-		onExit: () => void
-	) {
+	constructor(program: string, args: string[], version: string, onExit: () => void) {
 		this.proc = startHeldProcess(program, args, {}, (error) => {
 			for (const reply of this.replies.values()) reply({ error: { message: error } });
 			for (const turn of this.turns.values()) turn.done(error);
@@ -84,7 +78,7 @@ export class CodexWarm implements WarmAgent {
 		});
 	}
 
-	async ask(prompt: AgentPrompt, signal: AbortSignal): Promise<AgentResult> {
+	async ask(prompt: AgentPrompt, signal: AbortSignal, model: string): Promise<AgentResult> {
 		const notReady = await this.ready;
 		if (notReady) return { ok: false, error: notReady };
 		const started = await this.request('thread/start', {
@@ -93,7 +87,7 @@ export class CodexWarm implements WarmAgent {
 			approvalPolicy: 'never',
 			ephemeral: true,
 			...(prompt.system ? { baseInstructions: prompt.system } : {}),
-			...(this.model ? { model: this.model } : {})
+			...(model ? { model } : {})
 		});
 		const threadId = text(record(record(started.result).thread).id);
 		if (!threadId) return { ok: false, error: errorOf(started) ?? 'codex started no thread' };

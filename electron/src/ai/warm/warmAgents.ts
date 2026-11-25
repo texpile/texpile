@@ -1,17 +1,22 @@
-// The agents kept running for proofread and Refine. Claude Code reads its rules once, so each task holds its own
-// process; Codex takes them per thread, so one serves both. The others start for each request
+// The agent kept running for proofread, Refine and Convert to LaTeX. Claude Code and OpenCode read their rules once, so
+// each task holds its own process; Codex and the other ACP agents take them per request, so one serves every task
 import { app } from 'electron';
 import { findProgram } from '../../shell/findProgram';
 import { shellEnvReady } from '../../shell/shellEnv';
-import { agentArgv, CODEX_WARM_ARGS, claudeWarmArgs } from '../agentCommand';
-import { agentModelOf } from '../agentChoice';
-import { agentStdio } from '../agentStdio';
-import { runAgent, type AgentPrompt, type AgentResult } from '../runAgent';
+import { agentsDir } from '../../appIdentity';
+import { CODEX_WARM_ARGS, claudeWarmArgs } from '../agentCommand';
+import { agentModelOf, type AiAgent, type AiTask } from '../agentChoice';
+import { agentLaunch } from '../acp/acpAgents';
+import type { AgentPrompt, AgentResult } from '../agentPrompt';
+import { listAgentModels, type AgentModelList } from '../agentModels';
+import { AcpWarm } from './acpWarm';
 import { ClaudeWarm } from './claudeWarm';
 import { CodexWarm } from './codexWarm';
 import type { WarmAgent } from './heldProcess';
+import { openCodePlace } from './openCodePlace';
 
-export type AgentTask = 'proofread' | 'refine' | 'image';
+/** test is Preferences' Test agent, released once it answers */
+export type AgentTask = AiTask | 'test';
 
 type Held = { key: string; agent: WarmAgent; idle?: NodeJS.Timeout };
 
@@ -53,38 +58,100 @@ function idleFrom(slot: string): void {
 	h.idle = setTimeout(() => release(slot), IDLE_MS);
 }
 
+/** what errors call the agent */
+const NAMES: Record<AiAgent, string> = {
+	claude: 'Claude Code',
+	codex: 'Codex',
+	opencode: 'OpenCode',
+	gemini: 'Gemini',
+	copilot: 'Copilot',
+	custom: 'The agent'
+};
+
+type Starter = { slot: string; key: string; start(onExit: () => void): WarmAgent };
+
+async function starterOf(
+	task: AgentTask,
+	agent: AiAgent,
+	s: Record<string, unknown>,
+	system: string,
+	model: string
+): Promise<Starter | string> {
+	const version = app.getVersion();
+	if (agent === 'claude' || agent === 'codex') {
+		const program = findProgram(agent);
+		if (!program) return `${agent} was not found on PATH`;
+		if (agent === 'codex')
+			return { slot: 'codex', key: program, start: (onExit) => new CodexWarm(program, CODEX_WARM_ARGS, version, onExit) };
+		return {
+			slot: `claude:${task}`,
+			key: [program, model, system].join('\0'),
+			start: (onExit) => new ClaudeWarm(program, claudeWarmArgs(model), system, onExit)
+		};
+	}
+	const launch = agentLaunch(agent, s.agentCommand, { findProgram, adapterDir: agentsDir(), execPath: process.execPath });
+	if (!launch.ok) return launch.reason === 'missing' ? `${launch.program} was not found on PATH` : 'no agent command is set in Preferences';
+	const name = NAMES[agent];
+	const key = [launch.program, ...launch.args].join('\0');
+	if (agent !== 'opencode')
+		return {
+			slot: agent,
+			key,
+			start: (onExit) => new AcpWarm(launch.program, launch.args, { name, rulesKnown: false, place: { env: launch.env }, version }, onExit)
+		};
+	const place = await openCodePlace(task, system);
+	return {
+		slot: `opencode:${task}`,
+		key: [key, system].join('\0'),
+		start: (onExit) => new AcpWarm(launch.program, launch.args, { name, rulesKnown: true, place, version }, onExit)
+	};
+}
+
 export async function askAgent(
 	task: AgentTask,
-	agent: string,
+	agent: AiAgent,
 	s: Record<string, unknown>,
 	prompt: AgentPrompt,
 	signal: AbortSignal
 ): Promise<AgentResult> {
 	await shellEnvReady();
-	const model = agentModelOf(s, agent);
-	if (agent !== 'claude' && agent !== 'codex') {
-		const argv = agentArgv(agent, s.aiAgentCommand, model);
-		if (!argv) return { ok: false, error: 'no agent is set in Preferences' };
-		return runAgent(argv, prompt, signal, agentStdio(agent));
-	}
-	const program = findProgram(agent);
-	if (!program) return { ok: false, error: `${agent} was not found on PATH` };
-	const slot = agent === 'claude' ? `claude:${task}` : 'codex';
+	const model = agentModelOf(s, agent, task === 'test' ? 'proofread' : task);
+	const starter = await starterOf(task, agent, s, prompt.system, model);
+	if (typeof starter === 'string') return { ok: false, error: starter };
 	let warm: WarmAgent;
 	try {
-		warm =
-			agent === 'claude'
-				? hold(
-						slot,
-						[program, model, prompt.system].join('\0'),
-						(onExit) => new ClaudeWarm(program, claudeWarmArgs(model), prompt.system, onExit)
-					)
-				: hold(slot, [program, model].join('\0'), (onExit) => new CodexWarm(program, CODEX_WARM_ARGS, model, app.getVersion(), onExit));
+		warm = hold(starter.slot, starter.key, starter.start);
 	} catch (e) {
 		return { ok: false, error: e instanceof Error ? e.message : String(e) };
 	}
-	idleFrom(slot);
-	const answer = await warm.ask(prompt, signal);
-	idleFrom(slot);
+	idleFrom(starter.slot);
+	const answer = await warm.ask(prompt, signal, model);
+	// a process of the test's own goes; one the tasks share stays warm for them
+	if (starter.slot.endsWith(':test')) release(starter.slot);
+	else idleFrom(starter.slot);
 	return answer;
+}
+
+/** asked of the agent itself, in a process of its own that ends with the answer */
+export async function listModels(agent: AiAgent, s: Record<string, unknown>): Promise<AgentModelList> {
+	await shellEnvReady();
+	if (agent === 'claude' || agent === 'codex') return listAgentModels(agent, app.getVersion());
+	const launch = agentLaunch(agent, s.agentCommand, { findProgram, adapterDir: agentsDir(), execPath: process.execPath });
+	if (!launch.ok)
+		return { ok: false, error: launch.reason === 'missing' ? `${launch.program} was not found on PATH` : 'no agent command is set' };
+	const place = agent === 'opencode' ? await openCodePlace('models', '') : { env: launch.env };
+	const warm = new AcpWarm(
+		launch.program,
+		launch.args,
+		{ name: NAMES[agent], rulesKnown: false, place, version: app.getVersion() },
+		() => {}
+	);
+	const timeout = new Promise<AgentModelList>((done) =>
+		setTimeout(() => done({ ok: false, error: `${NAMES[agent]} did not answer` }), 30_000)
+	);
+	try {
+		return await Promise.race([warm.models(), timeout]);
+	} finally {
+		warm.close();
+	}
 }

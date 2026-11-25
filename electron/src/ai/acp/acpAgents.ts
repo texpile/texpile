@@ -1,12 +1,8 @@
-// The agents the panel talks to over ACP, and the program each one starts. Main reads the choice from
-// settings.json; a request from a window never names a program
+// The program each agent starts to speak ACP. Main reads the choice from settings.json; a request from a window never
+// names a program
 import * as path from 'node:path';
 import { splitCommandLine } from '../agentCommand';
-
-export type PanelAgent = 'codex' | 'claude' | 'opencode' | 'copilot' | 'gemini' | 'custom';
-export type PresetPanelAgent = Exclude<PanelAgent, 'custom'>;
-
-export const PANEL_PRESETS: PresetPanelAgent[] = ['codex', 'claude', 'opencode', 'copilot', 'gemini'];
+import { PRESET_AGENTS, type PresetAgent } from '../agentChoice';
 
 type Preset = {
 	/** the agent's own program, found on PATH or in the folders under Toolchain */
@@ -19,7 +15,7 @@ type Preset = {
 	args?: string[];
 };
 
-const PRESETS: Record<PresetPanelAgent, Preset> = {
+const PRESETS: Record<PresetAgent, Preset> = {
 	codex: { cli: 'codex', adapter: 'codex-acp.mjs', cliEnv: 'CODEX_PATH' },
 	claude: { cli: 'claude', adapter: 'claude-agent-acp.mjs', cliEnv: 'CLAUDE_CODE_EXECUTABLE' },
 	opencode: { cli: 'opencode', args: ['acp'] },
@@ -40,11 +36,7 @@ export type LaunchContext = {
 	execPath: string;
 };
 
-export function isPanelAgent(v: unknown): v is PanelAgent {
-	return v === 'custom' || PANEL_PRESETS.includes(v as PresetPanelAgent);
-}
-
-export function presetProgram(agent: PresetPanelAgent): string {
+export function presetProgram(agent: PresetAgent): string {
 	return PRESETS[agent].cli;
 }
 
@@ -55,8 +47,8 @@ export function agentLaunch(choice: unknown, custom: unknown, cx: LaunchContext)
 		const program = cx.findProgram(argv[0]);
 		return program ? { ok: true, program, args: argv.slice(1), env: {} } : { ok: false, reason: 'missing', program: argv[0] };
 	}
-	if (!PANEL_PRESETS.includes(choice as PresetPanelAgent)) return { ok: false, reason: 'unset' };
-	const preset = PRESETS[choice as PresetPanelAgent];
+	if (!PRESET_AGENTS.includes(choice as PresetAgent)) return { ok: false, reason: 'unset' };
+	const preset = PRESETS[choice as PresetAgent];
 	const cli = cx.findProgram(preset.cli);
 	if (!cli) return { ok: false, reason: 'missing', program: preset.cli };
 	if (!preset.adapter) return { ok: true, program: cli, args: preset.args ?? [], env: {} };

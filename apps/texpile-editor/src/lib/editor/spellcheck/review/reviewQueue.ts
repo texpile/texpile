@@ -1,5 +1,4 @@
 // When paragraphs go to the model: the ones on screen, once the writer has paused, a few at a time
-import { settings } from '$lib/settings';
 import { observe } from '$lib/runes/observe.svelte';
 import { proofreadBridge } from '$lib/ai/proofread/proofreadBridge';
 import { noteProofreadResult } from '$lib/ai/proofread/proofreadStatus.svelte';
@@ -88,10 +87,9 @@ function nextBatch(pending: Pending[]): Pending[] {
 function sendVisible(): void {
 	timer = null;
 	if (!proofreadOn() || Date.now() < pausedUntil) return;
-	// the agent is one program run at a time
-	const most = settings.current.refineAgents?.[0] === 'service' ? 2 : 1;
+	// the agent is one program, run a request at a time
 	const pending = pendingOnScreen();
-	while (inFlight < most && pending.length) void send(nextBatch(pending));
+	if (inFlight === 0 && pending.length) void send(nextBatch(pending));
 }
 
 const NO_CHANGE: ParagraphReview = { verdicts: new Map(), own: [] };
