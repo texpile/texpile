@@ -1,4 +1,5 @@
 // what Harper reads of a source file: markup blanked, offsets one to one with the source
+import type { Tree } from '@lezer/common';
 import type { SpellLanguage } from '../languages/spellLanguages';
 import { maskMarkdown } from '../languages/markdownMask';
 import { maskTex, type TexMask } from '../texMask';
@@ -10,9 +11,9 @@ export type SpellMarkup = 'plaintext' | 'markdown' | 'typst';
 export type Paragraph = { from: number; text: string };
 
 // Harper parses Typst itself; a dictionary reads no markup, so it gets the word count's prose
-export function sourceProse(src: string, markup: SpellMarkup, spelling: SpellLanguage | null): TexMask {
+export function sourceProse(src: string, markup: SpellMarkup, spelling: SpellLanguage | null, tree?: Tree): TexMask {
 	if (markup === 'typst') return { text: spelling === 'en' ? src : typstProse(src), spans: [] };
-	const tex = maskTex(src);
+	const tex = maskTex(src, markup === 'plaintext' ? tree : undefined);
 	return markup === 'markdown' && spelling !== 'en' ? { text: maskMarkdown(tex.text), spans: tex.spans } : tex;
 }
 

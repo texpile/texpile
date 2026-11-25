@@ -2,13 +2,14 @@
 // offset identical to the source (masked chars become spaces). Ported from upstream harper-tex's
 // Masker (scratch/harper/harper-tex/src/masker.rs), with tighter comment/math/verbatim handling.
 
-import type { SyntaxNode } from '@lezer/common';
+import type { SyntaxNode, Tree } from '@lezer/common';
 import { callAt, rolesOf, type CallArgument, type CommandCall } from '$lib/languages/latex/knowledge/calls/commandCalls';
 import { commonEnvFacts } from '$lib/languages/latex/knowledge/environments/envFacts';
 import { commandTokensOf } from '$lib/languages/latex/syntax/commandTokens';
 import { latexTreeOf } from '$lib/languages/latex/syntax/latexTrees';
 import { environmentName } from '$lib/languages/latex/syntax/treeMode';
 import { codeOnly } from '$lib/languages/latex/texCode';
+import { PRIMITIVE_DEFINERS } from '$lib/languages/latex/userDefinitions';
 
 // alltt is the one body with prose in it
 function hasNonProseBody(env: string): boolean {
@@ -71,7 +72,14 @@ function argumentsEnd(src: string, closes: Int32Array, node: SyntaxNode, at: num
 	}
 }
 
-function markProse(src: string, mark: Mark): void {
+// \def\u{{\bf u}}: the name, parameters and body
+function definitionEnd(node: SyntaxNode): number {
+	let group = node.nextSibling;
+	while (group && group.name !== 'Group' && group.name !== 'ParBreak') group = group.nextSibling;
+	return group?.name === 'Group' ? group.to : node.to;
+}
+
+function markProse(src: string, mark: Mark, tree: Tree = latexTreeOf(src)): void {
 	const code = codeOnly(src);
 	const { closes } = commandTokensOf(src);
 
@@ -120,7 +128,7 @@ function markProse(src: string, mark: Mark): void {
 		markProse(text, (from, to) => mark(body.from + from, body.from + to));
 	}
 
-	latexTreeOf(src).iterate({
+	tree.iterate({
 		enter(node) {
 			const { name } = node;
 			if (name === 'Comment') {
@@ -133,6 +141,8 @@ function markProse(src: string, mark: Mark): void {
 				markVerbatim(node.node);
 				return false;
 			} else if (name === 'Environment') return markEnvironment(node.node);
+			else if (name === 'ControlWord' && PRIMITIVE_DEFINERS.has(src.slice(node.from + 1, node.to)))
+				mark(node.from, definitionEnd(node.node));
 			else if (name === 'ControlWord') {
 				const call = callAt(code, node.from);
 				if (call) markCall(call);
@@ -145,10 +155,11 @@ function markProse(src: string, mark: Mark): void {
 	});
 }
 
-export function maskTex(src: string): TexMask {
+/** `tree`: a reading of `src` that knows the math its own macros open, where the caller has one */
+export function maskTex(src: string, tree?: Tree): TexMask {
 	const n = src.length;
 	const m = new Uint8Array(n);
-	markProse(src, (from, to) => m.fill(1, Math.max(0, from), Math.min(n, to)));
+	markProse(src, (from, to) => m.fill(1, Math.max(0, from), Math.min(n, to)), tree);
 	// indentation is layout, not prose; the newline itself stays visible so harper keeps its sentence/paragraph boundaries
 	for (let nl = src.indexOf('\n'); nl >= 0; nl = src.indexOf('\n', nl + 1)) {
 		if (m[nl]) continue;

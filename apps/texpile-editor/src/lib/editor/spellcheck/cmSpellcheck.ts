@@ -2,7 +2,9 @@
 // the same harper worker + dictionary the visual editor uses, underline with the same
 // proofread-* styles, and open the shared SuggestionBox on click.
 import { Decoration, EditorView, ViewPlugin, type DecorationSet, type ViewUpdate } from '@codemirror/view';
-import { Facet, RangeSetBuilder } from '@codemirror/state';
+import { Facet, RangeSetBuilder, type EditorState } from '@codemirror/state';
+import { syntaxTree } from '@codemirror/language';
+import type { Tree } from '@lezer/common';
 import { onLintRulesChanged } from '$lib/editor/spellcheck/linter';
 import type { SpellLanguage } from '$lib/editor/spellcheck/languages/spellLanguages';
 import { createHarperSuggestionBox, type Problem } from '$lib/editor/spellcheck/suggestionBoxFactory';
@@ -52,6 +54,12 @@ function languageOf(view: EditorView): SpellLanguage | null {
 	return view.state.facet(spelledIn)(docText(view.state.doc));
 }
 
+// the editor's own reading knows the math the file's macros open; the masker reads the file again without it
+function wholeTree(state: EditorState): Tree | undefined {
+	const tree = syntaxTree(state);
+	return tree.length === state.doc.length ? tree : undefined;
+}
+
 class SpellPlugin {
 	decorations: DecorationSet = Decoration.none;
 	shown: DecorationSet = Decoration.none;
@@ -65,6 +73,7 @@ class SpellPlugin {
 	private dirty = false;
 	private maskedFor: string | null = null;
 	private maskedIn: SpellLanguage | null = null;
+	private maskedBy: Tree | undefined;
 	private masked: TexMask | null = null;
 	private stopLanguage: () => void;
 	private stopReview: () => void;
@@ -122,7 +131,7 @@ class SpellPlugin {
 			this.gen++;
 			this.decorations = this.decorations.map(u.changes);
 			this.schedule(DEBOUNCE_MS);
-		}
+		} else if (wholeTree(u.state) && syntaxTree(u.state) !== syntaxTree(u.startState)) this.schedule(DEBOUNCE_MS);
 		if (u.docChanged || liveSuggestionRanges(u.startState) !== liveSuggestionRanges(u.state)) {
 			this.shown = clearOfOldWords(this.decorations, u.state);
 		}
@@ -203,10 +212,12 @@ class SpellPlugin {
 		const markup = this.view.state.facet(spellMarkup);
 		const spelling = this.view.state.facet(spelledIn)(src);
 		// docText returns the same string for an unchanged doc, so this is a reference compare
-		if (this.maskedFor !== src || this.maskedIn !== spelling) {
-			this.masked = sourceProse(src, markup, spelling);
+		const tree = wholeTree(this.view.state);
+		if (this.maskedFor !== src || this.maskedIn !== spelling || this.maskedBy !== tree) {
+			this.masked = sourceProse(src, markup, spelling, tree);
 			this.maskedFor = src;
 			this.maskedIn = spelling;
+			this.maskedBy = tree;
 		}
 		const { text, spans } = this.masked!;
 		const paras = splitParagraphs(text);
