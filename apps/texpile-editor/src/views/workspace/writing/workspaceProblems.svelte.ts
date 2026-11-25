@@ -8,7 +8,10 @@ import { editorConfigStore } from '$lib/stores/editorStore';
 import { problemsOpenFile, setMainFileFromProblems } from '$lib/problems/problemsStore.svelte';
 import { OpenFileProofread } from '$lib/problems/sources/openFileProofread.svelte';
 import { proofreadProblems } from '$lib/problems/sources/proofreadProblems';
-import { refreshMainCandidate, refreshMainDocument } from '$lib/problems/sources/mainDocument.svelte';
+import { mainDocument, refreshMainCandidate, refreshMainDocument } from '$lib/problems/sources/mainDocument.svelte';
+import { ProjectChecks } from '$lib/problems/sources/projectChecks.svelte';
+import { references } from '$lib/workspace/citations';
+import { fileService } from '$lib/files/service/fileService';
 
 /** for as long as the effect root it is called in */
 export function bindProblems(doc: DocumentBuffer, setMain: (file: string) => Promise<void>): void {
@@ -35,6 +38,30 @@ export function bindProblems(doc: DocumentBuffer, setMain: (file: string) => Pro
 		untrack(() => proofread.schedule());
 	});
 	$effect(() => () => proofread.destroy());
+	const project = new ProjectChecks({
+		document: () => mainDocument.current,
+		open: () => problemsOpenFile.current,
+		root: () => workspaceRoot.current,
+		read,
+		knownKeys: () => new Set(references.current.map((r) => r.key))
+	});
+	$effect(() => {
+		void mainDocument.current;
+		void problemsOpenFile.current;
+		void doc.texSource;
+		void references.current;
+		void editorConfigStore.current?.spellcheck;
+		untrack(() => project.schedule());
+	});
+	$effect(() => {
+		const offOperations = fileService.onDidRunOperation(() => project.schedule());
+		const offChanges = fileService.onDidFilesChange(() => project.schedule());
+		return () => {
+			offOperations();
+			offChanges();
+		};
+	});
+	$effect(() => () => project.destroy());
 	$effect(() => {
 		const main = mainFile.current;
 		const root = workspaceRoot.current;

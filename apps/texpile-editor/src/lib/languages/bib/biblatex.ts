@@ -11,6 +11,7 @@ export {
 } from './bibtexRoundtrip';
 export type { ParseBibtexResult } from './bibtexRoundtrip';
 export type { BibToken } from './bibtexParser';
+export { parseBibtexTokens } from './bibtexParser';
 
 // the generated-artifact side: keys and display fields scraped from a .bbl
 export { parseBblEntries } from './bblScan';
