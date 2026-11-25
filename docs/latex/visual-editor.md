@@ -11,7 +11,7 @@ Edit the document as formatted text. Texpile writes the LaTeX, and the parts you
 
 1. **Visual / Source.** Switch at any time. Undo works across the switch.
 2. **Toolbar.** Headings and text style. The arrow at its end shows lists, math, tables and code. The Insert and Format menus have the rest.
-3. **Block handle.** Drag to move the block. **+** adds a block below it.
+3. **Block handle.** Click to select the block and drag to move it. **+** adds a block below it.
 
 Click a citation, a label or any other command to edit it.
 
