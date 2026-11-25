@@ -12,11 +12,11 @@
 		{@const look = PROBLEM_LOOKS[filter]}
 		{@const on = !problemsView.hidden.has(filter)}
 		<button
-			class="chip {on ? 'preset-tonal' : 'preset-outlined-surface-200-800 text-muted'} [--chip-size:var(--text-xs)]"
+			class="chip hover:bg-surface-wash {on ? '' : 'text-muted'} [--chip-size:var(--text-xs)]"
 			aria-pressed={on}
 			onclick={() => problemsView.toggle(filter)}
 		>
-			<look.icon class="size-3.5 {on ? look.ink : ''}" />
+			<look.icon class="text-muted size-3.5" />
 			<span class="cap-center">{look.name()} {problemsView.counts[filter]}</span>
 		</button>
 	{/each}
