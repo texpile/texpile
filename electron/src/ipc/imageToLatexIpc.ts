@@ -10,8 +10,7 @@ const MOST_IMAGE_CHARS = 28_000_000;
 
 const running = new Map<string, AbortController>();
 
-/** strong: a drawing, which the strong model draws */
-type ImageRequest = { id?: unknown; system?: unknown; request?: unknown; mediaType?: unknown; base64?: unknown; strong?: unknown };
+type ImageRequest = { id?: unknown; system?: unknown; request?: unknown; mediaType?: unknown; base64?: unknown };
 
 export function registerImageToLatexIpc(): void {
 	ipcMain.handle('ai:imageToLatex', async (e, req: ImageRequest) => {
@@ -27,8 +26,7 @@ export function registerImageToLatexIpc(): void {
 		e.sender.once('destroyed', stop);
 		try {
 			const signal = AbortSignal.any([abort.signal, AbortSignal.timeout(IMAGE_TIMEOUT_MS)]);
-			const task = req.strong === true ? 'convertStrong' : 'convertFast';
-			return await askAi(task, readSettings(), { system, request, images: [{ mediaType: mediaType as string, base64 }] }, signal);
+			return await askAi('convert', readSettings(), { system, request, images: [{ mediaType: mediaType as string, base64 }] }, signal);
 		} finally {
 			running.delete(id);
 			e.sender.removeListener('destroyed', stop);

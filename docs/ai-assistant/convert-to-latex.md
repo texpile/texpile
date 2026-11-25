@@ -17,4 +17,4 @@ The dialog shows the picture. Drag over it to convert part of it, then click **C
 
 The result shows drawn above its source. An equation is drawn as it will look, and a diagram is drawn by your own `lualatex` (TikZ) or `tinymist` (CeTZ). A diagram that fails to compile goes back to the agent once with the error, and the fixed version is shown. **Insert** puts the source in your file, and adds `\usepackage{tikz}` or `amsmath` when the document needs it.
 
-An equation goes to the fast model under [Models](README.md#models) and a diagram to the strong one. What is sent is in [Privacy](../reference/privacy.md).
+It uses the model picked for **Convert pictures** under [Models](README.md#models). What is sent is in [Privacy](../reference/privacy.md).

@@ -7,8 +7,8 @@ export type PresetAgent = Exclude<AiAgent, 'custom'>;
 export const PRESET_AGENTS: PresetAgent[] = ['claude', 'codex', 'opencode', 'gemini', 'copilot'];
 export const AI_AGENTS: AiAgent[] = [...PRESET_AGENTS, 'custom'];
 
-/** Convert to LaTeX asks the fast model of an equation and the strong one of a drawing; chat is the Agent tab's start */
-export type ModelTask = 'proofread' | 'refine' | 'convertFast' | 'convertStrong' | 'chat';
+/** chat is the Agent tab's starting model */
+export type ModelTask = 'proofread' | 'refine' | 'convert' | 'chat';
 
 export const INSTALL_PAGES: Record<PresetAgent, string> = {
 	claude: 'https://code.claude.com/docs/en/setup',

@@ -1,8 +1,8 @@
 // One picture being turned into source: the part picked, the request and its one retry, the preview, and the insert
 import { m } from '$lib/paraglide/messages';
-import { agentName, agentOffered, modelOf } from '$lib/ai/agent/aiAgent.svelte';
+import { agentName, agentOffered } from '$lib/ai/agent/aiAgent.svelte';
 import { imageToLatexBridge } from './imageToLatexBridge';
-import { handedOn, imageAnswerSource, imageFastRequest, imageRequest, imageRetryRequest, imageSystem } from './imagePrompt';
+import { imageAnswerSource, imageRequest, imageRetryRequest, imageSystem } from './imagePrompt';
 import { pictureBitmap, pictureForService, wantsRegion, type PictureRegion } from './pictureBytes';
 import { answerPreview, type AnswerPreview } from './answerPreview';
 import type { ImageToLatexRequest, ImageToLatexTarget } from './imageToLatexRequest';
@@ -62,25 +62,18 @@ export class ImageToLatexJob {
 		this.preview = null;
 		const { dialect } = this.target;
 		const image = await pictureForService(this.bitmap, this.region);
-		function ask(request: string, strong: boolean) {
-			return bridge!.imageToLatex({ id, system: imageSystem(dialect), request, ...image, strong });
+		function ask(request: string) {
+			return bridge!.imageToLatex({ id, system: imageSystem(dialect), request, ...image });
 		}
-		// the fast model reads an equation and hands a drawing on to the strong one, where the two differ
-		const agent = this.chosen;
-		const twoModels = !!agent && dialect !== 'markdown' && modelOf(agent, 'convertFast') !== modelOf(agent, 'convertStrong');
-		let first = await ask(twoModels ? imageFastRequest(dialect) : imageRequest(dialect), false);
+		const first = await ask(imageRequest(dialect));
 		if (this.running !== id) return;
-		if (first.ok && twoModels && handedOn(first.text)) {
-			first = await ask(imageRequest(dialect), true);
-			if (this.running !== id) return;
-		}
 		if (!first.ok) return this.fail(first);
 		this.source = imageAnswerSource(first.text);
 		let preview = await answerPreview(this.source, dialect, await this.target.place());
 		if (this.running !== id) return;
 		if (preview.kind === 'drawing-error' && preview.fixable) {
 			this.phase = 'fixing';
-			const second = await ask(imageRetryRequest(dialect, this.source, preview.error), twoModels);
+			const second = await ask(imageRetryRequest(dialect, this.source, preview.error));
 			if (this.running !== id) return;
 			if (second.ok) {
 				this.source = imageAnswerSource(second.text);

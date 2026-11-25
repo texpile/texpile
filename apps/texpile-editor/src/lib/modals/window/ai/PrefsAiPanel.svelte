@@ -1,15 +1,17 @@
 <script lang="ts">
-	// Preferences › AI agent: AI on or off, the one agent every AI feature uses, its models, and where it is used
+	// Preferences › AI agent: AI on or off, the one agent every AI feature uses, and its models
 	import { settings } from '$lib/settings';
 	import { agentOffered, lookUpAgents } from '$lib/ai/agent/aiAgent.svelte';
 	import { setAiOff } from '$lib/ai/aiSwitch';
+	import { openPreferencesAt } from '$lib/stores/dialogStore';
 	import PrefsHeading from '../rows/PrefsHeading.svelte';
 	import PrefsRow from '../rows/PrefsRow.svelte';
 	import PrefsSwitchRow from '../rows/PrefsSwitchRow.svelte';
-	import AiAgentChoices from './AiAgentChoices.svelte';
+	import AiAgentPicker from './AiAgentPicker.svelte';
 	import AiAgentStatusLine from './AiAgentStatusLine.svelte';
+	import AiAgentCommandField from './AiAgentCommandField.svelte';
 	import AgentModelRows from './AgentModelRows.svelte';
-	import AiUsesRows from './AiUsesRows.svelte';
+	import McpServerRows from './McpServerRows.svelte';
 	import { mcpStatus } from './mcpStatus.svelte';
 	import { m } from '$lib/paraglide/messages';
 
@@ -28,17 +30,21 @@
 
 <!-- what the switch turns off stays in sight, as it was picked, for when it is turned back on -->
 <div class:opacity-50={off} inert={off}>
-	<PrefsHeading section="aiAgent" />
-	<PrefsRow id="ai-agent" layout="block">
-		<AiAgentChoices />
+	<PrefsRow id="ai-agent">
+		{#snippet below()}
+			<AiAgentStatusLine />
+			{#if settings.current.agent === 'custom'}<AiAgentCommandField />{/if}
+		{/snippet}
+		<AiAgentPicker />
 	</PrefsRow>
-	<AiAgentStatusLine />
 
 	{#if agent}
 		<PrefsHeading section="aiModels" />
 		<AgentModelRows {agent} />
 	{/if}
 
-	<PrefsHeading section="aiUses" />
-	<AiUsesRows />
+	<PrefsRow id="ai-use-proofread">
+		<button class="btn btn-sm preset-tonal" onclick={() => openPreferencesAt('proofing')}>{m.prefs_ai_use_open()}</button>
+	</PrefsRow>
+	<McpServerRows />
 </div>

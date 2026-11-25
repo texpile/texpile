@@ -563,8 +563,7 @@ contextBridge.exposeInMainWorld('texpileProofread', {
 
 // a picture turned into LaTeX or Typst by the agent picked in Preferences
 contextBridge.exposeInMainWorld('texpileAi', {
-	/** strong: a drawing, for the strong model */
-	imageToLatex: (req: { id: string; system: string; request: string; mediaType: string; base64: string; strong: boolean }) =>
+	imageToLatex: (req: { id: string; system: string; request: string; mediaType: string; base64: string }) =>
 		invokeReady('ai:imageToLatex', req),
 	cancel: (id: string) => ipcRenderer.send('ai:cancel', id)
 });

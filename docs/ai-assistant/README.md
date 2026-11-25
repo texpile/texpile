@@ -13,7 +13,7 @@ Texpile includes no AI. It works with an agent you install and sign in to yourse
 
 ## Set up an agent
 
-Install the agent and sign in outside Texpile, then pick it in `Preferences › AI agent`. The Agent tab, Refine, [Proofread with AI](../spell-check.md#proofread-with-ai) and Convert to LaTeX all use the one agent picked there. **Test agent** below the list sends it a short request and shows how long it took to answer.
+Install the agent and sign in outside Texpile, then pick it from the **Agent** menu in `Preferences › AI agent`. The Agent tab, Refine, [Proofread with AI](../spell-check.md#proofread-with-ai) and Convert to LaTeX all use the one agent picked there. **Test agent**, under the menu, sends it a short request and shows how long it took to answer.
 
 | Agent       | Sign in from a terminal | Plan                                               |
 | ----------- | ----------------------- | -------------------------------------------------- |
@@ -23,22 +23,22 @@ Install the agent and sign in outside Texpile, then pick it in `Preferences › 
 | Gemini      | Run `gemini`            | Google account                                     |
 | Copilot     | Run `copilot`           | GitHub Copilot plan                                |
 
-**Custom** runs any command that speaks the Agent Client Protocol, such as `goose acp`.
+**Custom command** runs any command that speaks the Agent Client Protocol, such as `goose acp`. Type the command in the box under the menu.
 
 The agent keeps running while you write and closes after 15 minutes idle. For Refine, Proofread with AI and Convert to LaTeX its tools are turned off, and it answers from the text Texpile sends.
 
-If an agent shows **Not found**, click **Install**, or add its folder in `Preferences › Programs & Compiler › Other folders` and reopen Preferences.
+The menu lists the agents Texpile finds. Each agent it does not find has an **Install** item at the end of the menu, which opens that agent's install page. If the agent is installed in a folder Texpile does not search, add that folder in `Preferences › Programs & Compiler › Other folders` and reopen Preferences.
 
 ## Models
 
 **Models** picks the model the agent runs for each task. The list comes from the agent picked above. **Agent default** uses the agent's own choice.
 
-| Task             | Default for Claude Code | Used for                                                    |
-| ---------------- | ----------------------- | ----------------------------------------------------------- |
-| Proofread        | Haiku                   | Proofread with AI, which runs often                         |
-| Refine           | Sonnet                  | Refine                                                      |
-| Convert to LaTeX | Haiku and Opus          | Equations use the first model. Diagrams use the second one. |
-| Agent tab        | Agent default           | The starting model of a new chat. Each chat can change it.  |
+| Task             | Default for Claude Code | Used for                                                                 |
+| ---------------- | ----------------------- | ------------------------------------------------------------------------ |
+| Proofread        | Haiku                   | Proofread with AI, which runs often                                      |
+| Refine           | Sonnet                  | Refine                                                                   |
+| Convert pictures | Opus                    | Convert to LaTeX and Paste as LaTeX. A strong model draws diagrams best. |
+| Agent tab        | Agent default           | The starting model of a new chat. Each chat can change it.               |
 
 ## Turn off AI
 

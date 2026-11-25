@@ -22,9 +22,7 @@ const SECTIONS = {
 	spellAll: () => m.prefs_spell_all_folders(),
 	git: () => m.prefs_group_git(),
 	localHistory: () => m.prefs_group_local_history(),
-	aiAgent: () => m.prefs_group_ai_agent(),
-	aiModels: () => m.prefs_group_ai_models(),
-	aiUses: () => m.prefs_group_ai_uses()
+	aiModels: () => m.prefs_group_ai_models()
 } satisfies Record<string, () => string>;
 
 export type PrefsSectionId = keyof typeof SECTIONS;
@@ -274,7 +272,7 @@ const STATIC_ROWS = [
 	{ id: 'check-updates', tab: 'startup', label: () => m.prefs_check_updates() },
 
 	{ id: 'ai-on', tab: 'ai', label: () => m.prefs_ai_on(), note: () => m.prefs_ai_on_note() },
-	{ id: 'ai-agent', tab: 'ai', section: 'aiAgent', label: () => m.prefs_ai_agent(), note: () => m.prefs_ai_agent_note() },
+	{ id: 'ai-agent', tab: 'ai', label: () => m.prefs_ai_agent() },
 	{
 		id: 'ai-model-proofread',
 		tab: 'ai',
@@ -307,22 +305,8 @@ const STATIC_ROWS = [
 		note: () => m.prefs_ai_model_chat_note(),
 		shown: aiModelsShown
 	},
-	{
-		id: 'ai-use-proofread',
-		tab: 'ai',
-		section: 'aiUses',
-		label: () => m.prefs_proofread_ai(),
-		note: () => m.prefs_ai_use_proofread_note()
-	},
-	{ id: 'ai-use-refine', tab: 'ai', section: 'aiUses', label: () => m.prefs_ai_use_refine(), note: () => m.prefs_ai_use_refine_note() },
-	{
-		id: 'ai-use-document',
-		tab: 'ai',
-		section: 'aiUses',
-		label: () => m.prefs_ai_use_document(),
-		note: () => m.prefs_ai_use_document_note()
-	},
-	{ id: 'mcp', tab: 'ai', section: 'aiUses', label: () => m.prefs_mcp(), note: () => m.prefs_mcp_note() }
+	{ id: 'ai-use-proofread', tab: 'ai', label: () => m.prefs_proofread_ai(), note: () => m.prefs_ai_use_proofread_note() },
+	{ id: 'mcp', tab: 'ai', label: () => m.prefs_mcp(), note: () => m.prefs_mcp_note() }
 ] as const satisfies readonly PrefsRowDef[];
 
 export type PrefsRowId = (typeof STATIC_ROWS)[number]['id'] | `latex-check-${LatexCheckId}` | `folder-check-${LatexCheckId}`;
