@@ -4,7 +4,8 @@ import { citeCallFace } from './citeCallFace';
 import { citeGroupsOf } from './citeGroups';
 import { nociteFace } from './nociteFace';
 import { citationDocument } from './document';
-import { CitationView } from './node/citationView.svelte';
+import { citationView } from './citationView';
+import { citationKeys } from './citationForm';
 
 function drawsAsCitation(name: string): boolean {
 	return citationFaceCommands().has(name) || citeFormOf(name) === 'nocite';
@@ -34,5 +35,6 @@ export const citation: LatexPlugin = {
 		return undefined;
 	},
 	document: citationDocument,
-	views: () => ({ citation: (node, view, getPos) => new CitationView(node, view, getPos as () => number) })
+	canvasViews: () => ({ nodeViews: { citation: citationView } }),
+	editorPlugins: { atStart: citationKeys }
 };

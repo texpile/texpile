@@ -2,6 +2,8 @@
 
 import { Plugin, PluginKey, EditorState } from 'prosemirror-state';
 import { Decoration, DecorationSet, EditorView } from 'prosemirror-view';
+import type { DecorationLook } from '$lib/editor/canvas';
+import { triggerBefore } from './triggerBefore';
 
 export type TexpileSuggester = {
 	/** The trigger character (e.g., '@') */
@@ -18,6 +20,9 @@ export type TexpileSuggester = {
 
 	/** CSS class to apply to active suggestions */
 	suggestClassName?: string;
+
+	/** the same on the canvas */
+	suggestLook?: DecorationLook;
 
 	/** Called when suggestion becomes active or changes */
 	onChange?: (params: {
@@ -53,35 +58,15 @@ function findSuggestion(state: EditorState, suggester: TexpileSuggester): Sugges
 
 	if ($pos.parent.type.name !== 'paragraph') return null;
 
-	// search from the start of the parent block, not $pos.before(), so text after inline atoms is captured
-	const searchStart = $pos.start();
-
-	let triggerPos = -1;
-	let queryText = '';
-
-	for (let pos = cursorPos - 1; pos >= searchStart; pos--) {
-		const char = state.doc.textBetween(pos, pos + 1, '\n', '');
-
-		// empty string means an atom node, keep going
-		if (char === '') continue;
-
-		if (char === suggester.char) {
-			triggerPos = pos;
-			queryText = state.doc.textBetween(pos + 1, cursorPos, '\n', '');
-			break;
-		}
-
-		const supportedChars = suggester.supportedCharacters || /[a-zA-Z0-9\s_]/;
-		if (!supportedChars.test(char)) {
-			break;
-		}
-	}
-
-	if (triggerPos === -1) return null;
+	const supportedChars = suggester.supportedCharacters || /[a-zA-Z0-9\s_]/;
+	// from the start of the parent block, so text after inline atoms is captured
+	const trigger = triggerBefore($pos.parent, $pos.parentOffset, suggester.char, supportedChars);
+	if (!trigger) return null;
+	const triggerPos = $pos.start() + trigger.at;
+	const queryText = trigger.query;
 
 	// single-char class, no quantifier: the template below adds the `*` (a starred default here
 	// produced `**`, an invalid regexp, for any suggester that omitted supportedCharacters)
-	const supportedChars = suggester.supportedCharacters || /[a-zA-Z0-9\s_]/;
 	const match = queryText.match(new RegExp(`^(${supportedChars.source}*)$`));
 
 	if (!match) return null;
@@ -105,9 +90,14 @@ function createDecorations(state: EditorState, match: SuggestMatch | null): Deco
 		return DecorationSet.empty;
 	}
 
-	const decoration = Decoration.inline(match.from, match.to, {
-		class: match.suggester.suggestClassName
-	});
+	const decoration = Decoration.inline(
+		match.from,
+		match.to,
+		{
+			class: match.suggester.suggestClassName
+		},
+		match.suggester.suggestLook ? { canvasLook: match.suggester.suggestLook } : undefined
+	);
 
 	return DecorationSet.create(state.doc, [decoration]);
 }

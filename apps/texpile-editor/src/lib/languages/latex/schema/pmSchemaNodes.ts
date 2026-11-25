@@ -10,6 +10,7 @@ export const coreNodes: Record<string, NodeSpec> = {
 	environment: {
 		content: 'block+',
 		group: 'block',
+		paragraphSpacing: 'body',
 		definingAsContext: true,
 		allowGapCursor: true,
 		attrs: {

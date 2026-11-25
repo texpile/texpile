@@ -157,7 +157,6 @@ function build(doc: PMNode, ranges: PmCommentRange[], focused: string | null, pe
 				from: r.from,
 				to: r.to,
 				tint: threadTint(focus),
-				key: `thread-${r.id}`,
 				reach: 'text',
 				mirrored: true,
 				whole: r.node,
@@ -174,7 +173,6 @@ function build(doc: PMNode, ranges: PmCommentRange[], focused: string | null, pe
 				from: pending.from,
 				to: pending.to,
 				tint: 'var(--editor-selection)',
-				key: 'composer',
 				reach: 'line',
 				class: 'pm-comment-pending'
 			})

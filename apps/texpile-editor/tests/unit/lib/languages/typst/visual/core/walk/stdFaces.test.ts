@@ -3,6 +3,7 @@
 // a call that prints nothing as a quiet line, a label, an include and a code block of expressions; each from the data of
 // the call's name, never from a list of names
 import { describe, it, expect } from 'vitest';
+import { domOf } from '$lib/editor/visual/extensions/drawnChips/chipFace';
 import { typstFace } from '$lib/languages/typst/visual/core/walk/typstFace';
 import { typstScopeNow } from '$lib/languages/typst/visual/core/scope/fileScopeNow.svelte';
 
@@ -11,7 +12,7 @@ typstScopeNow.current = null;
 function drawn(chip: string): HTMLElement {
 	const face = typstFace(chip);
 	if (!face) throw new Error(`not drawn: ${chip}`);
-	return face.dom;
+	return domOf(face);
 }
 
 describe('elements that wrap content', () => {

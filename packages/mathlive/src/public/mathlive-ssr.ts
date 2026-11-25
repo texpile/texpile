@@ -41,6 +41,7 @@ import { atomToTypst } from '../typst/write';
 import { asTypstAlignments } from '../typst/alignments';
 import { mathCommands } from '../addons/math-commands';
 import { applyInterBoxSpacing } from '../core/inter-box-spacing';
+import { layoutBox } from '../core/box-layout';
 import { LayoutOptions } from './options';
 import { ContextInterface } from 'core/types';
 import {
@@ -116,17 +117,38 @@ export function convertTypstToMarkup(
   return renderToMarkup(() => readTypst(text).atoms, options);
 }
 
+type FormulaParse = (
+  context: Context,
+  parseMode: ParseMode,
+  mathstyle: 'displaystyle' | 'textstyle'
+) => Atom[];
+
 function renderToMarkup(
-  parse: (
-    context: Context,
-    parseMode: ParseMode,
-    mathstyle: 'displaystyle' | 'textstyle'
-  ) => Atom[],
+  parse: FormulaParse,
   options?: Partial<LayoutOptions>
 ): string {
+  return renderToStruts(parse, options)?.toMarkup() ?? '';
+}
+
+/** steps 1 to 4 of a static render: the atoms, their boxes, the inter-box spacing and the struts */
+function renderToStruts(
+  parse: FormulaParse,
+  options?: Partial<LayoutOptions> & {
+    colorMap?: (name: string) => string | undefined;
+  }
+): Box | null {
+  const defaults = getDefaultContext();
+  const colorMap = options?.colorMap;
   const from: ContextInterface = {
-    ...getDefaultContext(),
+    ...defaults,
     renderPlaceholder: () => new Box(0xa0, { maxFontSize: 1.0 }),
+    ...(colorMap
+      ? {
+          colorMap: (name: string) => colorMap(name) ?? defaults.colorMap(name),
+          backgroundColorMap: (name: string) =>
+            colorMap(name) ?? defaults.backgroundColorMap(name),
+        }
+      : {}),
   };
   if (options?.letterShapeStyle && options?.letterShapeStyle !== 'auto')
     from.letterShapeStyle = options.letterShapeStyle;
@@ -147,7 +169,8 @@ function renderToMarkup(
     mathstyle = 'textstyle';
     parseMode = 'text';
   }
-  const effectiveContext = new Context({ from });
+  // Texpile: the render takes the mathstyle too, as the field's own render does, so inline-math sets text style
+  const effectiveContext = new Context({ from, mathstyle });
 
   //
   // 1. Parse the formula and return a tree of atoms, e.g. 'genfrac'.
@@ -164,7 +187,7 @@ function renderToMarkup(
   //
   const box = root.render(effectiveContext);
 
-  if (!box) return '';
+  if (!box) return null;
 
   //
   // 3. Simplify by coalescing adjacent boxes
@@ -176,13 +199,162 @@ function renderToMarkup(
   //
   // 4. Wrap the expression with struts
   //
-  const struts = makeStruts(box, { classes: 'ML__latex' });
+  return makeStruts(box, { classes: 'ML__latex' });
+}
 
-  //
-  // 5. Generate markup
-  //
+/** em units, from the formula's left edge and baseline, y down */
+export type MathRect = { x: number; y: number; width: number; height: number };
 
-  return struts.toMarkup();
+/** `current` is the color of the text the formula stands in; a role is resolved by the app's mode */
+export type MathColor =
+  | 'current'
+  | { css: string }
+  | {
+      role:
+        | 'placeholder'
+        | 'latex'
+        | 'smartFence'
+        | 'selection'
+        | 'macro'
+        | 'error'
+        | 'containsHighlight';
+    };
+
+/** `font` is a canvas font string whose size is in em */
+export type MathPaintItem =
+  | {
+      kind: 'glyphs';
+      x: number;
+      y: number;
+      text: string;
+      font: string;
+      color: MathColor;
+      opacity: number;
+    }
+  | {
+      kind: 'rule';
+      x: number;
+      y: number;
+      w: number;
+      h: number;
+      color: MathColor;
+    }
+  | {
+      kind: 'path';
+      d: string;
+      viewBox: [number, number, number, number];
+      box: MathRect;
+      aspect: string;
+      fill?: MathColor;
+      stroke?: MathColor;
+      /** in the viewBox's units */
+      strokeWidth?: number;
+      dash?: number[];
+    }
+  | {
+      kind: 'fill';
+      rect: MathRect;
+      color: MathColor;
+      radius?: MathRadius;
+    }
+  | {
+      kind: 'frame';
+      rect: MathRect;
+      widths: [number, number, number, number];
+      color: MathColor;
+      dash?: number[];
+      radius?: MathRadius;
+    };
+
+/** em, or the horizontal and vertical radius of an elliptical corner */
+export type MathRadius = number | [number, number];
+
+/** a formula laid out for a canvas: sizes in em, what to paint in paint order */
+export type MathLayout = {
+  width: number;
+  ascent: number;
+  descent: number;
+  items: readonly MathPaintItem[];
+  /** atom id -> rect, editing renders only */
+  atoms: ReadonlyMap<string, MathRect>;
+  /** atom id -> the left edges, em, of its offsetParent chain in the markup and its own: MathLive measured vertical
+   * moves in whole px per link (editing renders only) */
+  atomOffsets?: ReadonlyMap<string, readonly number[]>;
+  caret?: {
+    x: number;
+    top: number;
+    bottom: number;
+    /** the baseline and the em of the box the caret follows */
+    baseline: number;
+    em: number;
+    kind: 'math' | 'text' | 'latex';
+  };
+  selection: readonly MathRect[];
+  macroCalls: readonly {
+    rect: MathRect;
+    latex: string;
+    command: string;
+    selected: boolean;
+  }[];
+  /** display rows, for per-row equation numbers */
+  rows: readonly { baseline: number }[];
+};
+
+/**
+ * How a static formula is laid out for a canvas: the document's options, the width of a run of text the KaTeX
+ * metrics do not cover (`measure`, in px, for a canvas font string), the font of the text around it and a color
+ * map applied before MathLive's own.
+ *
+ * @category Conversion
+ */
+export type MathLayoutOptions = Partial<LayoutOptions> & {
+  measure: (font: string, text: string) => number;
+  /** the font families of the text around the formula, which `\text` takes */
+  family: string;
+  colorMap?: (name: string) => string | undefined;
+};
+
+/**
+ * Lay a LaTeX formula out for a canvas, as `convertLatexToMarkup()` and `mathlive-static.css` lay it out in a page.
+ * Null when there is nothing to draw.
+ *
+ * @category Conversion
+ */
+export function layoutLatex(
+  text: string,
+  options: MathLayoutOptions
+): MathLayout | null {
+  const struts = renderToStruts(
+    (context, parseMode, mathstyle) =>
+      parseLatex(text, { context, parseMode, mathstyle }),
+    options
+  );
+  return struts
+    ? layoutBox(struts, {
+        measure: options.measure,
+        family: options.family,
+        editing: false,
+      })
+    : null;
+}
+
+/**
+ * Lay Typst math out for a canvas, as `layoutLatex()` does for LaTeX. Requires `configureTypst()`.
+ *
+ * @category Conversion
+ */
+export function layoutTypst(
+  text: string,
+  options: MathLayoutOptions
+): MathLayout | null {
+  const struts = renderToStruts(() => readTypst(text).atoms, options);
+  return struts
+    ? layoutBox(struts, {
+        measure: options.measure,
+        family: options.family,
+        editing: false,
+      })
+    : null;
 }
 
 export { configureTypst } from '../typst/syntax';

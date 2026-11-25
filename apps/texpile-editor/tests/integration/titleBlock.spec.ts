@@ -42,7 +42,7 @@ test('Author on an empty line opens its panel for the name, and Title on a line 
 	await v.caretAtEndOf('A Paper');
 	await style.click();
 	await page.getByRole('menuitemradio', { name: 'Title', exact: true }).click();
-	await expect(page.locator('.ProseMirror')).toBeFocused();
+	await expect.poll(() => v.evalView<boolean>('return view.hasFocus();')).toBe(true);
 	await v.type('Z');
 	await v.caretAfter('ZFirst words.');
 	await v.press('Enter');

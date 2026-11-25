@@ -11,6 +11,7 @@ describe('a table in a chip', () => {
 			'{\\renewcommand{\\arraystretch}{1.1}\\begin{tabular}{lll}\\multicolumn{2}{c}{Audio} & B\\\\\n\\end{tabular}}',
 			false
 		);
-		expect(spanned?.dom.querySelector<HTMLElement>('.drawn-tabular-cell')?.style.gridArea).toBe('1 / 1 / auto / span 2');
+		const cell = spanned?.dom.querySelector('.drawn-tabular-cell')?.style;
+		expect([cell?.gridRow, cell?.gridColumn]).toEqual(['1', '1 / span 2']);
 	});
 });

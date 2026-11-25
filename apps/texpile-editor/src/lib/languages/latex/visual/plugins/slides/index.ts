@@ -1,9 +1,8 @@
+import { slideViews } from './canvas/slideViews';
 import { hasArgs, type LatexPlugin } from '$lib/languages/latex/visual/core';
 import { pauseFace } from './pauseFace';
 import { titlePageFace } from './titlePageFace.svelte';
 import { slidesDocument } from './document';
-import { columnView } from './columnView';
-import { frameView } from './frame/frameView.svelte';
 import { slidePlugins } from './slidePlugin';
 import { slideInserts } from './insert/slideInsert';
 import { slideArguments } from './insert/slideArguments';
@@ -15,7 +14,7 @@ export const slides: LatexPlugin = {
 		return part.name === 'pause' ? pauseFace(core.source) : titlePageFace(core.source);
 	},
 	document: slidesDocument,
-	views: () => ({ frame: frameView, column: columnView }),
+	canvasViews: slideViews,
 	editorPlugins: { atStart: slidePlugins },
 	insert: slideInserts,
 	arguments: slideArguments

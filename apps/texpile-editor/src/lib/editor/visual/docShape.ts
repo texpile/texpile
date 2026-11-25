@@ -24,7 +24,11 @@ export type VisualFormat = 'tex' | 'md' | 'typ';
 
 type Cell = { ch: string; marks: string[] };
 
-export function visibleLines(doc: PMNode, format: VisualFormat): string[] {
+// the editor's document is checked against each save's reading, and its blocks stay the same nodes from save to save
+const blockLines = new WeakMap<PMNode, Map<VisualFormat, string[]>>();
+
+/** `twin`: a document whose equal top-level blocks read the same, so their lines are read once */
+export function visibleLines(doc: PMNode, format: VisualFormat, twin?: PMNode): string[] {
 	const lines: string[] = [];
 	function cellsOf(node: PMNode): Cell[] {
 		const plain = format === 'md' && node.type.name === 'image';
@@ -147,43 +151,55 @@ export function visibleLines(doc: PMNode, format: VisualFormat): string[] {
 	}
 	function walkBlocks(node: PMNode, path: string) {
 		node.forEach((child, _offset, index) => {
-			const name = child.type.name;
-			if (format === 'typ' && typstDisplay(child, path)) return;
-			if (node.type.name === 'list' && index > 0 && child.isTextblock) {
-				const cells = cellsOf(child).map((c) => ({ ...c, marks: c.marks.filter((m) => m !== 'item_label') }));
-				push(path, name, render(cells));
-				return;
-			}
-			if (child.type.spec.code) {
-				push(path, name, child.textContent.replace(/\s+/g, ' ').trim());
-			} else if (format === 'md' && name === 'image') {
-				push(
-					path,
-					'paragraph',
-					`‹inline_latex:${formatImage(String(child.attrs.alt ?? ''), String(child.attrs.src ?? ''), render(cellsOf(child)))}›`
-				);
-			} else if (format === 'typ' && name === 'image' && child.attrs.showCaption === false) {
-				lines.push(`${path}${name}`);
-			} else if (format === 'md' && /^table_(cell|header)$/.test(name)) {
-				const cells: Cell[] = [];
-				child.forEach((p) => {
-					const own = cellsOf(p);
-					if (!own.some((c) => c.ch !== ' ' && c.ch !== '⏎')) return;
-					if (cells.length) cells.push({ ch: '⏎', marks: [] });
-					cells.push(...own);
-				});
-				push(`${path}${name}>`, 'paragraph', render(cells));
-			} else if (child.isTextblock) {
-				// a label is one only at the head of an item: one Shift+Tab took out of its list reads as its bold
-				const cells = cellsOf(child);
-				const shown = node.type.name === 'list' ? cells : cells.map((c) => ({ ...c, marks: c.marks.filter((m) => m !== 'item_label') }));
-				push(path, `${name}${child.attrs.level ?? ''}`, render(shown));
-			} else if (child.isLeaf || child.isAtom) {
-				lines.push(`${path}${name}`);
-			} else {
-				walkBlocks(child, `${path}${name}>`);
-			}
+			if (node !== doc) return walkChild(node, child, index, path);
+			const paired = twin && twin.childCount === doc.childCount ? twin.child(index) : null;
+			const block = paired && paired !== child && paired.eq(child) ? paired : child;
+			const kept = blockLines.get(block)?.get(format);
+			if (kept) return void lines.push(...kept);
+			const start = lines.length;
+			walkChild(node, block, index, path);
+			const byFormat = blockLines.get(block) ?? new Map<VisualFormat, string[]>();
+			byFormat.set(format, lines.slice(start));
+			blockLines.set(block, byFormat);
 		});
+	}
+	function walkChild(node: PMNode, child: PMNode, index: number, path: string): void {
+		const name = child.type.name;
+		if (format === 'typ' && typstDisplay(child, path)) return;
+		if (node.type.name === 'list' && index > 0 && child.isTextblock) {
+			const cells = cellsOf(child).map((c) => ({ ...c, marks: c.marks.filter((m) => m !== 'item_label') }));
+			push(path, name, render(cells));
+			return;
+		}
+		if (child.type.spec.code) {
+			push(path, name, child.textContent.replace(/\s+/g, ' ').trim());
+		} else if (format === 'md' && name === 'image') {
+			push(
+				path,
+				'paragraph',
+				`‹inline_latex:${formatImage(String(child.attrs.alt ?? ''), String(child.attrs.src ?? ''), render(cellsOf(child)))}›`
+			);
+		} else if (format === 'typ' && name === 'image' && child.attrs.showCaption === false) {
+			lines.push(`${path}${name}`);
+		} else if (format === 'md' && /^table_(cell|header)$/.test(name)) {
+			const cells: Cell[] = [];
+			child.forEach((p) => {
+				const own = cellsOf(p);
+				if (!own.some((c) => c.ch !== ' ' && c.ch !== '⏎')) return;
+				if (cells.length) cells.push({ ch: '⏎', marks: [] });
+				cells.push(...own);
+			});
+			push(`${path}${name}>`, 'paragraph', render(cells));
+		} else if (child.isTextblock) {
+			// a label is one only at the head of an item: one Shift+Tab took out of its list reads as its bold
+			const cells = cellsOf(child);
+			const shown = node.type.name === 'list' ? cells : cells.map((c) => ({ ...c, marks: c.marks.filter((m) => m !== 'item_label') }));
+			push(path, `${name}${child.attrs.level ?? ''}`, render(shown));
+		} else if (child.isLeaf || child.isAtom) {
+			lines.push(`${path}${name}`);
+		} else {
+			walkBlocks(child, `${path}${name}>`);
+		}
 	}
 	walkBlocks(doc, '');
 	const raw = /^(.*?)raw_latex: (.*)$/;
@@ -227,7 +243,8 @@ export function differingBlocks(doc: PMNode, again: PMNode, format: VisualFormat
 
 export function reopenDifference(doc: PMNode, again: PMNode, format: VisualFormat): string | null {
 	const want = visibleLines(doc, format).map((l) => printedLine(l, format));
-	const got = visibleLines(again, format).map((l) => printedLine(l, format));
+	// a save reads back every block it did not touch as it was, and those blocks' lines are the editor's own
+	const got = visibleLines(again, format, doc).map((l) => printedLine(l, format));
 	const ww = want.map(wordsOfLine).join('');
 	const gw = got.map(wordsOfLine).join('');
 	if (ww !== gw) {

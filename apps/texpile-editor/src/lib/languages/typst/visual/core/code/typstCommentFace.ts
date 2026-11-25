@@ -1,6 +1,6 @@
 // a Typst chip made only of comments (// lines, /* blocks */, nested ones included) drawn folded like a LaTeX % comment
 import type { ChipFace } from '$lib/editor/visual/extensions/drawnChips/chipFace';
-import { commentFace } from '$lib/editor/visual/extensions/drawnChips/commentFace';
+import { commentFace } from '$lib/editor/visual/extensions/drawnChips/comment/commentFace';
 
 /** the index just past the block comment opened at `from`, or -1 when it never closes */
 function blockEnd(source: string, from: number): number {

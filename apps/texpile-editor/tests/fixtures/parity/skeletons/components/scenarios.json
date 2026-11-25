@@ -1,0 +1,887 @@
+[
+ {
+  "id": "frame-chrome-command-form-hover",
+  "document": "parity-tex-beamer:main.tex",
+  "action": "hover",
+  "opened": true,
+  "components": [
+   "FrameChrome"
+  ]
+ },
+ {
+  "id": "frame-chrome-title-slide-hover",
+  "document": "parity-tex-beamer:main.tex",
+  "action": "hover",
+  "opened": true,
+  "components": [
+   "FrameChrome"
+  ]
+ },
+ {
+  "id": "frame-chrome-complete-rest",
+  "document": "parity-tex-beamer:main.tex",
+  "action": "none",
+  "opened": true,
+  "components": [
+   "FrameChrome"
+  ]
+ },
+ {
+  "id": "frame-chrome-complete-hover",
+  "document": "parity-tex-beamer:main.tex",
+  "action": "hover",
+  "opened": true,
+  "components": [
+   "FrameChrome"
+  ]
+ },
+ {
+  "id": "frame-chrome-complete-focus",
+  "document": "parity-tex-beamer:main.tex",
+  "action": "focus",
+  "opened": true,
+  "components": [
+   "FrameChrome"
+  ]
+ },
+ {
+  "id": "frame-chrome-subtitle",
+  "document": "parity-tex-beamer:main.tex",
+  "action": "hover",
+  "opened": true,
+  "components": [
+   "FrameChrome"
+  ]
+ },
+ {
+  "id": "frame-chrome-missing-title-hover",
+  "document": "parity-tex-beamer:main.tex",
+  "action": "hover",
+  "opened": true,
+  "components": [
+   "FrameChrome"
+  ]
+ },
+ {
+  "id": "frame-chrome-missing-title-focus",
+  "document": "parity-tex-beamer:main.tex",
+  "action": "focus",
+  "opened": true,
+  "components": [
+   "FrameChrome"
+  ]
+ },
+ {
+  "id": "frame-chrome-noframenumbering-hover",
+  "document": "parity-tex-beamer:main.tex",
+  "action": "hover",
+  "opened": true,
+  "components": [
+   "FrameChrome"
+  ]
+ },
+ {
+  "id": "frame-settings-options",
+  "document": "parity-tex-beamer:main.tex",
+  "action": "click",
+  "opened": true,
+  "components": [
+   "FrameSettings"
+  ]
+ },
+ {
+  "id": "frame-settings-overlay",
+  "document": "parity-tex-beamer:main.tex",
+  "action": "click",
+  "opened": true,
+  "components": [
+   "FrameSettings"
+  ]
+ },
+ {
+  "id": "column-view",
+  "document": "parity-tex-beamer:main.tex",
+  "action": "hover",
+  "opened": true,
+  "components": [
+   "BeamerColumnView"
+  ]
+ },
+ {
+  "id": "column-width-chip",
+  "document": "parity-tex-beamer:main.tex",
+  "action": "click",
+  "opened": true,
+  "components": [
+   "BeamerColumnView"
+  ]
+ },
+ {
+  "id": "block-environments",
+  "document": "parity-tex-beamer:main.tex",
+  "action": "hover",
+  "opened": true,
+  "components": [
+   "EnvironmentHead",
+   "EnvironmentHeadText"
+  ]
+ },
+ {
+  "id": "block-gear",
+  "document": "parity-tex-beamer:main.tex",
+  "action": "click",
+  "opened": true,
+  "components": [
+   "EnvironmentHead"
+  ]
+ },
+ {
+  "id": "chip-titlepage",
+  "document": "parity-tex-beamer:main.tex",
+  "action": "click",
+  "opened": true,
+  "components": [
+   "ChipSourceField",
+   "PanelHeader"
+  ]
+ },
+ {
+  "id": "chip-pause",
+  "document": "parity-tex-beamer:main.tex",
+  "action": "click",
+  "opened": true,
+  "components": [
+   "ChipSourceField"
+  ]
+ },
+ {
+  "id": "chip-appendix",
+  "document": "parity-tex-beamer:main.tex",
+  "action": "click",
+  "opened": true,
+  "components": [
+   "AppendixSettings"
+  ]
+ },
+ {
+  "id": "beamer-image-overlay",
+  "document": "parity-tex-beamer:main.tex",
+  "action": "hover",
+  "opened": true,
+  "components": [
+   "ImageOverlay"
+  ]
+ },
+ {
+  "id": "beamer-block-handle",
+  "document": "parity-tex-beamer:main.tex",
+  "action": "hover",
+  "opened": true,
+  "components": [
+   "BlockHandle"
+  ]
+ },
+ {
+  "id": "body-editor-host",
+  "document": "parity-tex-body:main.tex",
+  "action": "none",
+  "opened": true,
+  "components": [
+   "LatexEditorView"
+  ]
+ },
+ {
+  "id": "body-toolbar",
+  "document": "parity-tex-body:main.tex",
+  "action": "none",
+  "opened": true,
+  "components": [
+   "LatexToolbar"
+  ]
+ },
+ {
+  "id": "body-toolbar-table",
+  "document": "parity-tex-body:main.tex",
+  "action": "click",
+  "opened": true,
+  "components": [
+   "LatexToolbar"
+  ]
+ },
+ {
+  "id": "body-block-handle-hover",
+  "document": "parity-tex-body:main.tex",
+  "action": "hover",
+  "opened": true,
+  "components": [
+   "BlockHandle"
+  ]
+ },
+ {
+  "id": "body-block-handle-insert",
+  "document": "parity-tex-body:main.tex",
+  "action": "click",
+  "opened": true,
+  "components": [
+   "BlockHandle"
+  ]
+ },
+ {
+  "id": "body-math-settings",
+  "document": "parity-tex-body:main.tex",
+  "action": "click",
+  "opened": true,
+  "components": [
+   "MathSettings",
+   "MathSettingsPanel",
+   "MathLabelSetting"
+  ]
+ },
+ {
+  "id": "body-math-search",
+  "document": "parity-tex-body:main.tex",
+  "action": "keys",
+  "opened": true,
+  "components": [
+   "MathSearchPanel",
+   "MathSearchQuery"
+  ]
+ },
+ {
+  "id": "body-citation-open",
+  "document": "parity-tex-body:main.tex",
+  "action": "click",
+  "opened": true,
+  "components": [
+   "CitationDisplay",
+   "CitationEditForm",
+   "CitationReferenceField",
+   "CitationPagesField"
+  ]
+ },
+ {
+  "id": "body-ref-open",
+  "document": "parity-tex-body:main.tex",
+  "action": "click",
+  "opened": false,
+  "components": [
+   "RefDisplay",
+   "ReferencePickerDropdown"
+  ]
+ },
+ {
+  "id": "body-label-open",
+  "document": "parity-tex-body:main.tex",
+  "action": "click",
+  "opened": true,
+  "components": [
+   "LabelDisplay"
+  ]
+ },
+ {
+  "id": "body-bibkey-open",
+  "document": "parity-tex-body:main.tex",
+  "action": "click",
+  "opened": true,
+  "components": [
+   "BibKeyChip"
+  ]
+ },
+ {
+  "id": "body-table-settings",
+  "document": "parity-tex-body:main.tex",
+  "action": "click",
+  "opened": true,
+  "components": [
+   "TableSettingsPanel",
+   "TableLinesSetting",
+   "LatexColumnsSetting"
+  ]
+ },
+ {
+  "id": "body-table-settings-advanced",
+  "document": "parity-tex-body:main.tex",
+  "action": "click",
+  "opened": true,
+  "components": [
+   "TableAdvancedSection",
+   "TableSettingsPanel"
+  ]
+ },
+ {
+  "id": "body-bare-table",
+  "document": "parity-tex-body:main.tex",
+  "action": "click",
+  "opened": true,
+  "components": [
+   "BareTableSettings"
+  ]
+ },
+ {
+  "id": "body-image-overlay-hover",
+  "document": "parity-tex-body:main.tex",
+  "action": "hover",
+  "opened": true,
+  "components": [
+   "ImageOverlay"
+  ]
+ },
+ {
+  "id": "body-image-settings",
+  "document": "parity-tex-body:main.tex",
+  "action": "click",
+  "opened": true,
+  "components": [
+   "ImageSettingsPanel"
+  ]
+ },
+ {
+  "id": "body-image-crop",
+  "document": "parity-tex-body:main.tex",
+  "action": "click",
+  "opened": true,
+  "components": [
+   "PaperCropBar",
+   "PaperCropper"
+  ]
+ },
+ {
+  "id": "body-codeblock-settings",
+  "document": "parity-tex-body:main.tex",
+  "action": "click",
+  "opened": true,
+  "components": [
+   "CodeBlockSettings"
+  ]
+ },
+ {
+  "id": "body-env-label",
+  "document": "parity-tex-body:main.tex",
+  "action": "click",
+  "opened": true,
+  "components": [
+   "EnvironmentHead",
+   "EnvironmentAlignSetting"
+  ]
+ },
+ {
+  "id": "body-env-head-theorem",
+  "document": "parity-tex-body:main.tex",
+  "action": "click",
+  "opened": true,
+  "components": [
+   "EnvironmentHead",
+   "EnvironmentHeadText"
+  ]
+ },
+ {
+  "id": "body-chip-character",
+  "document": "parity-tex-body:main.tex",
+  "action": "click",
+  "opened": true,
+  "components": [
+   "CharacterSettings"
+  ]
+ },
+ {
+  "id": "body-chip-spacing",
+  "document": "parity-tex-body:main.tex",
+  "action": "click",
+  "opened": true,
+  "components": [
+   "SpacingSettings"
+  ]
+ },
+ {
+  "id": "body-chip-character-symbol",
+  "document": "parity-tex-body:main.tex",
+  "action": "click",
+  "opened": true,
+  "components": [
+   "CharacterSettings"
+  ]
+ },
+ {
+  "id": "body-chip-hspace",
+  "document": "parity-tex-body:main.tex",
+  "action": "click",
+  "opened": true,
+  "components": [
+   "SpacingSettings"
+  ]
+ },
+ {
+  "id": "body-chip-pagebreak",
+  "document": "parity-tex-body:main.tex",
+  "action": "click",
+  "opened": true,
+  "components": [
+   "PageBreakSettings"
+  ]
+ },
+ {
+  "id": "body-chip-footnote",
+  "document": "parity-tex-body:main.tex",
+  "action": "click",
+  "opened": true,
+  "components": [
+   "FootnoteSettings"
+  ]
+ },
+ {
+  "id": "body-chip-textstyle",
+  "document": "parity-tex-body:main.tex",
+  "action": "click",
+  "opened": true,
+  "components": [
+   "TextStyleSettings"
+  ]
+ },
+ {
+  "id": "body-chip-margin-note",
+  "document": "parity-tex-body:main.tex",
+  "action": "click",
+  "opened": true,
+  "components": []
+ },
+ {
+  "id": "body-chip-crossref",
+  "document": "parity-tex-body:main.tex",
+  "action": "click",
+  "opened": true,
+  "components": [
+   "CrossRefSettings",
+   "LabelField"
+  ]
+ },
+ {
+  "id": "body-chip-hyperref",
+  "document": "parity-tex-body:main.tex",
+  "action": "click",
+  "opened": true,
+  "components": [
+   "HyperrefSettings",
+   "LabelField"
+  ]
+ },
+ {
+  "id": "body-chip-bibstyle",
+  "document": "parity-tex-body:main.tex",
+  "action": "click",
+  "opened": true,
+  "components": [
+   "BibliographySettings"
+  ]
+ },
+ {
+  "id": "body-chip-bibliography",
+  "document": "parity-tex-body:main.tex",
+  "action": "click",
+  "opened": true,
+  "components": [
+   "BibliographySettings"
+  ]
+ },
+ {
+  "id": "body-chip-macro-definitions",
+  "document": "parity-tex-body:main.tex",
+  "action": "click",
+  "opened": true,
+  "components": [
+   "ChipSourceField"
+  ]
+ },
+ {
+  "id": "body-chip-raw",
+  "document": "parity-tex-body:main.tex",
+  "action": "click",
+  "opened": true,
+  "components": [
+   "ChipSourceField",
+   "ChipPanelFooter",
+   "DrawnChipPanel"
+  ]
+ },
+ {
+  "id": "body-figure-group-settings",
+  "document": "parity-tex-body:main.tex",
+  "action": "click",
+  "opened": true,
+  "components": [
+   "FigureGroupSettings"
+  ]
+ },
+ {
+  "id": "body-figure-card",
+  "document": "parity-tex-body:main.tex",
+  "action": "hover",
+  "opened": true,
+  "components": [
+   "FigureCard"
+  ]
+ },
+ {
+  "id": "body-link-tooltip",
+  "document": "parity-tex-body:main.tex",
+  "action": "click",
+  "opened": true,
+  "components": [
+   "LinkTooltip"
+  ]
+ },
+ {
+  "id": "body-link-tooltip-keys",
+  "document": "parity-tex-body:main.tex",
+  "action": "hover",
+  "opened": true,
+  "components": [
+   "LinkTooltip"
+  ]
+ },
+ {
+  "id": "body-reference-picker",
+  "document": "parity-tex-body:main.tex",
+  "action": "click",
+  "opened": true,
+  "components": [
+   "ReferencePickerDropdown"
+  ]
+ },
+ {
+  "id": "body-include-chip",
+  "document": "parity-tex-body:main.tex",
+  "action": "click",
+  "opened": false,
+  "error": "Cannot read properties of null (reading 'x')",
+  "components": [
+   "IncludeDocDisplay"
+  ]
+ },
+ {
+  "id": "ieee-author-view",
+  "document": "parity-tex-classes:ieee.tex",
+  "action": "none",
+  "opened": true,
+  "components": [
+   "IeeeAuthorView"
+  ]
+ },
+ {
+  "id": "typ-editor-host",
+  "document": "parity-typ-body:main.typ",
+  "action": "none",
+  "opened": true,
+  "components": [
+   "TypstEditorView"
+  ]
+ },
+ {
+  "id": "typ-toolbar",
+  "document": "parity-typ-body:main.typ",
+  "action": "none",
+  "opened": true,
+  "components": [
+   "TypstToolbar"
+  ]
+ },
+ {
+  "id": "typ-toolbar-table",
+  "document": "parity-typ-body:main.typ",
+  "action": "click",
+  "opened": true,
+  "components": [
+   "TypstToolbarTable"
+  ]
+ },
+ {
+  "id": "typ-block-handle-hover",
+  "document": "parity-typ-body:main.typ",
+  "action": "hover",
+  "opened": true,
+  "components": [
+   "BlockHandle"
+  ]
+ },
+ {
+  "id": "typ-layout-gear",
+  "document": "parity-typ-body:main.typ",
+  "action": "click",
+  "opened": true,
+  "components": [
+   "TypstLayoutGear",
+   "TypstLayoutSettings"
+  ]
+ },
+ {
+  "id": "typ-layout-gear-last",
+  "document": "parity-typ-body:main.typ",
+  "action": "click",
+  "opened": true,
+  "components": [
+   "TypstLayoutSettings"
+  ]
+ },
+ {
+  "id": "typ-env-label",
+  "document": "parity-typ-body:main.typ",
+  "action": "click",
+  "opened": true,
+  "components": [
+   "TypstEnvHeader"
+  ]
+ },
+ {
+  "id": "typ-ref-open",
+  "document": "parity-typ-body:main.typ",
+  "action": "click",
+  "opened": true,
+  "components": [
+   "TypstRefDisplay",
+   "TypstRefEditForm",
+   "CitationReferenceField",
+   "CitationPagesField"
+  ]
+ },
+ {
+  "id": "typ-ref-open-last",
+  "document": "parity-typ-body:main.typ",
+  "action": "click",
+  "opened": true,
+  "components": [
+   "TypstRefEditForm"
+  ]
+ },
+ {
+  "id": "typ-table-settings",
+  "document": "parity-typ-body:main.typ",
+  "action": "click",
+  "opened": true,
+  "components": [
+   "TableSettingsPanel",
+   "TypstColumnsSetting",
+   "TableLinesSetting"
+  ]
+ },
+ {
+  "id": "typ-image-settings",
+  "document": "parity-typ-body:main.typ",
+  "action": "click",
+  "opened": true,
+  "components": [
+   "ImageSettingsPanel"
+  ]
+ },
+ {
+  "id": "typ-bibliography-click",
+  "document": "parity-typ-body:main.typ",
+  "action": "click",
+  "opened": true,
+  "components": [
+   "BibliographyView"
+  ]
+ },
+ {
+  "id": "typ-chip-package",
+  "document": "parity-typ-body:main.typ",
+  "action": "click",
+  "opened": true,
+  "components": [
+   "ChipSourceField"
+  ]
+ },
+ {
+  "id": "typ-chip-setrule-page",
+  "document": "parity-typ-body:main.typ",
+  "action": "click",
+  "opened": true,
+  "components": [
+   "TypstSetRuleSettings",
+   "TypstSetRuleField"
+  ]
+ },
+ {
+  "id": "typ-chip-setrule-text",
+  "document": "parity-typ-body:main.typ",
+  "action": "click",
+  "opened": true,
+  "components": [
+   "TypstSetRuleSettings",
+   "TypstSetRuleField"
+  ]
+ },
+ {
+  "id": "typ-chip-setrule-paragraphs",
+  "document": "parity-typ-body:main.typ",
+  "action": "click",
+  "opened": true,
+  "components": [
+   "TypstSetRuleSettings",
+   "TypstSetRuleField"
+  ]
+ },
+ {
+  "id": "typ-chip-spacing-h",
+  "document": "parity-typ-body:main.typ",
+  "action": "click",
+  "opened": true,
+  "components": [
+   "TypstSpacingSettings"
+  ]
+ },
+ {
+  "id": "typ-chip-spacing-v",
+  "document": "parity-typ-body:main.typ",
+  "action": "click",
+  "opened": true,
+  "components": [
+   "TypstSpacingSettings"
+  ]
+ },
+ {
+  "id": "typ-chip-pagebreak",
+  "document": "parity-typ-body:main.typ",
+  "action": "click",
+  "opened": true,
+  "components": [
+   "TypstBreakSettings"
+  ]
+ },
+ {
+  "id": "typ-chip-colbreak",
+  "document": "parity-typ-body:main.typ",
+  "action": "click",
+  "opened": true,
+  "components": [
+   "TypstBreakSettings"
+  ]
+ },
+ {
+  "id": "typ-chip-lorem",
+  "document": "parity-typ-body:main.typ",
+  "action": "click",
+  "opened": true,
+  "components": [
+   "TypstLoremSettings"
+  ]
+ },
+ {
+  "id": "typ-chip-footnote",
+  "document": "parity-typ-body:main.typ",
+  "action": "click",
+  "opened": true,
+  "components": [
+   "TypstFootnoteSettings"
+  ]
+ },
+ {
+  "id": "typ-chip-outline",
+  "document": "parity-typ-body:main.typ",
+  "action": "click",
+  "opened": true,
+  "components": [
+   "TypstOutlineSettings"
+  ]
+ },
+ {
+  "id": "typ-codeblock-settings",
+  "document": "parity-typ-body:main.typ",
+  "action": "click",
+  "opened": true,
+  "components": [
+   "CodeBlockSettings"
+  ]
+ },
+ {
+  "id": "md-editor-host",
+  "document": "parity-md-body:main.md",
+  "action": "none",
+  "opened": true,
+  "components": [
+   "MarkdownEditorView"
+  ]
+ },
+ {
+  "id": "md-toolbar",
+  "document": "parity-md-body:main.md",
+  "action": "none",
+  "opened": true,
+  "components": [
+   "MarkdownToolbar"
+  ]
+ },
+ {
+  "id": "md-toolbar-table",
+  "document": "parity-md-body:main.md",
+  "action": "click",
+  "opened": true,
+  "components": [
+   "MarkdownToolbarTable"
+  ]
+ },
+ {
+  "id": "md-toolbar-heading",
+  "document": "parity-md-body:main.md",
+  "action": "click",
+  "opened": true,
+  "components": [
+   "MdHeadingDropdown"
+  ]
+ },
+ {
+  "id": "md-block-handle-hover",
+  "document": "parity-md-body:main.md",
+  "action": "hover",
+  "opened": true,
+  "components": [
+   "BlockHandle"
+  ]
+ },
+ {
+  "id": "md-image-settings",
+  "document": "parity-md-body:main.md",
+  "action": "click",
+  "opened": true,
+  "components": [
+   "ImageSettingsPanel",
+   "ImageOverlay"
+  ]
+ },
+ {
+  "id": "md-codeblock-settings",
+  "document": "parity-md-body:main.md",
+  "action": "click",
+  "opened": true,
+  "components": [
+   "CodeBlockSettings"
+  ]
+ },
+ {
+  "id": "md-link-tooltip",
+  "document": "parity-md-body:main.md",
+  "action": "click",
+  "opened": true,
+  "components": [
+   "LinkTooltip"
+  ]
+ },
+ {
+  "id": "tables-env-align-center",
+  "document": "parity-tex-tables:main.tex",
+  "action": "click",
+  "opened": true,
+  "components": [
+   "EnvironmentAlignSetting",
+   "EnvironmentHead"
+  ]
+ },
+ {
+  "id": "drive-chip-comment",
+  "document": "parity-typ-drive:drawn.pristine.typ",
+  "action": "click",
+  "opened": true,
+  "components": [
+   "CommentSettings",
+   "DrawnChipPanel"
+  ]
+ }
+]

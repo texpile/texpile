@@ -81,3 +81,16 @@ describe('folding: environments and sections', () => {
 		expect(foldAtLine('just some text\nmore text', 1)).toBeNull();
 	});
 });
+
+// the gutter asks for every line it shows; each ask parsed up to 100 ms more of the file, three seconds to switch a
+// 1.9 MB paper to source
+it('reads a long file only as far as the editor has parsed it', async () => {
+	const { syntaxTree } = await import('@codemirror/language');
+	const doc = '\\section{A}\nwords\n' + 'A paragraph of words, $x^2$ and \\emph{more}.\n\n'.repeat(40_000) + '\\section{B}\n';
+	const state = latexState(doc);
+	const parsed = syntaxTree(state).length;
+	expect(parsed).toBeLessThan(doc.length);
+	expect(foldAtLine(doc, 1)).toBeNull();
+	foldRangeAt(state, 0, state.doc.line(1).to);
+	expect(syntaxTree(state).length).toBe(parsed);
+});

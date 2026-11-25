@@ -1,14 +1,14 @@
 // a macro the paper defines itself, drawn as what its definition prints (\bert as BERT, \ie as i.e.). The document's own
 // definitions win over the rest of the project's, and a definition that changes redraws it in place
-import { tip } from '$lib/components/tooltip.svelte';
 import { onDrawnInputs } from '../drawnInputs.svelte';
-import { faceElement, type ChipFace } from '$lib/editor/visual/extensions/drawnChips/chipFace';
-import { renderStaticInlineCode } from '$lib/editor/visual/extensions/codemirrorbridge/cmStatic';
+import { tippedFace, type ChipFace } from '$lib/editor/visual/extensions/drawnChips/chipFace';
+import { elementMode, replaceIn } from '$lib/editor/visual/extensions/drawnChips/faces/partElements';
 import type { MacroDef } from '$lib/editor/source/extensions/math-preview/userMacros';
 import type { Argument } from '$lib/languages/latex/knowledge/types';
 import { templateFeaturesStore } from '$lib/stores/editorStore';
 import { projectIntelStore } from '$lib/stores/projectIntel';
 import { commandExpansions } from '$lib/languages/latex/knowledge/commands/commandExpansions';
+import { coreElement } from '../looks/coreLooks';
 import { aliasTarget, expandCutShort, expandMacroAlias, expandOwnMacro, readOwnMacroCall } from './ownMacroCall';
 
 let kernel: Record<string, MacroDef> | null = null;
@@ -63,33 +63,37 @@ export function ownMacroBody(name: string, source: string): string | null {
 
 /** `draw` draws what the call prints; one that cannot be drawn inline shows the call as source */
 export function ownMacroFace(name: string, source: string, draw: (latex: string) => ChipFace | null): ChipFace {
-	const dom = faceElement('span', 'drawn-macro');
-	const tipped = tip(dom, source);
-	let drawn: ChipFace | null = null;
+	let drawn = null as ChipFace | null;
 	// false until the first drawing; null is "no definition"
 	let shown: string | null | false = false;
-	// drawn now, so the line breaker measures it, and again whenever the definition changes
-	function show(): void {
+	/** false when the definition is the one already drawn */
+	function redraw(): boolean {
 		const body = ownMacroBody(name, source);
-		if (body === shown) return;
+		if (body === shown) return false;
 		shown = body;
 		drawn?.destroy?.();
-		drawn = body === null ? null : draw(body);
-		if (drawn?.line) {
-			drawn.destroy?.();
-			drawn = null;
-		}
-		dom.replaceChildren(drawn ? drawn.dom : renderStaticInlineCode(source));
+		const next = body === null ? null : draw(body);
+		const inline = next && !next.line && !next.mixed;
+		if (next && !inline) next.destroy?.();
+		drawn = inline ? next : null;
+		return true;
 	}
-	show();
-	const stop = onDrawnInputs(show);
+	redraw();
+	const mode = elementMode(coreElement);
+	const dom = mode.make('span', 'drawn-macro');
+	function fill(): void {
+		replaceIn(dom, drawn ? mode.ofFace(drawn) : mode.make('span', 'drawn-macro-code', source));
+	}
+	fill();
+	const stop = onDrawnInputs(() => redraw() && fill());
+	const face = tippedFace(dom, source);
 	return {
-		dom,
+		...face,
 		decorate: (decorations) => drawn?.decorate?.(decorations),
 		destroy() {
 			stop();
 			drawn?.destroy?.();
-			tipped.destroy();
+			face.destroy?.();
 		}
 	};
 }

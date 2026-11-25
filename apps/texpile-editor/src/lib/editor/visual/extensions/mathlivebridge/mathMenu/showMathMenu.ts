@@ -1,12 +1,11 @@
 // the right-click menu of an equation in the visual editor, in place of MathLive's own
-import type { MathfieldElement } from 'mathlive';
+import type { HeadlessMathfield } from 'mathlive';
 import { showContextMenu, type ContextMenuItem } from '$lib/menus/contextMenu.svelte';
 import { arrayItems, clipboardItems, styleItems } from './mathFieldItems';
 import { formulaItems, type MathMenuEquation } from './mathFormulaItems';
 
-export function showMathMenu(field: MathfieldElement, equation: MathMenuEquation, event: MouseEvent): void {
-	const box = field.getBoundingClientRect();
-	const at = event.clientX || event.clientY ? { x: event.clientX, y: event.clientY } : { x: box.left, y: box.bottom };
+/** at the pointer, or for a key at the formula's bottom left */
+export function showMathMenu(field: HeadlessMathfield, equation: MathMenuEquation, at: { x: number; y: number }): void {
 	const { editable } = equation;
 	const sections = [
 		clipboardItems(field, editable),

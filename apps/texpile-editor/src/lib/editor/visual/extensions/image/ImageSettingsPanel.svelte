@@ -1,4 +1,5 @@
 <script lang="ts">
+	import type { ImageMeasure } from './imageMeasure';
 	// The image settings popover's content: size, caption/numbering toggles, column spanning,
 	// and the LaTeX \label under Advanced. ImageOverlay owns the popover shell and trigger.
 	import { tip } from '$lib/components/tooltip.svelte';
@@ -18,11 +19,11 @@
 		view: EditorView;
 		getPos: () => number | undefined;
 		dialect: Dialect;
-		/** the overlay element, for resolving the image and its column width */
-		overlayElement: HTMLDivElement | undefined;
+		/** the px the column gives the image, and the picture's own size once it is loaded */
+		measure: () => ImageMeasure;
 	};
 
-	let { node, view, getPos, dialect, overlayElement }: Props = $props();
+	let { node, view, getPos, dialect, measure }: Props = $props();
 	// markdown has no width or figure-numbering syntax to write back, so those controls hide
 	const latexControls = $derived(dialect === 'latex');
 
@@ -104,26 +105,10 @@
 		updateAttrs({ options: next || null });
 	}
 
-	function imgEl(): HTMLImageElement | null {
-		return overlayElement?.parentElement?.querySelector('img') ?? null;
-	}
-
-	/** px available to the image: the editor column minus horizontal padding. */
-	function containerWidth(): number {
-		const pm = overlayElement?.closest('.ProseMirror') as HTMLElement | null;
-		if (!pm) return imgEl()?.parentElement?.clientWidth || 600;
-		const style = getComputedStyle(pm);
-		const pad = (parseFloat(style.paddingLeft) || 0) + (parseFloat(style.paddingRight) || 0);
-		return Math.max(50, pm.clientWidth - pad);
-	}
-
 	function setSizePercent(pct: number) {
-		const cw = containerWidth();
-		const img = imgEl();
-		const aspect =
-			img && img.naturalWidth && img.naturalHeight
-				? img.naturalWidth / img.naturalHeight
-				: Number(node.attrs.width) / Number(node.attrs.height) || 1;
+		const { columnWidth, natural } = measure();
+		const cw = Math.max(50, columnWidth);
+		const aspect = natural ? natural.width / natural.height : Number(node.attrs.width) / Number(node.attrs.height) || 1;
 		const width = Math.round((pct / 100) * cw);
 		updateAttrs({ width, height: Math.round(width / aspect), maxWidth: Math.round(cw) });
 	}

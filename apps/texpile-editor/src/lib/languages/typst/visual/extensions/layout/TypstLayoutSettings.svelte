@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { ChipSettingsProps } from '$lib/editor/visual/extensions/drawnChips/chipPanel.svelte';
+	import type { ChipSettingsProps } from '$lib/editor/visual/extensions/drawnChips/chipPanel/chipPanel.svelte';
 	import * as Panel from '$lib/editor/visual/extensions/drawnChips/panel';
 	import { readTypstCall } from '../../core/reading/typstCall';
 	import { horizontalAlignment, withHorizontal } from './layoutDrawing';

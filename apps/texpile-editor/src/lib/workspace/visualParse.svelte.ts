@@ -5,21 +5,13 @@
 // of always dropping to source. A sequence number drops superseded results, so a slow parse can
 // never overwrite fresher state.
 import type { ParsedLatexFile, ParsePhase } from '$lib/workspace/latexRoundtrip';
-import { parseLatexFileAsync, PARSE_TIMEOUT, PARSE_TOO_COMPLEX } from '$lib/workspace/latexParserClient';
+import { parseLatexFileAsync, PARSE_TIMEOUT } from '$lib/workspace/latexParserClient';
 import { mark } from '$lib/debug/startupDoctor';
 import { parsedPackages } from '$lib/languages/latex/intellisense/packages/loadedPackages';
+import { readSourceTrees } from '$lib/workspace/sourceTrees';
 import { packageTableOf, type PackageTable } from '$lib/languages/latex/parser/signatures/packageTable';
 import type { Node as PMNode } from 'prosemirror-model';
 
-// ProseMirror renders the whole doc with no virtualization and builds a node view per
-// math/raw/citation node, so past a certain size the mount locks the renderer for minutes and no
-// timeout can save it (the parse already succeeded). Empirical: a healthy 245KB paper is ~14k
-// nodes, while a 1.9MB paper whose \def-aliased environments defeat the parser reaches 322k
-// (104k of them node views) and never finishes mounting.
-const MAX_VISUAL_NODES = 100_000;
-// the node count misses prose-heavy files: a 1.3 MB single file stays under it and still builds
-// 371k DOM nodes over three minutes. past this many bytes the file opens in source mode
-export const MAX_VISUAL_BYTES = 800 * 1024;
 const MIN_TIMEOUT_MS = 3000;
 const MAX_TIMEOUT_MS = 30000;
 
@@ -35,10 +27,6 @@ async function tableFor(text: string, format: 'tex' | 'md'): Promise<PackageTabl
 export type ParseFailure = {
 	timeout: boolean;
 	message: string;
-	/** doc parsed but is too large to render; carries the node count for the message */
-	tooComplex?: number;
-	/** refused before parsing on size alone; carries the byte count for the message */
-	tooLarge?: number;
 };
 
 export type ParseOutcome = {
@@ -65,8 +53,7 @@ export class VisualParser {
 	}
 
 	/** the document `text` parses to, for the save check: the same parse as `parse`, with nothing
-	 *  shown while it runs and no size ceiling, since the text was small enough to open; null when
-	 *  it cannot be parsed now, which leaves the file as serialized */
+	 *  shown while it runs; null when it cannot be parsed now, which leaves the file as serialized */
 	async reparse(text: string, format: 'tex' | 'md' | 'typ'): Promise<PMNode | null> {
 		try {
 			if (format === 'typ') {
@@ -74,7 +61,7 @@ export class VisualParser {
 				return parseTypstFile(text, this.getMacros()).doc;
 			}
 			const table = await tableFor(text, format);
-			return (await parseLatexFileAsync(text, this.getMacros(), timeoutFor(text), undefined, 0, format, table)).doc;
+			return (await parseLatexFileAsync(text, this.getMacros(), timeoutFor(text), undefined, format, table)).doc;
 		} catch {
 			return null;
 		}
@@ -85,41 +72,34 @@ export class VisualParser {
 	 * `shown` false: a parked editor's file, whose parse puts up no loading bar. `abandon` settles a parse nobody waits for */
 	async parse(text: string, format: 'tex' | 'md' | 'typ' = 'tex', shown = true, abandon?: AbortSignal): Promise<ParseOutcome> {
 		mark('parse');
-		if (text.length > MAX_VISUAL_BYTES) return { failure: { timeout: false, tooLarge: text.length, message: 'too-large' } };
 		if (format === 'typ') return this.parseTypst(text, shown);
 		try {
 			const timeoutMs = timeoutFor(text);
 			if (shown) this.progress = 'parsing';
 			const progress = shown ? (p: ParsePhase) => (this.progress = p) : undefined;
 			const table = await tableFor(text, format);
-			return { parsed: await parseLatexFileAsync(text, this.getMacros(), timeoutMs, progress, MAX_VISUAL_NODES, format, table, abandon) };
+			const parsed = await parseLatexFileAsync(text, this.getMacros(), timeoutMs, progress, format, table, abandon);
+			// the readers of the file's source ask for its trees, which a worker's parse leaves here unread
+			if (format === 'tex') await readSourceTrees(text);
+			// the editor is built in a task of its own, apart from rebuilding the document the worker sent
+			await new Promise((next) => setTimeout(next));
+			return { parsed };
 		} catch (e) {
 			const msg = e instanceof Error ? e.message : String(e);
-			const timeout = msg === PARSE_TIMEOUT;
-			const tooComplex = msg.startsWith(`${PARSE_TOO_COMPLEX}:`) ? Number(msg.slice(PARSE_TOO_COMPLEX.length + 1)) : undefined;
-			return { failure: { timeout, tooComplex, message: msg } };
+			return { failure: { timeout: msg === PARSE_TIMEOUT, message: msg } };
 		} finally {
 			if (shown) this.progress = null;
 		}
 	}
 
-	/** Typst parses on the main thread: its wasm is already loaded here for CodeMirror. The node-count ceiling still applies */
+	/** Typst parses on the main thread: its wasm is already loaded here for CodeMirror */
 	private async parseTypst(text: string, shown: boolean): Promise<ParseOutcome> {
 		try {
 			if (shown) this.progress = 'parsing';
 			mark('typst-import');
 			const { parseTypstFile } = await import('$lib/languages/typst/visual/roundtrip');
 			mark('typst-ready');
-			const parsed = parseTypstFile(text, this.getMacros());
-			let nodeCount = 0;
-			parsed.doc.descendants(() => {
-				nodeCount++;
-				return true;
-			});
-			if (nodeCount > MAX_VISUAL_NODES) {
-				return { failure: { timeout: false, tooComplex: nodeCount, message: `${PARSE_TOO_COMPLEX}:${nodeCount}` } };
-			}
-			return { parsed };
+			return { parsed: parseTypstFile(text, this.getMacros()) };
 		} catch (e) {
 			return { failure: { timeout: false, message: e instanceof Error ? e.message : String(e) } };
 		} finally {

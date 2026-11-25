@@ -1,0 +1,1281 @@
+{
+ "environment": {
+  "userAgent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Texpile/2.0.1 Chrome/152.0.7977.167 Electron/44.9.3 Safari/537.36",
+  "devicePixelRatio": 1,
+  "window": [
+   1280,
+   860
+  ],
+  "domEditorCommit": "6ec0389c61ffc889078a95517ee770740f556c7e",
+  "os": "Linux 6.18.44-fc-v470, Xvfb :99",
+  "platform": "linux",
+  "zoom": 1,
+  "document": "purpose-made documents under perf-drive/parity/verify/docs (latex, markdown, typst)",
+  "electron": "44.9.3",
+  "chromium": "152.0.7977.167"
+ },
+ "inventoryMarkers": [
+  {
+   "file": "inventory/codemirror-bridge.md",
+   "line": 44,
+   "item": "codeBlockFontSize"
+  },
+  {
+   "file": "inventory/codemirror-bridge.md",
+   "line": 52,
+   "item": "readOnlyInIsland"
+  },
+  {
+   "file": "inventory/codemirror-bridge.md",
+   "line": 118,
+   "item": "disabledGearStyle"
+  },
+  {
+   "file": "inventory/codemirror-bridge.md",
+   "line": 164,
+   "item": "defaultKeymap"
+  },
+  {
+   "file": "inventory/codemirror-bridge.md",
+   "line": 262,
+   "item": "noautofocusConsumer"
+  },
+  {
+   "file": "inventory/codemirror-bridge.md",
+   "line": 372,
+   "item": "wrappedChipOutline"
+  },
+  {
+   "file": "inventory/codemirror-bridge.md",
+   "line": 389,
+   "item": "tabInChip"
+  },
+  {
+   "file": "inventory/codemirror-bridge.md",
+   "line": 419,
+   "item": "scrollerBorder"
+  },
+  {
+   "file": "inventory/codemirror-bridge.md",
+   "line": 423,
+   "item": "rawLatexLangAttr"
+  },
+  {
+   "file": "inventory/codemirror-bridge.md",
+   "line": 660,
+   "item": "peerCaretsInIslands"
+  },
+  {
+   "file": "inventory/codemirror-bridge.md",
+   "line": 681,
+   "item": "indentUnitAndTabSize"
+  },
+  {
+   "file": "inventory/codemirror-bridge.md",
+   "line": 698,
+   "item": "integrationSpecsVisualOrSource"
+  },
+  {
+   "file": "inventory/digest.md",
+   "line": 311,
+   "item": "codeBlockFontSize, readOnlyInIsland, rawLatexLangAttr, noautofocusConsumer, defaultKeymap, peerCaretsInIslands"
+  }
+ ],
+ "items": [
+  {
+   "id": "codeBlockFontSize",
+   "covers": [
+    "design 18.2: the code block font size",
+    "INV/codemirror-bridge.md:44"
+   ],
+   "question": "What font size does a code block draw in? Nothing in app.css sets it.",
+   "answer": "13px, family `monospace`, line height 18.2px (1.4 x 13). CodeMirror's base theme sets `font-family: monospace` on .cm-scroller and nothing sets a size, so Chromium's default fixed font size (13px) applies instead of the editor's 16px. The same 13px shows in the Markdown and Typst code blocks. .cm-content has padding 4px 0 and .cm-line padding 0 2px (the view theme override at cmview.svelte.ts:159); a monospace character advances 7.828125px. The inline chip draws in the paragraph's face (system-ui 17.072px) and the raw block island in the body face (markdown raw block system-ui 16px, app.css:1984-1996 inherits it). A canvas code block needs the engine's default fixed size per platform (13px on Chromium everywhere) as a style table entry, not 16px.",
+   "evidence": {
+    "method": "getComputedStyle of .cm-content, .cm-line and .cm-scroller in the running DOM editor, three dialects",
+    "script": "perf-drive/parity/verify/measure.mjs (FONT_PROBE)",
+    "code": [
+     "apps/texpile-editor/src/lib/editor/visual/extensions/codemirrorbridge/cmview.svelte.ts:87",
+     "apps/texpile-editor/src/lib/editor/visual/extensions/codemirrorbridge/cmview.svelte.ts:159",
+     "apps/texpile-editor/src/app.css:1984"
+    ],
+    "screenshots": [
+     "verify/code-block.png",
+     "verify/raw-block-focused.png"
+    ],
+    "measurements": {
+     "latexCodeBlock": {
+      "kind": "code block",
+      "wrapperClass": "noautofocus cm-wrapper relative border-surface-300-700 bg-surface-50-950 m-1 rounded-md border p-2 pr-9 pm-line-caret",
+      "scroller": {
+       "fontFamily": "monospace",
+       "fontSize": "13px",
+       "lineHeight": "18.2px"
+      },
+      "content": {
+       "fontFamily": "monospace",
+       "fontSize": "13px",
+       "lineHeight": "18.2px",
+       "paddingTop": "4px",
+       "paddingBottom": "4px",
+       "tabSize": "4",
+       "whiteSpace": "pre"
+      },
+      "line": {
+       "fontSize": "13px",
+       "paddingLeft": "2px",
+       "paddingRight": "2px",
+       "height": "18.1875px"
+      },
+      "charWidth": 7.828125
+     },
+     "latexInlineChip": {
+      "kind": "inline chip",
+      "wrapperClass": "noautofocus inline-latex-wrapper inline-block align-baseline",
+      "scroller": {
+       "fontFamily": "system-ui",
+       "fontSize": "17.072px",
+       "lineHeight": "27.991px"
+      },
+      "content": {
+       "fontFamily": "system-ui",
+       "fontSize": "17.072px",
+       "lineHeight": "27.991px",
+       "paddingTop": "0px",
+       "paddingBottom": "0px",
+       "tabSize": "4",
+       "whiteSpace": "break-spaces"
+      },
+      "line": {
+       "fontSize": "17.072px",
+       "paddingLeft": "0px",
+       "paddingRight": "0px",
+       "height": "56px"
+      },
+      "charWidth": 10.4296875
+     },
+     "markdownCodeBlock": [
+      {
+       "kind": "code block",
+       "wrapperClass": "noautofocus cm-wrapper relative border-surface-300-700 bg-surface-50-950 m-1 rounded-md border p-2 pr-9",
+       "scroller": {
+        "fontFamily": "monospace",
+        "fontSize": "13px",
+        "lineHeight": "18.2px"
+       },
+       "content": {
+        "fontFamily": "monospace",
+        "fontSize": "13px",
+        "lineHeight": "18.2px",
+        "paddingTop": "4px",
+        "paddingBottom": "4px",
+        "tabSize": "4",
+        "whiteSpace": "pre"
+       },
+       "line": {
+        "fontSize": "13px",
+        "paddingLeft": "2px",
+        "paddingRight": "2px",
+        "height": "18.1875px"
+       },
+       "charWidth": 7.828125
+      },
+      {
+       "kind": "raw block",
+       "wrapperClass": "noautofocus raw-latex-wrapper my-1 pm-line-caret",
+       "scroller": {
+        "fontFamily": "system-ui",
+        "fontSize": "16px",
+        "lineHeight": "26px"
+       },
+       "content": {
+        "fontFamily": "system-ui",
+        "fontSize": "16px",
+        "lineHeight": "26px",
+        "paddingTop": "0px",
+        "paddingBottom": "0px",
+        "tabSize": "4",
+        "whiteSpace": "break-spaces"
+       },
+       "line": {
+        "fontSize": "16px",
+        "paddingLeft": "0px",
+        "paddingRight": "0px",
+        "height": "52px"
+       },
+       "charWidth": null
+      }
+     ],
+     "typstCodeBlock": [
+      {
+       "kind": "code block",
+       "wrapperClass": "noautofocus cm-wrapper relative border-surface-300-700 bg-surface-50-950 m-1 rounded-md border p-2 pr-9",
+       "scroller": {
+        "fontFamily": "monospace",
+        "fontSize": "13px",
+        "lineHeight": "18.2px"
+       },
+       "content": {
+        "fontFamily": "monospace",
+        "fontSize": "13px",
+        "lineHeight": "18.2px",
+        "paddingTop": "4px",
+        "paddingBottom": "4px",
+        "tabSize": "4",
+        "whiteSpace": "pre"
+       },
+       "line": {
+        "fontSize": "13px",
+        "paddingLeft": "2px",
+        "paddingRight": "2px",
+        "height": "18.1875px"
+       },
+       "charWidth": 7.828125
+      }
+     ],
+     "markdownRawBlock": {
+      "kind": "raw block",
+      "wrapperClass": "noautofocus raw-latex-wrapper my-1 pm-line-caret",
+      "scroller": {
+       "fontFamily": "system-ui",
+       "fontSize": "16px",
+       "lineHeight": "26px"
+      },
+      "content": {
+       "fontFamily": "system-ui",
+       "fontSize": "16px",
+       "lineHeight": "26px",
+       "paddingTop": "0px",
+       "paddingBottom": "0px",
+       "tabSize": "4",
+       "whiteSpace": "break-spaces"
+      },
+      "line": {
+       "fontSize": "16px",
+       "paddingLeft": "0px",
+       "paddingRight": "0px",
+       "height": "52px"
+      },
+      "charWidth": null
+     },
+     "editorRoot": {
+      "fontFamily": "system-ui",
+      "fontSize": "16px",
+      "lineHeight": "26px"
+     },
+     "firstParagraph": {
+      "fontFamily": "system-ui",
+      "fontSize": "17.072px",
+      "lineHeight": "27.991px"
+     }
+    }
+   }
+  },
+  {
+   "id": "readOnlyInIsland",
+   "covers": [
+    "design 18.2: whether read-only blocks typing in an island",
+    "INV/codemirror-bridge.md:52"
+   ],
+   "question": "When the editor is read-only, does a CodeMirror island still take typing?",
+   "answer": "Yes. With ProseMirror's editable prop false, a typed key still went into the code block: CodeMirror's first line changed from \"  d ef f(x):\" to \" Q d ef f(x):\" and ProseMirror's code_block text followed (\" Q d ef f(x):\"). The island's .cm-content stays contenteditable=true, CodeMirror's readOnly facet is false and ProseMirror does not refuse the forwarded transaction. Only the gear is disabled. The app cannot reach this state offline (isReadOnly is a constant false in permissionStore.ts:4-8), so the canvas decides: it refuses input to islands when the editor is not editable.",
+   "evidence": {
+    "method": "view.setProps({ editable: () => false }) in the running DOM editor, click into the code block, type Q, read both documents",
+    "script": "perf-drive/parity/verify/measure.mjs (read only block)",
+    "code": [
+     "apps/texpile-editor/src/lib/stores/permissionStore.ts:4",
+     "apps/texpile-editor/src/lib/editor/visual/extensions/codemirrorbridge/cmview.svelte.ts:145"
+    ],
+    "measurements": {
+     "before": "  d ef f(x):",
+     "after": {
+      "pmEditable": false,
+      "cmContentEditableAttr": "true",
+      "cmFirstLine": " Q d ef f(x):",
+      "pmCodeBlockFirstLine": " Q d ef f(x):",
+      "cmEditableFacetState": false,
+      "cmViewEditable": true
+     }
+    }
+   }
+  },
+  {
+   "id": "disabledGearStyle",
+   "covers": [
+    "INV/codemirror-bridge.md:118"
+   ],
+   "question": "What does the disabled code block gear look like?",
+   "answer": "Opacity 0.5 and nothing else: cursor stays pointer, color and border do not change (Skeleton's :disabled rule). Measured by setting disabled on the gear button, because the state cannot occur offline.",
+   "evidence": {
+    "method": "getComputedStyle of the gear before and after setting disabled",
+    "script": "perf-drive/parity/verify/measure.mjs",
+    "code": [
+     "apps/texpile-editor/src/lib/editor/visual/extensions/codemirrorbridge/CodeBlockSettings.svelte:76"
+    ],
+    "measurements": {
+     "enabled": {
+      "opacity": "1",
+      "cursor": "pointer",
+      "color": "oklab(0.3863 -0.00439155 -0.00898411 / 0.4)",
+      "backgroundColor": "rgba(0, 0, 0, 0)",
+      "filter": "none",
+      "pointerEvents": "auto",
+      "borderColor": "oklab(0.3863 -0.00439155 -0.00898411 / 0.4)"
+     },
+     "disabled": {
+      "opacity": "0.5",
+      "cursor": "pointer",
+      "color": "oklab(0.3863 -0.00439155 -0.00898411 / 0.4)",
+      "backgroundColor": "rgba(0, 0, 0, 0)",
+      "filter": "none",
+      "pointerEvents": "auto",
+      "borderColor": "oklab(0.3863 -0.00439155 -0.00898411 / 0.4)"
+     },
+     "className": "codeblock-settings-btn svelte-1y1al9k",
+     "ariaLabel": "Code block settings"
+    }
+   }
+  },
+  {
+   "id": "peerCaretsInIslands",
+   "covers": [
+    "design 18.2: whether peer carets draw inside islands today",
+    "INV/codemirror-bridge.md:660"
+   ],
+   "question": "Do a peer's caret and selection draw inside a code block, raw block or inline chip today?",
+   "answer": "No. A peer fed through the plugin's own channel (a remote-cursors meta with positions inside each node) drew a caret and a selection tint in a paragraph and nothing inside a code block, an inline chip or an open raw block, in LaTeX, Markdown and Typst. remoteCursors.ts draws widgets and decorations at ProseMirror positions, and a node view with CodeMirror inside has no content DOM for them to land in. A second participant could not run here: a session needs a relay server and a second window, and the repository ships neither. The simulation reaches the same plugin state a real peer reaches through peersOnText (remoteCursors.ts:144), so the drawing answer holds; whether peersOnText maps a real awareness cursor inside a block to a position inside it is read from pmAtOffset (sourceMap.ts:91-104): the fallback returns block.pmFrom + 1, a position inside the node.",
+   "evidence": {
+    "method": "setMeta on the remote-cursors plugin key with a peer whose anchor and head lie inside each node kind, then query .pm-remote-caret and .pm-remote-sel",
+    "script": "perf-drive/parity/verify/measure.mjs (PEERS)",
+    "code": [
+     "apps/texpile-editor/src/lib/editor/visual/extensions/remoteCursors.ts:78",
+     "apps/texpile-editor/src/lib/editor/visual/extensions/remoteCursors.ts:144",
+     "apps/texpile-editor/src/lib/editor/visual/sourceMap.ts:91"
+    ],
+    "measurements": {
+     "peers": {
+      "latex": [
+       {
+        "target": {
+         "type": "paragraph",
+         "pos": 0,
+         "size": 246,
+         "text": "Paragraph with an inline chip ",
+         "isLeaf": false
+        },
+        "peerAt": {
+         "anchor": 5,
+         "head": 8
+        },
+        "caretElements": [
+         {
+          "inIsland": false,
+          "inWrapper": null,
+          "rect": {
+           "x": 444.453125,
+           "y": 141,
+           "width": 0,
+           "height": 21,
+           "top": 141,
+           "right": 444.453125,
+           "bottom": 162,
+           "left": 444.453125
+          }
+         }
+        ],
+        "selectionElements": [
+         {
+          "inIsland": false,
+          "tag": "SPAN",
+          "rect": {
+           "x": 417.984375,
+           "y": 138.015625,
+           "width": 26.46875,
+           "height": 27.953125,
+           "top": 138.015625,
+           "right": 444.453125,
+           "bottom": 165.96875,
+           "left": 417.984375
+          }
+         }
+        ]
+       },
+       {
+        "target": {
+         "type": "inline_latex",
+         "pos": 31,
+         "size": 157,
+         "text": "\\mycommand{with a long argumen",
+         "isLeaf": false
+        },
+        "peerAt": {
+         "anchor": 36,
+         "head": 39
+        },
+        "caretElements": [],
+        "selectionElements": []
+       },
+       {
+        "target": {
+         "type": "code_block",
+         "pos": 289,
+         "size": 63,
+         "text": "  d ef f(x):\n    return x  # a",
+         "isLeaf": false
+        },
+        "peerAt": {
+         "anchor": 294,
+         "head": 297
+        },
+        "caretElements": [],
+        "selectionElements": []
+       },
+       {
+        "target": {
+         "type": "raw_latex",
+         "pos": 563,
+         "size": 12,
+         "text": "\\maketitle",
+         "isLeaf": false
+        },
+        "peerAt": {
+         "anchor": 568,
+         "head": 571
+        },
+        "caretElements": [],
+        "selectionElements": []
+       }
+      ],
+      "markdown": [
+       {
+        "target": {
+         "type": "paragraph",
+         "pos": 9,
+         "size": 22,
+         "text": "Paragraph text here.",
+         "isLeaf": false
+        },
+        "peerAt": {
+         "anchor": 14,
+         "head": 17
+        },
+        "caretElements": [
+         {
+          "inIsland": false,
+          "inWrapper": null,
+          "rect": {
+           "x": 444.453125,
+           "y": 201.796875,
+           "width": 0,
+           "height": 21,
+           "top": 201.796875,
+           "right": 444.453125,
+           "bottom": 222.796875,
+           "left": 444.453125
+          }
+         }
+        ],
+        "selectionElements": [
+         {
+          "inIsland": false,
+          "tag": "SPAN",
+          "rect": {
+           "x": 417.984375,
+           "y": 198.8125,
+           "width": 26.46875,
+           "height": 27.953125,
+           "top": 198.8125,
+           "right": 444.453125,
+           "bottom": 226.765625,
+           "left": 417.984375
+          }
+         }
+        ]
+       },
+       {
+        "target": {
+         "type": "code_block",
+         "pos": 31,
+         "size": 24,
+         "text": "def f(x):\n    return x",
+         "isLeaf": false
+        },
+        "peerAt": {
+         "anchor": 36,
+         "head": 39
+        },
+        "caretElements": [],
+        "selectionElements": []
+       },
+       {
+        "target": {
+         "type": "raw_latex",
+         "pos": 75,
+         "size": 154,
+         "text": "<div class=\"x\">raw html block ",
+         "isLeaf": false
+        },
+        "peerAt": {
+         "anchor": 80,
+         "head": 83
+        },
+        "caretElements": [],
+        "selectionElements": []
+       }
+      ],
+      "typst": [
+       {
+        "target": {
+         "type": "paragraph",
+         "pos": 9,
+         "size": 17,
+         "text": "Paragraph text.",
+         "isLeaf": false
+        },
+        "peerAt": {
+         "anchor": 14,
+         "head": 17
+        },
+        "caretElements": [
+         {
+          "inIsland": false,
+          "inWrapper": null,
+          "rect": {
+           "x": 444.453125,
+           "y": 221.859375,
+           "width": 0,
+           "height": 21,
+           "top": 221.859375,
+           "right": 444.453125,
+           "bottom": 242.859375,
+           "left": 444.453125
+          }
+         }
+        ],
+        "selectionElements": [
+         {
+          "inIsland": false,
+          "tag": "SPAN",
+          "rect": {
+           "x": 417.984375,
+           "y": 218.875,
+           "width": 26.46875,
+           "height": 27.953125,
+           "top": 218.875,
+           "right": 444.453125,
+           "bottom": 246.828125,
+           "left": 417.984375
+          }
+         }
+        ]
+       },
+       {
+        "target": {
+         "type": "code_block",
+         "pos": 26,
+         "size": 24,
+         "text": "def f(x):\n    return x",
+         "isLeaf": false
+        },
+        "peerAt": {
+         "anchor": 31,
+         "head": 34
+        },
+        "caretElements": [],
+        "selectionElements": []
+       }
+      ]
+     },
+     "openRawBlock": [
+      {
+       "target": {
+        "type": "raw_latex",
+        "pos": 75,
+        "size": 154,
+        "text": "<div class=\"x\">raw html block ",
+        "isLeaf": false
+       },
+       "peerAt": {
+        "anchor": 80,
+        "head": 83
+       },
+       "caretElements": [],
+       "selectionElements": []
+      }
+     ]
+    },
+    "notRecorded": "two real participants over a relay"
+   }
+  },
+  {
+   "id": "defaultKeymap",
+   "covers": [
+    "design 18.2: the installed defaultKeymap table",
+    "INV/codemirror-bridge.md:164"
+   ],
+   "question": "Which table does the installed @codemirror/commands defaultKeymap hold?",
+   "answer": "@codemirror/commands 6.11.1: 59 bindings (39 of them in standardKeymap), listed in defaultKeymap.json with key, mac, win, linux, run and shift. The 20 extra ones include Mod-Alt-ArrowUp and Mod-Alt-ArrowDown (addCursorAbove, addCursorBelow), so the inventory's doubt is settled: they are in defaultKeymap, and the island mounts [...codeMirrorKeymap(), ...defaultKeymap] then [tabIndentBinding]. completionKeymap (@codemirror/autocomplete 6.20.4) is in the same file. Run names are the exported command names.",
+   "evidence": {
+    "method": "imported the installed packages in Node and reverse mapped each run function to its export name",
+    "script": "perf-drive/parity/verify/keymapTable.mjs",
+    "code": [
+     "apps/texpile-editor/src/lib/editor/visual/extensions/codemirrorbridge/cmview.svelte.ts:145"
+    ],
+    "file": "verify/defaultKeymap.json"
+   }
+  },
+  {
+   "id": "indentUnitAndTabSize",
+   "covers": [
+    "design 18.2: indentUnit and tabSize",
+    "INV/codemirror-bridge.md:681"
+   ],
+   "question": "What are indentUnit and tabSize in an island?",
+   "answer": "tabSize 4 and indentUnit two spaces, both CodeMirror defaults: the app sets neither (the compartment named tabSize in cmview.svelte.ts:65 is never configured). state.tabSize is 4, computed tab-size is 4, and a literal tab advances 31.3125px = 4 x 7.828125px. Tab at the start of \"def f(x):\" gave \"  def f(x):\" (two spaces) and Tab at column 3 of that line inserted one space, to the next stop of 2 (\"  d ef f(x):\"): the indentAtCaret rule in cmTabKey.ts:13-22.",
+   "evidence": {
+    "method": "read view.state.tabSize and getComputedStyle, pressed Tab in a code block, measured a literal tab with coordsAtPos",
+    "script": "perf-drive/parity/verify/measure.mjs",
+    "code": [
+     "apps/texpile-editor/src/lib/editor/source/extensions/keybindings/cmTabKey.ts:13",
+     "apps/texpile-editor/src/lib/editor/visual/extensions/codemirrorbridge/cmview.svelte.ts:65"
+    ],
+    "measurements": {
+     "tabSize": 4,
+     "computedTabSize": "4",
+     "doc": "def f(x):\n    return x  # a comment line\n\ttab_indented = 1",
+     "line1Before": "def f(x):",
+     "afterTabAtStart": "\"  def f(x):\"",
+     "afterTabAtColumn3": "\"  d ef f(x):\"",
+     "tabWidth": {
+      "tabAdvance": 31.3125,
+      "charAdvance": 7.828125,
+      "lineText": "\"\\ttab_indented \""
+     }
+    }
+   }
+  },
+  {
+   "id": "scrollerBorder",
+   "covers": [
+    "design 18.2: the 3 px scroller border",
+    "INV/codemirror-bridge.md:419"
+   ],
+   "question": "Does the app-wide 3px transparent right border apply to islands, and what does it do to the wrap width?",
+   "answer": "Yes, on every .cm-scroller. A wrapped inline chip: wrapper 760px wide, scroller border box 760px, client width 757px, .cm-content 757px. The open raw block measures the same (760 to 757px). So the text wraps at the block width minus 3px. A code block does not wrap and scrolls sideways: its scroller is 734px with 731px of client width, so the visible code area is 3px narrower than the wrapper's content box (734px).",
+   "evidence": {
+    "method": "getBoundingClientRect, clientWidth and the glyph rects of each .cm-scroller and .cm-content",
+    "script": "perf-drive/parity/verify/measure.mjs",
+    "code": [
+     "apps/texpile-editor/src/app.css:1229"
+    ],
+    "measurements": {
+     "scrollerBorder": [
+      {
+       "kind": "inline chip",
+       "lineWrapping": true,
+       "scrollerBorderRight": "3px solid rgba(0, 0, 0, 0)",
+       "scrollerBorderBox": 760,
+       "scrollerClientWidth": 757,
+       "scrollerScrollWidth": 757,
+       "contentBorderBoxWidth": 757,
+       "contentLeft": 381.5,
+       "contentRight": 1138.5,
+       "wrapperContentBoxWidth": 760,
+       "wrapperBorderBoxWidth": 760,
+       "wrapperPaddingRight": "0px",
+       "widestGlyphRight": 1138.5
+      },
+      {
+       "kind": "code block",
+       "lineWrapping": false,
+       "scrollerBorderRight": "3px solid rgba(0, 0, 0, 0)",
+       "scrollerBorderBox": 734,
+       "scrollerClientWidth": 731,
+       "scrollerScrollWidth": 731,
+       "contentBorderBoxWidth": 731,
+       "contentLeft": 394.5,
+       "contentRight": 1125.5,
+       "wrapperContentBoxWidth": 734,
+       "wrapperBorderBoxWidth": 752,
+       "wrapperPaddingRight": "8px",
+       "widestGlyphRight": 631.328125
+      },
+      {
+       "kind": "code block",
+       "lineWrapping": false,
+       "scrollerBorderRight": "3px solid rgba(0, 0, 0, 0)",
+       "scrollerBorderBox": 734,
+       "scrollerClientWidth": 731,
+       "scrollerScrollWidth": 731,
+       "contentBorderBoxWidth": 731,
+       "contentLeft": 394.5,
+       "contentRight": 1125.5,
+       "wrapperContentBoxWidth": 734,
+       "wrapperBorderBoxWidth": 752,
+       "wrapperPaddingRight": "8px",
+       "widestGlyphRight": 498.25
+      }
+     ],
+     "rawBlock": {
+      "scrollerBorderRight": "3px solid",
+      "scrollerBorderBox": 760,
+      "scrollerClientWidth": 757,
+      "contentBorderBoxWidth": 757,
+      "wrapperWidth": 760,
+      "lineWrapping": true,
+      "wrapperOutline": "solid",
+      "wrapperText": "<div class=\"x\">raw html block with a lon"
+     }
+    }
+   }
+  },
+  {
+   "id": "wrappedChipOutline",
+   "covers": [
+    "design 18.2: a wrapped chip's outline shape",
+    "INV/codemirror-bridge.md:372"
+   ],
+   "question": "What shape is the focus outline of an inline chip that wraps onto two lines?",
+   "answer": "One rectangle around the whole inline-block (760 x 56px, getClientRects().length = 1), not one per line fragment. The outline is 1px solid color-mix(surface-500 45%, transparent), offset 1px, radius 2px (0.5 x radius-base), on the wrapper through :focus-within; the .cm-editor itself has outline none. The box is as wide as the line and as tall as the lines (2 visual lines of 27.991px).",
+   "evidence": {
+    "method": "focused a two line chip, read computed outline and client rects, screenshot at 3x",
+    "script": "perf-drive/parity/verify/measure.mjs (chipSteps)",
+    "code": [
+     "apps/texpile-editor/src/app.css:1998"
+    ],
+    "screenshots": [
+     "verify/wrapped-chip-focused.png"
+    ],
+    "measurements": {
+     "focused": {
+      "focusWithin": true,
+      "wrapperStyle": {
+       "outlineStyle": "solid",
+       "outlineWidth": "1px",
+       "outlineColor": "color(srgb 0.487815 0.549877 0.611702 / 0.45)",
+       "outlineOffset": "1px",
+       "borderRadius": "2px",
+       "display": "inline-block",
+       "verticalAlign": "baseline"
+      },
+      "wrapperRects": [
+       {
+        "x": 381.5,
+        "y": 166,
+        "width": 760,
+        "height": 56,
+        "top": 166,
+        "right": 1141.5,
+        "bottom": 222,
+        "left": 381.5
+       }
+      ],
+      "wrapperRectCount": 1,
+      "visualLines": 2,
+      "lineHeightPx": 27.991,
+      "cmEditorOutline": "none",
+      "rawCssRule": [
+       ".ProseMirror .inline-latex-wrapper:focus-within, .ProseMirror .raw-latex-wrapper:focus-within { outline: var(--default-border-width) solid #73737373; }",
+       ".ProseMirror .inline-latex-wrapper:focus-within, .ProseMirror .raw-latex-wrapper:focus-within { outline: var(--default-border-width) solid color-mix(in srgb, var(--color-surface-500) 45%, transparent); }",
+       ".ProseMirror .inline-latex-wrapper:focus-within, .ProseMirror .raw-latex-wrapper:focus-within { outline-offset: 1px; border-radius: calc(var(--radius-base) * .5); }"
+      ]
+     },
+     "screenshot": "wrapped-chip-focused.png",
+     "chipBox": {
+      "x": 381.5,
+      "y": 166,
+      "width": 760,
+      "height": 56
+     }
+    }
+   }
+  },
+  {
+   "id": "tabInChip",
+   "covers": [
+    "design 18.2: Tab inside a chip",
+    "INV/codemirror-bridge.md:389"
+   ],
+   "question": "What does Tab do inside an inline chip?",
+   "answer": "Tab leaves the chip by the browser's focus order: focus moved to the next focusable thing, here the next island's .cm-content (the code block), and ProseMirror's selection moved to 290 (the start of that block). The chip text did not change (no tab indent). Shift+Tab from the chip ended with focus still in the chip and the selection unchanged (33): no earlier focus stop took it out. Tab inside a code block is different: tabIndentBinding indents.",
+   "evidence": {
+    "method": "clicked into a chip, pressed Tab and Shift+Tab, described document.activeElement and the PM selection",
+    "script": "perf-drive/parity/verify/measure.mjs (chipSteps)",
+    "measurements": {
+     "before": {
+      "chip": "\\mycommand{with a long argument that wil",
+      "sel": {
+       "type": "text",
+       "anchor": 33,
+       "head": 33
+      }
+     },
+     "afterTab": {
+      "tag": "DIV",
+      "className": "cm-content",
+      "ariaLabel": null,
+      "insideChip": false,
+      "insideEditor": true,
+      "insideCodeBlockGear": true,
+      "isBody": false,
+      "chipText": "\\mycommand{with a long argument that wil",
+      "selection": {
+       "type": "text",
+       "anchor": 290,
+       "head": 290
+      }
+     },
+     "afterShiftTab": {
+      "tag": "DIV",
+      "className": "cm-content cm-lineWrapping",
+      "ariaLabel": null,
+      "insideChip": true,
+      "insideEditor": true,
+      "insideCodeBlockGear": false,
+      "isBody": false,
+      "chipText": "\\mycommand{with a long argument that wil",
+      "selection": {
+       "type": "text",
+       "anchor": 33,
+       "head": 33
+      }
+     }
+    }
+   }
+  },
+  {
+   "id": "pageViewDarkSheet",
+   "covers": [
+    "design 18.2: the page view dark sheet color"
+   ],
+   "question": "What color is the page view sheet in dark mode?",
+   "answer": "oklch(0.985 0.002 247.839) (oklch 98.5% 0.002 247.839, near white), from --page-sheet: light-dark(#fff, oklch(98.5% 0.002 247.839)) at texpile-default-theme.css:315; light mode paints rgb(255, 255, 255). The sheet's text color in dark mode is oklch(0.9851 0 none) (the dark mode text color) and the first paragraph's is oklch(0.9851 0 none), as light as the sheet, so plain text on the dark sheet is nearly invisible (see the screenshot; only syntax colored text shows). Recorded as measured; the canvas replays the same two colors unless Louis decides otherwise. The mode was set the way theme.ts apply() sets it (data-mode and the dark class on html) and the page-view class the way LatexEditorView.svelte:284 adds it.",
+   "evidence": {
+    "method": "toggled data-mode, the dark class and .page-view in the running DOM editor, read computed colors, screenshots",
+    "script": "perf-drive/parity/verify/measure.mjs (pageViewSteps)",
+    "code": [
+     "apps/texpile-editor/texpile-default-theme.css:315",
+     "apps/texpile-editor/src/texpile-tokens.css:200",
+     "apps/texpile-editor/src/lib/editor/visual/styles/document.css:14"
+    ],
+    "screenshots": [
+     "verify/page-view-light.png",
+     "verify/page-view-dark.png"
+    ],
+    "measurements": {
+     "light": {
+      "classes": "ProseMirror TexpileEditor pm-block-carets ProseMirror-focused ProseMirror-hideselection page-view",
+      "pageSheetToken": "light-dark(#fff,oklch(98.5% .002 247.839))",
+      "surface50": "oklch(98.51% 0 none)",
+      "surface950": "oklch(38.63% .01 243.95)",
+      "sheetBackground": "rgb(255, 255, 255)",
+      "sheetColor": "oklch(0.3863 0.01 243.95)",
+      "sheetShadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0",
+      "sheetWidth": 652.796875,
+      "sheetRadius": "4px",
+      "paneBackground": "rgba(0, 0, 0, 0)",
+      "colorScheme": "light",
+      "dataMode": "light"
+     },
+     "shots": [
+      "page-view-light.png",
+      "page-view-dark.png"
+     ],
+     "dark": {
+      "classes": "ProseMirror TexpileEditor pm-block-carets ProseMirror-focused ProseMirror-hideselection page-view",
+      "pageSheetToken": "light-dark(#fff,oklch(98.5% .002 247.839))",
+      "surface50": "oklch(98.51% 0 none)",
+      "surface950": "oklch(38.63% .01 243.95)",
+      "sheetBackground": "oklch(0.985 0.002 247.839)",
+      "sheetColor": "oklch(0.9851 0 none)",
+      "sheetShadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0",
+      "sheetWidth": 652.796875,
+      "sheetRadius": "4px",
+      "paneBackground": "rgba(0, 0, 0, 0)",
+      "colorScheme": "dark",
+      "dataMode": "dark"
+     },
+     "darkTextOnSheet": "oklch(0.9851 0 none)"
+    }
+   }
+  },
+  {
+   "id": "typRefMissingRule",
+   "covers": [
+    "design 18.2: .typ-ref's missing rule"
+   ],
+   "question": "Is there a CSS rule for .typ-ref?",
+   "answer": "No. None of the 16 readable stylesheets has a selector containing \"typ-ref\"; the class is only a marker (TypstRefDisplay.svelte:48, refSchema.ts:30), and the look comes from utilities (rounded-base, cursor-pointer, transition-colors, text-ref-fg or text-ref-broken-fg with hover backgrounds, and py-0.5 -my-0.5 for a label ref). Computed on a broken ref: display block (blockified by the inline-flex button parent), padding 0px, radius 4px, cursor pointer.",
+   "evidence": {
+    "method": "scanned document.styleSheets cssRules for the selector and read computed style of a .typ-ref",
+    "script": "perf-drive/parity/verify/measure.mjs (SHEET_SCAN)",
+    "code": [
+     "apps/texpile-editor/src/lib/languages/typst/visual/plugins/ref/node/TypstRefDisplay.svelte:48",
+     "apps/texpile-editor/src/lib/languages/typst/visual/plugins/ref/refSchema.ts:30"
+    ],
+    "screenshots": [
+     "verify/typ-ref.png"
+    ],
+    "measurements": {
+     "scan": {
+      "typ-ref": [],
+      "texpile-template-block": [
+       ".texpile-template-block",
+       ".texpile-template-block .template-block-content",
+       ".texpile-template-block::before",
+       ".texpile-template-block[data-style=\"style-1\"], .texpile-template-block[data-style=\"style-blue\"]",
+       ".texpile-template-block[data-style=\"style-1\"], .texpile-template-block[data-style=\"style-blue\"]",
+       ".texpile-template-block[data-style=\"style-1\"] .template-block-label, .texpile-template-block[data-style=\"style-blue\"] .t",
+       ".texpile-template-block[data-style=\"style-1\"]:hover, .texpile-template-block[data-style=\"style-blue\"]:hover",
+       ".texpile-template-block[data-style=\"style-1\"]:hover, .texpile-template-block[data-style=\"style-blue\"]:hover",
+       ".texpile-template-block[data-style=\"style-2\"], .texpile-template-block[data-style=\"style-green\"]",
+       ".texpile-template-block[data-style=\"style-2\"], .texpile-template-block[data-style=\"style-green\"]",
+       ".texpile-template-block[data-style=\"style-2\"] .template-block-label, .texpile-template-block[data-style=\"style-green\"] .",
+       ".texpile-template-block[data-style=\"style-2\"]:hover, .texpile-template-block[data-style=\"style-green\"]:hover",
+       ".texpile-template-block[data-style=\"style-2\"]:hover, .texpile-template-block[data-style=\"style-green\"]:hover",
+       ".texpile-template-block[data-style=\"style-3\"], .texpile-template-block[data-style=\"style-cyan\"]",
+       ".texpile-template-block[data-style=\"style-3\"], .texpile-template-block[data-style=\"style-cyan\"]",
+       ".texpile-template-block[data-style=\"style-3\"] .template-block-label, .texpile-template-block[data-style=\"style-cyan\"] .t",
+       ".texpile-template-block[data-style=\"style-3\"]:hover, .texpile-template-block[data-style=\"style-cyan\"]:hover",
+       ".texpile-template-block[data-style=\"style-3\"]:hover, .texpile-template-block[data-style=\"style-cyan\"]:hover",
+       ".texpile-template-block[data-style=\"style-4\"], .texpile-template-block[data-style=\"style-yellow\"]",
+       ".texpile-template-block[data-style=\"style-4\"], .texpile-template-block[data-style=\"style-yellow\"]",
+       ".texpile-template-block[data-style=\"style-4\"] .template-block-label, .texpile-template-block[data-style=\"style-yellow\"] ",
+       ".texpile-template-block[data-style=\"style-4\"]:hover, .texpile-template-block[data-style=\"style-yellow\"]:hover",
+       ".texpile-template-block[data-style=\"style-4\"]:hover, .texpile-template-block[data-style=\"style-yellow\"]:hover",
+       ".texpile-template-block[data-style=\"style-5\"], .texpile-template-block[data-style=\"style-gray\"]",
+       ".texpile-template-block[data-style=\"style-5\"], .texpile-template-block[data-style=\"style-gray\"]",
+       ".texpile-template-block[data-style=\"style-5\"] .template-block-label, .texpile-template-block[data-style=\"style-gray\"] .t",
+       ".texpile-template-block[data-style=\"style-5\"]:hover, .texpile-template-block[data-style=\"style-gray\"]:hover",
+       ".texpile-template-block[data-style=\"style-5\"]:hover, .texpile-template-block[data-style=\"style-gray\"]:hover",
+       ".texpile-template-block[data-style=\"style-6\"], .texpile-template-block[data-style=\"style-red\"]",
+       ".texpile-template-block[data-style=\"style-6\"], .texpile-template-block[data-style=\"style-red\"]",
+       ".texpile-template-block[data-style=\"style-6\"] .template-block-label, .texpile-template-block[data-style=\"style-red\"] .te",
+       ".texpile-template-block[data-style=\"style-6\"]:hover, .texpile-template-block[data-style=\"style-red\"]:hover",
+       ".texpile-template-block[data-style=\"style-6\"]:hover, .texpile-template-block[data-style=\"style-red\"]:hover",
+       ".texpile-template-block[data-orphaned=\"true\"]",
+       ".texpile-template-block[data-orphaned=\"true\"]",
+       ".texpile-template-block[data-orphaned=\"true\"] .template-block-label",
+       ".texpile-template-block[data-orphaned=\"true\"]::before",
+       ".texpile-template-block[data-orphaned=\"true\"]::after",
+       ".texpile-template-block[data-orphaned=\"true\"]::after",
+       ".texpile-template-block[data-orphaned=\"true\"]::after",
+       ".ProseMirror[data-template-loading=\"true\"] .texpile-template-block[data-orphaned=\"true\"]",
+       ".ProseMirror[data-template-loading=\"true\"] .texpile-template-block[data-orphaned=\"true\"]",
+       ".ProseMirror[data-template-loading=\"true\"] .texpile-template-block[data-orphaned=\"true\"]::before",
+       ".ProseMirror[data-template-loading=\"true\"] .texpile-template-block[data-orphaned=\"true\"]::after",
+       ".ProseMirror[data-template-loading=\"true\"] .texpile-template-block[data-orphaned=\"true\"]::after",
+       ".texpile-template-block[data-duplicate=\"true\"]",
+       ".texpile-template-block[data-duplicate=\"true\"]",
+       ".texpile-template-block[data-duplicate=\"true\"]::before",
+       ".texpile-template-block[data-duplicate=\"true\"]::after",
+       ".texpile-template-block[data-duplicate=\"true\"]::after",
+       ".texpile-template-block[data-duplicate=\"true\"]::after"
+      ]
+     },
+     "typRef": [
+      {
+       "text": "@nope",
+       "className": "typ-ref rounded-base cursor-pointer transition-colors text-ref-broken-fg hover:bg-ref-broken-bg",
+       "style": {
+        "display": "block",
+        "color": "oklch(0.505 0.213 27.518)",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "paddingTop": "0px",
+        "paddingBottom": "0px",
+        "marginTop": "0px",
+        "marginBottom": "0px",
+        "borderRadius": "4px",
+        "cursor": "pointer",
+        "fontSize": "17.072px",
+        "fontFamily": "system-ui",
+        "textDecorationLine": "none",
+        "transitionProperty": "color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, --tw-gradient-from, --tw-gradient-via, --tw-gradient-to"
+       },
+       "dataset": {
+        "tip": "nope"
+       },
+       "parentClass": "inline-flex cursor-pointer items-center"
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "templateBlockRuleDead",
+   "covers": [
+    "design 18.2: the texpile-template-block rule being dead"
+   ],
+   "question": "Does anything produce .texpile-template-block?",
+   "answer": "No. app.css:1661 onward holds rules for it (51 selector entries in the loaded sheets, duplicates included) (including a 4px accent border-left that CLAUDE.md forbids), no source file under apps/ or packages/ outside app.css mentions the class, .template-block-label or .template-block-content, and the DOM scans of the LaTeX, Markdown and Typst documents found 0 elements. Dead CSS from the removed template system; the canvas style sheet does not need it.",
+   "evidence": {
+    "method": "grep over apps and packages, stylesheet scan, element count",
+    "script": "perf-drive/parity/verify/measure.mjs (SHEET_SCAN)",
+    "code": [
+     "apps/texpile-editor/src/app.css:1661"
+    ],
+    "grep": [
+     "apps/texpile-editor/src/app.css"
+    ],
+    "measurements": {
+     "latexDocument": {
+      "sheetsRead": 16,
+      "selectorsMatching": {
+       "typ-ref": [],
+       "texpile-template-block": [
+        ".texpile-template-block",
+        ".texpile-template-block .template-block-content",
+        ".texpile-template-block::before",
+        ".texpile-template-block[data-style=\"style-1\"], .texpile-template-block[data-style=\"style-blue\"]",
+        ".texpile-template-block[data-style=\"style-1\"], .texpile-template-block[data-style=\"style-blue\"]",
+        ".texpile-template-block[data-style=\"style-1\"] .template-block-label, .texpile-template-block[data-style=\"style-blue\"] .t",
+        ".texpile-template-block[data-style=\"style-1\"]:hover, .texpile-template-block[data-style=\"style-blue\"]:hover",
+        ".texpile-template-block[data-style=\"style-1\"]:hover, .texpile-template-block[data-style=\"style-blue\"]:hover",
+        ".texpile-template-block[data-style=\"style-2\"], .texpile-template-block[data-style=\"style-green\"]",
+        ".texpile-template-block[data-style=\"style-2\"], .texpile-template-block[data-style=\"style-green\"]",
+        ".texpile-template-block[data-style=\"style-2\"] .template-block-label, .texpile-template-block[data-style=\"style-green\"] .",
+        ".texpile-template-block[data-style=\"style-2\"]:hover, .texpile-template-block[data-style=\"style-green\"]:hover",
+        ".texpile-template-block[data-style=\"style-2\"]:hover, .texpile-template-block[data-style=\"style-green\"]:hover",
+        ".texpile-template-block[data-style=\"style-3\"], .texpile-template-block[data-style=\"style-cyan\"]",
+        ".texpile-template-block[data-style=\"style-3\"], .texpile-template-block[data-style=\"style-cyan\"]",
+        ".texpile-template-block[data-style=\"style-3\"] .template-block-label, .texpile-template-block[data-style=\"style-cyan\"] .t",
+        ".texpile-template-block[data-style=\"style-3\"]:hover, .texpile-template-block[data-style=\"style-cyan\"]:hover",
+        ".texpile-template-block[data-style=\"style-3\"]:hover, .texpile-template-block[data-style=\"style-cyan\"]:hover",
+        ".texpile-template-block[data-style=\"style-4\"], .texpile-template-block[data-style=\"style-yellow\"]",
+        ".texpile-template-block[data-style=\"style-4\"], .texpile-template-block[data-style=\"style-yellow\"]",
+        ".texpile-template-block[data-style=\"style-4\"] .template-block-label, .texpile-template-block[data-style=\"style-yellow\"] ",
+        ".texpile-template-block[data-style=\"style-4\"]:hover, .texpile-template-block[data-style=\"style-yellow\"]:hover",
+        ".texpile-template-block[data-style=\"style-4\"]:hover, .texpile-template-block[data-style=\"style-yellow\"]:hover",
+        ".texpile-template-block[data-style=\"style-5\"], .texpile-template-block[data-style=\"style-gray\"]",
+        ".texpile-template-block[data-style=\"style-5\"], .texpile-template-block[data-style=\"style-gray\"]",
+        ".texpile-template-block[data-style=\"style-5\"] .template-block-label, .texpile-template-block[data-style=\"style-gray\"] .t",
+        ".texpile-template-block[data-style=\"style-5\"]:hover, .texpile-template-block[data-style=\"style-gray\"]:hover",
+        ".texpile-template-block[data-style=\"style-5\"]:hover, .texpile-template-block[data-style=\"style-gray\"]:hover",
+        ".texpile-template-block[data-style=\"style-6\"], .texpile-template-block[data-style=\"style-red\"]",
+        ".texpile-template-block[data-style=\"style-6\"], .texpile-template-block[data-style=\"style-red\"]",
+        ".texpile-template-block[data-style=\"style-6\"] .template-block-label, .texpile-template-block[data-style=\"style-red\"] .te",
+        ".texpile-template-block[data-style=\"style-6\"]:hover, .texpile-template-block[data-style=\"style-red\"]:hover",
+        ".texpile-template-block[data-style=\"style-6\"]:hover, .texpile-template-block[data-style=\"style-red\"]:hover",
+        ".texpile-template-block[data-orphaned=\"true\"]",
+        ".texpile-template-block[data-orphaned=\"true\"]",
+        ".texpile-template-block[data-orphaned=\"true\"] .template-block-label",
+        ".texpile-template-block[data-orphaned=\"true\"]::before",
+        ".texpile-template-block[data-orphaned=\"true\"]::after",
+        ".texpile-template-block[data-orphaned=\"true\"]::after",
+        ".texpile-template-block[data-orphaned=\"true\"]::after",
+        ".ProseMirror[data-template-loading=\"true\"] .texpile-template-block[data-orphaned=\"true\"]",
+        ".ProseMirror[data-template-loading=\"true\"] .texpile-template-block[data-orphaned=\"true\"]",
+        ".ProseMirror[data-template-loading=\"true\"] .texpile-template-block[data-orphaned=\"true\"]::before",
+        ".ProseMirror[data-template-loading=\"true\"] .texpile-template-block[data-orphaned=\"true\"]::after",
+        ".ProseMirror[data-template-loading=\"true\"] .texpile-template-block[data-orphaned=\"true\"]::after",
+        ".texpile-template-block[data-duplicate=\"true\"]",
+        ".texpile-template-block[data-duplicate=\"true\"]",
+        ".texpile-template-block[data-duplicate=\"true\"]::before",
+        ".texpile-template-block[data-duplicate=\"true\"]::after",
+        ".texpile-template-block[data-duplicate=\"true\"]::after",
+        ".texpile-template-block[data-duplicate=\"true\"]::after"
+       ]
+      },
+      "elements": {
+       "typ-ref": 0,
+       "texpile-template-block": 0,
+       "template-block-content": 0,
+       "noautofocus": 3
+      }
+     },
+     "markdown": {
+      "sheetsRead": 16,
+      "selectorsMatching": {
+       "typ-ref": [],
+       "texpile-template-block": [
+        ".texpile-template-block",
+        ".texpile-template-block .template-block-content",
+        ".texpile-template-block::before",
+        ".texpile-template-block[data-style=\"style-1\"], .texpile-template-block[data-style=\"style-blue\"]",
+        ".texpile-template-block[data-style=\"style-1\"], .texpile-template-block[data-style=\"style-blue\"]",
+        ".texpile-template-block[data-style=\"style-1\"] .template-block-label, .texpile-template-block[data-style=\"style-blue\"] .t",
+        ".texpile-template-block[data-style=\"style-1\"]:hover, .texpile-template-block[data-style=\"style-blue\"]:hover",
+        ".texpile-template-block[data-style=\"style-1\"]:hover, .texpile-template-block[data-style=\"style-blue\"]:hover",
+        ".texpile-template-block[data-style=\"style-2\"], .texpile-template-block[data-style=\"style-green\"]",
+        ".texpile-template-block[data-style=\"style-2\"], .texpile-template-block[data-style=\"style-green\"]",
+        ".texpile-template-block[data-style=\"style-2\"] .template-block-label, .texpile-template-block[data-style=\"style-green\"] .",
+        ".texpile-template-block[data-style=\"style-2\"]:hover, .texpile-template-block[data-style=\"style-green\"]:hover",
+        ".texpile-template-block[data-style=\"style-2\"]:hover, .texpile-template-block[data-style=\"style-green\"]:hover",
+        ".texpile-template-block[data-style=\"style-3\"], .texpile-template-block[data-style=\"style-cyan\"]",
+        ".texpile-template-block[data-style=\"style-3\"], .texpile-template-block[data-style=\"style-cyan\"]",
+        ".texpile-template-block[data-style=\"style-3\"] .template-block-label, .texpile-template-block[data-style=\"style-cyan\"] .t",
+        ".texpile-template-block[data-style=\"style-3\"]:hover, .texpile-template-block[data-style=\"style-cyan\"]:hover",
+        ".texpile-template-block[data-style=\"style-3\"]:hover, .texpile-template-block[data-style=\"style-cyan\"]:hover",
+        ".texpile-template-block[data-style=\"style-4\"], .texpile-template-block[data-style=\"style-yellow\"]",
+        ".texpile-template-block[data-style=\"style-4\"], .texpile-template-block[data-style=\"style-yellow\"]",
+        ".texpile-template-block[data-style=\"style-4\"] .template-block-label, .texpile-template-block[data-style=\"style-yellow\"] ",
+        ".texpile-template-block[data-style=\"style-4\"]:hover, .texpile-template-block[data-style=\"style-yellow\"]:hover",
+        ".texpile-template-block[data-style=\"style-4\"]:hover, .texpile-template-block[data-style=\"style-yellow\"]:hover",
+        ".texpile-template-block[data-style=\"style-5\"], .texpile-template-block[data-style=\"style-gray\"]",
+        ".texpile-template-block[data-style=\"style-5\"], .texpile-template-block[data-style=\"style-gray\"]",
+        ".texpile-template-block[data-style=\"style-5\"] .template-block-label, .texpile-template-block[data-style=\"style-gray\"] .t",
+        ".texpile-template-block[data-style=\"style-5\"]:hover, .texpile-template-block[data-style=\"style-gray\"]:hover",
+        ".texpile-template-block[data-style=\"style-5\"]:hover, .texpile-template-block[data-style=\"style-gray\"]:hover",
+        ".texpile-template-block[data-style=\"style-6\"], .texpile-template-block[data-style=\"style-red\"]",
+        ".texpile-template-block[data-style=\"style-6\"], .texpile-template-block[data-style=\"style-red\"]",
+        ".texpile-template-block[data-style=\"style-6\"] .template-block-label, .texpile-template-block[data-style=\"style-red\"] .te",
+        ".texpile-template-block[data-style=\"style-6\"]:hover, .texpile-template-block[data-style=\"style-red\"]:hover",
+        ".texpile-template-block[data-style=\"style-6\"]:hover, .texpile-template-block[data-style=\"style-red\"]:hover",
+        ".texpile-template-block[data-orphaned=\"true\"]",
+        ".texpile-template-block[data-orphaned=\"true\"]",
+        ".texpile-template-block[data-orphaned=\"true\"] .template-block-label",
+        ".texpile-template-block[data-orphaned=\"true\"]::before",
+        ".texpile-template-block[data-orphaned=\"true\"]::after",
+        ".texpile-template-block[data-orphaned=\"true\"]::after",
+        ".texpile-template-block[data-orphaned=\"true\"]::after",
+        ".ProseMirror[data-template-loading=\"true\"] .texpile-template-block[data-orphaned=\"true\"]",
+        ".ProseMirror[data-template-loading=\"true\"] .texpile-template-block[data-orphaned=\"true\"]",
+        ".ProseMirror[data-template-loading=\"true\"] .texpile-template-block[data-orphaned=\"true\"]::before",
+        ".ProseMirror[data-template-loading=\"true\"] .texpile-template-block[data-orphaned=\"true\"]::after",
+        ".ProseMirror[data-template-loading=\"true\"] .texpile-template-block[data-orphaned=\"true\"]::after",
+        ".texpile-template-block[data-duplicate=\"true\"]",
+        ".texpile-template-block[data-duplicate=\"true\"]",
+        ".texpile-template-block[data-duplicate=\"true\"]::before",
+        ".texpile-template-block[data-duplicate=\"true\"]::after",
+        ".texpile-template-block[data-duplicate=\"true\"]::after",
+        ".texpile-template-block[data-duplicate=\"true\"]::after"
+       ]
+      },
+      "elements": {
+       "typ-ref": 0,
+       "texpile-template-block": 0,
+       "template-block-content": 0,
+       "noautofocus": 2
+      }
+     },
+     "typst": {
+      "sheetsRead": 16,
+      "selectorsMatching": {
+       "typ-ref": [],
+       "texpile-template-block": [
+        ".texpile-template-block",
+        ".texpile-template-block .template-block-content",
+        ".texpile-template-block::before",
+        ".texpile-template-block[data-style=\"style-1\"], .texpile-template-block[data-style=\"style-blue\"]",
+        ".texpile-template-block[data-style=\"style-1\"], .texpile-template-block[data-style=\"style-blue\"]",
+        ".texpile-template-block[data-style=\"style-1\"] .template-block-label, .texpile-template-block[data-style=\"style-blue\"] .t",
+        ".texpile-template-block[data-style=\"style-1\"]:hover, .texpile-template-block[data-style=\"style-blue\"]:hover",
+        ".texpile-template-block[data-style=\"style-1\"]:hover, .texpile-template-block[data-style=\"style-blue\"]:hover",
+        ".texpile-template-block[data-style=\"style-2\"], .texpile-template-block[data-style=\"style-green\"]",
+        ".texpile-template-block[data-style=\"style-2\"], .texpile-template-block[data-style=\"style-green\"]",
+        ".texpile-template-block[data-style=\"style-2\"] .template-block-label, .texpile-template-block[data-style=\"style-green\"] .",
+        ".texpile-template-block[data-style=\"style-2\"]:hover, .texpile-template-block[data-style=\"style-green\"]:hover",
+        ".texpile-template-block[data-style=\"style-2\"]:hover, .texpile-template-block[data-style=\"style-green\"]:hover",
+        ".texpile-template-block[data-style=\"style-3\"], .texpile-template-block[data-style=\"style-cyan\"]",
+        ".texpile-template-block[data-style=\"style-3\"], .texpile-template-block[data-style=\"style-cyan\"]",
+        ".texpile-template-block[data-style=\"style-3\"] .template-block-label, .texpile-template-block[data-style=\"style-cyan\"] .t",
+        ".texpile-template-block[data-style=\"style-3\"]:hover, .texpile-template-block[data-style=\"style-cyan\"]:hover",
+        ".texpile-template-block[data-style=\"style-3\"]:hover, .texpile-template-block[data-style=\"style-cyan\"]:hover",
+        ".texpile-template-block[data-style=\"style-4\"], .texpile-template-block[data-style=\"style-yellow\"]",
+        ".texpile-template-block[data-style=\"style-4\"], .texpile-template-block[data-style=\"style-yellow\"]",
+        ".texpile-template-block[data-style=\"style-4\"] .template-block-label, .texpile-template-block[data-style=\"style-yellow\"] ",
+        ".texpile-template-block[data-style=\"style-4\"]:hover, .texpile-template-block[data-style=\"style-yellow\"]:hover",
+        ".texpile-template-block[data-style=\"style-4\"]:hover, .texpile-template-block[data-style=\"style-yellow\"]:hover",
+        ".texpile-template-block[data-style=\"style-5\"], .texpile-template-block[data-style=\"style-gray\"]",
+        ".texpile-template-block[data-style=\"style-5\"], .texpile-template-block[data-style=\"style-gray\"]",
+        ".texpile-template-block[data-style=\"style-5\"] .template-block-label, .texpile-template-block[data-style=\"style-gray\"] .t",
+        ".texpile-template-block[data-style=\"style-5\"]:hover, .texpile-template-block[data-style=\"style-gray\"]:hover",
+        ".texpile-template-block[data-style=\"style-5\"]:hover, .texpile-template-block[data-style=\"style-gray\"]:hover",
+        ".texpile-template-block[data-style=\"style-6\"], .texpile-template-block[data-style=\"style-red\"]",
+        ".texpile-template-block[data-style=\"style-6\"], .texpile-template-block[data-style=\"style-red\"]",
+        ".texpile-template-block[data-style=\"style-6\"] .template-block-label, .texpile-template-block[data-style=\"style-red\"] .te",
+        ".texpile-template-block[data-style=\"style-6\"]:hover, .texpile-template-block[data-style=\"style-red\"]:hover",
+        ".texpile-template-block[data-style=\"style-6\"]:hover, .texpile-template-block[data-style=\"style-red\"]:hover",
+        ".texpile-template-block[data-orphaned=\"true\"]",
+        ".texpile-template-block[data-orphaned=\"true\"]",
+        ".texpile-template-block[data-orphaned=\"true\"] .template-block-label",
+        ".texpile-template-block[data-orphaned=\"true\"]::before",
+        ".texpile-template-block[data-orphaned=\"true\"]::after",
+        ".texpile-template-block[data-orphaned=\"true\"]::after",
+        ".texpile-template-block[data-orphaned=\"true\"]::after",
+        ".ProseMirror[data-template-loading=\"true\"] .texpile-template-block[data-orphaned=\"true\"]",
+        ".ProseMirror[data-template-loading=\"true\"] .texpile-template-block[data-orphaned=\"true\"]",
+        ".ProseMirror[data-template-loading=\"true\"] .texpile-template-block[data-orphaned=\"true\"]::before",
+        ".ProseMirror[data-template-loading=\"true\"] .texpile-template-block[data-orphaned=\"true\"]::after",
+        ".ProseMirror[data-template-loading=\"true\"] .texpile-template-block[data-orphaned=\"true\"]::after",
+        ".texpile-template-block[data-duplicate=\"true\"]",
+        ".texpile-template-block[data-duplicate=\"true\"]",
+        ".texpile-template-block[data-duplicate=\"true\"]::before",
+        ".texpile-template-block[data-duplicate=\"true\"]::after",
+        ".texpile-template-block[data-duplicate=\"true\"]::after",
+        ".texpile-template-block[data-duplicate=\"true\"]::after"
+       ]
+      },
+      "elements": {
+       "typ-ref": 1,
+       "texpile-template-block": 0,
+       "template-block-content": 0,
+       "noautofocus": 1
+      }
+     }
+    }
+   }
+  },
+  {
+   "id": "noautofocusConsumer",
+   "covers": [
+    "INV/codemirror-bridge.md:262"
+   ],
+   "question": "Which code reads the .noautofocus class?",
+   "answer": "None. It is assigned to three wrappers (rawLatexView.ts:79, inlineLatexView.ts:55, cmview.svelte.ts:87) and no selector, closest(), classList check or CSS rule anywhere in apps/ or packages/ reads it. A dead marker; the canvas does not need an equivalent.",
+   "evidence": {
+    "method": "grep over apps and packages",
+    "code": [],
+    "grep": [
+     "apps/texpile-editor/src/lib/editor/visual/extensions/raw-latex/rawLatexView.ts:79:\t\twrapper.className = 'noautofocus raw-latex-wrapper my-1';",
+     "apps/texpile-editor/src/lib/editor/visual/extensions/raw-latex/inlineLatexView.ts:55:\t\twrapper.className = 'noautofocus inline-latex-wrapper inline-block align-baseline';",
+     "apps/texpile-editor/src/lib/editor/visual/extensions/codemirrorbridge/cmview.svelte.ts:87:\t\twrapper.className = 'noautofocus cm-wrapper relative border-surface-300-700 bg-surface-50-950 m-1 rounded-md border p-2 pr-9';"
+    ]
+   }
+  },
+  {
+   "id": "rawLatexLangAttr",
+   "covers": [
+    "INV/codemirror-bridge.md:423"
+   ],
+   "question": "Does raw_latex have a lang attribute, and is it re-read when it changes?",
+   "answer": "The base schema's raw_latex has no lang (baseNodes.ts:90-101). Markdown adds lang with default 'latex' (markdown/visual/schema.ts:33-36) and Typst with default 'typst' (typst/visual/schema.ts:51-54). RawLatexView reads it once in its constructor (rawLatexView.ts:55, 84) and update() does not look at it (rawLatexView.ts:239-247), so a changed lang keeps the old language. LaTeX documents get no RawLatexView island on selection: opening a raw chip selection there left no .raw-latex-wrapper (rawBlockInLatex.opened = false), the edit goes through the chip panel (.drawn-chip-panel .cm-content, tests/integration/titleBlock.spec.ts:21).",
+   "evidence": {
+    "method": "code reading, plus selecting a raw_latex node in the LaTeX and Markdown documents",
+    "script": "perf-drive/parity/verify/measure.mjs (rawBlockSteps)",
+    "code": [
+     "apps/texpile-editor/src/lib/editor/visual/schema/baseNodes.ts:90",
+     "apps/texpile-editor/src/lib/languages/markdown/visual/schema.ts:33",
+     "apps/texpile-editor/src/lib/languages/typst/visual/schema.ts:51",
+     "apps/texpile-editor/src/lib/editor/visual/extensions/raw-latex/rawLatexView.ts:239"
+    ],
+    "measurements": {
+     "latex": {
+      "opened": false
+     },
+     "markdown": {
+      "opened": true
+     }
+    }
+   }
+  },
+  {
+   "id": "integrationSpecsVisualOrSource",
+   "covers": [
+    "INV/codemirror-bridge.md:698"
+   ],
+   "question": "Which of the listed integration specs run in the visual editor and which in the source editor?",
+   "answer": "Visual editor (VisualEditor driver, .ProseMirror): chipsAndMath, caretWalk, macroArguments, visualFind, undoScroll. Visual editor opening a chip panel whose CodeMirror is the panel's own (.drawn-chip-panel .cm-content): bibliography, titleBlock. Both editors, switching modes and checking the file on disk: visualEditor. Source editor only (SourceEditor driver, sourceCmView): keyboardShortcuts, completionTyping, completionBib.",
+   "evidence": {
+    "method": "read each spec's imports and locators",
+    "code": [
+     "apps/texpile-editor/tests/integration/chipsAndMath.spec.ts",
+     "apps/texpile-editor/tests/integration/bibliography.spec.ts:21",
+     "apps/texpile-editor/tests/integration/titleBlock.spec.ts:21",
+     "apps/texpile-editor/tests/integration/visualEditor.spec.ts:30",
+     "apps/texpile-editor/tests/integration/keyboardShortcuts.spec.ts:26",
+     "apps/texpile-editor/tests/integration/driver/completionHelpers.ts:3"
+    ]
+   }
+  }
+ ]
+}

@@ -21,6 +21,8 @@ function titleSpec(className: string): NodeSpec {
 export const slideNodeSpecs: Record<string, NodeSpec> = {
 	frame: {
 		content: 'frame_title? frame_subtitle? block+',
+		// slides.css took the last child's bottom margin off, the frame's or block's own padding holds it
+		paragraphSpacing: 'body',
 		group: 'block',
 		definingAsContext: true,
 		allowGapCursor: true,
@@ -38,6 +40,7 @@ export const slideNodeSpecs: Record<string, NodeSpec> = {
 
 	beamer_block: {
 		content: 'beamer_block_title block+',
+		paragraphSpacing: 'body',
 		group: 'block',
 		definingAsContext: true,
 		allowGapCursor: true,
@@ -65,6 +68,7 @@ export const slideNodeSpecs: Record<string, NodeSpec> = {
 	},
 	column: {
 		content: 'block+',
+		paragraphSpacing: 'body',
 		isolating: true,
 		definingAsContext: true,
 		attrs: { form: { default: 'macro' }, options: { default: '' }, width: { default: '' } },

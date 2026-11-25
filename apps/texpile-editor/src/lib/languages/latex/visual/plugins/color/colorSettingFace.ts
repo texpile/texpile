@@ -1,14 +1,14 @@
-import { cssColor, faceElement, tippedFace, type ChipFace } from '$lib/languages/latex/visual/core';
-import './colorSetting.css';
+import { faceElement, setLook } from '$lib/editor/canvas';
+import { coreElement, cssColor, tippedFace, type ChipFace } from '$lib/languages/latex/visual/core';
 
 export function colorSettingFace(color: string, source: string): ChipFace {
-	const dom = faceElement('span', 'drawn-switch drawn-color-setting');
+	const dom = coreElement('span', 'drawn-switch drawn-color-setting');
+	setLook(dom, { display: 'inline-flex', alignItems: 'center', gap: '0.25em' });
 	const css = cssColor(color);
 	if (css) {
-		const swatch = faceElement('span', 'drawn-color-swatch');
-		swatch.style.background = css;
-		dom.append(swatch);
+		const swatch = dom.appendChild(faceElement('span', 'drawn-color-swatch'));
+		setLook(swatch, { width: '0.7em', height: '0.7em', borderRadius: '2px', border: '1px solid var(--faint-text)', backgroundColor: css });
 	}
-	dom.append(color.trim());
+	dom.appendChild(faceElement('span', '', color.trim()));
 	return tippedFace(dom, source);
 }

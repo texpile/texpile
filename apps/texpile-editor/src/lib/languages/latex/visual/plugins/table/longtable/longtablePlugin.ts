@@ -2,10 +2,10 @@ import { Plugin, PluginKey } from 'prosemirror-state';
 import { Decoration, DecorationSet } from 'prosemirror-view';
 import type { Node } from 'prosemirror-model';
 import { TableMap } from 'prosemirror-tables';
+import { setLook, type CanvasWidget, type StyleLook } from '$lib/editor/canvas';
 import { m } from '$lib/paraglide/messages';
 import type { LongtableMarker } from './longtableMarkers';
 import { markerLinesOf, sectionOfRow } from './longtableSections';
-import './longtable.css';
 
 const MARKER_LABELS: Record<LongtableMarker, () => string> = {
 	endfirsthead: () => m.longtable_end_first_head(),
@@ -14,13 +14,30 @@ const MARKER_LABELS: Record<LongtableMarker, () => string> = {
 	endlastfoot: () => m.longtable_end_last_foot()
 };
 
-function markerRow(marker: LongtableMarker, columns: number): HTMLElement {
-	const row = document.createElement('tr');
-	row.className = 'longtable-marker';
-	const cell = row.appendChild(document.createElement('td'));
-	cell.colSpan = columns;
-	cell.textContent = MARKER_LABELS[marker]();
-	return row;
+const MARKER_LOOK: StyleLook = {
+	padding: '0 calc(var(--spacing) * 2)',
+	border: 'none',
+	borderTop: '1px dashed light-dark(var(--color-surface-300), var(--color-surface-700))',
+	backgroundColor: 'transparent',
+	color: 'var(--faint-text)',
+	fontSize: '0.6875rem',
+	lineHeight: '1rem',
+	textAlign: 'right'
+};
+// a head row's words in bold and a foot row's muted, as the section's own rows print them
+const SECTION_STYLES: Record<string, string> = { head: 'font-weight: 600', foot: 'color: var(--muted-text)' };
+
+function markerForm(marker: LongtableMarker, columns: number): CanvasWidget {
+	return {
+		kind: 'tableRow',
+		build(ctx) {
+			const row = ctx.el('tr', 'longtable-marker');
+			const cell = row.appendChild(ctx.el('td', undefined, MARKER_LABELS[marker]()));
+			cell.setAttribute('colspan', String(columns));
+			setLook(cell, MARKER_LOOK);
+			return row;
+		}
+	};
 }
 
 function decorateTable(table: Node, at: number, caption: Node | null, out: Decoration[]): void {
@@ -31,14 +48,21 @@ function decorateTable(table: Node, at: number, caption: Node | null, out: Decor
 	table.forEach((row, offset, i) => {
 		starts.push(at + 1 + offset);
 		const section = sectionOfRow(lines, i);
-		if (section !== 'body') out.push(Decoration.node(at + 1 + offset, at + 1 + offset + row.nodeSize, { class: `longtable-${section}` }));
+		if (section !== 'body')
+			out.push(
+				Decoration.node(at + 1 + offset, at + 1 + offset + row.nodeSize, {
+					class: `longtable-${section}`,
+					style: SECTION_STYLES[section] ?? ''
+				})
+			);
 	});
 	starts.push(at + 1 + table.content.size);
 	lines.forEach((line, i) => {
 		out.push(
-			Decoration.widget(starts[line.before], () => markerRow(line.marker, columns), {
+			Decoration.widget(starts[line.before], () => document.createElement('tr'), {
 				side: -1,
 				ignoreSelection: true,
+				canvas: markerForm(line.marker, columns),
 				key: `longtable-${line.marker}-${line.before}-${columns}-${i}`
 			})
 		);

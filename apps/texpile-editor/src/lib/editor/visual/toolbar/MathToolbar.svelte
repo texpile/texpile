@@ -11,71 +11,26 @@
 </script>
 
 <script lang="ts">
-	import { inChildWindows } from '$lib/childWindows/childWindowRegistry.svelte';
 	import { tip } from '$lib/components/tooltip.svelte';
 	import { ChevronDown, BoxSelect } from '@lucide/svelte';
-	import { editorViewStore } from '$lib/stores/editorStore';
+	import { activeMath } from './activeMath.svelte';
 	import { TextSelection } from 'prosemirror-state';
 	import { m } from '$lib/paraglide/messages';
 	import ToolbarOverflow from './ToolbarOverflow.svelte';
 	import MathSymbolPanel from './MathSymbolPanel.svelte';
 	import { SYMBOL_GROUPS } from './mathSymbols';
 
-	let activeMathfieldRef: HTMLElement | null = $state(null);
+	const isBlockMath = $derived(activeMath.current?.display ?? false);
 
-	// Track the focused mathfield through an EVENT, not a read of document.activeElement: that is not
-	// reactive, so the effect this replaces ran once at mount and never again. Inserting a symbol
-	// makes ProseMirror rebuild the math node, which throws away the element this pointed at - after
-	// which every insert targeted a detached field and did nothing at all, silently. Repro was two
-	// symbols in a row: the first worked, the second vanished.
-	function onFocusIn(e: FocusEvent) {
-		if (e.target instanceof window.MathfieldElement) activeMathfieldRef = e.target;
-	}
-	// an editor in a window of its own
-	inChildWindows('focusin', onFocusIn, true);
-	$effect(() => {
-		document.addEventListener('focusin', onFocusIn, true);
-		if (document.activeElement instanceof window.MathfieldElement) activeMathfieldRef = document.activeElement;
-		return () => document.removeEventListener('focusin', onFocusIn, true);
-	});
-
-	let isBlockMath = $derived.by(() => {
-		if (!activeMathfieldRef) return false;
-		return activeMathfieldRef.closest('.block-math-container') !== null;
-	});
-
+	/** the whole display as a text range, so the format bar's own commands act on it */
 	function selectBlockMath() {
-		const view = editorViewStore.current;
-		if (!view || !activeMathfieldRef) return;
-
-		const container = activeMathfieldRef.closest('.block-math-container');
-		if (!container) return;
-
-		const pos = view.posAtDOM(container, 0);
-		if (pos === null || pos === undefined) return;
-
-		const resolvedPos = view.state.doc.resolve(pos);
-		let nodePos = pos;
-		let node = view.state.doc.nodeAt(pos);
-
-		// pos lands inside the text content, walk up to the block_math itself
-		if (!node || node.type.name !== 'block_math') {
-			for (let d = resolvedPos.depth; d > 0; d--) {
-				const parentNode = resolvedPos.node(d);
-				if (parentNode.type.name === 'block_math') {
-					nodePos = resolvedPos.before(d);
-					node = parentNode;
-					break;
-				}
-			}
-		}
-
-		if (!node || node.type.name !== 'block_math') return;
-
-		const from = nodePos;
-		const to = nodePos + node.nodeSize;
-		const tr = view.state.tr.setSelection(TextSelection.create(view.state.doc, from, to));
-		view.dispatch(tr);
+		const math = activeMath.current;
+		if (!math?.display) return;
+		const { view } = math;
+		const from = math.pos();
+		const node = view.state.doc.nodeAt(from);
+		if (node?.type.name !== 'block_math') return;
+		view.dispatch(view.state.tr.setSelection(TextSelection.create(view.state.doc, from, from + node.nodeSize)));
 		view.focus();
 	}
 
@@ -107,20 +62,6 @@
 		mathToolbarState.openGroup = mathToolbarState.openGroup === groupId ? null : groupId;
 		mathToolbarState.paletteOpen = mathToolbarState.openGroup !== null;
 	}
-
-	// Virtual keyboard disabled (desktop app, physical keyboard always present). Kept for reference
-	// along with virtualKeyboardConfig.ts; re-add the toolbar item to bring it back.
-	// function toggleVirtualKeyboard() {
-	// if (window.mathVirtualKeyboard?.visible) {
-	// window.mathVirtualKeyboard.hide();
-	// } else {
-	// window.mathVirtualKeyboard.show();
-	// }
-	// // resolved live rather than from a cached ref, same as everything else here
-	// const mf = liveMathfield();
-	// if (mf instanceof window.MathfieldElement) mf.focus();
-	// }
-	//
 </script>
 
 {#snippet symbolGroup(item: { payload?: unknown })}
@@ -181,8 +122,6 @@
 		menuLabel={m.toolbar_more_actions_aria()}
 		items={[
 			...SYMBOL_GROUPS.map((g) => ({ id: g.id, payload: g, render: symbolGroup })),
-			// virtual keyboard disabled: desktop app, physical keyboard always present
-			// { id: 'keyboard', pinned: true, render: keyboardItem },
 			...(isBlockMath ? [{ id: 'blockmath', pinned: true, render: blockMathItem }] : [])
 		]}
 	/>

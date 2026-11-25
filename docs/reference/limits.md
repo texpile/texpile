@@ -6,8 +6,6 @@ order: 2
 
 # Limits
 
-Files over 800 KB open in the source editor only.
-
 | Limit                      | Value | What happens                                                              |
 | -------------------------- | ----- | ------------------------------------------------------------------------- |
 | Open tabs                  | 50    | Opening another closes the oldest tab.                                    |

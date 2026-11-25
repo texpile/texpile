@@ -3,21 +3,20 @@
 // structured-clone, so the doc crosses as toJSON() and the client rehydrates via nodeFromJSON.
 import { parseLatexFile, type ParsePhase } from './latexRoundtrip';
 import { parseMarkdownFile } from '$lib/languages/markdown/visual/roundtrip';
+import { scanDocument } from './documentScans';
 import type { PackageTable } from '$lib/languages/latex/parser/signatures/packageTable';
 
 type ParseRequest = {
 	id: number;
 	source: string;
 	projectMacros: string;
-	/** refuse to hand back a doc bigger than this; 0/undefined disables the check. */
-	maxNodes?: number;
 	/** source dialect; defaults to LaTeX. */
 	format?: 'tex' | 'md';
 	table?: PackageTable;
 };
 
 self.onmessage = (event: MessageEvent<ParseRequest>) => {
-	const { id, source, projectMacros, maxNodes, format, table } = event.data;
+	const { id, source, projectMacros, format, table } = event.data;
 	// keep it a call ON self: an unbound postMessage reference throws "Illegal invocation"
 	function post(m: unknown) {
 		return (self as unknown as { postMessage: (m: unknown) => void }).postMessage(m);
@@ -28,18 +27,6 @@ self.onmessage = (event: MessageEvent<ParseRequest>) => {
 		}
 		const parsed =
 			format === 'md' ? parseMarkdownFile(source, projectMacros, onPhase) : parseLatexFile(source, projectMacros, onPhase, table);
-		// ProseMirror renders every node eagerly (no virtualization) and builds a node view per
-		// math/raw/citation node, so an oversized doc locks the renderer for minutes. Decide HERE:
-		// rejecting before toJSON also skips serializing and cloning a doc we'd only throw away.
-		let nodeCount = 0;
-		parsed.doc.descendants(() => {
-			nodeCount++;
-			return true;
-		});
-		if (maxNodes && nodeCount > maxNodes) {
-			post({ type: 'too-complex', id, nodeCount });
-			return;
-		}
 		post({
 			type: 'result',
 			id,
@@ -48,7 +35,8 @@ self.onmessage = (event: MessageEvent<ParseRequest>) => {
 			hadDocumentEnv: parsed.hadDocumentEnv,
 			warnings: parsed.warnings,
 			map: parsed.map,
-			docJSON: parsed.doc.toJSON()
+			docJSON: parsed.doc.toJSON(),
+			scans: scanDocument(source)
 		});
 	} catch (err) {
 		post({

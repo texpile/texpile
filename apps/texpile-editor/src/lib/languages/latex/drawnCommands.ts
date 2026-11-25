@@ -1,5 +1,6 @@
 // the commands the visual editor draws as what they print, and how the text ones look. The parser reads it too: a drawn
 // command is a chip of its own, never merged with the raw code beside it
+import type { StyleLook } from '$lib/editor/canvas';
 import { commonSize } from './knowledge/commands/naturalSize';
 import { ACCENT_COMMANDS, SYMBOLS } from './knowledge/commands/texCharacters';
 import { definesGlossaryEntries, glossaryUse } from './knowledge/commands/glossaryUse';
@@ -26,9 +27,9 @@ export const HORIZONTAL_SPACES: Record<string, number> = {
 export const PAGE_BREAKS = new Set(['newpage', 'clearpage', 'cleardoublepage', 'pagebreak']);
 export const REFERENCES = new Set(['ref', 'eqref', 'cref', 'Cref', 'autoref', 'Autoref', 'pageref', 'nameref', 'Nameref', 'hyperref']);
 
-export type Look = Partial<CSSStyleDeclaration>;
-const MONO = 'var(--font-mono, monospace)';
-const SANS = 'var(--font-sans, sans-serif)';
+export type Look = StyleLook;
+const MONO = 'var(--font-mono)';
+const SANS = 'var(--font-sans)';
 // \textbf{...} and friends, drawn around their argument
 export const STYLED: Record<string, Look> = {
 	textbf: { fontWeight: '700' },
@@ -36,19 +37,19 @@ export const STYLED: Record<string, Look> = {
 	textsl: { fontStyle: 'italic' },
 	emph: { fontStyle: 'italic' },
 	texttt: { fontFamily: MONO },
-	textsc: { fontVariant: 'small-caps' },
+	textsc: { fontVariantCaps: 'small-caps' },
 	textsf: { fontFamily: SANS },
 	textrm: {},
 	textup: { fontStyle: 'normal' },
 	textmd: { fontWeight: '400' },
-	textnormal: { fontStyle: 'normal', fontWeight: '400', fontVariant: 'normal' },
+	textnormal: { fontStyle: 'normal', fontWeight: '400', fontVariantCaps: 'normal' },
 	underline: { textDecoration: 'underline' },
 	uline: { textDecoration: 'underline' },
 	mbox: { whiteSpace: 'nowrap' },
 	hbox: { whiteSpace: 'nowrap' },
 	// classicthesis; the data has no field for how a command looks
 	spacedallcaps: { textTransform: 'uppercase', letterSpacing: '0.1em' },
-	spacedlowsmallcaps: { textTransform: 'lowercase', fontVariant: 'small-caps', letterSpacing: '0.1em' },
+	spacedlowsmallcaps: { textTransform: 'lowercase', fontVariantCaps: 'small-caps', letterSpacing: '0.1em' },
 	text: {},
 	fbox: { border: 'var(--default-border-width) solid currentColor', padding: '0 0.2em' },
 	textsuperscript: { verticalAlign: 'super', fontSize: '0.75em' },
@@ -65,15 +66,15 @@ export const SWITCHES: Record<string, Look> = {
 	slshape: { fontStyle: 'italic' },
 	tt: { fontFamily: MONO },
 	ttfamily: { fontFamily: MONO },
-	sc: { fontVariant: 'small-caps' },
-	scshape: { fontVariant: 'small-caps' },
+	sc: { fontVariantCaps: 'small-caps' },
+	scshape: { fontVariantCaps: 'small-caps' },
 	sf: { fontFamily: SANS },
 	sffamily: { fontFamily: SANS },
 	rm: {},
 	rmfamily: {},
 	upshape: { fontStyle: 'normal' },
 	mdseries: { fontWeight: '400' },
-	normalfont: { fontStyle: 'normal', fontWeight: '400', fontVariant: 'normal' },
+	normalfont: { fontStyle: 'normal', fontWeight: '400', fontVariantCaps: 'normal' },
 	tiny: { fontSize: '0.5em' },
 	scriptsize: { fontSize: '0.7em' },
 	footnotesize: { fontSize: '0.8em' },

@@ -1,7 +1,7 @@
 // Tab goes to the next empty slot or opens math search, Ctrl+Space opens it as in the source editor, and either
 // again closes it; an open search gets keys before MathLive, and before the source editor (sourceMathSearch.ts)
-import type { MathfieldElement } from 'mathlive';
-import { mathSearch } from './mathSearch.svelte';
+import type { HeadlessMathfield } from 'mathlive';
+import { mathSearch, type MathSearchPlace } from './mathSearch.svelte';
 import { placeholderAhead } from '$lib/editor/snippets/visual/mathliveSnippets';
 import { isMac } from '$lib/platform';
 import { deleteBy, moveBy, moveTo, selectAll } from './query/queryBox';
@@ -29,7 +29,7 @@ function isTab(event: KeyboardEvent): boolean {
 	return event.key === 'Tab' && !event.shiftKey && plain(event);
 }
 
-function opensSearch(event: KeyboardEvent, field: MathfieldElement): boolean {
+function opensSearch(event: KeyboardEvent, field: HeadlessMathfield): boolean {
 	return (isTab(event) || isSearchKey(event)) && field.mode === 'math' && !field.readOnly && !suggestionsShowing();
 }
 
@@ -129,16 +129,21 @@ export function takeSearchKey(event: KeyboardEvent): boolean {
 	return false;
 }
 
-/** the field's keydown, in the capture phase so it runs before MathLive's */
-export function mathSearchKeydown(event: KeyboardEvent): void {
-	const field = event.currentTarget as MathfieldElement;
+/** a formula's key before MathLive's: true when the search took it, opened it or swallowed Shift+Tab */
+export function mathSearchKey(
+	event: KeyboardEvent,
+	field: HeadlessMathfield,
+	display: boolean,
+	place: () => MathSearchPlace | null
+): boolean {
 	if (mathSearch.field === field) {
 		// a modifier on its own is the start of a key, not one
-		if (MODIFIERS.has(event.key) || !takeSearchKey(event)) return;
-	} else if (opensSearch(event, field)) {
+		return !MODIFIERS.has(event.key) && takeSearchKey(event);
+	}
+	if (opensSearch(event, field)) {
 		if (isTab(event) && placeholderAhead(field)) field.executeCommand('moveToNextPlaceholder');
-		else mathSearch.open(field, field.syntax === 'typst' ? 'typst' : 'latex', field.closest('.block-math-container') !== null);
-	} else if (!isShiftTab(event)) return;
-	event.preventDefault();
-	event.stopImmediatePropagation();
+		else mathSearch.open(field, field.syntax === 'typst' ? 'typst' : 'latex', display, place);
+		return true;
+	}
+	return isShiftTab(event);
 }

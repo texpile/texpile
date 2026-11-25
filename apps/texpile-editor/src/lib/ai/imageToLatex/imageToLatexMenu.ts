@@ -69,20 +69,31 @@ function pasteAsLatexItem(target: () => ImageToLatexTarget): ContextMenuItem[] {
 	];
 }
 
+/** the picture the pointer is on: the image node itself, or its caption */
+function imageUnder(view: EditorView, at: { pos: number; inside: number } | null): { src: string; at: number } | null {
+	if (!at) return null;
+	const doc = view.state.doc;
+	for (const pos of [at.inside, at.pos]) {
+		const node = pos >= 0 ? doc.nodeAt(pos) : null;
+		if (node?.type.name === 'image') return { src: String(node.attrs.src), at: pos };
+	}
+	const $pos = doc.resolve(at.pos);
+	for (let d = $pos.depth; d > 0; d--)
+		if ($pos.node(d).type.name === 'image') return { src: String($pos.node(d).attrs.src), at: $pos.before(d) };
+	return null;
+}
+
 /** both items for the visual editor's menu: Convert on the picture under the pointer, Paste as LaTeX at the caret */
-export function visualImageItems(at: EventTarget | null, view: EditorView, dialect: ImageDialect): ContextMenuItem[] {
+export function visualImageItems(at: { pos: number; inside: number } | null, view: EditorView, dialect: ImageDialect): ContextMenuItem[] {
 	if (!imageReaderAvailable() || !view.editable) return [];
-	const root = at instanceof Element ? at.closest('.imagePluginRoot') : null;
-	const img = root?.querySelector<HTMLImageElement>('img.imagePluginImg');
+	const image = imageUnder(view, at);
 	const items: ContextMenuItem[] = [];
-	if (root && img && !img.hidden && img.currentSrc) {
-		const pos = view.posAtDOM(root, 0);
-		const $pos = view.state.doc.resolve(pos);
-		const after = $pos.depth ? $pos.after(1) : pos + (view.state.doc.nodeAt(pos)?.nodeSize ?? 0);
-		const url = img.currentSrc;
+	if (image) {
+		const $at = view.state.doc.resolve(image.at);
+		const after = $at.depth ? $at.after(1) : image.at + (view.state.doc.nodeAt(image.at)?.nodeSize ?? 0);
 		items.push(
 			...convertImageItem(
-				async () => url,
+				() => shownUrl(image.src),
 				() => visualImageTarget(view, dialect, after)
 			)
 		);

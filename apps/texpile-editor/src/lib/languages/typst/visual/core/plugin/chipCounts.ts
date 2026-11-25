@@ -1,6 +1,6 @@
 // what a chip adds to each counter, in the order its calls stand: the number a call prints, or null for the counter's next
 import type { SyntaxNode } from '@lezer/common';
-import type { ChipCounts } from '$lib/editor/visual/extensions/drawnChips/footnoteNumbers';
+import type { ChipCounts } from '$lib/editor/visual/extensions/drawnChips/footnote/footnoteNumbers';
 import { typstPlugins } from '../../typstPlugins';
 import { typstSyntax } from '../reading/typstCall';
 import { listedPlugins } from './pluginMap';

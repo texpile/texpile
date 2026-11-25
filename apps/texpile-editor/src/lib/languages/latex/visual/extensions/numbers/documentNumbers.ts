@@ -2,15 +2,15 @@
 import type { Node as PMNode } from 'prosemirror-model';
 import type { CompiledEntry } from '$lib/editor/visual/extensions/tableofcontents/compiled/compiledNumbers';
 import { matchedNumbers } from '$lib/editor/visual/extensions/tableofcontents/compiled/compiledNumbers';
-import { isSingleLabelEnvironment, numberedRowCount } from '$lib/editor/visual/extensions/mathlivebridge/mathEnvironments';
+import { isSingleLabelEnvironment, shownRowNumbers, type RowNumber } from '$lib/editor/visual/extensions/mathlivebridge/mathEnvironments';
 import type { CounterChange, NumberingScheme, WithinChange } from './numberingScheme';
 import { ownStyleOf, parseForm, plainPrinted, readAnchor, renderForm, withOwnStyle, type NumberForm } from './numberForms';
 import { printedValue } from './printedNumber';
 import { eventsIn, type Item, type NumberEvent } from './numberEvents';
-import type { ChipCountsOf } from '$lib/editor/visual/extensions/drawnChips/footnoteNumbers';
+import type { ChipCountsOf } from '$lib/editor/visual/extensions/drawnChips/footnote/footnoteNumbers';
 import { HEADINGS } from './numberedNodes';
 import { eventsBefore, withReadIn, type NumberedFiles } from './readInEvents';
-import { tagIn } from './tagText';
+import { printedTag, tagIn } from './tagText';
 import { codeOnly } from '$lib/languages/latex/texCode';
 import { floatTypes } from '$lib/languages/latex/knowledge/registries/floatTypes';
 
@@ -334,16 +334,20 @@ class Count {
 		// a single equation's \tag prints instead of a number and steps nothing
 		if (single && tag) {
 			this.note(item.node.attrs.label as string | null, tag.text, 'equation');
-			return tag.text === null ? [] : [tag.starred ? tag.text : `(${tag.text})`];
+			const printed = printedTag(tag);
+			return printed === null ? [] : [printed];
 		}
 		if (single && NONUMBER.test(text)) return [];
-		// a tag on one line of several is a count the editor does not follow
-		if (tag) c.sure = false;
-		const lines = single ? 1 : numberedRowCount(text);
+		const rows: Exclude<RowNumber, 'none'>[] = single ? ['counted'] : shownRowNumbers(text);
 		const labels = (item.node.attrs.lineLabels as string[] | null) ?? [];
 		const numbers: string[] = [];
-		for (let i = 0; i < lines; i++) {
+		for (const [i, row] of rows.entries()) {
 			const label = (single ? item.node.attrs.label : labels[i]) as string | null;
+			if (row !== 'counted') {
+				this.note(label, row.text, 'equation');
+				numbers.push(printedTag(row) ?? '');
+				continue;
+			}
 			const anchored = this.labelAnchor(label);
 			let n: string | null;
 			if (this.sub) {
@@ -355,9 +359,10 @@ class Count {
 				this.restart('equation');
 			}
 			this.note(label, n, 'equation');
-			if (n) numbers.push(`(${n})`);
+			numbers.push(n ? `(${n})` : '');
 		}
-		return numbers;
+		// one entry per row that shows a number, so each lands on its row; an unknown one is empty
+		return numbers.some(Boolean) ? numbers : [];
 	}
 }
 

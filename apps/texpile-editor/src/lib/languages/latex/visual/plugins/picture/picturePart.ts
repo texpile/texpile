@@ -1,7 +1,7 @@
 import type { SyntaxNode } from '@lezer/common';
 import { tikzLanguage, type ChipFace } from '$lib/languages/latex/visual/core';
 import { m } from '$lib/paraglide/messages';
-import { figureCardFace } from './figureCardFace.svelte';
+import { figureCardFace } from './figureCardFace';
 import { pictureFace } from './pictureFace';
 
 export function xyPictureFace(): ChipFace {

@@ -263,7 +263,7 @@ export const baseNodes = {
 	// table_header nodes
 	...tableFamilyNodes,
 
-	list: createListSpec()
+	list: { ...createListSpec(), paragraphSpacing: 'list' }
 };
 
 // raw LaTeX between \begin{itemize} and the first \item (\setlength\itemsep{0pt} setup is

@@ -1,6 +1,5 @@
+import { faceElement, setLook, type StyleLook } from '$lib/editor/canvas';
 import {
-	tip,
-	faceElement,
 	type ChipFace,
 	type TypstDrawer,
 	typstSidesCss,
@@ -13,7 +12,6 @@ import {
 } from '$lib/languages/typst/visual/core';
 import { readTable, type TableRead } from './tableCall';
 import { placeTable, type TableLine } from './tableGrid';
-import './tableFace.css';
 
 const DEFAULT_STROKE = '1px solid currentColor';
 const DEFAULT_INSET = '0.3em 0.5em';
@@ -48,13 +46,15 @@ export function tableFace(source: string, drawer: TypstDrawer): ChipFace | null 
 	const dom = faceElement('div', 'drawn-typst-table');
 	const columns = namedArg(call, 'columns');
 	const tracks = columnsCss(call, columns);
-	if (tracks) dom.style.gridTemplateColumns = tracks;
-	if (tracks?.includes('fr')) dom.style.width = '100%';
 	const stroke = cellStroke(read);
-	if (stroke) {
-		dom.style.setProperty('--typ-stroke', stroke);
-		dom.dataset.stroke = '';
-	}
+	setLook(dom, {
+		display: 'grid',
+		width: tracks?.includes('fr') ? '100%' : 'fit-content',
+		maxWidth: '100%',
+		margin: '0.5em 0',
+		...(tracks ? { gridTemplateColumns: tracks } : {}),
+		...(stroke ? { borderTop: stroke, borderLeft: stroke } : {})
+	});
 	const align = namedArg(call, 'align');
 	const whole = align && align.kind !== 'Array' ? horizontalAlignment(align.value) : null;
 	const perColumn = columnAlignments(align);
@@ -62,31 +62,33 @@ export function tableFace(source: string, drawer: TypstDrawer): ChipFace | null 
 	const padding = inset ? typstSidesCss(inset.node, call.source) : null;
 	for (const cell of grid.cells) {
 		const box = faceElement('div', 'drawn-typst-cell');
-		box.style.gridColumn = `${cell.col + 1} / span ${Math.min(cell.colspan, cols - cell.col)}`;
-		box.style.gridRow = `${cell.row + 1} / span ${cell.rowspan}`;
-		box.style.padding = padding ?? DEFAULT_INSET;
 		const side = perColumn ? perColumn[cell.col] : whole;
-		if (side) box.style.textAlign = side;
+		const look: { -readonly [K in keyof StyleLook]: StyleLook[K] } = {
+			minWidth: '0',
+			gridColumn: `${cell.col + 1} / span ${Math.min(cell.colspan, cols - cell.col)}`,
+			gridRow: `${cell.row + 1} / span ${cell.rowspan}`,
+			padding: padding ?? DEFAULT_INSET,
+			...(stroke ? { borderRight: stroke, borderBottom: stroke } : {}),
+			...(side ? { textAlign: side } : {})
+		};
 		for (const line of grid.hlines) {
-			if (line.at === cell.row) box.style.borderTop = lineBorder(line);
-			if (line.at === grid.rows && cell.row + cell.rowspan === grid.rows) box.style.borderBottom = lineBorder(line);
+			if (line.at === cell.row) look.borderTop = lineBorder(line);
+			if (line.at === grid.rows && cell.row + cell.rowspan === grid.rows) look.borderBottom = lineBorder(line);
 		}
 		for (const line of grid.vlines) {
-			if (line.at === cell.col) box.style.borderLeft = lineBorder(line);
-			if (line.at === cols && cell.col + cell.colspan === cols) box.style.borderRight = lineBorder(line);
+			if (line.at === cell.col) look.borderLeft = lineBorder(line);
+			if (line.at === cols && cell.col + cell.colspan === cols) look.borderRight = lineBorder(line);
 		}
+		setLook(box, look);
 		box.append(cell.drawing.dom);
 		dom.append(box);
 	}
 	const drawings = grid.cells.map((cell) => cell.drawing);
-	const tipped = tip(dom, read.source);
+	dom.hint = read.source;
 	return {
 		dom,
 		line: true,
 		decorate: (decorations) => drawings.forEach((drawn) => drawn.faces.forEach((face) => face.decorate?.(decorations))),
-		destroy() {
-			destroyDrawings(drawings);
-			tipped.destroy();
-		}
+		destroy: () => destroyDrawings(drawings)
 	};
 }

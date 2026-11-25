@@ -1,4 +1,4 @@
-// Column widths for Typst tables: the DOM half of the resize.
+// Column widths for Typst tables, measured on the canvas layout.
 //
 // Everything here exists because `fr` is a SHARE, and a share can only be turned into pixels once
 // something has measured the table. Two jobs, both needing that measurement:
@@ -15,8 +15,10 @@
 // (table.style.width), so being a few pixels over the container is the difference between a table
 // that fits and one with a scrollbar under it.
 import { Plugin, PluginKey } from 'prosemirror-state';
+import { GapCursor } from 'prosemirror-gapcursor';
 import type { EditorView } from 'prosemirror-view';
 import type { Node } from 'prosemirror-model';
+import type { VisualView } from '$lib/editor/canvas';
 import {
 	columnWidthsOf,
 	distribute,
@@ -39,44 +41,22 @@ function gridWidth(table: Node): number {
 	return cols;
 }
 
-/**
- * The width the table is actually allowed to occupy: the nearest ancestor that scrolls or clips.
- *
- * Not the TableView wrapper. App CSS gives `.tableWrapper` `overflow: visible !important` (it has
- * to, or the boundary swallows drag selections), so it stretches to fit whatever the table is -
- * measuring it just reads the oversized table back and any overflow becomes permanent. The element
- * that constrains is `.table-wrapper-content` for a captioned table, and the editor's own content
- * box for a bare one; both are found by looking for the first ancestor that is not `visible`.
- */
-function availableWidth(dom: HTMLElement): number {
-	for (let el = dom.parentElement; el; el = el.parentElement) {
-		if (getComputedStyle(el).overflowX !== 'visible') return el.clientWidth;
-		if (el.classList.contains('ProseMirror')) return el.clientWidth;
-	}
-	return dom.clientWidth;
-}
-
-/** per-column rendered widths, from the first row that spans nothing. */
-function measure(dom: HTMLElement, cols: number): { widths: number[]; total: number } | null {
-	const table = dom.querySelector('table');
-	const row = dom.querySelector('tr');
-	if (!table || !row) return null;
+/** per-column drawn widths from the first row, and the width of the table's block, which the columns may take */
+function measure(view: EditorView, pos: number, table: Node, cols: number): { widths: number[]; total: number } | null {
+	const { geometry } = (view as unknown as VisualView).canvas;
+	const block = geometry.nodeRect(pos);
+	const row = table.firstChild;
+	if (!block || block.estimated || !row) return null;
 	const widths: number[] = [];
-	for (const cell of Array.from(row.children) as HTMLElement[]) {
-		const span = Number(cell.getAttribute('colspan') ?? 1);
-		const w = cell.getBoundingClientRect().width;
-		if (!(w > 0)) return null;
-		for (let i = 0; i < span; i++) widths.push(w / span);
-	}
-	if (widths.length !== cols) return null;
-	// The constraining ancestor, not the table and not its immediate wrapper - either of those is
-	// as wide as the table already is, so spending that width makes an overflow permanent.
-	//
-	// The table's own chrome is measured rather than assumed: with border-collapse the outer border
-	// can sit outside the column boxes, and a single stray pixel is a visible scrollbar.
-	const cellSum = widths.reduce((a, b) => a + b, 0);
-	const chrome = Math.max(0, Math.ceil(table.getBoundingClientRect().width - cellSum));
-	const total = Math.floor(availableWidth(dom)) - chrome;
+	let missing = false;
+	row.forEach((cell, offset) => {
+		const span = Number(cell.attrs.colspan ?? 1);
+		const width = geometry.nodeRect(pos + 2 + offset)?.rect.width ?? 0;
+		if (!(width > 0)) missing = true;
+		for (let i = 0; i < span; i++) widths.push(width / span);
+	});
+	if (missing || widths.length !== cols) return null;
+	const total = Math.floor(block.rect.width);
 	return total > 0 ? { widths, total } : null;
 }
 
@@ -120,6 +100,9 @@ function applyWidths(view: EditorView, table: Node, pos: number, cols: number, w
 			c += span;
 		});
 	});
+	// widths change no position: a gap cursor stays, though prosemirror-gapcursor's own check refuses one beside a display
+	const { selection } = view.state;
+	if (changed && selection instanceof GapCursor) tr.setSelection(new GapCursor(tr.doc.resolve(selection.head)));
 	if (changed) view.dispatch(tr.setMeta('addToHistory', false));
 	return changed;
 }
@@ -142,9 +125,7 @@ function sync(view: EditorView): boolean {
 		const asWritten = !!tracks && (sized === 0 || followsTracks(columnWidthsOf(node, cols), tracks));
 		if (sized === 0 && !(asWritten && tracks.some((t) => t.kind !== 'auto'))) return false;
 
-		const dom = view.nodeDOM(pos);
-		if (!(dom instanceof HTMLElement)) return false;
-		const m = measure(dom, cols);
+		const m = measure(view, pos, node, cols);
 		if (!m) {
 			complete = false; // laid out later; try again
 			return false;

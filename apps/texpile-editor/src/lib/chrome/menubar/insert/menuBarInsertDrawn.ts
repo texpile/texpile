@@ -6,12 +6,14 @@
 import { Fragment, Slice, type Node as PMNode } from 'prosemirror-model';
 import { NodeSelection, TextSelection, type Transaction } from 'prosemirror-state';
 import type { EditorView } from 'prosemirror-view';
+import type { VisualView } from '$lib/editor/canvas';
 import type { EditorView as CMView } from '@codemirror/view';
 import { editorViewStore, templateFeaturesStore } from '$lib/stores/editorStore';
 import { projectIntelStore } from '$lib/stores/projectIntel';
 import { activeFilePath, mainFile, texFiles } from '$lib/workspace/workspaceStore';
 import { relativeTo } from '$lib/workspace/fileSystem';
-import { drawnChipOf } from '$lib/editor/visual/extensions/drawnChips/DrawnChipView';
+import { drawnChipOf } from '$lib/editor/visual/extensions/drawnChips/chipShows';
+import { openDrawnChip } from '$lib/editor/visual/extensions/drawnChips/drawnChipView';
 import { openPopoverOf } from '$lib/editor/visual/extensions/popoverFocus/atomPopovers';
 import { sanitizeLabel } from '$lib/editor/visual/label';
 import { renderChildren } from '$lib/languages/latex/serializer/latexSerializer';
@@ -145,8 +147,9 @@ function openPanelOfSelected(view: EditorView): void {
 	function open(): void {
 		requestAnimationFrame(() => {
 			const { selection } = view.state;
-			if (!(selection instanceof NodeSelection) || openPopoverOf(selection.node)) return;
-			drawnChipOf(selection.node)?.openPanel();
+			if (view.isDestroyed || !(selection instanceof NodeSelection)) return;
+			if (openPopoverOf(view as unknown as VisualView, selection.from)) return;
+			if (drawnChipOf(selection.node)) openDrawnChip(view, selection.from);
 		});
 	}
 	// an in-app menu hands focus back to its trigger a tick after our item ran, and a panel opened before

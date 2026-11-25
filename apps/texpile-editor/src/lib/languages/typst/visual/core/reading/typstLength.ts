@@ -1,7 +1,7 @@
 // a Typst length as the editor draws it (1em, 2.5cm, 50%, 1fr, and sums of them such as 1em + 2pt), read off the
 // parsed expression so only what Typst itself reads as a length counts
 import type { SyntaxNode } from '@lezer/common';
-import type { DrawnLength } from '$lib/editor/visual/extensions/drawnChips/spaceFace';
+import type { DrawnLength } from '$lib/editor/visual/extensions/drawnChips/space/spaceFace';
 import { positionalArgs, readTypstCall } from './typstCall';
 
 // points per unit, a Typst point being 1/72 in; the editor's em stands for the default 11pt text

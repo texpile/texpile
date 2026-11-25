@@ -272,7 +272,20 @@ function callsOver(text: string, tokens: CommandToken[], roles: readonly Argumen
 /** every call in `text` of a command with an argument of one of `roles`, nested ones too, with all the arguments it
  * writes; `own` holds the document's own commands, read over the data's; comments are the caller's to mask */
 export function callsIn(text: string, roles: readonly ArgumentRole[], own?: CommandReadings): CommandCall[] {
+	if (text.length < SHORT_TEXT && !namesAny(text, roles, own)) return [];
 	return callsOver(text, commandTokensOf(text).list, roles, own);
+}
+
+const NAMED = /\\([a-zA-Z@]+)/g;
+// a file's own tokens are kept with its tree, and scanning its words again cost more than they did
+const SHORT_TEXT = 4096;
+
+// a short text naming no such command is not parsed: a long paper's thousands of chips were, one tree each, for a second
+function namesAny(text: string, roles: readonly ArgumentRole[], own?: CommandReadings): boolean {
+	const names = namesFor(roles);
+	for (const [, name] of text.matchAll(NAMED))
+		if (names.has(name) || (own && Object.hasOwn(own, name) && holds(own[name], roles))) return true;
+	return false;
 }
 
 // an enclosing call may have commands in its arguments, so a few before the position are tried

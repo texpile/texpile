@@ -6,19 +6,11 @@ import type { Node as PMNode } from 'prosemirror-model';
 import type { PmSuggestionRange } from './pmSuggestionsPlace';
 import { editMode, mapSuggestionEdges, noteTypedSide, typingSide } from '$lib/comments/activeSuggestions.svelte';
 import type { CaretSide } from '$lib/comments/oldWordsCaret';
-import {
-	breakMark,
-	goneBlocksElement,
-	lineEnd,
-	oldNodeElement,
-	oldWordsElement,
-	replacedPicture,
-	suggestionTint
-} from './pmSuggestionWidgets';
-import { rangeAttrs } from '$lib/editor/visual/highlight/paintRange';
+import { rangeAttrs, rangeSpec } from '$lib/editor/visual/highlight/paintRange';
 import { isSelfRendered } from '../diff/selfRendered';
 import { liftPosition } from './liftPosition';
-import { caretSideWhereItLanded, oldWordsClick, oldWordsKeyDown } from './pmOldWordsCaret';
+import { breakForm, goneBlocksForm, LINE_END, oldWordsForm, suggestionTint, wasNodeForm, widgetHolder } from './pmSuggestionForms';
+import { oldWordsClick } from './pmOldWordsCaret';
 import { hasOldWords, pmSuggestionsKey, type PmSuggestionsMeta, type PmSuggestionsState } from './pmSuggestionsState';
 
 export { pmSuggestionsKey };
@@ -59,21 +51,22 @@ function build(doc: PMNode, ranges: PmSuggestionRange[], focused: string | null,
 			if (now?.nodeSize !== r.to - r.from) continue;
 			const { was, old } = r;
 			if (was) {
-				const picture = replacedPicture(was, now);
 				decos.push(
-					Decoration.widget(r.from, () => oldNodeElement(was, id, on, picture), {
+					Decoration.widget(r.from, widgetHolder, {
 						side: -1,
 						ignoreSelection: true,
-						key: `was-${id}-${on}-${picture !== null}-${was.toString()}`
+						canvas: wasNodeForm(schema, was, id, on),
+						key: `was-${id}-${on}-${was.toString()}`
 					})
 				);
 			}
 			// the words the node replaced, struck out before it
 			if (old.length)
 				decos.push(
-					Decoration.widget(r.from, () => oldWordsElement(schema, old, id, on), {
+					Decoration.widget(r.from, widgetHolder, {
 						side: -1,
 						ignoreSelection: true,
+						canvas: oldWordsForm(schema, old, id, on),
 						key: `old-${id}-${on}-node-${oldKey(r)}`
 					})
 				);
@@ -111,51 +104,44 @@ function build(doc: PMNode, ranges: PmSuggestionRange[], focused: string | null,
 			function side(k: number) {
 				return after ? k - 5 : k;
 			}
-			// the line breaker reads the two by their part, as one run of offsets
 			function words(runs: typeof head, k: number, part: 'head' | 'tail') {
-				const start = part === 'tail' ? head.reduce((n, run) => n + run.text.length, 0) : 0;
 				decos.push(
-					Decoration.widget(
-						r.from,
-						() => {
-							const element = oldWordsElement(schema, runs, id, on, start);
-							element.dataset.part = part;
-							return element;
-						},
-						{ side: side(k), ignoreSelection: true, key: `gone-${part}-${id}-${on}-${after}-${runs.map((run) => run.text).join('')}` }
-					)
+					Decoration.widget(r.from, widgetHolder, {
+						side: side(k),
+						ignoreSelection: true,
+						canvas: oldWordsForm(schema, runs, id, on),
+						key: `gone-${part}-${id}-${on}-${after}-${runs.map((run) => run.text).join('')}`
+					})
 				);
 			}
 			if (head.length) words(head, 1, 'head');
 			if (split)
 				decos.push(
-					Decoration.widget(r.from, () => breakMark('removed', id, on), {
+					Decoration.widget(r.from, widgetHolder, {
 						side: side(2),
 						ignoreSelection: true,
+						canvas: breakForm('removed', on),
 						key: `gone-brk-${id}-${on}-${after}`
 					})
 				);
 			const gone = blocks.map((b) => b.toString()).join('');
 			if (split)
 				decos.push(
-					Decoration.widget(
-						r.from,
-						() => {
-							if (!blocks.length) return lineEnd(id);
-							const box = goneBlocksElement(schema, blocks, id, on);
-							box.dataset.lineEnd = '';
-							return box;
-						},
-						{ side: side(3), ignoreSelection: true, key: `gone-end-${id}-${on}-${after}-${gone}` }
-					)
+					Decoration.widget(r.from, widgetHolder, {
+						side: side(3),
+						ignoreSelection: true,
+						canvas: blocks.length ? goneBlocksForm(blocks, id, on) : LINE_END,
+						key: `gone-end-${id}-${on}-${after}-${gone}`
+					})
 				);
 			if (tail.length) words(tail, 4, 'tail');
 			// before the old form of a node that starts there, which stood after them
 			if (blocks.length && !split)
 				decos.push(
-					Decoration.widget(at, () => goneBlocksElement(schema, blocks, id, on), {
+					Decoration.widget(at, widgetHolder, {
 						side: lead ? -1 : -2,
 						ignoreSelection: true,
+						canvas: goneBlocksForm(blocks, id, on),
 						key: `gone-${id}-${on}-${gone}`
 					})
 				);
@@ -164,26 +150,33 @@ function build(doc: PMNode, ranges: PmSuggestionRange[], focused: string | null,
 		if (r.brk) {
 			const { brk, old } = r;
 			decos.push(
-				Decoration.widget(r.from, () => breakMark(brk, id, on), {
+				Decoration.widget(r.from, widgetHolder, {
 					side: brk === 'added' ? 1 : -2,
 					ignoreSelection: true,
+					canvas: breakForm(brk, on),
 					key: `brk-${id}-${on}-${brk}`
 				})
 			);
 			// after the space that joined the two, if one did
 			if (brk === 'removed')
-				decos.push(Decoration.widget(r.to, () => lineEnd(id), { side: -1, ignoreSelection: true, key: `brk-end-${id}` }));
+				decos.push(Decoration.widget(r.to, widgetHolder, { side: -1, ignoreSelection: true, canvas: LINE_END, key: `brk-end-${id}` }));
 			if (old.length)
 				decos.push(
-					Decoration.widget(r.from, () => oldWordsElement(schema, old, id, on), {
+					Decoration.widget(r.from, widgetHolder, {
 						side: 1,
 						ignoreSelection: true,
+						canvas: oldWordsForm(schema, old, id, on),
 						key: `old-${id}-${on}-brk-${oldKey(r)}`
 					})
 				);
 			if (r.to > r.from)
 				decos.push(
-					Decoration.inline(r.from, r.to, { ...rangeAttrs(suggestionTint('new', on), `pm-suggest-new${focus}`), 'data-comment': id })
+					Decoration.inline(
+						r.from,
+						r.to,
+						{ ...rangeAttrs(suggestionTint('new', on), `pm-suggest-new${focus}`), 'data-comment': id },
+						rangeSpec(suggestionTint('new', on))
+					)
 				);
 			continue;
 		}
@@ -191,16 +184,22 @@ function build(doc: PMNode, ranges: PmSuggestionRange[], focused: string | null,
 			const { old } = r;
 			const side = caret?.at === r.from ? caret.side : typingSide(r);
 			decos.push(
-				Decoration.widget(r.from, () => oldWordsElement(schema, old, id, on), {
+				Decoration.widget(r.from, widgetHolder, {
 					side: side === 'after' ? -1 : 1,
 					ignoreSelection: true,
+					canvas: oldWordsForm(schema, old, id, on),
 					key: `old-${id}-${on}-${side}-${oldKey(r)}`
 				})
 			);
 		}
 		if (r.to > r.from) {
 			decos.push(
-				Decoration.inline(r.from, r.to, { ...rangeAttrs(suggestionTint('new', on), `pm-suggest-new${focus}`), 'data-comment': id })
+				Decoration.inline(
+					r.from,
+					r.to,
+					{ ...rangeAttrs(suggestionTint('new', on), `pm-suggest-new${focus}`), 'data-comment': id },
+					rangeSpec(suggestionTint('new', on))
+				)
 			);
 			// a formula or a chip keeps its source as content, so an inline decoration lands on text nobody draws
 			doc.nodesBetween(r.from, r.to, (node, pos) => {
@@ -221,7 +220,6 @@ function build(doc: PMNode, ranges: PmSuggestionRange[], focused: string | null,
 }
 
 export function pmSuggestions(): Plugin<PmSuggestionsState> {
-	let mounted: EditorView | null = null;
 	return new Plugin<PmSuggestionsState>({
 		key: pmSuggestionsKey,
 		state: {
@@ -254,14 +252,8 @@ export function pmSuggestions(): Plugin<PmSuggestionsState> {
 				return { ...value, ranges, caret, deco: build(tr.doc, ranges, value.focused, caret), mode };
 			}
 		},
-		appendTransaction: (trs, _before, state) => (mounted ? caretSideWhereItLanded(mounted, trs, state) : null),
-		view(view) {
-			mounted = view;
-			return { destroy: () => (mounted = null) };
-		},
 		props: {
 			decorations: (state) => pmSuggestionsKey.getState(state)?.deco ?? DecorationSet.empty,
-			handleKeyDown: oldWordsKeyDown,
 			handleClick: oldWordsClick
 		}
 	});

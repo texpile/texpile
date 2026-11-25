@@ -26,3 +26,9 @@ export function tagIn(code: string): EquationTag | null {
 	const body = groupAt(code, match.index + match[0].length);
 	return body === null ? null : { starred: match[1] === '*', text: plainTagText(body) };
 }
+
+/** the tag as LaTeX prints it: in parentheses unless starred, null when the editor cannot print it */
+export function printedTag(tag: EquationTag): string | null {
+	if (tag.text === null) return null;
+	return tag.starred ? tag.text : `(${tag.text})`;
+}

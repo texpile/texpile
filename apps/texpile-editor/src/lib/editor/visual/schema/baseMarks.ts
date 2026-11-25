@@ -140,6 +140,7 @@ export const baseMarks = {
 	} as MarkSpec,
 
 	code: {
+		code: true,
 		// an inline raw chip is a <code> too, and mark rules are tried before node rules
 		parseDOM: [{ tag: 'code', getAttrs: (dom: HTMLElement) => (dom.classList.contains('inline-latex') ? false : null) }],
 		toDOM() {

@@ -1,6 +1,7 @@
 import { expect, test } from '@playwright/test';
 import { useTexpile } from './driver/useTexpile';
 import { VisualEditor } from './driver/visualEditor';
+import { inCanvas, settled } from './canvas/canvasPage';
 
 const texpile = useTexpile({
 	files: {
@@ -16,7 +17,7 @@ function visual(): VisualEditor {
 }
 
 async function openFind(v: VisualEditor, query: string): Promise<void> {
-	await v.page.locator('.ProseMirror p').first().click();
+	await v.caretAfter('The sum');
 	await v.page.keyboard.press('ControlOrMeta+f');
 	await expect(v.page.getByRole('textbox', { name: 'Find' })).toBeFocused();
 	await v.page.keyboard.type(query);
@@ -38,4 +39,32 @@ test('stepping onto a formula leaves the keyboard in the find field', async () =
 	await expect(v.page.getByRole('textbox', { name: 'Find' })).toBeFocused();
 	await v.page.keyboard.press('Enter');
 	await expect(status).toHaveText(first ?? '');
+});
+
+/** the find tints the canvas drew over the paragraph: [yellow match fills, orange current fills] */
+function findFills(v: VisualEditor): Promise<[number, number]> {
+	return inCanvas(v.page, ({ probe }) => {
+		const ops = probe.drawList(0).filter((op) => op.op === 'fillRect');
+		const match = ops.filter((op) => /^rgba\(255, 255, 0, 0\.4/.test(op.color ?? '')).length;
+		const current = ops.filter((op) => /^rgba\(255, 128, 0, 0\.6/.test(op.color ?? '')).length;
+		return [match, current] as [number, number];
+	});
+}
+
+test('the matches are tinted on the canvas, the current one in its own color, and the tint goes when find closes', async () => {
+	const v = visual();
+	await v.open('find.tex');
+	await openFind(v, 'the');
+	const status = v.page.locator('.find-status');
+	await expect(status).toHaveText(/^0 of \d+$/);
+	const count = Number((await status.textContent())!.split(' of ')[1]);
+	expect(count).toBeGreaterThan(2);
+	await settled(v.page);
+	expect(await findFills(v), 'a tint for each word found').toEqual([count, 0]);
+	await v.page.keyboard.press('Enter');
+	await settled(v.page);
+	expect(await findFills(v)).toEqual([count - 1, 1]);
+	await v.page.keyboard.press('Escape');
+	await settled(v.page);
+	expect(await findFills(v)).toEqual([0, 0]);
 });

@@ -1,8 +1,9 @@
 <script lang="ts">
 	import { tick } from 'svelte';
-	import type { ChipFace } from '$lib/editor/visual/extensions/drawnChips/chipFace';
-	import { openChipPanel, syncChipPanel } from '$lib/editor/visual/extensions/drawnChips/chipPanel.svelte';
+	import { domOf } from '$lib/editor/visual/extensions/drawnChips/chipFace';
+	import { openChipPanel, syncChipPanel } from '$lib/editor/visual/extensions/drawnChips/chipPanel/chipPanel.svelte';
 	import { latexFace } from '$lib/languages/latex/visual/core/walk/drawUnits';
+	import { typesetStaticMathIn } from '$lib/editor/visual/extensions/mathlivebridge/mathStatic';
 	import { editorViewStore } from '$lib/stores/editorStore';
 	import { undoVisual, redoVisual } from '$lib/editor/visual/visualUndo';
 	import { m } from '$lib/paraglide/messages';
@@ -13,11 +14,13 @@
 	const props: Props = $props();
 
 	let field = $state<HTMLElement>();
-	let face = $state.raw<ChipFace | null>(null);
+	let faceDom = $state.raw<HTMLElement | null>(null);
 
 	$effect(() => {
 		const drawn = latexFace(props.command, true);
-		face = drawn;
+		const dom = drawn && domOf(drawn);
+		if (dom) typesetStaticMathIn(dom);
+		faceDom = dom;
 		return () => drawn?.destroy?.();
 	});
 
@@ -56,13 +59,13 @@
 	}
 </script>
 
-{#if face}
+{#if faceDom}
 	<div
 		bind:this={field}
 		class="title-field"
 		role="button"
 		tabindex="0"
-		use:place={face.dom}
+		use:place={faceDom}
 		use:tip={m.title_edit_source()}
 		onclick={open}
 		onkeydown={(e) => e.key === 'Enter' && open()}

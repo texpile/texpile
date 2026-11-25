@@ -2,16 +2,29 @@
 import type { Node } from 'prosemirror-model';
 import { Plugin, PluginKey } from 'prosemirror-state';
 import { Decoration, DecorationSet } from 'prosemirror-view';
-import { labelFace, typedInParagraph, type ChipFace } from '$lib/languages/typst/visual/core';
+import { setLook, type CanvasWidget, type FaceElement } from '$lib/editor/canvas';
+import { domOf, labelFace, typedInParagraph, type ChipFace } from '$lib/languages/typst/visual/core';
 
 const faces = new WeakMap<globalThis.Node, ChipFace>();
 
 function labelChip(name: string): HTMLElement {
 	const face = labelFace(name);
-	face.dom.classList.add('ml-2', 'align-middle', 'font-normal');
-	face.dom.contentEditable = 'false';
-	faces.set(face.dom, face);
-	return face.dom;
+	const dom = domOf(face);
+	dom.classList.add('ml-2', 'align-middle', 'font-normal');
+	dom.contentEditable = 'false';
+	faces.set(dom, face);
+	return dom;
+}
+
+function labelForm(name: string): CanvasWidget {
+	return {
+		kind: 'inline',
+		build() {
+			const dom = labelFace(name).dom as FaceElement;
+			setLook(dom, { marginLeft: '0.5rem', verticalAlign: 'middle', fontWeight: 'normal' });
+			return dom;
+		}
+	};
 }
 
 function labelsIn(doc: Node): DecorationSet {
@@ -23,6 +36,7 @@ function labelsIn(doc: Node): DecorationSet {
 				Decoration.widget(pos + node.nodeSize - 1, () => labelChip(label), {
 					side: 1,
 					key: `heading-label:${label}`,
+					canvas: labelForm(label),
 					destroy: (dom) => faces.get(dom)?.destroy?.()
 				})
 			);

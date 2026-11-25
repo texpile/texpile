@@ -1,17 +1,12 @@
 import type { Plugin } from 'prosemirror-state';
+import { composeNodeViews, type CanvasViewSet } from '$lib/editor/canvas';
 import { latexPlugins } from '../../latexPlugins';
-import type { LatexEditorSlot, LatexNodeViews, LatexViewSetup } from './latexPlugin';
+import type { LatexEditorSlot, LatexViewSetup } from './latexPlugin';
 
 export function pluginEditorPlugins(slot: LatexEditorSlot): Plugin[] {
 	return latexPlugins.flatMap((plugin) => plugin.editorPlugins?.[slot]?.() ?? []);
 }
 
-export function pluginNodeViews(setup: LatexViewSetup): LatexNodeViews {
-	const views: LatexNodeViews = {};
-	for (const plugin of latexPlugins)
-		for (const [name, view] of Object.entries(plugin.views?.(setup) ?? {})) {
-			if (views[name]) throw new Error(`two LaTeX plugins draw the node ${name}`);
-			views[name] = view;
-		}
-	return views;
+export function pluginCanvasViews(setup: LatexViewSetup): Required<CanvasViewSet> {
+	return composeNodeViews(...latexPlugins.map((plugin) => plugin.canvasViews?.(setup) ?? {}));
 }

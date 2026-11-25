@@ -1,6 +1,7 @@
 import { expect, test } from '@playwright/test';
 import { useTexpile } from './driver/useTexpile';
 import { VisualEditor } from './driver/visualEditor';
+import { inCanvas, settled } from './canvas/canvasPage';
 
 const doc = (body: string) =>
 	`\\documentclass{article}\n\\newcommand{\\den}[1]{|#1\\rangle\\langle#1|}\n\\begin{document}\n\n${body}\n\n\\end{document}\n`;
@@ -17,44 +18,66 @@ function visual(): VisualEditor {
 	return new VisualEditor(page, root);
 }
 
-/** the display formula as a live field, built as a pointer reaching it builds it */
-async function liveField(v: VisualEditor) {
-	const block = v.page.locator('.block-math-container').first();
-	await block.scrollIntoViewIfNeeded();
-	await block.hover();
-	return block.locator('math-field');
-}
-
 function formula(v: VisualEditor): Promise<string> {
 	return v.evalView<string>(
 		`let found = ''; view.state.doc.descendants((n) => { if (n.type.name === 'block_math') found = n.textContent; }); return found;`
 	);
 }
 
-/** what the live field of the editor's first display formula holds */
-function unitsFormula(v: VisualEditor): Promise<string> {
-	return v.evalView<string>(`return view.dom.querySelector('.block-math-container math-field')?.value ?? '';`);
+/** what the formula session holds, '' with none */
+function sessionValue(v: VisualEditor): Promise<string> {
+	return v.evalView<string>(`return view.canvas.nested()?.field.getValue() ?? '';`);
+}
+
+/** the first display formula's drawn box */
+async function displayBox(v: VisualEditor): Promise<{ left: number; top: number; width: number; height: number; pos: number }> {
+	await settled(v.page);
+	return inCanvas(v.page, ({ probe, view }) => {
+		let pos = -1;
+		view.state.doc.descendants((node, at) => {
+			if (pos < 0 && node.type.name === 'block_math') pos = at;
+		});
+		const node = probe.rectOfNode(pos)!;
+		const box = probe
+			.query('.math-formula')
+			.map((each) => each.rect)
+			.find((rect) => rect.top >= node.top - 1 && rect.bottom <= node.bottom + 1)!;
+		return { left: box.left, top: box.top, width: box.width, height: box.height, pos };
+	});
+}
+
+/** a press on the formula's left end, on the \\rho, clear of the macro calls */
+async function enterDisplay(v: VisualEditor): Promise<void> {
+	const box = await displayBox(v);
+	await v.page.mouse.click(box.left + 3, box.top + box.height / 2);
+	await expect.poll(() => v.evalView<number | null>('return view.canvas.nested()?.pos ?? null;')).toBe(box.pos);
 }
 
 // the paper's macros set the formula again, and mathlive read it in the mode at its caret: text, after a unit
 test("a formula that ends in text is still drawn once the paper's macros reach it", async () => {
 	const v = visual();
 	await v.open('units.tex');
-	const at = await v.evalView<{ x: number; y: number }>(
-		`const r = view.dom.querySelector('.block-math-container').getBoundingClientRect(); return { x: r.x + r.width / 2, y: r.y + r.height / 2 };`
-	);
-	await v.page.mouse.move(at.x, at.y, { steps: 4 });
-	await expect.poll(() => unitsFormula(v)).toContain('F_{x}');
-	await v.page.waitForTimeout(1500);
-	expect(await unitsFormula(v)).not.toContain('textbackslash');
+	const box = await displayBox(v);
+	await v.page.mouse.click(box.left + box.width - 2, box.top + box.height - 4);
+	await expect.poll(() => sessionValue(v)).toContain('F_{x}');
+	await v.evalView(`return (async () => {
+		const { mathMacros } = await import('/src/lib/editor/visual/extensions/mathlivebridge/mathMacros.svelte.ts');
+		mathMacros.current = { ...mathMacros.current, kN: { def: 'kN', args: 0, expand: false, captureSelection: true, part: 'macro' } };
+	})();`);
+	await v.page.waitForTimeout(500);
+	expect(await sessionValue(v)).toContain('F_{x}');
+	expect(await sessionValue(v)).not.toContain('textbackslash');
 });
 
 test('a macro in a formula opens as its LaTeX, and an edit rewrites that call only', async () => {
 	const v = visual();
 	await v.open('den.tex');
 	const before = await formula(v);
-	const field = await liveField(v);
-	await field.locator('[part~="macro"]').nth(1).click();
+	await enterDisplay(v);
+	const call = await v.evalView<{ x: number; y: number }>(
+		`const r = view.canvas.nested().macroCallClientRect(1); return { x: r.left + r.width / 2, y: r.top + r.height / 2 };`
+	);
+	await v.page.mouse.click(call.x, call.y);
 	const panel = v.page.locator('.drawn-chip-panel');
 	const source = panel.locator('.cm-content');
 	await expect(source).toHaveText('\\den\\phi');
@@ -66,14 +89,11 @@ test('a macro in a formula opens as its LaTeX, and an edit rewrites that call on
 	// back in the formula on the call it edited, as Escape leaves a text chip
 	await v.page.keyboard.press('Escape');
 	await expect(panel).toHaveCount(0);
-	await expect(field.locator('[part~="macro-selected"]')).toHaveCount(1);
+	await expect.poll(() => v.evalView<number>('return view.canvas.nested()?.outlineRects().length ?? 0;')).toBe(1);
 	// on a selected call, Tab and Ctrl+Space open it rather than math search
 	for (const key of ['Tab', 'Control+Space']) {
-		// mathlive takes the keyboard a moment after the formula gets the focus back, and a key before that goes nowhere
-		await expect(async () => {
-			await v.page.keyboard.press(key);
-			await expect(source).toBeFocused({ timeout: 1000 });
-		}).toPass({ timeout: 10_000 });
+		await v.page.keyboard.press(key);
+		await expect(source).toBeFocused();
 		await expect(v.page.locator('.math-search')).toHaveCount(0);
 		await v.page.keyboard.press('Escape');
 		await expect(panel).toHaveCount(0);
@@ -84,10 +104,20 @@ test('a macro in a formula opens as its LaTeX, and an edit rewrites that call on
 test('another file opened from a formula shows its own formula', async () => {
 	const v = visual();
 	await v.open('den.tex');
-	const field = await liveField(v);
-	// on the \\rho, clear of the macros that open a panel
-	await field.click({ position: { x: 6, y: 12 } });
-	await expect.poll(() => v.page.evaluate(() => document.activeElement?.tagName)).toBe('MATH-FIELD');
+	await enterDisplay(v);
 	await v.open('units.tex');
-	await expect.poll(() => unitsFormula(v)).toContain('F_{x}');
+	expect(await v.evalView<number | null>('return view.canvas.nested()?.pos ?? null;')).toBeNull();
+	await expect.poll(() => formula(v)).toContain('F_x');
+	const drawn = await inCanvas(v.page, ({ probe, view }) => {
+		let pos = -1;
+		view.state.doc.descendants((node, at) => {
+			if (pos < 0 && node.type.name === 'block_math') pos = at;
+		});
+		return probe
+			.drawList(pos)
+			.filter((op) => op.op === 'fillText')
+			.map((op) => op.text)
+			.join('');
+	});
+	expect(drawn).toContain('kN');
 });

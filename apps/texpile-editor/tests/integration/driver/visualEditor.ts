@@ -28,6 +28,14 @@ export class VisualEditor {
 
 	/** opens a folder file and shows it in the visual editor */
 	async open(rel: string): Promise<void> {
+		// the canvas harness has no workspace: it shows the file itself
+		if (await this.page.evaluate(() => '__harness' in window)) {
+			await this.page.evaluate(
+				(file) => (window as unknown as { __harness: { open(rel: string): Promise<void> } }).__harness.open(file),
+				rel
+			);
+			return;
+		}
 		await this.page.keyboard.press('Escape');
 		// the view stays and its document is swapped once the new file is parsed: wait for another document
 		const switching = await this.page.evaluate(async (file) => {
@@ -100,8 +108,7 @@ export class VisualEditor {
 
 	/** clicks into the paragraph holding `text` and puts the caret at the end of the document's text block */
 	async caretAtEndOf(text: string): Promise<void> {
-		const block = this.editor.locator('p', { hasText: text }).first();
-		await block.click();
+		await this.setRange(text, true);
 		await this.page.keyboard.press('End');
 		// the editor reads the caret after a native move; a mark set before that read would be dropped by it
 		await expect

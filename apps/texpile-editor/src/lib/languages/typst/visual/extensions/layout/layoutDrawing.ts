@@ -45,6 +45,21 @@ export function horizontalAlignment(value: string): string | null {
 	return null;
 }
 
+const SIDE_OF: Record<string, 'left' | 'center' | 'right'> = {
+	left: 'left',
+	start: 'left',
+	center: 'center',
+	right: 'right',
+	end: 'right'
+};
+
+/** the side an `#align` sets its content on; null for any other block */
+export function alignSideOf(node: Node): 'left' | 'center' | 'right' | null {
+	if (layoutKindOf(node) !== 'align') return null;
+	const call = readTypstCall(layoutHeadSource(node));
+	return SIDE_OF[horizontalAlignment((call && positionalArgs(call)[0]?.value) ?? '') ?? ''] ?? null;
+}
+
 export function withHorizontal(value: string, horizontal: string): string {
 	const rest = value
 		.split('+')

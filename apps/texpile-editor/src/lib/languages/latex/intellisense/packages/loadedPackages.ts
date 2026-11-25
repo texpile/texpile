@@ -1,7 +1,7 @@
 // the package files a document loads: the kernel, each use and what it loads in turn
 import { packageUsesIn, type PackageUse } from './packageUses';
 import { BASE_ID, KERNEL_ID, fileIdOf } from '../../knowledge/fileIds';
-import { documentWrapperOf } from '../../syntax/documentWrapper';
+import { documentBeginOf } from '../../syntax/documentWrapper';
 import { loadFiles, type LoadedFile } from '../../knowledge/loadedFiles';
 import { userFilesVersion } from '../../knowledge/userFiles';
 import { projectIntelStore } from '$lib/stores/projectIntel';
@@ -91,9 +91,9 @@ function namesOf(loaded: LoadedFile[]): Set<string> {
 }
 
 /** what a parse of the open file reads: texpile/ctan-base under its own files, so a construct the visual editor models keeps
- * its arguments whatever the file loads */
+ * its arguments whatever the file loads. Packages load in the preamble, and a long body cost seconds of the main thread */
 export function parsedPackages(text: string): Promise<LoadedFile[]> {
-	return loadedPackages(documentUses(text), true);
+	return loadedPackages(documentUses(preambleOf(text)), true);
 }
 
 /** the names of what the open file and the project load, the class as class-<name> */
@@ -135,7 +135,7 @@ export function documentPackagesNow(text: string): LoadedFile[] | null {
 
 /** the text a preamble read covers: up to \begin{document}, else all of it */
 export function preambleOf(text: string): string {
-	return text.slice(0, documentWrapperOf(text)?.begin.from);
+	return text.slice(0, documentBeginOf(text) ?? undefined);
 }
 
 /** documentPackagesNow for what the preamble loads, so the cost of a keystroke does not grow with the body */

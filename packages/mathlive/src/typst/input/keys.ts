@@ -21,6 +21,7 @@ import {
   typeIntoName,
 } from './compose';
 import { alignPoint, breakLine, intoLines } from './lines';
+import { continuesCommand } from './latex-command';
 import {
   closeParens,
   exitOperand,
@@ -192,7 +193,7 @@ function typeChar(
       openFraction(mf, typing);
       return;
     case '\\':
-      if (!breakLine(mf)) model.announce('plonk');
+      typing.switchTo = 'command';
       return;
     case '&':
       if (!alignPoint(mf)) model.announce('plonk');
@@ -257,8 +258,8 @@ export function insertTypstChar(
   const mode = typing.switchTo;
   typing.switchTo = undefined;
   if (mode === 'text') mf.switchMode('text');
-  else if (mode === 'latex') {
-    mf.switchMode('latex', '', '#');
+  else if (mode === 'latex' || mode === 'command') {
+    mf.switchMode('latex', '', mode === 'latex' ? '#' : '\\');
     // `x #h(1em)`: what is typed apart from what is before it stays apart once it is read
     const group = getLatexGroupBody(model)[0]?.parent;
     if (spaced && before.type !== 'first' && group) group.typstLead = ' ';
@@ -299,6 +300,38 @@ function isCodeComplete(code: string): boolean {
   return depth <= 0 && !inString;
 }
 
+const ENDING_KEYS = ['[Escape]', '[Tab]', '[Enter]', '[Return]'];
+
+/**
+ * A key after `\`: the letters and arguments of a LaTeX command, which any other key ends and
+ * types after; `\` alone is Typst's line break. null when LaTeX mode holds no `\`
+ */
+function commandKey(
+  mf: _Mathfield,
+  keystroke: string,
+  evt: KeyboardEvent
+): boolean | undefined | null {
+  const source = getLatexGroupBody(mf.model)
+    .map((x) => x.value)
+    .join('');
+  if (!source.startsWith('\\')) return null;
+  const c = keyboardEventToChar(evt);
+  const ends = ENDING_KEYS.includes(keystroke);
+  if (!ends && (c.length !== 1 || continuesCommand(source, c)))
+    return undefined;
+  if (source === '\\') {
+    complete(mf, 'reject');
+    if (!breakLine(mf)) mf.model.announce('plonk');
+    requestUpdate(mf);
+  } else complete(mf, 'accept-all');
+  // `\\` is LaTeX's line break
+  if (ends || c === ' ' || (source === '\\' && c === '\\')) {
+    typstTyping(mf).spaced = c === ' ';
+    return false;
+  }
+  return true;
+}
+
 /**
  * Keys a Typst field takes before MathLive: `true` passes a character on to be typed, `false`
  * means the key was handled, and undefined leaves it to MathLive.
@@ -311,6 +344,8 @@ export function onTypstKeystroke(
   const { model } = mf;
   const typing = typstTyping(mf);
   if (model.mode === 'latex') {
+    const command = commandKey(mf, keystroke, evt);
+    if (command !== null) return command;
     // Typst source typed after Escape or `#`: a space is part of it until `#code` is over
     const source = getLatexGroupBody(model)
       .map((x) => x.value)

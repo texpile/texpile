@@ -48,6 +48,32 @@ function writtenChars(middle: string, bytes: string, write: (s: string, first: b
 	return off === bytes.length ? chars : null;
 }
 
+/** each leaf's runs, in the order the origin holds them; the pairs stand in document order, so one pass places every run */
+function runsByPair(pairs: readonly LeafPair[], origin: BlockOrigin): Map<LeafPair, Segment[]> {
+	const held = new Map<LeafPair, Segment[]>();
+	function hold(pair: LeafPair, run: Segment): void {
+		const from = origin.pmFrom + pair.thenPm;
+		if (run.pmFrom < from || run.pmTo > from + pair.then.nodeSize) return;
+		const runs = held.get(pair);
+		if (runs) runs.push(run);
+		else held.set(pair, [run]);
+	}
+	for (const run of origin.leaves) {
+		let low = 0;
+		let high = pairs.length;
+		while (low < high) {
+			const mid = (low + high) >> 1;
+			if (origin.pmFrom + pairs[mid].thenPm <= run.pmFrom) low = mid + 1;
+			else high = mid;
+		}
+		if (low === 0) continue;
+		// an empty run at the seam of two leaves belongs to both
+		if (low > 1 && run.pmFrom === run.pmTo) hold(pairs[low - 2], run);
+		hold(pairs[low - 1], run);
+	}
+	return held;
+}
+
 export function createLeafSplice(options: BlockAssemblyOptions): Splice {
 	/**
 	 * A block whose shape the parse still knows, written out as the bytes it came from with only
@@ -63,12 +89,10 @@ export function createLeafSplice(options: BlockAssemblyOptions): Splice {
 		const pairs: LeafPair[] = [];
 		if (!pairLeaves(node, origin.node, node, 0, 0, pairs)) return null;
 		const base = origin.srcFrom!;
+		let held: Map<LeafPair, Segment[]> | null = null;
 		function runsOf(p: LeafPair): Segment[] {
-			const from = origin.pmFrom + p.thenPm;
-			const to = from + p.then.nodeSize;
-			const out: Segment[] = [];
-			for (const s of origin.leaves) if (s.pmFrom >= from && s.pmTo <= to) out.push(s);
-			return out;
+			held ??= runsByPair(pairs, origin);
+			return held.get(p) ?? [];
 		}
 		type Change = {
 			gone: string;

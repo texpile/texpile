@@ -160,6 +160,8 @@ export function attachSourceToc(wsdoc: WorkspaceDoc): void {
 			);
 	}
 	const deferred = trailingDebounce<void>(300, publish);
+	// in the next task, so a switch to Source draws before a long file's outline is read
+	const next = trailingDebounce<void>(0, publish);
 	// the file whose outline the store holds; a file just opened gets its own at once rather than
 	// showing the last one's for a beat, as the visual outline does
 	let shown: string | null = null;
@@ -175,8 +177,11 @@ export function attachSourceToc(wsdoc: WorkspaceDoc): void {
 		if (path === shown) return deferred();
 		shown = path;
 		deferred.cancel();
-		untrack(publish);
+		next();
 	});
 	// a stale timer must not fire into the next workspace's store after unmount
-	$effect(() => () => deferred.cancel());
+	$effect(() => () => {
+		deferred.cancel();
+		next.cancel();
+	});
 }

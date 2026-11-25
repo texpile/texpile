@@ -123,10 +123,6 @@ html.window-glass
 		.preset-outlined-surface-400-600,
 		.fieldset
 	),
-/* the editor's own boxes draw their borders through @apply, not a utility class, so the rule above misses them */
-html.window-glass .TexpileEditor :is(hr, div.abstract, td, th, .settings-button) {
-	border-color: var(--glass-line);
-}
 /* a bar's line drawn as a shadow, which the border rule above does not reach */
 html.window-glass .line-under {
 	box-shadow: inset 0 -1px 0 var(--glass-line);
@@ -297,15 +293,6 @@ math-field {
 	outline: none;
 }
 
-/* Thematic breaks. Skeleton styles `hr` as a UTILITY CLASS, which an element the schema emits
-   never gets, so a bare <hr> fell through to Tailwind preflight - whose border-color defaults to
-   currentColor, i.e. the TEXT colour: a glaring near-white bar in dark mode. */
-.TexpileEditor hr {
-	border-top-width: 1px;
-	border-color: var(--color-surface-200-800);
-	margin: calc(var(--spacing) * 6) 0;
-}
-
 /* CodeMirror doesn't auto-theme, so its chrome takes the editor's ground and text tokens. Its base
    theme is mounted at the top of <head> under a generated scope class, two classes deep, so every
    override here carries :root to weigh the same and win by order. */
@@ -337,8 +324,7 @@ math-field {
 }
 
 /* ONE selection colour for both editors and every simulated one. The source editor's drawn layer
-   (above) and the visual editor's ::selection read it; everything the browser paints nothing over
-   is drawn by the range painter (highlight/paintRange.ts) in this same color. Any drift showed as
+   (above) and the visual editor's canvas read it, and so does the range painter (highlight/paintRange.ts). Any drift showed as
    patchwork inside a single drag: solid Tailwind blue boxes over math, native blue over prose,
    lavender in source. Light is lighter over a white page. */
 :root {
@@ -347,18 +333,11 @@ math-field {
 		color-mix(in srgb, var(--color-primary-500) 35%, transparent)
 	);
 }
-.ProseMirror ::selection {
-	background-color: var(--editor-selection);
-}
 /* prosemirror-tables paints its own cell overlay, hardcoded to rgba(200, 200, 255, 0.4): theme
    blind, and the one selection in the editor that was not reading the variable above - a pale
    lavender wash next to primary-tinted prose. td/th in the selector only to outspecify the
    vendored rule without !important; its stylesheet is imported per editor component, so the
    cascade order between it and this file is not something to rely on. */
-.ProseMirror td.selectedCell::after,
-.ProseMirror th.selectedCell::after {
-	background: var(--editor-selection);
-}
 :root .cm-panels {
 	background-color: var(--color-surface-100-900);
 	color: var(--color-surface-950-50);
@@ -379,26 +358,6 @@ math-field {
 :root .cm-button:active {
 	background-image: none;
 	background-color: light-dark(var(--color-surface-200), var(--color-surface-600));
-}
-/* placeholderplugin.ts */
-.ProseMirror .pm-placeholder::before {
-	content: attr(data-placeholder);
-	float: left;
-	height: 0;
-	pointer-events: none;
-	color: var(--muted-text);
-}
-/* the PM gap cursor defaults to solid black, invisible on dark; !important so the
-   override wins regardless of stylesheet order. Its own blink animates visibility, which the
-   main thread restyles on every frame for as long as the cursor shows; opacity runs off it */
-.ProseMirror-gapcursor:after {
-	border-top: var(--default-border-width) solid var(--color-surface-950-50) !important;
-	animation: pm-caret-blink 1.1s step-end infinite !important;
-}
-/* dropPastNodeViews.ts. mathlive turns pointer events back on inside its shadow root */
-.ProseMirror.pm-own-drag [contenteditable='false'],
-.ProseMirror.pm-own-drag math-field::part(container) {
-	pointer-events: none;
 }
 /* mathlive's \command suggestion popover (light DOM in <body>) ships one hardcoded gray look
    with no color variables or layout hooks; restyled to a compact themed list (command left,
@@ -538,70 +497,7 @@ select.input {
 	background: light-dark(var(--color-surface-200), var(--color-surface-700));
 	color: var(--color-surface-950-50);
 }
-/* destructive, so tint red on hover */
-.block-handle-btn-danger:hover {
-	background: light-dark(
-		color-mix(in srgb, var(--color-error-500) 15%, transparent),
-		color-mix(in srgb, var(--color-error-500) 22%, transparent)
-	);
-	color: var(--error-ink);
-}
-/* first-line indent from the Tab toggle (data-indent). 'noindent' renders flush like 'auto', so it
-   gets a label in the left margin to tell the two apart. The block handle shares that margin, so it
-   drops a line for these paragraphs (see block-handle-plugin).
 
-   Abbreviated, and small, because the margin is 48px (VisualEditorHost's pl-12) and that is a hard
-   ceiling: on a narrow window the mx-auto centering collapses and there is nothing else. Spelt in
-   full at 0.8em the label wanted ~70px and got cut from the LEFT, so \noindent rendered as
-   "indent" - the one thing it must never say. max-width pins the failure direction: if it ever
-   doesn't fit, the tail goes, not the head. */
-.ProseMirror p[data-indent='indent'] {
-	text-indent: 1.5em;
-}
-.ProseMirror p[data-indent='noindent'] {
-	position: relative;
-}
-.ProseMirror p[data-indent='noindent']::before {
-	content: '\\noind';
-	position: absolute;
-	top: 0;
-	right: 100%;
-	margin-right: 0.4em;
-	max-width: 2.6rem;
-	overflow: hidden;
-	color: var(--faint-text);
-	font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-	font-size: 0.7em;
-	white-space: nowrap;
-	user-select: none;
-	pointer-events: none;
-}
-
-/* with the block handles stacked (comments crowding a narrow pane) the margin is 30px: keep the head, \no */
-[data-gutter-stacked] .ProseMirror p[data-indent='noindent']::before {
-	max-width: 1.4rem;
-}
-
-/* in a list the space just left of the paragraph holds the bullet or the number, so the label goes
-   out past the item's own marker column (32px, prosemirror-flat-list's margin) */
-.ProseMirror .prosemirror-flat-list p[data-indent='noindent']::before {
-	margin-right: calc(0.4em + 32px);
-}
-
-/* lines ended where lineBreakPlugin chose: the paragraph cannot wrap, only the marked spaces, dashes
-   and hyphenation points can. The space that ends a line hangs past the edge (pre-wrap), so a line
-   that ends in a hyphen stops where the others do. */
-.ProseMirror .pm-line-par {
-	text-wrap-mode: nowrap;
-}
-.ProseMirror .pm-line-justified {
-	text-align: justify;
-}
-/* a document too large to break line by line carries no decorations, so one rule justifies its body text */
-.ProseMirror.pm-lines-plain > p,
-.ProseMirror.pm-lines-plain > .prosemirror-flat-list p {
-	text-align: justify;
-}
 /* a preview or a visual editor is covered while its width moves and names itself, so split panes stay told apart
    (resizeCover). The solid ground: a see-through window clears the usual one */
 [data-resize-cover][data-resizing]::after {
@@ -619,36 +515,6 @@ select.input {
 	background-color: light-dark(var(--solid-surface-50, var(--color-surface-50)), var(--solid-surface-950, var(--color-surface-950)));
 	pointer-events: none;
 }
-/* an input method's text grows at the caret and cannot be re-broken until it commits (compositionWrap) */
-.ProseMirror.pm-composing .pm-line-par.pm-line-caret {
-	text-wrap-mode: wrap;
-}
-.ProseMirror .pm-line-par .pm-line-break {
-	white-space: pre-wrap;
-}
-.ProseMirror .pm-line-par .pm-line-hyphen {
-	text-wrap-mode: wrap;
-	hyphens: manual;
-	hyphenate-character: '-';
-}
-/* a soft hyphen as generated content: drawn only if the line does end there, and never in the text */
-.ProseMirror .pm-line-par .pm-line-hyphen::after {
-	content: '\00AD';
-}
-/* the browser paints no selection over generated content; a selected word's hyphen gets the colour from hyphenSelection */
-.ProseMirror .pm-line-par .pm-line-hyphen.pm-line-hyphen-selected::after {
-	background-color: var(--editor-selection);
-	/* up to the line box, as the browser paints selected text (rangeBands.ts measures the line) */
-	padding-block: var(--band-up, 0px) var(--band-down, 0px);
-}
-/* inside a word no line can hold, the browser's way out; a zero width space makes the character's end a break */
-.ProseMirror .pm-line-par .pm-line-anywhere {
-	text-wrap-mode: wrap;
-}
-.ProseMirror .pm-line-par .pm-line-anywhere::after {
-	content: '\200B';
-}
-
 /* scrollbars for the app's own scrollers, a share of the text colour so they sit on any ground;
    the PDF viewer (shadow DOM) and terminal style their own */
 /* Skeleton puts scrollbar-color on the root, and it inherits. Any value there but auto makes Chromium drop the
@@ -844,188 +710,12 @@ html .cm-comment-add-card .cm-comment-add:hover {
 	width: 20px;
 }
 
-/* a suggestion's tints come from the range painter (suggestionTint in pmSuggestionWidgets.ts) */
-.TexpileEditor .pm-suggest-old {
-	text-decoration: line-through;
-	user-select: none;
-}
-/* the same under a collaborator's selection, in their color; our own selection is laid over it */
-.TexpileEditor .pm-suggest-old.pm-peer-selected {
-	background-color: transparent;
-	background-image: linear-gradient(var(--peer-tint), var(--peer-tint)), linear-gradient(var(--range-tint), var(--range-tint));
-	background-clip: border-box, content-box;
-}
-/* selected old words: their own tint stays text high under the selection color, as it does where the
-   browser paints over new words, and the selection color alone fills the rest of the band */
-.TexpileEditor .pm-suggest-old.pm-range-selected {
-	background-color: transparent;
-	background-image:
-		linear-gradient(var(--editor-selection), var(--editor-selection)), linear-gradient(var(--range-tint), var(--range-tint));
-	background-clip: border-box, content-box;
-}
-/* The formula a change replaced, typeset beside the one that replaced it: maths has no words to
-   strike, so the two set side by side are the whole of what changed. The rule through it is PAINTED,
-   not text-decoration: mathlive builds its markup out of inline-blocks, and a decoration does not
-   cross into one, so the line would stop at the first box it met. */
-.TexpileEditor .pm-suggest-was {
-	display: inline-block;
-	margin-right: 0.3em;
-	opacity: 0.75;
-	text-decoration: none;
-	background-image: linear-gradient(
-		to bottom,
-		transparent calc(50% - 0.5px),
-		currentColor calc(50% - 0.5px),
-		currentColor calc(50% + 0.5px),
-		transparent calc(50% + 0.5px)
-	);
-}
-.TexpileEditor div.pm-suggest-was {
-	display: block;
-	margin: 0 0 0.3em;
-}
-/* a block's source as it was: a few lines of it, wrapped inside the column */
-.TexpileEditor div.pm-suggest-was:has(> code) {
-	background-image: none;
-}
-.TexpileEditor div.pm-suggest-was > code {
-	display: -webkit-box;
-	-webkit-box-orient: vertical;
-	-webkit-line-clamp: 4;
-	overflow: hidden;
-	white-space: pre-wrap;
-	overflow-wrap: anywhere;
-	text-decoration: line-through;
-}
-/* a picture as it was drawn, on white in dark mode as its card is */
-.TexpileEditor div.pm-suggest-drawn {
-	display: flex;
-	justify-content: center;
-	padding: 0.5rem;
-	border-radius: var(--radius-base);
-	background-image: none;
-}
-.TexpileEditor div.pm-suggest-drawn > svg {
-	max-width: 100%;
-	height: auto;
-}
-html[data-mode='dark'] .TexpileEditor div.pm-suggest-drawn > svg {
-	box-sizing: content-box;
-	padding: 0.5rem;
-	border-radius: var(--radius-base);
-	background-color: white;
-}
-/* a display formula sits centered, as the one that replaced it does, with the rule through the formula alone */
-.TexpileEditor div.pm-suggest-was:has(> div.math-static-placeholder) {
-	background-image: none;
-}
-.TexpileEditor div.pm-suggest-was > div.math-static-placeholder {
-	display: flex;
-	justify-content: center;
-}
-.TexpileEditor div.pm-suggest-was > div.math-static-placeholder > .ML__latex {
-	width: fit-content;
-	background-image: linear-gradient(
-		to bottom,
-		transparent calc(50% - 0.5px),
-		currentColor calc(50% - 0.5px),
-		currentColor calc(50% + 0.5px),
-		transparent calc(50% + 0.5px)
-	);
-}
-/* Blocks a suggestion took out. They are gone from the document, so there is nothing left in it to
-   strike and no block that could be tinted without saying a paragraph changed that did not. Same
-   shape as the diff view's removed block, for the same reason: a whole block took a whole block's
-   room, and cramming it into the line beside it collapses it to a sliver. The breaks are its own,
-   which is why it keeps its whitespace. */
-.TexpileEditor .pm-suggest-gone {
-	display: block;
-	margin: 0.35em 0;
-	padding: 0.15em 0.3em;
-	white-space: break-spaces;
-	border-radius: calc(var(--radius-base) * 0.5);
-	/* drawn inside the heading a cut joined, its paragraphs came out in the heading's weight */
-	font-size: calc(1rem * var(--text-scaling));
-	font-weight: normal;
-	line-height: var(--leading-relaxed, 1.625);
-}
 /* nothing is dropped on it (goneBlocksRefuseDrop.ts), so no drop cursor shows over it either */
 html.pm-drop-refused .pm-drop-cursor {
 	display: none;
 }
-/* the file no longer has them, so they show no number */
-.ProseMirror .pm-suggest-gone :is(h1, h2, h3, h4, h5, h6)::before {
-	content: none;
-}
-/* the same for an item taken out of a numbered list: the item after it goes on from the one before */
-.ProseMirror .prosemirror-flat-list[data-list-kind='ordered'] + .pm-suggest-gone .prosemirror-flat-list[data-list-kind='ordered'] {
-	counter-increment: none;
-	counter-reset: none;
-	counter-set: none;
-}
-.ProseMirror .prosemirror-flat-list[data-list-kind='ordered'] + .pm-suggest-gone .prosemirror-flat-list[data-list-kind='ordered']::before {
-	content: none;
-}
-.ProseMirror .prosemirror-flat-list[data-list-kind='ordered'] + .pm-suggest-gone + .prosemirror-flat-list[data-list-kind='ordered'] {
-	counter-reset: none;
-	counter-set: none;
-}
-/* the tint shows through what would paint its own ground over it */
-.TexpileEditor .pm-suggest-gone :is(.table-wrapper, th) {
-	background: transparent;
-}
-.TexpileEditor .pm-suggest-gone .table-wrapper[data-show-notes='false'] > .table-notes {
-	display: none;
-}
-/* tailwind's table-caption utility shares the class name; the view's flex column is what undoes it there */
-.TexpileEditor .pm-suggest-gone .table-caption {
-	display: block;
-}
-.TexpileEditor .pm-suggest-gone code {
-	white-space: pre-wrap;
-	overflow-wrap: anywhere;
-}
-.TexpileEditor .pm-suggest-gone div.math-static-placeholder {
-	display: flex;
-	justify-content: center;
-	opacity: 0.75;
-}
-/* an aligned environment's box would otherwise take the whole line, and sit at its left */
-.TexpileEditor .pm-suggest-gone div.math-static-placeholder > .ML__latex {
-	width: fit-content;
-}
-/* struck the way a replaced formula is, a painted rule, since a decoration stops at mathlive's boxes;
-   in a line only, where the words beside it are struck */
-.TexpileEditor .pm-suggest-gone span.math-static-placeholder .ML__latex {
-	opacity: 0.75;
-	background-image: linear-gradient(
-		to bottom,
-		transparent calc(50% - 0.5px),
-		currentColor calc(50% - 0.5px),
-		currentColor calc(50% + 0.5px),
-		transparent calc(50% + 0.5px)
-	);
-}
-/* the view's header names the environment; drawn without one, the name goes on top */
-.TexpileEditor .pm-suggest-gone .tex-environment::before {
-	content: attr(data-env);
-	display: block;
-	font-size: 0.7em;
-	color: var(--muted-text);
-}
-.TexpileEditor .pm-gone-figure {
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	margin: 0.5em 0;
-}
-.TexpileEditor .pm-gone-figure img {
-	max-width: 100%;
-	opacity: 0.6;
-}
 /* Where a paragraph break is being put in or taken out. A bar, the way a diff marks one, rather
    than a pilcrow or a ↵: those are characters the document does not contain and nobody explains. */
-.TexpileEditor .pm-suggest-break,
 .cm-suggest-break {
 	display: inline-block;
 	width: 2px;
@@ -1034,11 +724,9 @@ html.pm-drop-refused .pm-drop-cursor {
 	border-radius: 1px;
 	margin-inline: 0.12em;
 }
-.TexpileEditor .pm-suggest-break-added,
 .cm-suggest-break-added {
 	background-color: var(--diff-insert-tint);
 }
-.TexpileEditor .pm-suggest-break-removed,
 .cm-suggest-break-removed {
 	background-color: var(--diff-delete-tint);
 }
@@ -1057,6 +745,14 @@ html.pm-drop-refused .pm-drop-cursor {
 		top 160ms ease,
 		left 160ms ease,
 		box-shadow 160ms ease;
+}
+.comment-rail-visual[data-snap] .comment-card {
+	transition: none;
+}
+/* held with the canvas rows: their first place lands before they show (paneShownMark.ts) */
+.comment-rail-visual :is(.comment-card, .comment-rail-fade):not([data-canvas-shown] *) {
+	visibility: hidden;
+	transition: none;
 }
 .comment-rail-source {
 	position: sticky;
@@ -1142,15 +838,6 @@ html.pm-drop-refused .pm-drop-cursor {
 
 .cm-editor .cm-content .cm-foldPlaceholder:hover {
 	background: color-mix(in oklab, var(--primary-ink) 14%, transparent);
-}
-
-/* The visual editor while it builds. VISIBILITY, never display: an element with no box intersects
-   nothing, so display:none blinds the IntersectionObserver that turns the heavy nodes on screen
-   into real ones - guaranteeing the reveal exposes a document still made of stand-ins, chips as
-   plain source and formulas as blank boxes. Keeping the boxes lets that happen while it is still
-   invisible. See revealBuiltEditor.ts, which owns the reveal. */
-.editor-building {
-	visibility: hidden;
 }
 
 /* "Nothing below 300ms" - the whole rule, and the only copy of it. Put this on anything that should
@@ -1818,22 +1505,6 @@ html.pm-drop-refused .pm-drop-cursor {
 	width: fit-content;
 }
 
-/* during template load, show "Loading..." instead of the orphaned warning */
-.ProseMirror[data-template-loading='true'] .texpile-template-block[data-orphaned='true'] {
-	border-left-color: var(--color-surface-300-700);
-	background: color-mix(in srgb, var(--color-surface-400) 5%, transparent);
-}
-
-.ProseMirror[data-template-loading='true'] .texpile-template-block[data-orphaned='true']::before {
-	color: var(--muted-text);
-}
-
-.ProseMirror[data-template-loading='true'] .texpile-template-block[data-orphaned='true']::after {
-	content: 'Loading template...';
-	color: var(--muted-text);
-	background: color-mix(in srgb, var(--color-surface-400) 10%, transparent);
-}
-
 /* duplicate block (allowMultiple: false) */
 .texpile-template-block[data-duplicate='true'] {
 	border-left-color: var(--color-error-500);
@@ -1858,57 +1529,6 @@ html.pm-drop-refused .pm-drop-cursor {
 	width: fit-content;
 }
 
-/* each heading's number, from numbersPlugin */
-.ProseMirror :is(h1, h2, h3, h4, h5, h6)[data-number]::before {
-	content: attr(data-number);
-	color: var(--muted-text);
-	font-weight: 600;
-	margin-right: 0.5em;
-	user-select: none;
-}
-.ProseMirror h1[data-number]::before {
-	font-weight: 700;
-}
-.ProseMirror :is(h4, h5, h6)[data-number]::before {
-	font-weight: 500;
-}
-
-/* figure counter: only numbered images with a non-empty label count; LaTeX shows the compile's number instead */
-.ProseMirror:not([data-compiled-numbers])
-	.imagePluginRoot[imageplugin-label]:not([imageplugin-label='']):not([imageplugin-label='null']):not([imageplugin-numbered='false']) {
-	counter-increment: figure;
-}
-
-/* the number sits on the image's root, and attr() reads only the element itself, so it comes down to the caption */
-.ProseMirror[data-compiled-numbers] .imagePluginRoot[data-number] {
-	--figure-number: attr(data-number);
-}
-.ProseMirror[data-compiled-numbers] .imagePluginRoot[data-number]:not([imageplugin-numbered='false']) .text::before {
-	content: 'Figure ' var(--figure-number) ': ';
-	font-weight: 600;
-	color: var(--muted-text);
-	margin-right: 0.25em;
-}
-
-/* "Figure X: " caption prefix, numbered images only */
-.ProseMirror:not([data-compiled-numbers])
-	.imagePluginRoot[imageplugin-label]:not([imageplugin-label='']):not([imageplugin-label='null']):not([imageplugin-numbered='false'])
-	.text::before {
-	content: 'Figure ' counter(figure) ': ';
-	font-weight: 600;
-	color: var(--muted-text);
-	margin-right: 0.25em;
-}
-
-.ProseMirror .imagePluginRoot[imageplugin-showCaption='false'] .text {
-	display: none;
-}
-
-/* figure counter root; equation numbering itself is handled by JS */
-.ProseMirror {
-	counter-reset: figure;
-}
-
 /* the writing area runs to the foot of the pane, so a drop or a click below the last block lands at the end of the document */
 .texpile-main-editor,
 .texpile-main-editor > main {
@@ -1918,266 +1538,11 @@ html.pm-drop-refused .pm-drop-cursor {
 }
 .texpile-main-editor > main > .ProseMirror {
 	flex: 1;
-	padding-bottom: 2rem;
-}
-
-/* "(X)" to the right of single-line equations, from data-equation-number */
-.ProseMirror
-	.block-math-container[data-numbered='true'][data-label]:not([data-label='']):not([data-label='null']):not([data-environment])::after,
-.ProseMirror
-	.block-math-container[data-numbered='true'][data-label]:not([data-label='']):not([data-label='null'])[data-environment='']::after,
-.ProseMirror .block-math-container[data-numbered='true'][data-equation-number][data-numbering='single']::after {
-	content: attr(data-equation-number);
-	position: absolute;
-	right: calc(var(--spacing) * 4);
-	top: 50%;
-	transform: translateY(-50%);
-	font-weight: 500;
-	color: var(--muted-text);
-	user-select: none;
-	pointer-events: none;
-}
-
-/* per-line environments (align, gather) are numbered by JS; a single-number one keeps the ::after */
-.ProseMirror .block-math-container[data-environment]:not([data-environment='']):not([data-numbering='single'])::after {
-	display: none;
-}
-
-.ProseMirror .block-math-container .equation-numbers {
-	position: absolute;
-	right: calc(var(--spacing) * 4);
-	top: 50%;
-	transform: translateY(-50%);
-	display: flex;
-	flex-direction: column;
-	align-items: flex-end;
-	gap: calc(var(--spacing) * 2);
-	pointer-events: none;
-	user-select: none;
-}
-
-.ProseMirror .block-math-container .equation-number-line {
-	font-weight: 500;
-	color: var(--muted-text);
-	font-size: 0.95em;
-}
-
-/* Inline chips for unknown/unhandled macros. The chip IS the source, standing where the source
-   stands, so it takes the document's own type and ground and nothing sets it apart but its syntax
-   colour - which every chip on screen has, since all three editors build a CodeMirror into one.
-   No padding, no background, no border: each of them boxed the chip off from the line instead of
-   letting it sit in it, and vertical padding on an inline-block set the whole paragraph wider. */
-.ProseMirror code.inline-latex,
-.ProseMirror .inline-latex-wrapper {
-	font: inherit;
-	background-color: transparent;
-	padding: 0;
-	margin: 0;
-	white-space: pre-wrap;
-	word-break: break-word;
-}
-
-/* A block island reads as source the same way, in the same face, flush with the prose margin.
-   These land in CSS rather than the view's own CodeMirror theme because the offscreen placeholder
-   borrows CodeMirror's class names and a view-scoped theme never reaches it - the two would then
-   measure differently, and every upgrade would nudge the scroll. */
-.ProseMirror .raw-latex-wrapper .cm-scroller {
-	font-family: inherit;
-	font-size: inherit;
-	line-height: inherit;
-}
-.ProseMirror .raw-latex-wrapper .cm-content {
-	padding: 0;
-}
-.ProseMirror .raw-latex-wrapper .cm-line {
-	padding: 0;
-}
-
-/* the bounds only matter while you are editing. An OUTLINE, never a border: it is painted outside
-   the box, so it cannot shift the line, or the paragraphs below it, the moment the caret arrives. */
-.ProseMirror .inline-latex-wrapper:focus-within,
-.ProseMirror .raw-latex-wrapper:focus-within {
-	outline: var(--default-border-width) solid color-mix(in srgb, var(--color-surface-500) 45%, transparent);
-	outline-offset: 1px;
-	border-radius: calc(var(--radius-base) * 0.5);
-}
-
-/* a comment chip owns its whole line in the source (% consumes to end of line) and serializes
-   on a line of its own, so it displays as one too */
-.ProseMirror .inline-latex-wrapper.comment-chip {
-	display: block;
-	width: fit-content;
-}
-
-/* a raw chip drawn as what it prints (DrawnChipView); a click opens its panel */
-.ProseMirror .drawn-chip-face {
-	cursor: pointer;
-	border-radius: calc(var(--radius-base) * 0.5);
-}
-.ProseMirror .drawn-chip-line {
-	display: block;
-}
-/* a chip alone in its paragraph (chip, caret image, break) is a full-width inline box, so the caret hacks share its line
-   and the browser draws a caret beside it; after a block it has no line to sit in */
-.ProseMirror .drawn-chip-line:first-child:nth-last-child(3) {
-	display: inline-block;
-	width: 100%;
-	vertical-align: top;
-}
-.ProseMirror .drawn-chip-line:first-child:nth-last-child(3) + .ProseMirror-separator {
-	width: 0;
-	height: 0;
-}
-/* the hack after a chip ending its paragraph would be an empty line under one on a line of its own; the keys leave the
-   caret on the next line instead. important: prosemirror-view's own sheet forces the image inline */
-.ProseMirror .drawn-chip-line:not(:first-child:nth-last-child(3)) + .ProseMirror-separator,
-.ProseMirror .drawn-chip-line:not(:first-child:nth-last-child(3)) + .ProseMirror-separator + .ProseMirror-trailingBreak {
-	display: none !important;
-}
-.ProseMirror .drawn-chip-face.drawn-chip-selected {
-	outline: var(--default-border-width) solid var(--color-primary-500);
-	outline-offset: 1px;
 }
 
 /* a panel field's suggestions open from its own chevron; the browser's arrow resists a plain display rule */
 .drawn-chip-panel input[list]::-webkit-calendar-picker-indicator {
 	display: none !important;
-}
-
-/* a comment folded to one quiet line */
-.ProseMirror .drawn-comment {
-	display: block;
-	overflow: hidden;
-	font-size: 0.85em;
-	color: var(--faint-text);
-	text-overflow: ellipsis;
-	white-space: nowrap;
-}
-.ProseMirror .drawn-comment-marker {
-	font-family: var(--font-mono, monospace);
-}
-.ProseMirror .drawn-comment-more {
-	margin-left: 0.6em;
-	font-size: 0.85em;
-}
-
-/* a Typst set rule as one quiet line saying what it sets */
-.ProseMirror .drawn-setting {
-	display: block;
-	overflow: hidden;
-	font-size: 0.85em;
-	color: var(--muted-text);
-	text-overflow: ellipsis;
-	white-space: nowrap;
-}
-.ProseMirror .drawn-setting-target {
-	font-weight: 600;
-}
-
-/* a vertical space at its size: an arrow from its top to its bottom, labelled with the command and its length */
-.ProseMirror .drawn-vspace {
-	display: flex;
-	align-items: center;
-	gap: 0.4em;
-	color: var(--faint-text);
-}
-/* whole pixels and an odd width, so the heads' tips and the 1px line share one center */
-.ProseMirror .drawn-vspace-arrow {
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	align-self: stretch;
-	flex: none;
-	width: 9px;
-	margin-inline: 4px;
-}
-.ProseMirror .drawn-vspace-head {
-	flex: none;
-	width: 9px;
-	height: 6px;
-	fill: currentColor;
-}
-.ProseMirror .drawn-vspace-shaft {
-	flex: 1;
-	width: 1px;
-	background: currentColor;
-}
-.ProseMirror .drawn-space-command,
-.ProseMirror .drawn-space-length {
-	font-family: var(--font-mono, monospace);
-	font-size: 0.7em;
-	line-height: 1;
-}
-
-/* a horizontal space as room in the line; an \hspace also shows its extent, bracketed */
-.ProseMirror .drawn-space,
-.ProseMirror .drawn-hspace {
-	display: inline-block;
-	height: 0.6em;
-	vertical-align: baseline;
-}
-.ProseMirror .drawn-hspace {
-	border: var(--default-border-width) solid var(--faint-text);
-	border-top: none;
-}
-.ProseMirror .drawn-hspace-negative {
-	width: 0;
-	border-right: none;
-	border-bottom: none;
-}
-.ProseMirror .drawn-space:hover,
-.ProseMirror .drawn-hspace:hover {
-	background: color-mix(in srgb, var(--color-primary-500) 12%, transparent);
-}
-
-/* a page break, the appendix, the bibliography: a labelled line across the column, closed at both ends */
-.ProseMirror .drawn-divider {
-	display: flex;
-	align-items: center;
-	gap: 0.75em;
-	margin: calc(var(--spacing) * 2) 0;
-	border-inline: var(--default-border-width) solid currentColor;
-	font-size: 0.7rem;
-	letter-spacing: 0.06em;
-	text-transform: uppercase;
-	color: var(--faint-text);
-}
-.ProseMirror .drawn-divider::before,
-.ProseMirror .drawn-divider::after {
-	content: '';
-	flex: 1;
-	border-top: var(--default-border-width) solid currentColor;
-}
-.ProseMirror .drawn-divider-label {
-	text-transform: none;
-	letter-spacing: normal;
-}
-
-.ProseMirror .drawn-footnote {
-	margin-left: 0.05em;
-	font-size: 0.75em;
-	line-height: 0;
-	color: var(--color-ref-fg);
-}
-
-/* the same tinted text a \ref is (RefDisplay.svelte) */
-.ProseMirror .drawn-crossref {
-	border-radius: var(--radius-base);
-	color: var(--color-ref-fg);
-}
-.ProseMirror .drawn-crossref:hover {
-	background: var(--color-ref-bg);
-}
-.ProseMirror .drawn-crossref-broken {
-	color: var(--color-ref-broken-fg);
-}
-.ProseMirror .drawn-crossref-broken:hover {
-	background: var(--color-ref-broken-bg);
-}
-
-/* a macro drawn as its definition: the dotted underline says it is a command, as \today's does */
-.ProseMirror .drawn-macro {
-	border-bottom: var(--default-border-width) dotted var(--faint-text);
 }
 
 /* a document's own macro in a formula opens its panel as a text chip does */
@@ -2195,20 +1560,6 @@ math-field::part(macro-selected) {
 }
 math-field[data-macro-selected] {
 	--selection-background-color: transparent;
-}
-/* the visual editor's find (find/findHighlights.ts): text through highlights, a formula by its box */
-::highlight(find-match) {
-	background-color: var(--find-match-bg);
-}
-::highlight(find-current) {
-	background-color: var(--find-match-active-bg);
-}
-.ProseMirror [data-find] {
-	border-radius: calc(var(--radius-base) * 0.5);
-	background-color: var(--find-match-bg);
-}
-.ProseMirror [data-find='current'] {
-	background-color: var(--find-match-active-bg);
 }
 .math-macro-anchor {
 	position: absolute;
@@ -2532,19 +1883,4 @@ math-field[data-macro-selected] {
 /* the source editor's own lines only: a raw LaTeX block or chip in the visual editor is a CodeMirror too */
 .floating-bar-room .source-editor > .cm-editor > .cm-scroller > .cm-content {
 	padding-top: 2.875rem !important;
-}
-html.pm-handle-drag .pm-drop-cursor:not(.pm-handle-drop-line) {
-	display: none;
-}
-.pm-handle-drop-line {
-	position: relative;
-	height: 0;
-	pointer-events: none;
-}
-.pm-handle-drop-line::before {
-	content: '';
-	position: absolute;
-	inset: -1px 0 auto;
-	height: 2px;
-	background-color: var(--color-primary-500);
 }

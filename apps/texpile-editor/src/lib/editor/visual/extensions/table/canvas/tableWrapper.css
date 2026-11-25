@@ -1,0 +1,69 @@
+/* a table as a paper sets it: the caption line over the cells, no box around them */
+.table-wrapper {
+	position: relative;
+	margin: calc(var(--spacing) * 4) 0;
+}
+
+/* wide tables just overflow, no scrollbar */
+.ProseMirror .tableWrapper {
+	pointer-events: none;
+	overflow: visible !important;
+	margin: 0 !important;
+	padding: 0 !important;
+}
+
+.ProseMirror .tableWrapper > * {
+	pointer-events: auto;
+}
+
+/* over-wide tables scroll inside their own box, the page never gets a horizontal scrollbar */
+.table-wrapper-content {
+	max-width: 100%;
+	overflow-x: auto;
+	display: flex;
+	flex-direction: column;
+	gap: calc(var(--spacing) * 2);
+}
+
+/* the number stands before the caption as it prints, drawn from the wrapper's --table-prefix */
+.table-caption {
+	text-align: center;
+	padding: 0 calc(var(--spacing) * 8);
+	cursor: text;
+	min-height: calc(var(--spacing) * 6);
+}
+.table-caption::before {
+	content: var(--table-prefix, '');
+	font-weight: 600;
+	color: var(--muted-text);
+	margin-right: 0.25em;
+}
+.table-caption[data-starred='true']::before {
+	content: none;
+}
+.TexpileEditor .table-wrapper-content table {
+	margin: 0;
+}
+
+.table-notes {
+	font-size: 0.75rem;
+	margin-top: calc(var(--spacing) * 2);
+	color: var(--muted-text);
+	font-style: italic;
+	padding: calc(var(--spacing) * 1) calc(var(--spacing) * 2);
+	border-radius: var(--radius-base);
+	cursor: text;
+	min-height: calc(var(--spacing) * 6);
+}
+
+.table-wrapper-content.hide-notes .table-notes {
+	display: none;
+}
+
+.table-wrapper-content table th {
+	font-weight: 600;
+}
+
+[data-mode='dark'] .table-notes {
+	color: var(--faint-text);
+}

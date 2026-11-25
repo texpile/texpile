@@ -279,9 +279,6 @@
 	"wsview_toast_git_init_failed_title": "無法初始化存放庫",
 	"wsview_toast_git_init_success_title": "已初始化空的 Git 存放庫",
 	"wsview_toast_discard_failed_title": "無法捨棄變更",
-	"wsview_toast_too_complex_title": "已在原始碼模式中開啟",
-	"wsview_toast_too_complex_desc": "本文件包含 {count} 個元素，超出視覺化編輯器的顯示能力。",
-	"wsview_toast_too_large_desc": "此檔案大小為 {size} KB。超過 {limit} KB 的檔案將在原始碼模式中開啟。",
 	"wsview_loading_parsing": "正在讀取 LaTeX…",
 	"wsview_loading_building": "正在建構文件…",
 	"wsview_loading_finalizing": "正在完成…",
@@ -2506,7 +2503,6 @@
 	"figure_needs_tinymist": "Typst 圖形需要 tinymist。",
 	"drawn_chip_typst_crop_definition": "圖片裁剪定義",
 	"imageoverlay_crop": "裁剪",
-	"imageoverlay_crop_unreadable": "裁剪需要簡單的 trim 和 angle 選項。",
 	"image_crop_turn_left": "向左旋轉",
 	"image_crop_turn_right": "向右旋轉",
 	"image_crop_reset": "重設",
@@ -3372,5 +3368,6 @@
 	"keybindings_source_builtin": "內建",
 	"keybindings_copy": "複製",
 	"keybindings_copy_title": "複製命令標題",
-	"keybindings_sort_precedence": "依優先順序排序"
+	"keybindings_sort_precedence": "依優先順序排序",
+	"canvas_screen_reader_label": "視覺化編輯器。切換到原始碼模式即可用螢幕閱讀器閱讀此檔案。"
 }

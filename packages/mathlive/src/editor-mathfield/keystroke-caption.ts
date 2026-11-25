@@ -33,6 +33,7 @@ export function showKeystroke(mathfield: _Mathfield, keystroke: string): void {
 }
 
 export function toggleKeystrokeCaption(mathfield: _Mathfield): boolean {
+  if (mathfield.headless) return false;
   mathfield.keystrokeCaptionVisible = !mathfield.keystrokeCaptionVisible;
   if (!mathfield.keystrokeCaptionVisible) {
     const panel = getSharedElement('mathlive-keystroke-caption-panel');

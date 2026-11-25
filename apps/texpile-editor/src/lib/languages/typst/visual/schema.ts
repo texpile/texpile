@@ -69,6 +69,7 @@ nodes.doc = { ...base.doc, attrs: { ...base.doc.attrs, typFile: { default: null 
 nodes.typ_env = {
 	content: 'block+',
 	group: 'block',
+	paragraphSpacing: 'tight',
 	definingAsContext: true,
 	allowGapCursor: true,
 	attrs: {

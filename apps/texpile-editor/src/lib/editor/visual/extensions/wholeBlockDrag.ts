@@ -6,7 +6,7 @@ import { NodeSelection, Plugin, PluginKey, TextSelection, type Selection } from 
 export const wholeBlockDragKey = new PluginKey('whole-block-drag');
 
 // a caption, a note or a term title is part of its float or list and stays where it is
-const PLAIN_BLOCKS = new Set(['paragraph', 'heading']);
+export const PLAIN_BLOCKS = new Set(['paragraph', 'heading']);
 
 /** the position before the block whose entire text `selection` covers, if its parent can do without it */
 export function wholeBlockOf(selection: Selection): number | null {

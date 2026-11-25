@@ -7,7 +7,7 @@ import type {
 
 import { Atom, isCellBranch, isNamedBranch } from '../core/atom-class';
 import { Box } from '../core/box';
-import { VBox, VBoxElementAndShift } from '../core/v-box';
+import { ARRAY_ROWS, VBox, VBoxElementAndShift } from '../core/v-box';
 import { makeLeftRightDelim } from '../core/delimiters';
 import { Context } from '../core/context';
 import { joinLatex } from '../core/tokenizer';
@@ -649,6 +649,10 @@ export class ArrayAtom extends Atom {
     const inner = new Box(cols, {
       classes: ['ML__mtable', ...this.classes].join(' '),
     });
+    ARRAY_ROWS.set(
+      inner,
+      body.map((row) => row.pos - offset)
+    );
 
     // For inline array environments, adjust the box height/depth to align
     // properly with surrounding text (see issue #2512)

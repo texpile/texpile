@@ -1,4 +1,4 @@
-import { commentFace } from '$lib/editor/visual/extensions/drawnChips/commentFace';
+import { commentFace } from '$lib/editor/visual/extensions/drawnChips/comment/commentFace';
 import type { ChipFace } from '$lib/editor/visual/extensions/drawnChips/chipFace';
 import { commonEnvFacts } from '$lib/languages/latex/knowledge/environments/envFacts';
 import { environmentPlugins } from '../plugin/pluginMap';

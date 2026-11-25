@@ -3,7 +3,8 @@
 		"paths": {
 			"$lib": ["./src/lib"],
 			"$lib/*": ["./src/lib/*"],
-			"$branding/*": ["../../branding/*"]
+			"$branding/*": ["../../branding/*"],
+			"prosemirror-view": ["./src/lib/editor/canvas/contracts/typings/prosemirrorView.d.ts"]
 		},
 		"verbatimModuleSyntax": true,
 		"isolatedModules": true,

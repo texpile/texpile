@@ -1,6 +1,6 @@
 // what a document numbers, in reading order
 import type { Node as PMNode } from 'prosemirror-model';
-import type { ChipCountsOf } from '$lib/editor/visual/extensions/drawnChips/footnoteNumbers';
+import type { ChipCountsOf } from '$lib/editor/visual/extensions/drawnChips/footnote/footnoteNumbers';
 import { numberedKindOf, type NumberedKind } from './numberedNodes';
 import { counterChangesIn, withinChangesIn, type CounterChange, type NumberingScheme, type WithinChange } from './numberingScheme';
 import { definedFormsIn, NUMBERED_MATH, NUMBERED_MATH_ENVIRONMENTS, type MathOpeners } from './definedForms';
@@ -31,6 +31,8 @@ export type NumberEvent =
 const APPENDIX = /\\append(ix|ices)(?![a-zA-Z@])/;
 const MATTER = /\\(front|main|back)matter(?![a-zA-Z@])/g;
 const HIDDEN_FLOAT = /\\begin\s*\{(figure|table)\*?\}/g;
+// what codeOnly blanks starts with one of these: a comment, \iffalse, a verbatim command or environment
+const UNREAD = /%|\\iffalse|\\begin|\\verb|\\url|\\path|\\lst|\\mint|\\[a-zA-Z]*[Vv]erb/;
 
 export type EventScheme = Pick<NumberingScheme, 'mathOpeners' | 'theorems'>;
 
@@ -38,12 +40,15 @@ export type EventScheme = Pick<NumberingScheme, 'mathOpeners' | 'theorems'>;
 type ChipEvents = { code: string; first: NumberEvent[]; floats: NumberEvent[] };
 // a long document holds thousands of chips, and each one says the same for as long as it is the same node
 const chipEvents = new WeakMap<PMNode, ChipEvents>();
+// the first count of a long paper read every chip in one task: they are read beforehand in slices this long
+const CHIP_SLICE_MS = 40;
 
 function chipEventsOf(node: PMNode): ChipEvents {
 	const kept = chipEvents.get(node);
 	if (kept) return kept;
 	const text = node.textContent;
-	const code = codeOnly(text);
+	// a chip with nothing TeX skips reads as written; parsing each to find that out took a second over a long paper
+	const code = UNREAD.test(text) ? codeOnly(text) : text;
 	const first: NumberEvent[] = [];
 	for (const m of code.matchAll(MATTER)) first.push({ type: 'matter', main: m[1] === 'main' });
 	if (APPENDIX.test(code)) first.push({ type: 'appendix' });
@@ -56,6 +61,26 @@ function chipEventsOf(node: PMNode): ChipEvents {
 	const events = { code, first, floats };
 	chipEvents.set(node, events);
 	return events;
+}
+
+/** reads what the chips of `doc` say ahead of a count, a slice at a time; returns the way to stop, calls `done` once read */
+export function readChipsAhead(doc: PMNode, done: () => void): () => void {
+	const chips: PMNode[] = [];
+	let next = -1;
+	let timer = setTimeout(function slice() {
+		const end = performance.now() + CHIP_SLICE_MS;
+		if (next < 0) {
+			doc.descendants((node) => {
+				if (node.type.name === 'raw_latex' || node.type.name === 'inline_latex') chips.push(node);
+				return !node.isTextblock || node.childCount > 0;
+			});
+			next = 0;
+		}
+		while (next < chips.length && performance.now() < end) chipEventsOf(chips[next++]);
+		if (next < chips.length) timer = setTimeout(slice);
+		else done();
+	});
+	return () => clearTimeout(timer);
 }
 
 export function eventsIn(doc: PMNode, countsOf: ChipCountsOf, scheme: EventScheme): NumberEvent[] {

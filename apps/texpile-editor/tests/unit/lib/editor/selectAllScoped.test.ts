@@ -47,4 +47,13 @@ describe('selectAllScoped', () => {
 		selectAllScoped(first, (tr) => (next = first.apply(tr)));
 		expect(selectAllScoped(next, () => {})).toBe(false);
 	});
+
+	it('takes a raw LaTeX block before the document', () => {
+		const doc = N.doc.create(null, [N.paragraph.create(null, schema.text('body')), N.raw_latex.create(null, schema.text('\\foo{x}'))]);
+		const state = selectionInside(EditorState.create({ doc }), 'foo');
+		let next = state;
+		expect(selectAllScoped(state, (tr) => (next = state.apply(tr)))).toBe(true);
+		expect(next.doc.textBetween(next.selection.from, next.selection.to)).toBe('\\foo{x}');
+		expect(selectAllScoped(next, () => {})).toBe(false);
+	});
 });

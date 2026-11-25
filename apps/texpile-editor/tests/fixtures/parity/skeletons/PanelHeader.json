@@ -1,0 +1,121 @@
+{
+ "environment": {
+  "tool": "jsdom",
+  "userAgent": "Mozilla/5.0 (linux) AppleWebKit/537.36 (KHTML, like Gecko) jsdom/30.1.3",
+  "node": "v22.23.4",
+  "document": null,
+  "scrollPositionIndex": null,
+  "window": null,
+  "devicePixelRatio": null,
+  "zoom": null,
+  "electron": null,
+  "chromium": null,
+  "os": "linux",
+  "domEditorCommit": "6ec0389c61ffc889078a95517ee770740f556c7e",
+  "live": "crosscheck.json"
+ },
+ "component": "PanelHeader",
+ "source": "src/lib/editor/visual/extensions/drawnChips/panel/PanelHeader.svelte",
+ "mountsInEditorAs": "first row of every drawn chip panel",
+ "states": {
+  "title": {
+   "roots": [
+    {
+     "tag": "div",
+     "class": [
+      "flex",
+      "min-h-6",
+      "items-center",
+      "justify-between",
+      "gap-2"
+     ],
+     "children": [
+      {
+       "tag": "span",
+       "class": [
+        "text-sm",
+        "font-medium"
+       ],
+       "children": [
+        "{title}"
+       ]
+      },
+      " "
+     ]
+    }
+   ]
+  },
+  "title-command": {
+   "roots": [
+    {
+     "tag": "div",
+     "class": [
+      "flex",
+      "min-h-6",
+      "items-center",
+      "justify-between",
+      "gap-2"
+     ],
+     "children": [
+      {
+       "tag": "span",
+       "class": [
+        "text-sm",
+        "font-medium"
+       ],
+       "children": [
+        "{title}"
+       ]
+      },
+      " ",
+      {
+       "tag": "span",
+       "class": [
+        "text-muted",
+        "truncate",
+        "font-mono",
+        "text-xs"
+       ],
+       "children": [
+        "\\cmd"
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  "children": {
+   "roots": [
+    {
+     "tag": "div",
+     "class": [
+      "flex",
+      "min-h-6",
+      "items-center",
+      "justify-between",
+      "gap-2"
+     ],
+     "children": [
+      {
+       "tag": "span",
+       "class": [
+        "text-sm",
+        "font-medium"
+       ],
+       "children": [
+        "{title}"
+       ]
+      },
+      " ",
+      {
+       "tag": "span",
+       "children": [
+        "{children}"
+       ]
+      }
+     ]
+    }
+   ]
+  }
+ }
+}

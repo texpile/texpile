@@ -1,0 +1,372 @@
+{
+ "environment": {
+  "tool": "jsdom",
+  "userAgent": "Mozilla/5.0 (linux) AppleWebKit/537.36 (KHTML, like Gecko) jsdom/30.1.3",
+  "node": "v22.23.4",
+  "document": null,
+  "scrollPositionIndex": null,
+  "window": null,
+  "devicePixelRatio": null,
+  "zoom": null,
+  "electron": null,
+  "chromium": null,
+  "os": "linux",
+  "domEditorCommit": "6ec0389c61ffc889078a95517ee770740f556c7e",
+  "live": "crosscheck.json"
+ },
+ "component": "TypstLayoutGear",
+ "source": "src/lib/languages/typst/visual/extensions/layout/TypstLayoutGear.svelte",
+ "mountsInEditorAs": "the gear div of TypstLayoutView (typstLayoutView.svelte.ts mounts it into this.gear)",
+ "states": {
+  "no-cells": {
+   "roots": [
+    {
+     "tag": "div",
+     "class": [
+      "flex",
+      "items-center"
+     ],
+     "children": [
+      " ",
+      {
+       "tag": "button",
+       "class": [
+        "typ-layout-settings",
+        "btn-icon",
+        "btn-icon-sm",
+        "hover:preset-tonal",
+        "text-muted"
+       ],
+       "attrs": {
+        "type": "button",
+        "aria-label": "Layout settings",
+        "data-tip": "Layout settings"
+       },
+       "children": [
+        {
+         "tag": "svg",
+         "class": [
+          "lucide",
+          "lucide-settings",
+          "lucide-icon"
+         ],
+         "attrs": {
+          "xmlns": "http://www.w3.org/2000/svg",
+          "width": "14",
+          "height": "14",
+          "viewBox": "0 0 24 24",
+          "fill": "none",
+          "stroke": "currentColor",
+          "stroke-width": "2",
+          "stroke-linecap": "round",
+          "stroke-linejoin": "round",
+          "aria-hidden": "true"
+         },
+         "children": [
+          {
+           "tag": "path"
+          },
+          {
+           "tag": "circle"
+          }
+         ]
+        }
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  "one-cell": {
+   "roots": [
+    {
+     "tag": "div",
+     "class": [
+      "flex",
+      "items-center"
+     ],
+     "children": [
+      {
+       "tag": "button",
+       "class": [
+        "btn-icon",
+        "btn-icon-sm",
+        "hover:preset-tonal",
+        "text-muted"
+       ],
+       "attrs": {
+        "type": "button",
+        "aria-label": "Add cell",
+        "data-tip": "Add cell"
+       },
+       "children": [
+        {
+         "tag": "svg",
+         "class": [
+          "lucide",
+          "lucide-plus",
+          "lucide-icon"
+         ],
+         "attrs": {
+          "xmlns": "http://www.w3.org/2000/svg",
+          "width": "14",
+          "height": "14",
+          "viewBox": "0 0 24 24",
+          "fill": "none",
+          "stroke": "currentColor",
+          "stroke-width": "2",
+          "stroke-linecap": "round",
+          "stroke-linejoin": "round",
+          "aria-hidden": "true"
+         },
+         "children": [
+          {
+           "tag": "path"
+          },
+          {
+           "tag": "path"
+          }
+         ]
+        }
+       ]
+      },
+      " ",
+      {
+       "tag": "button",
+       "class": [
+        "btn-icon",
+        "btn-icon-sm",
+        "hover:preset-tonal",
+        "text-muted"
+       ],
+       "attrs": {
+        "type": "button",
+        "aria-label": "Remove last cell",
+        "disabled": "",
+        "data-tip": "Remove last cell"
+       },
+       "children": [
+        {
+         "tag": "svg",
+         "class": [
+          "lucide",
+          "lucide-minus",
+          "lucide-icon"
+         ],
+         "attrs": {
+          "xmlns": "http://www.w3.org/2000/svg",
+          "width": "14",
+          "height": "14",
+          "viewBox": "0 0 24 24",
+          "fill": "none",
+          "stroke": "currentColor",
+          "stroke-width": "2",
+          "stroke-linecap": "round",
+          "stroke-linejoin": "round",
+          "aria-hidden": "true"
+         },
+         "children": [
+          {
+           "tag": "path"
+          }
+         ]
+        }
+       ]
+      },
+      " ",
+      {
+       "tag": "button",
+       "class": [
+        "typ-layout-settings",
+        "btn-icon",
+        "btn-icon-sm",
+        "hover:preset-tonal",
+        "text-muted"
+       ],
+       "attrs": {
+        "type": "button",
+        "aria-label": "Layout settings",
+        "data-tip": "Layout settings"
+       },
+       "children": [
+        {
+         "tag": "svg",
+         "class": [
+          "lucide",
+          "lucide-settings",
+          "lucide-icon"
+         ],
+         "attrs": {
+          "xmlns": "http://www.w3.org/2000/svg",
+          "width": "14",
+          "height": "14",
+          "viewBox": "0 0 24 24",
+          "fill": "none",
+          "stroke": "currentColor",
+          "stroke-width": "2",
+          "stroke-linecap": "round",
+          "stroke-linejoin": "round",
+          "aria-hidden": "true"
+         },
+         "children": [
+          {
+           "tag": "path"
+          },
+          {
+           "tag": "circle"
+          }
+         ]
+        }
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  "three-cells": {
+   "roots": [
+    {
+     "tag": "div",
+     "class": [
+      "flex",
+      "items-center"
+     ],
+     "children": [
+      {
+       "tag": "button",
+       "class": [
+        "btn-icon",
+        "btn-icon-sm",
+        "hover:preset-tonal",
+        "text-muted"
+       ],
+       "attrs": {
+        "type": "button",
+        "aria-label": "Add cell",
+        "data-tip": "Add cell"
+       },
+       "children": [
+        {
+         "tag": "svg",
+         "class": [
+          "lucide",
+          "lucide-plus",
+          "lucide-icon"
+         ],
+         "attrs": {
+          "xmlns": "http://www.w3.org/2000/svg",
+          "width": "14",
+          "height": "14",
+          "viewBox": "0 0 24 24",
+          "fill": "none",
+          "stroke": "currentColor",
+          "stroke-width": "2",
+          "stroke-linecap": "round",
+          "stroke-linejoin": "round",
+          "aria-hidden": "true"
+         },
+         "children": [
+          {
+           "tag": "path"
+          },
+          {
+           "tag": "path"
+          }
+         ]
+        }
+       ]
+      },
+      " ",
+      {
+       "tag": "button",
+       "class": [
+        "btn-icon",
+        "btn-icon-sm",
+        "hover:preset-tonal",
+        "text-muted"
+       ],
+       "attrs": {
+        "type": "button",
+        "aria-label": "Remove last cell",
+        "data-tip": "Remove last cell"
+       },
+       "children": [
+        {
+         "tag": "svg",
+         "class": [
+          "lucide",
+          "lucide-minus",
+          "lucide-icon"
+         ],
+         "attrs": {
+          "xmlns": "http://www.w3.org/2000/svg",
+          "width": "14",
+          "height": "14",
+          "viewBox": "0 0 24 24",
+          "fill": "none",
+          "stroke": "currentColor",
+          "stroke-width": "2",
+          "stroke-linecap": "round",
+          "stroke-linejoin": "round",
+          "aria-hidden": "true"
+         },
+         "children": [
+          {
+           "tag": "path"
+          }
+         ]
+        }
+       ]
+      },
+      " ",
+      {
+       "tag": "button",
+       "class": [
+        "typ-layout-settings",
+        "btn-icon",
+        "btn-icon-sm",
+        "hover:preset-tonal",
+        "text-muted"
+       ],
+       "attrs": {
+        "type": "button",
+        "aria-label": "Layout settings",
+        "data-tip": "Layout settings"
+       },
+       "children": [
+        {
+         "tag": "svg",
+         "class": [
+          "lucide",
+          "lucide-settings",
+          "lucide-icon"
+         ],
+         "attrs": {
+          "xmlns": "http://www.w3.org/2000/svg",
+          "width": "14",
+          "height": "14",
+          "viewBox": "0 0 24 24",
+          "fill": "none",
+          "stroke": "currentColor",
+          "stroke-width": "2",
+          "stroke-linecap": "round",
+          "stroke-linejoin": "round",
+          "aria-hidden": "true"
+         },
+         "children": [
+          {
+           "tag": "path"
+          },
+          {
+           "tag": "circle"
+          }
+         ]
+        }
+       ]
+      }
+     ]
+    }
+   ]
+  }
+ }
+}

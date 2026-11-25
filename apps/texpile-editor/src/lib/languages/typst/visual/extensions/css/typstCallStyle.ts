@@ -3,7 +3,7 @@ const STYLES: Record<string, string> = {
 	strike: 'text-decoration: line-through',
 	overline: 'text-decoration: overline',
 	underline: 'text-decoration: underline',
-	smallcaps: 'font-variant: small-caps',
+	smallcaps: 'font-variant-caps: small-caps',
 	upper: 'text-transform: uppercase',
 	lower: 'text-transform: lowercase',
 	super: 'vertical-align: super; font-size: smaller',

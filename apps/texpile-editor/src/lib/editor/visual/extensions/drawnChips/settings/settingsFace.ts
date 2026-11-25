@@ -1,5 +1,6 @@
-import { faceElement, tippedFace, type ChipFace } from '../chipFace';
-import '../definitions/definitions.css';
+import type { FaceElement } from '$lib/editor/canvas';
+import { tippedFace, type ChipFace } from '../chipFace';
+import { chipElement } from '../looks/chipLooks';
 
 export type SettingLine = { target: string; values: string[] };
 
@@ -14,15 +15,15 @@ export function settingLines(settings: readonly SettingLine[]): SettingLine[] {
 	return lines;
 }
 
-export function settingRow(line: SettingLine): HTMLElement {
-	const row = faceElement('span', 'drawn-setting');
-	row.appendChild(faceElement('span', 'drawn-setting-target', line.target));
-	for (const value of line.values) row.appendChild(document.createTextNode(` - ${value}`));
+export function settingRow(line: SettingLine): FaceElement {
+	const row = chipElement('span', 'drawn-setting');
+	row.appendChild(chipElement('span', 'drawn-setting-target', line.target));
+	for (const value of line.values) row.append(` - ${value}`);
 	return row;
 }
 
 export function settingsFace(settings: readonly SettingLine[], hint: string): ChipFace {
-	const dom = faceElement('span', 'drawn-settings');
+	const dom = chipElement('span', 'drawn-settings');
 	for (const line of settingLines(settings)) dom.appendChild(settingRow(line));
 	return tippedFace(dom, hint, { line: true });
 }

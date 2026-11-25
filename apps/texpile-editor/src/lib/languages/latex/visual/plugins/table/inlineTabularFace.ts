@@ -3,7 +3,6 @@ import {
 	argText,
 	documentTable,
 	environmentName,
-	faceElement,
 	mandatoryArgs,
 	readEnvironment,
 	type ChipFace,
@@ -12,7 +11,7 @@ import {
 } from '$lib/languages/latex/visual/core';
 import { commonFacts } from '$lib/languages/latex/knowledge/commands/commandFacts';
 import { commonEnvFacts } from '$lib/languages/latex/knowledge/environments/envFacts';
-import './inlineTabular.css';
+import { faceElement, setLook } from '$lib/editor/canvas';
 
 const SPANS = new Set(['multicolumn', 'multirow']);
 
@@ -77,6 +76,7 @@ export function inlineTabularPart(node: SyntaxNode, src: string, drawer: UnitsDr
 	const rows = rowsOf(src, drawer.unitsOf(env.body));
 	if (!rows) return null;
 	const dom = faceElement('span', 'drawn-tabular');
+	setLook(dom, { display: 'inline-grid', verticalAlign: 'middle' });
 	let width = 1;
 	const parts: ChipFace[] = [];
 	function fail(): null {
@@ -93,7 +93,7 @@ export function inlineTabularPart(node: SyntaxNode, src: string, drawer: UnitsDr
 				return fail();
 			}
 			const box = faceElement('span', 'drawn-tabular-cell');
-			box.style.gridArea = `${r + 1} / ${column} / auto / span ${columns}`;
+			setLook(box, { padding: '0 0.25em', gridRow: String(r + 1), gridColumn: `${column} / span ${columns}` });
 			for (const part of drawn) box.appendChild(part.dom);
 			parts.push(...drawn);
 			dom.appendChild(box);
@@ -101,7 +101,7 @@ export function inlineTabularPart(node: SyntaxNode, src: string, drawer: UnitsDr
 		}
 		width = Math.max(width, column - 1);
 	}
-	dom.style.gridTemplateColumns = `repeat(${width}, auto)`;
+	setLook(dom, { gridTemplateColumns: `repeat(${width}, auto)` });
 	return {
 		dom,
 		decorate: (decorations) => parts.forEach((part) => part.decorate?.(decorations)),

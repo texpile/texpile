@@ -1,50 +1,19 @@
-import { describe, it, expect, vi } from 'vitest';
+import { describe, it, expect } from 'vitest';
+import {
+	completeWithPlaceholder,
+	quoteSwitchesText,
+	type HotfixField
+} from '$lib/editor/visual/extensions/mathlivebridge/mathFieldFactory';
 
-const platform = vi.hoisted(() => ({ isMac: true, isWindows: false }));
-vi.mock('$lib/platform', () => platform);
-vi.mock('mathlive', () => ({ MathfieldElement: class {} }));
-
-import { dropIntlBackslashBinding, quoteSwitchesText } from '$lib/editor/visual/extensions/mathlivebridge/mathFieldFactory';
-import type { MathfieldElement } from 'mathlive';
-
-const bindings = [
-	{ key: '\\', ifMode: 'math', command: ['switchMode', 'latex', '', '\\'] },
-	{ key: '[IntlBackslash]', ifMode: 'math', command: ['switchMode', 'latex', '', '\\'] },
-	{ key: '[Tab]', command: 'moveToNextGroup' }
-];
-
-function field(isConnected = true) {
-	return { keybindings: bindings, isConnected } as unknown as MathfieldElement;
+function key(init: KeyboardEventInit & { key: string }): KeyboardEvent {
+	return { shiftKey: false, altKey: false, ctrlKey: false, metaKey: false, ...init } as KeyboardEvent;
 }
 
-describe('dropIntlBackslashBinding', () => {
-	it('drops only the IntlBackslash binding on macOS', () => {
-		platform.isMac = true;
-		const f = field();
-		dropIntlBackslashBinding(f);
-		expect(f.keybindings.map((b) => b.key)).toEqual(['\\', '[Tab]']);
-	});
-
-	it('leaves a field outside the document alone', () => {
-		platform.isMac = true;
-		const f = field(false);
-		dropIntlBackslashBinding(f);
-		expect(f.keybindings).toBe(bindings);
-	});
-
-	it('keeps it elsewhere, where the key types a backslash on UK keyboards', () => {
-		platform.isMac = false;
-		const f = field();
-		dropIntlBackslashBinding(f);
-		expect(f.keybindings).toBe(bindings);
-	});
-});
-
 describe('quoteSwitchesText', () => {
-	function press(mode: string, key = '"', syntax = 'latex') {
+	function press(mode: string, pressed = '"', syntax = 'latex') {
 		const commands: unknown[] = [];
-		const f = { mode, syntax, executeCommand: (c: unknown) => commands.push(c) };
-		quoteSwitchesText({ key, currentTarget: f, preventDefault() {}, stopPropagation() {} } as unknown as KeyboardEvent);
+		const field = { mode, syntax, executeCommand: (c: unknown) => commands.push(c) } as unknown as HotfixField;
+		quoteSwitchesText(field, key({ key: pressed }));
 		return commands;
 	}
 
@@ -53,5 +22,26 @@ describe('quoteSwitchesText', () => {
 		expect(press('text')).toEqual([['switchMode', 'math']]);
 		expect(press('math', "'")).toEqual([]);
 		expect(press('math', '"', 'typst')).toEqual([]);
+	});
+});
+
+describe('completeWithPlaceholder', () => {
+	it('completes a command and puts the caret in its first empty argument', () => {
+		const commands: unknown[] = [];
+		const inserted: string[] = [];
+		const field = {
+			mode: 'latex',
+			syntax: 'latex',
+			position: 3,
+			selection: { ranges: [[3, 3]] },
+			executeCommand: (c: unknown) => commands.push(c),
+			getValue: () => '\\frac{}{}',
+			insert: (latex: string) => inserted.push(latex)
+		} as unknown as HotfixField;
+		expect(completeWithPlaceholder(field, key({ key: ' ' }))).toBe(true);
+		expect(commands).toEqual([['complete', 'accept-all']]);
+		expect(field.selection).toEqual({ ranges: [[0, 3]] });
+		expect(inserted).toEqual(['\\frac{#?}{#?}']);
+		expect(completeWithPlaceholder({ ...field, mode: 'math' } as HotfixField, key({ key: ' ' }))).toBe(false);
 	});
 });

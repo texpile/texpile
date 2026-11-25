@@ -3,6 +3,7 @@
 import type { EditorView } from 'prosemirror-view';
 import { toaster } from '$lib/modals/toaster-svelte';
 import { m } from '$lib/paraglide/messages';
+import { isTexpileCopy, texpileCopyText } from './texpileCopy';
 
 type ClipboardText = { html: string; text: string; hasImage: boolean };
 
@@ -40,7 +41,9 @@ export async function pasteFromClipboard(view: EditorView): Promise<void> {
 export async function pasteWithoutFormatting(view: EditorView): Promise<void> {
 	const read = await readClipboardText().catch(() => null);
 	if (!read) return warnUnreadable();
-	const text = read.text || new DOMParser().parseFromString(read.html, 'text/html').body.textContent || '';
+	const text = isTexpileCopy(read.html)
+		? texpileCopyText(view, read.html)
+		: read.text || new DOMParser().parseFromString(read.html, 'text/html').body.textContent || '';
 	// no clipboard data on the event, so the paste handlers that read one stand aside
 	if (text) view.pasteText(text);
 }
