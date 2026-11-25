@@ -8,6 +8,8 @@
 		/** a short mark before the label, such as `1.1` or `==` */
 		marker?: string;
 		icon?: Component<{ class?: string }>;
+		/** a filled 24 by 24 path, for a brand mark */
+		iconPath?: string;
 		/** a line under the label saying what the option does */
 		note?: string;
 		/** its shortcut, as shortcutText writes it */

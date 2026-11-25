@@ -25,6 +25,13 @@
 	{#if props.option.icon}
 		{@const Icon = props.option.icon}
 		<Icon class="size-4 shrink-0 {props.option.checked ? 'text-primary-ink' : 'text-muted'}" />
+	{:else if props.option.iconPath}
+		<svg
+			class="size-4 shrink-0 {props.option.checked ? 'text-primary-ink' : 'text-muted'}"
+			viewBox="0 0 24 24"
+			fill="currentColor"
+			aria-hidden="true"><path d={props.option.iconPath} /></svg
+		>
 	{:else if props.marked}
 		<span class="text-muted w-10 shrink-0 font-mono text-xs">{props.option.marker ?? ''}</span>
 	{/if}
