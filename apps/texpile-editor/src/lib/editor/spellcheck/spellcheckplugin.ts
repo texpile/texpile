@@ -143,10 +143,12 @@ function proofreadOf(state: EditorState): Plugin | undefined {
 
 /** one per editor: the library debounces per instance, and each editor's file has its own language */
 export function proofreadPlugin(language: () => SpellLanguage | null): Plugin {
+	// the library hands the box only the word's bottom, and it needs the top to open above the word
+	let word = new DOMRect();
 	const libraryPlugin = createProofreadPlugin(
 		500,
 		(block: string) => lintTextAfterComposition(block, language()),
-		createHarperSuggestionBox,
+		(options) => createHarperSuggestionBox({ ...options, position: { x: word.left, y: word.bottom, top: word.top } }),
 		spellcheckenabled,
 		blockSpellText,
 		true // useCustomCSS: enables the proofread-* class naming
@@ -187,7 +189,9 @@ export function proofreadPlugin(language: () => SpellLanguage | null): Plugin {
 			// the library searches the whole page for its own suggestion box on every key; the box here is Texpile's
 			handleKeyDown: undefined,
 			handleClick(view, pos, event) {
-				return !onOldWords(view, event) && !!libraryPlugin.spec.props?.handleClick?.call(this, view, pos, event);
+				if (onOldWords(view, event)) return false;
+				word = (event.target as Element).getBoundingClientRect();
+				return !!libraryPlugin.spec.props?.handleClick?.call(this, view, pos, event);
 			}
 		}
 	});

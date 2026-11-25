@@ -37,7 +37,8 @@
 
 	type Props = {
 		error: Problem;
-		position: { x: number; y: number };
+		/** y is the word's bottom, top its top */
+		position: { x: number; y: number; top?: number };
 		onReplace: (value: string) => void;
 		onIgnore: () => void;
 		onClose: () => void;
@@ -86,7 +87,7 @@
 
 			// show above if no room below
 			if (adjustedY + rect.height > viewportHeight) {
-				adjustedY = position.y - rect.height - 5;
+				adjustedY = (position.top ?? position.y) - rect.height - 5;
 			}
 			if (adjustedY < 10) {
 				adjustedY = 10;

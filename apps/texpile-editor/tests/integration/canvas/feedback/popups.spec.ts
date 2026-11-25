@@ -106,10 +106,10 @@ function centerOn(page: Page, needle: string, length = needle.length, reveal: 'c
 	);
 }
 
-/** the DOM editor's rule for the spell box and the link tooltip: under the anchor, else over it where the window ends */
-function placedBelow(anchorBottom: number, gap: number, height: number, windowHeight: number): number {
+/** the rule for the spell box and the link tooltip: under the anchor, else over it where the window ends */
+function placedBelow(anchorBottom: number, gap: number, height: number, windowHeight: number, anchorTop = anchorBottom): number {
 	const below = anchorBottom + gap;
-	return Math.max(10, below + height > windowHeight ? anchorBottom - height - gap : below);
+	return Math.max(10, below + height > windowHeight ? anchorTop - height - gap : below);
 }
 
 async function closePopups(page: Page): Promise<void> {
@@ -160,7 +160,13 @@ for (const scale of [1.25, 1.5]) {
 				const spell = await settledBoxOf(page, '#harper-suggestion-container .card');
 				const flagged = await centerOn(page, 'misspeled', 'misspeled'.length, null);
 				expect(Math.abs(spell.left - flagged.text.left), 'the spell box starts at its word').toBeLessThanOrEqual(PX);
-				const spellTop = placedBelow(flagged.text.bottom + SPELL_BORDER, SPELL_GAP, spell.height, flagged.innerHeight);
+				const spellTop = placedBelow(
+					flagged.text.bottom + SPELL_BORDER,
+					SPELL_GAP,
+					spell.height,
+					flagged.innerHeight,
+					flagged.text.top - SPELL_BORDER
+				);
 				expect(Math.abs(spell.top - spellTop), 'the spell box hangs under its word, or over it where the window ends').toBeLessThanOrEqual(
 					PX
 				);

@@ -367,7 +367,7 @@ const spellPlugin = ViewPlugin.fromClass(SpellPlugin, {
 			createHarperSuggestionBox({
 				error: hits[0],
 				errors: hits,
-				position: anchor ? { x: anchor.left, y: anchor.bottom } : { x: e.clientX, y: e.clientY },
+				position: anchor ? { x: anchor.left, y: anchor.bottom, top: anchor.top } : { x: e.clientX, y: e.clientY },
 				onReplace: (value) => {
 					view.dispatch({ changes: { from: hits[0].from, to: hits[0].to, insert: value } });
 					view.focus();
