@@ -41,6 +41,8 @@ export type PaletteActions = {
 	toggleSidebar(): void;
 	sidebarOpen(): boolean;
 	toggleBottomPanel(): void;
+	/** brings the Problems tab up, leaving it up when it is */
+	showProblems(): void;
 	bottomPanelOpen(): boolean;
 	/** the Agent tab is on in Preferences and the agent can run in this window */
 	agentTabOffered(): boolean;

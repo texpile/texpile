@@ -372,6 +372,10 @@ export function makePaletteActions(d: ActionSurfaceDeps) {
 		toggleSidebar: () => d.layout().toggleSidebar(),
 		sidebarOpen: () => d.layout().sidebarOpen,
 		toggleBottomPanel: () => d.termDock().togglePanel(),
+		showProblems: () => {
+			d.termDock().show();
+			d.setDockView('problems');
+		},
 		bottomPanelOpen: () => d.termDock().visible,
 		agentTabOffered: () => !aiTurnedOff() && !agentUnavailable() && d.termDock().available,
 		agentTabOpen: () => agentTabOpen(d),

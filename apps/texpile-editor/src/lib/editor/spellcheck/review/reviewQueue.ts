@@ -1,4 +1,5 @@
 // When paragraphs go to the model: the ones on screen, once the writer has paused, a few at a time
+import { box } from '$lib/runes/box.svelte';
 import { observe } from '$lib/runes/observe.svelte';
 import { proofreadBridge } from '$lib/ai/proofread/proofreadBridge';
 import { noteProofreadResult } from '$lib/ai/proofread/proofreadStatus.svelte';
@@ -29,6 +30,13 @@ let timer: ReturnType<typeof setTimeout> | null = null;
 let inFlight = 0;
 let pausedUntil = 0;
 let listening = false;
+
+const ASKED_SOURCE: ReviewSource = { visible: () => [], redraw: () => {} };
+// paragraphs a writer asked for by name (Proofread document with AI), sent after the ones on screen
+const asked: Pending[] = [];
+
+/** how many asked-for paragraphs are still to go out or come back */
+export const reviewsAsked = box(0);
 
 export function registerReviewSource(source: ReviewSource): () => void {
 	sources.add(source);
@@ -84,11 +92,35 @@ function nextBatch(pending: Pending[]): Pending[] {
 	return batch;
 }
 
+/** asked paragraphs already reviewed or just failed drop out */
+function pendingAsked(now: number, taken: ReadonlySet<string>): Pending[] {
+	for (let i = asked.length - 1; i >= 0; i--)
+		if (!sending.has(asked[i].key) && !wanted(asked[i].target, asked[i].key, now)) asked.splice(i, 1);
+	reviewsAsked.current = asked.length;
+	return asked.filter((p) => !taken.has(p.key) && !sending.has(p.key));
+}
+
+/** queues the paragraphs behind what is on screen; the number queued */
+export function reviewParagraphs(targets: ReviewTarget[]): number {
+	const now = Date.now();
+	const queued = new Set(asked.map((p) => p.key));
+	for (const target of targets) {
+		const key = reviewKey(target);
+		if (queued.has(key) || !wanted(target, key, now)) continue;
+		queued.add(key);
+		asked.push({ target, key, source: ASKED_SOURCE });
+	}
+	reviewsAsked.current = asked.length;
+	reviewSoon(0);
+	return asked.length;
+}
+
 function sendVisible(): void {
 	timer = null;
 	if (!proofreadOn() || Date.now() < pausedUntil) return;
 	// the agent is one program, run a request at a time
-	const pending = pendingOnScreen();
+	const onScreen = pendingOnScreen();
+	const pending = [...onScreen, ...pendingAsked(Date.now(), new Set(onScreen.map((p) => p.key)))];
 	if (inFlight === 0 && pending.length) void send(nextBatch(pending));
 }
 
@@ -121,6 +153,7 @@ async function send(batch: Pending[]): Promise<void> {
 	} finally {
 		inFlight--;
 		for (const p of batch) sending.delete(p.key);
+		pendingAsked(Date.now(), new Set());
 		reviewSoon(0);
 	}
 }

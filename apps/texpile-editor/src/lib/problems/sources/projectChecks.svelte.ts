@@ -2,6 +2,7 @@
 import { box } from '$lib/runes/box.svelte';
 import { trailingDebounce } from '$lib/trailingDebounce';
 import { onLintRulesChanged } from '$lib/editor/spellcheck/linter';
+import { onReviewKept } from '$lib/editor/spellcheck/review/reviewStore';
 import { editorConfigStore } from '$lib/stores/editorStore';
 import { readSourceTrees } from '$lib/workspace/sourceTrees';
 import { dirname, joinPath, samePath } from '$lib/workspace/fileSystem';
@@ -41,16 +42,19 @@ function nextTask(): Promise<void> {
 export class ProjectChecks {
 	private gen = 0;
 	private soon = trailingDebounce<void>(1200, () => void this.run());
-	private stopRules = onLintRulesChanged(() => {
-		this.proofread.clear();
-		this.soon();
-	});
+	private stopRules = onLintRulesChanged(() => this.checkSpellingAgain());
+	private stopReviews = onReviewKept(() => this.checkSpellingAgain());
 	private readings = new Map<string, { text: string; own: CommandReadings | null; refs: FileReferences; notes: Problem[] }>();
 	private proofread = new Map<string, { text: string; problems: Problem[] }>();
 
 	constructor(private deps: ProjectCheckDeps) {}
 
 	schedule(): void {
+		this.soon();
+	}
+
+	private checkSpellingAgain(): void {
+		this.proofread.clear();
 		this.soon();
 	}
 
@@ -152,6 +156,7 @@ export class ProjectChecks {
 		this.gen++;
 		this.soon.cancel();
 		this.stopRules();
+		this.stopReviews();
 		projectProblems.current = null;
 	}
 }
