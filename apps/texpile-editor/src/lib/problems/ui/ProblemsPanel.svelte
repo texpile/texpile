@@ -9,6 +9,7 @@
 	import ProblemRow from './ProblemRow.svelte';
 	import ProblemSection from './ProblemSection.svelte';
 	import ProjectNotice from './ProjectNotice.svelte';
+	import ProofreadDocumentButton from './ProofreadDocumentButton.svelte';
 
 	type Props = {
 		root: string;
@@ -26,7 +27,10 @@
 <div class="flex h-full min-h-0 flex-col text-xs">
 	<div class="border-surface-200-800 flex shrink-0 flex-wrap items-center gap-x-3 gap-y-1 border-b px-2 py-1">
 		<ProblemFilters />
-		<div class="ml-auto"><CompileStatusLine /></div>
+		<div class="ml-auto flex items-center gap-2">
+			<ProofreadDocumentButton />
+			<CompileStatusLine />
+		</div>
 	</div>
 	<div class="min-h-0 flex-1 [scrollbar-gutter:stable] overflow-y-auto pb-2">
 		<ProblemSection
