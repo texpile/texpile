@@ -16,7 +16,7 @@
 			aria-pressed={on}
 			onclick={() => problemsView.toggle(filter)}
 		>
-			<look.icon class="text-muted size-3.5" />
+			<look.icon class="size-3.5 {on ? look.ink : ''}" />
 			<span class="cap-center">{look.name()} {problemsView.counts[filter]}</span>
 		</button>
 	{/each}

@@ -13,6 +13,7 @@ The tools an assistant gets from the [MCP server](mcp.md). Every tool except `ge
 | `get_editor_state`   | Every open window: folder, main file, active file, view, tabs, unsaved changes, cursor, selection, compile mode.                                |
 | `get_unsaved`        | The text of the active file and of every other file with unsaved changes.                                                                       |
 | `get_diagnostics`    | Compile errors and warnings with file and line, and whether a compile is running.                                                               |
+| `get_problems`       | The Problems tab: compile problems, checks, spelling, grammar, style and references, with file and line. Ignored rows are left out.             |
 | `get_compile_config` | Compile command, format, engine, output folder, PDF and log paths.                                                                              |
 | `open_file`          | Opens a file. With a `line`, in the source editor.                                                                                              |
 | `show_diff`          | Opens a comparison tab against the last commit, in a git repository.                                                                            |
