@@ -549,11 +549,19 @@ contextBridge.exposeInMainWorld('texpileAgent', {
 	cancel: (id: string) => ipcRenderer.send('agent:cancel', id)
 });
 
-// proofreading with a model; main picks the service and holds the keys, which a window can set but never read
+// proofreading with a model; main picks the service
 contextBridge.exposeInMainWorld('texpileProofread', {
-	review: (system: string, request: string) => invokeReady('proofread:review', { system, request }),
-	keys: () => invokeReady('proofread:keys'),
-	setKey: (provider: 'anthropic' | 'openai', key: string) => invokeReady('proofread:setKey', { provider, key })
+	review: (system: string, request: string) => invokeReady('proofread:review', { system, request })
+});
+
+// the AI service picked in Preferences: the custom service's key, which a window can set but never read, and a picture
+// turned into LaTeX or Typst
+contextBridge.exposeInMainWorld('texpileAi', {
+	serviceKey: () => invokeReady('ai:serviceKey'),
+	setServiceKey: (key: string) => invokeReady('ai:setServiceKey', key),
+	imageToLatex: (req: { id: string; system: string; request: string; mediaType: string; base64: string }) =>
+		invokeReady('ai:imageToLatex', req),
+	cancel: (id: string) => ipcRenderer.send('ai:cancel', id)
 });
 
 // the agent panel's conversation over ACP; main picks the program and the folder, a window only talks

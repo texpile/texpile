@@ -8,7 +8,7 @@ import { findProgram } from '../shell/findProgram';
 import { PRESET_AGENTS, type PresetAgent } from '../ai/agentCommand';
 import { listAgentModels } from '../ai/agentModels';
 import { refineAgentsAllowed } from '../ai/agentChoice';
-import { askAgent } from '../ai/warm/warmAgents';
+import { askAi } from '../ai/askAi';
 
 const running = new Map<string, AbortController>();
 
@@ -38,7 +38,7 @@ export function registerAgentIpc(): void {
 		}
 		e.sender.once('destroyed', stop);
 		try {
-			return await askAgent('refine', req.agent, s, { system, request: req.prompt }, abort.signal);
+			return await askAi('refine', s, { system, request: req.prompt }, abort.signal);
 		} finally {
 			running.delete(req.id);
 			e.sender.removeListener('destroyed', stop);

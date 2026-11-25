@@ -1,6 +1,14 @@
 <script lang="ts" module>
-	/** disabled: there to see but not to tick, as an agent not found */
-	export type CheckChoice = { value: string; label: string; aside?: string; warn?: boolean; tip?: string; disabled?: boolean };
+	/** disabled: there to see but not to tick, as an agent not found. heading: a label above the choice that starts a group */
+	export type CheckChoice = {
+		value: string;
+		label: string;
+		aside?: string;
+		warn?: boolean;
+		tip?: string;
+		disabled?: boolean;
+		heading?: string;
+	};
 </script>
 
 <script lang="ts">
@@ -24,6 +32,7 @@
 
 <div class="flex w-56 shrink-0 flex-col" role={props.one ? 'radiogroup' : 'group'} aria-label={props.label}>
 	{#each props.choices as c (c.value)}
+		{#if c.heading}<div class="text-muted px-1.5 pt-3 pb-1 text-xs">{c.heading}</div>{/if}
 		<label
 			class="rounded-base flex h-7 items-center gap-2 px-1.5 text-sm {c.disabled ? 'cursor-default' : 'hover:preset-tonal cursor-pointer'}"
 			use:tip={c.tip}

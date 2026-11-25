@@ -16,7 +16,7 @@ export const DEFERRED_STEP_CHANNELS = {
 	zotero: ['zotero:'],
 	doi: ['doi:'],
 	agent: ['agent:'],
-	proofread: ['proofread:'],
+	ai: ['proofread:', 'ai:'],
 	acp: ['acp:'],
 	terminal: ['terminal:'],
 	updates: ['update:'],
@@ -31,5 +31,5 @@ export const DEFERRED_CHANNELS: readonly string[] = [...new Set(Object.values(DE
  *  protocol and MCP libraries with their schemas held 13 MB of the main process from the start. An MCP server that is
  *  switched on starts with the app, so it loads with the rest */
 export function waitsForFirstCall(step: DeferredStep, mcpEnabled: boolean): boolean {
-	return step === 'acp' || step === 'terminal' || step === 'proofread' || (step === 'mcp' && !mcpEnabled);
+	return step === 'acp' || step === 'terminal' || step === 'ai' || (step === 'mcp' && !mcpEnabled);
 }

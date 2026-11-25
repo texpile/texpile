@@ -11,7 +11,7 @@ import { ClaudeWarm } from './claudeWarm';
 import { CodexWarm } from './codexWarm';
 import type { WarmAgent } from './heldProcess';
 
-export type AgentTask = 'proofread' | 'refine';
+export type AgentTask = 'proofread' | 'refine' | 'image';
 
 type Held = { key: string; agent: WarmAgent; idle?: NodeJS.Timeout };
 

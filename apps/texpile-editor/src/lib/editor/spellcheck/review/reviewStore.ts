@@ -1,6 +1,7 @@
 // The reviews the model gave, by paragraph, and Harper's findings they were given for
 import { settings } from '$lib/settings';
 import { proofreadBridge } from '$lib/ai/proofread/proofreadBridge';
+import { refineAgentsOffered } from '$lib/ai/refineAgents.svelte';
 import type { LintMatch } from '../linter';
 import { englishVariant, PROMPT_VERSION } from './reviewPrompt';
 import { mergeReview } from './reviewMerge';
@@ -13,7 +14,7 @@ const reviews = new Map<string, ParagraphReview>();
 const drawnWith = new Map<string, string | null>();
 
 export function proofreadOn(): boolean {
-	return settings.current.proofreadAi && !settings.current.aiOff && !!proofreadBridge();
+	return settings.current.proofreadAi && refineAgentsOffered().length > 0 && !!proofreadBridge();
 }
 
 /** a review stands for this text, these findings, this English and this prompt */

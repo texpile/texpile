@@ -53,6 +53,11 @@
 	$effect(() => {
 		if (refineCard.current && !RefineCard) void import('$lib/ai/RefineCard.svelte').then((mod) => (RefineCard = mod.default));
 	});
+	let ImageToLatexDialog = $state<typeof import('$lib/ai/imageToLatex/ui/ImageToLatexDialog.svelte').default | null>(null);
+	$effect(() => {
+		if (imageToLatexRequest.current && !ImageToLatexDialog)
+			void import('$lib/ai/imageToLatex/ui/ImageToLatexDialog.svelte').then((mod) => (ImageToLatexDialog = mod.default));
+	});
 
 	// one in-flight load per view; cleared on failure so a later navigation can retry
 	let workspaceLoad: Promise<void> | null = null;
@@ -144,6 +149,7 @@
 	import TooltipHost from '$lib/components/TooltipHost.svelte';
 	import ContextMenuHost from '$lib/menus/ContextMenuHost.svelte';
 	import { refineCard } from '$lib/ai/refineCardState.svelte';
+	import { imageToLatexRequest } from '$lib/ai/imageToLatex/imageToLatexRequest';
 	import MissingProgramDialog from '$lib/modals/window/missingProgram/MissingProgramDialog.svelte';
 </script>
 
@@ -177,6 +183,9 @@
 <ConfirmHost />
 <TooltipHost />
 {#if RefineCard}<RefineCard />{/if}
+{#if ImageToLatexDialog && imageToLatexRequest.current}
+	{#key imageToLatexRequest.current}<ImageToLatexDialog request={imageToLatexRequest.current} />{/key}
+{/if}
 <MissingProgramDialog />
 <ContextMenuHost />
 

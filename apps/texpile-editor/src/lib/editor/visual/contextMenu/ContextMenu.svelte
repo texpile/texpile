@@ -13,6 +13,7 @@
 	import { showContextMenu, type ContextMenuItem } from '$lib/menus/contextMenu.svelte';
 	import { m } from '$lib/paraglide/messages';
 	import { refineMenuItems } from '$lib/ai/refineMenu';
+	import { visualImageItems } from '$lib/ai/imageToLatex/imageToLatexMenu';
 	import type { ShowInOutput } from './showInOutput';
 
 	type Props = {
@@ -135,6 +136,8 @@
 		const hasTextSelection = sel instanceof TextSelection && !sel.empty;
 
 		const items: ContextMenuItem[] = menuItems.map(entry);
+		const image = visualImageItems(event.target, editorViewStore.current!, dialect);
+		if (image.length) items.push({ separator: true }, ...image);
 		const refine = refineMenuItems(hasTextSelection);
 		if (refine.length) items.push({ separator: true }, ...refine);
 		if (onAddComment) {

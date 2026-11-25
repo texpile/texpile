@@ -47,17 +47,17 @@ const DEFAULT_SETTINGS = {
 	// 0 = use the channel default (mcp.PORT_DEFAULT / PORT_DEFAULT_DEV). Fixed rather than
 	// ephemeral so a client config keeps working across restarts; overridable for a port clash.
 	mcpPort: 0,
-	// the reader's own command-line agent that Refine may run: 'claude', 'codex', 'agy' or 'custom'; null = none chosen
+	// the AI service Refine, proofread and Convert to LaTeX use: 'claude', 'codex', 'agy', 'custom' or 'service'; null = none chosen
 	// yet. Kept here and not in a folder's .texpile/config.json, which travels with the folder: a downloaded
 	// project must never pick the program that runs, and no MCP tool writes this file. A run names one of these
 	aiOff: false, // Preferences › AI Assistant's switch: no agent runs while it is on, whatever is ticked
 	refineAgents: null as string[] | null,
-	// Harper's findings checked and added to by a model: the paragraphs on screen, sent with the writer's own key
+	// Harper's findings checked and added to by the AI service: the paragraphs on screen
 	proofreadAi: false,
-	aiService: 'anthropic', // 'anthropic' | 'openai' (any OpenAI-compatible service) | 'agent' (Refine's agent)
-	aiAnthropicModel: '', // '' = claude-haiku-5-5
-	aiOpenAiUrl: '', // the service's base URL, such as https://api.openai.com/v1 or http://localhost:11434/v1
-	aiOpenAiModel: '',
+	// the custom service, picked as 'service' in refineAgents: any OpenAI-compatible base URL, such as
+	// http://localhost:11434/v1. Its key is in the keychain (ai/service/serviceKey.ts)
+	aiServiceUrl: '',
+	aiServiceModel: '',
 	proofreadAddTerms: false, // names and field terms the model recognizes go into the dictionary
 	aiAgentCommand: '', // the command line for the 'custom' agent; the prompt goes on its stdin
 	aiAgentModels: {} as Record<string, string>, // each preset's --model, from the list it gives (agentModels.ts); '' = its own default

@@ -36,7 +36,7 @@ export class ClaudeWarm implements WarmAgent {
 		waiting?.(end);
 	}
 
-	private send(content: string): Promise<TurnEnd> {
+	private send(content: string | object[]): Promise<TurnEnd> {
 		if (this.proc.exitError !== null) return Promise.resolve(this.proc.exitError);
 		return new Promise((resolve) => {
 			this.waiting = resolve;
@@ -49,7 +49,7 @@ export class ClaudeWarm implements WarmAgent {
 	}
 
 	ask(prompt: AgentPrompt, signal: AbortSignal): Promise<AgentResult> {
-		const turn = this.queue.then(() => this.turn(prompt.request, signal));
+		const turn = this.queue.then(() => this.turn(prompt, signal));
 		this.queue = turn.then(
 			() => (this.proc.alive ? this.send('/clear') : null),
 			() => {}
@@ -57,9 +57,15 @@ export class ClaudeWarm implements WarmAgent {
 		return turn;
 	}
 
-	private async turn(request: string, signal: AbortSignal): Promise<AgentResult> {
+	private async turn(prompt: AgentPrompt, signal: AbortSignal): Promise<AgentResult> {
 		const stop = watchStop(signal, 'claude', this.proc.lastWords);
-		const answer = await Promise.race([this.send(request).then(answerOf), stop.stopped]);
+		const content = prompt.images?.length
+			? [
+					...prompt.images.map((i) => ({ type: 'image', source: { type: 'base64', media_type: i.mediaType, data: i.base64 } })),
+					{ type: 'text', text: prompt.request }
+				]
+			: prompt.request;
+		const answer = await Promise.race([this.send(content).then(answerOf), stop.stopped]);
 		stop.end();
 		// a turn cannot be taken back, and a sign-in or limit error is better met by a fresh start
 		if (!answer.ok) this.close();

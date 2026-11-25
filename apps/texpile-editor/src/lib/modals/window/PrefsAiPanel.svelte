@@ -1,5 +1,5 @@
 <script lang="ts">
-	// The AI category: the MCP server an assistant connects to, the agent Refine runs, the AI service, and the Agent tab's.
+	// The AI category: the MCP server an assistant connects to, the AI service with its model or custom address, and the Agent tab's.
 	import { settings, updateSettings, setMcpEnabled } from '$lib/settings';
 	import { agentName, isPresetAgent, PRESET_AGENTS, type RefineAgent } from '$lib/ai/selectionRefiner';
 	import { lookUpRefineAgents, refineAgentsTicked, refineInstalled } from '$lib/ai/refineAgents.svelte';
@@ -36,13 +36,15 @@
 	void refreshMcp();
 	lookUpRefineAgents(true);
 
-	const AGENTS: { value: RefineAgent | ''; label: string }[] = [
+	const AGENTS: { value: RefineAgent | ''; label: string; heading?: string }[] = [
 		{ value: 'claude', label: m.prefs_ai_agent_claude() },
 		{ value: 'codex', label: m.prefs_ai_agent_codex() },
 		{ value: 'agy', label: m.prefs_ai_agent_agy() },
 		{ value: 'custom', label: m.prefs_ai_agent_custom() },
-		// Refine off: nothing in the right-click menu or on the selection toolbar
-		{ value: '', label: m.prefs_ai_agent_none() }
+		// no AI: nothing in the right-click menu or on the selection toolbar
+		{ value: '', label: m.prefs_ai_agent_none() },
+		// any OpenAI-compatible address: a local model, a university gateway
+		{ value: 'service', label: m.prefs_ai_service_custom(), heading: m.prefs_ai_advanced() }
 	];
 	const installed = $derived(refineInstalled.found);
 	const ticked = $derived(refineAgentsTicked());
@@ -127,7 +129,9 @@
 		{/if}
 	{/each}
 
-	<AiServicePrefs />
+	{#if ticked.includes('service')}
+		<AiServicePrefs />
+	{/if}
 
 	<AgentPanelPrefs />
 </div>

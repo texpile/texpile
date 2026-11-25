@@ -27,12 +27,14 @@ These requests follow your system's proxy settings.
 
 ## AI features
 
-Texpile holds no AI keys. Agents run on your computer, and what they send online depends on the agent.
+Agents run on your computer, and what they send online depends on the agent. A [custom service](../ai-assistant/README.md#custom-service) gets the same requests straight from Texpile, with the key you saved there.
 
-| Feature    | What the agent sees                                                                                                                                                                                                    |
-| ---------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Refine     | The selection, 1,500 characters before it and 600 after (4,000 and 1,500 for **Match writing style**), the file format and the task. A custom command gets the same and sends it wherever it sends it.                 |
-| Agent tab  | Your messages, attached files, selections and images, and anything the agent reads or runs in the folder. It can run commands and edit files there, within its own permission prompts.                                 |
-| MCP server | Off by default. When on, it listens on this computer only (127.0.0.1). A connected assistant can read your open files, cursor position, unsaved changes, errors and comments, and its provider receives what it reads. |
+| Feature           | What the agent sees                                                                                                                                                                                                    |
+| ----------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Refine            | The selection, 1,500 characters before it and 600 after (4,000 and 1,500 for **Match writing style**), the file format and the task. A custom command gets the same and sends it wherever it sends it.                 |
+| Proofread with AI | Off by default. The paragraphs on screen with equations left out, and the spell check's findings on them.                                                                                                              |
+| Convert to LaTeX  | The picture, or the part of it you picked, and the file format. A drawing that fails to compile goes back once with the error.                                                                                         |
+| Agent tab         | Your messages, attached files, selections and images, and anything the agent reads or runs in the folder. It can run commands and edit files there, within its own permission prompts.                                 |
+| MCP server        | Off by default. When on, it listens on this computer only (127.0.0.1). A connected assistant can read your open files, cursor position, unsaved changes, errors and comments, and its provider receives what it reads. |
 
-To use none of this, leave the MCP server off, set **Refine with** to **None**, and untick every agent under **Agent tab** in `Preferences › AI Assistant`.
+To use none of this, leave the MCP server off, set **AI service** to **None**, and untick every agent under **Agent tab** in `Preferences › AI Assistant`.
