@@ -43,7 +43,7 @@ export function signatureOf(args: Argument[]): string {
 /** `params` and `body` null when the parameter text is more than #1#2; `delimiter` ends the last argument (\def\bea#1\eea{...}) */
 export type PrimitiveDefinition = { name: string; at: number; params: number | null; body: string | null; delimiter?: string };
 
-const PRIMITIVE_DEFINERS = new Set(['def', 'gdef', 'edef', 'xdef']);
+export const PRIMITIVE_DEFINERS = new Set(['def', 'gdef', 'edef', 'xdef']);
 const PLAIN_PARAMS = /^\s*((?:#\d)*)\s*$/;
 const DELIMITED_PARAMS = /^\s*(?:#\d\s*)+\\([A-Za-z@]+)\s*$/;
 

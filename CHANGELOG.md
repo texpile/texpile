@@ -21,6 +21,7 @@ Release notes for Texpile Desktop. Add notes under `## [Unreleased]` as you work
 - feat: a model for each AI task (by @louisqli)
 - feat: show the Agent tab in a side panel (by @louisqli)
 - fix: Agent tab menus under the message box cut off in a narrow panel (by @louisqli)
+- fix: spell check underlining math written with the document's own macros (by @louisqli)
 - fix: spelling and grammar box covering the word it is about near the bottom of the window (by @louisqli)
 - fix: other AI suggestions in a paragraph gone after accepting one (by @louisqli)
 - fix: Refine with Claude Code or Codex slow to answer (by @louisqli)
