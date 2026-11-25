@@ -4,7 +4,7 @@ import { it, expect, vi } from 'vitest';
 vi.mock('electron', () => ({ app: { getPath: () => '/nowhere' } }));
 const { upgradeAgentSettings } = await import('../../../../../electron/src/ai/agentSettingsUpgrade');
 
-const DEFAULTS = { claude: { proofread: 'haiku', refine: 'sonnet', convertFast: 'haiku', convertStrong: 'opus' } };
+const DEFAULTS = { claude: { proofread: 'haiku', refine: 'sonnet', convert: 'opus' } };
 
 it("takes Refine's agent, with agy's place going to Gemini, and its model as Refine's", () => {
 	expect(

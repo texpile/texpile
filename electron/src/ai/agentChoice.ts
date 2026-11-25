@@ -5,14 +5,14 @@ export type PresetAgent = Exclude<AiAgent, 'custom'>;
 
 export const PRESET_AGENTS: PresetAgent[] = ['claude', 'codex', 'opencode', 'gemini', 'copilot'];
 
-/** what an agent is asked to do; Convert to LaTeX asks the fast model of an equation and the strong one of a drawing */
-export type AiTask = 'proofread' | 'refine' | 'convertFast' | 'convertStrong';
+/** what an agent is asked to do */
+export type AiTask = 'proofread' | 'refine' | 'convert';
 /** chat is the Agent tab's starting model */
 export type ModelTask = AiTask | 'chat';
 
 /** Claude Code's models by alias, which follow its newest of each */
 export const DEFAULT_AGENT_MODELS: Record<string, Record<string, string>> = {
-	claude: { proofread: 'haiku', refine: 'sonnet', convertFast: 'haiku', convertStrong: 'opus' }
+	claude: { proofread: 'haiku', refine: 'sonnet', convert: 'opus' }
 };
 
 export function isAiAgent(v: unknown): v is AiAgent {

@@ -34,17 +34,6 @@ export function imageRequest(dialect: ImageDialect): string {
 	return `Write the ${LANGUAGE[dialect]} for this picture.`;
 }
 
-const DRAWING = 'DRAWING';
-
-/** the fast model's request, which hands a drawing on to the strong model */
-export function imageFastRequest(dialect: ImageDialect): string {
-	return `${imageRequest(dialect)} If it is a diagram, plot, graph, circuit or drawing, answer with the single word ${DRAWING} instead.`;
-}
-
-export function handedOn(answer: string): boolean {
-	return answer.replace(/[`.\s]/g, '') === DRAWING;
-}
-
 /** asked once when the drawing does not compile, with the error */
 export function imageRetryRequest(dialect: ImageDialect, answer: string, error: string): string {
 	return `You wrote this ${LANGUAGE[dialect]} for the picture:

@@ -2,7 +2,8 @@
 	// A model for each task, from the list the agent picked gives
 	import { LoaderCircle } from '@lucide/svelte';
 	import { agentModels } from '$lib/ai/agent/agentModels';
-	import { agentLabel, type AiAgent } from '$lib/ai/agent/aiAgents';
+	import { agentName } from '$lib/ai/agent/aiAgent.svelte';
+	import type { AiAgent } from '$lib/ai/agent/aiAgents';
 	import PrefsRow from '../rows/PrefsRow.svelte';
 	import AgentModelSelect from './AgentModelSelect.svelte';
 	import { m } from '$lib/paraglide/messages';
@@ -10,7 +11,7 @@
 	type Props = { agent: AiAgent };
 	const props: Props = $props();
 	const list = $derived(agentModels(props.agent));
-	const name = $derived(agentLabel(props.agent));
+	const name = $derived(agentName(props.agent));
 </script>
 
 {#await list}
@@ -28,22 +29,7 @@
 			{#snippet children(def)}<AgentModelSelect agent={props.agent} task="refine" {models} label={def.label()} />{/snippet}
 		</PrefsRow>
 		<PrefsRow id="ai-model-convert">
-			<span class="flex gap-2">
-				<AgentModelSelect
-					agent={props.agent}
-					task="convertFast"
-					{models}
-					label={m.prefs_ai_model_convert_fast()}
-					hint={m.prefs_ai_model_convert_fast()}
-				/>
-				<AgentModelSelect
-					agent={props.agent}
-					task="convertStrong"
-					{models}
-					label={m.prefs_ai_model_convert_strong()}
-					hint={m.prefs_ai_model_convert_strong()}
-				/>
-			</span>
+			{#snippet children(def)}<AgentModelSelect agent={props.agent} task="convert" {models} label={def.label()} />{/snippet}
 		</PrefsRow>
 		<PrefsRow id="ai-model-chat">
 			{#snippet children(def)}<AgentModelSelect agent={props.agent} task="chat" {models} label={def.label()} />{/snippet}
