@@ -2,7 +2,6 @@
 // reader back where they were (a switch of mode, a file reopened, a pane shut) land at once instead
 import { EditorView as CMView } from '@codemirror/view';
 import type { EditorView as PMView } from 'prosemirror-view';
-import { scrollParent } from '$lib/editor/visual/scrollParent';
 import { jumpScrollShift } from '$lib/editor/jumpPlacement';
 
 /** smooth to where `to` says, then exact: lines not drawn yet were only estimated when the glide set off */
@@ -31,12 +30,11 @@ function glide(scroller: HTMLElement, to: () => number): void {
 }
 
 export function glideVisualTo(view: PMView, pos: number): void {
-	const scroller = scrollParent(view.dom);
-	if (!scroller) return;
+	const { scroller } = view.canvas;
 	glide(scroller, () => {
-		const dom = view.nodeDOM(pos);
-		if (!(dom instanceof HTMLElement)) return scroller.scrollTop;
-		return scroller.scrollTop + (jumpScrollShift(dom.getBoundingClientRect(), scroller.getBoundingClientRect()) ?? 0);
+		const rect = view.canvas.nodeClientRect(pos)?.rect;
+		if (!rect) return scroller.scrollTop;
+		return scroller.scrollTop + (jumpScrollShift(rect, scroller.getBoundingClientRect()) ?? 0);
 	});
 }
 

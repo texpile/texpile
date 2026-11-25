@@ -689,6 +689,8 @@ export class _Model implements Model {
           parent = parent.parent;
         }
       }
+      // Texpile: an anchor left behind made a range read as collapsed
+      this._anchor = this.normalizeOffset(anchor);
       this._position = this.normalizeOffset(position);
       this._selection = {
         ranges: [[start, end]],
@@ -866,8 +868,8 @@ export class _Model implements Model {
   }
 
   contentDidChange(options: ContentChangeOptions): void {
-    if (window.mathVirtualKeyboard.visible)
-      window.mathVirtualKeyboard.update(makeProxy(this.mathfield));
+    if (window.mathVirtualKeyboard?.visible)
+      window.mathVirtualKeyboard?.update(makeProxy(this.mathfield));
     if (this.silenceNotifications || !this.mathfield?.host) return;
 
     const save = this.silenceNotifications;

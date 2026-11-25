@@ -332,12 +332,12 @@ export function getDefaultMenuItems(mf: _Mathfield): MenuItem[] {
     // {
     //   label: 'Show Virtual Keyboard',
     //   onMenuSelect: () => window.mathVirtualKeyboard.show({ animate: true }),
-    //   visible: () => window.mathVirtualKeyboard.visible === false,
+    //   visible: () => window.mathVirtualKeyboard?.visible === false,
     // },
     // {
     //   label: 'Hide Virtual Keyboard',
     //   onMenuSelect: () => window.mathVirtualKeyboard.hide({ animate: true }),
-    //   visible: () => window.mathVirtualKeyboard.visible === true,
+    //   visible: () => window.mathVirtualKeyboard?.visible === true,
     // },
     {
       label: () => localize('menu.array.add row above')!,

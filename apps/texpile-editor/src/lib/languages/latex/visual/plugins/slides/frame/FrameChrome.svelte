@@ -25,7 +25,7 @@
 	const missingSubtitle = $derived(has('frame_title') && !has('frame_subtitle'));
 </script>
 
-<div class="frame-chrome" data-open={open || undefined}>
+<div class="frame-chrome">
 	{#if !isReadOnly.current && !props.titleSlide}
 		{#if missingTitle}
 			<button type="button" class="frame-chrome-add" onclick={() => props.addPart('frame_title')}>{m.slide_add_title()}</button>
@@ -65,13 +65,6 @@
 		align-items: center;
 		justify-content: flex-end;
 		gap: calc(var(--spacing) * 1);
-		opacity: 0;
-		transition: opacity 0.12s;
-	}
-	:global(.beamer-frame:hover) .frame-chrome,
-	:global(.beamer-frame:focus-within) .frame-chrome,
-	.frame-chrome[data-open] {
-		opacity: 1;
 	}
 	.frame-chrome-add,
 	.frame-chrome-settings {

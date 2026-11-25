@@ -3,7 +3,7 @@
 import { describe, expect, it, afterEach } from 'vitest';
 import { flushSync, mount, unmount, type Component } from 'svelte';
 import type { EditorView } from 'prosemirror-view';
-import type { ChipSettingsProps } from '$lib/editor/visual/extensions/drawnChips/chipPanel.svelte';
+import type { ChipSettingsProps } from '$lib/editor/visual/extensions/drawnChips/chipPanel/chipPanel.svelte';
 import TypstSetRuleSettings from '$lib/languages/typst/visual/plugins/setRule/TypstSetRuleSettings.svelte';
 import TypstSpacingSettings from '$lib/languages/typst/visual/plugins/spacing/TypstSpacingSettings.svelte';
 import TypstOutlineSettings from '$lib/languages/typst/visual/plugins/outline/TypstOutlineSettings.svelte';

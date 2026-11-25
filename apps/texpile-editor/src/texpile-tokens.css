@@ -201,6 +201,10 @@ html {
 	/* an empty math field, and one about to be deleted */
 	--math-empty-tint: var(--color-error-500);
 	--mathfield-focus-border: light-dark(var(--color-surface-950), var(--color-surface-50));
+	/* a formula's placeholder and a paper's own macro, LaTeX typed into it and a part it cannot read: MathLive's own colors */
+	--math-placeholder: light-dark(hsl(212, 40%, 49%), hsl(212, 60%, 69%));
+	--math-latex: light-dark(hsl(212, 80%, 40%), hsl(212, 40%, 50%));
+	--math-error-tint: hsla(341, 100%, 40%, 0.1);
 	/* the selected block's outline while the context menu is open */
 	--selected-node-outline: var(--color-primary-300);
 	/* a peer's cursor label when it carries no colour of its own */

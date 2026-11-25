@@ -15,6 +15,9 @@
 	import { refineMenuItems } from '$lib/ai/refineMenu';
 	import { visualImageItems } from '$lib/ai/imageToLatex/imageToLatexMenu';
 	import type { ShowInOutput } from './showInOutput';
+	import { selectionBox } from './selectionBox';
+	import { menuPoint } from './menuPoint';
+	import { formulaCopyAsItem } from './formulaCopyAs';
 
 	type Props = {
 		/** dialect-aware chrome (see lib/editor/dialect.ts): feature flags derive from this. */
@@ -107,8 +110,8 @@
 
 		event.preventDefault();
 
-		const coords = { left: event.clientX, top: event.clientY };
-		const pos = editorViewStore.current!.posAtCoords(coords);
+		const point = menuPoint(editorViewStore.current!, event);
+		const pos = editorViewStore.current!.posAtCoords({ left: point.x, top: point.y });
 
 		if (pos) {
 			const Resolvedpos = editorViewStore.current!.state.doc.resolve(pos.pos);
@@ -136,9 +139,11 @@
 		const hasTextSelection = sel instanceof TextSelection && !sel.empty;
 
 		const items: ContextMenuItem[] = menuItems.map(entry);
-		const image = visualImageItems(event.target, editorViewStore.current!, dialect);
+		const copyAs = formulaCopyAsItem(editorViewStore.current!);
+		if (copyAs) items.splice(2, 0, copyAs);
+		const image = visualImageItems(pos, editorViewStore.current!, dialect);
 		if (image.length) items.push({ separator: true }, ...image);
-		const refine = refineMenuItems(hasTextSelection);
+		const refine = refineMenuItems(hasTextSelection, () => selectionBox(editorViewStore.current!));
 		if (refine.length) items.push({ separator: true }, ...refine);
 		if (onAddComment) {
 			// the same gesture the floating tooltip offers, for people who reach for the menu;
@@ -175,7 +180,7 @@
 			const at = pos.pos;
 			items.push({ separator: true }, { label: showInOutput.label, icon: ArrowRight, onclick: () => showInOutput.run(at) });
 		}
-		void showContextMenu(items, { x: event.clientX, y: event.clientY });
+		void showContextMenu(items, point);
 
 		// empty transaction keeps the selection visible while the editor is blurred
 		requestAnimationFrame(() => {

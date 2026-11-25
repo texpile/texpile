@@ -1,16 +1,12 @@
-// how a LaTeX raw chip is drawn, edited and read again once edited
+// how a LaTeX drawn chip's panel reads and edits it
 import type { EditorView } from 'prosemirror-view';
-import type { DrawnChipKind } from '$lib/editor/visual/extensions/drawnChips/DrawnChipView';
+import type { DrawnChipKind } from '$lib/editor/visual/extensions/drawnChips/chipKind';
 import { chipReplacement } from '$lib/editor/visual/extensions/drawnChips/chipReparse';
-import { InlineLatexView } from '$lib/editor/visual/extensions/raw-latex/inlineLatexView';
-import { RawLatexView } from '$lib/editor/visual/extensions/raw-latex/rawLatexView';
 import { treeToProseMirror } from '$lib/languages/latex/parser/tree/importTree';
 import { jumpToLabel } from './ref/jumpToLabel';
-import { latexFace } from '../core/walk/drawUnits';
 import { latexChipSettings } from '../core/latexChipSettings';
 import { macroCaret, macroFooter } from '../core/own/macroFooter';
 import { figureEditAction } from './figureEditAction';
-import { blockChipView, inlineChipView } from './chipViewKind';
 
 function parsed(source: string) {
 	try {
@@ -29,9 +25,6 @@ export function latexChipKind(
 	return {
 		block,
 		language: 'latex',
-		takes: (source) => (block ? blockChipView(source) : inlineChipView(source)) === 'chip',
-		makeFace: (source) => latexFace(source, block),
-		makeSource: (node, v, getPos) => (block ? new RawLatexView(node, v, getPos) : new InlineLatexView(node, v, getPos)),
 		reparse: (source, chip) => chipReplacement(parsed(source), chip, block),
 		settingsFor: latexChipSettings,
 		jump: (label) => jumpToLabel(view, label, onJumpToLabel),

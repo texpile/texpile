@@ -87,3 +87,8 @@ describe('locale coverage', () => {
 		});
 	}
 });
+
+it("Edit › Select All is the editors' own Mod-A: the native role selects the canvas's hidden input", () => {
+	expect(chrome).not.toContain("role: 'selectAll'");
+	expect(chrome).toContain("fire(win, 'edit:selectAll')");
+});

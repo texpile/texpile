@@ -5,11 +5,15 @@ import { EditorState } from 'prosemirror-state';
 import { typstFace } from '$lib/languages/typst/visual/core/walk/typstFace';
 import { typstChipSettings } from '$lib/languages/typst/visual/core/plugin/typstChipSettings';
 import { typstChipCounts } from '$lib/languages/typst/visual/core/plugin/chipCounts';
-import { footnoteNumbersKey, footnoteNumbersOf, footnoteNumbersPlugin } from '$lib/editor/visual/extensions/drawnChips/footnoteNumbers';
+import {
+	footnoteNumbersKey,
+	footnoteNumbersOf,
+	footnoteNumbersPlugin
+} from '$lib/editor/visual/extensions/drawnChips/footnote/footnoteNumbers';
 import { typstToProseMirror } from '$lib/languages/typst/visual/convert/converter';
 import TypstSetRuleSettings from '$lib/languages/typst/visual/plugins/setRule/TypstSetRuleSettings.svelte';
 import TypstSpacingSettings from '$lib/languages/typst/visual/plugins/spacing/TypstSpacingSettings.svelte';
-import CommentSettings from '$lib/editor/visual/extensions/drawnChips/CommentSettings.svelte';
+import CommentSettings from '$lib/editor/visual/extensions/drawnChips/comment/CommentSettings.svelte';
 
 const text = (source: string) => typstFace(source)?.dom.textContent ?? null;
 

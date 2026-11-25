@@ -7,103 +7,25 @@
 	import { loadMathlive, mathliveLoaded, type MathlivePlugin } from '$lib/languages/mathliveLoad';
 	import { EditorState, type Transaction } from 'prosemirror-state';
 	import { swapParsedDoc, swapDocForNewFile, docSwapKind } from '$lib/editor/visual/docSwap';
-	import { EditorView } from 'prosemirror-view';
+	import type { EditorView } from 'prosemirror-view';
 	import type { Node as PMNode } from 'prosemirror-model';
-	import { keymap } from 'prosemirror-keymap';
-	import { pmCommandKeys } from '$lib/keybindings/editors/pmCommandKeys';
-	import { pmEditorScope } from '$lib/keybindings/editors/editorScopes';
-	import { baseKeymap, toggleMark } from 'prosemirror-commands';
-	import { history } from 'prosemirror-history';
-	import { undoVisual, redoVisual } from '$lib/editor/visual/visualUndo';
-	import { heldGapCursor } from '$lib/editor/visual/gapArrows';
-	import { hiddenSelectionPlugin } from '$lib/editor/visual/highlight/hiddenSelection';
-	import { visualCaretDoctor } from '$lib/debug/visualCaretDoctor';
-	import { caretClearOfFormatBar } from '$lib/editor/visual/formatBarScroll';
-	import { verticalArrowStall } from '$lib/editor/visual/verticalArrowStall';
-	import { dropCursor } from 'prosemirror-dropcursor';
-	import { tableEditing, goToNextCell } from 'prosemirror-tables';
 	import { padTablesInState } from '$lib/editor/visual/padTables';
-	import { tableViewOnly } from '$lib/editor/visual/extensions/table/tableViewOnly';
-	import { wholeTableEdits } from '$lib/editor/visual/extensions/table/wholeTableEdits';
-	import { tableArrowEntry } from '$lib/editor/visual/extensions/table/caret/tableArrowEntry';
-	import { tableArrowExit } from '$lib/editor/visual/extensions/table/caret/tableArrowExit';
-	import { tabThroughCells } from '$lib/editor/visual/extensions/table/rows/addTableRow';
-	import { crossBlockEdits } from '$lib/editor/visual/extensions/crossBlockEdits';
-	import { firstRowHeader } from './firstRowHeader';
-	import { tableAlignment } from './tableAlignment';
-	import { createListPlugins, listInputRules, listKeymap, createIndentListCommand, createDedentListCommand } from 'prosemirror-flat-list';
-	import { inputRules, textblockTypeInputRule, wrappingInputRule, InputRule, undoInputRule } from 'prosemirror-inputrules';
-	import { selectFigureBackward, selectFigureForward } from '$lib/editor/visual/figureDeleteGuard';
-	import { deleteEmptyBlockBackward, deleteEmptyBlockForward } from '$lib/editor/visual/emptyBlockDelete';
-	import { visualFindPlugin } from '$lib/editor/visual/find/visualFindPlugin';
+	import { createCanvasView } from '$lib/editor/canvas';
+	import { canvasMount } from '$lib/editor/visual/mount/canvasMount.svelte';
 	import { mdSchema } from './schema';
-	import { markdownCopyPlugin } from './clipboard';
-	import { parseCarryPlugin } from '$lib/editor/visual/parseCarry';
-	import { listAttrInheritance } from './listAttrInheritance';
+	import { markdownEditorPlugins } from './markdownEditorSetup';
+	import { markdownNodeViews } from './markdownNodeViews';
 	import { referenceStore } from '$lib/stores/editorStore';
 	import { groupView } from '$lib/editor/visual/groupView.svelte';
-	import { revealBuiltEditor, BUILDING_CLASS } from '$lib/editor/visual/revealBuiltEditor';
-	import { preferences } from '$lib/stores/preferencesStore.svelte';
-	import { toggleHeading, toggleBlockQuote, insertHardBreak } from '$lib/editor/visual/helperCommands';
-	import { selectAllScoped } from '$lib/editor/visual/selectAllScoped';
-	import {
-		extendToDocEnd,
-		extendToDocStart,
-		holdAtDocEnd,
-		holdAtDocStart,
-		selectDocEnd,
-		selectDocStart
-	} from '$lib/editor/visual/selectDocBoundary';
-	import { createMathField } from '$lib/editor/visual/extensions/mathlivebridge/mlcommands';
-	import { createCodeBlock } from '$lib/editor/visual/extensions/codemirrorbridge/cmcommands';
-	import { cmarrowHandlers } from '$lib/editor/visual/extensions/codemirrorbridge/cmarrowhandler';
-	import { imagePlugin } from '$lib/editor/visual/extensions/image';
-	import { createMarkdownImageSettings } from './imageSettings.svelte';
-	import { menuUpdatePlugin } from '$lib/editor/visual/extensions/toolbarlistenerplugin';
-	import { createCursorPlugin } from '$lib/editor/visual/extensions/cursor-plugin';
-	import { shiftArrowsPlugin } from '$lib/editor/visual/extensions/shiftArrows/shiftArrowsPlugin';
-	import { lineBreakPlugins } from '$lib/editor/visual/linebreak/lineBreakPlugin';
-	import { createLinkPlugin } from '$lib/editor/visual/extensions/link';
-	import { pasteUuidFixPlugin } from '$lib/editor/visual/extensions/paste-uuid-fix';
-	import { pasteMarkdownSource, visualSmartPaste } from '$lib/editor/paste/visualSmartPaste';
-	import { placeholderPlugin } from '$lib/editor/visual/extensions/placeholderplugin';
-	import { tablePlaceholderPlugin } from '$lib/editor/visual/extensions/table/tablePlaceholderPlugin';
-	import { createWordCountPlugin } from '$lib/editor/visual/extensions/wordcount/wordCountPlugin';
-	import { createTocPlugin } from '$lib/editor/visual/extensions/tableofcontents/tocPlugin';
-	import { listNumbersPlugin } from '$lib/editor/visual/extensions/listNumbers/listNumbers';
-	import { createPersistentSelectionPlugin } from '$lib/editor/visual/extensions/persistentSelection/persistentSelectionPlugin';
-	import { proofreadPlugin, spellClickBoundaryPlugin, spellProblemKeymap } from '$lib/editor/spellcheck/spellcheckplugin';
 	import type { SpellLanguage } from '$lib/editor/spellcheck/languages/spellLanguages';
-	import { createBoundaryClickPlugin } from '$lib/editor/visual/extensions/boundary-click-plugin';
-	import { wordSelectionTrim } from '$lib/editor/visual/extensions/wordSelectionTrim';
-	import { unfocusedPressCaret } from '$lib/editor/visual/extensions/unfocusedPress';
-	import { dragSelectionPlugin } from '$lib/editor/visual/extensions/dragSelection/dragSelectionPlugin';
-	import { createBlockHandlePlugin } from '$lib/editor/visual/extensions/block-handle-plugin.svelte';
-	import { wholeBlockDragPlugin } from '$lib/editor/visual/extensions/wholeBlockDrag';
-	import { dropPastNodeViewsPlugin } from '$lib/editor/visual/extensions/dropPastNodeViews';
-	import { createNodeFlashPlugin } from '$lib/editor/visual/extensions/flash-plugin';
-	import { remoteCursorsPlugin } from '$lib/editor/visual/extensions/remoteCursors';
-	import { markdownInsertItems } from './blockInsertItems';
-	import { CodeBlockView } from '$lib/editor/visual/extensions/codemirrorbridge/cmview.svelte';
-	import { RawLatexView } from '$lib/editor/visual/extensions/raw-latex/rawLatexView';
-	import { InlineLatexView } from '$lib/editor/visual/extensions/raw-latex/inlineLatexView';
 	import ContextMenu from '$lib/editor/visual/contextMenu/ContextMenu.svelte';
-	import { pmComments } from '$lib/editor/visual/extensions/pmComments';
 	import { syncPmComments } from '$lib/editor/visual/extensions/pmCommentsSync.svelte';
 	import type { CommentAnchor } from '$lib/comments/anchor';
 	import type { SourceAnchorFn } from '$lib/editor/visual/extensions/pmComments';
 	import type { CommentRange } from '$lib/editor/visual/extensions/comments';
 	import type { RegionParser, SourceMap } from '$lib/editor/visual/sourceSpans';
 	import type { BiblatexReference } from '$lib/languages/bib/biblatex';
-	import 'prosemirror-view/style/prosemirror.css';
-	import 'prosemirror-tables/style/tables.css';
-	import 'prosemirror-gapcursor/style/gapcursor.css';
-	import 'prosemirror-flat-list/dist/style.css';
-	import '$lib/editor/visual/extensions/image/styles/common.css';
-	import '$lib/editor/visual/extensions/image/styles/withResize.css';
-	import '$lib/editor/visual/extensions/image/styles/sideResize.css';
-	import '$lib/editor/visual/styles/cursor.css';
-	import '$lib/editor/visual/styles/document.css';
+	import '$lib/editor/canvas/frame/canvasRoot.css';
 
 	type Props = {
 		/** false in a parked editor group: no typing, and it follows the focused editor on the same file */
@@ -174,15 +96,14 @@
 	const group = groupView({ view: () => editorView, live: () => live, path: () => docPath ?? null });
 	const isLive = $derived(live);
 
-	// markdown-flavored autoformat: # headings, > quotes, ``` fences, --- rules
-	const mdInputRules = [
-		textblockTypeInputRule(/^(#{1,6})\s$/, mdSchema.nodes.heading, (m) => ({ level: m[1].length })),
-		wrappingInputRule(/^>\s$/, mdSchema.nodes.blockquote),
-		textblockTypeInputRule(/^```$/, mdSchema.nodes.code_block, { env: 'fence', args: '' }),
-		new InputRule(/^(?:---|\*\*\*)\s$/, (state, _match, start, end) =>
-			state.tr.replaceRangeWith(start, end, mdSchema.nodes.horizontal_rule.create())
-		)
-	];
+	const mount = canvasMount({
+		view: () => editorView,
+		path: () => docPath ?? null,
+		imageDirectory: () => imageDir ?? '',
+		cropFormat: '',
+		isMainFile: () => true,
+		onReady: () => onReady?.()
+	});
 
 	onMount(() => {
 		const mathlive = mathliveLoaded();
@@ -193,142 +114,48 @@
 	function build({ mathlivePlugin, mlarrowHandlers }: MathlivePlugin): void {
 		if (!editor) return;
 
-		const plugins = [
-			parseCarryPlugin,
-			markdownCopyPlugin,
-			heldGapCursor(),
-			hiddenSelectionPlugin(),
-			...visualCaretDoctor(),
-			caretClearOfFormatBar(),
-			verticalArrowStall(),
-			dropCursor({ color: 'var(--color-primary-500)', width: 2, class: 'pm-drop-cursor' }),
-			// TableView WITHOUT columnResizing: a pipe table has no width syntax, so a dragged column
-			// could never be written to the file. It used to move on screen and be silently discarded
-			// on the next parse - a control that lied. The node view is kept because it is what
-			// renders the <colgroup>; only the drag handlers are gone.
-			tableViewOnly,
-			tableArrowExit,
-			tableEditing(),
-			wholeTableEdits,
-			tableArrowEntry,
-			crossBlockEdits,
-			visualSmartPaste('markdown', mdSchema, pasteMarkdownSource),
-			firstRowHeader,
-			tableAlignment,
-			...createListPlugins({ schema: mdSchema }),
-			listAttrInheritance,
-			history(),
-			// before the list keymap, whose Backspace and Delete act at a block edge: they would join the block after an empty one into it, and a block into a figure
-			keymap({ Backspace: deleteEmptyBlockBackward, Delete: deleteEmptyBlockForward }),
-			keymap({ Backspace: selectFigureBackward, Delete: selectFigureForward }),
-			shiftArrowsPlugin(),
-			keymap(listKeymap),
-			inputRules({ rules: [...listInputRules, ...mdInputRules] }),
-			pmCommandKeys({
-				'editor.bold': toggleMark(mdSchema.marks.strong),
-				'editor.italic': toggleMark(mdSchema.marks.em),
-				'editor.inlineCode': toggleMark(mdSchema.marks.code),
-				'editor.strikethrough': toggleMark(mdSchema.marks.s),
-				'editor.blockquote': toggleBlockQuote(),
-				'editor.codeBlock': createCodeBlock(),
-				'editor.inlineMath': createMathField(),
-				'editor.displayMath': createMathField(true),
-				// markdown gets all six levels
-				...Object.fromEntries([0, 1, 2, 3, 4, 5, 6].map((n) => [`editor.heading${n}`, toggleHeading(n)]))
-			}),
-			pmEditorScope('markdown'),
-			keymap({
-				'Mod-z': undoVisual,
-				'Mod-y': redoVisual,
-				'Mod-Shift-z': redoVisual,
-				Backspace: undoInputRule,
-				'Mod-a': selectAllScoped,
-				'Mod-Home': selectDocStart,
-				ArrowUp: holdAtDocStart,
-				ArrowLeft: holdAtDocStart,
-				ArrowDown: holdAtDocEnd,
-				ArrowRight: holdAtDocEnd,
-				'Mod-End': selectDocEnd,
-				'Shift-Mod-Home': extendToDocStart,
-				'Shift-Mod-End': extendToDocEnd,
-				'Shift-Enter': insertHardBreak,
-				// table cell first, then list indent; always consume so focus stays in the editor
-				Tab: (state, dispatch, view) => tabThroughCells(state, dispatch, view) || createIndentListCommand()(state, dispatch) || true,
-				'Shift-Tab': (state, dispatch) => goToNextCell(-1)(state, dispatch) || createDedentListCommand()(state, dispatch) || true
-			}),
-			cmarrowHandlers,
-			mlarrowHandlers,
+		const plugins = markdownEditorPlugins({
 			mathlivePlugin,
-			keymap(baseKeymap),
-			imagePlugin(createMarkdownImageSettings(imageDir === undefined ? undefined : () => imageDir ?? '')),
-			menuUpdatePlugin(),
-			createCursorPlugin(),
-			...lineBreakPlugins(),
-			createLinkPlugin({ onOpen: onOpenLink }),
-			pasteUuidFixPlugin,
-			visualFindPlugin(),
-			placeholderPlugin(placeholder),
-			tablePlaceholderPlugin(),
-			createWordCountPlugin(),
-			createTocPlugin(),
-			listNumbersPlugin(),
-			createPersistentSelectionPlugin(),
-			spellClickBoundaryPlugin, // must precede proofreadPlugin; see its comment
-			proofreadPlugin(() => spellLanguage),
-			spellProblemKeymap,
-			createBoundaryClickPlugin(),
-			wordSelectionTrim(),
-			unfocusedPressCaret(),
-			dragSelectionPlugin(),
-			// the Notion-style + / drag / delete gutter, with the markdown insert set
-			createBlockHandlePlugin({ items: markdownInsertItems }),
-			wholeBlockDragPlugin(),
-			dropPastNodeViewsPlugin(),
-			createNodeFlashPlugin(),
-			// collaborators' carets; VisualCollab feeds it, and is inert outside a shared session
-			remoteCursorsPlugin,
-			...pmComments({
-				onSelect: (id) => onSelectComment?.(id),
-				onAdd: onAddComment,
-				sourceAnchor,
-				addLabel: addCommentLabel
-			})
-		];
+			mlarrowHandlers,
+			imageDir: imageDir === undefined ? undefined : () => imageDir ?? '',
+			placeholder,
+			onOpenLink,
+			onSelectComment,
+			onAddComment,
+			sourceAnchor,
+			addCommentLabel,
+			spellLanguage: () => spellLanguage
+		});
 
 		let editorState = EditorState.create({ schema: mdSchema, plugins, doc: localValue ?? undefined });
 		editorState = padTablesInState(editorState);
 
-		editorView = new EditorView(editor, {
-			attributes: { class: 'TexpileEditor MarkdownEditor', spellcheck: 'false' },
-			state: editorState,
-			nodeViews: {
-				code_block: (node, view, getPos) => new CodeBlockView(node, view, getPos as () => number),
-				// md raw islands are html/markdown chunks: always the plain CM views, none of the
-				// latex-specific frontmatter/bibliography/figure specializations
-				raw_latex: (node, view, getPos) => new RawLatexView(node, view, getPos as () => number),
-				inline_latex: (node, view, getPos) => new InlineLatexView(node, view, getPos as () => number)
+		editorView = createCanvasView(
+			editor,
+			{
+				attributes: { class: 'TexpileEditor MarkdownEditor', spellcheck: 'false' },
+				state: editorState,
+				language: 'markdown',
+				...markdownNodeViews(),
+				editable: group.editable,
+				dispatchTransaction(this: EditorView, transaction: Transaction) {
+					// async plugins (spellcheck) can dispatch into a destroyed view on tab switches
+					if (this.isDestroyed) return;
+					const newState = this.state.apply(transaction);
+					this.updateState(newState);
+					// collabRemotePatch: a collaborator's edit patched in from the shared doc. It is
+					// already IN the shared doc, so reporting it as a local change would echo it back
+					// out and the two peers would ping-pong the same edit
+					if (onLocalChange && transaction.docChanged && !transaction.getMeta('collabRemotePatch')) onLocalChange(newState.doc);
+					if (transaction.getMeta('collabRemotePatch')) remotePatches++;
+					if (onSelectionChange && (transaction.selectionSet || transaction.docChanged)) onSelectionChange();
+				}
 			},
-			editable: group.editable,
-			dispatchTransaction(this: EditorView, transaction: Transaction) {
-				// async plugins (spellcheck) can dispatch into a destroyed view on tab switches
-				if (this.isDestroyed) return;
-				const newState = this.state.apply(transaction);
-				this.updateState(newState);
-				// collabRemotePatch: a collaborator's edit patched in from the shared doc. It is
-				// already IN the shared doc, so reporting it as a local change would echo it back
-				// out and the two peers would ping-pong the same edit
-				if (onLocalChange && transaction.docChanged && !transaction.getMeta('collabRemotePatch')) onLocalChange(newState.doc);
-				if (transaction.getMeta('collabRemotePatch')) remotePatches++;
-				if (onSelectionChange && (transaction.selectionSet || transaction.docChanged)) onSelectionChange();
-			}
-		});
+			mount.setup(editor)
+		);
 
 		group.claim(editorView);
-		// before onReady, which takes the loading bar down: the reveal is what turns the stand-ins on
-		// screen into the real thing, so announcing readiness first would show a document mid-upgrade
-		revealBuiltEditor(editor);
 		if (live) editorView.focus();
-		onReady?.();
 	}
 
 	let mountedDoc: PMNode | null = null;
@@ -363,10 +190,8 @@
 		if (kind === 'newFile') swapDocForNewFile(editorView, mdSchema, next);
 		else swapParsedDoc(editorView, mdSchema, next);
 		docEpoch++;
-		// another file's formulas drawn in this frame, as a fresh build draws them, not as blanks for one
 		if (kind === 'newFile') {
-			revealBuiltEditor(editor);
-			onReady?.();
+			mount.swappedFile(editorView);
 			if (takesFocus) editorView.focus();
 		}
 	});
@@ -387,21 +212,13 @@
 		pendingActive: () => commentPendingActive
 	});
 
-	$effect(() => {
-		if (editorView?.dom) {
-			(editorView.dom as HTMLElement).style.setProperty('zoom', `${preferences.zoom}`, 'important');
-		}
-	});
-
 	onDestroy(() => {
 		editorView?.destroy();
 		group.release(editorView);
 	});
 </script>
 
-<!-- invisible, not hidden: display:none gives it no box, and an element with no box intersects
-     nothing, so the viewport upgrades could not run until after it was already on screen -->
-<main bind:this={editor} class={BUILDING_CLASS}></main>
+<main bind:this={editor}></main>
 
 <ContextMenu dialect="markdown" {onAddComment} {sourceAnchor} />
 

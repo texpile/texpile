@@ -19,6 +19,7 @@ import { conditionalUseNames, readingOf, usesInReadingOrder, type FileReading } 
 import { NO_OPTIONS, optionNamesOf, type OptionNames } from '$lib/languages/latex/intellisense/checks/reading/optionNames';
 import { NO_POSSIBLE_NAMES, possibleNamesOf } from '$lib/languages/latex/intellisense/checks/reading/possibleNames';
 import type { Engine } from '../compileCommand';
+import { readSourceTrees } from '../sourceTrees';
 
 /** checks: what the LaTeX checks that are on found, besides the reference problems */
 export type LiveRefProblems = { path: string; text: string; problems: RefProblem[]; checks: SourceProblem[] };
@@ -95,11 +96,16 @@ function withOpenText(parts: readonly FileReading[], open: { path: string; text:
 	return was ? parts.map((p) => (p === was ? now : p)) : [now];
 }
 
+function nextTask(): Promise<void> {
+	return new Promise((next) => setTimeout(next));
+}
+
 export class LiveRefChecks {
 	private document: Document | null = null;
 	private seq = 0;
 	private reloadSeq = 0;
-	private checkSoon = trailingDebounce<void>(400, () => this.check());
+	private checkSeq = 0;
+	private checkSoon = trailingDebounce<void>(400, () => void this.check());
 
 	constructor(private deps: LiveRefDeps) {}
 
@@ -165,7 +171,7 @@ export class LiveRefChecks {
 		};
 		if (my !== this.seq) return;
 		this.document = document;
-		this.check();
+		void this.check();
 	}
 
 	/** check the open file again once typing pauses */
@@ -183,10 +189,11 @@ export class LiveRefChecks {
 		const read = await readLoaded(loaded, parts);
 		if (my !== this.reloadSeq || this.document !== doc) return;
 		this.document = { ...doc, parts, usesKey: JSON.stringify(uses), loaded, ...read };
-		this.check();
+		void this.check();
 	}
 
-	private runChecks(open: { path: string; text: string }, doc: Document | null): SourceProblem[] {
+	/** each check on its own, to run one task apiece */
+	private checkRuns(open: { path: string; text: string }, doc: Document | null): (() => SourceProblem[])[] {
 		const on = LATEX_CHECKS.filter((c) => checkIsOn(c.id));
 		if (!on.length || !doc?.loaded) return [];
 		const parts = withOpenText(doc.parts, open);
@@ -208,16 +215,21 @@ export class LiveRefChecks {
 			options: doc.options,
 			possible: doc.possible
 		};
-		return on.flatMap((c) => c.run(input));
+		return on.map((c) => () => c.run(input));
 	}
 
-	private check(): void {
+	// each check reads the whole file: run together they held a long paper's main thread for 560 ms after every pause
+	private async check(): Promise<void> {
+		const my = ++this.checkSeq;
 		const open = this.deps.open();
 		const root = this.deps.root();
 		if (!open || !root) {
 			liveRefProblems.current = null;
 			return;
 		}
+		// an undo across far places rereads the whole file: read it in slices first, so the checks find it read
+		await readSourceTrees(open.text);
+		if (my !== this.checkSeq) return;
 		const doc = this.document && samePath(this.document.path, open.path) ? this.document : null;
 		const files = this.deps.files();
 		const have = new Set(files.map(pathKey));
@@ -233,12 +245,19 @@ export class LiveRefChecks {
 			knownKeys: this.deps.knownKeys(),
 			outDir: this.deps.outDir()
 		});
-		liveRefProblems.current = { path: open.path, text: open.text, problems, checks: this.runChecks(open, doc) };
+		const checks: SourceProblem[] = [];
+		for (const run of this.checkRuns(open, doc)) {
+			await nextTask();
+			if (my !== this.checkSeq) return;
+			checks.push(...run());
+		}
+		liveRefProblems.current = { path: open.path, text: open.text, problems, checks };
 	}
 
 	destroy(): void {
 		this.seq++;
 		this.reloadSeq++;
+		this.checkSeq++;
 		this.checkSoon.cancel();
 		liveRefProblems.current = null;
 	}

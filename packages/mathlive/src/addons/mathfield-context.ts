@@ -6,6 +6,7 @@ import type { _Mathfield } from '../editor-mathfield/mathfield-private';
 import type { _Model } from '../editor-model/model-private';
 import { register } from '../editor/commands';
 import type { MathfieldElement } from '../public/mathfield-element';
+import type { HeadlessMathfield } from '../public/headless-mathfield';
 import type { MathfieldContext, MathfieldLimits } from '../public/mathlive';
 
 const OPERATORS = new Set(['extensible-symbol', 'operator', 'mop']);
@@ -27,7 +28,9 @@ function operatorAt(model: _Model): Atom | undefined {
   return scripted ? operator : undefined;
 }
 
-export function mathfieldContext(field: MathfieldElement): MathfieldContext {
+export function mathfieldContext(
+  field: MathfieldElement | HeadlessMathfield
+): MathfieldContext {
   const mf = (field as unknown as { _mathfield: _Mathfield | null })._mathfield;
   if (!mf) return {};
   const { model } = mf;
@@ -44,6 +47,7 @@ export function mathfieldContext(field: MathfieldElement): MathfieldContext {
       canRemoveRow: array.rowCount > Math.max(1, options.minRows ?? 1),
       canAddColumn: array.colCount < array.maxColumns,
       canRemoveColumn: array.colCount > Math.max(1, options.minColumns ?? 1),
+      multiline: array.isMultiline,
     };
   }
   const operator = operatorAt(model);

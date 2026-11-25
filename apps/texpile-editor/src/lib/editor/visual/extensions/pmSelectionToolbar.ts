@@ -63,9 +63,9 @@ const HEIGHT = 26;
  * it spans lines. Flips below when the selection starts at the top of the window.
  *
  * Structurally simpler than the CodeMirror twin because ProseMirror permits layout reads in a
- * plugin view's update(); there is no requestMeasure discipline to follow. Scroll and pane-resize
- * move the text without an editor update, so a capture-phase scroll listener and a ResizeObserver
- * cover what update() cannot see.
+ * plugin view's update(); there is no requestMeasure discipline to follow. Scroll and relayout
+ * move the text without an editor update, so a capture-phase scroll listener and the canvas's
+ * onLayout cover what update() cannot see.
  */
 export function pmSelectionToolbar(onAdd: (anchor: CommentAnchor | null) => void, label: string, sourceAnchor: SourceAnchorFn): Plugin {
 	return new Plugin({
@@ -153,8 +153,7 @@ export function pmSelectionToolbar(onAdd: (anchor: CommentAnchor | null) => void
 			}
 			const win = view.dom.ownerDocument.defaultView ?? window;
 			win.addEventListener('scroll', place, true);
-			const ro = new ResizeObserver(place);
-			ro.observe(view.dom);
+			const stopLayout = view.canvas.onLayout(place);
 			// the toggle has to bite without waiting for the next selection change, in both directions
 			const unsub = observe(
 				() => settings.current,
@@ -164,7 +163,7 @@ export function pmSelectionToolbar(onAdd: (anchor: CommentAnchor | null) => void
 				update: place,
 				destroy() {
 					win.removeEventListener('scroll', place, true);
-					ro.disconnect();
+					stopLayout();
 					unsub();
 					if (timer) clearTimeout(timer);
 					dom.remove();

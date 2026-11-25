@@ -14,7 +14,7 @@ describe('inline faces', () => {
 
 	it('draws a formula inside styled text, and leaves one standing in the chip itself as source', () => {
 		const styled = latexFace(String.raw`\textup{Let $\alpha$ be small}`, false);
-		expect(styled?.dom.querySelector('.math-static-placeholder')?.getAttribute('aria-label')).toBe(String.raw`\alpha`);
+		expect(styled?.dom.querySelector('[role="math"]')?.getAttribute('aria-label')).toBe(String.raw`\alpha`);
 		expect(latexFace(String.raw`\textbf{x} $y$`, false)).toBeNull();
 	});
 

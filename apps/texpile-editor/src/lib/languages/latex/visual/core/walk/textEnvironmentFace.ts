@@ -1,7 +1,7 @@
-import { tip } from '$lib/components/tooltip.svelte';
-import { faceElement, faceOfParts, type ChipFace } from '$lib/editor/visual/extensions/drawnChips/chipFace';
+import { faceOfParts, tippedFace, type ChipFace } from '$lib/editor/visual/extensions/drawnChips/chipFace';
+import { appendTo, elementMode } from '$lib/editor/visual/extensions/drawnChips/faces/partElements';
+import { coreElement } from '../looks/coreLooks';
 import { documentTable } from '../title/documentTable.svelte';
-import './textEnvironment.css';
 
 const HINT_LENGTH = 400;
 
@@ -12,19 +12,17 @@ export function holdsRunningText(name: string): boolean {
 }
 
 export function textEnvironmentFace(name: string, parts: ChipFace[], source: string): ChipFace {
-	const dom = faceElement('div', 'drawn-environment');
-	dom.appendChild(faceElement('span', 'drawn-environment-name', name));
 	const body = faceOfParts(parts, false);
-	dom.appendChild(body.dom);
+	const mode = elementMode(coreElement);
+	const dom = appendTo(mode.make('div', 'drawn-environment'), mode.make('span', 'drawn-environment-name', name), mode.ofFace(body));
 	const hint = source.replace(/\s+/g, ' ').trim();
-	const tipped = tip(dom, hint.length > HINT_LENGTH ? hint.slice(0, HINT_LENGTH) + '…' : hint);
+	const face = tippedFace(dom, hint.length > HINT_LENGTH ? hint.slice(0, HINT_LENGTH) + '…' : hint, { line: true });
 	return {
-		dom,
-		line: true,
+		...face,
 		decorate: (decorations) => body.decorate?.(decorations),
 		destroy() {
 			body.destroy?.();
-			tipped.destroy();
+			face.destroy?.();
 		}
 	};
 }

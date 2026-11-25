@@ -19,7 +19,7 @@ import {
 } from '$lib/stores/projectIntel';
 import { scanGlossary } from '$lib/languages/latex/intellisense/completion/glossary';
 import { scanScripts } from '$lib/languages/latex/intellisense/completion/subsuperscript';
-import { scanMacroBodies } from '$lib/editor/source/extensions/math-preview/userMacros';
+import { scanMacroBodies } from '$lib/editor/source/extensions/math-preview/macroScan';
 import { parseOutlineRaw } from '$lib/editor/visual/extensions/tableofcontents/latexHeadings';
 import { definedIn, ownLiteralsIn, primitiveDefsIn, signatureOf } from '$lib/languages/latex/userDefinitions';
 import type { OwnLiterals } from '$lib/languages/latex/syntax/tokens/ownSyntax';

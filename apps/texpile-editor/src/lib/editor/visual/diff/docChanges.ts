@@ -7,6 +7,8 @@ import { ChangeSet, simplifyChanges, type Change } from 'prosemirror-changeset';
 import { StepMap } from 'prosemirror-transform';
 import { Decoration, DecorationSet } from 'prosemirror-view';
 import type { Node as PMNode } from 'prosemirror-model';
+import type { CanvasWidget, StyleLook } from '$lib/editor/canvas';
+import { faceText, setLook } from '$lib/editor/canvas';
 import { changeTokens } from './changeTokens';
 import { isSelfRendered } from './selfRendered';
 import { sharedWordsGivenBack, type DiffRange } from './sharedWords';
@@ -27,7 +29,25 @@ function wholeWordChanges(changes: readonly Change[], oldDoc: PMNode, newDoc: PM
 }
 
 // ProseMirror's decoration types are internal, so the tests need these to tell the marks apart
-const INLINE_SPEC = { diff: 'inline' };
+// tinted rather than underlined, so it survives inside headings, maths and table cells
+const INLINE_SPEC = {
+	diff: 'inline',
+	canvasLook: {
+		look: {
+			backgroundColor: 'color-mix(in srgb, var(--color-success-500) 22%, transparent)',
+			borderRadius: 'calc(var(--radius-base) * 0.5)'
+		}
+	}
+};
+
+/** a node that draws its own content carries the mark, as a fill and an inset ring: green when new, amber when changed */
+function nodeMark(cls: string): { class: string; style: string } {
+	const color = cls.endsWith('changed-node') ? 'var(--color-warning-500)' : 'var(--color-success-500)';
+	return {
+		class: cls,
+		style: `background-color: color-mix(in srgb, ${color} 16%, transparent); outline: 2px solid color-mix(in srgb, ${color} 45%, transparent); outline-offset: -2px; border-radius: var(--radius-base);`
+	};
+}
 const NODE_SPEC = { diff: 'node' };
 
 const WORD = /[\p{L}\p{N}]/u;
@@ -80,6 +100,31 @@ function removedText(oldDoc: PMNode, newDoc: PMNode, change: DiffRange): string 
 
 // A widget, never a node: three dialects means three schemas and three serializers to teach about
 // it, and one missed case writes diff furniture into the author's file.
+const REMOVED_LOOK: StyleLook = {
+	backgroundColor: 'color-mix(in srgb, var(--color-error-500) 14%, transparent)',
+	color: 'var(--error-ink)',
+	textDecoration: 'line-through',
+	textDecorationColor: 'color-mix(in srgb, var(--color-error-500) 70%, transparent)',
+	borderRadius: 'calc(var(--radius-base) * 0.5)',
+	whiteSpace: 'pre-wrap'
+};
+// between paragraphs the removal was whole blocks, so it takes a block of its own; the tint bleeds into the padding
+const REMOVED_BLOCK_LOOK: StyleLook = { ...REMOVED_LOOK, display: 'block', margin: '0.35em -0.3em', padding: '0.15em 0.3em' };
+const REMOVED_INLINE_LOOK: StyleLook = { ...REMOVED_LOOK, padding: '0 calc(var(--spacing) * 0.5)' };
+
+/** the removed text struck through and tinted, in the line or in a block of its own */
+function removedForm(text: string, block: boolean): CanvasWidget {
+	return {
+		kind: block ? 'block' : 'inline',
+		build(ctx) {
+			const el = ctx.el(block ? 'div' : 'span', block ? 'texpile-diff-removed-block' : 'texpile-diff-removed');
+			setLook(el, block ? REMOVED_BLOCK_LOOK : REMOVED_INLINE_LOOK);
+			el.appendChild(faceText(text));
+			return el;
+		}
+	};
+}
+
 function removedMarker(text: string, block: boolean): HTMLElement {
 	const el = document.createElement(block ? 'div' : 'span');
 	el.className = block ? 'texpile-diff-removed-block' : 'texpile-diff-removed';
@@ -111,7 +156,7 @@ function decorationsFor(changes: readonly DiffRange[], oldDoc: PMNode, newDoc: P
 			inside = true;
 			if (!marked.has(pos)) {
 				marked.add(pos);
-				decos.push(Decoration.node(pos, pos + node.nodeSize, { class: cls }, NODE_SPEC));
+				decos.push(Decoration.node(pos, pos + node.nodeSize, nodeMark(cls), NODE_SPEC));
 			}
 			return false;
 		});
@@ -126,7 +171,7 @@ function decorationsFor(changes: readonly DiffRange[], oldDoc: PMNode, newDoc: P
 			// the hole a deleted file leaves, not content that arrived
 			if (node.isTextblock && node.content.size === 0) return true;
 			marked.add(pos);
-			decos.push(Decoration.node(pos, pos + node.nodeSize, { class: cls }, NODE_SPEC));
+			decos.push(Decoration.node(pos, pos + node.nodeSize, nodeMark(cls), NODE_SPEC));
 			return true;
 		});
 	}
@@ -156,6 +201,7 @@ function decorationsFor(changes: readonly DiffRange[], oldDoc: PMNode, newDoc: P
 					side: -1,
 					// chrome, not content: a copy out of the diff must not carry it
 					ignoreSelection: true,
+					canvas: removedForm(text, block),
 					key: `del-${change.fromA}`
 				})
 			);

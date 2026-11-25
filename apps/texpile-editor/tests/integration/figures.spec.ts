@@ -3,6 +3,7 @@ import { execFileSync } from 'node:child_process';
 import { Disk } from './driver/disk';
 import { useTexpile } from './driver/useTexpile';
 import { VisualEditor } from './driver/visualEditor';
+import { inCanvas, settled } from './canvas/canvasPage';
 
 // figures are drawn by the lualatex on PATH, else the spec is skipped
 function hasLualatex(): boolean {
@@ -29,13 +30,25 @@ const texpile = useTexpile({
 });
 
 async function openFigure(visual: VisualEditor, file = 'fig.tex', item = /B/): Promise<void> {
-	const card = visual.page.locator('.figure-card').first();
-	await card.scrollIntoViewIfNeeded();
-	await card.hover();
-	await visual.page.getByRole('button', { name: 'Edit figure' }).first().click();
+	const { page } = visual;
+	await expect.poll(() => inCanvas(page, ({ probe }) => probe.query('.figure-card').length)).toBeGreaterThan(0);
+	await inCanvas(page, ({ probe, view }) => view.canvas.revealPos(probe.query('.figure-card')[0].pos!, 'center'));
+	await settled(page);
+	const card = await inCanvas(page, ({ probe }) => probe.query('.figure-card')[0].rect);
+	await page.mouse.click(card.left + card.width / 2, card.top + card.height / 2);
+	await page.getByRole('button', { name: 'Edit figure' }).click();
 	await expect(visual.page.getByText(`Figure 1 - ${file}`)).toBeVisible();
 	await expect(visual.page.getByRole('treeitem', { name: item })).toBeVisible({ timeout: 120_000 });
 	await expect(visual.page.locator('[aria-busy="true"]')).toHaveCount(0, { timeout: 120_000 });
+}
+
+/** the next test opens the figure afresh: a tab left open shows its panels tucked */
+async function closeFigure(visual: VisualEditor): Promise<void> {
+	await visual.page
+		.getByRole('tab', { name: /^Figure 1 - fig\.tex/ })
+		.getByRole('button', { name: /close/i })
+		.click();
+	await visual.showVisual();
 }
 
 // the panels sit tucked behind their tabs at the stage's edge until the pointer comes close
@@ -59,6 +72,7 @@ test('a figure tab edits the picture in the file, and undo takes the edit back',
 	expect(disk.read('fig.tex').replace('at (4,0) {B}', 'at (3,0) {B}')).toBe(FIG);
 	await page.getByRole('button', { name: 'Undo' }).last().click();
 	await disk.expectFile('fig.tex', (t) => t === FIG, 'the file after undo');
+	await closeFigure(visual);
 });
 
 test('the undo key takes back a box just drawn, though the caret is already in its text', async () => {
@@ -83,6 +97,7 @@ test('the undo key takes back a box just drawn, though the caret is already in i
 	await page.keyboard.press('ControlOrMeta+z');
 	await expect(text).toHaveCount(0);
 	await disk.expectFile('fig.tex', (t) => t === FIG, 'the file after undo');
+	await closeFigure(visual);
 });
 
 test('a narrow pane keeps the tools on one row and docks the panels at the foot', async () => {
@@ -110,9 +125,5 @@ test('a narrow pane keeps the tools on one row and docks the panels at the foot'
 	await page.keyboard.press('4');
 	await expect(page.getByRole('button', { name: 'Ellipse', exact: true })).toHaveAttribute('aria-pressed', 'true');
 	await page.keyboard.press('Escape');
-	await page
-		.getByRole('tab', { name: /^Figure 1 - fig\.tex/ })
-		.getByRole('button', { name: /close/i })
-		.click();
-	await visual.showVisual();
+	await closeFigure(visual);
 });

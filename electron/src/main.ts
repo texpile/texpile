@@ -27,6 +27,7 @@ import { registerWorkspaceWindowIpc, openFolderInNewWindow } from './ipc/workspa
 import { registerWindowGlassIpc } from './windowGlass';
 import { registerNativeAppearanceIpc } from './nativeAppearance';
 import { registerSurfacesIpc } from './ipc/surfacesIpc';
+import { registerClipboardIpc } from './ipc/clipboardIpc';
 import { registerKeybindingsIpc } from './ipc/keybindingsIpc';
 import { registerThemesIpc } from './themes/themesIpc';
 import { registerDeferredIpc, registerDeferredReadyIpc, shutdownDeferred } from './ipc/deferredIpc';
@@ -53,6 +54,7 @@ registerWorkspaceWindowIpc();
 registerWindowGlassIpc(() => chromeColors().background);
 registerNativeAppearanceIpc();
 registerSurfacesIpc();
+registerClipboardIpc();
 registerKeybindingsIpc();
 registerThemesIpc();
 

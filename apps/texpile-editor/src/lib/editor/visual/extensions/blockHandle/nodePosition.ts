@@ -9,3 +9,8 @@ export function positionOf(doc: Node, node: Node): number | null {
 	});
 	return found;
 }
+
+/** the node at `pos`, or null once the document no longer reaches it (another file swapped in under an open panel) */
+export function nodeStillAt(doc: Node, pos: number): Node | null {
+	return pos >= 0 && pos < doc.content.size ? doc.nodeAt(pos) : null;
+}

@@ -16,18 +16,17 @@ describe('floats in chips', () => {
 			true
 		);
 		expect(face?.dom.className).toBe('drawn-float');
-		expect(face?.dom.querySelector('.drawn-picture')?.textContent).toContain('TikZ figure');
+		expect(face?.dom.querySelector('.figure-card')?.textContent).toContain('TikZ figure');
 		expect(face?.dom.querySelector('.drawn-caption')?.textContent).toContain('A simple body.');
 	});
 
-	it('gives the picture the figure card of the body, whose Edit button opens the picture', () => {
+	it('gives the picture the figure card of the body, whose Edit figure action opens the picture', () => {
 		const picture = '\\begin{tikzpicture}\n\\draw (0,0) -- (1,1);\n\\end{tikzpicture}';
 		const face = latexFace(`\\begin{figure}\n${picture}\n\\end{figure}`, true);
 		const opened: unknown[] = [];
 		window.addEventListener('texpileopenfigure', (e) => opened.push((e as CustomEvent).detail), { once: true });
-		(face?.dom.querySelector('.figure-edit') as HTMLButtonElement).click();
+		face?.actions?.()[0].run();
 		expect(opened).toEqual([{ index: -1, source: picture }]);
-		face?.destroy?.();
 	});
 
 	it('draws subfloats as panels, each over its own caption, and a table cell without its commented row', () => {

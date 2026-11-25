@@ -1,6 +1,5 @@
 import { box } from '$lib/runes/box.svelte';
 import type { MacroDef } from '$lib/editor/source/extensions/math-preview/userMacros';
-import { MACRO_PART } from './macroArgs/macroCallElements';
 
 /**
  * The document's own \newcommand definitions, in the form MathLive takes them.
@@ -13,6 +12,9 @@ import { MACRO_PART } from './macroArgs/macroCallElements';
  *
  * captureSelection keeps the caret out of the expansion, which has nowhere to map back to.
  */
+/** the part the fork gives a top-level call of the paper's own macros */
+export const MACRO_PART = 'macro';
+
 export type GuardedMacro = { def: string; args: number; optional?: string; expand: false; captureSelection: true; part: typeof MACRO_PART };
 
 export const mathMacros = box<Record<string, GuardedMacro>>({});

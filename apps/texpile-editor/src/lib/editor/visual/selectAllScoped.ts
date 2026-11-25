@@ -5,13 +5,15 @@ import type { ResolvedPos } from 'prosemirror-model';
 // captions and notes hold prose but are not `isolating` (table cells are, via prosemirror-tables):
 // reaching the whole document from inside one is the same surprise
 const FIELD_NODES = new Set(['table_caption', 'table_notes']);
+// code held in the document takes its own text first, as its CodeMirror did in the DOM editor
+const ISLANDS = new Set(['code_block', 'raw_latex', 'inline_latex']);
 
 function fieldDepth($pos: ResolvedPos): number | null {
 	for (let d = $pos.depth; d > 0; d--) {
 		const { spec, name, isAtom } = $pos.node(d).type;
 		// an ATOM you can still be inside is a widget with a text field in it: a figure caption, the
 		// key of a ref or a citation. Each reads as its own box, whatever the schema calls it
-		if (spec.isolating || isAtom || FIELD_NODES.has(name)) return d;
+		if (spec.isolating || isAtom || FIELD_NODES.has(name) || ISLANDS.has(name)) return d;
 	}
 	return null;
 }

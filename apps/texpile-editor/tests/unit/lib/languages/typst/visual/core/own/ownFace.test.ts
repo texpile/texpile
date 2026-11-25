@@ -1,5 +1,6 @@
 // @vitest-environment jsdom
 import { describe, it, expect } from 'vitest';
+import { domOf } from '$lib/editor/visual/extensions/drawnChips/chipFace';
 import { typstFace } from '$lib/languages/typst/visual/core/walk/typstFace';
 import { scopeOfFile, typstScopeNow } from '$lib/languages/typst/visual/core/scope/fileScopeNow.svelte';
 
@@ -47,7 +48,7 @@ describe('own function faces', () => {
 	it('puts a content argument in as one value', async () => {
 		const face = await faceIn('#let paragraph(title) = [*#title*]\n', '#paragraph[Sec *one* two]');
 		expect(face?.dom.textContent).toBe('Sec one two');
-		const texts = document.createTreeWalker(face!.dom, NodeFilter.SHOW_TEXT);
+		const texts = document.createTreeWalker(domOf(face!), NodeFilter.SHOW_TEXT);
 		const loose: string[] = [];
 		while (texts.nextNode()) if (!texts.currentNode.parentElement?.closest('strong')) loose.push(texts.currentNode.textContent!);
 		expect(loose).toEqual([]);

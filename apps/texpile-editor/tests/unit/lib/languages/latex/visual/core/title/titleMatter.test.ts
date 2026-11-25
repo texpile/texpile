@@ -41,7 +41,7 @@ describe('the title block', () => {
 			'title-matter title-matter-affiliation',
 			'title-matter title-matter-keywords'
 		]);
-		expect(face!.dom.querySelector('br')).not.toBeNull();
+		expect(face!.dom.querySelector('.drawn-newline')).not.toBeNull();
 		expect(face!.dom.querySelector('.title-matter-keywords')?.textContent).toBe('Keywordsa, b');
 		// a document that does not load the class has no \affiliation to draw
 		await loading(classes('article'));
@@ -53,7 +53,7 @@ describe('the title block', () => {
 		templateFeaturesStore.current = { ...templateFeaturesStore.current, macros: { lyxaddress, labelled: { def: 'Address: #1', args: 1 } } };
 		const face = latexFace('\\lyxaddress{Ottawa$^1$\\\\ Canada}', false);
 		expect(face?.dom.className).toBe('title-matter title-matter-affiliation');
-		expect(face?.dom.querySelector('br')).not.toBeNull();
+		expect(face?.dom.querySelector('.drawn-newline')).not.toBeNull();
 		// a macro that prints more than its argument is drawn as what it prints
 		expect(latexFace('\\labelled{Ottawa}', false)?.dom.textContent).toBe('Address: Ottawa');
 		templateFeaturesStore.current = { ...templateFeaturesStore.current, macros: undefined };

@@ -3,6 +3,10 @@ import { describe, it, expect } from 'vitest';
 import { Fragment, Slice, type Node } from 'prosemirror-model';
 import { parseLatexFile, serializeLatexFile } from '$lib/workspace/latexRoundtrip';
 import { markerLinesOf, sectionOfRow } from '$lib/languages/latex/visual/plugins/table/longtable/longtableSections';
+import { EditorState } from 'prosemirror-state';
+import type { DecorationSet } from 'prosemirror-view';
+import { faceElement } from '$lib/editor/canvas';
+import { longtablePlugin } from '$lib/languages/latex/visual/plugins/table/longtable/longtablePlugin';
 
 const LONG = `\\begin{longtable}{lll}
 \\caption{A long table.}\\label{tab:long}\\\\
@@ -65,5 +69,20 @@ describe('longtable markers', () => {
 		expect(out).toContain(
 			'\\caption{Cap}\\\\\n\\endfirsthead\n\\hline\na & b \\\\\n\\hline\n\\multicolumn{2}{l}{Continued}\n\\endlastfoot\ne & d \\\\'
 		);
+	});
+
+	it('draws its marker lines as canvas rows across the columns and its head rows in bold', () => {
+		const doc = parseLatexFile(file(LONG)).doc;
+		const plugin = longtablePlugin();
+		const state = EditorState.create({ doc, plugins: [plugin] });
+		const found = (plugin.props.decorations!.call(plugin, state) as DecorationSet).find();
+		const rows = found.filter((d) => (d.spec as { canvas?: { kind: string } }).canvas?.kind === 'tableRow');
+		expect(rows).toHaveLength(3);
+		const form = (rows[0].spec as { canvas: { build(ctx: unknown): ReturnType<typeof faceElement> } }).canvas;
+		const row = form.build({ el: faceElement });
+		expect(row.tagName.toLowerCase()).toBe('tr');
+		expect(row.firstElementChild?.getAttribute('colspan')).toBe('3');
+		const head = found.find((d) => (d as unknown as { type: { attrs?: { class?: string } } }).type.attrs?.class === 'longtable-head');
+		expect((head as unknown as { type: { attrs: { style: string } } }).type.attrs.style).toContain('font-weight: 600');
 	});
 });

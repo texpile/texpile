@@ -23,44 +23,10 @@
 	import { createCodeBlock } from '$lib/editor/visual/extensions/codemirrorbridge/cmcommands';
 	import MathDropdown from '$lib/editor/visual/toolbar/MathDropdown.svelte';
 	import MathToolbar, { mathToolbarState } from '$lib/editor/visual/toolbar/MathToolbar.svelte';
+	import { activeMath } from '$lib/editor/visual/toolbar/activeMath.svelte';
 	import ToolbarOverflow from '$lib/editor/visual/toolbar/ToolbarOverflow.svelte';
 	import { isReadOnly } from '$lib/stores/permissionStore';
-	import { onMount } from 'svelte';
 	import { m } from '$lib/paraglide/messages';
-
-	let isMathfieldActive = $state(false);
-
-	// Whether a mathfield is focused - which decides whether MathToolbar exists at all.
-	//
-	// Focus landing on the math toolbar's own palette does NOT mean the user left their equation.
-	// Treating it as such unmounted the toolbar between mousedown and click on a symbol button: the
-	// button was gone before the click could dispatch, so nothing inserted and nothing reported it,
-	// because the handler never ran. Repro was two symbols in a row - the second one vanished.
-	function updateMathfieldState() {
-		setTimeout(() => {
-			const active = document.activeElement;
-			if (active instanceof window.MathfieldElement) {
-				isMathfieldActive = true;
-				return;
-			}
-			// our own palette (portalled, hence [data-scope]) or anything inside this toolbar: the user
-			// is still working on the equation, so hold the previous answer rather than tearing down
-			if (active instanceof Element && active.closest('[data-scope], [data-math-toolbar]')) return;
-			isMathfieldActive = false;
-		}, 0);
-	}
-
-	onMount(() => {
-		window.addEventListener('focusin', updateMathfieldState);
-		// custom event, see the monkey patch in mlview.ts
-		window.addEventListener('ml:focusin', updateMathfieldState);
-		window.addEventListener('focusout', updateMathfieldState);
-		return () => {
-			window.removeEventListener('focusin', updateMathfieldState);
-			window.removeEventListener('ml:focusin', updateMathfieldState);
-			window.removeEventListener('focusout', updateMathfieldState);
-		};
-	});
 
 	type Cmd = (state: EditorState, dispatch?: (tr: Transaction) => void) => boolean;
 	function keepEditorFocus(cmd: Cmd) {
@@ -122,7 +88,7 @@
 					<span class="text-sm font-medium">{m.toolbar_read_only()}</span>
 				</div>
 			{:else}
-				{#if isMathfieldActive || mathToolbarState.aiInputActive || mathToolbarState.paletteOpen}
+				{#if activeMath.current || mathToolbarState.aiInputActive || mathToolbarState.paletteOpen}
 					<MathToolbar />
 				{:else}
 					{#snippet tb_heading()}

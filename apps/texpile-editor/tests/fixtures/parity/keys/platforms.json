@@ -1,0 +1,521 @@
+{
+ "note": "pending: record with the same scripts on that OS (PLATFORM=windows|mac) and fill in value; the Linux values are in the per document files",
+ "windows": {
+  "status": "pending",
+  "rows": [
+   {
+    "id": "char-left",
+    "by": "character",
+    "dir": -1,
+    "chord": "ArrowLeft",
+    "status": "pending",
+    "chromiumDefault": null
+   },
+   {
+    "id": "char-right",
+    "by": "character",
+    "dir": 1,
+    "chord": "ArrowRight",
+    "status": "pending",
+    "chromiumDefault": null
+   },
+   {
+    "id": "word-left",
+    "by": "word",
+    "dir": -1,
+    "chord": "Control+ArrowLeft",
+    "status": "pending",
+    "chromiumDefault": null
+   },
+   {
+    "id": "word-right",
+    "by": "word",
+    "dir": 1,
+    "chord": "Control+ArrowRight",
+    "status": "pending",
+    "chromiumDefault": "moves to the start of the next word (Windows editing behavior); Linux moves to the end of the word"
+   },
+   {
+    "id": "line-start",
+    "by": "line",
+    "dir": -1,
+    "chord": "Home",
+    "status": "pending",
+    "chromiumDefault": "Home moves to the start of the visual line"
+   },
+   {
+    "id": "line-end",
+    "by": "line",
+    "dir": 1,
+    "chord": "End",
+    "status": "pending",
+    "chromiumDefault": null
+   },
+   {
+    "id": "line-up",
+    "by": "line",
+    "dir": -1,
+    "chord": "ArrowUp",
+    "status": "pending",
+    "chromiumDefault": "on the first line, Up moves the caret to the start of the line on Mac and nowhere on Windows and Linux"
+   },
+   {
+    "id": "line-down",
+    "by": "line",
+    "dir": 1,
+    "chord": "ArrowDown",
+    "status": "pending",
+    "chromiumDefault": "on the last line, Down moves the caret to the end of the line on Mac and nowhere on Windows and Linux"
+   },
+   {
+    "id": "paragraph-up",
+    "by": "paragraph",
+    "dir": -1,
+    "chord": "Control+ArrowUp",
+    "status": "pending",
+    "chromiumDefault": null
+   },
+   {
+    "id": "paragraph-down",
+    "by": "paragraph",
+    "dir": 1,
+    "chord": "Control+ArrowDown",
+    "status": "pending",
+    "chromiumDefault": null
+   },
+   {
+    "id": "page-up",
+    "by": "page",
+    "dir": -1,
+    "chord": "PageUp",
+    "status": "pending",
+    "chromiumDefault": "moves the caret one scroller page (87.5% of its height) and scrolls with it"
+   },
+   {
+    "id": "page-down",
+    "by": "page",
+    "dir": 1,
+    "chord": "PageDown",
+    "status": "pending",
+    "chromiumDefault": "moves the caret one scroller page (87.5% of its height) and scrolls with it"
+   },
+   {
+    "id": "document-start",
+    "by": "document",
+    "dir": -1,
+    "chord": "Control+Home",
+    "status": "pending",
+    "chromiumDefault": null
+   },
+   {
+    "id": "document-end",
+    "by": "document",
+    "dir": 1,
+    "chord": "Control+End",
+    "status": "pending",
+    "chromiumDefault": null
+   },
+   {
+    "id": "delete-char-back",
+    "by": "character",
+    "dir": -1,
+    "chord": "Backspace",
+    "status": "pending",
+    "chromiumDefault": null
+   },
+   {
+    "id": "delete-char-forward",
+    "by": "character",
+    "dir": 1,
+    "chord": "Delete",
+    "status": "pending",
+    "chromiumDefault": null
+   },
+   {
+    "id": "delete-word-back",
+    "by": "word",
+    "dir": -1,
+    "chord": "Control+Backspace",
+    "status": "pending",
+    "chromiumDefault": null
+   },
+   {
+    "id": "delete-word-forward",
+    "by": "word",
+    "dir": 1,
+    "chord": "Control+Delete",
+    "status": "pending",
+    "chromiumDefault": null
+   },
+   {
+    "id": "cut-shift-delete",
+    "chord": "Shift+Delete",
+    "status": "pending",
+    "chromiumDefault": "cut, copy and paste events fire natively"
+   },
+   {
+    "id": "copy-ctrl-insert",
+    "chord": "Control+Insert",
+    "status": "pending",
+    "chromiumDefault": "cut, copy and paste events fire natively"
+   },
+   {
+    "id": "paste-shift-insert",
+    "chord": "Shift+Insert",
+    "status": "pending",
+    "chromiumDefault": "cut, copy and paste events fire natively"
+   }
+  ],
+  "rules": {
+   "edgeLineGoesToEnd": {
+    "value": null,
+    "chromiumDefault": "the caret stays",
+    "source": "Chromium editing_behavior.cc (recalled, to be confirmed by the capture)"
+   },
+   "contextClickSelectsWord": {
+    "value": null,
+    "chromiumDefault": false,
+    "source": "EditingBehavior::ShouldSelectOnContextualMenuClick: true for the Mac behavior only"
+   },
+   "pageKeysMoveCaret": {
+    "value": null,
+    "chromiumDefault": true,
+    "source": "to be confirmed by the capture"
+   },
+   "caretBlinkHalfPeriodMs": {
+    "value": null,
+    "chromiumDefault": "the system caret blink time (GetCaretBlinkTime), 530 ms by default",
+    "source": "LayoutTheme::CaretBlinkInterval"
+   },
+   "wordRightStopsAt": {
+    "value": null,
+    "chromiumDefault": "nextStart",
+    "source": "EditingBehavior::ShouldSkipSpaceWhenMovingRight: Windows only"
+   }
+  }
+ },
+ "mac": {
+  "status": "pending",
+  "rows": [
+   {
+    "id": "char-left",
+    "by": "character",
+    "dir": -1,
+    "chord": "ArrowLeft | Control+B",
+    "status": "pending",
+    "chromiumDefault": null
+   },
+   {
+    "id": "char-right",
+    "by": "character",
+    "dir": 1,
+    "chord": "ArrowRight | Control+F",
+    "status": "pending",
+    "chromiumDefault": null
+   },
+   {
+    "id": "word-left",
+    "by": "word",
+    "dir": -1,
+    "chord": "Alt+ArrowLeft",
+    "status": "pending",
+    "chromiumDefault": null
+   },
+   {
+    "id": "word-right",
+    "by": "word",
+    "dir": 1,
+    "chord": "Alt+ArrowRight",
+    "status": "pending",
+    "chromiumDefault": "moves to the end of the word (Mac editing behavior)"
+   },
+   {
+    "id": "line-start",
+    "by": "line",
+    "dir": -1,
+    "chord": "Meta+ArrowLeft | Control+A",
+    "status": "pending",
+    "chromiumDefault": "Cmd+Left moves to the start of the visual line; Control+A moves to the start of the paragraph"
+   },
+   {
+    "id": "line-end",
+    "by": "line",
+    "dir": 1,
+    "chord": "Meta+ArrowRight | Control+E",
+    "status": "pending",
+    "chromiumDefault": null
+   },
+   {
+    "id": "line-up",
+    "by": "line",
+    "dir": -1,
+    "chord": "ArrowUp | Control+P",
+    "status": "pending",
+    "chromiumDefault": "on the first line, Up moves the caret to the start of the line on Mac and nowhere on Windows and Linux"
+   },
+   {
+    "id": "line-down",
+    "by": "line",
+    "dir": 1,
+    "chord": "ArrowDown | Control+N",
+    "status": "pending",
+    "chromiumDefault": "on the last line, Down moves the caret to the end of the line on Mac and nowhere on Windows and Linux"
+   },
+   {
+    "id": "paragraph-up",
+    "by": "paragraph",
+    "dir": -1,
+    "chord": "Alt+ArrowUp",
+    "status": "pending",
+    "chromiumDefault": null
+   },
+   {
+    "id": "paragraph-down",
+    "by": "paragraph",
+    "dir": 1,
+    "chord": "Alt+ArrowDown",
+    "status": "pending",
+    "chromiumDefault": null
+   },
+   {
+    "id": "page-up",
+    "by": "page",
+    "dir": -1,
+    "chord": "PageUp | Fn+ArrowUp",
+    "status": "pending",
+    "chromiumDefault": "scrolls a page and leaves the caret"
+   },
+   {
+    "id": "page-down",
+    "by": "page",
+    "dir": 1,
+    "chord": "PageDown | Fn+ArrowDown",
+    "status": "pending",
+    "chromiumDefault": "scrolls a page and leaves the caret"
+   },
+   {
+    "id": "document-start",
+    "by": "document",
+    "dir": -1,
+    "chord": "Meta+ArrowUp",
+    "status": "pending",
+    "chromiumDefault": null
+   },
+   {
+    "id": "document-end",
+    "by": "document",
+    "dir": 1,
+    "chord": "Meta+ArrowDown",
+    "status": "pending",
+    "chromiumDefault": null
+   },
+   {
+    "id": "delete-char-back",
+    "by": "character",
+    "dir": -1,
+    "chord": "Backspace | Control+H",
+    "status": "pending",
+    "chromiumDefault": null
+   },
+   {
+    "id": "delete-char-forward",
+    "by": "character",
+    "dir": 1,
+    "chord": "Fn+Delete | Control+D",
+    "status": "pending",
+    "chromiumDefault": null
+   },
+   {
+    "id": "delete-word-back",
+    "by": "word",
+    "dir": -1,
+    "chord": "Alt+Backspace",
+    "status": "pending",
+    "chromiumDefault": null
+   },
+   {
+    "id": "delete-word-forward",
+    "by": "word",
+    "dir": 1,
+    "chord": "Alt+Delete",
+    "status": "pending",
+    "chromiumDefault": null
+   },
+   {
+    "id": "delete-line-back",
+    "by": "line",
+    "dir": -1,
+    "chord": "Meta+Backspace",
+    "status": "pending",
+    "chromiumDefault": "deletes to the start of the visual line"
+   },
+   {
+    "id": "delete-line-forward",
+    "by": "line",
+    "dir": 1,
+    "chord": "Meta+Delete",
+    "status": "pending",
+    "chromiumDefault": "deletes to the end of the visual line"
+   },
+   {
+    "id": "kill",
+    "by": "paragraph",
+    "dir": 1,
+    "chord": "Control+K",
+    "status": "pending",
+    "chromiumDefault": "deletes to the end of the paragraph into the kill buffer"
+   },
+   {
+    "id": "yank",
+    "chord": "Control+Y",
+    "status": "pending",
+    "chromiumDefault": "inserts the kill buffer"
+   },
+   {
+    "id": "transpose",
+    "chord": "Control+T",
+    "status": "pending",
+    "chromiumDefault": "swaps the characters around the caret"
+   },
+   {
+    "id": "open-line",
+    "chord": "Control+O",
+    "status": "pending",
+    "chromiumDefault": "inserts a line break and keeps the caret before it"
+   }
+  ],
+  "rules": {
+   "edgeLineGoesToEnd": {
+    "value": null,
+    "chromiumDefault": "unrecorded: Up on the first line and Down on the last move the caret to the line start or end on macOS",
+    "source": "Chromium editing_behavior.cc (recalled, to be confirmed by the capture)"
+   },
+   "contextClickSelectsWord": {
+    "value": null,
+    "chromiumDefault": true,
+    "source": "EditingBehavior::ShouldSelectOnContextualMenuClick: true for the Mac behavior only"
+   },
+   "pageKeysMoveCaret": {
+    "value": null,
+    "chromiumDefault": false,
+    "source": "to be confirmed by the capture"
+   },
+   "caretBlinkHalfPeriodMs": {
+    "value": null,
+    "chromiumDefault": "the system text insertion point period on macOS, about 500 ms",
+    "source": "LayoutTheme::CaretBlinkInterval"
+   },
+   "wordRightStopsAt": {
+    "value": null,
+    "chromiumDefault": "nextEnd",
+    "source": "EditingBehavior::ShouldSkipSpaceWhenMovingRight: Windows only"
+   }
+  }
+ },
+ "linux": {
+  "status": "recorded",
+  "rules": {
+   "edgeLineGoesToEnd": {
+    "value": true,
+    "from": "edge.tex: Up on the first line goes to the start of the text, Down on the last line to its end",
+    "cases": [
+     {
+      "id": "first line of the document, mid line",
+      "key": "ArrowUp",
+      "firstBlock": "paragraph",
+      "lastBlock": "paragraph",
+      "before": [
+       "text",
+       47,
+       47
+      ],
+      "after": [
+       "text",
+       1,
+       1
+      ]
+     },
+     {
+      "id": "last line of the document, mid line",
+      "key": "ArrowDown",
+      "firstBlock": "paragraph",
+      "lastBlock": "paragraph",
+      "before": [
+       "text",
+       312,
+       312
+      ],
+      "after": [
+       "text",
+       339,
+       339
+      ]
+     }
+    ]
+   },
+   "contextClickSelectsWord": {
+    "value": false,
+    "from": "pointer.tex: a right click on a word puts the caret there",
+    "case": {
+     "id": "caret elsewhere, on a word",
+     "before": [
+      "text",
+      426,
+      426
+     ],
+     "click": {
+      "pos": 466,
+      "to": null,
+      "dx": 3.07,
+      "dy": 0,
+      "hit": "p.pm-line-par.pm-line-justified.pm-line-caret"
+     },
+     "after": [
+      "text",
+      466,
+      466
+     ],
+     "selected": "",
+     "menu": []
+    }
+   },
+   "pageKeysMoveCaret": {
+    "value": true,
+    "from": "pointer-tall.tex: PageDown",
+    "case": {
+     "start": "word-middle",
+     "key": "PageDown",
+     "scrollerHeight": 791,
+     "before": [
+      "text",
+      4430,
+      4430
+     ],
+     "after": [
+      "text",
+      5477,
+      5477
+     ],
+     "scrollDy": 999,
+     "caretDocDy": 735.37,
+     "caretPane": [
+      308.61,
+      44.98
+     ],
+     "caretStepOverHeight": 0.93
+    }
+   },
+   "caretBlinkHalfPeriodMs": {
+    "value": 505,
+    "from": "plain-tall.tex: on and off periods from screenshots",
+    "onMs": 503.33,
+    "offMs": 507.5,
+    "resolutionMs": 44.44
+   },
+   "wordRightStopsAt": {
+    "value": "nextEnd",
+    "from": "parity-tex-theorems word-start, Control+ArrowRight"
+   }
+  }
+ }
+}

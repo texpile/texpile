@@ -1,5 +1,6 @@
 import { countProse, latexProse, markdownProse, typstProse, type ProseCount } from '$lib/workspace/wordCount/proseWords';
 import { trailingDebounce } from '$lib/trailingDebounce';
+import { countLatexInWorker } from '$lib/workspace/wordCount/latexCountClient';
 
 export type DocumentCount = {
 	words: number;
@@ -76,21 +77,35 @@ function sourceCount(text: string, as: SourceCounting, main: boolean): ProseCoun
 	return { ...countText(text), charactersWithSpaces: text.length };
 }
 
-export function setSourceDocCount(text: string, as: SourceCounting = 'text'): void {
-	const { words, characters, charactersWithSpaces } = sourceCount(text, as, true);
+function showCount({ words, characters, charactersWithSpaces }: ProseCount): void {
 	documentCountStore.words = words;
 	documentCountStore.charactersWithSpaces = charactersWithSpaces;
 	documentCountStore.characters = characters;
 }
 
+export function setSourceDocCount(text: string, as: SourceCounting = 'text'): void {
+	showCount(sourceCount(text, as, true));
+}
+
 let countedPath: string | null = null;
-const deferredOpenCount = trailingDebounce(300, ({ text, as }: { text: string; as: SourceCounting }) => setSourceDocCount(text, as));
+let counting = 0;
+
+function countFile(text: string, as: SourceCounting): void {
+	const ask = ++counting;
+	if (as !== 'latex') return setSourceDocCount(text, as);
+	void countLatexInWorker(text).then((count) => {
+		if (count && ask === counting) showCount(count);
+	});
+}
+
+const deferredOpenCount = trailingDebounce(300, ({ text, as }: { text: string; as: SourceCounting }) => countFile(text, as));
 
 /** latex and typst only: the editors count any other file, and every selection, themselves */
 export function countOpenFile(path: string | null, text: string): void {
 	const as = path ? sourceCounting(path) : 'text';
 	if (countedByEditor(as)) {
 		countedPath = null;
+		counting++;
 		deferredOpenCount.cancel();
 		return;
 	}
@@ -98,7 +113,7 @@ export function countOpenFile(path: string | null, text: string): void {
 	// a file just opened counts at once, so the last one's number does not stay up
 	countedPath = path;
 	deferredOpenCount.cancel();
-	setSourceDocCount(text, as);
+	countFile(text, as);
 }
 
 export function setSourceSelectionCount(selText: string | null, as: SourceCounting = 'text'): void {

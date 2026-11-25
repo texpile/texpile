@@ -1,0 +1,9208 @@
+{
+ "environment": {
+  "userAgent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Texpile/2.0.1 Chrome/152.0.7977.167 Electron/44.9.3 Safari/537.36",
+  "devicePixelRatio": 1,
+  "window": [
+   1280,
+   860
+  ],
+  "domEditorCommit": "6ec0389c61ffc889078a95517ee770740f556c7e",
+  "os": "Linux 6.18.44-fc-v553, Xvfb :99",
+  "platform": "linux"
+ },
+ "live": {
+  "CitationDisplay": [
+   {
+    "document": "/home/user/texpile-tools-main/perf-drive/parity/verify/docs/skeleton-article:main.tex",
+    "skeleton": {
+     "tag": "span",
+     "class": [
+      "rounded-base",
+      "cursor-pointer",
+      "transition-colors",
+      "text-ref-fg",
+      "hover:bg-ref-bg"
+     ],
+     "attrs": {
+      "data-scope": "popover",
+      "data-part": "trigger",
+      "dir": "ltr",
+      "type": "button",
+      "id": "popover:«id»:trigger",
+      "data-ownedby": "«id»",
+      "aria-haspopup": "dialog",
+      "aria-expanded": "false",
+      "data-state": "closed",
+      "aria-controls": "popover:«id»:content",
+      "role": "button",
+      "tabindex": "0"
+     },
+     "children": [
+      "(Knuth 1984)"
+     ]
+    }
+   },
+   {
+    "document": "/home/user/texpile-tools-main/perf-drive/parity/verify/docs/skeleton-article:main.tex",
+    "skeleton": {
+     "tag": "span",
+     "class": [
+      "rounded-base",
+      "cursor-pointer",
+      "transition-colors",
+      "text-ref-broken-fg",
+      "hover:bg-ref-broken-bg"
+     ],
+     "attrs": {
+      "data-scope": "popover",
+      "data-part": "trigger",
+      "dir": "ltr",
+      "type": "button",
+      "id": "popover:«id»:trigger",
+      "data-ownedby": "«id»",
+      "aria-haspopup": "dialog",
+      "aria-expanded": "false",
+      "data-state": "closed",
+      "aria-controls": "popover:«id»:content",
+      "role": "button",
+      "tabindex": "0"
+     },
+     "children": [
+      "(nokey not found)"
+     ]
+    }
+   },
+   {
+    "document": "/home/user/texpile-tools-main/perf-drive/parity/verify/docs/skeleton-article:main.tex",
+    "skeleton": {
+     "tag": "span",
+     "class": [
+      "rounded-base",
+      "cursor-pointer",
+      "transition-colors",
+      "text-ref-fg",
+      "hover:bg-ref-bg"
+     ],
+     "attrs": {
+      "data-scope": "popover",
+      "data-part": "trigger",
+      "dir": "ltr",
+      "type": "button",
+      "id": "popover:«id»:trigger",
+      "data-ownedby": "«id»",
+      "aria-haspopup": "dialog",
+      "aria-expanded": "false",
+      "data-state": "closed",
+      "aria-controls": "popover:«id»:content",
+      "role": "button",
+      "tabindex": "0"
+     },
+     "children": [
+      "[1]"
+     ]
+    }
+   },
+   {
+    "document": "parity-tex-theorems:main.tex",
+    "skeleton": {
+     "tag": "span",
+     "class": [
+      "rounded-base",
+      "cursor-pointer",
+      "transition-colors",
+      "text-ref-broken-fg",
+      "hover:bg-ref-broken-bg"
+     ],
+     "attrs": {
+      "data-scope": "popover",
+      "data-part": "trigger",
+      "dir": "ltr",
+      "type": "button",
+      "id": "popover:«id»:trigger",
+      "data-ownedby": "«id»",
+      "aria-haspopup": "dialog",
+      "aria-expanded": "false",
+      "data-state": "closed",
+      "aria-controls": "popover:«id»:content",
+      "role": "button",
+      "tabindex": "0"
+     },
+     "children": [
+      "(Oxley01 not found)"
+     ]
+    }
+   },
+   {
+    "document": "parity-tex-theorems:main.tex",
+    "skeleton": {
+     "tag": "span",
+     "class": [
+      "rounded-base",
+      "cursor-pointer",
+      "transition-colors",
+      "text-ref-broken-fg",
+      "hover:bg-ref-broken-bg"
+     ],
+     "attrs": {
+      "data-scope": "popover",
+      "data-part": "trigger",
+      "dir": "ltr",
+      "type": "button",
+      "id": "popover:«id»:trigger",
+      "data-ownedby": "«id»",
+      "aria-haspopup": "dialog",
+      "aria-expanded": "false",
+      "data-state": "closed",
+      "aria-controls": "popover:«id»:content",
+      "role": "button",
+      "tabindex": "0"
+     },
+     "children": [
+      "(CMNR1 not found)"
+     ]
+    }
+   },
+   {
+    "document": "parity-tex-theorems:main.tex",
+    "skeleton": {
+     "tag": "span",
+     "class": [
+      "rounded-base",
+      "cursor-pointer",
+      "transition-colors",
+      "text-ref-broken-fg",
+      "hover:bg-ref-broken-bg"
+     ],
+     "attrs": {
+      "data-scope": "popover",
+      "data-part": "trigger",
+      "dir": "ltr",
+      "type": "button",
+      "id": "popover:«id»:trigger",
+      "data-ownedby": "«id»",
+      "aria-haspopup": "dialog",
+      "aria-expanded": "false",
+      "data-state": "closed",
+      "aria-controls": "popover:«id»:content",
+      "role": "button",
+      "tabindex": "0"
+     },
+     "children": [
+      "(CMNR2 not found)"
+     ]
+    }
+   },
+   {
+    "document": "parity-tex-theorems:main.tex",
+    "skeleton": {
+     "tag": "span",
+     "class": [
+      "rounded-base",
+      "cursor-pointer",
+      "transition-colors",
+      "text-ref-broken-fg",
+      "hover:bg-ref-broken-bg"
+     ],
+     "attrs": {
+      "data-scope": "popover",
+      "data-part": "trigger",
+      "dir": "ltr",
+      "type": "button",
+      "id": "popover:«id»:trigger",
+      "data-ownedby": "«id»",
+      "aria-haspopup": "dialog",
+      "aria-expanded": "false",
+      "data-state": "closed",
+      "aria-controls": "popover:«id»:content",
+      "role": "button",
+      "tabindex": "0"
+     },
+     "children": [
+      "(EMMbook not found)"
+     ]
+    }
+   },
+   {
+    "document": "parity-tex-theorems:main.tex",
+    "skeleton": {
+     "tag": "span",
+     "class": [
+      "rounded-base",
+      "cursor-pointer",
+      "transition-colors",
+      "text-ref-broken-fg",
+      "hover:bg-ref-broken-bg"
+     ],
+     "attrs": {
+      "data-scope": "popover",
+      "data-part": "trigger",
+      "dir": "ltr",
+      "type": "button",
+      "id": "popover:«id»:trigger",
+      "data-ownedby": "«id»",
+      "aria-haspopup": "dialog",
+      "aria-expanded": "false",
+      "data-state": "closed",
+      "aria-controls": "popover:«id»:content",
+      "role": "button",
+      "tabindex": "0"
+     },
+     "children": [
+      "(GT87 not found)"
+     ]
+    }
+   },
+   {
+    "document": "parity-tex-theorems:main.tex",
+    "skeleton": {
+     "tag": "span",
+     "class": [
+      "rounded-base",
+      "cursor-pointer",
+      "transition-colors",
+      "text-ref-broken-fg",
+      "hover:bg-ref-broken-bg"
+     ],
+     "attrs": {
+      "data-scope": "popover",
+      "data-part": "trigger",
+      "dir": "ltr",
+      "type": "button",
+      "id": "popover:«id»:trigger",
+      "data-ownedby": "«id»",
+      "aria-haspopup": "dialog",
+      "aria-expanded": "false",
+      "data-state": "closed",
+      "aria-controls": "popover:«id»:content",
+      "role": "button",
+      "tabindex": "0"
+     },
+     "children": [
+      "(cart; crom; grif)"
+     ]
+    }
+   },
+   {
+    "document": "parity-tex-theorems:main.tex",
+    "skeleton": {
+     "tag": "span",
+     "class": [
+      "rounded-base",
+      "cursor-pointer",
+      "transition-colors",
+      "text-ref-broken-fg",
+      "hover:bg-ref-broken-bg"
+     ],
+     "attrs": {
+      "data-scope": "popover",
+      "data-part": "trigger",
+      "dir": "ltr",
+      "type": "button",
+      "id": "popover:«id»:trigger",
+      "data-ownedby": "«id»",
+      "aria-haspopup": "dialog",
+      "aria-expanded": "false",
+      "data-state": "closed",
+      "aria-controls": "popover:«id»:content",
+      "role": "button",
+      "tabindex": "0"
+     },
+     "children": [
+      "(ab1 not found)"
+     ]
+    }
+   },
+   {
+    "document": "parity-tex-theorems:main.tex",
+    "skeleton": {
+     "tag": "span",
+     "class": [
+      "rounded-base",
+      "cursor-pointer",
+      "transition-colors",
+      "text-ref-broken-fg",
+      "hover:bg-ref-broken-bg"
+     ],
+     "attrs": {
+      "data-scope": "popover",
+      "data-part": "trigger",
+      "dir": "ltr",
+      "type": "button",
+      "id": "popover:«id»:trigger",
+      "data-ownedby": "«id»",
+      "aria-haspopup": "dialog",
+      "aria-expanded": "false",
+      "data-state": "closed",
+      "aria-controls": "popover:«id»:content",
+      "role": "button",
+      "tabindex": "0"
+     },
+     "children": [
+      "(ab2 not found)"
+     ]
+    }
+   },
+   {
+    "document": "parity-tex-theorems:main.tex",
+    "skeleton": {
+     "tag": "span",
+     "class": [
+      "rounded-base",
+      "cursor-pointer",
+      "transition-colors",
+      "text-ref-broken-fg",
+      "hover:bg-ref-broken-bg"
+     ],
+     "attrs": {
+      "data-scope": "popover",
+      "data-part": "trigger",
+      "dir": "ltr",
+      "type": "button",
+      "id": "popover:«id»:trigger",
+      "data-ownedby": "«id»",
+      "aria-haspopup": "dialog",
+      "aria-expanded": "false",
+      "data-state": "closed",
+      "aria-controls": "popover:«id»:content",
+      "role": "button",
+      "tabindex": "0"
+     },
+     "children": [
+      "(CMNR1; CMNR2)"
+     ]
+    }
+   },
+   {
+    "document": "parity-tex-theorems:main.tex",
+    "skeleton": {
+     "tag": "span",
+     "class": [
+      "rounded-base",
+      "cursor-pointer",
+      "transition-colors",
+      "text-ref-broken-fg",
+      "hover:bg-ref-broken-bg"
+     ],
+     "attrs": {
+      "data-scope": "popover",
+      "data-part": "trigger",
+      "dir": "ltr",
+      "type": "button",
+      "id": "popover:«id»:trigger",
+      "data-ownedby": "«id»",
+      "aria-haspopup": "dialog",
+      "aria-expanded": "false",
+      "data-state": "closed",
+      "aria-controls": "popover:«id»:content",
+      "role": "button",
+      "tabindex": "0"
+     },
+     "children": [
+      "(BD91 not found)"
+     ]
+    }
+   },
+   {
+    "document": "parity-tex-theorems:main.tex",
+    "skeleton": {
+     "tag": "span",
+     "class": [
+      "rounded-base",
+      "cursor-pointer",
+      "transition-colors",
+      "text-ref-broken-fg",
+      "hover:bg-ref-broken-bg"
+     ],
+     "attrs": {
+      "data-scope": "popover",
+      "data-part": "trigger",
+      "dir": "ltr",
+      "type": "button",
+      "id": "popover:«id»:trigger",
+      "data-ownedby": "«id»",
+      "aria-haspopup": "dialog",
+      "aria-expanded": "false",
+      "data-state": "closed",
+      "aria-controls": "popover:«id»:content",
+      "role": "button",
+      "tabindex": "0"
+     },
+     "children": [
+      "(abrep not found)"
+     ]
+    }
+   },
+   {
+    "document": "parity-tex-theorems:main.tex",
+    "skeleton": {
+     "tag": "span",
+     "class": [
+      "rounded-base",
+      "cursor-pointer",
+      "transition-colors",
+      "text-ref-broken-fg",
+      "hover:bg-ref-broken-bg"
+     ],
+     "attrs": {
+      "data-scope": "popover",
+      "data-part": "trigger",
+      "dir": "ltr",
+      "type": "button",
+      "id": "popover:«id»:trigger",
+      "data-ownedby": "«id»",
+      "aria-haspopup": "dialog",
+      "aria-expanded": "false",
+      "data-state": "closed",
+      "aria-controls": "popover:«id»:content",
+      "role": "button",
+      "tabindex": "0"
+     },
+     "children": [
+      "(Ch09; CMNR1)"
+     ]
+    }
+   },
+   {
+    "document": "parity-tex-tables:main.tex",
+    "skeleton": {
+     "tag": "span",
+     "class": [
+      "rounded-base",
+      "cursor-pointer",
+      "transition-colors",
+      "text-ref-broken-fg",
+      "hover:bg-ref-broken-bg"
+     ],
+     "attrs": {
+      "data-scope": "popover",
+      "data-part": "trigger",
+      "dir": "ltr",
+      "type": "button",
+      "id": "popover:«id»:trigger",
+      "data-ownedby": "«id»",
+      "aria-haspopup": "dialog",
+      "aria-expanded": "false",
+      "data-state": "closed",
+      "aria-controls": "popover:«id»:content",
+      "role": "button",
+      "tabindex": "0"
+     },
+     "children": [
+      "(2013CAA not found)"
+     ]
+    }
+   },
+   {
+    "document": "parity-tex-tables:main.tex",
+    "skeleton": {
+     "tag": "span",
+     "class": [
+      "rounded-base",
+      "cursor-pointer",
+      "transition-colors",
+      "text-ref-broken-fg",
+      "hover:bg-ref-broken-bg"
+     ],
+     "attrs": {
+      "data-scope": "popover",
+      "data-part": "trigger",
+      "dir": "ltr",
+      "type": "button",
+      "id": "popover:«id»:trigger",
+      "data-ownedby": "«id»",
+      "aria-haspopup": "dialog",
+      "aria-expanded": "false",
+      "data-state": "closed",
+      "aria-controls": "popover:«id»:content",
+      "role": "button",
+      "tabindex": "0"
+     },
+     "children": [
+      "(Davies2019 not found)"
+     ]
+    }
+   },
+   {
+    "document": "parity-tex-tables:main.tex",
+    "skeleton": {
+     "tag": "span",
+     "class": [
+      "rounded-base",
+      "cursor-pointer",
+      "transition-colors",
+      "text-ref-broken-fg",
+      "hover:bg-ref-broken-bg"
+     ],
+     "attrs": {
+      "data-scope": "popover",
+      "data-part": "trigger",
+      "dir": "ltr",
+      "type": "button",
+      "id": "popover:«id»:trigger",
+      "data-ownedby": "«id»",
+      "aria-haspopup": "dialog",
+      "aria-expanded": "false",
+      "data-state": "closed",
+      "aria-controls": "popover:«id»:content",
+      "role": "button",
+      "tabindex": "0"
+     },
+     "children": [
+      "(Moore1994 not found)"
+     ]
+    }
+   },
+   {
+    "document": "parity-tex-tables:main.tex",
+    "skeleton": {
+     "tag": "span",
+     "class": [
+      "rounded-base",
+      "cursor-pointer",
+      "transition-colors",
+      "text-ref-broken-fg",
+      "hover:bg-ref-broken-bg"
+     ],
+     "attrs": {
+      "data-scope": "popover",
+      "data-part": "trigger",
+      "dir": "ltr",
+      "type": "button",
+      "id": "popover:«id»:trigger",
+      "data-ownedby": "«id»",
+      "aria-haspopup": "dialog",
+      "aria-expanded": "false",
+      "data-state": "closed",
+      "aria-controls": "popover:«id»:content",
+      "role": "button",
+      "tabindex": "0"
+     },
+     "children": [
+      "(Weber2001 not found)"
+     ]
+    }
+   },
+   {
+    "document": "parity-tex-tables:main.tex",
+    "skeleton": {
+     "tag": "span",
+     "class": [
+      "rounded-base",
+      "cursor-pointer",
+      "transition-colors",
+      "text-ref-broken-fg",
+      "hover:bg-ref-broken-bg"
+     ],
+     "attrs": {
+      "data-scope": "popover",
+      "data-part": "trigger",
+      "dir": "ltr",
+      "type": "button",
+      "id": "popover:«id»:trigger",
+      "data-ownedby": "«id»",
+      "aria-haspopup": "dialog",
+      "aria-expanded": "false",
+      "data-state": "closed",
+      "aria-controls": "popover:«id»:content",
+      "role": "button",
+      "tabindex": "0"
+     },
+     "children": [
+      "(Harel2007 not found)"
+     ]
+    }
+   },
+   {
+    "document": "parity-tex-tables:main.tex",
+    "skeleton": {
+     "tag": "span",
+     "class": [
+      "rounded-base",
+      "cursor-pointer",
+      "transition-colors",
+      "text-ref-broken-fg",
+      "hover:bg-ref-broken-bg"
+     ],
+     "attrs": {
+      "data-scope": "popover",
+      "data-part": "trigger",
+      "dir": "ltr",
+      "type": "button",
+      "id": "popover:«id»:trigger",
+      "data-ownedby": "«id»",
+      "aria-haspopup": "dialog",
+      "aria-expanded": "false",
+      "data-state": "closed",
+      "aria-controls": "popover:«id»:content",
+      "role": "button",
+      "tabindex": "0"
+     },
+     "children": [
+      "(Hodds2014 not found)"
+     ]
+    }
+   },
+   {
+    "document": "parity-tex-tables:main.tex",
+    "skeleton": {
+     "tag": "span",
+     "class": [
+      "rounded-base",
+      "cursor-pointer",
+      "transition-colors",
+      "text-ref-broken-fg",
+      "hover:bg-ref-broken-bg"
+     ],
+     "attrs": {
+      "data-scope": "popover",
+      "data-part": "trigger",
+      "dir": "ltr",
+      "type": "button",
+      "id": "popover:«id»:trigger",
+      "data-ownedby": "«id»",
+      "aria-haspopup": "dialog",
+      "aria-expanded": "false",
+      "data-state": "closed",
+      "aria-controls": "popover:«id»:content",
+      "role": "button",
+      "tabindex": "0"
+     },
+     "children": [
+      "(Kalyuga2003; Kalyuga2012)"
+     ]
+    }
+   },
+   {
+    "document": "parity-tex-tables:main.tex",
+    "skeleton": {
+     "tag": "span",
+     "class": [
+      "rounded-base",
+      "cursor-pointer",
+      "transition-colors",
+      "text-ref-broken-fg",
+      "hover:bg-ref-broken-bg"
+     ],
+     "attrs": {
+      "data-scope": "popover",
+      "data-part": "trigger",
+      "dir": "ltr",
+      "type": "button",
+      "id": "popover:«id»:trigger",
+      "data-ownedby": "«id»",
+      "aria-haspopup": "dialog",
+      "aria-expanded": "false",
+      "data-state": "closed",
+      "aria-controls": "popover:«id»:content",
+      "role": "button",
+      "tabindex": "0"
+     },
+     "children": [
+      "(Renkl2004 not found)"
+     ]
+    }
+   },
+   {
+    "document": "parity-tex-tables:main.tex",
+    "skeleton": {
+     "tag": "span",
+     "class": [
+      "rounded-base",
+      "cursor-pointer",
+      "transition-colors",
+      "text-ref-broken-fg",
+      "hover:bg-ref-broken-bg"
+     ],
+     "attrs": {
+      "data-scope": "popover",
+      "data-part": "trigger",
+      "dir": "ltr",
+      "type": "button",
+      "id": "popover:«id»:trigger",
+      "data-ownedby": "«id»",
+      "aria-haspopup": "dialog",
+      "aria-expanded": "false",
+      "data-state": "closed",
+      "aria-controls": "popover:«id»:content",
+      "role": "button",
+      "tabindex": "0"
+     },
+     "children": [
+      "(2017MCQ not found)"
+     ]
+    }
+   },
+   {
+    "document": "parity-tex-tables:main.tex",
+    "skeleton": {
+     "tag": "span",
+     "class": [
+      "rounded-base",
+      "cursor-pointer",
+      "transition-colors",
+      "text-ref-broken-fg",
+      "hover:bg-ref-broken-bg"
+     ],
+     "attrs": {
+      "data-scope": "popover",
+      "data-part": "trigger",
+      "dir": "ltr",
+      "type": "button",
+      "id": "popover:«id»:trigger",
+      "data-ownedby": "«id»",
+      "aria-haspopup": "dialog",
+      "aria-expanded": "false",
+      "data-state": "closed",
+      "aria-controls": "popover:«id»:content",
+      "role": "button",
+      "tabindex": "0"
+     },
+     "children": [
+      "(2018Sangwin-equivalence-proof not found)"
+     ]
+    }
+   },
+   {
+    "document": "parity-tex-tables:main.tex",
+    "skeleton": {
+     "tag": "span",
+     "class": [
+      "rounded-base",
+      "cursor-pointer",
+      "transition-colors",
+      "text-ref-broken-fg",
+      "hover:bg-ref-broken-bg"
+     ],
+     "attrs": {
+      "data-scope": "popover",
+      "data-part": "trigger",
+      "dir": "ltr",
+      "type": "button",
+      "id": "popover:«id»:trigger",
+      "data-ownedby": "«id»",
+      "aria-haspopup": "dialog",
+      "aria-expanded": "false",
+      "data-state": "closed",
+      "aria-controls": "popover:«id»:content",
+      "role": "button",
+      "tabindex": "0"
+     },
+     "children": [
+      "(Butcher2010 not found)"
+     ]
+    }
+   },
+   {
+    "document": "parity-tex-tables:main.tex",
+    "skeleton": {
+     "tag": "span",
+     "class": [
+      "rounded-base",
+      "cursor-pointer",
+      "transition-colors",
+      "text-ref-broken-fg",
+      "hover:bg-ref-broken-bg"
+     ],
+     "attrs": {
+      "data-scope": "popover",
+      "data-part": "trigger",
+      "dir": "ltr",
+      "type": "button",
+      "id": "popover:«id»:trigger",
+      "data-ownedby": "«id»",
+      "aria-haspopup": "dialog",
+      "aria-expanded": "false",
+      "data-state": "closed",
+      "aria-controls": "popover:«id»:content",
+      "role": "button",
+      "tabindex": "0"
+     },
+     "children": [
+      "(kinnear_george_2019_2565969 not found)"
+     ]
+    }
+   },
+   {
+    "document": "parity-tex-tables:main.tex",
+    "skeleton": {
+     "tag": "span",
+     "class": [
+      "rounded-base",
+      "cursor-pointer",
+      "transition-colors",
+      "text-ref-broken-fg",
+      "hover:bg-ref-broken-bg"
+     ],
+     "attrs": {
+      "data-scope": "popover",
+      "data-part": "trigger",
+      "dir": "ltr",
+      "type": "button",
+      "id": "popover:«id»:trigger",
+      "data-ownedby": "«id»",
+      "aria-haspopup": "dialog",
+      "aria-expanded": "false",
+      "data-state": "closed",
+      "aria-controls": "popover:«id»:content",
+      "role": "button",
+      "tabindex": "0"
+     },
+     "children": [
+      "(Osterholm2006 not found)"
+     ]
+    }
+   },
+   {
+    "document": "parity-tex-tables:main.tex",
+    "skeleton": {
+     "tag": "span",
+     "class": [
+      "rounded-base",
+      "cursor-pointer",
+      "transition-colors",
+      "text-ref-broken-fg",
+      "hover:bg-ref-broken-bg"
+     ],
+     "attrs": {
+      "data-scope": "popover",
+      "data-part": "trigger",
+      "dir": "ltr",
+      "type": "button",
+      "id": "popover:«id»:trigger",
+      "data-ownedby": "«id»",
+      "aria-haspopup": "dialog",
+      "aria-expanded": "false",
+      "data-state": "closed",
+      "aria-controls": "popover:«id»:content",
+      "role": "button",
+      "tabindex": "0"
+     },
+     "children": [
+      "(2018-Contrapositive not found)"
+     ]
+    }
+   },
+   {
+    "document": "parity-tex-tables:main.tex",
+    "skeleton": {
+     "tag": "span",
+     "class": [
+      "rounded-base",
+      "cursor-pointer",
+      "transition-colors",
+      "text-ref-broken-fg",
+      "hover:bg-ref-broken-bg"
+     ],
+     "attrs": {
+      "data-scope": "popover",
+      "data-part": "trigger",
+      "dir": "ltr",
+      "type": "button",
+      "id": "popover:«id»:trigger",
+      "data-ownedby": "«id»",
+      "aria-haspopup": "dialog",
+      "aria-expanded": "false",
+      "data-state": "closed",
+      "aria-controls": "popover:«id»:content",
+      "role": "button",
+      "tabindex": "0"
+     },
+     "children": [
+      "(Pointon02 not found)"
+     ]
+    }
+   },
+   {
+    "document": "parity-tex-tables:main.tex",
+    "skeleton": {
+     "tag": "span",
+     "class": [
+      "rounded-base",
+      "cursor-pointer",
+      "transition-colors",
+      "text-ref-broken-fg",
+      "hover:bg-ref-broken-bg"
+     ],
+     "attrs": {
+      "data-scope": "popover",
+      "data-part": "trigger",
+      "dir": "ltr",
+      "type": "button",
+      "id": "popover:«id»:trigger",
+      "data-ownedby": "«id»",
+      "aria-haspopup": "dialog",
+      "aria-expanded": "false",
+      "data-state": "closed",
+      "aria-controls": "popover:«id»:content",
+      "role": "button",
+      "tabindex": "0"
+     },
+     "children": [
+      "(Recorde1557 not found)"
+     ]
+    }
+   },
+   {
+    "document": "parity-tex-tables:main.tex",
+    "skeleton": {
+     "tag": "span",
+     "class": [
+      "rounded-base",
+      "cursor-pointer",
+      "transition-colors",
+      "text-ref-broken-fg",
+      "hover:bg-ref-broken-bg"
+     ],
+     "attrs": {
+      "data-scope": "popover",
+      "data-part": "trigger",
+      "dir": "ltr",
+      "type": "button",
+      "id": "popover:«id»:trigger",
+      "data-ownedby": "«id»",
+      "aria-haspopup": "dialog",
+      "aria-expanded": "false",
+      "data-state": "closed",
+      "aria-controls": "popover:«id»:content",
+      "role": "button",
+      "tabindex": "0"
+     },
+     "children": [
+      "(Toulmin2003 not found)"
+     ]
+    }
+   },
+   {
+    "document": "parity-tex-tables:main.tex",
+    "skeleton": {
+     "tag": "span",
+     "class": [
+      "rounded-base",
+      "cursor-pointer",
+      "transition-colors",
+      "text-ref-broken-fg",
+      "hover:bg-ref-broken-bg"
+     ],
+     "attrs": {
+      "data-scope": "popover",
+      "data-part": "trigger",
+      "dir": "ltr",
+      "type": "button",
+      "id": "popover:«id»:trigger",
+      "data-ownedby": "«id»",
+      "aria-haspopup": "dialog",
+      "aria-expanded": "false",
+      "data-state": "closed",
+      "aria-controls": "popover:«id»:content",
+      "role": "button",
+      "tabindex": "0"
+     },
+     "children": [
+      "(Inglis2007 not found)"
+     ]
+    }
+   },
+   {
+    "document": "parity-tex-tables:main.tex",
+    "skeleton": {
+     "tag": "span",
+     "class": [
+      "rounded-base",
+      "cursor-pointer",
+      "transition-colors",
+      "text-ref-broken-fg",
+      "hover:bg-ref-broken-bg"
+     ],
+     "attrs": {
+      "data-scope": "popover",
+      "data-part": "trigger",
+      "dir": "ltr",
+      "type": "button",
+      "id": "popover:«id»:trigger",
+      "data-ownedby": "«id»",
+      "aria-haspopup": "dialog",
+      "aria-expanded": "false",
+      "data-state": "closed",
+      "aria-controls": "popover:«id»:content",
+      "role": "button",
+      "tabindex": "0"
+     },
+     "children": [
+      "(Toulmin2003 not found, p. 96)"
+     ]
+    }
+   },
+   {
+    "document": "parity-tex-tables:main.tex",
+    "skeleton": {
+     "tag": "span",
+     "class": [
+      "rounded-base",
+      "cursor-pointer",
+      "transition-colors",
+      "text-ref-broken-fg",
+      "hover:bg-ref-broken-bg"
+     ],
+     "attrs": {
+      "data-scope": "popover",
+      "data-part": "trigger",
+      "dir": "ltr",
+      "type": "button",
+      "id": "popover:«id»:trigger",
+      "data-ownedby": "«id»",
+      "aria-haspopup": "dialog",
+      "aria-expanded": "false",
+      "data-state": "closed",
+      "aria-controls": "popover:«id»:content",
+      "role": "button",
+      "tabindex": "0"
+     },
+     "children": [
+      "(Mejia-Ramos2012 not found)"
+     ]
+    }
+   },
+   {
+    "document": "parity-tex-tables:main.tex",
+    "skeleton": {
+     "tag": "span",
+     "class": [
+      "rounded-base",
+      "cursor-pointer",
+      "transition-colors",
+      "text-ref-broken-fg",
+      "hover:bg-ref-broken-bg"
+     ],
+     "attrs": {
+      "data-scope": "popover",
+      "data-part": "trigger",
+      "dir": "ltr",
+      "type": "button",
+      "id": "popover:«id»:trigger",
+      "data-ownedby": "«id»",
+      "aria-haspopup": "dialog",
+      "aria-expanded": "false",
+      "data-state": "closed",
+      "aria-controls": "popover:«id»:content",
+      "role": "button",
+      "tabindex": "0"
+     },
+     "children": [
+      "(Selden1995 not found)"
+     ]
+    }
+   },
+   {
+    "document": "parity-tex-tables:main.tex",
+    "skeleton": {
+     "tag": "span",
+     "class": [
+      "rounded-base",
+      "cursor-pointer",
+      "transition-colors",
+      "text-ref-broken-fg",
+      "hover:bg-ref-broken-bg"
+     ],
+     "attrs": {
+      "data-scope": "popover",
+      "data-part": "trigger",
+      "dir": "ltr",
+      "type": "button",
+      "id": "popover:«id»:trigger",
+      "data-ownedby": "«id»",
+      "aria-haspopup": "dialog",
+      "aria-expanded": "false",
+      "data-state": "closed",
+      "aria-controls": "popover:«id»:content",
+      "role": "button",
+      "tabindex": "0"
+     },
+     "children": [
+      "(Weber2015b not found)"
+     ]
+    }
+   },
+   {
+    "document": "parity-tex-tables:main.tex",
+    "skeleton": {
+     "tag": "span",
+     "class": [
+      "rounded-base",
+      "cursor-pointer",
+      "transition-colors",
+      "text-ref-broken-fg",
+      "hover:bg-ref-broken-bg"
+     ],
+     "attrs": {
+      "data-scope": "popover",
+      "data-part": "trigger",
+      "dir": "ltr",
+      "type": "button",
+      "id": "popover:«id»:trigger",
+      "data-ownedby": "«id»",
+      "aria-haspopup": "dialog",
+      "aria-expanded": "false",
+      "data-state": "closed",
+      "aria-controls": "popover:«id»:content",
+      "role": "button",
+      "tabindex": "0"
+     },
+     "children": [
+      "(Polya54 not found)"
+     ]
+    }
+   },
+   {
+    "document": "parity-tex-tables:main.tex",
+    "skeleton": {
+     "tag": "span",
+     "class": [
+      "rounded-base",
+      "cursor-pointer",
+      "transition-colors",
+      "text-ref-broken-fg",
+      "hover:bg-ref-broken-bg"
+     ],
+     "attrs": {
+      "data-scope": "popover",
+      "data-part": "trigger",
+      "dir": "ltr",
+      "type": "button",
+      "id": "popover:«id»:trigger",
+      "data-ownedby": "«id»",
+      "aria-haspopup": "dialog",
+      "aria-expanded": "false",
+      "data-state": "closed",
+      "aria-controls": "popover:«id»:content",
+      "role": "button",
+      "tabindex": "0"
+     },
+     "children": [
+      "(Inglis2012 not found)"
+     ]
+    }
+   },
+   {
+    "document": "parity-tex-tables:main.tex",
+    "skeleton": {
+     "tag": "span",
+     "class": [
+      "rounded-base",
+      "cursor-pointer",
+      "transition-colors",
+      "text-ref-broken-fg",
+      "hover:bg-ref-broken-bg"
+     ],
+     "attrs": {
+      "data-scope": "popover",
+      "data-part": "trigger",
+      "dir": "ltr",
+      "type": "button",
+      "id": "popover:«id»:trigger",
+      "data-ownedby": "«id»",
+      "aria-haspopup": "dialog",
+      "aria-expanded": "false",
+      "data-state": "closed",
+      "aria-controls": "popover:«id»:content",
+      "role": "button",
+      "tabindex": "0"
+     },
+     "children": [
+      "(Mejia-Ramos2017 not found)"
+     ]
+    }
+   },
+   {
+    "document": "parity-tex-tables:main.tex",
+    "skeleton": {
+     "tag": "span",
+     "class": [
+      "rounded-base",
+      "cursor-pointer",
+      "transition-colors",
+      "text-ref-broken-fg",
+      "hover:bg-ref-broken-bg"
+     ],
+     "attrs": {
+      "data-scope": "popover",
+      "data-part": "trigger",
+      "dir": "ltr",
+      "type": "button",
+      "id": "popover:«id»:trigger",
+      "data-ownedby": "«id»",
+      "aria-haspopup": "dialog",
+      "aria-expanded": "false",
+      "data-state": "closed",
+      "aria-controls": "popover:«id»:content",
+      "role": "button",
+      "tabindex": "0"
+     },
+     "children": [
+      "(Mejia-Ramos2017 not found, Table 1)"
+     ]
+    }
+   },
+   {
+    "document": "parity-tex-tables:main.tex",
+    "skeleton": {
+     "tag": "span",
+     "class": [
+      "rounded-base",
+      "cursor-pointer",
+      "transition-colors",
+      "text-ref-broken-fg",
+      "hover:bg-ref-broken-bg"
+     ],
+     "attrs": {
+      "data-scope": "popover",
+      "data-part": "trigger",
+      "dir": "ltr",
+      "type": "button",
+      "id": "popover:«id»:trigger",
+      "data-ownedby": "«id»",
+      "aria-haspopup": "dialog",
+      "aria-expanded": "false",
+      "data-state": "closed",
+      "aria-controls": "popover:«id»:content",
+      "role": "button",
+      "tabindex": "0"
+     },
+     "children": [
+      "(Carlson2010 not found)"
+     ]
+    }
+   },
+   {
+    "document": "parity-tex-beamer:main.tex",
+    "skeleton": {
+     "tag": "span",
+     "class": [
+      "rounded-base",
+      "cursor-pointer",
+      "transition-colors",
+      "text-ref-fg",
+      "hover:bg-ref-bg"
+     ],
+     "attrs": {
+      "data-scope": "popover",
+      "data-part": "trigger",
+      "dir": "ltr",
+      "type": "button",
+      "id": "popover:«id»:trigger",
+      "data-ownedby": "«id»",
+      "aria-haspopup": "dialog",
+      "aria-expanded": "false",
+      "data-state": "closed",
+      "aria-controls": "popover:«id»:content",
+      "role": "button",
+      "tabindex": "0"
+     },
+     "children": [
+      "(Knuth 1968)"
+     ]
+    }
+   },
+   {
+    "document": "parity-tex-body:main.tex",
+    "skeleton": {
+     "tag": "span",
+     "class": [
+      "rounded-base",
+      "cursor-pointer",
+      "transition-colors",
+      "text-ref-fg",
+      "hover:bg-ref-bg"
+     ],
+     "attrs": {
+      "data-scope": "popover",
+      "data-part": "trigger",
+      "dir": "ltr",
+      "type": "button",
+      "id": "popover:«id»:trigger",
+      "data-ownedby": "«id»",
+      "aria-haspopup": "dialog",
+      "aria-expanded": "false",
+      "data-state": "closed",
+      "aria-controls": "popover:«id»:content",
+      "role": "button",
+      "tabindex": "0"
+     },
+     "children": [
+      "(see Writer and Reader 2020, p. 3)"
+     ]
+    }
+   },
+   {
+    "document": "parity-tex-body:main.tex",
+    "skeleton": {
+     "tag": "span",
+     "class": [
+      "rounded-base",
+      "cursor-pointer",
+      "transition-colors",
+      "text-ref-fg",
+      "hover:bg-ref-bg"
+     ],
+     "attrs": {
+      "data-scope": "popover",
+      "data-part": "trigger",
+      "dir": "ltr",
+      "type": "button",
+      "id": "popover:«id»:trigger",
+      "data-ownedby": "«id»",
+      "aria-haspopup": "dialog",
+      "aria-expanded": "false",
+      "data-state": "closed",
+      "aria-controls": "popover:«id»:content",
+      "role": "button",
+      "tabindex": "0"
+     },
+     "children": [
+      "Writer and Reader (2020)"
+     ]
+    }
+   },
+   {
+    "document": "parity-tex-body:main.tex",
+    "skeleton": {
+     "tag": "span",
+     "class": [
+      "rounded-base",
+      "cursor-pointer",
+      "transition-colors",
+      "text-ref-fg",
+      "hover:bg-ref-bg"
+     ],
+     "attrs": {
+      "data-scope": "popover",
+      "data-part": "trigger",
+      "dir": "ltr",
+      "type": "button",
+      "id": "popover:«id»:trigger",
+      "data-ownedby": "«id»",
+      "aria-haspopup": "dialog",
+      "aria-expanded": "false",
+      "data-state": "closed",
+      "aria-controls": "popover:«id»:content",
+      "role": "button",
+      "tabindex": "0"
+     },
+     "children": [
+      "Writer and Reader"
+     ]
+    }
+   },
+   {
+    "document": "parity-tex-body:main.tex",
+    "skeleton": {
+     "tag": "span",
+     "class": [
+      "rounded-base",
+      "cursor-pointer",
+      "transition-colors",
+      "text-ref-fg",
+      "hover:bg-ref-bg"
+     ],
+     "attrs": {
+      "data-scope": "popover",
+      "data-part": "trigger",
+      "dir": "ltr",
+      "type": "button",
+      "id": "popover:«id»:trigger",
+      "data-ownedby": "«id»",
+      "aria-haspopup": "dialog",
+      "aria-expanded": "false",
+      "data-state": "closed",
+      "aria-controls": "popover:«id»:content",
+      "role": "button",
+      "tabindex": "0"
+     },
+     "children": [
+      "2020"
+     ]
+    }
+   },
+   {
+    "document": "parity-tex-body:main.tex",
+    "skeleton": {
+     "tag": "span",
+     "class": [
+      "rounded-base",
+      "cursor-pointer",
+      "transition-colors",
+      "text-ref-fg",
+      "hover:bg-ref-bg"
+     ],
+     "attrs": {
+      "data-scope": "popover",
+      "data-part": "trigger",
+      "dir": "ltr",
+      "type": "button",
+      "id": "popover:«id»:trigger",
+      "data-ownedby": "«id»",
+      "aria-haspopup": "dialog",
+      "aria-expanded": "false",
+      "data-state": "closed",
+      "aria-controls": "popover:«id»:content",
+      "role": "button",
+      "tabindex": "0"
+     },
+     "children": [
+      "(Writer and Reader 2020; Lamport 1994)"
+     ]
+    }
+   },
+   {
+    "document": "parity-tex-body:main.tex",
+    "skeleton": {
+     "tag": "span",
+     "class": [
+      "rounded-base",
+      "cursor-pointer",
+      "transition-colors",
+      "text-ref-fg",
+      "hover:bg-ref-bg"
+     ],
+     "attrs": {
+      "data-scope": "popover",
+      "data-part": "trigger",
+      "dir": "ltr",
+      "type": "button",
+      "id": "popover:«id»:trigger",
+      "data-ownedby": "«id»",
+      "aria-haspopup": "dialog",
+      "aria-expanded": "false",
+      "data-state": "closed",
+      "aria-controls": "popover:«id»:content",
+      "role": "button",
+      "tabindex": "0"
+     },
+     "children": [
+      "(Writer and Reader 2020, A very long note that goes on and on before the key)"
+     ]
+    }
+   }
+  ],
+  "RefDisplay": [
+   {
+    "document": "/home/user/texpile-tools-main/perf-drive/parity/verify/docs/skeleton-article:main.tex",
+    "skeleton": {
+     "tag": "span",
+     "class": [
+      "rounded-base",
+      "cursor-pointer",
+      "py-0.5",
+      "transition-colors",
+      "text-ref-fg",
+      "hover:bg-ref-bg"
+     ],
+     "attrs": {
+      "role": "button",
+      "tabindex": "0",
+      "data-tip": "Reference to sec:intro"
+     },
+     "children": [
+      "1"
+     ]
+    }
+   },
+   {
+    "document": "/home/user/texpile-tools-main/perf-drive/parity/verify/docs/skeleton-article:main.tex",
+    "skeleton": {
+     "tag": "span",
+     "class": [
+      "rounded-base",
+      "cursor-pointer",
+      "py-0.5",
+      "transition-colors",
+      "text-ref-fg",
+      "hover:bg-ref-bg"
+     ],
+     "attrs": {
+      "role": "button",
+      "tabindex": "0",
+      "data-tip": "Reference: sec:none"
+     },
+     "children": [
+      "sec:none"
+     ]
+    }
+   },
+   {
+    "document": "parity-tex-theorems:main.tex",
+    "skeleton": {
+     "tag": "span",
+     "class": [
+      "rounded-base",
+      "cursor-pointer",
+      "py-0.5",
+      "transition-colors",
+      "text-ref-fg",
+      "hover:bg-ref-bg"
+     ],
+     "attrs": {
+      "role": "button",
+      "tabindex": "0",
+      "data-tip": "Reference: f5c"
+     },
+     "children": [
+      "f5c"
+     ]
+    }
+   },
+   {
+    "document": "parity-tex-theorems:main.tex",
+    "skeleton": {
+     "tag": "span",
+     "class": [
+      "rounded-base",
+      "cursor-pointer",
+      "py-0.5",
+      "transition-colors",
+      "text-ref-fg",
+      "hover:bg-ref-bg"
+     ],
+     "attrs": {
+      "role": "button",
+      "tabindex": "0",
+      "data-tip": "Reference: f5a"
+     },
+     "children": [
+      "f5a"
+     ]
+    }
+   },
+   {
+    "document": "parity-tex-theorems:main.tex",
+    "skeleton": {
+     "tag": "span",
+     "class": [
+      "rounded-base",
+      "cursor-pointer",
+      "py-0.5",
+      "transition-colors",
+      "text-ref-fg",
+      "hover:bg-ref-bg"
+     ],
+     "attrs": {
+      "role": "button",
+      "tabindex": "0",
+      "data-tip": "Reference: f5b"
+     },
+     "children": [
+      "f5b"
+     ]
+    }
+   },
+   {
+    "document": "parity-tex-theorems:main.tex",
+    "skeleton": {
+     "tag": "span",
+     "class": [
+      "rounded-base",
+      "cursor-pointer",
+      "py-0.5",
+      "transition-colors",
+      "text-ref-fg",
+      "hover:bg-ref-bg"
+     ],
+     "attrs": {
+      "role": "button",
+      "tabindex": "0",
+      "data-tip": "Reference to hs"
+     },
+     "children": [
+      "1"
+     ]
+    }
+   },
+   {
+    "document": "parity-tex-theorems:main.tex",
+    "skeleton": {
+     "tag": "span",
+     "class": [
+      "rounded-base",
+      "cursor-pointer",
+      "py-0.5",
+      "transition-colors",
+      "text-ref-fg",
+      "hover:bg-ref-bg"
+     ],
+     "attrs": {
+      "role": "button",
+      "tabindex": "0",
+      "data-tip": "Reference to s.2"
+     },
+     "children": [
+      "2"
+     ]
+    }
+   },
+   {
+    "document": "parity-tex-theorems:main.tex",
+    "skeleton": {
+     "tag": "span",
+     "class": [
+      "rounded-base",
+      "cursor-pointer",
+      "py-0.5",
+      "transition-colors",
+      "text-ref-fg",
+      "hover:bg-ref-bg"
+     ],
+     "attrs": {
+      "role": "button",
+      "tabindex": "0",
+      "data-tip": "Reference to s.3"
+     },
+     "children": [
+      "3"
+     ]
+    }
+   },
+   {
+    "document": "parity-tex-theorems:main.tex",
+    "skeleton": {
+     "tag": "span",
+     "class": [
+      "rounded-base",
+      "cursor-pointer",
+      "py-0.5",
+      "transition-colors",
+      "text-ref-fg",
+      "hover:bg-ref-bg"
+     ],
+     "attrs": {
+      "role": "button",
+      "tabindex": "0",
+      "data-tip": "Reference to t.1"
+     },
+     "children": [
+      "2"
+     ]
+    }
+   },
+   {
+    "document": "parity-tex-theorems:main.tex",
+    "skeleton": {
+     "tag": "span",
+     "class": [
+      "rounded-base",
+      "cursor-pointer",
+      "py-0.5",
+      "transition-colors",
+      "text-ref-fg",
+      "hover:bg-ref-bg"
+     ],
+     "attrs": {
+      "role": "button",
+      "tabindex": "0",
+      "data-tip": "Reference to s.1"
+     },
+     "children": [
+      "1"
+     ]
+    }
+   },
+   {
+    "document": "parity-tex-theorems:main.tex",
+    "skeleton": {
+     "tag": "span",
+     "class": [
+      "rounded-base",
+      "cursor-pointer",
+      "py-0.5",
+      "transition-colors",
+      "text-ref-fg",
+      "hover:bg-ref-bg"
+     ],
+     "attrs": {
+      "role": "button",
+      "tabindex": "0",
+      "data-tip": "Reference to d1"
+     },
+     "children": [
+      "5"
+     ]
+    }
+   },
+   {
+    "document": "parity-tex-theorems:main.tex",
+    "skeleton": {
+     "tag": "span",
+     "class": [
+      "rounded-base",
+      "cursor-pointer",
+      "py-0.5",
+      "transition-colors",
+      "text-ref-fg",
+      "hover:bg-ref-bg"
+     ],
+     "attrs": {
+      "role": "button",
+      "tabindex": "0",
+      "data-tip": "Reference to table1"
+     },
+     "children": [
+      "1"
+     ]
+    }
+   },
+   {
+    "document": "parity-tex-theorems:main.tex",
+    "skeleton": {
+     "tag": "span",
+     "class": [
+      "rounded-base",
+      "cursor-pointer",
+      "py-0.5",
+      "transition-colors",
+      "text-ref-fg",
+      "hover:bg-ref-bg"
+     ],
+     "attrs": {
+      "role": "button",
+      "tabindex": "0",
+      "data-tip": "Reference to t.hs"
+     },
+     "children": [
+      "7"
+     ]
+    }
+   },
+   {
+    "document": "parity-tex-theorems:main.tex",
+    "skeleton": {
+     "tag": "span",
+     "class": [
+      "rounded-base",
+      "cursor-pointer",
+      "py-0.5",
+      "transition-colors",
+      "text-ref-fg",
+      "hover:bg-ref-bg"
+     ],
+     "attrs": {
+      "role": "button",
+      "tabindex": "0",
+      "data-tip": "Reference to r.1"
+     },
+     "children": [
+      "8"
+     ]
+    }
+   },
+   {
+    "document": "parity-tex-theorems:main.tex",
+    "skeleton": {
+     "tag": "span",
+     "class": [
+      "rounded-base",
+      "cursor-pointer",
+      "py-0.5",
+      "transition-colors",
+      "text-ref-fg",
+      "hover:bg-ref-bg"
+     ],
+     "attrs": {
+      "role": "button",
+      "tabindex": "0",
+      "data-tip": "Reference to c.1"
+     },
+     "children": [
+      "17"
+     ]
+    }
+   },
+   {
+    "document": "parity-tex-theorems:main.tex",
+    "skeleton": {
+     "tag": "span",
+     "class": [
+      "rounded-base",
+      "cursor-pointer",
+      "py-0.5",
+      "transition-colors",
+      "text-ref-fg",
+      "hover:bg-ref-bg"
+     ],
+     "attrs": {
+      "role": "button",
+      "tabindex": "0",
+      "data-tip": "Reference to examp3"
+     },
+     "children": [
+      "6"
+     ]
+    }
+   },
+   {
+    "document": "parity-tex-theorems:main.tex",
+    "skeleton": {
+     "tag": "span",
+     "class": [
+      "rounded-base",
+      "cursor-pointer",
+      "py-0.5",
+      "transition-colors",
+      "text-ref-fg",
+      "hover:bg-ref-bg"
+     ],
+     "attrs": {
+      "role": "button",
+      "tabindex": "0",
+      "data-tip": "Reference to e.con2a"
+     },
+     "children": [
+      "(1)"
+     ]
+    }
+   },
+   {
+    "document": "parity-tex-theorems:main.tex",
+    "skeleton": {
+     "tag": "span",
+     "class": [
+      "rounded-base",
+      "cursor-pointer",
+      "py-0.5",
+      "transition-colors",
+      "text-ref-fg",
+      "hover:bg-ref-bg"
+     ],
+     "attrs": {
+      "role": "button",
+      "tabindex": "0",
+      "data-tip": "Reference to e.con2b"
+     },
+     "children": [
+      "(2)"
+     ]
+    }
+   },
+   {
+    "document": "parity-tex-theorems:main.tex",
+    "skeleton": {
+     "tag": "span",
+     "class": [
+      "rounded-base",
+      "cursor-pointer",
+      "py-0.5",
+      "transition-colors",
+      "text-ref-fg",
+      "hover:bg-ref-bg"
+     ],
+     "attrs": {
+      "role": "button",
+      "tabindex": "0",
+      "data-tip": "Reference to l.rep"
+     },
+     "children": [
+      "10"
+     ]
+    }
+   },
+   {
+    "document": "parity-tex-tables:main.tex",
+    "skeleton": {
+     "tag": "span",
+     "class": [
+      "rounded-base",
+      "cursor-pointer",
+      "py-0.5",
+      "transition-colors",
+      "text-ref-fg",
+      "hover:bg-ref-bg"
+     ],
+     "attrs": {
+      "role": "button",
+      "tabindex": "0",
+      "data-tip": "Reference: fig:induction2"
+     },
+     "children": [
+      "fig:induction2"
+     ]
+    }
+   },
+   {
+    "document": "parity-tex-tables:main.tex",
+    "skeleton": {
+     "tag": "span",
+     "class": [
+      "rounded-base",
+      "cursor-pointer",
+      "py-0.5",
+      "transition-colors",
+      "text-ref-fg",
+      "hover:bg-ref-bg"
+     ],
+     "attrs": {
+      "role": "button",
+      "tabindex": "0",
+      "data-tip": "Reference: fig:induction"
+     },
+     "children": [
+      "fig:induction"
+     ]
+    }
+   },
+   {
+    "document": "parity-tex-tables:main.tex",
+    "skeleton": {
+     "tag": "span",
+     "class": [
+      "rounded-base",
+      "cursor-pointer",
+      "py-0.5",
+      "transition-colors",
+      "text-ref-fg",
+      "hover:bg-ref-bg"
+     ],
+     "attrs": {
+      "role": "button",
+      "tabindex": "0",
+      "data-tip": "Reference to th:bounded-inc-converge"
+     },
+     "children": [
+      "4.1"
+     ]
+    }
+   },
+   {
+    "document": "parity-tex-tables:main.tex",
+    "skeleton": {
+     "tag": "span",
+     "class": [
+      "rounded-base",
+      "cursor-pointer",
+      "py-0.5",
+      "transition-colors",
+      "text-ref-fg",
+      "hover:bg-ref-bg"
+     ],
+     "attrs": {
+      "role": "button",
+      "tabindex": "0",
+      "data-tip": "Reference: fig:Toulmin"
+     },
+     "children": [
+      "fig:Toulmin"
+     ]
+    }
+   },
+   {
+    "document": "parity-tex-tables:main.tex",
+    "skeleton": {
+     "tag": "span",
+     "class": [
+      "rounded-base",
+      "cursor-pointer",
+      "py-0.5",
+      "transition-colors",
+      "text-ref-fg",
+      "hover:bg-ref-bg"
+     ],
+     "attrs": {
+      "role": "button",
+      "tabindex": "0",
+      "data-tip": "Reference: fig:pubc"
+     },
+     "children": [
+      "fig:pubc"
+     ]
+    }
+   },
+   {
+    "document": "parity-tex-tables:main.tex",
+    "skeleton": {
+     "tag": "span",
+     "class": [
+      "rounded-base",
+      "cursor-pointer",
+      "py-0.5",
+      "transition-colors",
+      "text-ref-fg",
+      "hover:bg-ref-bg"
+     ],
+     "attrs": {
+      "role": "button",
+      "tabindex": "0",
+      "data-tip": "Reference to th:bounded-inc-converge-examples"
+     },
+     "children": [
+      "1"
+     ]
+    }
+   },
+   {
+    "document": "parity-tex-tables:main.tex",
+    "skeleton": {
+     "tag": "span",
+     "class": [
+      "rounded-base",
+      "cursor-pointer",
+      "py-0.5",
+      "transition-colors",
+      "text-ref-fg",
+      "hover:bg-ref-bg"
+     ],
+     "attrs": {
+      "role": "button",
+      "tabindex": "0",
+      "data-tip": "Reference: fig:Increase-bound-converge"
+     },
+     "children": [
+      "fig:Increase-bound-converge"
+     ]
+    }
+   },
+   {
+    "document": "parity-tex-tables:main.tex",
+    "skeleton": {
+     "tag": "span",
+     "class": [
+      "rounded-base",
+      "cursor-pointer",
+      "py-0.5",
+      "transition-colors",
+      "text-ref-fg",
+      "hover:bg-ref-bg"
+     ],
+     "attrs": {
+      "role": "button",
+      "tabindex": "0",
+      "data-tip": "Reference: fig:pcw5a"
+     },
+     "children": [
+      "fig:pcw5a"
+     ]
+    }
+   },
+   {
+    "document": "parity-tex-body:main.tex",
+    "skeleton": {
+     "tag": "span",
+     "class": [
+      "rounded-base",
+      "cursor-pointer",
+      "py-0.5",
+      "transition-colors",
+      "text-ref-fg",
+      "hover:bg-ref-bg"
+     ],
+     "attrs": {
+      "role": "button",
+      "tabindex": "0",
+      "data-tip": "Reference to tab:one"
+     },
+     "children": [
+      "1"
+     ]
+    }
+   }
+  ],
+  "LabelDisplay": [
+   {
+    "document": "/home/user/texpile-tools-main/perf-drive/parity/verify/docs/skeleton-article:main.tex",
+    "skeleton": {
+     "tag": "button",
+     "class": [
+      "text-chip"
+     ],
+     "attrs": {
+      "type": "button",
+      "data-tip": "Label sec:intro. Click to rename it and every reference to it."
+     },
+     "children": [
+      {
+       "tag": "svg",
+       "class": [
+        "lucide",
+        "lucide-tag",
+        "lucide-icon"
+       ],
+       "attrs": {
+        "xmlns": "http://www.w3.org/2000/svg",
+        "width": "24",
+        "height": "24",
+        "viewBox": "0 0 24 24",
+        "fill": "none",
+        "stroke": "currentColor",
+        "stroke-width": "2",
+        "stroke-linecap": "round",
+        "stroke-linejoin": "round",
+        "aria-hidden": "true"
+       },
+       "children": [
+        {
+         "tag": "path"
+        },
+        {
+         "tag": "circle",
+         "attrs": {
+          "fill": "currentColor"
+         }
+        }
+       ]
+      },
+      " ",
+      {
+       "tag": "span",
+       "class": [
+        "text-chip-name"
+       ],
+       "children": [
+        "sec:intro"
+       ]
+      }
+     ]
+    }
+   },
+   {
+    "document": "parity-tex-theorems:main.tex",
+    "skeleton": {
+     "tag": "button",
+     "class": [
+      "text-chip"
+     ],
+     "attrs": {
+      "type": "button",
+      "data-tip": "Label s.1. Click to rename it and every reference to it."
+     },
+     "children": [
+      {
+       "tag": "svg",
+       "class": [
+        "lucide",
+        "lucide-tag",
+        "lucide-icon"
+       ],
+       "attrs": {
+        "xmlns": "http://www.w3.org/2000/svg",
+        "width": "24",
+        "height": "24",
+        "viewBox": "0 0 24 24",
+        "fill": "none",
+        "stroke": "currentColor",
+        "stroke-width": "2",
+        "stroke-linecap": "round",
+        "stroke-linejoin": "round",
+        "aria-hidden": "true"
+       },
+       "children": [
+        {
+         "tag": "path"
+        },
+        {
+         "tag": "circle",
+         "attrs": {
+          "fill": "currentColor"
+         }
+        }
+       ]
+      },
+      " ",
+      {
+       "tag": "span",
+       "class": [
+        "text-chip-name"
+       ],
+       "children": [
+        "s.1"
+       ]
+      }
+     ]
+    }
+   },
+   {
+    "document": "parity-tex-theorems:main.tex",
+    "skeleton": {
+     "tag": "button",
+     "class": [
+      "text-chip"
+     ],
+     "attrs": {
+      "type": "button",
+      "data-tip": "Label hs. Click to rename it and every reference to it."
+     },
+     "children": [
+      {
+       "tag": "svg",
+       "class": [
+        "lucide",
+        "lucide-tag",
+        "lucide-icon"
+       ],
+       "attrs": {
+        "xmlns": "http://www.w3.org/2000/svg",
+        "width": "24",
+        "height": "24",
+        "viewBox": "0 0 24 24",
+        "fill": "none",
+        "stroke": "currentColor",
+        "stroke-width": "2",
+        "stroke-linecap": "round",
+        "stroke-linejoin": "round",
+        "aria-hidden": "true"
+       },
+       "children": [
+        {
+         "tag": "path"
+        },
+        {
+         "tag": "circle",
+         "attrs": {
+          "fill": "currentColor"
+         }
+        }
+       ]
+      },
+      " ",
+      {
+       "tag": "span",
+       "class": [
+        "text-chip-name"
+       ],
+       "children": [
+        "hs"
+       ]
+      }
+     ]
+    }
+   },
+   {
+    "document": "parity-tex-theorems:main.tex",
+    "skeleton": {
+     "tag": "button",
+     "class": [
+      "text-chip"
+     ],
+     "attrs": {
+      "type": "button",
+      "data-tip": "Label t.1. Click to rename it and every reference to it."
+     },
+     "children": [
+      {
+       "tag": "svg",
+       "class": [
+        "lucide",
+        "lucide-tag",
+        "lucide-icon"
+       ],
+       "attrs": {
+        "xmlns": "http://www.w3.org/2000/svg",
+        "width": "24",
+        "height": "24",
+        "viewBox": "0 0 24 24",
+        "fill": "none",
+        "stroke": "currentColor",
+        "stroke-width": "2",
+        "stroke-linecap": "round",
+        "stroke-linejoin": "round",
+        "aria-hidden": "true"
+       },
+       "children": [
+        {
+         "tag": "path"
+        },
+        {
+         "tag": "circle",
+         "attrs": {
+          "fill": "currentColor"
+         }
+        }
+       ]
+      },
+      " ",
+      {
+       "tag": "span",
+       "class": [
+        "text-chip-name"
+       ],
+       "children": [
+        "t.1"
+       ]
+      }
+     ]
+    }
+   },
+   {
+    "document": "parity-tex-theorems:main.tex",
+    "skeleton": {
+     "tag": "button",
+     "class": [
+      "text-chip"
+     ],
+     "attrs": {
+      "type": "button",
+      "data-tip": "Label s.2. Click to rename it and every reference to it."
+     },
+     "children": [
+      {
+       "tag": "svg",
+       "class": [
+        "lucide",
+        "lucide-tag",
+        "lucide-icon"
+       ],
+       "attrs": {
+        "xmlns": "http://www.w3.org/2000/svg",
+        "width": "24",
+        "height": "24",
+        "viewBox": "0 0 24 24",
+        "fill": "none",
+        "stroke": "currentColor",
+        "stroke-width": "2",
+        "stroke-linecap": "round",
+        "stroke-linejoin": "round",
+        "aria-hidden": "true"
+       },
+       "children": [
+        {
+         "tag": "path"
+        },
+        {
+         "tag": "circle",
+         "attrs": {
+          "fill": "currentColor"
+         }
+        }
+       ]
+      },
+      " ",
+      {
+       "tag": "span",
+       "class": [
+        "text-chip-name"
+       ],
+       "children": [
+        "s.2"
+       ]
+      }
+     ]
+    }
+   },
+   {
+    "document": "parity-tex-theorems:main.tex",
+    "skeleton": {
+     "tag": "button",
+     "class": [
+      "text-chip"
+     ],
+     "attrs": {
+      "type": "button",
+      "data-tip": "Label examp1. Click to rename it and every reference to it."
+     },
+     "children": [
+      {
+       "tag": "svg",
+       "class": [
+        "lucide",
+        "lucide-tag",
+        "lucide-icon"
+       ],
+       "attrs": {
+        "xmlns": "http://www.w3.org/2000/svg",
+        "width": "24",
+        "height": "24",
+        "viewBox": "0 0 24 24",
+        "fill": "none",
+        "stroke": "currentColor",
+        "stroke-width": "2",
+        "stroke-linecap": "round",
+        "stroke-linejoin": "round",
+        "aria-hidden": "true"
+       },
+       "children": [
+        {
+         "tag": "path"
+        },
+        {
+         "tag": "circle",
+         "attrs": {
+          "fill": "currentColor"
+         }
+        }
+       ]
+      },
+      " ",
+      {
+       "tag": "span",
+       "class": [
+        "text-chip-name"
+       ],
+       "children": [
+        "examp1"
+       ]
+      }
+     ]
+    }
+   },
+   {
+    "document": "parity-tex-theorems:main.tex",
+    "skeleton": {
+     "tag": "button",
+     "class": [
+      "text-chip"
+     ],
+     "attrs": {
+      "type": "button",
+      "data-tip": "Label examp2. Click to rename it and every reference to it."
+     },
+     "children": [
+      {
+       "tag": "svg",
+       "class": [
+        "lucide",
+        "lucide-tag",
+        "lucide-icon"
+       ],
+       "attrs": {
+        "xmlns": "http://www.w3.org/2000/svg",
+        "width": "24",
+        "height": "24",
+        "viewBox": "0 0 24 24",
+        "fill": "none",
+        "stroke": "currentColor",
+        "stroke-width": "2",
+        "stroke-linecap": "round",
+        "stroke-linejoin": "round",
+        "aria-hidden": "true"
+       },
+       "children": [
+        {
+         "tag": "path"
+        },
+        {
+         "tag": "circle",
+         "attrs": {
+          "fill": "currentColor"
+         }
+        }
+       ]
+      },
+      " ",
+      {
+       "tag": "span",
+       "class": [
+        "text-chip-name"
+       ],
+       "children": [
+        "examp2"
+       ]
+      }
+     ]
+    }
+   },
+   {
+    "document": "parity-tex-theorems:main.tex",
+    "skeleton": {
+     "tag": "button",
+     "class": [
+      "text-chip"
+     ],
+     "attrs": {
+      "type": "button",
+      "data-tip": "Label d1. Click to rename it and every reference to it."
+     },
+     "children": [
+      {
+       "tag": "svg",
+       "class": [
+        "lucide",
+        "lucide-tag",
+        "lucide-icon"
+       ],
+       "attrs": {
+        "xmlns": "http://www.w3.org/2000/svg",
+        "width": "24",
+        "height": "24",
+        "viewBox": "0 0 24 24",
+        "fill": "none",
+        "stroke": "currentColor",
+        "stroke-width": "2",
+        "stroke-linecap": "round",
+        "stroke-linejoin": "round",
+        "aria-hidden": "true"
+       },
+       "children": [
+        {
+         "tag": "path"
+        },
+        {
+         "tag": "circle",
+         "attrs": {
+          "fill": "currentColor"
+         }
+        }
+       ]
+      },
+      " ",
+      {
+       "tag": "span",
+       "class": [
+        "text-chip-name"
+       ],
+       "children": [
+        "d1"
+       ]
+      }
+     ]
+    }
+   },
+   {
+    "document": "parity-tex-theorems:main.tex",
+    "skeleton": {
+     "tag": "button",
+     "class": [
+      "text-chip"
+     ],
+     "attrs": {
+      "type": "button",
+      "data-tip": "Label examp3. Click to rename it and every reference to it."
+     },
+     "children": [
+      {
+       "tag": "svg",
+       "class": [
+        "lucide",
+        "lucide-tag",
+        "lucide-icon"
+       ],
+       "attrs": {
+        "xmlns": "http://www.w3.org/2000/svg",
+        "width": "24",
+        "height": "24",
+        "viewBox": "0 0 24 24",
+        "fill": "none",
+        "stroke": "currentColor",
+        "stroke-width": "2",
+        "stroke-linecap": "round",
+        "stroke-linejoin": "round",
+        "aria-hidden": "true"
+       },
+       "children": [
+        {
+         "tag": "path"
+        },
+        {
+         "tag": "circle",
+         "attrs": {
+          "fill": "currentColor"
+         }
+        }
+       ]
+      },
+      " ",
+      {
+       "tag": "span",
+       "class": [
+        "text-chip-name"
+       ],
+       "children": [
+        "examp3"
+       ]
+      }
+     ]
+    }
+   },
+   {
+    "document": "parity-tex-theorems:main.tex",
+    "skeleton": {
+     "tag": "button",
+     "class": [
+      "text-chip"
+     ],
+     "attrs": {
+      "type": "button",
+      "data-tip": "Label t.hs. Click to rename it and every reference to it."
+     },
+     "children": [
+      {
+       "tag": "svg",
+       "class": [
+        "lucide",
+        "lucide-tag",
+        "lucide-icon"
+       ],
+       "attrs": {
+        "xmlns": "http://www.w3.org/2000/svg",
+        "width": "24",
+        "height": "24",
+        "viewBox": "0 0 24 24",
+        "fill": "none",
+        "stroke": "currentColor",
+        "stroke-width": "2",
+        "stroke-linecap": "round",
+        "stroke-linejoin": "round",
+        "aria-hidden": "true"
+       },
+       "children": [
+        {
+         "tag": "path"
+        },
+        {
+         "tag": "circle",
+         "attrs": {
+          "fill": "currentColor"
+         }
+        }
+       ]
+      },
+      " ",
+      {
+       "tag": "span",
+       "class": [
+        "text-chip-name"
+       ],
+       "children": [
+        "t.hs"
+       ]
+      }
+     ]
+    }
+   },
+   {
+    "document": "parity-tex-theorems:main.tex",
+    "skeleton": {
+     "tag": "button",
+     "class": [
+      "text-chip"
+     ],
+     "attrs": {
+      "type": "button",
+      "data-tip": "Label r.1. Click to rename it and every reference to it."
+     },
+     "children": [
+      {
+       "tag": "svg",
+       "class": [
+        "lucide",
+        "lucide-tag",
+        "lucide-icon"
+       ],
+       "attrs": {
+        "xmlns": "http://www.w3.org/2000/svg",
+        "width": "24",
+        "height": "24",
+        "viewBox": "0 0 24 24",
+        "fill": "none",
+        "stroke": "currentColor",
+        "stroke-width": "2",
+        "stroke-linecap": "round",
+        "stroke-linejoin": "round",
+        "aria-hidden": "true"
+       },
+       "children": [
+        {
+         "tag": "path"
+        },
+        {
+         "tag": "circle",
+         "attrs": {
+          "fill": "currentColor"
+         }
+        }
+       ]
+      },
+      " ",
+      {
+       "tag": "span",
+       "class": [
+        "text-chip-name"
+       ],
+       "children": [
+        "r.1"
+       ]
+      }
+     ]
+    }
+   },
+   {
+    "document": "parity-tex-theorems:main.tex",
+    "skeleton": {
+     "tag": "button",
+     "class": [
+      "text-chip"
+     ],
+     "attrs": {
+      "type": "button",
+      "data-tip": "Label r.2. Click to rename it and every reference to it."
+     },
+     "children": [
+      {
+       "tag": "svg",
+       "class": [
+        "lucide",
+        "lucide-tag",
+        "lucide-icon"
+       ],
+       "attrs": {
+        "xmlns": "http://www.w3.org/2000/svg",
+        "width": "24",
+        "height": "24",
+        "viewBox": "0 0 24 24",
+        "fill": "none",
+        "stroke": "currentColor",
+        "stroke-width": "2",
+        "stroke-linecap": "round",
+        "stroke-linejoin": "round",
+        "aria-hidden": "true"
+       },
+       "children": [
+        {
+         "tag": "path"
+        },
+        {
+         "tag": "circle",
+         "attrs": {
+          "fill": "currentColor"
+         }
+        }
+       ]
+      },
+      " ",
+      {
+       "tag": "span",
+       "class": [
+        "text-chip-name"
+       ],
+       "children": [
+        "r.2"
+       ]
+      }
+     ]
+    }
+   },
+   {
+    "document": "parity-tex-theorems:main.tex",
+    "skeleton": {
+     "tag": "button",
+     "class": [
+      "text-chip"
+     ],
+     "attrs": {
+      "type": "button",
+      "data-tip": "Label s.3. Click to rename it and every reference to it."
+     },
+     "children": [
+      {
+       "tag": "svg",
+       "class": [
+        "lucide",
+        "lucide-tag",
+        "lucide-icon"
+       ],
+       "attrs": {
+        "xmlns": "http://www.w3.org/2000/svg",
+        "width": "24",
+        "height": "24",
+        "viewBox": "0 0 24 24",
+        "fill": "none",
+        "stroke": "currentColor",
+        "stroke-width": "2",
+        "stroke-linecap": "round",
+        "stroke-linejoin": "round",
+        "aria-hidden": "true"
+       },
+       "children": [
+        {
+         "tag": "path"
+        },
+        {
+         "tag": "circle",
+         "attrs": {
+          "fill": "currentColor"
+         }
+        }
+       ]
+      },
+      " ",
+      {
+       "tag": "span",
+       "class": [
+        "text-chip-name"
+       ],
+       "children": [
+        "s.3"
+       ]
+      }
+     ]
+    }
+   },
+   {
+    "document": "parity-tex-theorems:main.tex",
+    "skeleton": {
+     "tag": "button",
+     "class": [
+      "text-chip"
+     ],
+     "attrs": {
+      "type": "button",
+      "data-tip": "Label l.rep. Click to rename it and every reference to it."
+     },
+     "children": [
+      {
+       "tag": "svg",
+       "class": [
+        "lucide",
+        "lucide-tag",
+        "lucide-icon"
+       ],
+       "attrs": {
+        "xmlns": "http://www.w3.org/2000/svg",
+        "width": "24",
+        "height": "24",
+        "viewBox": "0 0 24 24",
+        "fill": "none",
+        "stroke": "currentColor",
+        "stroke-width": "2",
+        "stroke-linecap": "round",
+        "stroke-linejoin": "round",
+        "aria-hidden": "true"
+       },
+       "children": [
+        {
+         "tag": "path"
+        },
+        {
+         "tag": "circle",
+         "attrs": {
+          "fill": "currentColor"
+         }
+        }
+       ]
+      },
+      " ",
+      {
+       "tag": "span",
+       "class": [
+        "text-chip-name"
+       ],
+       "children": [
+        "l.rep"
+       ]
+      }
+     ]
+    }
+   },
+   {
+    "document": "parity-tex-theorems:main.tex",
+    "skeleton": {
+     "tag": "button",
+     "class": [
+      "text-chip"
+     ],
+     "attrs": {
+      "type": "button",
+      "data-tip": "Label d.2. Click to rename it and every reference to it."
+     },
+     "children": [
+      {
+       "tag": "svg",
+       "class": [
+        "lucide",
+        "lucide-tag",
+        "lucide-icon"
+       ],
+       "attrs": {
+        "xmlns": "http://www.w3.org/2000/svg",
+        "width": "24",
+        "height": "24",
+        "viewBox": "0 0 24 24",
+        "fill": "none",
+        "stroke": "currentColor",
+        "stroke-width": "2",
+        "stroke-linecap": "round",
+        "stroke-linejoin": "round",
+        "aria-hidden": "true"
+       },
+       "children": [
+        {
+         "tag": "path"
+        },
+        {
+         "tag": "circle",
+         "attrs": {
+          "fill": "currentColor"
+         }
+        }
+       ]
+      },
+      " ",
+      {
+       "tag": "span",
+       "class": [
+        "text-chip-name"
+       ],
+       "children": [
+        "d.2"
+       ]
+      }
+     ]
+    }
+   },
+   {
+    "document": "parity-tex-theorems:main.tex",
+    "skeleton": {
+     "tag": "button",
+     "class": [
+      "text-chip"
+     ],
+     "attrs": {
+      "type": "button",
+      "data-tip": "Label con2. Click to rename it and every reference to it."
+     },
+     "children": [
+      {
+       "tag": "svg",
+       "class": [
+        "lucide",
+        "lucide-tag",
+        "lucide-icon"
+       ],
+       "attrs": {
+        "xmlns": "http://www.w3.org/2000/svg",
+        "width": "24",
+        "height": "24",
+        "viewBox": "0 0 24 24",
+        "fill": "none",
+        "stroke": "currentColor",
+        "stroke-width": "2",
+        "stroke-linecap": "round",
+        "stroke-linejoin": "round",
+        "aria-hidden": "true"
+       },
+       "children": [
+        {
+         "tag": "path"
+        },
+        {
+         "tag": "circle",
+         "attrs": {
+          "fill": "currentColor"
+         }
+        }
+       ]
+      },
+      " ",
+      {
+       "tag": "span",
+       "class": [
+        "text-chip-name"
+       ],
+       "children": [
+        "con2"
+       ]
+      }
+     ]
+    }
+   },
+   {
+    "document": "parity-tex-theorems:main.tex",
+    "skeleton": {
+     "tag": "button",
+     "class": [
+      "text-chip"
+     ],
+     "attrs": {
+      "type": "button",
+      "data-tip": "Label con2.a. Click to rename it and every reference to it."
+     },
+     "children": [
+      {
+       "tag": "svg",
+       "class": [
+        "lucide",
+        "lucide-tag",
+        "lucide-icon"
+       ],
+       "attrs": {
+        "xmlns": "http://www.w3.org/2000/svg",
+        "width": "24",
+        "height": "24",
+        "viewBox": "0 0 24 24",
+        "fill": "none",
+        "stroke": "currentColor",
+        "stroke-width": "2",
+        "stroke-linecap": "round",
+        "stroke-linejoin": "round",
+        "aria-hidden": "true"
+       },
+       "children": [
+        {
+         "tag": "path"
+        },
+        {
+         "tag": "circle",
+         "attrs": {
+          "fill": "currentColor"
+         }
+        }
+       ]
+      },
+      " ",
+      {
+       "tag": "span",
+       "class": [
+        "text-chip-name"
+       ],
+       "children": [
+        "con2.a"
+       ]
+      }
+     ]
+    }
+   },
+   {
+    "document": "parity-tex-theorems:main.tex",
+    "skeleton": {
+     "tag": "button",
+     "class": [
+      "text-chip"
+     ],
+     "attrs": {
+      "type": "button",
+      "data-tip": "Label con2.b. Click to rename it and every reference to it."
+     },
+     "children": [
+      {
+       "tag": "svg",
+       "class": [
+        "lucide",
+        "lucide-tag",
+        "lucide-icon"
+       ],
+       "attrs": {
+        "xmlns": "http://www.w3.org/2000/svg",
+        "width": "24",
+        "height": "24",
+        "viewBox": "0 0 24 24",
+        "fill": "none",
+        "stroke": "currentColor",
+        "stroke-width": "2",
+        "stroke-linecap": "round",
+        "stroke-linejoin": "round",
+        "aria-hidden": "true"
+       },
+       "children": [
+        {
+         "tag": "path"
+        },
+        {
+         "tag": "circle",
+         "attrs": {
+          "fill": "currentColor"
+         }
+        }
+       ]
+      },
+      " ",
+      {
+       "tag": "span",
+       "class": [
+        "text-chip-name"
+       ],
+       "children": [
+        "con2.b"
+       ]
+      }
+     ]
+    }
+   },
+   {
+    "document": "parity-tex-theorems:main.tex",
+    "skeleton": {
+     "tag": "button",
+     "class": [
+      "text-chip"
+     ],
+     "attrs": {
+      "type": "button",
+      "data-tip": "Label con2.c. Click to rename it and every reference to it."
+     },
+     "children": [
+      {
+       "tag": "svg",
+       "class": [
+        "lucide",
+        "lucide-tag",
+        "lucide-icon"
+       ],
+       "attrs": {
+        "xmlns": "http://www.w3.org/2000/svg",
+        "width": "24",
+        "height": "24",
+        "viewBox": "0 0 24 24",
+        "fill": "none",
+        "stroke": "currentColor",
+        "stroke-width": "2",
+        "stroke-linecap": "round",
+        "stroke-linejoin": "round",
+        "aria-hidden": "true"
+       },
+       "children": [
+        {
+         "tag": "path"
+        },
+        {
+         "tag": "circle",
+         "attrs": {
+          "fill": "currentColor"
+         }
+        }
+       ]
+      },
+      " ",
+      {
+       "tag": "span",
+       "class": [
+        "text-chip-name"
+       ],
+       "children": [
+        "con2.c"
+       ]
+      }
+     ]
+    }
+   },
+   {
+    "document": "parity-tex-theorems:main.tex",
+    "skeleton": {
+     "tag": "button",
+     "class": [
+      "text-chip"
+     ],
+     "attrs": {
+      "type": "button",
+      "data-tip": "Label con2.d. Click to rename it and every reference to it."
+     },
+     "children": [
+      {
+       "tag": "svg",
+       "class": [
+        "lucide",
+        "lucide-tag",
+        "lucide-icon"
+       ],
+       "attrs": {
+        "xmlns": "http://www.w3.org/2000/svg",
+        "width": "24",
+        "height": "24",
+        "viewBox": "0 0 24 24",
+        "fill": "none",
+        "stroke": "currentColor",
+        "stroke-width": "2",
+        "stroke-linecap": "round",
+        "stroke-linejoin": "round",
+        "aria-hidden": "true"
+       },
+       "children": [
+        {
+         "tag": "path"
+        },
+        {
+         "tag": "circle",
+         "attrs": {
+          "fill": "currentColor"
+         }
+        }
+       ]
+      },
+      " ",
+      {
+       "tag": "span",
+       "class": [
+        "text-chip-name"
+       ],
+       "children": [
+        "con2.d"
+       ]
+      }
+     ]
+    }
+   },
+   {
+    "document": "parity-tex-theorems:main.tex",
+    "skeleton": {
+     "tag": "button",
+     "class": [
+      "text-chip"
+     ],
+     "attrs": {
+      "type": "button",
+      "data-tip": "Label con2.e. Click to rename it and every reference to it."
+     },
+     "children": [
+      {
+       "tag": "svg",
+       "class": [
+        "lucide",
+        "lucide-tag",
+        "lucide-icon"
+       ],
+       "attrs": {
+        "xmlns": "http://www.w3.org/2000/svg",
+        "width": "24",
+        "height": "24",
+        "viewBox": "0 0 24 24",
+        "fill": "none",
+        "stroke": "currentColor",
+        "stroke-width": "2",
+        "stroke-linecap": "round",
+        "stroke-linejoin": "round",
+        "aria-hidden": "true"
+       },
+       "children": [
+        {
+         "tag": "path"
+        },
+        {
+         "tag": "circle",
+         "attrs": {
+          "fill": "currentColor"
+         }
+        }
+       ]
+      },
+      " ",
+      {
+       "tag": "span",
+       "class": [
+        "text-chip-name"
+       ],
+       "children": [
+        "con2.e"
+       ]
+      }
+     ]
+    }
+   },
+   {
+    "document": "parity-tex-theorems:main.tex",
+    "skeleton": {
+     "tag": "button",
+     "class": [
+      "text-chip"
+     ],
+     "attrs": {
+      "type": "button",
+      "data-tip": "Label c.3. Click to rename it and every reference to it."
+     },
+     "children": [
+      {
+       "tag": "svg",
+       "class": [
+        "lucide",
+        "lucide-tag",
+        "lucide-icon"
+       ],
+       "attrs": {
+        "xmlns": "http://www.w3.org/2000/svg",
+        "width": "24",
+        "height": "24",
+        "viewBox": "0 0 24 24",
+        "fill": "none",
+        "stroke": "currentColor",
+        "stroke-width": "2",
+        "stroke-linecap": "round",
+        "stroke-linejoin": "round",
+        "aria-hidden": "true"
+       },
+       "children": [
+        {
+         "tag": "path"
+        },
+        {
+         "tag": "circle",
+         "attrs": {
+          "fill": "currentColor"
+         }
+        }
+       ]
+      },
+      " ",
+      {
+       "tag": "span",
+       "class": [
+        "text-chip-name"
+       ],
+       "children": [
+        "c.3"
+       ]
+      }
+     ]
+    }
+   },
+   {
+    "document": "parity-tex-theorems:main.tex",
+    "skeleton": {
+     "tag": "button",
+     "class": [
+      "text-chip"
+     ],
+     "attrs": {
+      "type": "button",
+      "data-tip": "Label t.3. Click to rename it and every reference to it."
+     },
+     "children": [
+      {
+       "tag": "svg",
+       "class": [
+        "lucide",
+        "lucide-tag",
+        "lucide-icon"
+       ],
+       "attrs": {
+        "xmlns": "http://www.w3.org/2000/svg",
+        "width": "24",
+        "height": "24",
+        "viewBox": "0 0 24 24",
+        "fill": "none",
+        "stroke": "currentColor",
+        "stroke-width": "2",
+        "stroke-linecap": "round",
+        "stroke-linejoin": "round",
+        "aria-hidden": "true"
+       },
+       "children": [
+        {
+         "tag": "path"
+        },
+        {
+         "tag": "circle",
+         "attrs": {
+          "fill": "currentColor"
+         }
+        }
+       ]
+      },
+      " ",
+      {
+       "tag": "span",
+       "class": [
+        "text-chip-name"
+       ],
+       "children": [
+        "t.3"
+       ]
+      }
+     ]
+    }
+   },
+   {
+    "document": "parity-tex-theorems:main.tex",
+    "skeleton": {
+     "tag": "button",
+     "class": [
+      "text-chip"
+     ],
+     "attrs": {
+      "type": "button",
+      "data-tip": "Label c.2. Click to rename it and every reference to it."
+     },
+     "children": [
+      {
+       "tag": "svg",
+       "class": [
+        "lucide",
+        "lucide-tag",
+        "lucide-icon"
+       ],
+       "attrs": {
+        "xmlns": "http://www.w3.org/2000/svg",
+        "width": "24",
+        "height": "24",
+        "viewBox": "0 0 24 24",
+        "fill": "none",
+        "stroke": "currentColor",
+        "stroke-width": "2",
+        "stroke-linecap": "round",
+        "stroke-linejoin": "round",
+        "aria-hidden": "true"
+       },
+       "children": [
+        {
+         "tag": "path"
+        },
+        {
+         "tag": "circle",
+         "attrs": {
+          "fill": "currentColor"
+         }
+        }
+       ]
+      },
+      " ",
+      {
+       "tag": "span",
+       "class": [
+        "text-chip-name"
+       ],
+       "children": [
+        "c.2"
+       ]
+      }
+     ]
+    }
+   },
+   {
+    "document": "parity-tex-theorems:main.tex",
+    "skeleton": {
+     "tag": "button",
+     "class": [
+      "text-chip"
+     ],
+     "attrs": {
+      "type": "button",
+      "data-tip": "Label c.1. Click to rename it and every reference to it."
+     },
+     "children": [
+      {
+       "tag": "svg",
+       "class": [
+        "lucide",
+        "lucide-tag",
+        "lucide-icon"
+       ],
+       "attrs": {
+        "xmlns": "http://www.w3.org/2000/svg",
+        "width": "24",
+        "height": "24",
+        "viewBox": "0 0 24 24",
+        "fill": "none",
+        "stroke": "currentColor",
+        "stroke-width": "2",
+        "stroke-linecap": "round",
+        "stroke-linejoin": "round",
+        "aria-hidden": "true"
+       },
+       "children": [
+        {
+         "tag": "path"
+        },
+        {
+         "tag": "circle",
+         "attrs": {
+          "fill": "currentColor"
+         }
+        }
+       ]
+      },
+      " ",
+      {
+       "tag": "span",
+       "class": [
+        "text-chip-name"
+       ],
+       "children": [
+        "c.1"
+       ]
+      }
+     ]
+    }
+   },
+   {
+    "document": "parity-tex-theorems:main.tex",
+    "skeleton": {
+     "tag": "button",
+     "class": [
+      "text-chip"
+     ],
+     "attrs": {
+      "type": "button",
+      "data-tip": "Label s.4. Click to rename it and every reference to it."
+     },
+     "children": [
+      {
+       "tag": "svg",
+       "class": [
+        "lucide",
+        "lucide-tag",
+        "lucide-icon"
+       ],
+       "attrs": {
+        "xmlns": "http://www.w3.org/2000/svg",
+        "width": "24",
+        "height": "24",
+        "viewBox": "0 0 24 24",
+        "fill": "none",
+        "stroke": "currentColor",
+        "stroke-width": "2",
+        "stroke-linecap": "round",
+        "stroke-linejoin": "round",
+        "aria-hidden": "true"
+       },
+       "children": [
+        {
+         "tag": "path"
+        },
+        {
+         "tag": "circle",
+         "attrs": {
+          "fill": "currentColor"
+         }
+        }
+       ]
+      },
+      " ",
+      {
+       "tag": "span",
+       "class": [
+        "text-chip-name"
+       ],
+       "children": [
+        "s.4"
+       ]
+      }
+     ]
+    }
+   },
+   {
+    "document": "parity-tex-theorems:main.tex",
+    "skeleton": {
+     "tag": "button",
+     "class": [
+      "text-chip"
+     ],
+     "attrs": {
+      "type": "button",
+      "data-tip": "Label th.cl. Click to rename it and every reference to it."
+     },
+     "children": [
+      {
+       "tag": "svg",
+       "class": [
+        "lucide",
+        "lucide-tag",
+        "lucide-icon"
+       ],
+       "attrs": {
+        "xmlns": "http://www.w3.org/2000/svg",
+        "width": "24",
+        "height": "24",
+        "viewBox": "0 0 24 24",
+        "fill": "none",
+        "stroke": "currentColor",
+        "stroke-width": "2",
+        "stroke-linecap": "round",
+        "stroke-linejoin": "round",
+        "aria-hidden": "true"
+       },
+       "children": [
+        {
+         "tag": "path"
+        },
+        {
+         "tag": "circle",
+         "attrs": {
+          "fill": "currentColor"
+         }
+        }
+       ]
+      },
+      " ",
+      {
+       "tag": "span",
+       "class": [
+        "text-chip-name"
+       ],
+       "children": [
+        "th.cl"
+       ]
+      }
+     ]
+    }
+   },
+   {
+    "document": "parity-tex-tables:main.tex",
+    "skeleton": {
+     "tag": "button",
+     "class": [
+      "text-chip"
+     ],
+     "attrs": {
+      "type": "button",
+      "data-tip": "Label sec:int. Click to rename it and every reference to it."
+     },
+     "children": [
+      {
+       "tag": "svg",
+       "class": [
+        "lucide",
+        "lucide-tag",
+        "lucide-icon"
+       ],
+       "attrs": {
+        "xmlns": "http://www.w3.org/2000/svg",
+        "width": "24",
+        "height": "24",
+        "viewBox": "0 0 24 24",
+        "fill": "none",
+        "stroke": "currentColor",
+        "stroke-width": "2",
+        "stroke-linecap": "round",
+        "stroke-linejoin": "round",
+        "aria-hidden": "true"
+       },
+       "children": [
+        {
+         "tag": "path"
+        },
+        {
+         "tag": "circle",
+         "attrs": {
+          "fill": "currentColor"
+         }
+        }
+       ]
+      },
+      " ",
+      {
+       "tag": "span",
+       "class": [
+        "text-chip-name"
+       ],
+       "children": [
+        "sec:int"
+       ]
+      }
+     ]
+    }
+   },
+   {
+    "document": "parity-tex-tables:main.tex",
+    "skeleton": {
+     "tag": "button",
+     "class": [
+      "text-chip"
+     ],
+     "attrs": {
+      "type": "button",
+      "data-tip": "Label sec:term. Click to rename it and every reference to it."
+     },
+     "children": [
+      {
+       "tag": "svg",
+       "class": [
+        "lucide",
+        "lucide-tag",
+        "lucide-icon"
+       ],
+       "attrs": {
+        "xmlns": "http://www.w3.org/2000/svg",
+        "width": "24",
+        "height": "24",
+        "viewBox": "0 0 24 24",
+        "fill": "none",
+        "stroke": "currentColor",
+        "stroke-width": "2",
+        "stroke-linecap": "round",
+        "stroke-linejoin": "round",
+        "aria-hidden": "true"
+       },
+       "children": [
+        {
+         "tag": "path"
+        },
+        {
+         "tag": "circle",
+         "attrs": {
+          "fill": "currentColor"
+         }
+        }
+       ]
+      },
+      " ",
+      {
+       "tag": "span",
+       "class": [
+        "text-chip-name"
+       ],
+       "children": [
+        "sec:term"
+       ]
+      }
+     ]
+    }
+   },
+   {
+    "document": "parity-tex-tables:main.tex",
+    "skeleton": {
+     "tag": "button",
+     "class": [
+      "text-chip"
+     ],
+     "attrs": {
+      "type": "button",
+      "data-tip": "Label th:bounded-inc-converge. Click to rename it and every reference to it."
+     },
+     "children": [
+      {
+       "tag": "svg",
+       "class": [
+        "lucide",
+        "lucide-tag",
+        "lucide-icon"
+       ],
+       "attrs": {
+        "xmlns": "http://www.w3.org/2000/svg",
+        "width": "24",
+        "height": "24",
+        "viewBox": "0 0 24 24",
+        "fill": "none",
+        "stroke": "currentColor",
+        "stroke-width": "2",
+        "stroke-linecap": "round",
+        "stroke-linejoin": "round",
+        "aria-hidden": "true"
+       },
+       "children": [
+        {
+         "tag": "path"
+        },
+        {
+         "tag": "circle",
+         "attrs": {
+          "fill": "currentColor"
+         }
+        }
+       ]
+      },
+      " ",
+      {
+       "tag": "span",
+       "class": [
+        "text-chip-name"
+       ],
+       "children": [
+        "th:bounded-inc-converge"
+       ]
+      }
+     ]
+    }
+   },
+   {
+    "document": "parity-tex-tables:main.tex",
+    "skeleton": {
+     "tag": "button",
+     "class": [
+      "text-chip"
+     ],
+     "attrs": {
+      "type": "button",
+      "data-tip": "Label fig:pubc. Click to rename it and every reference to it."
+     },
+     "children": [
+      {
+       "tag": "svg",
+       "class": [
+        "lucide",
+        "lucide-tag",
+        "lucide-icon"
+       ],
+       "attrs": {
+        "xmlns": "http://www.w3.org/2000/svg",
+        "width": "24",
+        "height": "24",
+        "viewBox": "0 0 24 24",
+        "fill": "none",
+        "stroke": "currentColor",
+        "stroke-width": "2",
+        "stroke-linecap": "round",
+        "stroke-linejoin": "round",
+        "aria-hidden": "true"
+       },
+       "children": [
+        {
+         "tag": "path"
+        },
+        {
+         "tag": "circle",
+         "attrs": {
+          "fill": "currentColor"
+         }
+        }
+       ]
+      },
+      " ",
+      {
+       "tag": "span",
+       "class": [
+        "text-chip-name"
+       ],
+       "children": [
+        "fig:pubc"
+       ]
+      }
+     ]
+    }
+   },
+   {
+    "document": "parity-tex-tables:main.tex",
+    "skeleton": {
+     "tag": "button",
+     "class": [
+      "text-chip"
+     ],
+     "attrs": {
+      "type": "button",
+      "data-tip": "Label sec:dpce. Click to rename it and every reference to it."
+     },
+     "children": [
+      {
+       "tag": "svg",
+       "class": [
+        "lucide",
+        "lucide-tag",
+        "lucide-icon"
+       ],
+       "attrs": {
+        "xmlns": "http://www.w3.org/2000/svg",
+        "width": "24",
+        "height": "24",
+        "viewBox": "0 0 24 24",
+        "fill": "none",
+        "stroke": "currentColor",
+        "stroke-width": "2",
+        "stroke-linecap": "round",
+        "stroke-linejoin": "round",
+        "aria-hidden": "true"
+       },
+       "children": [
+        {
+         "tag": "path"
+        },
+        {
+         "tag": "circle",
+         "attrs": {
+          "fill": "currentColor"
+         }
+        }
+       ]
+      },
+      " ",
+      {
+       "tag": "span",
+       "class": [
+        "text-chip-name"
+       ],
+       "children": [
+        "sec:dpce"
+       ]
+      }
+     ]
+    }
+   },
+   {
+    "document": "parity-tex-tables:main.tex",
+    "skeleton": {
+     "tag": "button",
+     "class": [
+      "text-chip"
+     ],
+     "attrs": {
+      "type": "button",
+      "data-tip": "Label subsec:ps. Click to rename it and every reference to it."
+     },
+     "children": [
+      {
+       "tag": "svg",
+       "class": [
+        "lucide",
+        "lucide-tag",
+        "lucide-icon"
+       ],
+       "attrs": {
+        "xmlns": "http://www.w3.org/2000/svg",
+        "width": "24",
+        "height": "24",
+        "viewBox": "0 0 24 24",
+        "fill": "none",
+        "stroke": "currentColor",
+        "stroke-width": "2",
+        "stroke-linecap": "round",
+        "stroke-linejoin": "round",
+        "aria-hidden": "true"
+       },
+       "children": [
+        {
+         "tag": "path"
+        },
+        {
+         "tag": "circle",
+         "attrs": {
+          "fill": "currentColor"
+         }
+        }
+       ]
+      },
+      " ",
+      {
+       "tag": "span",
+       "class": [
+        "text-chip-name"
+       ],
+       "children": [
+        "subsec:ps"
+       ]
+      }
+     ]
+    }
+   },
+   {
+    "document": "parity-tex-tables:main.tex",
+    "skeleton": {
+     "tag": "button",
+     "class": [
+      "text-chip"
+     ],
+     "attrs": {
+      "type": "button",
+      "data-tip": "Label subsec:psimp. Click to rename it and every reference to it."
+     },
+     "children": [
+      {
+       "tag": "svg",
+       "class": [
+        "lucide",
+        "lucide-tag",
+        "lucide-icon"
+       ],
+       "attrs": {
+        "xmlns": "http://www.w3.org/2000/svg",
+        "width": "24",
+        "height": "24",
+        "viewBox": "0 0 24 24",
+        "fill": "none",
+        "stroke": "currentColor",
+        "stroke-width": "2",
+        "stroke-linecap": "round",
+        "stroke-linejoin": "round",
+        "aria-hidden": "true"
+       },
+       "children": [
+        {
+         "tag": "path"
+        },
+        {
+         "tag": "circle",
+         "attrs": {
+          "fill": "currentColor"
+         }
+        }
+       ]
+      },
+      " ",
+      {
+       "tag": "span",
+       "class": [
+        "text-chip-name"
+       ],
+       "children": [
+        "subsec:psimp"
+       ]
+      }
+     ]
+    }
+   },
+   {
+    "document": "parity-tex-tables:main.tex",
+    "skeleton": {
+     "tag": "button",
+     "class": [
+      "text-chip"
+     ],
+     "attrs": {
+      "type": "button",
+      "data-tip": "Label subsec:lc. Click to rename it and every reference to it."
+     },
+     "children": [
+      {
+       "tag": "svg",
+       "class": [
+        "lucide",
+        "lucide-tag",
+        "lucide-icon"
+       ],
+       "attrs": {
+        "xmlns": "http://www.w3.org/2000/svg",
+        "width": "24",
+        "height": "24",
+        "viewBox": "0 0 24 24",
+        "fill": "none",
+        "stroke": "currentColor",
+        "stroke-width": "2",
+        "stroke-linecap": "round",
+        "stroke-linejoin": "round",
+        "aria-hidden": "true"
+       },
+       "children": [
+        {
+         "tag": "path"
+        },
+        {
+         "tag": "circle",
+         "attrs": {
+          "fill": "currentColor"
+         }
+        }
+       ]
+      },
+      " ",
+      {
+       "tag": "span",
+       "class": [
+        "text-chip-name"
+       ],
+       "children": [
+        "subsec:lc"
+       ]
+      }
+     ]
+    }
+   },
+   {
+    "document": "parity-tex-tables:main.tex",
+    "skeleton": {
+     "tag": "button",
+     "class": [
+      "text-chip"
+     ],
+     "attrs": {
+      "type": "button",
+      "data-tip": "Label subsec:ep. Click to rename it and every reference to it."
+     },
+     "children": [
+      {
+       "tag": "svg",
+       "class": [
+        "lucide",
+        "lucide-tag",
+        "lucide-icon"
+       ],
+       "attrs": {
+        "xmlns": "http://www.w3.org/2000/svg",
+        "width": "24",
+        "height": "24",
+        "viewBox": "0 0 24 24",
+        "fill": "none",
+        "stroke": "currentColor",
+        "stroke-width": "2",
+        "stroke-linecap": "round",
+        "stroke-linejoin": "round",
+        "aria-hidden": "true"
+       },
+       "children": [
+        {
+         "tag": "path"
+        },
+        {
+         "tag": "circle",
+         "attrs": {
+          "fill": "currentColor"
+         }
+        }
+       ]
+      },
+      " ",
+      {
+       "tag": "span",
+       "class": [
+        "text-chip-name"
+       ],
+       "children": [
+        "subsec:ep"
+       ]
+      }
+     ]
+    }
+   },
+   {
+    "document": "parity-tex-body:main.tex",
+    "skeleton": {
+     "tag": "button",
+     "class": [
+      "text-chip"
+     ],
+     "attrs": {
+      "type": "button",
+      "data-tip": "Label sec:first. Click to rename it and every reference to it."
+     },
+     "children": [
+      {
+       "tag": "svg",
+       "class": [
+        "lucide",
+        "lucide-tag",
+        "lucide-icon"
+       ],
+       "attrs": {
+        "xmlns": "http://www.w3.org/2000/svg",
+        "width": "24",
+        "height": "24",
+        "viewBox": "0 0 24 24",
+        "fill": "none",
+        "stroke": "currentColor",
+        "stroke-width": "2",
+        "stroke-linecap": "round",
+        "stroke-linejoin": "round",
+        "aria-hidden": "true"
+       },
+       "children": [
+        {
+         "tag": "path"
+        },
+        {
+         "tag": "circle",
+         "attrs": {
+          "fill": "currentColor"
+         }
+        }
+       ]
+      },
+      " ",
+      {
+       "tag": "span",
+       "class": [
+        "text-chip-name"
+       ],
+       "children": [
+        "sec:first"
+       ]
+      }
+     ]
+    }
+   }
+  ],
+  "BibKeyChip": [
+   {
+    "document": "/home/user/texpile-tools-main/perf-drive/parity/verify/docs/skeleton-article:main.tex",
+    "skeleton": {
+     "tag": "button",
+     "class": [
+      "text-chip"
+     ],
+     "attrs": {
+      "type": "button",
+      "style": "text-indent: 0;",
+      "data-tip": "Citation key kn. Click to edit it."
+     },
+     "children": [
+      {
+       "tag": "svg",
+       "class": [
+        "lucide",
+        "lucide-tag",
+        "lucide-icon"
+       ],
+       "attrs": {
+        "xmlns": "http://www.w3.org/2000/svg",
+        "width": "24",
+        "height": "24",
+        "viewBox": "0 0 24 24",
+        "fill": "none",
+        "stroke": "currentColor",
+        "stroke-width": "2",
+        "stroke-linecap": "round",
+        "stroke-linejoin": "round",
+        "aria-hidden": "true"
+       },
+       "children": [
+        {
+         "tag": "path"
+        },
+        {
+         "tag": "circle",
+         "attrs": {
+          "fill": "currentColor"
+         }
+        }
+       ]
+      },
+      " ",
+      {
+       "tag": "span",
+       "class": [
+        "text-chip-name"
+       ],
+       "children": [
+        "kn"
+       ]
+      }
+     ]
+    }
+   },
+   {
+    "document": "/home/user/texpile-tools-main/perf-drive/parity/verify/docs/skeleton-article:main.tex",
+    "skeleton": {
+     "tag": "button",
+     "class": [
+      "text-chip"
+     ],
+     "attrs": {
+      "type": "button",
+      "style": "text-indent: 0;",
+      "data-tip": "Citation key . Click to edit it."
+     },
+     "children": [
+      {
+       "tag": "svg",
+       "class": [
+        "lucide",
+        "lucide-tag",
+        "lucide-icon"
+       ],
+       "attrs": {
+        "xmlns": "http://www.w3.org/2000/svg",
+        "width": "24",
+        "height": "24",
+        "viewBox": "0 0 24 24",
+        "fill": "none",
+        "stroke": "currentColor",
+        "stroke-width": "2",
+        "stroke-linecap": "round",
+        "stroke-linejoin": "round",
+        "aria-hidden": "true"
+       },
+       "children": [
+        {
+         "tag": "path"
+        },
+        {
+         "tag": "circle",
+         "attrs": {
+          "fill": "currentColor"
+         }
+        }
+       ]
+      },
+      " ",
+      {
+       "tag": "span",
+       "class": [
+        "text-chip-name"
+       ],
+       "children": [
+        "Add key"
+       ]
+      }
+     ]
+    }
+   },
+   {
+    "document": "parity-tex-body:main.tex",
+    "skeleton": {
+     "tag": "button",
+     "class": [
+      "text-chip"
+     ],
+     "attrs": {
+      "type": "button",
+      "style": "text-indent: 0;",
+      "data-tip": "Citation key lamport. Click to edit it."
+     },
+     "children": [
+      {
+       "tag": "svg",
+       "class": [
+        "lucide",
+        "lucide-tag",
+        "lucide-icon"
+       ],
+       "attrs": {
+        "xmlns": "http://www.w3.org/2000/svg",
+        "width": "24",
+        "height": "24",
+        "viewBox": "0 0 24 24",
+        "fill": "none",
+        "stroke": "currentColor",
+        "stroke-width": "2",
+        "stroke-linecap": "round",
+        "stroke-linejoin": "round",
+        "aria-hidden": "true"
+       },
+       "children": [
+        {
+         "tag": "path"
+        },
+        {
+         "tag": "circle",
+         "attrs": {
+          "fill": "currentColor"
+         }
+        }
+       ]
+      },
+      " ",
+      {
+       "tag": "span",
+       "class": [
+        "text-chip-name"
+       ],
+       "children": [
+        "lamport"
+       ]
+      }
+     ]
+    }
+   },
+   {
+    "document": "parity-tex-body:main.tex",
+    "skeleton": {
+     "tag": "button",
+     "class": [
+      "text-chip"
+     ],
+     "attrs": {
+      "type": "button",
+      "style": "text-indent: 0;",
+      "data-tip": "Citation key k. Click to edit it."
+     },
+     "children": [
+      {
+       "tag": "svg",
+       "class": [
+        "lucide",
+        "lucide-tag",
+        "lucide-icon"
+       ],
+       "attrs": {
+        "xmlns": "http://www.w3.org/2000/svg",
+        "width": "24",
+        "height": "24",
+        "viewBox": "0 0 24 24",
+        "fill": "none",
+        "stroke": "currentColor",
+        "stroke-width": "2",
+        "stroke-linecap": "round",
+        "stroke-linejoin": "round",
+        "aria-hidden": "true"
+       },
+       "children": [
+        {
+         "tag": "path"
+        },
+        {
+         "tag": "circle",
+         "attrs": {
+          "fill": "currentColor"
+         }
+        }
+       ]
+      },
+      " ",
+      {
+       "tag": "span",
+       "class": [
+        "text-chip-name"
+       ],
+       "children": [
+        "k"
+       ]
+      }
+     ]
+    }
+   }
+  ],
+  "EnvironmentHead": [
+   {
+    "document": "/home/user/texpile-tools-main/perf-drive/parity/verify/docs/skeleton-article:main.tex",
+    "skeleton": {
+     "tag": "button",
+     "class": [
+      "env-head"
+     ],
+     "attrs": {
+      "data-look": "theorem",
+      "data-style": "plain"
+     },
+     "children": [
+      {
+       "tag": "span",
+       "class": [
+        "env-head-name"
+       ],
+       "children": [
+        "Theorem 1"
+       ]
+      },
+      " (Pythagoras)."
+     ]
+    }
+   },
+   {
+    "document": "/home/user/texpile-tools-main/perf-drive/parity/verify/docs/skeleton-article:main.tex",
+    "skeleton": {
+     "tag": "button",
+     "class": [
+      "env-head"
+     ],
+     "attrs": {
+      "data-look": "theorem",
+      "data-style": "plain"
+     },
+     "children": [
+      {
+       "tag": "span",
+       "class": [
+        "env-head-name"
+       ],
+       "children": [
+        "Theorem 2"
+       ]
+      },
+      " (the \\emph{big} one)."
+     ]
+    }
+   },
+   {
+    "document": "/home/user/texpile-tools-main/perf-drive/parity/verify/docs/skeleton-article:main.tex",
+    "skeleton": {
+     "tag": "button",
+     "class": [
+      "env-head"
+     ],
+     "attrs": {
+      "data-look": "proof"
+     },
+     "children": [
+      "Proof."
+     ]
+    }
+   },
+   {
+    "document": "/home/user/texpile-tools-main/perf-drive/parity/verify/docs/skeleton-article:main.tex",
+    "skeleton": {
+     "tag": "button",
+     "class": [
+      "env-gear"
+     ],
+     "attrs": {
+      "data-look": "align",
+      "data-align": "center",
+      "data-tip": "Environment settings",
+      "aria-label": "Environment settings"
+     },
+     "children": [
+      {
+       "tag": "svg",
+       "class": [
+        "lucide",
+        "lucide-settings",
+        "lucide-icon",
+        "size-3.5"
+       ],
+       "attrs": {
+        "xmlns": "http://www.w3.org/2000/svg",
+        "width": "24",
+        "height": "24",
+        "viewBox": "0 0 24 24",
+        "fill": "none",
+        "stroke": "currentColor",
+        "stroke-width": "2",
+        "stroke-linecap": "round",
+        "stroke-linejoin": "round",
+        "aria-hidden": "true"
+       },
+       "children": [
+        {
+         "tag": "path"
+        },
+        {
+         "tag": "circle"
+        }
+       ]
+      }
+     ]
+    }
+   },
+   {
+    "document": "parity-tex-theorems:main.tex",
+    "skeleton": {
+     "tag": "button",
+     "class": [
+      "env-head"
+     ],
+     "attrs": {
+      "data-look": "theorem",
+      "data-style": "remark"
+     },
+     "children": [
+      {
+       "tag": "span",
+       "class": [
+        "env-head-name"
+       ],
+       "children": [
+        "Proposition 1"
+       ]
+      },
+      "."
+     ]
+    }
+   },
+   {
+    "document": "parity-tex-theorems:main.tex",
+    "skeleton": {
+     "tag": "button",
+     "class": [
+      "env-head"
+     ],
+     "attrs": {
+      "data-look": "theorem",
+      "data-style": "remark"
+     },
+     "children": [
+      {
+       "tag": "span",
+       "class": [
+        "env-head-name"
+       ],
+       "children": [
+        "Theorem 2"
+       ]
+      },
+      "."
+     ]
+    }
+   },
+   {
+    "document": "parity-tex-theorems:main.tex",
+    "skeleton": {
+     "tag": "button",
+     "class": [
+      "env-head"
+     ],
+     "attrs": {
+      "data-look": "theorem",
+      "data-style": "definition"
+     },
+     "children": [
+      {
+       "tag": "span",
+       "class": [
+        "env-head-name"
+       ],
+       "children": [
+        "Example 3"
+       ]
+      },
+      "."
+     ]
+    }
+   },
+   {
+    "document": "parity-tex-theorems:main.tex",
+    "skeleton": {
+     "tag": "button",
+     "class": [
+      "env-head"
+     ],
+     "attrs": {
+      "data-look": "theorem",
+      "data-style": "definition"
+     },
+     "children": [
+      {
+       "tag": "span",
+       "class": [
+        "env-head-name"
+       ],
+       "children": [
+        "Example 4"
+       ]
+      },
+      "."
+     ]
+    }
+   },
+   {
+    "document": "parity-tex-theorems:main.tex",
+    "skeleton": {
+     "tag": "button",
+     "class": [
+      "env-head"
+     ],
+     "attrs": {
+      "data-look": "theorem",
+      "data-style": "definition"
+     },
+     "children": [
+      {
+       "tag": "span",
+       "class": [
+        "env-head-name"
+       ],
+       "children": [
+        "Definition 5"
+       ]
+      },
+      "."
+     ]
+    }
+   },
+   {
+    "document": "parity-tex-theorems:main.tex",
+    "skeleton": {
+     "tag": "button",
+     "class": [
+      "env-head"
+     ],
+     "attrs": {
+      "data-look": "theorem",
+      "data-style": "definition"
+     },
+     "children": [
+      {
+       "tag": "span",
+       "class": [
+        "env-head-name"
+       ],
+       "children": [
+        "Example 6"
+       ]
+      },
+      "."
+     ]
+    }
+   },
+   {
+    "document": "parity-tex-theorems:main.tex",
+    "skeleton": {
+     "tag": "button",
+     "class": [
+      "env-head"
+     ],
+     "attrs": {
+      "data-look": "theorem",
+      "data-style": "remark"
+     },
+     "children": [
+      {
+       "tag": "span",
+       "class": [
+        "env-head-name"
+       ],
+       "children": [
+        "Theorem 7"
+       ]
+      },
+      "."
+     ]
+    }
+   },
+   {
+    "document": "parity-tex-theorems:main.tex",
+    "skeleton": {
+     "tag": "button",
+     "class": [
+      "env-head"
+     ],
+     "attrs": {
+      "data-look": "theorem",
+      "data-style": "remark"
+     },
+     "children": [
+      {
+       "tag": "span",
+       "class": [
+        "env-head-name"
+       ],
+       "children": [
+        "Remark 8"
+       ]
+      },
+      "."
+     ]
+    }
+   },
+   {
+    "document": "parity-tex-theorems:main.tex",
+    "skeleton": {
+     "tag": "button",
+     "class": [
+      "env-head"
+     ],
+     "attrs": {
+      "data-look": "theorem",
+      "data-style": "remark"
+     },
+     "children": [
+      {
+       "tag": "span",
+       "class": [
+        "env-head-name"
+       ],
+       "children": [
+        "Remark 9"
+       ]
+      },
+      "."
+     ]
+    }
+   },
+   {
+    "document": "parity-tex-theorems:main.tex",
+    "skeleton": {
+     "tag": "button",
+     "class": [
+      "env-head"
+     ],
+     "attrs": {
+      "data-look": "theorem",
+      "data-style": "remark"
+     },
+     "children": [
+      {
+       "tag": "span",
+       "class": [
+        "env-head-name"
+       ],
+       "children": [
+        "Lemma 10"
+       ]
+      },
+      " (Bouchet  \\cite{abrep})."
+     ]
+    }
+   },
+   {
+    "document": "parity-tex-theorems:main.tex",
+    "skeleton": {
+     "tag": "button",
+     "class": [
+      "env-head"
+     ],
+     "attrs": {
+      "data-look": "theorem",
+      "data-style": "definition"
+     },
+     "children": [
+      {
+       "tag": "span",
+       "class": [
+        "env-head-name"
+       ],
+       "children": [
+        "Definition 11"
+       ]
+      },
+      "."
+     ]
+    }
+   },
+   {
+    "document": "parity-tex-theorems:main.tex",
+    "skeleton": {
+     "tag": "button",
+     "class": [
+      "env-head"
+     ],
+     "attrs": {
+      "data-look": "theorem",
+      "data-style": "remark"
+     },
+     "children": [
+      {
+       "tag": "span",
+       "class": [
+        "env-head-name"
+       ],
+       "children": [
+        "Theorem 12"
+       ]
+      },
+      "."
+     ]
+    }
+   },
+   {
+    "document": "parity-tex-theorems:main.tex",
+    "skeleton": {
+     "tag": "button",
+     "class": [
+      "env-head"
+     ],
+     "attrs": {
+      "data-look": "theorem",
+      "data-style": "remark"
+     },
+     "children": [
+      {
+       "tag": "span",
+       "class": [
+        "env-head-name"
+       ],
+       "children": [
+        "Corollary 13"
+       ]
+      },
+      "."
+     ]
+    }
+   },
+   {
+    "document": "parity-tex-theorems:main.tex",
+    "skeleton": {
+     "tag": "button",
+     "class": [
+      "env-head"
+     ],
+     "attrs": {
+      "data-look": "theorem",
+      "data-style": "remark"
+     },
+     "children": [
+      {
+       "tag": "span",
+       "class": [
+        "env-head-name"
+       ],
+       "children": [
+        "Remark 14"
+       ]
+      },
+      "."
+     ]
+    }
+   },
+   {
+    "document": "parity-tex-theorems:main.tex",
+    "skeleton": {
+     "tag": "button",
+     "class": [
+      "env-head"
+     ],
+     "attrs": {
+      "data-look": "theorem",
+      "data-style": "remark"
+     },
+     "children": [
+      {
+       "tag": "span",
+       "class": [
+        "env-head-name"
+       ],
+       "children": [
+        "Lemma 15"
+       ]
+      },
+      "."
+     ]
+    }
+   },
+   {
+    "document": "parity-tex-theorems:main.tex",
+    "skeleton": {
+     "tag": "button",
+     "class": [
+      "env-head"
+     ],
+     "attrs": {
+      "data-look": "proof"
+     },
+     "children": [
+      "Proof of Theorem~\\ref{t.1}."
+     ]
+    }
+   },
+   {
+    "document": "parity-tex-theorems:main.tex",
+    "skeleton": {
+     "tag": "button",
+     "class": [
+      "env-head"
+     ],
+     "attrs": {
+      "data-look": "theorem",
+      "data-style": "remark"
+     },
+     "children": [
+      {
+       "tag": "span",
+       "class": [
+        "env-head-name"
+       ],
+       "children": [
+        "Corollary 16"
+       ]
+      },
+      "."
+     ]
+    }
+   },
+   {
+    "document": "parity-tex-theorems:main.tex",
+    "skeleton": {
+     "tag": "button",
+     "class": [
+      "env-head"
+     ],
+     "attrs": {
+      "data-look": "theorem",
+      "data-style": "remark"
+     },
+     "children": [
+      {
+       "tag": "span",
+       "class": [
+        "env-head-name"
+       ],
+       "children": [
+        "Corollary 17"
+       ]
+      },
+      "."
+     ]
+    }
+   },
+   {
+    "document": "parity-tex-theorems:main.tex",
+    "skeleton": {
+     "tag": "button",
+     "class": [
+      "env-head"
+     ],
+     "attrs": {
+      "data-look": "theorem",
+      "data-style": "remark"
+     },
+     "children": [
+      {
+       "tag": "span",
+       "class": [
+        "env-head-name"
+       ],
+       "children": [
+        "Remark 18"
+       ]
+      },
+      "."
+     ]
+    }
+   },
+   {
+    "document": "parity-tex-theorems:main.tex",
+    "skeleton": {
+     "tag": "button",
+     "class": [
+      "env-head"
+     ],
+     "attrs": {
+      "data-look": "theorem",
+      "data-style": "remark"
+     },
+     "children": [
+      {
+       "tag": "span",
+       "class": [
+        "env-head-name"
+       ],
+       "children": [
+        "Theorem 19"
+       ]
+      },
+      "."
+     ]
+    }
+   },
+   {
+    "document": "parity-tex-tables:main.tex",
+    "skeleton": {
+     "tag": "button",
+     "class": [
+      "env-head"
+     ],
+     "attrs": {
+      "data-look": "theorem",
+      "data-style": "plain"
+     },
+     "children": [
+      {
+       "tag": "span",
+       "class": [
+        "env-head-name"
+       ],
+       "children": [
+        "Theorem 4.1"
+       ]
+      },
+      "."
+     ]
+    }
+   },
+   {
+    "document": "parity-tex-tables:main.tex",
+    "skeleton": {
+     "tag": "button",
+     "class": [
+      "env-head"
+     ],
+     "attrs": {
+      "data-look": "theorem",
+      "data-style": "plain"
+     },
+     "children": [
+      {
+       "tag": "span",
+       "class": [
+        "env-head-name"
+       ],
+       "children": [
+        "Theorem 4.2"
+       ]
+      },
+      "."
+     ]
+    }
+   },
+   {
+    "document": "parity-tex-tables:main.tex",
+    "skeleton": {
+     "tag": "button",
+     "class": [
+      "env-head"
+     ],
+     "attrs": {
+      "data-look": "theorem",
+      "data-style": "definition"
+     },
+     "children": [
+      {
+       "tag": "span",
+       "class": [
+        "env-head-name"
+       ],
+       "children": [
+        "Figure"
+       ]
+      },
+      "."
+     ]
+    }
+   },
+   {
+    "document": "parity-tex-beamer:main.tex",
+    "skeleton": {
+     "tag": "button",
+     "class": [
+      "env-label"
+     ],
+     "attrs": {
+      "data-look": "box"
+     },
+     "children": [
+      "theorem"
+     ]
+    }
+   },
+   {
+    "document": "parity-tex-beamer:main.tex",
+    "skeleton": {
+     "tag": "button",
+     "class": [
+      "env-label"
+     ],
+     "attrs": {
+      "data-look": "box"
+     },
+     "children": [
+      "definition"
+     ]
+    }
+   },
+   {
+    "document": "parity-tex-beamer:main.tex",
+    "skeleton": {
+     "tag": "button",
+     "class": [
+      "env-head"
+     ],
+     "attrs": {
+      "data-look": "theorem",
+      "data-style": "definition"
+     },
+     "children": [
+      {
+       "tag": "span",
+       "class": [
+        "env-head-name"
+       ],
+       "children": [
+        "Lemma"
+       ]
+      },
+      "."
+     ]
+    }
+   },
+   {
+    "document": "parity-tex-beamer:main.tex",
+    "skeleton": {
+     "tag": "button",
+     "class": [
+      "env-label"
+     ],
+     "attrs": {
+      "data-look": "box"
+     },
+     "children": [
+      "onlyenv"
+     ]
+    }
+   },
+   {
+    "document": "parity-tex-beamer:main.tex",
+    "skeleton": {
+     "tag": "button",
+     "class": [
+      "env-label"
+     ],
+     "attrs": {
+      "data-look": "box"
+     },
+     "children": [
+      "uncoverenv"
+     ]
+    }
+   },
+   {
+    "document": "parity-tex-beamer:main.tex",
+    "skeleton": {
+     "tag": "button",
+     "class": [
+      "env-label"
+     ],
+     "attrs": {
+      "data-look": "box"
+     },
+     "children": [
+      "overprint"
+     ]
+    }
+   },
+   {
+    "document": "parity-tex-beamer:main.tex",
+    "skeleton": {
+     "tag": "button",
+     "class": [
+      "env-label"
+     ],
+     "attrs": {
+      "data-look": "box"
+     },
+     "children": [
+      "overlayarea"
+     ]
+    }
+   },
+   {
+    "document": "parity-tex-body:main.tex",
+    "skeleton": {
+     "tag": "button",
+     "class": [
+      "env-head"
+     ],
+     "attrs": {
+      "data-look": "theorem",
+      "data-style": "plain"
+     },
+     "children": [
+      {
+       "tag": "span",
+       "class": [
+        "env-head-name"
+       ],
+       "children": [
+        "Theorem 1"
+       ]
+      },
+      "."
+     ]
+    }
+   },
+   {
+    "document": "parity-tex-body:main.tex",
+    "skeleton": {
+     "tag": "button",
+     "class": [
+      "env-label"
+     ],
+     "attrs": {
+      "data-look": "box"
+     },
+     "children": [
+      "algorithm"
+     ]
+    }
+   },
+   {
+    "document": "parity-tex-body:main.tex",
+    "skeleton": {
+     "tag": "button",
+     "class": [
+      "env-label"
+     ],
+     "attrs": {
+      "data-look": "box"
+     },
+     "children": [
+      "circuitikz"
+     ]
+    }
+   },
+   {
+    "document": "parity-tex-body:main.tex",
+    "skeleton": {
+     "tag": "button",
+     "class": [
+      "env-label"
+     ],
+     "attrs": {
+      "data-look": "box"
+     },
+     "children": [
+      "forest"
+     ]
+    }
+   },
+   {
+    "document": "parity-tex-body:main.tex",
+    "skeleton": {
+     "tag": "button",
+     "class": [
+      "env-head"
+     ],
+     "attrs": {
+      "data-look": "theorem",
+      "data-style": "definition"
+     },
+     "children": [
+      {
+       "tag": "span",
+       "class": [
+        "env-head-name"
+       ],
+       "children": [
+        "Table"
+       ]
+      },
+      "."
+     ]
+    }
+   },
+   {
+    "document": "parity-tex-body:main.tex",
+    "skeleton": {
+     "tag": "button",
+     "class": [
+      "env-label"
+     ],
+     "attrs": {
+      "data-look": "box"
+     },
+     "children": [
+      "threeparttable"
+     ]
+    }
+   },
+   {
+    "document": "parity-tex-body:main.tex",
+    "skeleton": {
+     "tag": "button",
+     "class": [
+      "env-label"
+     ],
+     "attrs": {
+      "data-look": "box"
+     },
+     "children": [
+      "minipage"
+     ]
+    }
+   },
+   {
+    "document": "parity-tex-body:main.tex",
+    "skeleton": {
+     "tag": "button",
+     "class": [
+      "env-label"
+     ],
+     "attrs": {
+      "data-look": "box"
+     },
+     "children": [
+      "multicols"
+     ]
+    }
+   },
+   {
+    "document": "parity-tex-classes:ieee.tex",
+    "skeleton": {
+     "tag": "button",
+     "class": [
+      "env-head"
+     ],
+     "attrs": {
+      "data-look": "theorem",
+      "data-style": "definition"
+     },
+     "children": [
+      {
+       "tag": "span",
+       "class": [
+        "env-head-name"
+       ],
+       "children": [
+        "Index Terms"
+       ]
+      },
+      "."
+     ]
+    }
+   }
+  ],
+  "FrameChrome": [
+   {
+    "document": "/home/user/texpile-tools-main/perf-drive/parity/verify/docs/skeleton-beamer:main.tex",
+    "skeleton": {
+     "tag": "div",
+     "class": [
+      "frame-chrome"
+     ],
+     "children": [
+      " ",
+      {
+       "tag": "button",
+       "attrs": {
+        "data-scope": "popover",
+        "data-part": "trigger",
+        "dir": "ltr",
+        "type": "button",
+        "id": "popover:«id»:trigger",
+        "data-ownedby": "«id»",
+        "aria-haspopup": "dialog",
+        "aria-expanded": "false",
+        "data-state": "closed",
+        "aria-controls": "popover:«id»:content"
+       },
+       "children": [
+        {
+         "tag": "button",
+         "class": [
+          "frame-chrome-settings"
+         ],
+         "attrs": {
+          "type": "button",
+          "aria-label": "Frame settings",
+          "data-tip": "Frame settings"
+         },
+         "children": [
+          {
+           "tag": "svg",
+           "class": [
+            "lucide",
+            "lucide-sliders-horizontal",
+            "lucide-icon",
+            "size-3.5"
+           ],
+           "attrs": {
+            "xmlns": "http://www.w3.org/2000/svg",
+            "width": "24",
+            "height": "24",
+            "viewBox": "0 0 24 24",
+            "fill": "none",
+            "stroke": "currentColor",
+            "stroke-width": "2",
+            "stroke-linecap": "round",
+            "stroke-linejoin": "round",
+            "aria-hidden": "true"
+           },
+           "children": [
+            {
+             "tag": "path"
+            },
+            {
+             "tag": "path"
+            },
+            {
+             "tag": "path"
+            },
+            {
+             "tag": "path"
+            },
+            {
+             "tag": "path"
+            },
+            {
+             "tag": "path"
+            },
+            {
+             "tag": "path"
+            },
+            {
+             "tag": "path"
+            },
+            {
+             "tag": "path"
+            }
+           ]
+          }
+         ]
+        }
+       ]
+      },
+      " "
+     ]
+    }
+   },
+   {
+    "document": "/home/user/texpile-tools-main/perf-drive/parity/verify/docs/skeleton-beamer:main.tex",
+    "skeleton": {
+     "tag": "div",
+     "class": [
+      "frame-chrome"
+     ],
+     "children": [
+      {
+       "tag": "button",
+       "class": [
+        "frame-chrome-add"
+       ],
+       "attrs": {
+        "type": "button"
+       },
+       "children": [
+        "Add title"
+       ]
+      },
+      " ",
+      {
+       "tag": "button",
+       "attrs": {
+        "data-scope": "popover",
+        "data-part": "trigger",
+        "dir": "ltr",
+        "type": "button",
+        "id": "popover:«id»:trigger",
+        "data-ownedby": "«id»",
+        "aria-haspopup": "dialog",
+        "aria-expanded": "false",
+        "data-state": "closed",
+        "aria-controls": "popover:«id»:content"
+       },
+       "children": [
+        {
+         "tag": "button",
+         "class": [
+          "frame-chrome-settings"
+         ],
+         "attrs": {
+          "type": "button",
+          "aria-label": "Frame settings",
+          "data-tip": "Frame settings"
+         },
+         "children": [
+          {
+           "tag": "svg",
+           "class": [
+            "lucide",
+            "lucide-sliders-horizontal",
+            "lucide-icon",
+            "size-3.5"
+           ],
+           "attrs": {
+            "xmlns": "http://www.w3.org/2000/svg",
+            "width": "24",
+            "height": "24",
+            "viewBox": "0 0 24 24",
+            "fill": "none",
+            "stroke": "currentColor",
+            "stroke-width": "2",
+            "stroke-linecap": "round",
+            "stroke-linejoin": "round",
+            "aria-hidden": "true"
+           },
+           "children": [
+            {
+             "tag": "path"
+            },
+            {
+             "tag": "path"
+            },
+            {
+             "tag": "path"
+            },
+            {
+             "tag": "path"
+            },
+            {
+             "tag": "path"
+            },
+            {
+             "tag": "path"
+            },
+            {
+             "tag": "path"
+            },
+            {
+             "tag": "path"
+            },
+            {
+             "tag": "path"
+            }
+           ]
+          }
+         ]
+        }
+       ]
+      },
+      " "
+     ]
+    }
+   },
+   {
+    "document": "/home/user/texpile-tools-main/perf-drive/parity/verify/docs/skeleton-beamer:main.tex",
+    "skeleton": {
+     "tag": "div",
+     "class": [
+      "frame-chrome"
+     ],
+     "children": [
+      {
+       "tag": "button",
+       "class": [
+        "frame-chrome-add"
+       ],
+       "attrs": {
+        "type": "button"
+       },
+       "children": [
+        "Add subtitle"
+       ]
+      },
+      " ",
+      {
+       "tag": "button",
+       "attrs": {
+        "data-scope": "popover",
+        "data-part": "trigger",
+        "dir": "ltr",
+        "type": "button",
+        "id": "popover:«id»:trigger",
+        "data-ownedby": "«id»",
+        "aria-haspopup": "dialog",
+        "aria-expanded": "false",
+        "data-state": "closed",
+        "aria-controls": "popover:«id»:content"
+       },
+       "children": [
+        {
+         "tag": "button",
+         "class": [
+          "frame-chrome-settings"
+         ],
+         "attrs": {
+          "type": "button",
+          "aria-label": "Frame settings",
+          "data-tip": "Frame settings"
+         },
+         "children": [
+          {
+           "tag": "svg",
+           "class": [
+            "lucide",
+            "lucide-sliders-horizontal",
+            "lucide-icon",
+            "size-3.5"
+           ],
+           "attrs": {
+            "xmlns": "http://www.w3.org/2000/svg",
+            "width": "24",
+            "height": "24",
+            "viewBox": "0 0 24 24",
+            "fill": "none",
+            "stroke": "currentColor",
+            "stroke-width": "2",
+            "stroke-linecap": "round",
+            "stroke-linejoin": "round",
+            "aria-hidden": "true"
+           },
+           "children": [
+            {
+             "tag": "path"
+            },
+            {
+             "tag": "path"
+            },
+            {
+             "tag": "path"
+            },
+            {
+             "tag": "path"
+            },
+            {
+             "tag": "path"
+            },
+            {
+             "tag": "path"
+            },
+            {
+             "tag": "path"
+            },
+            {
+             "tag": "path"
+            },
+            {
+             "tag": "path"
+            }
+           ]
+          }
+         ]
+        }
+       ]
+      },
+      " "
+     ]
+    }
+   },
+   {
+    "document": "parity-tex-beamer:main.tex",
+    "skeleton": {
+     "tag": "div",
+     "class": [
+      "frame-chrome"
+     ],
+     "children": [
+      " "
+     ]
+    }
+   },
+   {
+    "document": "parity-tex-beamer:main.tex",
+    "skeleton": {
+     "tag": "div",
+     "class": [
+      "frame-chrome"
+     ],
+     "children": [
+      {
+       "tag": "button",
+       "class": [
+        "frame-chrome-add"
+       ],
+       "attrs": {
+        "type": "button"
+       },
+       "children": [
+        "Add title"
+       ]
+      },
+      " "
+     ]
+    }
+   },
+   {
+    "document": "parity-tex-beamer:main.tex",
+    "skeleton": {
+     "tag": "div",
+     "class": [
+      "frame-chrome"
+     ],
+     "children": [
+      {
+       "tag": "button",
+       "class": [
+        "frame-chrome-add"
+       ],
+       "attrs": {
+        "type": "button"
+       },
+       "children": [
+        "Add subtitle"
+       ]
+      },
+      " "
+     ]
+    }
+   }
+  ],
+  "IncludeDocDisplay": [
+   {
+    "document": "/home/user/texpile-tools-main/perf-drive/parity/verify/docs/skeleton-article:main.tex",
+    "skeleton": {
+     "tag": "button",
+     "class": [
+      "includedoc-chip"
+     ],
+     "attrs": {
+      "type": "button",
+      "contenteditable": "false",
+      "data-tip": "Open \\input{chapter1}"
+     },
+     "children": [
+      {
+       "tag": "svg",
+       "class": [
+        "lucide",
+        "lucide-file-symlink",
+        "lucide-icon",
+        "size-3.5",
+        "shrink-0",
+        "opacity-55"
+       ],
+       "attrs": {
+        "xmlns": "http://www.w3.org/2000/svg",
+        "width": "24",
+        "height": "24",
+        "viewBox": "0 0 24 24",
+        "fill": "none",
+        "stroke": "currentColor",
+        "stroke-width": "2",
+        "stroke-linecap": "round",
+        "stroke-linejoin": "round",
+        "aria-hidden": "true"
+       },
+       "children": [
+        {
+         "tag": "path"
+        },
+        {
+         "tag": "path"
+        },
+        {
+         "tag": "path"
+        }
+       ]
+      },
+      " ",
+      {
+       "tag": "span",
+       "class": [
+        "includedoc-code"
+       ],
+       "children": [
+        {
+         "tag": "span",
+         "class": [
+          "includedoc-syntax"
+         ],
+         "children": [
+          "\\input{"
+         ]
+        },
+        {
+         "tag": "span",
+         "class": [
+          "includedoc-path"
+         ],
+         "children": [
+          "chapter1"
+         ]
+        },
+        {
+         "tag": "span",
+         "class": [
+          "includedoc-syntax"
+         ],
+         "children": [
+          "}"
+         ]
+        }
+       ]
+      }
+     ]
+    }
+   },
+   {
+    "document": "/home/user/texpile-tools-main/perf-drive/parity/verify/docs/skeleton-article:main.tex",
+    "skeleton": {
+     "tag": "button",
+     "class": [
+      "includedoc-chip",
+      "includedoc-missing"
+     ],
+     "attrs": {
+      "type": "button",
+      "contenteditable": "false",
+      "data-tip": "No file gone in the project"
+     },
+     "children": [
+      {
+       "tag": "svg",
+       "class": [
+        "lucide",
+        "lucide-file-symlink",
+        "lucide-icon",
+        "size-3.5",
+        "shrink-0",
+        "opacity-55"
+       ],
+       "attrs": {
+        "xmlns": "http://www.w3.org/2000/svg",
+        "width": "24",
+        "height": "24",
+        "viewBox": "0 0 24 24",
+        "fill": "none",
+        "stroke": "currentColor",
+        "stroke-width": "2",
+        "stroke-linecap": "round",
+        "stroke-linejoin": "round",
+        "aria-hidden": "true"
+       },
+       "children": [
+        {
+         "tag": "path"
+        },
+        {
+         "tag": "path"
+        },
+        {
+         "tag": "path"
+        }
+       ]
+      },
+      " ",
+      {
+       "tag": "span",
+       "class": [
+        "includedoc-code"
+       ],
+       "children": [
+        {
+         "tag": "span",
+         "class": [
+          "includedoc-syntax"
+         ],
+         "children": [
+          "\\input{"
+         ]
+        },
+        {
+         "tag": "span",
+         "class": [
+          "includedoc-path"
+         ],
+         "children": [
+          "gone"
+         ]
+        },
+        {
+         "tag": "span",
+         "class": [
+          "includedoc-syntax"
+         ],
+         "children": [
+          "}"
+         ]
+        }
+       ]
+      }
+     ]
+    }
+   },
+   {
+    "document": "parity-typ-typst-report:main.typ",
+    "skeleton": {
+     "tag": "button",
+     "class": [
+      "includedoc-chip"
+     ],
+     "attrs": {
+      "type": "button",
+      "contenteditable": "false",
+      "data-tip": "Open #include \"chapters/introduction.typ\""
+     },
+     "children": [
+      {
+       "tag": "svg",
+       "class": [
+        "lucide",
+        "lucide-file-symlink",
+        "lucide-icon",
+        "size-3.5",
+        "shrink-0",
+        "opacity-55"
+       ],
+       "attrs": {
+        "xmlns": "http://www.w3.org/2000/svg",
+        "width": "24",
+        "height": "24",
+        "viewBox": "0 0 24 24",
+        "fill": "none",
+        "stroke": "currentColor",
+        "stroke-width": "2",
+        "stroke-linecap": "round",
+        "stroke-linejoin": "round",
+        "aria-hidden": "true"
+       },
+       "children": [
+        {
+         "tag": "path"
+        },
+        {
+         "tag": "path"
+        },
+        {
+         "tag": "path"
+        }
+       ]
+      },
+      " ",
+      {
+       "tag": "span",
+       "class": [
+        "includedoc-code"
+       ],
+       "children": [
+        {
+         "tag": "span",
+         "class": [
+          "includedoc-syntax"
+         ],
+         "children": [
+          "#include \""
+         ]
+        },
+        {
+         "tag": "span",
+         "class": [
+          "includedoc-path"
+         ],
+         "children": [
+          "chapters/introduction.typ"
+         ]
+        },
+        {
+         "tag": "span",
+         "class": [
+          "includedoc-syntax"
+         ],
+         "children": [
+          "\""
+         ]
+        }
+       ]
+      }
+     ]
+    }
+   },
+   {
+    "document": "parity-typ-typst-report:main.typ",
+    "skeleton": {
+     "tag": "button",
+     "class": [
+      "includedoc-chip"
+     ],
+     "attrs": {
+      "type": "button",
+      "contenteditable": "false",
+      "data-tip": "Open #include \"chapters/method.typ\""
+     },
+     "children": [
+      {
+       "tag": "svg",
+       "class": [
+        "lucide",
+        "lucide-file-symlink",
+        "lucide-icon",
+        "size-3.5",
+        "shrink-0",
+        "opacity-55"
+       ],
+       "attrs": {
+        "xmlns": "http://www.w3.org/2000/svg",
+        "width": "24",
+        "height": "24",
+        "viewBox": "0 0 24 24",
+        "fill": "none",
+        "stroke": "currentColor",
+        "stroke-width": "2",
+        "stroke-linecap": "round",
+        "stroke-linejoin": "round",
+        "aria-hidden": "true"
+       },
+       "children": [
+        {
+         "tag": "path"
+        },
+        {
+         "tag": "path"
+        },
+        {
+         "tag": "path"
+        }
+       ]
+      },
+      " ",
+      {
+       "tag": "span",
+       "class": [
+        "includedoc-code"
+       ],
+       "children": [
+        {
+         "tag": "span",
+         "class": [
+          "includedoc-syntax"
+         ],
+         "children": [
+          "#include \""
+         ]
+        },
+        {
+         "tag": "span",
+         "class": [
+          "includedoc-path"
+         ],
+         "children": [
+          "chapters/method.typ"
+         ]
+        },
+        {
+         "tag": "span",
+         "class": [
+          "includedoc-syntax"
+         ],
+         "children": [
+          "\""
+         ]
+        }
+       ]
+      }
+     ]
+    }
+   },
+   {
+    "document": "parity-typ-typst-report:main.typ",
+    "skeleton": {
+     "tag": "button",
+     "class": [
+      "includedoc-chip"
+     ],
+     "attrs": {
+      "type": "button",
+      "contenteditable": "false",
+      "data-tip": "Open #include \"chapters/conclusion.typ\""
+     },
+     "children": [
+      {
+       "tag": "svg",
+       "class": [
+        "lucide",
+        "lucide-file-symlink",
+        "lucide-icon",
+        "size-3.5",
+        "shrink-0",
+        "opacity-55"
+       ],
+       "attrs": {
+        "xmlns": "http://www.w3.org/2000/svg",
+        "width": "24",
+        "height": "24",
+        "viewBox": "0 0 24 24",
+        "fill": "none",
+        "stroke": "currentColor",
+        "stroke-width": "2",
+        "stroke-linecap": "round",
+        "stroke-linejoin": "round",
+        "aria-hidden": "true"
+       },
+       "children": [
+        {
+         "tag": "path"
+        },
+        {
+         "tag": "path"
+        },
+        {
+         "tag": "path"
+        }
+       ]
+      },
+      " ",
+      {
+       "tag": "span",
+       "class": [
+        "includedoc-code"
+       ],
+       "children": [
+        {
+         "tag": "span",
+         "class": [
+          "includedoc-syntax"
+         ],
+         "children": [
+          "#include \""
+         ]
+        },
+        {
+         "tag": "span",
+         "class": [
+          "includedoc-path"
+         ],
+         "children": [
+          "chapters/conclusion.typ"
+         ]
+        },
+        {
+         "tag": "span",
+         "class": [
+          "includedoc-syntax"
+         ],
+         "children": [
+          "\""
+         ]
+        }
+       ]
+      }
+     ]
+    }
+   },
+   {
+    "document": "parity-tex-beamer:main.tex",
+    "skeleton": {
+     "tag": "button",
+     "class": [
+      "includedoc-chip"
+     ],
+     "attrs": {
+      "type": "button",
+      "contenteditable": "false",
+      "data-tip": "Open \\input{frames/extra}"
+     },
+     "children": [
+      {
+       "tag": "svg",
+       "class": [
+        "lucide",
+        "lucide-file-symlink",
+        "lucide-icon",
+        "size-3.5",
+        "shrink-0",
+        "opacity-55"
+       ],
+       "attrs": {
+        "xmlns": "http://www.w3.org/2000/svg",
+        "width": "24",
+        "height": "24",
+        "viewBox": "0 0 24 24",
+        "fill": "none",
+        "stroke": "currentColor",
+        "stroke-width": "2",
+        "stroke-linecap": "round",
+        "stroke-linejoin": "round",
+        "aria-hidden": "true"
+       },
+       "children": [
+        {
+         "tag": "path"
+        },
+        {
+         "tag": "path"
+        },
+        {
+         "tag": "path"
+        }
+       ]
+      },
+      " ",
+      {
+       "tag": "span",
+       "class": [
+        "includedoc-code"
+       ],
+       "children": [
+        {
+         "tag": "span",
+         "class": [
+          "includedoc-syntax"
+         ],
+         "children": [
+          "\\input{"
+         ]
+        },
+        {
+         "tag": "span",
+         "class": [
+          "includedoc-path"
+         ],
+         "children": [
+          "frames/extra"
+         ]
+        },
+        {
+         "tag": "span",
+         "class": [
+          "includedoc-syntax"
+         ],
+         "children": [
+          "}"
+         ]
+        }
+       ]
+      }
+     ]
+    }
+   },
+   {
+    "document": "parity-tex-body:main.tex",
+    "skeleton": {
+     "tag": "button",
+     "class": [
+      "includedoc-chip"
+     ],
+     "attrs": {
+      "type": "button",
+      "contenteditable": "false",
+      "data-tip": "Open \\subfile{sections/sub}"
+     },
+     "children": [
+      {
+       "tag": "svg",
+       "class": [
+        "lucide",
+        "lucide-file-symlink",
+        "lucide-icon",
+        "size-3.5",
+        "shrink-0",
+        "opacity-55"
+       ],
+       "attrs": {
+        "xmlns": "http://www.w3.org/2000/svg",
+        "width": "24",
+        "height": "24",
+        "viewBox": "0 0 24 24",
+        "fill": "none",
+        "stroke": "currentColor",
+        "stroke-width": "2",
+        "stroke-linecap": "round",
+        "stroke-linejoin": "round",
+        "aria-hidden": "true"
+       },
+       "children": [
+        {
+         "tag": "path"
+        },
+        {
+         "tag": "path"
+        },
+        {
+         "tag": "path"
+        }
+       ]
+      },
+      " ",
+      {
+       "tag": "span",
+       "class": [
+        "includedoc-code"
+       ],
+       "children": [
+        {
+         "tag": "span",
+         "class": [
+          "includedoc-syntax"
+         ],
+         "children": [
+          "\\subfile{"
+         ]
+        },
+        {
+         "tag": "span",
+         "class": [
+          "includedoc-path"
+         ],
+         "children": [
+          "sections/sub"
+         ]
+        },
+        {
+         "tag": "span",
+         "class": [
+          "includedoc-syntax"
+         ],
+         "children": [
+          "}"
+         ]
+        }
+       ]
+      }
+     ]
+    }
+   },
+   {
+    "document": "parity-tex-body:main.tex",
+    "skeleton": {
+     "tag": "button",
+     "class": [
+      "includedoc-chip"
+     ],
+     "attrs": {
+      "type": "button",
+      "contenteditable": "false",
+      "data-tip": "Open \\input{sections/input}"
+     },
+     "children": [
+      {
+       "tag": "svg",
+       "class": [
+        "lucide",
+        "lucide-file-symlink",
+        "lucide-icon",
+        "size-3.5",
+        "shrink-0",
+        "opacity-55"
+       ],
+       "attrs": {
+        "xmlns": "http://www.w3.org/2000/svg",
+        "width": "24",
+        "height": "24",
+        "viewBox": "0 0 24 24",
+        "fill": "none",
+        "stroke": "currentColor",
+        "stroke-width": "2",
+        "stroke-linecap": "round",
+        "stroke-linejoin": "round",
+        "aria-hidden": "true"
+       },
+       "children": [
+        {
+         "tag": "path"
+        },
+        {
+         "tag": "path"
+        },
+        {
+         "tag": "path"
+        }
+       ]
+      },
+      " ",
+      {
+       "tag": "span",
+       "class": [
+        "includedoc-code"
+       ],
+       "children": [
+        {
+         "tag": "span",
+         "class": [
+          "includedoc-syntax"
+         ],
+         "children": [
+          "\\input{"
+         ]
+        },
+        {
+         "tag": "span",
+         "class": [
+          "includedoc-path"
+         ],
+         "children": [
+          "sections/input"
+         ]
+        },
+        {
+         "tag": "span",
+         "class": [
+          "includedoc-syntax"
+         ],
+         "children": [
+          "}"
+         ]
+        }
+       ]
+      }
+     ]
+    }
+   },
+   {
+    "document": "parity-tex-body:main.tex",
+    "skeleton": {
+     "tag": "button",
+     "class": [
+      "includedoc-chip"
+     ],
+     "attrs": {
+      "type": "button",
+      "contenteditable": "false",
+      "data-tip": "Open \\include{part}"
+     },
+     "children": [
+      {
+       "tag": "svg",
+       "class": [
+        "lucide",
+        "lucide-file-symlink",
+        "lucide-icon",
+        "size-3.5",
+        "shrink-0",
+        "opacity-55"
+       ],
+       "attrs": {
+        "xmlns": "http://www.w3.org/2000/svg",
+        "width": "24",
+        "height": "24",
+        "viewBox": "0 0 24 24",
+        "fill": "none",
+        "stroke": "currentColor",
+        "stroke-width": "2",
+        "stroke-linecap": "round",
+        "stroke-linejoin": "round",
+        "aria-hidden": "true"
+       },
+       "children": [
+        {
+         "tag": "path"
+        },
+        {
+         "tag": "path"
+        },
+        {
+         "tag": "path"
+        }
+       ]
+      },
+      " ",
+      {
+       "tag": "span",
+       "class": [
+        "includedoc-code"
+       ],
+       "children": [
+        {
+         "tag": "span",
+         "class": [
+          "includedoc-syntax"
+         ],
+         "children": [
+          "\\include{"
+         ]
+        },
+        {
+         "tag": "span",
+         "class": [
+          "includedoc-path"
+         ],
+         "children": [
+          "part"
+         ]
+        },
+        {
+         "tag": "span",
+         "class": [
+          "includedoc-syntax"
+         ],
+         "children": [
+          "}"
+         ]
+        }
+       ]
+      }
+     ]
+    }
+   }
+  ],
+  "BibliographyView": [
+   {
+    "document": "/home/user/texpile-tools-main/perf-drive/parity/verify/docs/skeleton-typ:main.typ",
+    "skeleton": {
+     "tag": "div",
+     "class": [
+      "bibliography-preview",
+      "rounded-base",
+      "my-4",
+      "select-none"
+     ],
+     "children": [
+      {
+       "tag": "h2",
+       "class": [
+        "mt-0",
+        "mb-2",
+        "text-2xl",
+        "font-semibold"
+       ],
+       "children": [
+        "Bibliography"
+       ]
+      },
+      " ",
+      {
+       "tag": "div",
+       "class": [
+        "flex",
+        "flex-col",
+        "gap-1.5"
+       ],
+       "children": [
+        {
+         "tag": "p",
+         "class": [
+          "m-0",
+          "pl-8",
+          "-indent-8"
+         ],
+         "children": [
+          {
+           "tag": "span",
+           "children": [
+            "Donald E. Knuth "
+           ]
+          },
+          {
+           "tag": "span",
+           "class": [
+            "text-muted"
+           ],
+           "children": [
+            "(1984). "
+           ]
+          },
+          {
+           "tag": "em",
+           "children": [
+            "The TeXbook. "
+           ]
+          },
+          {
+           "tag": "span",
+           "class": [
+            "text-muted"
+           ],
+           "children": [
+            "Addison-Wesley."
+           ]
+          }
+         ]
+        }
+       ]
+      },
+      " "
+     ]
+    }
+   },
+   {
+    "document": "parity-typ-typst-report:main.typ",
+    "skeleton": {
+     "tag": "div",
+     "class": [
+      "bibliography-preview",
+      "rounded-base",
+      "my-4",
+      "select-none"
+     ],
+     "children": [
+      {
+       "tag": "h2",
+       "class": [
+        "mt-0",
+        "mb-2",
+        "text-2xl",
+        "font-semibold"
+       ],
+       "children": [
+        "Bibliography"
+       ]
+      },
+      " ",
+      {
+       "tag": "div",
+       "class": [
+        "flex",
+        "flex-col",
+        "gap-1.5"
+       ],
+       "children": [
+        {
+         "tag": "p",
+         "class": [
+          "m-0",
+          "pl-8",
+          "-indent-8"
+         ],
+         "children": [
+          {
+           "tag": "span",
+           "children": [
+            "Jane Doe "
+           ]
+          },
+          {
+           "tag": "span",
+           "class": [
+            "text-muted"
+           ],
+           "children": [
+            "(2024). "
+           ]
+          },
+          {
+           "tag": "em",
+           "children": [
+            "An Example Source. "
+           ]
+          },
+          {
+           "tag": "span",
+           "class": [
+            "text-muted"
+           ],
+           "children": [
+            "Example Press."
+           ]
+          }
+         ]
+        },
+        {
+         "tag": "p",
+         "class": [
+          "m-0",
+          "pl-8",
+          "-indent-8"
+         ],
+         "children": [
+          {
+           "tag": "span",
+           "children": [
+            "John Smith "
+           ]
+          },
+          {
+           "tag": "span",
+           "class": [
+            "text-muted"
+           ],
+           "children": [
+            "(2023). "
+           ]
+          },
+          {
+           "tag": "em",
+           "children": [
+            "A Sample Paper for Demonstration. "
+           ]
+          },
+          {
+           "tag": "span",
+           "children": [
+            "Journal of Examples. "
+           ]
+          }
+         ]
+        }
+       ]
+      },
+      " "
+     ]
+    }
+   },
+   {
+    "document": "parity-tex-beamer:main.tex",
+    "skeleton": {
+     "tag": "div",
+     "class": [
+      "bibliography-preview",
+      "rounded-base",
+      "my-4",
+      "select-none"
+     ],
+     "children": [
+      {
+       "tag": "h2",
+       "class": [
+        "mt-0",
+        "mb-2",
+        "text-2xl",
+        "font-semibold"
+       ],
+       "children": [
+        "References"
+       ]
+      },
+      " ",
+      {
+       "tag": "div",
+       "class": [
+        "flex",
+        "flex-col",
+        "gap-1.5"
+       ],
+       "children": [
+        {
+         "tag": "p",
+         "class": [
+          "m-0",
+          "pl-8",
+          "-indent-8"
+         ],
+         "children": [
+          {
+           "tag": "span",
+           "children": [
+            "Donald E. Knuth "
+           ]
+          },
+          {
+           "tag": "span",
+           "class": [
+            "text-muted"
+           ],
+           "children": [
+            "(1968). "
+           ]
+          },
+          {
+           "tag": "em",
+           "children": [
+            "The Art of Computer Programming. "
+           ]
+          },
+          {
+           "tag": "span",
+           "class": [
+            "text-muted"
+           ],
+           "children": [
+            "Addison-Wesley."
+           ]
+          }
+         ]
+        },
+        {
+         "tag": "p",
+         "class": [
+          "m-0",
+          "pl-8",
+          "-indent-8"
+         ],
+         "children": [
+          {
+           "tag": "span",
+           "children": [
+            "Leslie Lamport "
+           ]
+          },
+          {
+           "tag": "span",
+           "class": [
+            "text-muted"
+           ],
+           "children": [
+            "(1994). "
+           ]
+          },
+          {
+           "tag": "em",
+           "children": [
+            "LaTeX: A Document Preparation System. "
+           ]
+          },
+          {
+           "tag": "span",
+           "class": [
+            "text-muted"
+           ],
+           "children": [
+            "Addison-Wesley."
+           ]
+          }
+         ]
+        }
+       ]
+      },
+      " "
+     ]
+    }
+   },
+   {
+    "document": "parity-typ-body:main.typ",
+    "skeleton": {
+     "tag": "div",
+     "class": [
+      "bibliography-preview",
+      "rounded-base",
+      "my-4",
+      "select-none"
+     ],
+     "children": [
+      {
+       "tag": "h2",
+       "class": [
+        "mt-0",
+        "mb-2",
+        "text-2xl",
+        "font-semibold"
+       ],
+       "children": [
+        "Bibliography"
+       ]
+      },
+      " ",
+      {
+       "tag": "div",
+       "class": [
+        "flex",
+        "flex-col",
+        "gap-1.5"
+       ],
+       "children": [
+        {
+         "tag": "p",
+         "class": [
+          "m-0",
+          "pl-8",
+          "-indent-8"
+         ],
+         "children": [
+          {
+           "tag": "span",
+           "children": [
+            "Ada Writer "
+           ]
+          },
+          {
+           "tag": "span",
+           "class": [
+            "text-muted"
+           ],
+           "children": [
+            "(2020). "
+           ]
+          },
+          {
+           "tag": "em",
+           "children": [
+            "A Small Result. "
+           ]
+          },
+          {
+           "tag": "span",
+           "children": [
+            "Journal of Examples. "
+           ]
+          }
+         ]
+        }
+       ]
+      },
+      " "
+     ]
+    }
+   }
+  ],
+  "BibliographyHeading": [
+   {
+    "document": "/home/user/texpile-tools-main/perf-drive/parity/verify/docs/skeleton-article:main.tex",
+    "skeleton": {
+     "tag": "h1",
+     "class": [
+      "bibliography-heading"
+     ],
+     "attrs": {
+      "data-unnumbered": "true"
+     },
+     "children": [
+      "References"
+     ]
+    }
+   }
+  ],
+  "TableWrapperComponent": [
+   {
+    "document": "parity-tex-theorems:main.tex",
+    "skeleton": {
+     "tag": "div",
+     "class": [
+      "table-chrome"
+     ],
+     "children": [
+      " ",
+      {
+       "tag": "div",
+       "class": [
+        "table-tools"
+       ],
+       "children": [
+        {
+         "tag": "button",
+         "class": [
+          "table-settings-btn"
+         ],
+         "attrs": {
+          "data-scope": "popover",
+          "data-part": "trigger",
+          "dir": "ltr",
+          "type": "button",
+          "id": "popover:«id»:trigger",
+          "data-ownedby": "«id»",
+          "aria-haspopup": "dialog",
+          "aria-expanded": "false",
+          "data-state": "closed",
+          "aria-controls": "popover:«id»:content"
+         },
+         "children": [
+          {
+           "tag": "button",
+           "attrs": {
+            "type": "button",
+            "aria-label": "Table settings",
+            "data-tip": "Table settings"
+           },
+           "children": [
+            {
+             "tag": "svg",
+             "class": [
+              "lucide",
+              "lucide-settings",
+              "lucide-icon",
+              "h-4",
+              "w-4"
+             ],
+             "attrs": {
+              "xmlns": "http://www.w3.org/2000/svg",
+              "width": "24",
+              "height": "24",
+              "viewBox": "0 0 24 24",
+              "fill": "none",
+              "stroke": "currentColor",
+              "stroke-width": "2",
+              "stroke-linecap": "round",
+              "stroke-linejoin": "round",
+              "aria-hidden": "true"
+             },
+             "children": [
+              {
+               "tag": "path"
+              },
+              {
+               "tag": "circle"
+              }
+             ]
+            }
+           ]
+          }
+         ]
+        },
+        " "
+       ]
+      }
+     ]
+    }
+   }
+  ],
+  "TypstEnvHeader": [
+   {
+    "document": "/home/user/texpile-tools-main/perf-drive/parity/verify/docs/skeleton-typ:main.typ",
+    "skeleton": {
+     "tag": "div",
+     "class": [
+      "typ-env-header"
+     ],
+     "attrs": {
+      "contenteditable": "false"
+     },
+     "children": [
+      {
+       "tag": "button",
+       "class": [
+        "env-label"
+       ],
+       "children": [
+        "callout"
+       ]
+      },
+      " "
+     ]
+    }
+   },
+   {
+    "document": "parity-typ-body:main.typ",
+    "skeleton": {
+     "tag": "div",
+     "class": [
+      "typ-env-header"
+     ],
+     "attrs": {
+      "contenteditable": "false"
+     },
+     "children": [
+      {
+       "tag": "button",
+       "class": [
+        "env-label"
+       ],
+       "children": [
+        "theorem"
+       ]
+      },
+      " "
+     ]
+    }
+   }
+  ],
+  "TypstRefDisplay": [
+   {
+    "document": "/home/user/texpile-tools-main/perf-drive/parity/verify/docs/skeleton-typ:main.typ",
+    "skeleton": {
+     "tag": "button",
+     "class": [
+      "inline-flex",
+      "cursor-pointer",
+      "items-center"
+     ],
+     "attrs": {
+      "data-scope": "popover",
+      "data-part": "trigger",
+      "dir": "ltr",
+      "type": "button",
+      "id": "popover:«id»:trigger",
+      "data-ownedby": "«id»",
+      "aria-haspopup": "dialog",
+      "aria-expanded": "false",
+      "data-state": "closed",
+      "aria-controls": "popover:«id»:content"
+     },
+     "children": [
+      {
+       "tag": "span",
+       "class": [
+        "typ-ref",
+        "rounded-base",
+        "cursor-pointer",
+        "transition-colors",
+        "text-ref-broken-fg",
+        "hover:bg-ref-broken-bg"
+       ],
+       "attrs": {
+        "role": "button",
+        "tabindex": "0",
+        "data-tip": "intro"
+       },
+       "children": [
+        "@intro"
+       ]
+      }
+     ]
+    }
+   },
+   {
+    "document": "/home/user/texpile-tools-main/perf-drive/parity/verify/docs/skeleton-typ:main.typ",
+    "skeleton": {
+     "tag": "button",
+     "class": [
+      "inline-flex",
+      "cursor-pointer",
+      "items-center"
+     ],
+     "attrs": {
+      "data-scope": "popover",
+      "data-part": "trigger",
+      "dir": "ltr",
+      "type": "button",
+      "id": "popover:«id»:trigger",
+      "data-ownedby": "«id»",
+      "aria-haspopup": "dialog",
+      "aria-expanded": "false",
+      "data-state": "closed",
+      "aria-controls": "popover:«id»:content"
+     },
+     "children": [
+      {
+       "tag": "span",
+       "class": [
+        "typ-ref",
+        "rounded-base",
+        "cursor-pointer",
+        "transition-colors",
+        "text-ref-fg",
+        "hover:bg-ref-bg"
+       ],
+       "attrs": {
+        "role": "button",
+        "tabindex": "0",
+        "data-tip": "@knuth84 - The TeXbook"
+       },
+       "children": [
+        "(Knuth 1984)"
+       ]
+      }
+     ]
+    }
+   },
+   {
+    "document": "/home/user/texpile-tools-main/perf-drive/parity/verify/docs/skeleton-typ:main.typ",
+    "skeleton": {
+     "tag": "button",
+     "class": [
+      "inline-flex",
+      "cursor-pointer",
+      "items-center"
+     ],
+     "attrs": {
+      "data-scope": "popover",
+      "data-part": "trigger",
+      "dir": "ltr",
+      "type": "button",
+      "id": "popover:«id»:trigger",
+      "data-ownedby": "«id»",
+      "aria-haspopup": "dialog",
+      "aria-expanded": "false",
+      "data-state": "closed",
+      "aria-controls": "popover:«id»:content"
+     },
+     "children": [
+      {
+       "tag": "span",
+       "class": [
+        "typ-ref",
+        "rounded-base",
+        "cursor-pointer",
+        "transition-colors",
+        "text-ref-broken-fg",
+        "hover:bg-ref-broken-bg"
+       ],
+       "attrs": {
+        "role": "button",
+        "tabindex": "0",
+        "data-tip": "nope"
+       },
+       "children": [
+        "@nope"
+       ]
+      }
+     ]
+    }
+   },
+   {
+    "document": "parity-typ-typst-paper:main.typ",
+    "skeleton": {
+     "tag": "button",
+     "class": [
+      "inline-flex",
+      "cursor-pointer",
+      "items-center"
+     ],
+     "attrs": {
+      "data-scope": "popover",
+      "data-part": "trigger",
+      "dir": "ltr",
+      "type": "button",
+      "id": "popover:«id»:trigger",
+      "data-ownedby": "«id»",
+      "aria-haspopup": "dialog",
+      "aria-expanded": "false",
+      "data-state": "closed",
+      "aria-controls": "popover:«id»:content"
+     },
+     "children": [
+      {
+       "tag": "span",
+       "class": [
+        "typ-ref",
+        "rounded-base",
+        "cursor-pointer",
+        "transition-colors",
+        "text-ref-fg",
+        "hover:bg-ref-bg"
+       ],
+       "attrs": {
+        "role": "button",
+        "tabindex": "0",
+        "data-tip": "@doe2024 - An Example Source"
+       },
+       "children": [
+        "(Doe 2024)"
+       ]
+      }
+     ]
+    }
+   },
+   {
+    "document": "parity-typ-typst-paper:main.typ",
+    "skeleton": {
+     "tag": "button",
+     "class": [
+      "inline-flex",
+      "cursor-pointer",
+      "items-center"
+     ],
+     "attrs": {
+      "data-scope": "popover",
+      "data-part": "trigger",
+      "dir": "ltr",
+      "type": "button",
+      "id": "popover:«id»:trigger",
+      "data-ownedby": "«id»",
+      "aria-haspopup": "dialog",
+      "aria-expanded": "false",
+      "data-state": "closed",
+      "aria-controls": "popover:«id»:content"
+     },
+     "children": [
+      {
+       "tag": "span",
+       "class": [
+        "typ-ref",
+        "rounded-base",
+        "cursor-pointer",
+        "transition-colors",
+        "text-ref-fg",
+        "hover:bg-ref-bg"
+       ],
+       "attrs": {
+        "role": "button",
+        "tabindex": "0",
+        "data-tip": "@smith2023 - A Sample Paper for Demonstration"
+       },
+       "children": [
+        "(Smith 2023)"
+       ]
+      }
+     ]
+    }
+   },
+   {
+    "document": "parity-typ-typst-paper:main.typ",
+    "skeleton": {
+     "tag": "button",
+     "class": [
+      "inline-flex",
+      "cursor-pointer",
+      "items-center"
+     ],
+     "attrs": {
+      "data-scope": "popover",
+      "data-part": "trigger",
+      "dir": "ltr",
+      "type": "button",
+      "id": "popover:«id»:trigger",
+      "data-ownedby": "«id»",
+      "aria-haspopup": "dialog",
+      "aria-expanded": "false",
+      "data-state": "closed",
+      "aria-controls": "popover:«id»:content"
+     },
+     "children": [
+      {
+       "tag": "span",
+       "class": [
+        "typ-ref",
+        "rounded-base",
+        "cursor-pointer",
+        "transition-colors",
+        "text-ref-broken-fg",
+        "hover:bg-ref-broken-bg"
+       ],
+       "attrs": {
+        "role": "button",
+        "tabindex": "0",
+        "data-tip": "eq:model"
+       },
+       "children": [
+        "@eq:model"
+       ]
+      }
+     ]
+    }
+   },
+   {
+    "document": "parity-typ-typst-paper:main.typ",
+    "skeleton": {
+     "tag": "button",
+     "class": [
+      "inline-flex",
+      "cursor-pointer",
+      "items-center"
+     ],
+     "attrs": {
+      "data-scope": "popover",
+      "data-part": "trigger",
+      "dir": "ltr",
+      "type": "button",
+      "id": "popover:«id»:trigger",
+      "data-ownedby": "«id»",
+      "aria-haspopup": "dialog",
+      "aria-expanded": "false",
+      "data-state": "closed",
+      "aria-controls": "popover:«id»:content"
+     },
+     "children": [
+      {
+       "tag": "span",
+       "class": [
+        "typ-ref",
+        "rounded-base",
+        "cursor-pointer",
+        "transition-colors",
+        "text-ref-broken-fg",
+        "hover:bg-ref-broken-bg"
+       ],
+       "attrs": {
+        "role": "button",
+        "tabindex": "0",
+        "data-tip": "fig:results"
+       },
+       "children": [
+        "@fig:results"
+       ]
+      }
+     ]
+    }
+   },
+   {
+    "document": "parity-typ-typst-paper:main.typ",
+    "skeleton": {
+     "tag": "button",
+     "class": [
+      "inline-flex",
+      "cursor-pointer",
+      "items-center"
+     ],
+     "attrs": {
+      "data-scope": "popover",
+      "data-part": "trigger",
+      "dir": "ltr",
+      "type": "button",
+      "id": "popover:«id»:trigger",
+      "data-ownedby": "«id»",
+      "aria-haspopup": "dialog",
+      "aria-expanded": "false",
+      "data-state": "closed",
+      "aria-controls": "popover:«id»:content"
+     },
+     "children": [
+      {
+       "tag": "span",
+       "class": [
+        "typ-ref",
+        "rounded-base",
+        "cursor-pointer",
+        "transition-colors",
+        "text-ref-broken-fg",
+        "hover:bg-ref-broken-bg"
+       ],
+       "attrs": {
+        "role": "button",
+        "tabindex": "0",
+        "data-tip": "tab:summary"
+       },
+       "children": [
+        "@tab:summary"
+       ]
+      }
+     ]
+    }
+   },
+   {
+    "document": "parity-typ-body:main.typ",
+    "skeleton": {
+     "tag": "button",
+     "class": [
+      "inline-flex",
+      "cursor-pointer",
+      "items-center"
+     ],
+     "attrs": {
+      "data-scope": "popover",
+      "data-part": "trigger",
+      "dir": "ltr",
+      "type": "button",
+      "id": "popover:«id»:trigger",
+      "data-ownedby": "«id»",
+      "aria-haspopup": "dialog",
+      "aria-expanded": "false",
+      "data-state": "closed",
+      "aria-controls": "popover:«id»:content"
+     },
+     "children": [
+      {
+       "tag": "span",
+       "class": [
+        "typ-ref",
+        "rounded-base",
+        "cursor-pointer",
+        "transition-colors",
+        "py-0.5",
+        "-my-0.5",
+        "text-ref-fg",
+        "hover:bg-ref-bg"
+       ],
+       "attrs": {
+        "role": "button",
+        "tabindex": "0",
+        "data-tip": "@eq:one"
+       },
+       "children": [
+        "Equation 1"
+       ]
+      }
+     ]
+    }
+   },
+   {
+    "document": "parity-typ-body:main.typ",
+    "skeleton": {
+     "tag": "button",
+     "class": [
+      "inline-flex",
+      "cursor-pointer",
+      "items-center"
+     ],
+     "attrs": {
+      "data-scope": "popover",
+      "data-part": "trigger",
+      "dir": "ltr",
+      "type": "button",
+      "id": "popover:«id»:trigger",
+      "data-ownedby": "«id»",
+      "aria-haspopup": "dialog",
+      "aria-expanded": "false",
+      "data-state": "closed",
+      "aria-controls": "popover:«id»:content"
+     },
+     "children": [
+      {
+       "tag": "span",
+       "class": [
+        "typ-ref",
+        "rounded-base",
+        "cursor-pointer",
+        "transition-colors",
+        "text-ref-broken-fg",
+        "hover:bg-ref-broken-bg"
+       ],
+       "attrs": {
+        "role": "button",
+        "tabindex": "0",
+        "data-tip": "fig:a"
+       },
+       "children": [
+        "@fig:a[Figure]"
+       ]
+      }
+     ]
+    }
+   },
+   {
+    "document": "parity-typ-body:main.typ",
+    "skeleton": {
+     "tag": "button",
+     "class": [
+      "inline-flex",
+      "cursor-pointer",
+      "items-center"
+     ],
+     "attrs": {
+      "data-scope": "popover",
+      "data-part": "trigger",
+      "dir": "ltr",
+      "type": "button",
+      "id": "popover:«id»:trigger",
+      "data-ownedby": "«id»",
+      "aria-haspopup": "dialog",
+      "aria-expanded": "false",
+      "data-state": "closed",
+      "aria-controls": "popover:«id»:content"
+     },
+     "children": [
+      {
+       "tag": "span",
+       "class": [
+        "typ-ref",
+        "rounded-base",
+        "cursor-pointer",
+        "transition-colors",
+        "py-0.5",
+        "-my-0.5",
+        "text-ref-fg",
+        "hover:bg-ref-bg"
+       ],
+       "attrs": {
+        "role": "button",
+        "tabindex": "0",
+        "data-tip": "@intro"
+       },
+       "children": [
+        "Section 1"
+       ]
+      }
+     ]
+    }
+   },
+   {
+    "document": "parity-typ-body:main.typ",
+    "skeleton": {
+     "tag": "button",
+     "class": [
+      "inline-flex",
+      "cursor-pointer",
+      "items-center"
+     ],
+     "attrs": {
+      "data-scope": "popover",
+      "data-part": "trigger",
+      "dir": "ltr",
+      "type": "button",
+      "id": "popover:«id»:trigger",
+      "data-ownedby": "«id»",
+      "aria-haspopup": "dialog",
+      "aria-expanded": "false",
+      "data-state": "closed",
+      "aria-controls": "popover:«id»:content"
+     },
+     "children": [
+      {
+       "tag": "span",
+       "class": [
+        "typ-ref",
+        "rounded-base",
+        "cursor-pointer",
+        "transition-colors",
+        "text-ref-fg",
+        "hover:bg-ref-bg"
+       ],
+       "attrs": {
+        "role": "button",
+        "tabindex": "0",
+        "data-tip": "@k - A Small Result"
+       },
+       "children": [
+        "(Writer 2020)"
+       ]
+      }
+     ]
+    }
+   },
+   {
+    "document": "parity-typ-body:main.typ",
+    "skeleton": {
+     "tag": "button",
+     "class": [
+      "inline-flex",
+      "cursor-pointer",
+      "items-center"
+     ],
+     "attrs": {
+      "data-scope": "popover",
+      "data-part": "trigger",
+      "dir": "ltr",
+      "type": "button",
+      "id": "popover:«id»:trigger",
+      "data-ownedby": "«id»",
+      "aria-haspopup": "dialog",
+      "aria-expanded": "false",
+      "data-state": "closed",
+      "aria-controls": "popover:«id»:content"
+     },
+     "children": [
+      {
+       "tag": "span",
+       "class": [
+        "typ-ref",
+        "rounded-base",
+        "cursor-pointer",
+        "transition-colors",
+        "text-ref-broken-fg",
+        "hover:bg-ref-broken-bg"
+       ],
+       "attrs": {
+        "role": "button",
+        "tabindex": "0",
+        "data-tip": "tex"
+       },
+       "children": [
+        "@tex"
+       ]
+      }
+     ]
+    }
+   }
+  ],
+  "TypstLayoutGear": [
+   {
+    "document": "/home/user/texpile-tools-main/perf-drive/parity/verify/docs/skeleton-typ:main.typ",
+    "skeleton": {
+     "tag": "div",
+     "class": [
+      "flex",
+      "items-center"
+     ],
+     "children": [
+      {
+       "tag": "button",
+       "class": [
+        "btn-icon",
+        "btn-icon-sm",
+        "hover:preset-tonal",
+        "text-muted"
+       ],
+       "attrs": {
+        "type": "button",
+        "aria-label": "Add cell",
+        "data-tip": "Add cell"
+       },
+       "children": [
+        {
+         "tag": "svg",
+         "class": [
+          "lucide",
+          "lucide-plus",
+          "lucide-icon"
+         ],
+         "attrs": {
+          "xmlns": "http://www.w3.org/2000/svg",
+          "width": "14",
+          "height": "14",
+          "viewBox": "0 0 24 24",
+          "fill": "none",
+          "stroke": "currentColor",
+          "stroke-width": "2",
+          "stroke-linecap": "round",
+          "stroke-linejoin": "round",
+          "aria-hidden": "true"
+         },
+         "children": [
+          {
+           "tag": "path"
+          },
+          {
+           "tag": "path"
+          }
+         ]
+        }
+       ]
+      },
+      " ",
+      {
+       "tag": "button",
+       "class": [
+        "btn-icon",
+        "btn-icon-sm",
+        "hover:preset-tonal",
+        "text-muted"
+       ],
+       "attrs": {
+        "type": "button",
+        "aria-label": "Remove last cell",
+        "data-tip": "Remove last cell"
+       },
+       "children": [
+        {
+         "tag": "svg",
+         "class": [
+          "lucide",
+          "lucide-minus",
+          "lucide-icon"
+         ],
+         "attrs": {
+          "xmlns": "http://www.w3.org/2000/svg",
+          "width": "14",
+          "height": "14",
+          "viewBox": "0 0 24 24",
+          "fill": "none",
+          "stroke": "currentColor",
+          "stroke-width": "2",
+          "stroke-linecap": "round",
+          "stroke-linejoin": "round",
+          "aria-hidden": "true"
+         },
+         "children": [
+          {
+           "tag": "path"
+          }
+         ]
+        }
+       ]
+      },
+      " ",
+      {
+       "tag": "button",
+       "class": [
+        "typ-layout-settings",
+        "btn-icon",
+        "btn-icon-sm",
+        "hover:preset-tonal",
+        "text-muted"
+       ],
+       "attrs": {
+        "type": "button",
+        "aria-label": "Layout settings",
+        "data-tip": "Layout settings"
+       },
+       "children": [
+        {
+         "tag": "svg",
+         "class": [
+          "lucide",
+          "lucide-settings",
+          "lucide-icon"
+         ],
+         "attrs": {
+          "xmlns": "http://www.w3.org/2000/svg",
+          "width": "14",
+          "height": "14",
+          "viewBox": "0 0 24 24",
+          "fill": "none",
+          "stroke": "currentColor",
+          "stroke-width": "2",
+          "stroke-linecap": "round",
+          "stroke-linejoin": "round",
+          "aria-hidden": "true"
+         },
+         "children": [
+          {
+           "tag": "path"
+          },
+          {
+           "tag": "circle"
+          }
+         ]
+        }
+       ]
+      }
+     ]
+    }
+   },
+   {
+    "document": "parity-typ-body:main.typ",
+    "skeleton": {
+     "tag": "div",
+     "class": [
+      "flex",
+      "items-center"
+     ],
+     "children": [
+      " ",
+      {
+       "tag": "button",
+       "class": [
+        "typ-layout-settings",
+        "btn-icon",
+        "btn-icon-sm",
+        "hover:preset-tonal",
+        "text-muted"
+       ],
+       "attrs": {
+        "type": "button",
+        "aria-label": "Layout settings",
+        "data-tip": "Layout settings"
+       },
+       "children": [
+        {
+         "tag": "svg",
+         "class": [
+          "lucide",
+          "lucide-settings",
+          "lucide-icon"
+         ],
+         "attrs": {
+          "xmlns": "http://www.w3.org/2000/svg",
+          "width": "14",
+          "height": "14",
+          "viewBox": "0 0 24 24",
+          "fill": "none",
+          "stroke": "currentColor",
+          "stroke-width": "2",
+          "stroke-linecap": "round",
+          "stroke-linejoin": "round",
+          "aria-hidden": "true"
+         },
+         "children": [
+          {
+           "tag": "path"
+          },
+          {
+           "tag": "circle"
+          }
+         ]
+        }
+       ]
+      }
+     ]
+    }
+   },
+   {
+    "document": "parity-typ-body:main.typ",
+    "skeleton": {
+     "tag": "div",
+     "class": [
+      "flex",
+      "items-center"
+     ],
+     "children": [
+      {
+       "tag": "button",
+       "class": [
+        "btn-icon",
+        "btn-icon-sm",
+        "hover:preset-tonal",
+        "text-muted"
+       ],
+       "attrs": {
+        "type": "button",
+        "aria-label": "Add cell",
+        "data-tip": "Add cell"
+       },
+       "children": [
+        {
+         "tag": "svg",
+         "class": [
+          "lucide",
+          "lucide-plus",
+          "lucide-icon"
+         ],
+         "attrs": {
+          "xmlns": "http://www.w3.org/2000/svg",
+          "width": "14",
+          "height": "14",
+          "viewBox": "0 0 24 24",
+          "fill": "none",
+          "stroke": "currentColor",
+          "stroke-width": "2",
+          "stroke-linecap": "round",
+          "stroke-linejoin": "round",
+          "aria-hidden": "true"
+         },
+         "children": [
+          {
+           "tag": "path"
+          },
+          {
+           "tag": "path"
+          }
+         ]
+        }
+       ]
+      },
+      " ",
+      {
+       "tag": "button",
+       "class": [
+        "btn-icon",
+        "btn-icon-sm",
+        "hover:preset-tonal",
+        "text-muted"
+       ],
+       "attrs": {
+        "type": "button",
+        "aria-label": "Remove last cell",
+        "disabled": "",
+        "data-tip": "Remove last cell"
+       },
+       "children": [
+        {
+         "tag": "svg",
+         "class": [
+          "lucide",
+          "lucide-minus",
+          "lucide-icon"
+         ],
+         "attrs": {
+          "xmlns": "http://www.w3.org/2000/svg",
+          "width": "14",
+          "height": "14",
+          "viewBox": "0 0 24 24",
+          "fill": "none",
+          "stroke": "currentColor",
+          "stroke-width": "2",
+          "stroke-linecap": "round",
+          "stroke-linejoin": "round",
+          "aria-hidden": "true"
+         },
+         "children": [
+          {
+           "tag": "path"
+          }
+         ]
+        }
+       ]
+      },
+      " ",
+      {
+       "tag": "button",
+       "class": [
+        "typ-layout-settings",
+        "btn-icon",
+        "btn-icon-sm",
+        "hover:preset-tonal",
+        "text-muted"
+       ],
+       "attrs": {
+        "type": "button",
+        "aria-label": "Layout settings",
+        "data-tip": "Layout settings"
+       },
+       "children": [
+        {
+         "tag": "svg",
+         "class": [
+          "lucide",
+          "lucide-settings",
+          "lucide-icon"
+         ],
+         "attrs": {
+          "xmlns": "http://www.w3.org/2000/svg",
+          "width": "14",
+          "height": "14",
+          "viewBox": "0 0 24 24",
+          "fill": "none",
+          "stroke": "currentColor",
+          "stroke-width": "2",
+          "stroke-linecap": "round",
+          "stroke-linejoin": "round",
+          "aria-hidden": "true"
+         },
+         "children": [
+          {
+           "tag": "path"
+          },
+          {
+           "tag": "circle"
+          }
+         ]
+        }
+       ]
+      }
+     ]
+    }
+   }
+  ],
+  "FigureCard": [
+   {
+    "document": "/home/user/texpile-tools-main/perf-drive/parity/verify/docs/skeleton-article:main.tex",
+    "skeleton": {
+     "tag": "div",
+     "class": [
+      "relative",
+      "w-full",
+      "max-w-md"
+     ],
+     "children": [
+      {
+       "tag": "div",
+       "class": [
+        "border-surface-300-700",
+        "text-muted",
+        "rounded-base",
+        "flex",
+        "h-36",
+        "w-full",
+        "flex-col",
+        "items-center",
+        "justify-center",
+        "gap-1",
+        "border",
+        "border-dashed"
+       ],
+       "children": [
+        {
+         "tag": "svg",
+         "class": [
+          "lucide",
+          "lucide-shapes",
+          "lucide-icon",
+          "size-6"
+         ],
+         "attrs": {
+          "xmlns": "http://www.w3.org/2000/svg",
+          "width": "24",
+          "height": "24",
+          "viewBox": "0 0 24 24",
+          "fill": "none",
+          "stroke": "currentColor",
+          "stroke-width": "2",
+          "stroke-linecap": "round",
+          "stroke-linejoin": "round",
+          "aria-hidden": "true"
+         },
+         "children": [
+          {
+           "tag": "path"
+          },
+          {
+           "tag": "rect"
+          },
+          {
+           "tag": "circle"
+          }
+         ]
+        },
+        " ",
+        {
+         "tag": "span",
+         "class": [
+          "text-surface-950-50",
+          "text-sm",
+          "font-semibold"
+         ],
+         "children": [
+          "TikZ figure"
+         ]
+        },
+        " ",
+        {
+         "tag": "span",
+         "class": [
+          "text-xs"
+         ],
+         "children": [
+          "1 line"
+         ]
+        }
+       ]
+      },
+      " ",
+      {
+       "tag": "button",
+       "class": [
+        "figure-edit",
+        "absolute",
+        "opacity-0",
+        "transition-opacity",
+        "top-2",
+        "right-2",
+        "group-hover:opacity-100",
+        "focus-visible:opacity-100"
+       ],
+       "attrs": {
+        "type": "button",
+        "aria-label": "Edit figure",
+        "data-tip": "Edit figure"
+       },
+       "children": [
+        {
+         "tag": "svg",
+         "class": [
+          "lucide",
+          "lucide-pencil",
+          "lucide-icon",
+          "size-4"
+         ],
+         "attrs": {
+          "xmlns": "http://www.w3.org/2000/svg",
+          "width": "24",
+          "height": "24",
+          "viewBox": "0 0 24 24",
+          "fill": "none",
+          "stroke": "currentColor",
+          "stroke-width": "2",
+          "stroke-linecap": "round",
+          "stroke-linejoin": "round",
+          "aria-hidden": "true"
+         },
+         "children": [
+          {
+           "tag": "path"
+          },
+          {
+           "tag": "path"
+          }
+         ]
+        }
+       ]
+      }
+     ]
+    }
+   },
+   {
+    "document": "parity-tex-tables:main.tex",
+    "skeleton": {
+     "tag": "div",
+     "class": [
+      "relative",
+      "w-full",
+      "max-w-md"
+     ],
+     "children": [
+      {
+       "tag": "div",
+       "class": [
+        "border-surface-300-700",
+        "text-muted",
+        "rounded-base",
+        "flex",
+        "h-36",
+        "w-full",
+        "flex-col",
+        "items-center",
+        "justify-center",
+        "gap-1",
+        "border",
+        "border-dashed"
+       ],
+       "children": [
+        {
+         "tag": "svg",
+         "class": [
+          "lucide",
+          "lucide-shapes",
+          "lucide-icon",
+          "size-6"
+         ],
+         "attrs": {
+          "xmlns": "http://www.w3.org/2000/svg",
+          "width": "24",
+          "height": "24",
+          "viewBox": "0 0 24 24",
+          "fill": "none",
+          "stroke": "currentColor",
+          "stroke-width": "2",
+          "stroke-linecap": "round",
+          "stroke-linejoin": "round",
+          "aria-hidden": "true"
+         },
+         "children": [
+          {
+           "tag": "path"
+          },
+          {
+           "tag": "rect"
+          },
+          {
+           "tag": "circle"
+          }
+         ]
+        },
+        " ",
+        {
+         "tag": "span",
+         "class": [
+          "text-surface-950-50",
+          "text-sm",
+          "font-semibold"
+         ],
+         "children": [
+          "TikZ figure"
+         ]
+        },
+        " ",
+        {
+         "tag": "span",
+         "class": [
+          "text-xs"
+         ],
+         "children": [
+          "8 lines, 1 arrow"
+         ]
+        }
+       ]
+      },
+      " ",
+      {
+       "tag": "button",
+       "class": [
+        "figure-edit",
+        "absolute",
+        "opacity-0",
+        "transition-opacity",
+        "top-2",
+        "right-2",
+        "group-hover:opacity-100",
+        "focus-visible:opacity-100"
+       ],
+       "attrs": {
+        "type": "button",
+        "aria-label": "Edit figure",
+        "data-tip": "Edit figure"
+       },
+       "children": [
+        {
+         "tag": "svg",
+         "class": [
+          "lucide",
+          "lucide-pencil",
+          "lucide-icon",
+          "size-4"
+         ],
+         "attrs": {
+          "xmlns": "http://www.w3.org/2000/svg",
+          "width": "24",
+          "height": "24",
+          "viewBox": "0 0 24 24",
+          "fill": "none",
+          "stroke": "currentColor",
+          "stroke-width": "2",
+          "stroke-linecap": "round",
+          "stroke-linejoin": "round",
+          "aria-hidden": "true"
+         },
+         "children": [
+          {
+           "tag": "path"
+          },
+          {
+           "tag": "path"
+          }
+         ]
+        }
+       ]
+      }
+     ]
+    }
+   },
+   {
+    "document": "parity-tex-beamer:main.tex",
+    "skeleton": {
+     "tag": "div",
+     "class": [
+      "relative",
+      "w-full",
+      "max-w-md"
+     ],
+     "children": [
+      {
+       "tag": "div",
+       "class": [
+        "border-surface-300-700",
+        "text-muted",
+        "rounded-base",
+        "flex",
+        "h-36",
+        "w-full",
+        "flex-col",
+        "items-center",
+        "justify-center",
+        "gap-1",
+        "border",
+        "border-dashed"
+       ],
+       "children": [
+        {
+         "tag": "svg",
+         "class": [
+          "lucide",
+          "lucide-shapes",
+          "lucide-icon",
+          "size-6"
+         ],
+         "attrs": {
+          "xmlns": "http://www.w3.org/2000/svg",
+          "width": "24",
+          "height": "24",
+          "viewBox": "0 0 24 24",
+          "fill": "none",
+          "stroke": "currentColor",
+          "stroke-width": "2",
+          "stroke-linecap": "round",
+          "stroke-linejoin": "round",
+          "aria-hidden": "true"
+         },
+         "children": [
+          {
+           "tag": "path"
+          },
+          {
+           "tag": "rect"
+          },
+          {
+           "tag": "circle"
+          }
+         ]
+        },
+        " ",
+        {
+         "tag": "span",
+         "class": [
+          "text-surface-950-50",
+          "text-sm",
+          "font-semibold"
+         ],
+         "children": [
+          "TikZ figure"
+         ]
+        },
+        " ",
+        {
+         "tag": "span",
+         "class": [
+          "text-xs"
+         ],
+         "children": [
+          "2 lines"
+         ]
+        }
+       ]
+      },
+      " ",
+      {
+       "tag": "button",
+       "class": [
+        "figure-edit",
+        "absolute",
+        "opacity-0",
+        "transition-opacity",
+        "top-2",
+        "right-2",
+        "group-hover:opacity-100",
+        "focus-visible:opacity-100"
+       ],
+       "attrs": {
+        "type": "button",
+        "aria-label": "Edit figure",
+        "data-tip": "Edit figure"
+       },
+       "children": [
+        {
+         "tag": "svg",
+         "class": [
+          "lucide",
+          "lucide-pencil",
+          "lucide-icon",
+          "size-4"
+         ],
+         "attrs": {
+          "xmlns": "http://www.w3.org/2000/svg",
+          "width": "24",
+          "height": "24",
+          "viewBox": "0 0 24 24",
+          "fill": "none",
+          "stroke": "currentColor",
+          "stroke-width": "2",
+          "stroke-linecap": "round",
+          "stroke-linejoin": "round",
+          "aria-hidden": "true"
+         },
+         "children": [
+          {
+           "tag": "path"
+          },
+          {
+           "tag": "path"
+          }
+         ]
+        }
+       ]
+      }
+     ]
+    }
+   },
+   {
+    "document": "parity-tex-body:main.tex",
+    "skeleton": {
+     "tag": "div",
+     "class": [
+      "relative",
+      "w-full",
+      "max-w-md"
+     ],
+     "children": [
+      {
+       "tag": "div",
+       "class": [
+        "border-surface-300-700",
+        "text-muted",
+        "rounded-base",
+        "flex",
+        "h-36",
+        "w-full",
+        "flex-col",
+        "items-center",
+        "justify-center",
+        "gap-1",
+        "border",
+        "border-dashed"
+       ],
+       "children": [
+        {
+         "tag": "svg",
+         "class": [
+          "lucide",
+          "lucide-shapes",
+          "lucide-icon",
+          "size-6"
+         ],
+         "attrs": {
+          "xmlns": "http://www.w3.org/2000/svg",
+          "width": "24",
+          "height": "24",
+          "viewBox": "0 0 24 24",
+          "fill": "none",
+          "stroke": "currentColor",
+          "stroke-width": "2",
+          "stroke-linecap": "round",
+          "stroke-linejoin": "round",
+          "aria-hidden": "true"
+         },
+         "children": [
+          {
+           "tag": "path"
+          },
+          {
+           "tag": "rect"
+          },
+          {
+           "tag": "circle"
+          }
+         ]
+        },
+        " ",
+        {
+         "tag": "span",
+         "class": [
+          "text-surface-950-50",
+          "text-sm",
+          "font-semibold"
+         ],
+         "children": [
+          "TikZ figure"
+         ]
+        },
+        " ",
+        {
+         "tag": "span",
+         "class": [
+          "text-xs"
+         ],
+         "children": [
+          "2 cells, 1 arrow"
+         ]
+        }
+       ]
+      },
+      " ",
+      {
+       "tag": "button",
+       "class": [
+        "figure-edit",
+        "absolute",
+        "opacity-0",
+        "transition-opacity",
+        "top-2",
+        "right-2",
+        "group-hover:opacity-100",
+        "focus-visible:opacity-100"
+       ],
+       "attrs": {
+        "type": "button",
+        "aria-label": "Edit figure",
+        "data-tip": "Edit figure"
+       },
+       "children": [
+        {
+         "tag": "svg",
+         "class": [
+          "lucide",
+          "lucide-pencil",
+          "lucide-icon",
+          "size-4"
+         ],
+         "attrs": {
+          "xmlns": "http://www.w3.org/2000/svg",
+          "width": "24",
+          "height": "24",
+          "viewBox": "0 0 24 24",
+          "fill": "none",
+          "stroke": "currentColor",
+          "stroke-width": "2",
+          "stroke-linecap": "round",
+          "stroke-linejoin": "round",
+          "aria-hidden": "true"
+         },
+         "children": [
+          {
+           "tag": "path"
+          },
+          {
+           "tag": "path"
+          }
+         ]
+        }
+       ]
+      }
+     ]
+    }
+   },
+   {
+    "document": "parity-typ-body:main.typ",
+    "skeleton": {
+     "tag": "div",
+     "class": [
+      "relative",
+      "w-full",
+      "max-w-md"
+     ],
+     "children": [
+      {
+       "tag": "div",
+       "class": [
+        "border-surface-300-700",
+        "text-muted",
+        "rounded-base",
+        "flex",
+        "h-36",
+        "w-full",
+        "flex-col",
+        "items-center",
+        "justify-center",
+        "gap-1",
+        "border",
+        "border-dashed"
+       ],
+       "children": [
+        {
+         "tag": "svg",
+         "class": [
+          "lucide",
+          "lucide-shapes",
+          "lucide-icon",
+          "size-6"
+         ],
+         "attrs": {
+          "xmlns": "http://www.w3.org/2000/svg",
+          "width": "24",
+          "height": "24",
+          "viewBox": "0 0 24 24",
+          "fill": "none",
+          "stroke": "currentColor",
+          "stroke-width": "2",
+          "stroke-linecap": "round",
+          "stroke-linejoin": "round",
+          "aria-hidden": "true"
+         },
+         "children": [
+          {
+           "tag": "path"
+          },
+          {
+           "tag": "rect"
+          },
+          {
+           "tag": "circle"
+          }
+         ]
+        },
+        " ",
+        {
+         "tag": "span",
+         "class": [
+          "text-surface-950-50",
+          "text-sm",
+          "font-semibold"
+         ],
+         "children": [
+          "CeTZ figure"
+         ]
+        },
+        " ",
+        {
+         "tag": "span",
+         "class": [
+          "text-xs"
+         ],
+         "children": [
+          "1 line"
+         ]
+        }
+       ]
+      },
+      " ",
+      {
+       "tag": "button",
+       "class": [
+        "figure-edit",
+        "absolute",
+        "opacity-0",
+        "transition-opacity",
+        "top-2",
+        "right-2",
+        "group-hover:opacity-100",
+        "focus-visible:opacity-100"
+       ],
+       "attrs": {
+        "type": "button",
+        "aria-label": "Edit figure",
+        "data-tip": "Edit figure"
+       },
+       "children": [
+        {
+         "tag": "svg",
+         "class": [
+          "lucide",
+          "lucide-pencil",
+          "lucide-icon",
+          "size-4"
+         ],
+         "attrs": {
+          "xmlns": "http://www.w3.org/2000/svg",
+          "width": "24",
+          "height": "24",
+          "viewBox": "0 0 24 24",
+          "fill": "none",
+          "stroke": "currentColor",
+          "stroke-width": "2",
+          "stroke-linecap": "round",
+          "stroke-linejoin": "round",
+          "aria-hidden": "true"
+         },
+         "children": [
+          {
+           "tag": "path"
+          },
+          {
+           "tag": "path"
+          }
+         ]
+        }
+       ]
+      }
+     ]
+    }
+   },
+   {
+    "document": "parity-typ-body:main.typ",
+    "skeleton": {
+     "tag": "div",
+     "class": [
+      "relative",
+      "w-full",
+      "max-w-md"
+     ],
+     "children": [
+      {
+       "tag": "div",
+       "class": [
+        "border-surface-300-700",
+        "text-muted",
+        "rounded-base",
+        "flex",
+        "h-36",
+        "w-full",
+        "flex-col",
+        "items-center",
+        "justify-center",
+        "gap-1",
+        "border",
+        "border-dashed"
+       ],
+       "children": [
+        {
+         "tag": "svg",
+         "class": [
+          "lucide",
+          "lucide-shapes",
+          "lucide-icon",
+          "size-6"
+         ],
+         "attrs": {
+          "xmlns": "http://www.w3.org/2000/svg",
+          "width": "24",
+          "height": "24",
+          "viewBox": "0 0 24 24",
+          "fill": "none",
+          "stroke": "currentColor",
+          "stroke-width": "2",
+          "stroke-linecap": "round",
+          "stroke-linejoin": "round",
+          "aria-hidden": "true"
+         },
+         "children": [
+          {
+           "tag": "path"
+          },
+          {
+           "tag": "rect"
+          },
+          {
+           "tag": "circle"
+          }
+         ]
+        },
+        " ",
+        {
+         "tag": "span",
+         "class": [
+          "text-surface-950-50",
+          "text-sm",
+          "font-semibold"
+         ],
+         "children": [
+          "CeTZ figure"
+         ]
+        },
+        " ",
+        {
+         "tag": "span",
+         "class": [
+          "text-xs"
+         ],
+         "children": [
+          "1 circle"
+         ]
+        }
+       ]
+      },
+      " ",
+      {
+       "tag": "button",
+       "class": [
+        "figure-edit",
+        "absolute",
+        "opacity-0",
+        "transition-opacity",
+        "top-2",
+        "right-2",
+        "group-hover:opacity-100",
+        "focus-visible:opacity-100"
+       ],
+       "attrs": {
+        "type": "button",
+        "aria-label": "Edit figure",
+        "data-tip": "Edit figure"
+       },
+       "children": [
+        {
+         "tag": "svg",
+         "class": [
+          "lucide",
+          "lucide-pencil",
+          "lucide-icon",
+          "size-4"
+         ],
+         "attrs": {
+          "xmlns": "http://www.w3.org/2000/svg",
+          "width": "24",
+          "height": "24",
+          "viewBox": "0 0 24 24",
+          "fill": "none",
+          "stroke": "currentColor",
+          "stroke-width": "2",
+          "stroke-linecap": "round",
+          "stroke-linejoin": "round",
+          "aria-hidden": "true"
+         },
+         "children": [
+          {
+           "tag": "path"
+          },
+          {
+           "tag": "path"
+          }
+         ]
+        }
+       ]
+      }
+     ]
+    }
+   }
+  ],
+  "ImageOverlay": [
+   {
+    "document": "/home/user/texpile-tools-main/perf-drive/parity/verify/docs/skeleton-article:main.tex",
+    "skeleton": {
+     "tag": "div",
+     "class": [
+      "image-overlay-wrapper"
+     ],
+     "children": [
+      {
+       "tag": "div",
+       "class": [
+        "image-overlay-buttons",
+        "pointer-events-auto",
+        "absolute",
+        "top-2",
+        "right-2",
+        "flex",
+        "gap-1"
+       ],
+       "children": [
+        {
+         "tag": "button",
+         "class": [
+          "settings-button"
+         ],
+         "attrs": {
+          "type": "button",
+          "aria-label": "Crop",
+          "data-tip": "Crop"
+         },
+         "children": [
+          {
+           "tag": "svg",
+           "class": [
+            "lucide",
+            "lucide-crop",
+            "lucide-icon",
+            "h-4",
+            "w-4"
+           ],
+           "attrs": {
+            "xmlns": "http://www.w3.org/2000/svg",
+            "width": "24",
+            "height": "24",
+            "viewBox": "0 0 24 24",
+            "fill": "none",
+            "stroke": "currentColor",
+            "stroke-width": "2",
+            "stroke-linecap": "round",
+            "stroke-linejoin": "round",
+            "aria-hidden": "true"
+           },
+           "children": [
+            {
+             "tag": "path"
+            },
+            {
+             "tag": "path"
+            }
+           ]
+          }
+         ]
+        },
+        " ",
+        {
+         "tag": "button",
+         "class": [
+          "image-settings-btn"
+         ],
+         "attrs": {
+          "data-scope": "popover",
+          "data-part": "trigger",
+          "dir": "ltr",
+          "type": "button",
+          "id": "popover:«id»:trigger",
+          "data-ownedby": "«id»",
+          "aria-haspopup": "dialog",
+          "aria-expanded": "false",
+          "data-state": "closed",
+          "aria-controls": "popover:«id»:content"
+         },
+         "children": [
+          {
+           "tag": "button",
+           "class": [
+            "settings-button"
+           ],
+           "attrs": {
+            "type": "button",
+            "aria-label": "Image settings",
+            "data-tip": "Image settings"
+           },
+           "children": [
+            {
+             "tag": "svg",
+             "class": [
+              "lucide",
+              "lucide-settings",
+              "lucide-icon",
+              "h-4",
+              "w-4"
+             ],
+             "attrs": {
+              "xmlns": "http://www.w3.org/2000/svg",
+              "width": "24",
+              "height": "24",
+              "viewBox": "0 0 24 24",
+              "fill": "none",
+              "stroke": "currentColor",
+              "stroke-width": "2",
+              "stroke-linecap": "round",
+              "stroke-linejoin": "round",
+              "aria-hidden": "true"
+             },
+             "children": [
+              {
+               "tag": "path"
+              },
+              {
+               "tag": "circle"
+              }
+             ]
+            }
+           ]
+          }
+         ]
+        },
+        " "
+       ]
+      }
+     ]
+    }
+   },
+   {
+    "document": "parity-md-latex:images.md",
+    "skeleton": {
+     "tag": "div",
+     "class": [
+      "image-overlay-wrapper"
+     ],
+     "children": [
+      {
+       "tag": "div",
+       "class": [
+        "image-overlay-buttons",
+        "pointer-events-auto",
+        "absolute",
+        "top-2",
+        "right-2",
+        "flex",
+        "gap-1"
+       ],
+       "children": [
+        " ",
+        {
+         "tag": "button",
+         "class": [
+          "image-settings-btn"
+         ],
+         "attrs": {
+          "data-scope": "popover",
+          "data-part": "trigger",
+          "dir": "ltr",
+          "type": "button",
+          "id": "popover:«id»:trigger",
+          "data-ownedby": "«id»",
+          "aria-haspopup": "dialog",
+          "aria-expanded": "false",
+          "data-state": "closed",
+          "aria-controls": "popover:«id»:content"
+         },
+         "children": [
+          {
+           "tag": "button",
+           "class": [
+            "settings-button"
+           ],
+           "attrs": {
+            "type": "button",
+            "aria-label": "Image settings",
+            "data-tip": "Image settings"
+           },
+           "children": [
+            {
+             "tag": "svg",
+             "class": [
+              "lucide",
+              "lucide-settings",
+              "lucide-icon",
+              "h-4",
+              "w-4"
+             ],
+             "attrs": {
+              "xmlns": "http://www.w3.org/2000/svg",
+              "width": "24",
+              "height": "24",
+              "viewBox": "0 0 24 24",
+              "fill": "none",
+              "stroke": "currentColor",
+              "stroke-width": "2",
+              "stroke-linecap": "round",
+              "stroke-linejoin": "round",
+              "aria-hidden": "true"
+             },
+             "children": [
+              {
+               "tag": "path"
+              },
+              {
+               "tag": "circle"
+              }
+             ]
+            }
+           ]
+          }
+         ]
+        },
+        " "
+       ]
+      }
+     ]
+    }
+   }
+  ]
+ },
+ "comparison": {
+  "CitationDisplay": [
+   {
+    "document": "/home/user/texpile-tools-main/perf-drive/parity/verify/docs/skeleton-article:main.tex",
+    "closestState": "resolved",
+    "differences": []
+   },
+   {
+    "document": "/home/user/texpile-tools-main/perf-drive/parity/verify/docs/skeleton-article:main.tex",
+    "closestState": "unresolved",
+    "differences": []
+   }
+  ],
+  "RefDisplay": [
+   {
+    "document": "/home/user/texpile-tools-main/perf-drive/parity/verify/docs/skeleton-article:main.tex",
+    "closestState": "counted",
+    "differences": []
+   }
+  ],
+  "LabelDisplay": [
+   {
+    "document": "/home/user/texpile-tools-main/perf-drive/parity/verify/docs/skeleton-article:main.tex",
+    "closestState": "plain",
+    "differences": []
+   }
+  ],
+  "BibKeyChip": [
+   {
+    "document": "/home/user/texpile-tools-main/perf-drive/parity/verify/docs/skeleton-article:main.tex",
+    "closestState": "with-key",
+    "differences": []
+   }
+  ],
+  "EnvironmentHead": [
+   {
+    "document": "/home/user/texpile-tools-main/perf-drive/parity/verify/docs/skeleton-article:main.tex",
+    "closestState": "theorem-numbered",
+    "differences": []
+   },
+   {
+    "document": "/home/user/texpile-tools-main/perf-drive/parity/verify/docs/skeleton-article:main.tex",
+    "closestState": "proof",
+    "differences": []
+   },
+   {
+    "document": "/home/user/texpile-tools-main/perf-drive/parity/verify/docs/skeleton-article:main.tex",
+    "closestState": "align-center",
+    "differences": []
+   },
+   {
+    "document": "parity-tex-theorems:main.tex",
+    "closestState": "theorem-unnumbered-remark",
+    "differences": []
+   },
+   {
+    "document": "parity-tex-theorems:main.tex",
+    "closestState": "theorem-numbered",
+    "differences": [
+     "/button.env-head: attr data-style=definition vs plain"
+    ]
+   },
+   {
+    "document": "parity-tex-beamer:main.tex",
+    "closestState": "box",
+    "differences": []
+   }
+  ],
+  "FrameChrome": [
+   {
+    "document": "/home/user/texpile-tools-main/perf-drive/parity/verify/docs/skeleton-beamer:main.tex",
+    "closestState": "complete",
+    "differences": []
+   },
+   {
+    "document": "/home/user/texpile-tools-main/perf-drive/parity/verify/docs/skeleton-beamer:main.tex",
+    "closestState": "missing-title",
+    "differences": []
+   },
+   {
+    "document": "parity-tex-beamer:main.tex",
+    "closestState": "command-form-complete",
+    "differences": []
+   },
+   {
+    "document": "parity-tex-beamer:main.tex",
+    "closestState": "command-form",
+    "differences": []
+   }
+  ],
+  "IncludeDocDisplay": [
+   {
+    "document": "/home/user/texpile-tools-main/perf-drive/parity/verify/docs/skeleton-article:main.tex",
+    "closestState": "latex-input",
+    "differences": []
+   },
+   {
+    "document": "/home/user/texpile-tools-main/perf-drive/parity/verify/docs/skeleton-article:main.tex",
+    "closestState": "missing",
+    "differences": []
+   }
+  ],
+  "BibliographyView": [
+   {
+    "document": "/home/user/texpile-tools-main/perf-drive/parity/verify/docs/skeleton-typ:main.typ",
+    "closestState": "six-entries",
+    "differences": [
+     "/div.bibliography-preview[2]/div.flex[0]/p.m-0[3]/span.text-muted: class text-muted only in first"
+    ]
+   },
+   {
+    "document": "parity-typ-body:main.typ",
+    "closestState": "six-entries",
+    "differences": []
+   }
+  ],
+  "BibliographyHeading": [
+   {
+    "document": "/home/user/texpile-tools-main/perf-drive/parity/verify/docs/skeleton-article:main.tex",
+    "closestState": "default-name",
+    "differences": []
+   }
+  ],
+  "TableWrapperComponent": [
+   {
+    "document": "parity-tex-theorems:main.tex",
+    "closestState": "latex-caption-supported",
+    "differences": []
+   }
+  ],
+  "TypstEnvHeader": [
+   {
+    "document": "/home/user/texpile-tools-main/perf-drive/parity/verify/docs/skeleton-typ:main.typ",
+    "closestState": "plain-label",
+    "differences": []
+   }
+  ],
+  "TypstRefDisplay": [
+   {
+    "document": "/home/user/texpile-tools-main/perf-drive/parity/verify/docs/skeleton-typ:main.typ",
+    "closestState": "unknown",
+    "differences": []
+   },
+   {
+    "document": "/home/user/texpile-tools-main/perf-drive/parity/verify/docs/skeleton-typ:main.typ",
+    "closestState": "citation",
+    "differences": []
+   },
+   {
+    "document": "parity-typ-body:main.typ",
+    "closestState": "label",
+    "differences": []
+   }
+  ],
+  "TypstLayoutGear": [
+   {
+    "document": "/home/user/texpile-tools-main/perf-drive/parity/verify/docs/skeleton-typ:main.typ",
+    "closestState": "three-cells",
+    "differences": []
+   },
+   {
+    "document": "parity-typ-body:main.typ",
+    "closestState": "no-cells",
+    "differences": []
+   },
+   {
+    "document": "parity-typ-body:main.typ",
+    "closestState": "one-cell",
+    "differences": []
+   }
+  ],
+  "FigureCard": [
+   {
+    "document": "/home/user/texpile-tools-main/perf-drive/parity/verify/docs/skeleton-article:main.tex",
+    "closestState": "placeholder",
+    "differences": []
+   }
+  ],
+  "ImageOverlay": [
+   {
+    "document": "/home/user/texpile-tools-main/perf-drive/parity/verify/docs/skeleton-article:main.tex",
+    "closestState": "latex",
+    "differences": []
+   },
+   {
+    "document": "parity-md-latex:images.md",
+    "closestState": "markdown",
+    "differences": []
+   }
+  ]
+ }
+}

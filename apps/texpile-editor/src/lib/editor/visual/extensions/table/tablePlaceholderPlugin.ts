@@ -1,6 +1,7 @@
 import type { Node } from 'prosemirror-model';
 import { Plugin, PluginKey } from 'prosemirror-state';
 import { Decoration, DecorationSet } from 'prosemirror-view';
+import { setLook, type CanvasWidget } from '$lib/editor/canvas';
 
 const key = new PluginKey<DecorationSet>('table-placeholder');
 
@@ -37,11 +38,22 @@ function placeholder(part: EmptyPart): HTMLElement {
 	return span;
 }
 
+function placeholderForm(part: EmptyPart): CanvasWidget {
+	return {
+		kind: 'inline',
+		build(ctx) {
+			const span = ctx.el('span', 'table-placeholder', part.text);
+			setLook(span, { color: 'var(--faint-text)', fontStyle: 'italic', ...(part.normalWeight ? { fontWeight: 'normal' } : {}) });
+			return span;
+		}
+	};
+}
+
 function decorate(doc: Node): DecorationSet {
 	const decorations: Decoration[] = [];
 	doc.forEach((block, offset) => {
 		for (const part of emptyPartsIn(block))
-			decorations.push(Decoration.widget(offset + 1 + part.at, () => placeholder(part), { key: part.text }));
+			decorations.push(Decoration.widget(offset + 1 + part.at, () => placeholder(part), { key: part.text, canvas: placeholderForm(part) }));
 	});
 	return decorations.length ? DecorationSet.create(doc, decorations) : DecorationSet.empty;
 }

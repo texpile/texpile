@@ -3,6 +3,7 @@
 import type { Node, Attrs } from 'prosemirror-model';
 import { generateLabel } from '$lib/editor/visual/label';
 import { splitRows } from '$lib/languages/latex/serializer/mathRows';
+import { tagIn, type EquationTag } from '$lib/languages/latex/visual/extensions/numbers/tagText';
 import { commonEnvFacts, commonEnvNames, envNameAlternation } from '$lib/languages/latex/knowledge/environments/envFacts';
 
 const MULTILINE_ENVIRONMENTS = commonEnvNames((f) => f.body === 'math-display' && f.rows === true).filter(
@@ -71,11 +72,29 @@ export function numberedLineCount(latex: string): number {
 	return Math.max(1, numberedRowCount(latex));
 }
 
+/** the rows that step the equation counter */
 export function numberedRowCount(latex: string): number {
+	return rowNumbers(latex).filter((row) => row === 'counted').length;
+}
+
+/** a row's number: the next count, none on a \nonumber or \notag row, or the \tag it prints, which steps no counter */
+export type RowNumber = 'counted' | 'none' | EquationTag;
+
+export function rowNumbers(latex: string): RowNumber[] {
 	const rows = environmentRows(latex);
 	// a trailing \\ ends amsmath's last row, and opens one more numbered row in eqnarray
 	if (rows.length > 1 && !rows[rows.length - 1].trim() && !/^\s*\\begin\{eqnarray\}/.test(latex)) rows.pop();
-	return rows.filter((r) => !/\\(?:nonumber|notag)\b/.test(r)).length;
+	return rows.map((r) => tagIn(r) ?? (/\\(?:nonumber|notag)\b/.test(r) ? 'none' : 'counted'));
+}
+
+/** the rows that show a number, a count or a tag, in order */
+export function shownRowNumbers(latex: string): Exclude<RowNumber, 'none'>[] {
+	return rowNumbers(latex).filter((row): row is Exclude<RowNumber, 'none'> => row !== 'none');
+}
+
+/** per row of the environment, whether it shows a number: a count or its tag */
+export function numberedRows(latex: string): boolean[] {
+	return rowNumbers(latex).map((row) => row !== 'none');
 }
 
 /** rewrites align <-> align* (and friends) in the latex source. */

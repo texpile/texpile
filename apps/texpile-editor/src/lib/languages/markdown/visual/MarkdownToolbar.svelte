@@ -27,36 +27,12 @@
 	import { markIsActive, toggleLinkCommand } from '$lib/editor/visual/toolbar/markState';
 	import { editorViewStore } from '$lib/stores/editorStore';
 	import MathToolbar, { mathToolbarState } from '$lib/editor/visual/toolbar/MathToolbar.svelte';
+	import { activeMath } from '$lib/editor/visual/toolbar/activeMath.svelte';
 	import MathDropdown from '$lib/editor/visual/toolbar/MathDropdown.svelte';
 	import ToolbarOverflow from '$lib/editor/visual/toolbar/ToolbarOverflow.svelte';
 	import { setHeadingLevel, toggleBlockQuote } from '$lib/editor/visual/helperCommands';
 	import { createCodeBlock } from '$lib/editor/visual/extensions/codemirrorbridge/cmcommands';
-	import { onMount } from 'svelte';
 	import { m } from '$lib/paraglide/messages';
-
-	let isMathfieldActive = $state(false);
-	// same debounced focus tracking as the tex toolbar; see its comment on palette focus
-	function updateMathfieldState() {
-		setTimeout(() => {
-			const active = document.activeElement;
-			if (active instanceof window.MathfieldElement) {
-				isMathfieldActive = true;
-				return;
-			}
-			if (active instanceof Element && active.closest('[data-scope], [data-math-toolbar]')) return;
-			isMathfieldActive = false;
-		}, 0);
-	}
-	onMount(() => {
-		window.addEventListener('focusin', updateMathfieldState);
-		window.addEventListener('ml:focusin', updateMathfieldState);
-		window.addEventListener('focusout', updateMathfieldState);
-		return () => {
-			window.removeEventListener('focusin', updateMathfieldState);
-			window.removeEventListener('ml:focusin', updateMathfieldState);
-			window.removeEventListener('focusout', updateMathfieldState);
-		};
-	});
 
 	type Cmd = (state: EditorState, dispatch?: (tr: Transaction) => void) => boolean;
 	function keepEditorFocus(cmd: Cmd) {
@@ -111,7 +87,7 @@
 	<div class="flex min-w-0 flex-1 items-center">
 		<!-- item gaps and divider padding use the same step per breakpoint, so the border sits centered in its gap -->
 		<div class="flex min-h-7 min-w-0 flex-1 items-center gap-2 sm:gap-3 2xl:gap-4">
-			{#if isMathfieldActive || mathToolbarState.aiInputActive || mathToolbarState.paletteOpen}
+			{#if activeMath.current || mathToolbarState.aiInputActive || mathToolbarState.paletteOpen}
 				<MathToolbar />
 			{:else}
 				{#snippet tb_heading()}

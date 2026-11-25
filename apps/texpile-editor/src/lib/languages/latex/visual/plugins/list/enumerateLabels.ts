@@ -1,4 +1,4 @@
-import { orderedRuns, printedValue, type ItemLabels, type NumberStyle } from '$lib/languages/latex/visual/core';
+import { bulletItems, orderedRuns, printedValue, type ItemLabels, type NumberStyle } from '$lib/languages/latex/visual/core';
 import type { Node as PMNode } from 'prosemirror-model';
 
 const KERNEL_LABELS = ['\\arabic*.', '(\\alph*)', '\\roman*.', '\\Alph*.'];
@@ -32,8 +32,34 @@ function printedLabel(template: string, value: number, enumerateShort: boolean):
 	return printed.replace(/\\[a-zA-Z@]+\*?/g, '').replace(/[{}]/g, '');
 }
 
+const KERNEL_BULLETS = ['\u2022', '\u2013', '\u2217', '\u00B7'];
+const BULLET_COMMANDS: Record<string, string> = {
+	textbullet: '\u2022',
+	bullet: '\u2022',
+	ast: '\u2217',
+	cdot: '\u00B7',
+	textendash: '\u2013'
+};
+
+/** an enumitem label that is plain text, as the item prints it */
+function printedBullet(template: string): string {
+	return template
+		.replace(/---/g, '\u2014')
+		.replace(/--/g, '\u2013')
+		.replace(/\\([a-zA-Z]+)\s*/g, (_, name: string) => BULLET_COMMANDS[name] ?? '')
+		.replace(/[{}$]/g, '');
+}
+
+function bulletLabels(doc: PMNode, out: ItemLabels): void {
+	for (const { node, pos, depth } of bulletItems(doc)) {
+		const label = optionsOf(node.attrs.envArgs).label;
+		out.set(pos, (label !== null && printedBullet(label)) || KERNEL_BULLETS[Math.min(depth, 3)]);
+	}
+}
+
 export function enumerateLabels(doc: PMNode): ItemLabels {
 	const out: ItemLabels = new Map();
+	bulletLabels(doc, out);
 	const last: number[] = [];
 	for (const run of orderedRuns(doc, (a, b) => a.attrs.envKey === b.attrs.envKey)) {
 		const options = optionsOf(run.items[0].node.attrs.envArgs);

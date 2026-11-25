@@ -1,19 +1,19 @@
 // the menu's items that act on what a field holds: the clipboard, a matrix's rows and columns,
 // the selection's font, and an operator's limits
 import { Clipboard, Copy, Plus, Scissors, Trash2 } from '@lucide/svelte';
-import { mathfieldContext, type MathfieldElement, type MathfieldLimits } from 'mathlive';
+import { mathfieldContext, type HeadlessMathfield, type MathfieldLimits } from 'mathlive';
 import type { ContextMenuItem } from '$lib/menus/contextMenu.svelte';
 import { toaster } from '$lib/modals/toaster-svelte';
 import { m } from '$lib/paraglide/messages';
 
-type FieldCommand = Parameters<MathfieldElement['executeCommand']>[0];
+type FieldCommand = Parameters<HeadlessMathfield['executeCommand']>[0];
 
-function run(field: MathfieldElement, command: string | [string, ...unknown[]]): void {
+function run(field: HeadlessMathfield, command: string | [string, ...unknown[]]): void {
 	field.focus();
 	field.executeCommand(command as FieldCommand);
 }
 
-function copyAs(field: MathfieldElement, format: 'latex' | 'typst' | 'math-ml'): void {
+function copyAs(field: HeadlessMathfield, format: 'latex' | 'typst' | 'math-ml'): void {
 	const selection = field.selectionIsCollapsed ? undefined : field.selection;
 	const text = selection ? field.getValue(selection, format) : field.getValue(format);
 	navigator.clipboard.writeText(text).then(
@@ -22,7 +22,7 @@ function copyAs(field: MathfieldElement, format: 'latex' | 'typst' | 'math-ml'):
 	);
 }
 
-export function clipboardItems(field: MathfieldElement, editable: boolean): ContextMenuItem[] {
+export function clipboardItems(field: HeadlessMathfield, editable: boolean): ContextMenuItem[] {
 	const items: ContextMenuItem[] = [];
 	if (editable) items.push({ label: m.tbar_ctx_cut(), icon: Scissors, keys: 'Mod+X', onclick: () => run(field, 'cutToClipboard') });
 	items.push(
@@ -51,7 +51,7 @@ const MATRICES: [string, () => string][] = [
 	['Vmatrix', m.mathpal_matrix_double_bars]
 ];
 
-export function arrayItems(field: MathfieldElement): ContextMenuItem[] {
+export function arrayItems(field: HeadlessMathfield): ContextMenuItem[] {
 	const array = mathfieldContext(field).array;
 	if (!array) return [];
 	const items: ContextMenuItem[] = [
@@ -93,7 +93,7 @@ const LIMITS: [MathfieldLimits, () => string][] = [
 	['adjacent', m.mathmenu_limits_adjacent]
 ];
 
-export function styleItems(field: MathfieldElement): ContextMenuItem[] {
+export function styleItems(field: HeadlessMathfield): ContextMenuItem[] {
 	const items: ContextMenuItem[] = [];
 	if (!field.selectionIsCollapsed)
 		items.push({

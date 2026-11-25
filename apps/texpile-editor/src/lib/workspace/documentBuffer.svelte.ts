@@ -21,14 +21,13 @@ import {
 	filePackagesNow,
 	isDegraded
 } from '$lib/languages/latex/intellisense/packages/loadedPackages';
-import { documentHyphenationLanguage } from '$lib/editor/visual/linebreak/documentHyphenationLanguage';
+import { documentHyphenationLanguage } from '$lib/editor/canvas/layout/linebreak/documentHyphenationLanguage';
 import { crossRefNamesFromPreamble } from '$lib/languages/latex/visual/core/references/crossRefNames';
 import { environmentHeadsFor } from '$lib/languages/latex/visual/extensions/environment/environmentHeads';
 import type { InsertSource } from '$lib/workspace/document/menuOffers/fileInserts';
 import { bibliographyName } from '$lib/languages/latex/visual/extensions/bibliography/bibliographyName';
-import { scanMacroDefinitions, scanRegisterDefinitions } from '$lib/editor/source/extensions/math-preview/userMacros';
-import { scanGlossary } from '$lib/languages/latex/intellisense/completion/glossary';
-import { citeAliasesIn } from '$lib/languages/latex/visual/core/definitions/citeAliases';
+import type { MacroDef } from '$lib/editor/source/extensions/math-preview/macroScan';
+import { NO_SCANS } from './documentScans';
 import { findConflicts, hasConflictMarkers, hasMarkerLines } from '$lib/workspace/scm/conflictMarkers';
 import { gitChanges, isConflicted } from '$lib/workspace/scm/gitStore';
 import type { Node as PMNode } from 'prosemirror-model';
@@ -95,7 +94,7 @@ export type DocumentBufferDeps = {
 	/** macro-defining text from the main file's include chain, as the parse saw it */
 	projectMacros?(): string;
 	/** a parse of `source` is about to be drawn */
-	adoptingText?(source: string): void;
+	adoptingText?(source: string, macros: Record<string, MacroDef>): void;
 	offerInserts?(file: InsertSource): Promise<unknown> | null;
 	/** the document a file's text parses to, for the save check; null when it cannot be parsed
 	 *  now (a timeout), which leaves the file as serialized. Absent: no save check */
@@ -370,7 +369,8 @@ export class DocumentBuffer {
 	}
 
 	adoptParsed(parsed: ParsedLatexFile, source: string): void {
-		this.deps.adoptingText?.(source);
+		const scans = parsed.scans ?? NO_SCANS;
+		this.deps.adoptingText?.(source, scans.macros);
 		this.docMeta = { preamble: parsed.preamble, postamble: parsed.postamble, hadDocumentEnv: parsed.hadDocumentEnv, table: parsed.table };
 		this.visualDoc = parsed.doc;
 		this.lastDoc = parsed.doc;
@@ -382,10 +382,10 @@ export class DocumentBuffer {
 		templateFeaturesStore.current = {
 			...templateFeaturesStore.current,
 			hyphenationLanguage: documentHyphenationLanguage(source),
-			macros: scanMacroDefinitions(source),
-			registers: scanRegisterDefinitions(source),
-			glossary: scanGlossary(source, []),
-			citeAliases: citeAliasesIn(source)
+			macros: scans.macros,
+			registers: scans.registers,
+			glossary: scans.glossary,
+			citeAliases: scans.citeAliases
 		};
 		this.narrowMenus();
 		this.nameCrossRefs();

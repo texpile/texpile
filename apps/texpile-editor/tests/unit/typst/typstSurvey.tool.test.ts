@@ -14,7 +14,7 @@ import path from 'node:path';
 import { parseTypstFile } from '$lib/languages/typst/visual/roundtrip';
 import { typstFace } from '$lib/languages/typst/visual/core/walk/typstFace';
 import { isTypstBibliography } from '$lib/languages/typst/visual/extensions/typstBibliography';
-import { isFigureBlock } from '$lib/draw/host/card/FigureCardView.svelte';
+import { isFigureBlock } from '$lib/draw/host/card/figureBlocks';
 import { cetzLanguage } from '$lib/draw/cetz/cetzLanguage';
 import { chipStatements, isAlone, type ChipStatement } from './survey/typstSurveyHeads';
 import { listTyp, paperNames, type NameOrigin } from './survey/typstSurveyOrigins';

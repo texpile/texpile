@@ -58,7 +58,8 @@ function boundary(
       pos += dir;
       atom = model.at(pos);
     }
-    return direction === 'backward' ? pos - 1 : pos;
+    // Texpile: the loop stops on the atom past the word, so the word ends one atom back
+    return direction === 'backward' ? pos : pos - 1;
   }
 
   //

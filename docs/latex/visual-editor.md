@@ -15,8 +15,6 @@ Edit the document as formatted text. Texpile writes the LaTeX, and the parts you
 
 Click a citation, a label or any other command to edit it.
 
-Files over 800 KB open in the source editor.
-
 ## Headings
 
 The heading menu has Section, Subsection and Subsubsection, each **Numbered** or **Unnumbered** (`\section*`). A `\chapter` or `\part` in the file stays as it is.

@@ -1,0 +1,51 @@
+[
+	{
+		"property": "layout.textAlign",
+		"recorded": "justify",
+		"canvas": ["start", "left", "justify"],
+		"where": "paragraphs",
+		"decision": "Justify is a setting of the line breaker (breakProfiles.ts, JUSTIFIABLE_ALIGNMENTS); the DOM editor drew it as a text-align"
+	},
+	{
+		"property": "paint.boxShadow",
+		"recorded": "entries with alpha 0",
+		"canvas": "left out",
+		"where": "page view root",
+		"decision": "Tailwind's empty ring and offset shadows paint nothing"
+	},
+	{
+		"property": "layout.gap, layout.columns.gap",
+		"recorded": "any",
+		"canvas": "not compared unless display is flex, grid or a multicolumn box",
+		"where": "block elements",
+		"decision": "layout reads gap only for those boxes; Skeleton's blockquote class set one"
+	},
+	{
+		"property": "paint.caretColor",
+		"recorded": "any",
+		"canvas": "not compared",
+		"where": "all elements",
+		"decision": "the canvas draws its own carets; the recording's value says which block the DOM editor hid the native caret on"
+	},
+	{
+		"property": "layout.counters, layout.content",
+		"recorded": "any",
+		"canvas": "not compared",
+		"where": "all elements",
+		"decision": "plan 2.7: generated content comes from the model, not from CSS"
+	},
+	{
+		"property": "layout.display, layout.width, layout.verticalAlign",
+		"recorded": "inline-block, 100%, top",
+		"canvas": "block",
+		"where": "a drawn chip that owns its line (drawn-chip-line)",
+		"decision": "The line breaker ends a line at a display block atom; the DOM editor drew the same chip as a full-width inline-block"
+	},
+	{
+		"property": "the chip itself",
+		"recorded": "source island (div.cm-editor)",
+		"canvas": "drawn face",
+		"where": "a chip the DOM editor left as source and whose parts are canvas elements now (a changes command with one argument)",
+		"decision": "S1.8b: the canvas draws what such a chip prints; the comparison skips a chip recorded as an island"
+	}
+]

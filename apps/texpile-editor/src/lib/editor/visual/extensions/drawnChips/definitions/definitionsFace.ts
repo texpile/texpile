@@ -1,37 +1,32 @@
-import { faceElement, sourceHint, type ChipFace } from '../chipFace';
-import { tip } from '$lib/components/tooltip.svelte';
-import './definitions.css';
+import { sourceHint, tippedFace, type ChipFace } from '../chipFace';
+import { appendTo, type PartElement } from '../faces/partElements';
+import { chipElement } from '../looks/chipLooks';
 
-export type DefinitionLine = { name: string; params: string; sign: string; body: HTMLElement };
+export type DefinitionLine = { name: string; params: string; sign: string; body: PartElement };
 
-export function definitionBody(drawn: ChipFace | null, code: string, kept: ChipFace[]): HTMLElement {
-	const el = faceElement('span', 'drawn-definition-body');
+/** `made`: a command the paper names without a body, as code */
+export function definitionBody(drawn: ChipFace | null, code: string, kept: ChipFace[], made = false): PartElement {
 	if (drawn && !drawn.line && !drawn.mixed) {
 		kept.push(drawn);
-		el.appendChild(drawn.dom);
-		return el;
+		return appendTo(chipElement('span', 'drawn-definition-body'), drawn.dom);
 	}
 	drawn?.destroy?.();
-	el.classList.add('drawn-definition-code');
-	el.textContent = code;
-	return el;
+	return chipElement('span', `drawn-definition-body drawn-definition-code${made ? ' drawn-definition-made' : ''}`, code);
 }
 
 export function definitionsFace(lines: DefinitionLine[], source: string, drawn: ChipFace[]): ChipFace {
-	const dom = faceElement('span', 'drawn-definitions');
+	const dom = chipElement('span', 'drawn-definitions');
 	for (const line of lines) {
-		const name = dom.appendChild(faceElement('span', 'drawn-definition-name', line.name));
-		if (line.params) name.appendChild(faceElement('span', 'drawn-definition-params', line.params));
-		dom.appendChild(faceElement('span', 'drawn-definition-sign', line.sign));
-		dom.appendChild(line.body);
+		const name = chipElement('span', 'drawn-definition-name', line.name);
+		if (line.params) appendTo(name, chipElement('span', 'drawn-definition-params', line.params));
+		appendTo(dom, name, chipElement('span', 'drawn-definition-sign', line.sign), line.body);
 	}
-	const tipped = tip(dom, sourceHint(source));
+	const face = tippedFace(dom, sourceHint(source), { line: true });
 	return {
-		dom,
-		line: true,
+		...face,
 		destroy() {
-			drawn.forEach((face) => face.destroy?.());
-			tipped.destroy();
+			drawn.forEach((part) => part.destroy?.());
+			face.destroy?.();
 		}
 	};
 }

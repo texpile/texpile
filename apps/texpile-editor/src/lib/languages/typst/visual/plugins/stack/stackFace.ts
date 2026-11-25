@@ -1,7 +1,6 @@
 // `#stack(dir: ltr, spacing: 2mm, a, b)`, the call that lays its children out in a row or a column, drawn as them in it
+import { faceElement, setLook } from '$lib/editor/canvas';
 import {
-	tip,
-	faceElement,
 	type ChipFace,
 	type TypstDrawer,
 	typstLengthCss,
@@ -12,7 +11,6 @@ import {
 	type ArgumentDrawing
 } from '$lib/languages/typst/visual/core';
 import { DIRECTIONS, readStack } from './stackCall';
-import './stack.css';
 
 export function stackFace(source: string, drawer: TypstDrawer): ChipFace | null {
 	const read = readStack(source);
@@ -28,19 +26,21 @@ export function stackFace(source: string, drawer: TypstDrawer): ChipFace | null 
 		drawings.push(drawn);
 	}
 	const dom = faceElement('div', 'drawn-typst-element drawn-typst-stack');
-	dom.style.flexDirection = direction ? DIRECTIONS[direction.value] : 'column';
 	const spacing = namedArg(use.call, 'spacing');
 	const gap = spacing ? typstLengthCss(spacing.node, use.call.source) : null;
-	if (gap) dom.style.gap = gap;
+	setLook(dom, {
+		display: 'flex',
+		boxSizing: 'border-box',
+		maxWidth: '100%',
+		flexDirection: direction ? DIRECTIONS[direction.value] : 'column',
+		...(gap ? { gap } : {})
+	});
 	for (const drawn of drawings) dom.append(drawn.dom);
-	const tipped = tip(dom, use.source);
+	dom.hint = use.source;
 	return {
 		dom,
 		line: true,
 		decorate: (decorations) => drawings.forEach((drawn) => drawn.faces.forEach((face) => face.decorate?.(decorations))),
-		destroy() {
-			destroyDrawings(drawings);
-			tipped.destroy();
-		}
+		destroy: () => destroyDrawings(drawings)
 	};
 }

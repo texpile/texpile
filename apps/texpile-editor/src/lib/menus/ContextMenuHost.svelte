@@ -8,12 +8,15 @@
 	import { m } from '$lib/paraglide/messages';
 	import { openMenu, closeContextMenu, type ContextMenuItem } from './contextMenu.svelte';
 	import { menuItemClass, menuPanelClass, separatorClass } from './menuStyles';
+	import { steppedItem } from './menuKeys';
+	import { tick } from 'svelte';
 
 	const props: { win?: Window } = $props();
 	const win = $derived(props.win ?? window);
 	const menu = $derived(openMenu.current && (openMenu.current.win ?? window) === win ? openMenu.current : null);
 
 	const EDGE = 8;
+	const MENU_KEYS = new Set(['ArrowDown', 'ArrowUp', 'ArrowRight', 'ArrowLeft', 'Enter', ' ']);
 	// the card's own top padding, so a submenu's first item lines up with the item that opened it
 	const PAD = 4;
 
@@ -45,13 +48,39 @@
 		};
 	});
 
+	let subOpener: HTMLElement | null = null;
+
+	async function walkMenu(key: string): Promise<boolean> {
+		const focused = win.document.activeElement as HTMLElement | null;
+		const inSub = !!subCard && !!focused && subCard.contains(focused);
+		const panel = inSub ? subCard : card;
+		if (!panel) return false;
+		if (key === 'ArrowDown' || key === 'ArrowUp') steppedItem(panel, key === 'ArrowDown' ? 1 : -1)?.focus();
+		else if (key === 'ArrowRight' && !inSub && focused?.getAttribute('aria-haspopup')) {
+			focused.click();
+			await tick();
+			if (subCard) steppedItem(subCard, 1)?.focus();
+		} else if (key === 'ArrowLeft' && inSub) {
+			sub = null;
+			subOpener?.focus();
+		} else if ((key === 'Enter' || key === ' ') && focused && panel.contains(focused)) focused.click();
+		else return false;
+		return true;
+	}
+
 	$effect(() => {
 		function onKey(e: KeyboardEvent): void {
-			if (menu && e.key === 'Escape') closeContextMenu();
+			if (!menu) return;
+			// ahead of the editor, which would move its caret or leave a formula
+			if (e.key !== 'Escape' && !MENU_KEYS.has(e.key)) return;
+			e.preventDefault();
+			e.stopPropagation();
+			if (e.key === 'Escape') closeContextMenu();
+			else void walkMenu(e.key);
 		}
 		const w = win;
-		w.addEventListener('keydown', onKey);
-		return () => w.removeEventListener('keydown', onKey);
+		w.addEventListener('keydown', onKey, true);
+		return () => w.removeEventListener('keydown', onKey, true);
 	});
 
 	function run(item: ContextMenuItem): void {
@@ -65,6 +94,7 @@
 	function hover(item: ContextMenuItem, el: HTMLElement): void {
 		if (!menu || 'separator' in item) return;
 		sub = item.submenu && !item.disabled ? { items: item.submenu, from: el.getBoundingClientRect(), for: menu } : null;
+		if (sub) subOpener = el;
 	}
 </script>
 

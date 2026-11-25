@@ -8,8 +8,9 @@ export type TextMatch = { kind: 'text'; from: number; to: number };
 export type UnitMatch = { kind: 'unit'; from: number; to: number; node: Node };
 export type FindMatch = TextMatch | UnitMatch;
 
-/** what a chip shows on the page, else null when nothing readable is drawn (a formula), and its LaTeX is searched */
-export type ShownText = (node: Node, pos: number) => string | null;
+/** what a chip shows on the page, else null when nothing readable is drawn (a formula), and its LaTeX is searched;
+ *  undefined while it is still to be read, and the chip matches nothing yet */
+export type ShownText = (node: Node, pos: number) => string | null | undefined;
 
 /** a node search treats as one piece: chips, formulas, and any other atom */
 export function isFindUnit(node: Node): boolean {
@@ -35,8 +36,9 @@ export function findMatches(doc: Node, matcher: FindMatcher, shownText: ShownTex
 		}
 		if (!isFindUnit(node)) return true;
 		endRun();
-		const text = shownText(node, pos) ?? node.textContent;
-		if (matcher.hitsIn(text).length) matches.push({ kind: 'unit', from: pos, to: pos + node.nodeSize, node });
+		const shown = shownText(node, pos);
+		if (shown === undefined) return false;
+		if (matcher.hitsIn(shown ?? node.textContent).length) matches.push({ kind: 'unit', from: pos, to: pos + node.nodeSize, node });
 		return false;
 	});
 	endRun();

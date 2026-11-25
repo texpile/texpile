@@ -1,6 +1,6 @@
 import type { SyntaxNode } from '@lezer/common';
 import { validateLatex } from 'mathlive';
-import { renderStaticMath } from '$lib/editor/visual/extensions/mathlivebridge/mathStatic';
+import { formulaFace } from '$lib/editor/visual/extensions/mathlivebridge/mathStatic';
 import type { ChipFace } from '$lib/editor/visual/extensions/drawnChips/chipFace';
 import { commonEnvFacts } from '$lib/languages/latex/knowledge/environments/envFacts';
 import { commonFacts } from '$lib/languages/latex/knowledge/commands/commandFacts';
@@ -53,7 +53,7 @@ function withoutUnprinted(latex: string): string {
 export function mathFace(math: Math | null): ChipFace | null {
 	const latex = math ? withoutUnprinted(math.latex).trim() : '';
 	if (!math || !latex || !typesets(latex)) return null;
-	return { dom: renderStaticMath(latex, math.block), line: math.block };
+	return { dom: formulaFace(latex, math.block), line: math.block };
 }
 
 export function mathPart(src: string, node: SyntaxNode): ChipFace | null {

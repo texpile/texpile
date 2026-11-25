@@ -5,9 +5,9 @@ vi.mock('$lib/languages/latex/syntax/documentWrapper', async (orig) => {
 	const real = await orig<typeof import('$lib/languages/latex/syntax/documentWrapper')>();
 	return {
 		...real,
-		documentWrapperOf: (source: string) => {
+		documentBeginOf: (source: string) => {
 			reads.count++;
-			return real.documentWrapperOf(source);
+			return real.documentBeginOf(source);
 		}
 	};
 });

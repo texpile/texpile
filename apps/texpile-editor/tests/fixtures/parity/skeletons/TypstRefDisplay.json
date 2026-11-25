@@ -1,0 +1,159 @@
+{
+ "environment": {
+  "tool": "jsdom",
+  "userAgent": "Mozilla/5.0 (linux) AppleWebKit/537.36 (KHTML, like Gecko) jsdom/30.1.3",
+  "node": "v22.23.4",
+  "document": null,
+  "scrollPositionIndex": null,
+  "window": null,
+  "devicePixelRatio": null,
+  "zoom": null,
+  "electron": null,
+  "chromium": null,
+  "os": "linux",
+  "domEditorCommit": "6ec0389c61ffc889078a95517ee770740f556c7e",
+  "live": "crosscheck.json"
+ },
+ "component": "TypstRefDisplay",
+ "source": "src/lib/languages/typst/visual/plugins/ref/node/TypstRefDisplay.svelte",
+ "mountsInEditorAs": "span node view of the typst ref (inline atom)",
+ "states": {
+  "citation": {
+   "roots": [
+    {
+     "tag": "button",
+     "class": [
+      "inline-flex",
+      "cursor-pointer",
+      "items-center"
+     ],
+     "attrs": {
+      "data-scope": "popover",
+      "data-part": "trigger",
+      "dir": "ltr",
+      "type": "button",
+      "id": "popover:«id»:trigger",
+      "data-ownedby": "«id»",
+      "aria-haspopup": "dialog",
+      "aria-expanded": "false",
+      "data-state": "closed",
+      "aria-controls": "popover:«id»:content"
+     },
+     "children": [
+      {
+       "tag": "span",
+       "class": [
+        "typ-ref",
+        "rounded-base",
+        "cursor-pointer",
+        "transition-colors",
+        "text-ref-fg",
+        "hover:bg-ref-bg"
+       ],
+       "attrs": {
+        "role": "button",
+        "tabindex": "0",
+        "data-tip": "@knuth84 - The TeXbook"
+       },
+       "children": [
+        "({author} 1984)"
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  "label": {
+   "roots": [
+    {
+     "tag": "button",
+     "class": [
+      "inline-flex",
+      "cursor-pointer",
+      "items-center"
+     ],
+     "attrs": {
+      "data-scope": "popover",
+      "data-part": "trigger",
+      "dir": "ltr",
+      "type": "button",
+      "id": "popover:«id»:trigger",
+      "data-ownedby": "«id»",
+      "aria-haspopup": "dialog",
+      "aria-expanded": "false",
+      "data-state": "closed",
+      "aria-controls": "popover:«id»:content"
+     },
+     "children": [
+      {
+       "tag": "span",
+       "class": [
+        "typ-ref",
+        "rounded-base",
+        "cursor-pointer",
+        "transition-colors",
+        "py-0.5",
+        "-my-0.5",
+        "text-ref-fg",
+        "hover:bg-ref-bg"
+       ],
+       "attrs": {
+        "role": "button",
+        "tabindex": "0",
+        "data-tip": "@fig-one"
+       },
+       "children": [
+        "{number}"
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  "unknown": {
+   "roots": [
+    {
+     "tag": "button",
+     "class": [
+      "inline-flex",
+      "cursor-pointer",
+      "items-center"
+     ],
+     "attrs": {
+      "data-scope": "popover",
+      "data-part": "trigger",
+      "dir": "ltr",
+      "type": "button",
+      "id": "popover:«id»:trigger",
+      "data-ownedby": "«id»",
+      "aria-haspopup": "dialog",
+      "aria-expanded": "false",
+      "data-state": "closed",
+      "aria-controls": "popover:«id»:content"
+     },
+     "children": [
+      {
+       "tag": "span",
+       "class": [
+        "typ-ref",
+        "rounded-base",
+        "cursor-pointer",
+        "transition-colors",
+        "text-ref-broken-fg",
+        "hover:bg-ref-broken-bg"
+       ],
+       "attrs": {
+        "role": "button",
+        "tabindex": "0",
+        "data-tip": "{target}"
+       },
+       "children": [
+        "@{target}"
+       ]
+      }
+     ]
+    }
+   ]
+  }
+ }
+}

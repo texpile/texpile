@@ -2,12 +2,14 @@
 import { untrack } from 'svelte';
 import { trailingDebounce } from '$lib/trailingDebounce';
 import { activeFilePath } from '$lib/workspace/workspaceStore';
+import { SELECTION_EVENT } from '$lib/editor/canvas';
 import { agentHost } from '../agentHost.svelte';
 import { selectedLines } from './attached';
 import type { SelectedLines } from '../agentPanel.types';
 
 // a drag fires the page's selectionchange at every step; the lines are read once it rests
 const SETTLE_MS = 150;
+const CHANGE_EVENTS = ['selectionchange', SELECTION_EVENT];
 
 export class EditorSelection {
 	current = $state<{ path: string; lines: SelectedLines } | null>(null);
@@ -21,16 +23,19 @@ export class EditorSelection {
 	/** reads it now and after each change of selection in the editor; the returned function stops */
 	watch(): () => void {
 		const later = trailingDebounce<void>(SETTLE_MS, () => this.read());
-		// a text box's own caret moves with every key typed there, and the editor's selection cannot move meanwhile
+		// a text box's own caret moves with every key typed there, and the editor's selection cannot move meanwhile;
+		// the visual editor's own input textarea is not such a box
 		function onChange(): void {
 			const at = document.activeElement;
-			if (!(at instanceof HTMLTextAreaElement || at instanceof HTMLInputElement)) later();
+			const textBox = (at instanceof HTMLTextAreaElement || at instanceof HTMLInputElement) && !at.closest('[data-canvas-input]');
+			if (!textBox) later();
 		}
 		untrack(() => this.read());
-		document.addEventListener('selectionchange', onChange);
+		// the canvas editor's selection is no DOM selection: it sends its own event
+		for (const type of CHANGE_EVENTS) document.addEventListener(type, onChange);
 		return () => {
 			later.cancel();
-			document.removeEventListener('selectionchange', onChange);
+			for (const type of CHANGE_EVENTS) document.removeEventListener(type, onChange);
 		};
 	}
 }

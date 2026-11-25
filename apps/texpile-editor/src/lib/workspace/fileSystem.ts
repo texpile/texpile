@@ -172,6 +172,10 @@ type TexpileNative = {
 	drawCetz?: (body: { root: string; path: string; job: string }) => Promise<unknown>;
 	drawStop?: () => Promise<void>;
 	drawRestart?: () => Promise<void>;
+	/** Linux PRIMARY: the selection's text, and the text a middle press pastes */
+	middlePastesSelection?: boolean;
+	clipboardWriteSelection?: (text: string) => void;
+	clipboardReadSelection?: () => Promise<string>;
 	imageKeepOriginal?: (path: string) => Promise<void>;
 	imageNoteWritten?: (path: string) => Promise<void>;
 	imageOriginalAt?: (path: string) => Promise<number | null>;

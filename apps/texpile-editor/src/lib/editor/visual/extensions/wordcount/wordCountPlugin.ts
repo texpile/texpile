@@ -4,56 +4,14 @@ import type { Node } from 'prosemirror-model';
 import { documentCountStore } from '$lib/stores/countStore.svelte';
 import { trailingDebounce } from '$lib/trailingDebounce';
 import { countProse } from '$lib/workspace/wordCount/proseWords';
+import { extractText, extractTextSlices, type RawProse } from './selectionText';
 
 const wordCountKey = new PluginKey('wordCount');
 
-/** latexProse or typstProse; without one, raw blocks are left out and raw inline text counts as written */
-export type RawProse = (raw: string) => string;
+function noCount(): void {}
 
-// never prose: math, code, and a citation, reference or label, whose text is a key
-const SKIPPED = new Set(['inline_math', 'block_math', 'code_block', 'citation', 'ref', 'typ_ref', 'label']);
-const RAW = new Set(['raw_latex', 'inline_latex']);
-
-function extractText(doc: Node, from: number, to: number, prose?: RawProse): string {
-	// pieces joined once: asking a string grown piece by piece how it ends flattens it every time
-	const pieces: string[] = [];
-	let spaced = true;
-	function add(piece: string): void {
-		pieces.push(piece);
-		spaced = piece.endsWith(' ');
-	}
-
-	doc.nodesBetween(from, to, (node, pos) => {
-		if (SKIPPED.has(node.type.name)) return false;
-		if (prose && RAW.has(node.type.name)) {
-			const start = Math.max(0, from - pos - 1);
-			const end = Math.min(node.content.size, to - pos - 1);
-			if (start < end) add(` ${prose(node.textBetween(start, end))} `);
-			return false;
-		}
-		if (!prose && node.type.name === 'raw_latex') return false;
-		if (node.type.name === 'hard_break') {
-			add(' ');
-			return false;
-		}
-
-		if (node.type.name === 'text' && node.text) {
-			const start = Math.max(0, from - pos);
-			const end = Math.min(node.text.length, to - pos);
-			if (start < end) add(node.text.slice(start, end));
-		}
-
-		// space between blocks so words don't merge
-		if (node.isBlock && !spaced) add(' ');
-
-		return true;
-	});
-
-	return pieces.join('').trim();
-}
-
-function updateSelectionCount(doc: Node, from: number, to: number, prose?: RawProse, node = false): void {
-	const counted = from === to ? null : countProse(extractText(doc, from, to, prose));
+function publishSelectionCount(text: string | null, node: boolean): void {
+	const counted = text === null ? null : countProse(text);
 	// a Typst paper opens on its first block, a set rule, selected whole: "0 of 114 words" for a selection nobody made
 	if (!counted || (node && counted.words === 0)) {
 		documentCountStore.selectionWords = null;
@@ -67,6 +25,33 @@ function updateSelectionCount(doc: Node, from: number, to: number, prose?: RawPr
 	}
 }
 
+// a selection of a whole paper is read in slices of this long, a task each, so the editor keeps answering
+const SLICE_MS = 30;
+
+/** counts the selection and returns the way to drop the count; a selection read within one slice lands at once */
+function startSelectionCount(doc: Node, from: number, to: number, prose: RawProse | undefined, node: boolean): () => void {
+	if (from === to) {
+		publishSelectionCount(null, node);
+		return noCount;
+	}
+	const slices = extractTextSlices(doc, from, to, prose);
+	let timer: ReturnType<typeof setTimeout> | undefined;
+	function run(): void {
+		const end = performance.now() + SLICE_MS;
+		for (;;) {
+			const step = slices.next();
+			if (step.done) return publishSelectionCount(step.value, node);
+			if (performance.now() >= end) break;
+		}
+		timer = setTimeout(run);
+	}
+	run();
+	return () => {
+		clearTimeout(timer);
+		slices.return('');
+	};
+}
+
 function updateDocCount(doc: Node): void {
 	const { words, characters, charactersWithSpaces } = countProse(extractText(doc, 0, doc.content.size));
 	documentCountStore.words = words;
@@ -78,8 +63,13 @@ function updateDocCount(doc: Node): void {
  *  Only the focused editor counts: a parked one shows another slot's file */
 export function createWordCountPlugin(prose?: RawProse) {
 	const deferredDocCount = trailingDebounce(300, updateDocCount);
+	let stopCount = noCount;
+	function countSelection(doc: Node, from: number, to: number, node: boolean): void {
+		stopCount();
+		stopCount = startSelectionCount(doc, from, to, prose, node);
+	}
 	const deferredSelectionCount = trailingDebounce(150, ({ doc, from, to, node }: { doc: Node; from: number; to: number; node: boolean }) =>
-		updateSelectionCount(doc, from, to, prose, node)
+		countSelection(doc, from, to, node)
 	);
 
 	return new Plugin({
@@ -98,8 +88,12 @@ export function createWordCountPlugin(prose?: RawProse) {
 				const { from, to } = selection;
 				const node = selection instanceof NodeSelection;
 				// one debouncer for range counts AND the collapsed clear, so a pending count can never land after a newer clear
-				if (fresh) updateSelectionCount(doc, from, to, prose, node);
-				else if (!before || before.doc !== doc || !before.selection.eq(selection)) deferredSelectionCount({ doc, from, to, node });
+				if (fresh) countSelection(doc, from, to, node);
+				else if (!before || before.doc !== doc || !before.selection.eq(selection)) {
+					// a count under way is of a selection that is gone
+					stopCount();
+					deferredSelectionCount({ doc, from, to, node });
+				}
 			}
 			sync(view);
 			return {
@@ -109,6 +103,7 @@ export function createWordCountPlugin(prose?: RawProse) {
 					if (!view.editable) return;
 					deferredDocCount.cancel();
 					deferredSelectionCount.cancel();
+					stopCount();
 				}
 			};
 		}

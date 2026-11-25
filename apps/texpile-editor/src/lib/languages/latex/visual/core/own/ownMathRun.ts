@@ -1,5 +1,8 @@
 import { templateFeaturesStore } from '$lib/stores/editorStore';
-import { faceElement, tippedFace, type ChipFace } from '$lib/editor/visual/extensions/drawnChips/chipFace';
+import { setLook } from '$lib/editor/canvas';
+import { tippedFace, type ChipFace } from '$lib/editor/visual/extensions/drawnChips/chipFace';
+import { REMARK_HEAD_NAME_LOOK } from '$lib/editor/visual/extensions/drawnChips/looks/headLooks';
+import { coreElement } from '../looks/coreLooks';
 import { ownMacroDefinition } from './ownMacroFace.svelte';
 import { environmentMath, mathFace } from '../parts/mathPart';
 
@@ -22,11 +25,12 @@ export function theoremCommandFace(name: string, source: string): ChipFace | nul
 	const heads = templateFeaturesStore.current.environmentHeads;
 	const head = heads && Object.hasOwn(heads, name) ? heads[name] : null;
 	if (!head) return null;
-	const dom = faceElement('span', 'env-head');
+	const dom = coreElement('span', 'env-head');
 	dom.dataset.look = 'theorem';
 	dom.dataset.style = head.style;
-	dom.appendChild(faceElement('span', 'env-head-name', head.text));
-	dom.appendChild(document.createTextNode('.'));
+	const label = dom.appendChild(coreElement('span', 'env-head-name', head.text));
+	if (head.style === 'remark') setLook(label, REMARK_HEAD_NAME_LOOK);
+	dom.append('.');
 	return tippedFace(dom, source);
 }
 

@@ -2,51 +2,39 @@
 import { Plugin } from 'prosemirror-state';
 import type { EditorView } from 'prosemirror-view';
 
-// the block is not the document, so a drop on it lands where the blocks were taken out, among the suggestion's own
-// parts. The pointer goes through it during a drag (dropPastNodeViews), so the test is by where it is
+// the block is not the document, so a drop on it lands where the blocks were taken out, among the suggestion's own parts
 function overGoneBlocks(view: EditorView, event: DragEvent): boolean {
-	for (const box of view.dom.querySelectorAll('.pm-suggest-gone')) {
-		const r = box.getBoundingClientRect();
-		if (event.clientX >= r.left && event.clientX <= r.right && event.clientY >= r.top && event.clientY <= r.bottom) return true;
-	}
-	return false;
+	const hit = view.canvas.geometry.hit(view.canvas.docPoint({ x: event.clientX, y: event.clientY }));
+	return !!hit?.chain[0]?.closest('.pm-suggest-gone');
 }
 
 export function refuseDropOnGoneBlocks(): Plugin {
+	// on the page: the drop indicator reads it, and one already showing has to go
+	function refuse(view: EditorView, on: boolean) {
+		view.dom.ownerDocument.documentElement.classList.toggle('pm-drop-refused', on);
+	}
 	return new Plugin({
-		view(view) {
-			const doc = view.dom.ownerDocument;
-			// on the page: the drop cursor is drawn outside the editor, and one already showing has to go
-			function refuse(on: boolean) {
-				doc.documentElement.classList.toggle('pm-drop-refused', on);
-			}
-			// before ProseMirror and its drop cursor hear of it: a dragover nobody takes shows the pointer as no drop,
-			// and the drop never comes
-			function dragover(event: DragEvent) {
-				const over = view.dom.contains(event.target as Node) && overGoneBlocks(view, event);
-				refuse(over);
-				if (!over) return;
-				event.stopPropagation();
-			}
-			function drop(event: DragEvent) {
-				refuse(false);
-				if (!view.dom.contains(event.target as Node) || !overGoneBlocks(view, event)) return;
-				event.preventDefault();
-				event.stopPropagation();
-			}
-			function done() {
-				refuse(false);
-			}
-			doc.addEventListener('dragover', dragover, true);
-			doc.addEventListener('drop', drop, true);
-			doc.addEventListener('dragend', done, true);
-			return {
-				destroy() {
-					doc.removeEventListener('dragover', dragover, true);
-					doc.removeEventListener('drop', drop, true);
-					doc.removeEventListener('dragend', done, true);
+		props: {
+			handleDOMEvents: {
+				dragover(view, event) {
+					const over = overGoneBlocks(view, event);
+					refuse(view, over);
+					// a dragover that accepts a drop with no effect shows the pointer as no drop
+					const transfer = event.dataTransfer;
+					if (over && transfer) transfer.dropEffect = 'none';
+					return false;
+				},
+				drop(view, event) {
+					refuse(view, false);
+					if (!overGoneBlocks(view, event)) return false;
+					event.preventDefault();
+					return true;
+				},
+				dragend(view) {
+					refuse(view, false);
+					return false;
 				}
-			};
+			}
 		}
 	});
 }

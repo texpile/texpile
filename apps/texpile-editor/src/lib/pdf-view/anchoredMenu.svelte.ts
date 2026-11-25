@@ -21,6 +21,8 @@ export class AnchoredMenu {
 	moveToBody = (el: HTMLElement) => {
 		el.setAttribute('data-anchored-menu', '');
 		this.button?.ownerDocument.body.append(el);
+		// svelte removes only the outermost node of a block it destroys, which left this one on the page
+		return () => el.remove();
 	};
 
 	toggle = () => {

@@ -1,7 +1,7 @@
 // hover tooltips: macro signature/doc, package/class blurb, full citation entry, glossary
 // description, \ref target preview (rendered math when the label sits in a math environment,
 // with the resolved number from the .aux), and an inline image preview for \includegraphics.
-import { ensureSyntaxTree } from '@codemirror/language';
+import { syntaxTree } from '@codemirror/language';
 import { EditorView, hoverTooltip, type Tooltip } from '@codemirror/view';
 import type { EditorState, Extension } from '@codemirror/state';
 import type { SyntaxNode } from '@lezer/common';
@@ -35,7 +35,6 @@ export type Token = {
 };
 
 const FILE_KINDS = ['package', 'class'] as const;
-const PARSE_BUDGET_MS = 100;
 
 function roleTokenAt(
 	text: string,
@@ -94,8 +93,7 @@ export function tokenAt(text: string, pos: number, loaded?: LoadedFile[] | null)
 /** `tokenAt` over an editor's document, reading the editor's own parse */
 export function tokenAtState(state: EditorState, pos: number, loaded?: LoadedFile[] | null): Token | null {
 	const text = docText(state.doc);
-	const tree = ensureSyntaxTree(state, state.doc.length, PARSE_BUDGET_MS);
-	if (tree) rememberLatexTree(text, tree);
+	rememberLatexTree(text, syntaxTree(state));
 	return tokenAt(text, pos, loaded);
 }
 

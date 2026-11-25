@@ -46,6 +46,8 @@ const bootstrap: Bootstrap = (() => {
 contextBridge.exposeInMainWorld('texpileNative', {
 	/** what this window is opening and the settings to open it with, known before the first render. */
 	bootstrap,
+	/** window.__canvasProbe in a production build, for perf-drive and the drive kits */
+	canvasProbe: process.env.TEXPILE_CANVAS_PROBE === '1',
 	/** native folder picker; resolves to the chosen absolute path or null. */
 	openFolder: () => invokeReady('dialog:openFolder'),
 	/** native pickers with a title of the caller's choosing; every chosen folder, or the one chosen file or null. */
@@ -241,6 +243,10 @@ contextBridge.exposeInMainWorld('texpileNative', {
 	draftStop: () => invokeFs('draft:stop', {}),
 	...drawBridge,
 	...imageBridge,
+	/** a middle press pastes PRIMARY, as on Linux unless Chromium's middle-click autoscroll is on */
+	middlePastesSelection: process.platform === 'linux' && !process.argv.some((arg) => arg.includes('MiddleClickAutoscroll')),
+	clipboardWriteSelection: (text: string) => ipcRenderer.send('clipboard:writeSelection', text),
+	clipboardReadSelection: (): Promise<string> => ipcRenderer.invoke('clipboard:readSelection'),
 	/** Save the live preview's reconcile PDF via a save dialog -> { saved, path? }. */
 	draftSavePdf: (body: { root: string; defaultName: string; to?: string }) => invokeFs('draft:savePdf', body),
 	/** Save PDF bytes the viewer holds (a guest has no file on disk) -> { saved, path? }. */

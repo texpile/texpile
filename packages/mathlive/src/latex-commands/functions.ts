@@ -126,11 +126,14 @@ defineFunction('ang', '{:math}', {
       style: { ...atom.style, variant: 'normal', variantStyle: 'up' },
     });
 
-    return new Box([box, deg], {
-      type: 'inner',
-      isSelected: atom.isSelected,
-      caret,
-    });
+    return atom.bind(
+      context,
+      new Box([box, deg], {
+        type: 'inner',
+        isSelected: atom.isSelected,
+        caret,
+      })
+    );
   },
 });
 

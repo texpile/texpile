@@ -95,8 +95,8 @@ export function createPersistentSelectionPlugin() {
 						el.className = 'pm-blur-cursor';
 						return el;
 					},
-					// tag in the key so PM rebuilds the widget when the pending mark changes
-					{ side: 0, key: `pm-blur-cursor:${tag}` }
+					// tag in the key so PM rebuilds the widget when the pending mark changes; the canvas draws it on the caret layer
+					{ side: 0, key: `pm-blur-cursor:${tag}`, canvas: { kind: 'caret' } }
 				);
 				return DecorationSet.create(state.doc, [widget]);
 			}

@@ -1,18 +1,13 @@
 // the node views and ProseMirror plugins the plugins give the editor, read off the list
 import type { Plugin } from 'prosemirror-state';
+import { composeNodeViews, type CanvasViewSet } from '$lib/editor/canvas';
 import { typstPlugins } from '../../typstPlugins';
-import type { TypstEditorSlot, TypstNodeViews, TypstViewSetup } from './typstPlugin';
+import type { TypstEditorSlot, TypstViewSetup } from './typstPlugin';
 
 export function pluginEditorPlugins(slot: TypstEditorSlot): Plugin[] {
 	return typstPlugins.flatMap((plugin) => plugin.editorPlugins?.[slot]?.() ?? []);
 }
 
-export function pluginNodeViews(setup: TypstViewSetup): TypstNodeViews {
-	const views: TypstNodeViews = {};
-	for (const plugin of typstPlugins)
-		for (const [name, view] of Object.entries(plugin.views?.(setup) ?? {})) {
-			if (views[name]) throw new Error(`two Typst plugins draw the node ${name}`);
-			views[name] = view;
-		}
-	return views;
+export function pluginCanvasViews(setup: TypstViewSetup): Required<CanvasViewSet> {
+	return composeNodeViews(...typstPlugins.map((plugin) => plugin.canvasViews?.(setup) ?? {}));
 }

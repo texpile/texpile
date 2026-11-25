@@ -4,6 +4,7 @@ export const abstractNodes: Record<string, NodeSpec> = {
 	abstract: {
 		content: 'block+',
 		group: 'block',
+		paragraphSpacing: 'abstract',
 		definingAsContext: true,
 		attrs: {
 			sourceForm: { default: 'env' }

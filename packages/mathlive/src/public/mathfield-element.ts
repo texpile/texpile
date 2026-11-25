@@ -2071,7 +2071,7 @@ import "https://esm.run/@cortex-js/compute-engine";
     }
 
     this._mathfield = new _Mathfield(
-      shadowRoot.querySelector(':host > span')!,
+      shadowRoot.querySelector<HTMLElement>(':host > span')!,
       {
         ...(gDeferredState.get(this)?.options ??
           getOptionsFromAttributes(this)),

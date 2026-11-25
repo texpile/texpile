@@ -19,6 +19,14 @@ the `lualatex` on PATH, or the folder in `TEXPILE_TEST_TEX_BIN`, and skips its t
 so a `pnpm electron:dev` on 5173 can stay open. A failed test leaves a screenshot of the window in `report/`
 (`npx playwright show-report tests/integration/report`).
 
+A canvas spec listed in `HARNESS_SPECS` (`playwright.config.ts`) also runs without Electron: `pnpm test:integration --project=canvas-web`
+opens `harness/index.html` (one visual editor over an in-memory copy of the folder) in plain Chromium and needs no display.
+The projects `canvas-web-firefox` and `canvas-web-webkit` run the specs in `HARNESS_GUEST_SPECS` the same way in Firefox
+and WebKit. A spec that needs the app (`texpile().app`, a save shortcut, the window's toolbar, panes, menus, launch
+options other than `files`) stays out of the lists, or skips that one test in the `canvas-web` projects.
+`useTexpile` picks the window by project. Undo steps the editor's own history there, and nothing that needs the workspace,
+the disk or a compile runs. `TEXPILE_CHROMIUM` names a Chromium executable when Playwright's own is not installed.
+
 CI runs the whole suite on every push (`.github/workflows/test.yml`, job `app`), and `release.yml` waits for it.
 
 ## Write one

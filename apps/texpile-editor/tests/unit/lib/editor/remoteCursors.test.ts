@@ -4,10 +4,7 @@
 import { describe, expect, it } from 'vitest';
 import { EditorState } from 'prosemirror-state';
 import { EditorView } from 'prosemirror-view';
-import { buildAnchor } from '$lib/comments/anchor';
-import { placePmSuggestions } from '$lib/editor/visual/extensions/pmSuggestionsPlace';
-import { pmSuggestions, setPmSuggestions } from '$lib/editor/visual/extensions/pmSuggestions';
-import { parseLatexFile, parseLatexRegion } from '$lib/workspace/latexRoundtrip';
+import { parseLatexFile } from '$lib/workspace/latexRoundtrip';
 import { remoteCursorsPlugin, remoteCursorsKey, setRemoteCursors, type RemotePeerSel } from '$lib/editor/visual/extensions/remoteCursors';
 
 const mkState = () => {
@@ -49,27 +46,18 @@ describe('remoteCursorsPlugin', () => {
 		expect(found[0].from).toBe(11); // shifted by the two inserted chars
 	});
 
-	// struck words are a widget no decoration reaches, so a peer's selection broke into islands around them
-	it('shades the struck words a peer selection runs across', () => {
-		const source = 'Refinement is driven by an estimator.\n';
-		const parsed = parseLatexFile(source);
-		const at = source.indexOf('driven');
-		const { ranges } = placePmSuggestions(
-			parsed.doc,
-			[{ id: 'replace', from: at, to: at + 6, restore: 'led', mine: false, anchor: buildAnchor(source, at, at + 6) }],
-			{ text: source, map: parsed.map, body: { from: 0, to: source.length }, parse: (src) => parseLatexRegion(src) }
-		);
-		const host = document.body.appendChild(document.createElement('div'));
-		const view = new EditorView(host, { state: EditorState.create({ doc: parsed.doc, plugins: [pmSuggestions(), remoteCursorsPlugin] }) });
-		setPmSuggestions(view, ranges);
-		const old = () => view.dom.querySelector<HTMLElement>('.pm-suggest-old')!;
-
-		setRemoteCursors(view, [{ clientId: 7, name: 'Ada', color: '#f06292', anchor: 2, head: 30 }]);
-		expect(old().classList.contains('pm-peer-selected')).toBe(true);
-		expect(old().style.getPropertyValue('--peer-tint')).toContain('#f06292');
-
-		setRemoteCursors(view, [{ clientId: 7, name: 'Ada', color: '#f06292', anchor: 30, head: 30 }]);
-		expect(old().classList.contains('pm-peer-selected')).toBe(false);
-		view.destroy();
+	// the label lingers on arrival: a move inside the paragraph keeps it hidden, another paragraph shows it again
+	it("keeps a peer's arrival while it moves inside one paragraph", () => {
+		const arrival = (state: EditorState) => {
+			const [caret] = remoteCursorsKey.getState(state)!.decos.find();
+			return (caret.spec as { canvas: { kind: string; peer: { arrival: number } } }).canvas.peer.arrival;
+		};
+		const at = (state: EditorState, head: number) =>
+			state.apply(state.tr.setMeta(remoteCursorsKey, [{ clientId: 7, name: 'Ada', color: '#f06292', anchor: head, head }]));
+		const first = at(mkState(), 3);
+		const moved = at(first, 9);
+		const second = moved.doc.child(0).nodeSize + 3;
+		expect(arrival(moved)).toBe(arrival(first));
+		expect(arrival(at(moved, second))).not.toBe(arrival(first));
 	});
 });

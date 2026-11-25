@@ -18,11 +18,11 @@ describe('tracked changes written by LyX', () => {
 		const added = latexFace('\\lyxadded{stoledo}{Sun Sep 28 12:32:10 2025}{a new sentence}', false)!;
 		expect(added.dom.className).toBe('drawn-change drawn-change-added');
 		expect(added.dom.textContent).toBe('a new sentence');
-		expect(added.dom.getAttribute('data-tip')).toBe('Added by stoledo on Sun Sep 28 12:32:10 2025');
+		expect((added.dom as unknown as { hint: string }).hint).toBe('Added by stoledo on Sun Sep 28 12:32:10 2025');
 		const deleted = latexFace('\\lyxdeleted{stoledo}{Sun Sep 28 12:32:10 2025}{old words}', false)!;
 		expect(deleted.dom.className).toBe('drawn-change drawn-change-deleted');
-		expect(deleted.dom.style.getPropertyValue('--change-hue')).toBe(added.dom.style.getPropertyValue('--change-hue'));
+		expect(deleted.dom.style.color).toBe(added.dom.style.color);
 		const other = latexFace('\\lyxadded{ada}{Mon Sep 29 09:00:00 2025}{text}', false)!;
-		expect(other.dom.style.getPropertyValue('--change-hue')).not.toBe(added.dom.style.getPropertyValue('--change-hue'));
+		expect(other.dom.style.color).not.toBe(added.dom.style.color);
 	});
 });

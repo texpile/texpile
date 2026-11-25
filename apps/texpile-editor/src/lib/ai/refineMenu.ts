@@ -13,16 +13,16 @@ function actionItems(r: SelectionRefiner, agent: RefineAgent): ContextMenuItem[]
 	return REFINE_ACTIONS.map((action) => ({ label: action.label(), icon: action.icon, onclick: () => void r.refine(action, agent) }));
 }
 
-/** the selected text's box, which is where the card goes when no toolbar button asked for it */
-function selectionRect(): DOMRect | null {
+/** the source editor's selected text: its box is where the card goes when no toolbar button asked for it */
+export function domSelectionRect(): DOMRect | null {
 	const sel = window.getSelection();
 	if (!sel || sel.rangeCount === 0 || sel.isCollapsed) return null;
 	const box = sel.getRangeAt(0).getBoundingClientRect();
 	return box.width || box.height ? box : null;
 }
 
-/** none wherever Refine cannot run at all, so the menu leaves it out */
-export function refineMenuItems(hasSelection: boolean): ContextMenuItem[] {
+/** none wherever Refine cannot run at all, so the menu leaves it out; `selectionRect` is the selected text's box */
+export function refineMenuItems(hasSelection: boolean, selectionRect: () => DOMRect | null): ContextMenuItem[] {
 	const r = refiner.current;
 	if (r?.needsAgent) return [{ label: m.ai_refine_setup(), icon: Sparkles, onclick: () => openPreferencesAt('ai') }];
 	if (!r?.available) return [];

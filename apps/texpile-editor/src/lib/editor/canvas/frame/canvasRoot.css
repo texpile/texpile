@@ -1,0 +1,17 @@
+/* the root wears the editor classes the app's own rules key on; the box is the canvas surface's */
+.ProseMirror[data-canvas-root] {
+	margin: 0 !important;
+	padding: 0 !important;
+	border: 0 !important;
+	background: none !important;
+	box-shadow: none !important;
+	width: auto !important;
+	max-width: none !important;
+	min-height: 0 !important;
+	flex-basis: auto !important;
+	flex-shrink: 0 !important;
+	border-radius: 0 !important;
+	/* the rows sit in its space; the last one reaches past the document's end and must not lengthen the scroll */
+	position: relative !important;
+	overflow: visible clip !important;
+}

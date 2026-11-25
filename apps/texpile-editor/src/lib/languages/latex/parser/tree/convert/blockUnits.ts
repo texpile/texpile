@@ -53,7 +53,7 @@ function callBlock(im: TreeImport, call: ImportCall, ctx: ConversionContext): Pm
 	if (hasUnclosedGroup(call)) return [rawBlockOf(im, call)];
 	if (ignoredMacros.has(call.name)) return null;
 	const handler = commandImports.get(call.name);
-	if (handler) {
+	if (typeof handler === 'function') {
 		const result = handler(im, call, ctx);
 		if (result && result.length > 0 && result[0].isBlock) {
 			// a block that is a chip of its own (\input, \hrule) stands for the call's bytes

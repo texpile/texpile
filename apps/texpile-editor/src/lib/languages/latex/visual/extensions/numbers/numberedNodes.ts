@@ -1,6 +1,6 @@
 // which nodes print a number
 import type { Node as PMNode } from 'prosemirror-model';
-import type { ChipCountsOf } from '$lib/editor/visual/extensions/drawnChips/footnoteNumbers';
+import type { ChipCountsOf } from '$lib/editor/visual/extensions/drawnChips/footnote/footnoteNumbers';
 import { FIG_CAP_SLOT } from '$lib/languages/latex/parser/tree/importCore/figureSlots';
 
 /** part -1, chapter 0, section 1: the position less one is a level's depth */

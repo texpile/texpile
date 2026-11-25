@@ -23,6 +23,7 @@ export const typGridSpec: NodeSpec = {
 export const typGridCellSpec: NodeSpec = {
 	content: 'block+',
 	isolating: true,
+	paragraphSpacing: 'cell',
 	attrs: { gap: { default: null }, bodyLead: { default: null }, bodyTrail: { default: null }, code: { default: false } },
 	parseDOM: [{ tag: 'div.typ-grid-cell' }],
 	toDOM: (node) => ['div', { class: node.attrs.code ? 'typ-grid-cell typ-grid-code' : 'typ-grid-cell' }, 0]
