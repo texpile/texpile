@@ -5,6 +5,9 @@ Release notes for Texpile Desktop. Add notes under `## [Unreleased]` as you work
 
 ## [Unreleased]
 
+- feat: Problems tab with This file and Project sections, filters, Fix and Ignore (by @louisqli)
+- feat: spelling and grammar of the open file in the Problems tab (by @louisqli)
+- feat: Fix with agent on a problem (by @louisqli)
 - feat: proofread with AI over the spell check (by @louisqli)
 - feat: convert a picture to LaTeX or Typst (by @louisqli)
 - feat: one AI agent for every AI feature in Preferences › AI agent (by @louisqli)

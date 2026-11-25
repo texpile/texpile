@@ -41,8 +41,17 @@ export function reviewOf(key: string): ParagraphReview | undefined {
 	return reviews.get(key);
 }
 
+const keptListeners = new Set<() => void>();
+
+/** a review came in, for whichever editor asked */
+export function onReviewKept(fn: () => void): () => void {
+	keptListeners.add(fn);
+	return () => keptListeners.delete(fn);
+}
+
 export function keepReview(key: string, review: ParagraphReview): void {
 	remember(reviews, key, review);
+	keptListeners.forEach((fn) => fn());
 }
 
 /** false when the text is drawn without the review it now has */

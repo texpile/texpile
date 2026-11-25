@@ -3,10 +3,10 @@
 	// terminal state (VS Code-style: one shown, the rest kept mounted so their shells persist).
 	// The parent owns only the dock's height/visibility (they drive its grid layout).
 	import { tip } from '$lib/components/tooltip.svelte';
-	import ProblemsPanel from '$lib/workspace/ProblemsPanel.svelte';
+	import ProblemsPanel from '$lib/problems/ui/ProblemsPanel.svelte';
+	import { problemsView } from '$lib/problems/problemsStore.svelte';
 	import CommentsPanel from '$lib/comments/CommentsPanel.svelte';
 	import type { CommentMessage, CommentThread } from '$lib/comments/log';
-	import { compileLog } from '$lib/stores/compileLogStore';
 	import { m } from '$lib/paraglide/messages';
 	import { TerminalShells } from './terminalShells.svelte';
 	import type { DockView } from './dockView';
@@ -81,6 +81,11 @@
 		if (!agentOn) agentOpened = false;
 		else if (view === 'agent') agentOpened = true;
 	});
+
+	function showAgent(): void {
+		if (agentInSide()) agentSide.setOpen(true);
+		else view = 'agent';
+	}
 
 	// shells (roster, compile shell, run/reset plumbing) live in terminalShells.svelte.ts
 	const shells = new TerminalShells(() => onClose());
@@ -169,10 +174,10 @@
 			onclick={() => (view = 'problems')}
 		>
 			{m.wsview_problems_label()}
-			{#if compileLog.current && compileLog.current.errors.length > 0}
-				<DockTabCount count={compileLog.current.errors.length} tone="error" />
-			{:else if compileLog.current && compileLog.current.warnings.length > 0}
-				<DockTabCount count={compileLog.current.warnings.length} tone="warning" />
+			{#if problemsView.counts.error > 0}
+				<DockTabCount count={problemsView.counts.error} tone="error" />
+			{:else if problemsView.counts.warning > 0}
+				<DockTabCount count={problemsView.counts.warning} tone="warning" />
 			{/if}
 		</button>
 		<!-- always present, not only once a thread exists: a tab that appears when there is something
@@ -315,7 +320,7 @@
 <div class="relative min-h-0 flex-1">
 	{#if view === 'problems'}
 		<div class="bg-surface-50-950 absolute inset-0 z-10 overflow-hidden">
-			<ProblemsPanel root={cwd} onJump={onProblemJump} />
+			<ProblemsPanel root={cwd} onJump={onProblemJump} onShowAgent={showAgent} />
 		</div>
 	{:else if view === 'comments'}
 		<div class="bg-surface-50-950 absolute inset-0 z-10 overflow-hidden">
