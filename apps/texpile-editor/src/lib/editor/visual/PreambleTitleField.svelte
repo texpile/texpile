@@ -1,5 +1,4 @@
 <script lang="ts">
-	import { tick } from 'svelte';
 	import { domOf } from '$lib/editor/visual/extensions/drawnChips/chipFace';
 	import { openChipPanel, syncChipPanel } from '$lib/editor/visual/extensions/drawnChips/chipPanel/chipPanel.svelte';
 	import { latexFace } from '$lib/languages/latex/visual/core/walk/drawUnits';
@@ -10,7 +9,13 @@
 	import { tip } from '$lib/components/tooltip.svelte';
 	import type { PreambleSpan } from '$lib/languages/latex/visual/core/title/preambleFields';
 
-	type Props = { command: string; text: string; span: PreambleSpan; onEdit?: (span: PreambleSpan, text: string) => void };
+	type Props = {
+		command: string;
+		text: string;
+		span: PreambleSpan;
+		caret: number;
+		onEdit?: (span: PreambleSpan, command: string) => void;
+	};
 	const props: Props = $props();
 
 	let field = $state<HTMLElement>();
@@ -29,10 +34,10 @@
 		return { update: (next: HTMLElement) => node.replaceChildren(next) };
 	}
 
-	function step(run: () => boolean): void {
-		run();
-		void tick().then(() => field && syncChipPanel(field, props.text));
-	}
+	// an undo reaches the preamble a few ticks later
+	$effect(() => {
+		if (field) syncChipPanel(field, props.command);
+	});
 
 	function open(): void {
 		const view = editorViewStore.current;
@@ -41,7 +46,8 @@
 		const span = props.span;
 		openChipPanel({
 			anchor,
-			source: props.text,
+			source: props.command,
+			caret: props.caret,
 			language: 'latex',
 			inline: false,
 			settingsFor: () => null,
@@ -50,8 +56,8 @@
 			jump: () => {},
 			jumpToDefinition: () => {},
 			view,
-			undo: () => step(undoVisual),
-			redo: () => step(redoVisual),
+			undo: () => void undoVisual(),
+			redo: () => void redoVisual(),
 			onClose: (how) => {
 				if (how !== 'away') anchor.focus();
 			}
