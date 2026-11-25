@@ -60,7 +60,9 @@ function normalizeProblem(p: ProofreadProblem & { rule?: string; language?: Spel
 	};
 }
 
-export function createHarperSuggestionBox(options: Parameters<CreateSuggestionBox>[0]): { destroy: () => void } {
+export function createHarperSuggestionBox(options: Omit<Parameters<CreateSuggestionBox>[0], 'position'> & { position: Position }): {
+	destroy: () => void;
+} {
 	if (currentCleanup) {
 		currentCleanup();
 		currentCleanup = null;
