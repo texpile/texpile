@@ -7,12 +7,12 @@
 	const filters = $derived(PROBLEM_FILTERS.filter((f) => f !== 'box' || problemsView.counts.box > 0));
 </script>
 
-<div class="flex flex-wrap items-center gap-1">
+<div class="flex flex-wrap items-center gap-1.5">
 	{#each filters as filter (filter)}
 		{@const look = PROBLEM_LOOKS[filter]}
 		{@const on = !problemsView.hidden.has(filter)}
 		<button
-			class="chip hover:bg-surface-wash {on ? '' : 'text-muted'} [--chip-size:var(--text-xs)]"
+			class="btn btn-sm h-6 gap-1.5 px-2 text-xs {on ? 'preset-tonal' : 'preset-outlined-surface-200-800 hover:preset-tonal text-muted'}"
 			aria-pressed={on}
 			onclick={() => problemsView.toggle(filter)}
 		>
