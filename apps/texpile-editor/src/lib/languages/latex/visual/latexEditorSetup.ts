@@ -50,6 +50,7 @@ import { indentListItem } from '$lib/editor/visual/extensions/listIndent/listInd
 import { inputRules, InputRule, smartQuotes, ellipsis, undoInputRule } from 'prosemirror-inputrules';
 import { selectFigureBackward, selectFigureForward } from '$lib/editor/visual/figureDeleteGuard';
 import { deleteEmptyBlockBackward, deleteEmptyBlockForward } from '$lib/editor/visual/emptyBlockDelete';
+import { deleteSelectedBlock } from '$lib/editor/visual/selectedBlockDelete';
 import { liftFromStyleEnvironment } from '$lib/editor/visual/liftFromStyleEnvironment';
 import { placeholderPlugin } from '$lib/editor/visual/extensions/placeholderplugin';
 import { tablePlaceholderPlugin } from '$lib/editor/visual/extensions/table/tablePlaceholderPlugin';
@@ -150,6 +151,7 @@ export function latexEditorPlugins(setup: LatexEditorSetup): Plugin[] {
 		heldWidthPlugin(),
 		islandKeysPlugin(),
 		// before the list keymap, whose Backspace and Delete act at a block edge: they would join the block after an empty one into it, and a block into a figure
+		keymap({ Backspace: deleteSelectedBlock, Delete: deleteSelectedBlock }),
 		keymap({ Backspace: unnumberHeading((state) => numbersKey.getState(state)?.set) }),
 		keymap({ Backspace: liftFromStyleEnvironment }),
 		keymap({ Backspace: deleteEmptyBlockBackward, Delete: deleteEmptyBlockForward }),
