@@ -685,7 +685,6 @@
 	"problems_status_clean": "Compilación correcta",
 	"problems_page_count_one": "{count} página",
 	"problems_page_count_other": "{count} páginas",
-	"problems_boxes_count": "Cajas ({count})",
 	"problems_no_problems": "Sin problemas.",
 	"spelldict_heading": "Diccionario personalizado",
 	"spelldict_add_button": "Añadir",

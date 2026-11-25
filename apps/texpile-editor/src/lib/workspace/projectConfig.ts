@@ -43,6 +43,8 @@ export type ProjectConfig = {
 	spelling?: { language: SpellLanguage };
 	/** LaTeX checks this folder turns on or off over the app's choice, by check id */
 	checks?: Record<string, boolean>;
+	/** the Problems rows Ignore hid (ignoredProblems.ts) */
+	ignore?: string[];
 };
 
 function configPath(root: string) {
@@ -91,6 +93,12 @@ function cleanChecks(v: unknown): Record<string, boolean> | undefined {
 	return Object.keys(out).length ? out : undefined;
 }
 
+function cleanIgnore(v: unknown): string[] | undefined {
+	if (!Array.isArray(v)) return undefined;
+	const out = v.filter((k): k is string => typeof k === 'string' && !!k);
+	return out.length ? out : undefined;
+}
+
 /**
  * null when there is no config, or one we cannot read: a project without one is the normal case.
  *
@@ -123,6 +131,8 @@ export async function readProjectConfig(root: string): Promise<ProjectConfig | n
 		if (isSpellLanguage(spelling)) cfg.spelling = { language: spelling };
 		const checks = cleanChecks((raw as { checks?: unknown }).checks);
 		if (checks) cfg.checks = checks;
+		const ignore = cleanIgnore((raw as { ignore?: unknown }).ignore);
+		if (ignore) cfg.ignore = ignore;
 		return cfg;
 	} catch {
 		return null;
