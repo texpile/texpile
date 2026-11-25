@@ -39,6 +39,8 @@ const asked: Pending[] = [];
 export const reviewsAsked = box(0);
 /** asked-for paragraphs since the queue last ran empty */
 export const reviewsAskedTotal = box(0);
+/** why the last asked-for run stopped short */
+export const reviewsAskedError = box<string | null>(null);
 
 function noteAsked(): void {
 	reviewsAsked.current = asked.length;
@@ -111,8 +113,11 @@ function pendingAsked(now: number, taken: ReadonlySet<string>): Pending[] {
 export function reviewParagraphs(targets: ReviewTarget[]): number {
 	const now = Date.now();
 	const queued = new Set(asked.map((p) => p.key));
+	reviewsAskedError.current = null;
+	pausedUntil = 0;
 	for (const target of targets) {
 		const key = reviewKey(target);
+		failedAt.delete(key);
 		if (queued.has(key) || !wanted(target, key, now)) continue;
 		queued.add(key);
 		asked.push({ target, key, source: ASKED_SOURCE });
@@ -131,7 +136,11 @@ export function stopAskedReviews(): void {
 
 function sendVisible(): void {
 	timer = null;
-	if (!proofreadOn() || Date.now() < pausedUntil) return;
+	if (!proofreadOn()) return;
+	if (Date.now() < pausedUntil) {
+		timer = setTimeout(sendVisible, pausedUntil - Date.now());
+		return;
+	}
 	// the agent is one program, run a request at a time
 	const onScreen = pendingOnScreen();
 	const pending = [...onScreen, ...pendingAsked(Date.now(), new Set(onScreen.map((p) => p.key)))];
@@ -146,13 +155,21 @@ async function send(batch: Pending[]): Promise<void> {
 	inFlight++;
 	for (const p of batch) sending.add(p.key);
 	try {
-		const answer = await bridge.review(reviewSystem(batch[0].target.language), reviewRequest(batch.map((p) => p.target)));
+		const answer = await bridge
+			.review(reviewSystem(batch[0].target.language), reviewRequest(batch.map((p) => p.target)))
+			.catch((e: unknown) => ({ ok: false as const, error: e instanceof Error ? e.message : String(e) }));
 		const parsed = answer.ok ? parseReview(answer.text) : null;
 		if (!parsed) {
 			const now = Date.now();
 			for (const p of batch) failedAt.set(p.key, now);
 			pausedUntil = now + AFTER_FAILURE_MS;
-			noteProofreadResult(answer.ok ? 'The answer was not the JSON asked for.' : answer.error);
+			const error = answer.ok ? 'The answer was not the JSON asked for.' : answer.error;
+			noteProofreadResult(error);
+			// an asked run stops at its first failure and says why
+			if (asked.length) {
+				reviewsAskedError.current = error;
+				stopAskedReviews();
+			}
 			return;
 		}
 		noteProofreadResult(null);

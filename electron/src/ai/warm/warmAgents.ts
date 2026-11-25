@@ -12,8 +12,9 @@ import { listAgentModels, type AgentModelList } from '../agentModels';
 import { AcpWarm } from './acpWarm';
 import { ClaudeWarm } from './claudeWarm';
 import { CodexWarm } from './codexWarm';
-import type { WarmAgent } from './heldProcess';
+import { watchStop, type WarmAgent } from './heldProcess';
 import { openCodePlace } from './openCodePlace';
+import { signInError } from '../agentSignIn';
 
 /** test is Preferences' Test agent, released once it answers */
 export type AgentTask = AiTask | 'test';
@@ -125,11 +126,21 @@ export async function askAgent(
 		return { ok: false, error: e instanceof Error ? e.message : String(e) };
 	}
 	idleFrom(starter.slot);
-	const answer = await warm.ask(prompt, signal, model);
+	let settled = false;
+	const asking = warm.ask(prompt, signal, model).finally(() => (settled = true));
+	// an agent that never answers its start or a queued request is stopped here too, and its process goes
+	const guard = watchStop(signal, NAMES[agent], () => undefined);
+	const answer = await Promise.race([asking, guard.stopped]);
+	guard.end();
+	if (!settled) {
+		release(starter.slot);
+		return answer;
+	}
 	// a process of the test's own goes; one the tasks share stays warm for them
 	if (starter.slot.endsWith(':test')) release(starter.slot);
 	else idleFrom(starter.slot);
-	return answer;
+	const signIn = answer.ok ? null : signInError(agent, answer.error);
+	return signIn ? { ok: false, error: signIn } : answer;
 }
 
 /** asked of the agent itself, in a process of its own that ends with the answer */

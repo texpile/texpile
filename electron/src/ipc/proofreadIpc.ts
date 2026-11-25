@@ -25,8 +25,10 @@ async function proofread(prompt: ProofreadPrompt): Promise<ProofreadAnswer> {
 	const s = readSettings();
 	if (s.aiOff === true || s.proofreadAi !== true) return { ok: false, error: 'Proofread with AI is off.' };
 	if (!underDailyLimit()) return { ok: false, error: `The daily limit of ${DAILY_LIMIT} requests is reached.` };
-	const result = await askAi('proofread', s, prompt, AbortSignal.timeout(TIMEOUT_MS));
-	return result.ok ? result : { ok: false, error: result.error };
+	const signal = AbortSignal.timeout(TIMEOUT_MS);
+	const result = await askAi('proofread', s, prompt, signal);
+	if (result.ok) return result;
+	return { ok: false, error: signal.aborted ? `The AI agent did not answer within ${TIMEOUT_MS / 1000} seconds.` : result.error };
 }
 
 export function registerProofreadIpc(): void {

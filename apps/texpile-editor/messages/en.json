@@ -1170,6 +1170,7 @@
 	"problems_proofread_document": "Proofread document with AI",
 	"problems_proofreading_progress": "Proofreading {done} of {total} paragraphs",
 	"problems_proofread_stop": "Stop",
+	"problems_proofread_open_preferences": "Open Preferences",
 	"spelldict_heading": "Custom Dictionary",
 	"spelldict_add_button": "Add",
 	"spelldict_remove_word_label": "Remove {word}",
