@@ -37,6 +37,13 @@ const asked: Pending[] = [];
 
 /** how many asked-for paragraphs are still to go out or come back */
 export const reviewsAsked = box(0);
+/** asked-for paragraphs since the queue last ran empty */
+export const reviewsAskedTotal = box(0);
+
+function noteAsked(): void {
+	reviewsAsked.current = asked.length;
+	if (!asked.length) reviewsAskedTotal.current = 0;
+}
 
 export function registerReviewSource(source: ReviewSource): () => void {
 	sources.add(source);
@@ -96,7 +103,7 @@ function nextBatch(pending: Pending[]): Pending[] {
 function pendingAsked(now: number, taken: ReadonlySet<string>): Pending[] {
 	for (let i = asked.length - 1; i >= 0; i--)
 		if (!sending.has(asked[i].key) && !wanted(asked[i].target, asked[i].key, now)) asked.splice(i, 1);
-	reviewsAsked.current = asked.length;
+	noteAsked();
 	return asked.filter((p) => !taken.has(p.key) && !sending.has(p.key));
 }
 
@@ -109,10 +116,17 @@ export function reviewParagraphs(targets: ReviewTarget[]): number {
 		if (queued.has(key) || !wanted(target, key, now)) continue;
 		queued.add(key);
 		asked.push({ target, key, source: ASKED_SOURCE });
+		reviewsAskedTotal.current++;
 	}
-	reviewsAsked.current = asked.length;
+	noteAsked();
 	reviewSoon(0);
 	return asked.length;
+}
+
+/** Stop: what is asked and not yet sent stays unsent */
+export function stopAskedReviews(): void {
+	asked.length = 0;
+	noteAsked();
 }
 
 function sendVisible(): void {
