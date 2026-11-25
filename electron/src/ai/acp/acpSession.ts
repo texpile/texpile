@@ -59,6 +59,7 @@ export type SessionOptions = {
 };
 
 const MOST_STDERR = 64 * 1024;
+const START_MS = 120_000;
 
 export function modelOption(options: acp.SessionConfigOption[]): (acp.SessionConfigOption & { type: 'select' }) | undefined {
 	return options.find(
@@ -121,6 +122,11 @@ export class AcpSession {
 				if (ctx.params.sessionId === this.sessionId) this.o.emit({ type: 'update', update: ctx.params.update });
 			})
 			.connect(stream);
+		const late = setTimeout(() => {
+			if (this.sessionId) return;
+			this.failed(lastLine(this.stderr) ?? `did not start within ${START_MS / 1000} seconds`);
+			if (child.pid) killTree(child.pid);
+		}, START_MS);
 		try {
 			const init = await this.connection.agent.request(acp.methods.agent.initialize, {
 				protocolVersion: acp.PROTOCOL_VERSION,
@@ -150,6 +156,8 @@ export class AcpSession {
 			if (this.closing) return;
 			if (authRequired(e)) this.o.emit({ type: 'state', state: 'signed-out' });
 			else this.failed(message(e));
+		} finally {
+			clearTimeout(late);
 		}
 	}
 

@@ -25,8 +25,17 @@ export function registerImageToLatexIpc(): void {
 		}
 		e.sender.once('destroyed', stop);
 		try {
-			const signal = AbortSignal.any([abort.signal, AbortSignal.timeout(IMAGE_TIMEOUT_MS)]);
-			return await askAi('convert', readSettings(), { system, request, images: [{ mediaType: mediaType as string, base64 }] }, signal);
+			const late = AbortSignal.timeout(IMAGE_TIMEOUT_MS);
+			const signal = AbortSignal.any([abort.signal, late]);
+			const result = await askAi(
+				'convert',
+				readSettings(),
+				{ system, request, images: [{ mediaType: mediaType as string, base64 }] },
+				signal
+			);
+			return !result.ok && late.aborted && !abort.signal.aborted
+				? { ok: false, error: `The AI agent did not answer within ${IMAGE_TIMEOUT_MS / 1000} seconds.` }
+				: result;
 		} finally {
 			running.delete(id);
 			e.sender.removeListener('destroyed', stop);

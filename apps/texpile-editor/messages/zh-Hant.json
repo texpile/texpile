@@ -1170,6 +1170,7 @@
 	"problems_proofread_document": "用 AI 校對文件",
 	"problems_proofreading_progress": "已校對 {done} / {total} 個段落",
 	"problems_proofread_stop": "停止",
+	"problems_proofread_open_preferences": "開啟偏好設定",
 	"spelldict_heading": "自訂字典",
 	"spelldict_add_button": "新增",
 	"spelldict_remove_word_label": "移除 {word}",

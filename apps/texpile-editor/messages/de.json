@@ -1170,6 +1170,7 @@
 	"problems_proofread_document": "Dokument mit KI Korrektur lesen",
 	"problems_proofreading_progress": "{done} von {total} Absätzen Korrektur gelesen",
 	"problems_proofread_stop": "Stopp",
+	"problems_proofread_open_preferences": "Einstellungen öffnen",
 	"spelldict_heading": "Benutzerdefiniertes Wörterbuch",
 	"spelldict_add_button": "Hinzufügen",
 	"spelldict_remove_word_label": "{word} entfernen",

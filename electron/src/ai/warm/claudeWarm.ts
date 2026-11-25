@@ -4,6 +4,8 @@ import type { AgentPrompt, AgentResult } from '../agentPrompt';
 import { startHeldProcess, watchStop, type HeldProcess, type WarmAgent } from './heldProcess';
 import { onJsonLines, writeJsonLine, type JsonMessage } from './jsonLines';
 
+const CLEAR_MS = 30_000;
+
 /** its result message, or why the process ended */
 type TurnEnd = JsonMessage | string;
 
@@ -51,10 +53,18 @@ export class ClaudeWarm implements WarmAgent {
 	ask(prompt: AgentPrompt, signal: AbortSignal): Promise<AgentResult> {
 		const turn = this.queue.then(() => this.turn(prompt, signal));
 		this.queue = turn.then(
-			() => (this.proc.alive ? this.send('/clear') : null),
+			() => (this.proc.alive ? this.clear() : null),
 			() => {}
 		);
 		return turn;
+	}
+
+	// a /clear with no result holds every later request, so the process goes and the next request starts a new one
+	private async clear(): Promise<void> {
+		let timer: NodeJS.Timeout | undefined;
+		const late = new Promise<'late'>((done) => (timer = setTimeout(() => done('late'), CLEAR_MS)));
+		if ((await Promise.race([this.send('/clear'), late])) === 'late') this.close();
+		clearTimeout(timer);
 	}
 
 	private async turn(prompt: AgentPrompt, signal: AbortSignal): Promise<AgentResult> {
