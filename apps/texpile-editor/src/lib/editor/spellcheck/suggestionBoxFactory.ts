@@ -12,6 +12,7 @@ import { isDictionaryLanguage, type SpellLanguage } from './languages/spellLangu
 type Position = {
 	x: number;
 	y: number;
+	top?: number;
 };
 
 type OnReplaceCallback = (value: string) => void;

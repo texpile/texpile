@@ -10,6 +10,7 @@ Release notes for Texpile Desktop. Add notes under `## [Unreleased]` as you work
 - feat: custom AI service for local models and university gateways (by @louisqli)
 - feat: show the Agent tab in a side panel (by @louisqli)
 - fix: Agent tab menus under the message box cut off in a narrow panel (by @louisqli)
+- fix: spelling and grammar box covering the word it is about near the bottom of the window (by @louisqli)
 - fix: Refine with Claude Code or Codex slow to answer (by @louisqli)
 - feat: vastly improved visual editor performance, there are no longer file limits (by @louisqli)
 - fix: Edit > Select All doing nothing in the visual editor (by @louisqli)
