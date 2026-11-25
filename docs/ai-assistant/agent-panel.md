@@ -1,6 +1,6 @@
 ---
 nav: Agent tab
-description: Chat with Codex, Claude or another AI agent in the bottom panel, and review or revert the files it changed.
+description: Chat with Codex, Claude or another AI agent in the bottom panel or a side panel, and review or revert the files it changed.
 order: 1
 ---
 
@@ -20,6 +20,10 @@ The robot button at the top of the PDF, or in the title bar while the PDF is clo
 - The ring beside **Send** fills as the chat uses up the agent's context. Hover it for the token count, or click it and choose **Compact Now** to sum up the chat before it fills. It shows once the agent reports it, which Codex and Claude do.
 - When the context is nearly full, the agent compacts it on its own: it sums up the chat so far and goes on from that summary. **Context compacted** marks the spot. Click it to read the summary, when the agent sends one. **New Chat** starts over instead.
 - Changing folder starts a new chat.
+
+## Side panel
+
+Click **Move to Side Panel** beside the agent menu to show the Agent tab in a column at the right edge of the window. The document and the PDF keep their full height. Drag the column's left edge to resize it. The Agent button and `Ctrl Alt I` show and hide it. **Move to Bottom Panel** in its header puts the tab back. Texpile remembers the place and the width.
 
 ## Review and revert
 
