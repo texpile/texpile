@@ -38,7 +38,7 @@
 			{/if}
 		</span>
 	</button>
-	<div class="hidden shrink-0 items-center gap-1 group-focus-within:flex group-hover:flex">
+	<div class="hidden h-4 shrink-0 items-center gap-1 group-focus-within:flex group-hover:flex">
 		{#if problem.fix}
 			{@const fix = problem.fix}
 			<button class="btn btn-sm preset-tonal h-5 px-2" use:tip={fix.label} onclick={() => void fix.apply()}>{m.problems_fix()}</button>
