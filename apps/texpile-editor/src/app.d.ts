@@ -76,7 +76,8 @@ declare global {
 	/** how far an install of Texpile's own tinymist or TeX Live has got; received/total are bytes while downloading */
 	type InstallStep = { phase: 'download' | 'verify' | 'extract'; received: number; total: number };
 
-	type InstallFailure = 'unsupported' | 'offline' | 'download' | 'checksum' | 'extract' | 'disk' | 'broken' | 'cancelled';
+	type InstallFailure =
+		'unsupported' | 'offline' | 'download' | 'checksum' | 'extract' | 'disk' | 'space' | 'in-use' | 'broken' | 'cancelled';
 
 	/** an install's outcome; a removal's success carries no command */
 	type TinymistInstallResult =
