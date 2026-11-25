@@ -1,7 +1,7 @@
 // Fix with agent: the problem and its line go to the Agent tab as a message
 import { agentSession, openAgentSession } from '$lib/ai/agentPanel/agentSession.svelte';
 import { agentUnavailable } from '$lib/ai/agentPanel/agentAvailability';
-import { panelTabOff } from '$lib/ai/agentPanel/agentOffer.svelte';
+import { aiTurnedOff } from '$lib/ai/agent/aiAgent.svelte';
 import { textNow } from '$lib/buffers/textNow';
 import { workspaceRoot } from '$lib/workspace/workspaceStore';
 import { relativeInside } from '$lib/workspace/fileSystem';
@@ -11,9 +11,9 @@ import type { Problem } from './problemTypes';
 
 const WAIT_MS = 60_000;
 
-/** AI turned off, the Agent tab turned off, or an agent that cannot run here */
+/** AI turned off, or an agent that cannot run here */
 export function agentFixOffered(): boolean {
-	return !panelTabOff() && agentUnavailable() === null;
+	return !aiTurnedOff() && agentUnavailable() === null;
 }
 
 function ready(): Promise<boolean> {
