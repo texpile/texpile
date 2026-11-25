@@ -28,9 +28,12 @@ export function sidebarWidthOf(s: LayoutState): number {
 	return s.sidebarWidth >= SIDEBAR_MIN && s.sidebarWidth <= SIDEBAR_MAX ? s.sidebarWidth : 256;
 }
 
+/** the preview's width however little the window leaves it */
+export const PDF_ROOM = 320;
+
 /** cap: whatever is left after the sidebar, keeping room for the editor */
 export function pdfMaxWidth(sidebarWidth: number, windowWidth: number): number {
-	return Math.max(320, windowWidth - sidebarWidth - EDITOR_RESERVE);
+	return Math.max(PDF_ROOM, windowWidth - sidebarWidth - EDITOR_RESERVE);
 }
 
 /** the preview is persisted as a FRACTION of window width, so it stays proportional across sizes */

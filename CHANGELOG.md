@@ -8,6 +8,7 @@ Release notes for Texpile Desktop. Add notes under `## [Unreleased]` as you work
 - feat: proofread with AI over the spell check (by @louisqli)
 - feat: convert a picture to LaTeX or Typst (by @louisqli)
 - feat: custom AI service for local models and university gateways (by @louisqli)
+- feat: show the Agent tab in a side panel (by @louisqli)
 - fix: Refine with Claude Code or Codex slow to answer (by @louisqli)
 - feat: title bar search box stays centered on the window (by @louisqli)
 - feat: Layout button shows its icon only (by @louisqli)

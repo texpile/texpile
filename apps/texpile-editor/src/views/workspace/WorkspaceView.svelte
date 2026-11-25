@@ -11,6 +11,8 @@
 	import WorkspaceModals from '$lib/modals/workspace/WorkspaceModals.svelte';
 	import WorkspaceMain from './WorkspaceMain.svelte';
 	import WorkspaceChrome from './WorkspaceChrome.svelte';
+	import AgentSidePanel from '$lib/ai/agentPanel/side/AgentSidePanel.svelte';
+	import { agentInSide, agentSide } from '$lib/ai/agentPanel/side/agentSide.svelte';
 	import GlobalSearch from '$lib/search/GlobalSearch.svelte';
 	import { makeFolderReplace } from './writing/workspaceReplace';
 	import { bindRenames } from './writing/workspaceRename';
@@ -424,6 +426,14 @@
 			bind:dockView
 			bind:pdfPaneRef={nav.pdfPaneRef}
 		/>
+		{#if agentInSide() && agentSide.open}
+			<AgentSidePanel
+				onOpenTerminal={actions.agentOpenTerminal}
+				onMoveToBottom={actions.agentToBottom}
+				room={layout.sidePanelRoom}
+				onWidth={layout.setSidePanel}
+			/>
+		{/if}
 	</WorkspaceChrome>
 
 	<ZoteroCitationDialog />

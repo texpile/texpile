@@ -16,7 +16,8 @@
 	import { agentSession } from '$lib/ai/agentPanel/agentSession.svelte';
 	import { agentUnavailable } from '$lib/ai/agentPanel/agentAvailability';
 	import { panelTabOff } from '$lib/ai/agentPanel/agentOffer.svelte';
-	import { SquareTerminal, ChevronDown, Check, Trash2, Plus, X, FoldHorizontal, UnfoldHorizontal } from '@lucide/svelte';
+	import { agentInSide, agentSide } from '$lib/ai/agentPanel/side/agentSide.svelte';
+	import { SquareTerminal, ChevronDown, Check, Trash2, Plus, X, FoldHorizontal, UnfoldHorizontal, PanelRight } from '@lucide/svelte';
 
 	let {
 		cwd,
@@ -70,11 +71,11 @@
 
 	const openComments = $derived(comments.filter((c) => !c.resolved).length);
 	// there until turned off; where the agent cannot run (a guest, the browser, a lone file) the tab says why
-	const agentOn = $derived(!panelTabOff());
+	const agentOn = $derived(!panelTabOff() && !agentInSide());
 	const agentBlocked = $derived(agentUnavailable());
 	// once opened it stays up behind the other tabs, so a message half written is still there on the way back
 	let agentOpened = $state(false);
-	// turned off from Preferences in any window: the tab goes (the workspace stops the agent behind it)
+	// turned off from Preferences in any window, or moved to the side panel: the tab goes
 	$effect(() => {
 		if (!agentOn && view === 'agent') view = terminalEnabled ? 'terminal' : 'problems';
 		if (!agentOn) agentOpened = false;
@@ -276,6 +277,19 @@
 		{/if}
 		{#if view === 'agent'}
 			<AgentPicker disabled={!!agentBlocked} />
+			{#if !agentBlocked}
+				<button
+					class="btn-icon btn-icon-xs hover:preset-tonal"
+					use:tip={m.agent_side_to_side()}
+					aria-label={m.agent_side_to_side()}
+					onclick={() => {
+						agentSide.moveTo('side');
+						onClose();
+					}}
+				>
+					<PanelRight class="size-3.5" />
+				</button>
+			{/if}
 		{/if}
 		{#if pdfPaneOpen}
 			<button
