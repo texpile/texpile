@@ -18,6 +18,12 @@ function messageOf(f: ReferenceFinding): string {
 			return m.problems_entry_uncited({ name: f.name });
 		case 'float-unreferenced':
 			return m.problems_float_unreferenced({ name: f.name });
+		case 'acronym-undefined':
+			return m.problems_acronym_undefined({ name: f.name });
+		case 'glossary-undefined':
+			return m.problems_glossary_undefined({ name: f.name });
+		case 'term-unused':
+			return m.problems_term_unused({ name: f.name });
 	}
 }
 
@@ -29,13 +35,14 @@ export function referenceProblems(findings: ReferenceFinding[], texts: ReadonlyM
 		let starts = lines.get(f.file);
 		if (!starts) lines.set(f.file, (starts = linesOf(text)));
 		const line = f.at >= 0 ? lineAt(starts, f.at) : null;
+		const filter = f.kind === 'term-unused' ? 'style' : 'reference';
 		return {
-			filter: 'reference',
+			filter,
 			file: f.file,
 			line,
 			message: messageOf(f),
 			words: f.at >= 0 ? f.name : undefined,
-			ignoreKey: ignoreKeyOf('reference', f.file, f.kind, f.name, line ? lineText(starts, line) : '')
+			ignoreKey: ignoreKeyOf(filter, f.file, f.kind, f.name, line ? lineText(starts, line) : '')
 		};
 	});
 }

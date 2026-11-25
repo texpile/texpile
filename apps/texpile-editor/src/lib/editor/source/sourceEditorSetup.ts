@@ -12,6 +12,7 @@ import { MARKDOWN_LIST_MARKER, TYPST_LIST_MARKER, wrapIndent } from './extension
 import { sourceMathSearch } from './extensions/math-search/sourceMathSearch';
 import { bracketMatching, codeFolding, indentOnInput, foldGutter, LanguageDescription } from '@codemirror/language';
 import { cmSyntaxHighlight } from '$lib/editor/source/cmHighlight';
+import { cmNoteMarks } from '$lib/editor/source/extensions/note-marks/cmNoteMarks';
 import { languages as cmlangdata } from '@codemirror/language-data';
 import { searchKeymap } from '@codemirror/search';
 import { closeSearchPanelAnimated, texpileSearch, toggleSearchPanel } from '$lib/editor/source/extensions/search-panel/searchPanel.svelte';
@@ -162,7 +163,8 @@ export function buildSourceExtensions(deps: SourceSetupDeps): Extension[] {
 					...(!fileFor || /\.tex$/i.test(fileFor) ? [starterGhost(), sourceSnippets('latex', snippetOptions)] : []),
 					...(fileFor && /\.(tex|tikz)$/i.test(fileFor) ? [sourceFigureMarks(fileFor)] : []),
 					sourceMathSearch(),
-					cmSpellcheck(deps.spellLanguage)
+					cmSpellcheck(deps.spellLanguage),
+					cmNoteMarks()
 				]
 			: /\.(md|markdown)$/i.test(fileFor)
 				? // md chords; $-math, spellcheck and project file paths are dialect-free
@@ -175,6 +177,7 @@ export function buildSourceExtensions(deps: SourceSetupDeps): Extension[] {
 						mathPreview({ markdown: true }),
 						sourceMathSearch(),
 						cmSpellcheck(deps.spellLanguage, 'markdown'),
+						cmNoteMarks(),
 						foldGutter({ markerDOM: foldMarkerDom }),
 						foldMarkerTheme
 					]
@@ -198,6 +201,7 @@ export function buildSourceExtensions(deps: SourceSetupDeps): Extension[] {
 								typstColorSwatches(),
 								sourceFigureMarks(fileFor),
 								cmSpellcheck(deps.spellLanguage, 'typst'),
+								cmNoteMarks(),
 								foldGutter({ markerDOM: foldMarkerDom }),
 								foldMarkerTheme
 							]

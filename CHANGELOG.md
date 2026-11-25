@@ -10,6 +10,8 @@ Release notes for Texpile Desktop. Add notes under `## [Unreleased]` as you work
 - feat: Fix with agent on a problem (by @louisqli)
 - feat: spelling and grammar of every file of the main document in the Problems tab (by @louisqli)
 - feat: undefined labels, uncited entries and unreferenced figures in the Problems tab (by @louisqli)
+- feat: TODO notes, unused acronyms and terms written two ways in the Problems tab (by @louisqli)
+- feat: TODO and FIXME in comments stand out in source mode (by @louisqli)
 - feat: proofread with AI over the spell check (by @louisqli)
 - feat: convert a picture to LaTeX or Typst (by @louisqli)
 - feat: one AI agent for every AI feature in Preferences › AI agent (by @louisqli)

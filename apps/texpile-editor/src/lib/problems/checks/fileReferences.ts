@@ -1,6 +1,7 @@
 // what one LaTeX file defines and uses: labels, references, citations, bibliography entries, floats
 import { codeOnly } from '$lib/languages/latex/texCode';
 import { keysIn } from '$lib/languages/latex/knowledge/calls/roleKeys';
+import { callsIn, rolesOf, type CommandReadings } from '$lib/languages/latex/knowledge/calls/commandCalls';
 import { latexTreeOf } from '$lib/languages/latex/syntax/latexTrees';
 import { environmentName } from '$lib/languages/latex/syntax/treeMode';
 import { floatTypes } from '$lib/languages/latex/knowledge/registries/floatTypes';
@@ -18,8 +19,11 @@ export type FileReferences = {
 	/** labels inside a figure, table or another float */
 	floatLabels: KeyAt[];
 	bibliographies: { name: string; remote: boolean }[];
+	/** acronyms and glossary entries */
+	terms: KeyAt[];
+	termUses: (KeyAt & { acronym: boolean })[];
 	/** a name only a macro knows, or \nocite{*}: what is never used cannot be told */
-	unsure: { labels: boolean; refs: boolean; cites: boolean };
+	unsure: { labels: boolean; refs: boolean; cites: boolean; terms: boolean };
 	external: boolean;
 };
 
@@ -47,13 +51,33 @@ function sure(keys: { key: string; at: number }[]): KeyAt[] {
 	return keys.filter((k) => !unresolved(k.key)).map((k) => ({ key: k.key, at: k.at }));
 }
 
-export function fileReferences(text: string): FileReferences {
+function termsIn(code: string, own: CommandReadings | null): { terms: KeyAt[]; uses: FileReferences['termUses']; unsure: boolean } {
+	const terms: KeyAt[] = [];
+	const uses: FileReferences['termUses'] = [];
+	let unsure = own === null;
+	for (const call of callsIn(code, ['acronym', 'glossary'], own ?? undefined)) {
+		for (const a of call.args) {
+			const roles = rolesOf(a.arg);
+			if (!roles.includes('acronym') && !roles.includes('glossary')) continue;
+			for (const v of a.values) {
+				if (unresolved(v.value)) unsure = true;
+				else if (a.arg.defines !== undefined) terms.push({ key: v.value, at: v.at });
+				else uses.push({ key: v.value, at: v.at, acronym: !roles.includes('glossary') });
+			}
+		}
+	}
+	return { terms, uses, unsure };
+}
+
+/** own: how the document's packages read acronym and glossary commands, null when not known */
+export function fileReferences(text: string, own: CommandReadings | null): FileReferences {
 	const code = codeOnly(text);
 	const labelKeys = keysIn(code, 'label', true);
 	const refKeys = keysIn(code, 'label', false);
 	const citeKeys = keysIn(code, 'citekey', false);
 	const labels = sure(labelKeys);
 	const floats = floatRanges(code);
+	const terms = termsIn(code, own);
 	return {
 		labels,
 		refs: sure(refKeys),
@@ -61,10 +85,14 @@ export function fileReferences(text: string): FileReferences {
 		items: sure(keysIn(code, 'citekey', true)),
 		floatLabels: labels.filter((l) => floats.some(([from, to]) => l.at > from && l.at < to)),
 		bibliographies: bibliographiesIn(text),
+		terms: terms.terms,
+		termUses: terms.uses,
 		unsure: {
 			labels: labelKeys.some((k) => unresolved(k.key)),
 			refs: refKeys.some((k) => unresolved(k.key)),
-			cites: citeKeys.some((k) => k.wildcard || unresolved(k.key))
+			cites: citeKeys.some((k) => k.wildcard || unresolved(k.key)),
+			// \glsaddall puts every entry in the glossary
+			terms: terms.unsure || code.includes('\\glsaddall')
 		},
 		external: code.includes('\\externaldocument')
 	};

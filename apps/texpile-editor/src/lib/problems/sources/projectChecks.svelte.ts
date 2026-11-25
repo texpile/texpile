@@ -6,10 +6,15 @@ import { editorConfigStore } from '$lib/stores/editorStore';
 import { readSourceTrees } from '$lib/workspace/sourceTrees';
 import { dirname, joinPath, samePath } from '$lib/workspace/fileSystem';
 import { fileReferences, type FileReferences } from '../checks/fileReferences';
+import { fileNotes } from '../checks/fileNotes';
+import { documentTermReadings } from '../checks/documentTermReadings';
+import type { CommandReadings } from '$lib/languages/latex/knowledge/calls/commandCalls';
+import { noteProblems } from './noteProblems';
 import { bibEntriesIn } from '../checks/bibEntries';
 import { documentReferences, type DocumentBibs, type DocumentFile } from '../checks/documentReferences';
 import { referenceProblems } from './referenceProblems';
 import { proofreadProblems } from './proofreadProblems';
+import { documentTermProblems } from './termProblems';
 import type { MainDocument } from './mainDocument.svelte';
 import type { Problem } from '../problemTypes';
 
@@ -40,7 +45,7 @@ export class ProjectChecks {
 		this.proofread.clear();
 		this.soon();
 	});
-	private readings = new Map<string, { text: string; refs: FileReferences }>();
+	private readings = new Map<string, { text: string; own: CommandReadings | null; refs: FileReferences; notes: Problem[] }>();
 	private proofread = new Map<string, { text: string; problems: Problem[] }>();
 
 	constructor(private deps: ProjectCheckDeps) {}
@@ -49,13 +54,13 @@ export class ProjectChecks {
 		this.soon();
 	}
 
-	private async referencesOf(path: string, text: string): Promise<FileReferences> {
+	private async readingOf(path: string, text: string, own: CommandReadings | null): Promise<{ refs: FileReferences; notes: Problem[] }> {
 		const kept = this.readings.get(path);
-		if (kept?.text === text) return kept.refs;
+		if (kept?.text === text && kept.own === own) return kept;
 		await readSourceTrees(text);
-		const refs = fileReferences(text);
-		this.readings.set(path, { text, refs });
-		return refs;
+		const reading = { text, own, refs: fileReferences(text, own), notes: noteProblems(path, text, fileNotes(text)) };
+		this.readings.set(path, reading);
+		return reading;
 	}
 
 	private async bibsOf(files: DocumentFile[], main: string, root: string, texts: Map<string, string>): Promise<DocumentBibs> {
@@ -95,10 +100,14 @@ export class ProjectChecks {
 		for (const path of doc.files) {
 			const text = await this.deps.read(path).catch(() => null);
 			if (stale()) return;
-			if (text === null) continue;
-			texts.set(path, text);
-			if (!isTex(path)) continue;
-			files.push({ path, refs: await this.referencesOf(path, text) });
+			if (text !== null) texts.set(path, text);
+		}
+		const tex = doc.files.filter((p) => isTex(p) && texts.has(p));
+		const own = await documentTermReadings(tex.map((path) => ({ path, text: texts.get(path)! })));
+		if (stale()) return;
+		for (const path of tex) {
+			const reading = await this.readingOf(path, texts.get(path)!, own);
+			files.push({ path, refs: reading.refs });
 			await nextTask();
 			if (stale()) return;
 		}
@@ -113,12 +122,16 @@ export class ProjectChecks {
 			);
 			references = referenceProblems(findings, texts);
 		}
+		const terms = await documentTermProblems(doc.files, texts, stale);
+		if (terms === null) return;
+		references.push(...terms);
 		const others = doc.files.filter((p) => texts.has(p) && !(open && samePath(p, open)));
 		const kept = this.proofread;
+		const readings = this.readings;
 		const main = doc.main;
 		function publish(): void {
-			const proofread = others.flatMap((p) => kept.get(p)?.problems ?? []);
-			projectProblems.current = { main, problems: [...references, ...proofread] };
+			const own = others.flatMap((p) => [...(readings.get(p)?.notes ?? []), ...(kept.get(p)?.problems ?? [])]);
+			projectProblems.current = { main, problems: [...references, ...own] };
 		}
 		const spellcheck = editorConfigStore.current?.spellcheck ?? false;
 		if (!spellcheck) this.proofread.clear();

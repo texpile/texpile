@@ -1,7 +1,15 @@
 // labels, references and citations checked across every file of the main document
 import type { FileReferences, KeyAt } from './fileReferences';
 
-export type ReferenceKind = 'ref-undefined' | 'label-twice' | 'cite-unknown' | 'entry-uncited' | 'float-unreferenced';
+export type ReferenceKind =
+	| 'ref-undefined'
+	| 'label-twice'
+	| 'cite-unknown'
+	| 'entry-uncited'
+	| 'float-unreferenced'
+	| 'acronym-undefined'
+	| 'glossary-undefined'
+	| 'term-unused';
 
 /** elsewhere: for label-twice, another file that defines it, null when the same file does twice */
 export type ReferenceFinding = { kind: ReferenceKind; file: string; at: number; name: string; elsewhere?: string | null };
@@ -39,6 +47,17 @@ export function documentReferences(files: DocumentFile[], bibs: DocumentBibs, kn
 		for (const f of files)
 			for (const l of f.refs.floatLabels)
 				if (!used.has(l.key)) out.push({ kind: 'float-unreferenced', file: f.path, at: l.at, name: l.key });
+	}
+
+	if (!any((r) => r.unsure.terms)) {
+		const defined = keysOf(files, (r) => r.terms);
+		const used = keysOf(files, (r) => r.termUses);
+		for (const f of files) {
+			for (const u of f.refs.termUses)
+				if (!defined.has(u.key))
+					out.push({ kind: u.acronym ? 'acronym-undefined' : 'glossary-undefined', file: f.path, at: u.at, name: u.key });
+			for (const t of f.refs.terms) if (!used.has(t.key)) out.push({ kind: 'term-unused', file: f.path, at: t.at, name: t.key });
+		}
 	}
 
 	const items = keysOf(files, (r) => r.items);
