@@ -23,11 +23,25 @@ function workerNow(): Worker {
 	return (worker = w);
 }
 
-/** null when the worker failed */
+const MOST_KEPT = 32;
+const kept = new Map<string, Promise<TexMask | null>>();
+
+/** null when the worker failed; the last few texts asked for are answered again without the worker */
 export function sourceProseInWorker(text: string, markup: SpellMarkup, spelling: SpellLanguage | null): Promise<TexMask | null> {
-	return new Promise((answer) => {
+	const key = `${markup}|${spelling}|${text}`;
+	const found = kept.get(key);
+	if (found) {
+		kept.delete(key);
+		kept.set(key, found);
+		return found;
+	}
+	const asked = new Promise<TexMask | null>((answer) => {
 		const id = nextId++;
 		waiting.set(id, answer);
 		workerNow().postMessage({ id, text, markup, spelling });
 	});
+	kept.set(key, asked);
+	void asked.then((prose) => prose === null && kept.delete(key));
+	if (kept.size > MOST_KEPT) kept.delete(kept.keys().next().value!);
+	return asked;
 }

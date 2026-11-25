@@ -4,18 +4,12 @@ import { trailingDebounce } from '$lib/trailingDebounce';
 import { documentAround } from './documentFiles';
 import { normalizePath, pathKey, relativeInside, samePath } from '../fileSystem';
 import { checkRefs, documentFacts, type DocumentFacts, type RefProblem } from '$lib/languages/latex/refCheck';
-import type { PackageUse } from '$lib/languages/latex/intellisense/packages/packageUses';
 import { compileEngine, loadedPackages, type LoadedFile } from '$lib/languages/latex/intellisense/packages/loadedPackages';
 import { checkIsOn } from '$lib/languages/latex/intellisense/checks/checkSwitches';
-import {
-	LATEX_CHECKS,
-	type DocumentPackageUse,
-	type LatexCheckInput,
-	type SourceProblem
-} from '$lib/languages/latex/intellisense/checks/latexChecks';
+import { LATEX_CHECKS, type LatexCheckInput, type SourceProblem } from '$lib/languages/latex/intellisense/checks/latexChecks';
 import type { DefinedNames } from '$lib/languages/latex/intellisense/checks/reading/definedNames';
 import { definedBesides, documentSources } from './documentSources';
-import { conditionalUseNames, readingOf, usesInReadingOrder, type FileReading } from './readingOrder';
+import { conditionalUseNames, plainUses, readingOf, usesInReadingOrder, type FileReading } from './readingOrder';
 import { NO_OPTIONS, optionNamesOf, type OptionNames } from '$lib/languages/latex/intellisense/checks/reading/optionNames';
 import { NO_POSSIBLE_NAMES, possibleNamesOf } from '$lib/languages/latex/intellisense/checks/reading/possibleNames';
 import type { Engine } from '../compileCommand';
@@ -77,16 +71,6 @@ async function readLoaded(
 		possibleNamesOf(loaded, conditionalUseNames(parts)).catch(() => NO_POSSIBLE_NAMES)
 	]);
 	return { options, possible };
-}
-
-function plainUses(uses: readonly DocumentPackageUse[]): PackageUse[] {
-	const seen = new Set<string>();
-	return uses
-		.map(({ path: _path, at: _at, ...use }) => use)
-		.filter((use) => {
-			const key = JSON.stringify(use);
-			return !seen.has(key) && !!seen.add(key);
-		});
 }
 
 /** the parts with the open file read from its live text */

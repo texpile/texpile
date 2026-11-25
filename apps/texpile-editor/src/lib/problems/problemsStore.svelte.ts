@@ -7,7 +7,7 @@ import { projectIgnored } from '$lib/workspace/projectConfigSync.svelte';
 import { pathKey, samePath } from '$lib/workspace/fileSystem';
 import { compileProblems } from './sources/compileProblems';
 import { liveCheckProblems } from './sources/liveCheckProblems';
-import { openFileProofread } from './sources/openFileProofread.svelte';
+import { openFileChecks } from './sources/openFileChecks.svelte';
 import { projectProblems } from './sources/projectChecks.svelte';
 import { PROBLEM_FILTERS, type Problem, type ProblemFilter } from './problemTypes';
 
@@ -57,11 +57,11 @@ class ProblemsView {
 		const open = problemsOpenFile.current;
 		const compiled = compileProblems(compileLog.current, workspaceRoot.current ?? '', mainFile.current);
 		const live = liveCheckProblems(forOpen(liveRefProblems.current, open)).filter((p) => !compiled.some((c) => sameSpot(c, p)));
-		const proofread = forOpen(openFileProofread.current, open)?.problems ?? [];
+		const own = forOpen(openFileChecks.current, open)?.problems ?? [];
 		const main = mainFile.current;
 		const project = projectProblems.current;
 		const document = main && project && samePath(project.main, main) ? project.problems : [];
-		return [...compiled, ...live, ...proofread, ...document];
+		return [...compiled, ...live, ...own, ...document];
 	});
 
 	unignored = $derived.by(() => {

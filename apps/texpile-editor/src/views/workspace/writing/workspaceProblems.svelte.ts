@@ -6,8 +6,8 @@ import { indexedText } from '$lib/files/index/indexedTexts';
 import { activeCompare, detectedMainFile, fileTree, mainFile, workspaceRoot } from '$lib/workspace/workspaceStore';
 import { editorConfigStore } from '$lib/stores/editorStore';
 import { problemsOpenFile, setMainFileFromProblems } from '$lib/problems/problemsStore.svelte';
-import { OpenFileProofread } from '$lib/problems/sources/openFileProofread.svelte';
-import { proofreadProblems } from '$lib/problems/sources/proofreadProblems';
+import { OpenFileChecks } from '$lib/problems/sources/openFileChecks.svelte';
+import { openFileRows } from '$lib/problems/sources/openFileRows';
 import { mainDocument, refreshMainCandidate, refreshMainDocument } from '$lib/problems/sources/mainDocument.svelte';
 import { ProjectChecks } from '$lib/problems/sources/projectChecks.svelte';
 import { references } from '$lib/workspace/citations';
@@ -26,18 +26,18 @@ export function bindProblems(doc: DocumentBuffer, setMain: (file: string) => Pro
 		setMainFileFromProblems.current = setMain;
 		return () => (setMainFileFromProblems.current = null);
 	});
-	const proofread = new OpenFileProofread(
+	const own = new OpenFileChecks(
 		() => (doc.path && hasVisualMode(doc.kind) && !activeCompare.current ? { path: doc.path, text: doc.texSource } : null),
-		proofreadProblems
+		openFileRows
 	);
 	$effect(() => {
 		void doc.path;
 		void doc.texSource;
 		void activeCompare.current;
 		void editorConfigStore.current?.spellcheck;
-		untrack(() => proofread.schedule());
+		untrack(() => own.schedule());
 	});
-	$effect(() => () => proofread.destroy());
+	$effect(() => () => own.destroy());
 	const project = new ProjectChecks({
 		document: () => mainDocument.current,
 		open: () => problemsOpenFile.current,
