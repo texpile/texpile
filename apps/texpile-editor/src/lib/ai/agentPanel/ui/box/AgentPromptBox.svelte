@@ -160,60 +160,64 @@
 			onpaste={(e) => void onPaste(e)}
 			onfocus={() => selected.read()}
 			{@attach takeAskedCaret}></textarea>
-		<div class="mt-1.5 flex h-6 items-center gap-1">
-			<AgentAddMenu
-				agent={props.agent}
-				takesImages={props.takesImages}
-				canAttachFile={!!props.file && !attached && !runsCommand(text, props.commands)}
-				onImages={(files) => images.add(files)}
-				onAttachFile={() => (detached = null)}
-			/>
-			{#each props.config as option (option.id)}
-				<MenuDropdown groups={configOptionMenu(option)} placement="bottom-start" onSelect={(v) => props.onConfig(option.id, v)}>
-					{#snippet trigger(attrs)}
-						<button
-							{...attrs}
-							class="text-muted hover:bg-surface-200-800 rounded-base flex h-6 shrink-0 items-center gap-0.5 px-1.5 text-xs whitespace-nowrap transition-colors"
-							aria-label={option.name}
-							use:tip={option.description ?? option.name}
-						>
-							{configOptionButton(option)}
-							<ChevronDown class="size-3 shrink-0" />
-						</button>
-					{/snippet}
-				</MenuDropdown>
-			{/each}
-			<span class="flex-1"></span>
-			{#if props.usage}
-				<AgentContextUsage
-					usage={props.usage}
-					commands={props.commands}
-					working={props.working}
+		<!-- the agent's options wrap onto more rows in a narrow panel; Send stays at the bottom right -->
+		<div class="mt-1.5 flex items-end gap-1">
+			<div class="flex min-w-0 flex-1 flex-wrap items-center gap-1">
+				<AgentAddMenu
 					agent={props.agent}
-					onCompact={() => props.onSend(COMPACT_CHAT_MESSAGE, null, [])}
+					takesImages={props.takesImages}
+					canAttachFile={!!props.file && !attached && !runsCommand(text, props.commands)}
+					onImages={(files) => images.add(files)}
+					onAttachFile={() => (detached = null)}
 				/>
-			{/if}
-			{#if props.working}
-				<button
-					class="btn-icon preset-tonal size-6 shrink-0 p-0"
-					use:tip={m.agent_panel_stop()}
-					aria-label={m.agent_panel_stop()}
-					onclick={stop}
-				>
-					<Square class="size-2.5 fill-current" />
-				</button>
-			{/if}
-			{#if !props.working || !empty}
-				<button
-					class="btn-icon preset-filled-primary-500 size-6 shrink-0 p-0"
-					disabled={empty}
-					use:tip={props.working ? m.agent_panel_queue() : m.agent_panel_send()}
-					aria-label={props.working ? m.agent_panel_queue() : m.agent_panel_send()}
-					onclick={send}
-				>
-					<ArrowUp class="size-3.5" />
-				</button>
-			{/if}
+				{#each props.config as option (option.id)}
+					<MenuDropdown groups={configOptionMenu(option)} placement="bottom-start" onSelect={(v) => props.onConfig(option.id, v)}>
+						{#snippet trigger(attrs)}
+							<button
+								{...attrs}
+								class="text-muted hover:bg-surface-200-800 rounded-base flex h-6 shrink-0 items-center gap-0.5 px-1.5 text-xs whitespace-nowrap transition-colors"
+								aria-label={option.name}
+								use:tip={option.description ?? option.name}
+							>
+								{configOptionButton(option)}
+								<ChevronDown class="size-3 shrink-0" />
+							</button>
+						{/snippet}
+					</MenuDropdown>
+				{/each}
+			</div>
+			<div class="flex h-6 shrink-0 items-center gap-1">
+				{#if props.usage}
+					<AgentContextUsage
+						usage={props.usage}
+						commands={props.commands}
+						working={props.working}
+						agent={props.agent}
+						onCompact={() => props.onSend(COMPACT_CHAT_MESSAGE, null, [])}
+					/>
+				{/if}
+				{#if props.working}
+					<button
+						class="btn-icon preset-tonal size-6 shrink-0 p-0"
+						use:tip={m.agent_panel_stop()}
+						aria-label={m.agent_panel_stop()}
+						onclick={stop}
+					>
+						<Square class="size-2.5 fill-current" />
+					</button>
+				{/if}
+				{#if !props.working || !empty}
+					<button
+						class="btn-icon preset-filled-primary-500 size-6 shrink-0 p-0"
+						disabled={empty}
+						use:tip={props.working ? m.agent_panel_queue() : m.agent_panel_send()}
+						aria-label={props.working ? m.agent_panel_queue() : m.agent_panel_send()}
+						onclick={send}
+					>
+						<ArrowUp class="size-3.5" />
+					</button>
+				{/if}
+			</div>
 		</div>
 	</div>
 	{#if images.refused}<p class="text-muted mt-1 px-1 text-xs">{m.agent_panel_no_images({ agent: props.agent })}</p>{/if}
