@@ -112,7 +112,12 @@ function capitalLike(written: string, preferred: string): string {
 
 export function termVariants(files: ProseFile[]): TermVariant[] {
 	const keyed = new Map<string, Use[]>();
-	for (const f of files) usesIn(f, (key, use) => keyed.set(key, [...(keyed.get(key) ?? []), use]));
+	for (const f of files)
+		usesIn(f, (key, use) => {
+			const found = keyed.get(key);
+			if (found) found.push(use);
+			else keyed.set(key, [use]);
+		});
 	const out: TermVariant[] = [];
 	for (const uses of keyed.values()) {
 		const counts = new Map<Form, number>();

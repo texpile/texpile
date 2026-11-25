@@ -6,7 +6,7 @@
 	import CompileStatusLine from './CompileStatusLine.svelte';
 	import ProblemFileGroup from './ProblemFileGroup.svelte';
 	import ProblemFilters from './ProblemFilters.svelte';
-	import ProblemRow from './ProblemRow.svelte';
+	import ProblemRows from './ProblemRows.svelte';
 	import ProblemSection from './ProblemSection.svelte';
 	import ProjectNotice from './ProjectNotice.svelte';
 	import ProofreadDocumentButton from './ProofreadDocumentButton.svelte';
@@ -45,11 +45,7 @@
 			{:else if problemsView.thisFile.length === 0}
 				<div class="text-muted px-6 py-1">{m.problems_file_clean()}</div>
 			{:else}
-				<div class="pl-4">
-					{#each problemsView.thisFile as problem, i (i)}
-						<ProblemRow {problem} {onJump} {onShowAgent} />
-					{/each}
-				</div>
+				<ProblemRows problems={problemsView.thisFile} {onJump} {onShowAgent} />
 			{/if}
 		</ProblemSection>
 		<ProblemSection

@@ -1180,6 +1180,7 @@
 	"problems_glossary_undefined": "文件中沒有術語表條目 {name}",
 	"problems_term_unused": "{name} 從未使用",
 	"problems_term_two_ways": "{used} 也寫作 {other}",
+	"problems_show_more": "再顯示 {count} 個",
 	"problems_proofread_document": "用 AI 校對文件",
 	"problems_proofreading_one": "AI 正在校對 {count} 個段落",
 	"problems_proofreading_other": "AI 正在校對 {count} 個段落",

@@ -2,7 +2,7 @@
 	import { m } from '$lib/paraglide/messages';
 	import { relativeInside } from '$lib/workspace/fileSystem';
 	import type { ProblemGroup } from '../problemsStore.svelte';
-	import ProblemRow from './ProblemRow.svelte';
+	import ProblemRows from './ProblemRows.svelte';
 
 	type Props = {
 		group: ProblemGroup;
@@ -26,8 +26,4 @@
 	<span class="cap-center min-w-0 truncate">{name}</span>
 	<span class="cap-center tabular-nums">{group.problems.length}</span>
 </div>
-<div class="pl-4">
-	{#each group.problems as problem, i (i)}
-		<ProblemRow {problem} {onJump} {onShowAgent} />
-	{/each}
-</div>
+<ProblemRows problems={group.problems} {onJump} {onShowAgent} />

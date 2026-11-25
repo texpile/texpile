@@ -1180,6 +1180,7 @@
 	"problems_glossary_undefined": "文档中没有术语表条目 {name}",
 	"problems_term_unused": "{name} 从未使用",
 	"problems_term_two_ways": "{used} 也写作 {other}",
+	"problems_show_more": "再显示 {count} 个",
 	"problems_proofread_document": "用 AI 校对文档",
 	"problems_proofreading_one": "AI 正在校对 {count} 个段落",
 	"problems_proofreading_other": "AI 正在校对 {count} 个段落",
