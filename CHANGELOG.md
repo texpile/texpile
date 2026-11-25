@@ -88,6 +88,8 @@ Release notes for Texpile Desktop. Add notes under `## [Unreleased]` as you work
 - fix: visual editor rows shifting when coming back to a file (by @louisqli)
 - fix: error when pressing Enter or undo while LaTeX suggestions load in a raw LaTeX block (by @louisqli)
 - fix: block handle left beside the old spot after the text glides back from a comment (by @louisqli)
+- fix: removing or reinstalling TeX Live failing on Windows while a TeX program runs (by @louisqli)
+- fix: install errors blaming free space when the disk is not full (by @louisqli)
 
 ## [2.0.1] - 2026-11-15
 
