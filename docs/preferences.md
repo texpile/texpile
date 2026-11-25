@@ -37,8 +37,8 @@ Preferences holds the settings for the whole app. Open it with Ctrl , (Cmd , on 
 | Integrations › Find and cite papers online               | Looks papers up through Crossref, DataCite, doi.org, Open Library, and PubMed.                                                                                                                  |
 | AI Assistant › Disable all AI integrations in Texpile    | Turns off Refine, the Agent tab and the MCP server. Your choices below it stay as they were.                                                                                                    |
 | AI Assistant › MCP server                                | Lets an AI assistant such as Claude Code see your open files. See [MCP server](ai-assistant/mcp.md).                                                                                            |
-| AI Assistant › Refine with                               | Only agents Texpile finds can be picked. To add another, add its folder under Programs & Compiler › Other folders.                                                                              |
-| AI Assistant › AI service                                | The service Proofread with AI sends text to. Claude and OpenAI and others take an API key, which Texpile keeps in the system password store.                                                    |
+| AI Assistant › AI service                                | Used by Refine, Proofread with AI and Convert to LaTeX. Only agents Texpile finds can be picked. To add another, add its folder under Programs & Compiler › Other folders.                      |
+| AI Assistant › AI service › Custom service               | Under Advanced. Any address that speaks the OpenAI chat API, with a key Texpile keeps in the system password store. See [Custom service](ai-assistant/README.md#custom-service).                |
 | AI Assistant › Agent tab                                 | Untick every agent to remove the tab.                                                                                                                                                           |
 
 ## Not in Preferences

@@ -100,17 +100,14 @@ export type AppSettings = {
 	mcpPort: number;
 	/** Preferences › AI Assistant's switch: Refine and the Agent tab gone, the MCP server stopped, whatever is picked below it */
 	aiOff: boolean;
-	/** the agent Refine runs, alone in the list; null = none chosen yet, empty = None, Refine off. Main reads it, see electron/src/ai */
-	refineAgents: ('claude' | 'codex' | 'agy' | 'custom')[] | null;
+	/** the AI service Refine, proofread and Convert to LaTeX use, alone in the list: an agent or 'service', the custom
+	 *  service; null = none chosen yet, empty = None. Main reads it, see electron/src/ai */
+	refineAgents: ('claude' | 'codex' | 'agy' | 'custom' | 'service')[] | null;
 	/** Harper's findings on the paragraphs on screen checked and added to by a model. Main reads it, see electron/src/ipc/proofreadIpc.ts */
 	proofreadAi: boolean;
-	/** the AI service set up under AI Assistant: an Anthropic key, any OpenAI-compatible service, or Refine's agent */
-	aiService: 'anthropic' | 'openai' | 'agent';
-	/** '' = claude-haiku-5-5 */
-	aiAnthropicModel: string;
-	/** the OpenAI-compatible service's base URL, such as https://api.openai.com/v1 */
-	aiOpenAiUrl: string;
-	aiOpenAiModel: string;
+	/** the custom service's base URL, any that speaks OpenAI's chat completions, such as http://localhost:11434/v1 */
+	aiServiceUrl: string;
+	aiServiceModel: string;
 	/** names, abbreviations and field terms the model recognizes go into the dictionary */
 	proofreadAddTerms: boolean;
 	/** the command line for Refine's custom agent; the prompt goes on its stdin */
@@ -183,10 +180,8 @@ const DEFAULTS: AppSettings = {
 	aiOff: false,
 	refineAgents: null,
 	proofreadAi: false,
-	aiService: 'anthropic',
-	aiAnthropicModel: '',
-	aiOpenAiUrl: '',
-	aiOpenAiModel: '',
+	aiServiceUrl: '',
+	aiServiceModel: '',
 	proofreadAddTerms: false,
 	aiAgentCommand: '',
 	aiAgentModels: {},

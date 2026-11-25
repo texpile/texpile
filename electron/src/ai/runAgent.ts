@@ -11,8 +11,11 @@ import { agentStdio, type AgentStdio } from './agentStdio';
 
 export type AgentResult = { ok: true; text: string } | { ok: false; error: string; cancelled?: true };
 
+/** a picture sent with a request, as base64 */
+export type PromptImage = { mediaType: string; base64: string };
+
 /** the rules of the task apart from the request itself; an agent with no place for rules gets both as one message */
-export type AgentPrompt = { system: string; request: string };
+export type AgentPrompt = { system: string; request: string; images?: PromptImage[] };
 
 const TIMEOUT_MS = 180_000;
 const MOST_OUTPUT = 1 << 20;

@@ -37,12 +37,6 @@ Each language has its own dictionary: Add to Dictionary on a German word adds it
 
 Proofread with AI checks the spell check's findings with an AI model. It drops false alarms such as a field term, puts a better fix first, and adds grammar and wording problems the spell check misses. Its own findings carry an **AI** badge in the suggestion box. It works in every language above.
 
-Turn it on in Preferences › Spelling & Grammar › Proofread with AI, then pick the service under Preferences › AI Assistant › AI service:
-
-| Service           | What it needs                                                                                   |
-| ----------------- | ----------------------------------------------------------------------------------------------- |
-| Claude            | An Anthropic API key. The model starts as `claude-haiku-5-5`.                                   |
-| OpenAI and others | The service address, an API key and a model. Ollama and LM Studio on your computer need no key. |
-| Refine agent      | The agent picked under AI Assistant › Refine with. It is slower and needs no key.               |
+Turn it on in Preferences › Spelling & Grammar › Proofread with AI. It uses the service picked under Preferences › AI Assistant › AI service: an agent such as Claude Code or Codex, or a [custom service](ai-assistant/README.md#custom-service) with its own address, key and model.
 
 A few seconds after you stop typing, the paragraphs on screen go to the service with equations left out. Wording suggestions can be turned off. Add terms to the dictionary lets the model add names, abbreviations and field terms to your dictionary, and a message lists each word it added with an Undo button.

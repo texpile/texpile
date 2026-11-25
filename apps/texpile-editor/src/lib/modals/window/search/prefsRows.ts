@@ -271,7 +271,8 @@ const STATIC_ROWS = [
 		id: 'ai-service',
 		tab: 'ai',
 		label: () => m.prefs_proofread_with(),
-		note: () => m.prefs_proofread_with_note()
+		note: () => m.prefs_ai_service_note(),
+		shown: () => settings.current.refineAgents?.[0] === 'service'
 	},
 	{ id: 'agent-panel', tab: 'ai', label: () => m.prefs_agent_panel(), note: () => m.prefs_agent_panel_note() }
 ] as const satisfies readonly PrefsRowDef[];

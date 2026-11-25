@@ -32,8 +32,8 @@ export function isPresetAgent(v: string): v is PresetAgent {
 	return PRESET_AGENTS.includes(v as PresetAgent);
 }
 
-/** a preset, or the reader's own command line */
-export type RefineAgent = PresetAgent | 'custom';
+/** a preset, the reader's own command line, or the custom service */
+export type RefineAgent = PresetAgent | 'custom' | 'service';
 
 /** id '' is the agent's own default */
 export type AgentModel = { id: string; name: string; description: string };
@@ -59,6 +59,7 @@ export function agentName(agent: RefineAgent): string {
 	if (agent === 'claude') return 'Claude';
 	if (agent === 'codex') return 'Codex';
 	if (agent === 'agy') return 'Antigravity';
+	if (agent === 'service') return settings.current.aiServiceModel.trim() || 'AI';
 	const { aiAgentCommand } = settings.current;
 	// the program a custom command runs, without its folder or extension
 	const program =
