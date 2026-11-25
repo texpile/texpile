@@ -152,6 +152,32 @@ export function buildServer(currentHost: () => McpHost | null): McpServer {
 	);
 
 	server.registerTool(
+		'get_problems',
+		{
+			title: 'Get the Problems tab',
+			description:
+				'The rows of the Problems tab, with every filter on and ignored rows left out: compile errors and ' +
+				"warnings, the open file's checks, spelling and grammar, and, when a main file is set, reference, " +
+				"style and spelling checks across the main document's files. kind is error, warning, spelling, " +
+				'grammar, style, reference or box. line is 1-based, words is the text a row is about, and fix names ' +
+				'the change the Fix button makes. Spelling of files other than the open one is listed only when a main ' +
+				'file is set. Rows past 200 are cut; total says how many matched.',
+			inputSchema: {
+				root: z.string().optional().describe('workspace root; defaults to the focused window'),
+				file: z.string().optional().describe('only rows in this workspace-relative file'),
+				kind: z.enum(['error', 'warning', 'spelling', 'grammar', 'style', 'reference', 'box']).optional().describe('only rows of this kind')
+			}
+		},
+		async ({ root, file, kind }) => {
+			const t = target(root);
+			if (!t) return fail('no matching Texpile window');
+			const data = await askRenderer(t.win, 'problems', { file, kind });
+			if (data === null) return fail('the editor did not respond in time');
+			return ok(data);
+		}
+	);
+
+	server.registerTool(
 		'open_file',
 		{
 			title: 'Open a file in Texpile',

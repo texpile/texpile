@@ -8,6 +8,7 @@ Release notes for Texpile Desktop. Add notes under `## [Unreleased]` as you work
 - feat: Problems tab with This file and Project sections, filters, Fix and Ignore (by @louisqli)
 - feat: spelling and grammar of the open file in the Problems tab (by @louisqli)
 - feat: Fix with agent on a problem (by @louisqli)
+- feat: get_problems gives a connected agent the Problems tab (by @louisqli)
 - feat: spelling and grammar of every file of the main document in the Problems tab (by @louisqli)
 - feat: undefined labels, uncited entries and unreferenced figures in the Problems tab (by @louisqli)
 - feat: TODO notes, unused acronyms and terms written two ways in the Problems tab (by @louisqli)
