@@ -21,6 +21,7 @@ import {
 	type McpCommentDeps
 } from './mcpComments';
 import { suggestEditPayload } from './mcpSuggestEdit';
+import { problemsPayload } from '$lib/problems/mcpProblems';
 import {
 	compileBaseDir,
 	compileOutDir,
@@ -345,6 +346,7 @@ export function attachMcpCommands(deps: McpCommandDeps): () => void {
 			return reply({ ok: false, reason: LONE_FILE });
 		if (req.kind === 'unsaved') return reply(unsavedPayload(deps));
 		if (req.kind === 'diagnostics') return reply(diagnosticsPayload(deps));
+		if (req.kind === 'problems') return reply(problemsPayload(a));
 		if (req.kind === 'synctex') return reply(syncTexPayload(deps, a.line));
 		if (req.kind === 'compile_config') return reply(compileConfigPayload(deps));
 		if (req.kind === 'set_output_paths') return reply(setOutputPathsPayload(deps, a));
