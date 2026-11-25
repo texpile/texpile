@@ -8,6 +8,7 @@ import type { SpellLanguage } from '$lib/editor/spellcheck/languages/spellLangua
 import { createHarperSuggestionBox, type Problem } from '$lib/editor/spellcheck/suggestionBoxFactory';
 import { editorConfigStore } from '$lib/stores/editorStore';
 import { observe } from '$lib/runes/observe.svelte';
+import { projectIgnored } from '$lib/workspace/projectConfigSync.svelte';
 import { docText } from '$lib/editor/source/docText';
 import { jumpRevealEffect } from '$lib/editor/source/cmJumpReveal';
 import { overlapsMask, type TexMask } from './texMask';
@@ -28,6 +29,13 @@ export const spellMarkup = Facet.define<SpellMarkup, SpellMarkup>({
 });
 
 type SpellingOf = (source: string) => SpellLanguage | null;
+
+/** a finding the Problems tab's Ignore hid */
+export type IgnoredFinding = (finding: { rule: string; kind: string; words: string; line: string }) => boolean;
+
+const ignoredFinding = Facet.define<IgnoredFinding, IgnoredFinding>({
+	combine: (values) => values[0] ?? (() => false)
+});
 
 /** the language this editor's file is checked in, given its text */
 const spelledIn = Facet.define<SpellingOf, SpellingOf>({
@@ -60,6 +68,7 @@ class SpellPlugin {
 	private masked: TexMask | null = null;
 	private stopLanguage: () => void;
 	private stopReview: () => void;
+	private stopIgnored: () => void;
 	// the last pass's paragraphs, for the review to find the ones on screen
 	private drawn: {
 		src: string;
@@ -88,6 +97,10 @@ class SpellPlugin {
 					this.view.dispatch({});
 				}
 			}
+		);
+		this.stopIgnored = observe(
+			() => projectIgnored.current,
+			() => this.schedule(0)
 		);
 		// another English or another set of rules: what was found is out of date
 		this.stopRules = onLintRulesChanged(() => this.invalidate());
@@ -120,6 +133,7 @@ class SpellPlugin {
 		this.stopRules();
 		this.stopLanguage();
 		this.stopReview();
+		this.stopIgnored();
 		if (this.timer) clearTimeout(this.timer);
 		this.gen++;
 	}
@@ -202,6 +216,7 @@ class SpellPlugin {
 
 		// rebuild decorations from the full cache: absolute offset = paragraph start + relative
 		const builder = new RangeSetBuilder<Decoration>();
+		const hidden = this.view.state.facet(ignoredFinding);
 		this.drawn = { src, paras, spans, language: spelling, markup };
 		for (const p of paras) {
 			const target = this.reviewTarget(p);
@@ -225,6 +240,7 @@ class SpellPlugin {
 					language: spelling ?? undefined
 				};
 				if (this.ignored.has(`${problem.type}:${problem.text}`)) continue;
+				if (hidden({ rule: m.rule, kind: problem.type, words: problem.text, line: this.view.state.doc.lineAt(from).text })) continue;
 				builder.add(from, to, Decoration.mark({ class: `proofread-${cssType(problem.type)}`, problem }));
 			}
 		}
@@ -305,6 +321,12 @@ const problemKeymap = cmCommandKeys({
 
 /** proofreading for source mode in the language `spelling` names; obeys the shared spell-check setting */
 /** `markup` selects Harper's parser; omit it for LaTeX/plain prose (see spellMarkup). */
-export function cmSpellcheck(spelling: SpellingOf, markup?: SpellMarkup) {
-	return [spellPlugin, problemKeymap, spelledIn.of(spelling), ...(markup ? [spellMarkup.of(markup)] : [])];
+export function cmSpellcheck(spelling: SpellingOf, markup?: SpellMarkup, ignored?: IgnoredFinding) {
+	return [
+		spellPlugin,
+		problemKeymap,
+		spelledIn.of(spelling),
+		...(markup ? [spellMarkup.of(markup)] : []),
+		...(ignored ? [ignoredFinding.of(ignored)] : [])
+	];
 }
