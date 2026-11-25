@@ -1,5 +1,5 @@
 <script lang="ts">
-	// Under the agent list: whether the agent picked can run, and Test agent to make sure it answers
+	// Under Agent: whether the agent picked can run, and Test agent to make sure it answers
 	import { settings } from '$lib/settings';
 	import { agentName, agentOffered, chosenAgent } from '$lib/ai/agent/aiAgent.svelte';
 	import { agentLabel } from '$lib/ai/agent/aiAgents';
@@ -13,24 +13,27 @@
 	const test = $derived(agentTest.current?.agent === ready ? agentTest.current : null);
 </script>
 
-<div class="py-2 text-xs leading-relaxed">
-	{#if ready}
-		<p class="text-muted">
-			{m.prefs_ai_status_ready({ agent: name })}
-			<button class="anchor" disabled={test?.phase === 'running'} onclick={() => void agentTest.run(ready)}>{m.prefs_ai_test()}</button>
-		</p>
-		{#if test?.phase === 'running'}
-			<p class="text-muted mt-1">{m.prefs_ai_testing({ agent: name })}</p>
-		{:else if test?.phase === 'passed'}
-			<p class="text-success-ink mt-1">{m.prefs_ai_test_passed({ agent: name, seconds: test.seconds })}</p>
-		{:else if test?.phase === 'failed'}
-			<p class="text-error-ink mt-1 [overflow-wrap:anywhere]">{m.prefs_ai_test_failed({ agent: name, error: test.error })}</p>
-		{/if}
+{#snippet testLink(label: string)}
+	<button type="button" class="anchor" onclick={() => ready && void agentTest.run(ready)}>{label}</button>
+{/snippet}
+
+<p class="text-muted mt-1 text-xs leading-relaxed [overflow-wrap:anywhere]">
+	{#if ready && test?.phase === 'running'}
+		{m.prefs_ai_testing({ agent: name })}
+	{:else if ready && test?.phase === 'passed'}
+		<span class="text-success-ink">{m.prefs_ai_test_passed({ agent: name, seconds: test.seconds })}</span>
+		{@render testLink(m.prefs_ai_test_again())}
+	{:else if ready && test?.phase === 'failed'}
+		<span class="text-warning-ink">{m.prefs_ai_test_failed({ agent: name, error: test.error })}</span>
+		{@render testLink(m.prefs_ai_test_again())}
+	{:else if ready}
+		{m.prefs_ai_status_ready({ agent: name })}
+		{@render testLink(m.prefs_ai_test())}
 	{:else if chosen === 'custom'}
-		<p class="text-muted">{m.prefs_ai_status_command()}</p>
+		{m.prefs_ai_status_command()}
 	{:else if chosen}
-		<p class="text-warning-ink">{m.prefs_ai_agent_elsewhere({ agent: agentLabel(chosen) })}</p>
+		<span class="text-warning-ink">{m.prefs_ai_agent_elsewhere({ agent: agentLabel(chosen) })}</span>
 	{:else if !settings.current.aiOff}
-		<p class="text-muted">{m.prefs_ai_status_none()}</p>
+		{m.prefs_ai_status_none()}
 	{/if}
-</div>
+</p>
