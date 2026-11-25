@@ -1,6 +1,6 @@
 <script lang="ts">
 	import type { PackageTable } from '$lib/languages/latex/parser/signatures/packageTable';
-	import { preambleFields, spanOf, type PreambleSpan } from '$lib/languages/latex/visual/core/title/preambleFields';
+	import { argumentEndOf, preambleFields, spanOf, type PreambleSpan } from '$lib/languages/latex/visual/core/title/preambleFields';
 	import { documentTable } from '$lib/languages/latex/visual/core/title/documentTable.svelte';
 	import PreambleTitleField from './PreambleTitleField.svelte';
 
@@ -11,11 +11,12 @@
 	const fields = $derived(preambleFields(preamble, props.table ?? documentTable.current));
 </script>
 
-{#each fields as field (field.bodyFrom)}
+{#each fields as field (field.from)}
 	<PreambleTitleField
 		command={preamble.slice(field.from, field.to)}
 		text={preamble.slice(field.bodyFrom, field.bodyTo)}
 		span={spanOf(preamble, field)}
+		caret={argumentEndOf(preamble, field)}
 		onEdit={(span, text) => props.onEdit?.(span, text)}
 	/>
 {/each}
