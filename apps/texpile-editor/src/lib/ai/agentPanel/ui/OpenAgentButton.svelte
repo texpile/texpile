@@ -6,14 +6,14 @@
 	import { withKeyLabel } from '$lib/keybindings/keybindings.svelte';
 	import { m } from '$lib/paraglide/messages';
 	import { agentUnavailable } from '../agentAvailability';
-	import { panelTabOff } from '../agentOffer.svelte';
+	import { aiTurnedOff } from '$lib/ai/agent/aiAgent.svelte';
 	import { agentSession } from '../agentSession.svelte';
 
 	type Props = { class: string; onOpen: () => void };
 	const props: Props = $props();
 </script>
 
-{#if !panelTabOff() && !agentUnavailable()}
+{#if !aiTurnedOff() && !agentUnavailable()}
 	<button
 		class="{props.class} gap-1"
 		onclick={props.onOpen}

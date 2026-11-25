@@ -38,7 +38,7 @@ const TABS = [
 	'Programs & Compiler',
 	'Integrations',
 	'Startup',
-	'AI Assistant'
+	'AI agent'
 ];
 
 const texpile = useTexpile({
@@ -146,8 +146,8 @@ test.describe('package files row', () => {
 	});
 });
 
-test.describe('AI Assistant', () => {
-	test('the Agent button opens the Agent tab, and goes with all AI disabled', async () => {
+test.describe('AI agent', () => {
+	test('the Agent button opens the Agent tab, and goes with AI features turned off', async () => {
 		const session = texpile();
 		const { page } = session;
 		const prefs = prefsOf(session);
@@ -156,8 +156,8 @@ test.describe('AI Assistant', () => {
 		await button.click();
 		await expect(page.getByText('Choose an agent', { exact: true })).toBeVisible();
 		await prefs.open();
-		await prefs.goTo('AI Assistant');
-		await prefs.toggle('Disable all AI integrations in Texpile');
+		await prefs.goTo('AI agent');
+		await prefs.toggle('Use AI features');
 		await prefs.close();
 		await expect(button).toHaveCount(0);
 		await expect(page.getByText('Choose an agent', { exact: true })).toBeHidden();

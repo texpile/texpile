@@ -4,6 +4,7 @@ import { flushSync, mount, unmount } from 'svelte';
 import { AgentSession, agentSession } from '$lib/ai/agentPanel/agentSession.svelte';
 import { provideAgentHost } from '$lib/ai/agentPanel/agentHost.svelte';
 import { workspaceRoot } from '$lib/workspace/workspaceStore';
+import { updateSettings } from '$lib/settings';
 import type { AcpBridge } from '$lib/ai/agentPanel/acpBridge';
 import Harness from './AgentSessionHarness.svelte';
 
@@ -45,6 +46,7 @@ it('stops the agent when Close Folder takes the workspace view down with its fol
 		close: () => closed.push('/p'),
 		onEvent: () => () => {}
 	};
+	updateSettings({ agent: 'claude' });
 	workspaceRoot.current = '/p';
 	await agentSession.start('/p');
 	const app = mount(Harness, { target: document.body });

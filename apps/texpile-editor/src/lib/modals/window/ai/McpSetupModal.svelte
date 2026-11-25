@@ -2,7 +2,7 @@
 	// one message for the reader to paste into their assistant, which knows its own setup better than a command we
 	// would have to keep current for every client
 	import { Check, Copy } from '@lucide/svelte';
-	import Modal from '../Modal.svelte';
+	import Modal from '../../Modal.svelte';
 	import { m } from '$lib/paraglide/messages';
 
 	let { open = $bindable(false), port }: { open?: boolean; port: number | null } = $props();

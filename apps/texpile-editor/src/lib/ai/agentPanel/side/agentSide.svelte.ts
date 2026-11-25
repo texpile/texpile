@@ -2,7 +2,7 @@
 import { layout, updateLayout } from '$lib/storage/layout';
 import { startDrag, nudgeOnKey, clampTo, SNAP_SLACK } from '$lib/workspace/paneResize';
 import { agentUnavailable } from '../agentAvailability';
-import { panelTabOff } from '../agentOffer.svelte';
+import { aiTurnedOff } from '$lib/ai/agent/aiAgent.svelte';
 
 export type AgentPlace = 'bottom' | 'side';
 
@@ -67,5 +67,5 @@ export const agentSide = new AgentSide();
 
 /** a guest, a lone file and the browser keep the tab in the Bottom Panel, which says why the agent cannot run */
 export function agentInSide(): boolean {
-	return agentSide.place === 'side' && !panelTabOff() && !agentUnavailable();
+	return agentSide.place === 'side' && !aiTurnedOff() && !agentUnavailable();
 }

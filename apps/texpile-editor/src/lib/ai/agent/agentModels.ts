@@ -1,17 +1,21 @@
-// The models a preset agent offers, asked of it once per agent while the app runs; a failed ask is asked again
-import { agentBridge, type AgentModel, type AgentModelList, type PresetAgent } from './selectionRefiner';
+// The models an agent offers, asked of it once per agent while the app runs; a failed ask is asked again
+import { settings } from '$lib/settings';
+import { agentBridge, type AgentModel, type AgentModelList } from './agentBridge';
+import type { AiAgent } from './aiAgents';
 
-const asked = new Map<PresetAgent, Promise<AgentModelList>>();
+const asked = new Map<string, Promise<AgentModelList>>();
 
-export function agentModels(agent: PresetAgent): Promise<AgentModelList> {
-	const known = asked.get(agent);
+export function agentModels(agent: AiAgent): Promise<AgentModelList> {
+	// a custom agent is whatever its command runs
+	const key = agent === 'custom' ? `custom\0${settings.current.agentCommand}` : agent;
+	const known = asked.get(key);
 	if (known) return known;
 	const bridge = agentBridge();
 	const list: Promise<AgentModelList> = bridge
 		? bridge.models(agent).catch((e: unknown) => ({ ok: false, error: e instanceof Error ? e.message : String(e) }))
 		: Promise.resolve({ ok: false, error: 'not in the desktop app' });
-	asked.set(agent, list);
-	void list.then((l) => !l.ok && asked.delete(agent));
+	asked.set(key, list);
+	void list.then((l) => !l.ok && asked.delete(key));
 	return list;
 }
 

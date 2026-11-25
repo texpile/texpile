@@ -10,7 +10,7 @@ Lets an AI assistant such as Claude Code read your editor and leave comments and
 
 > [!REQUIRES] an AI assistant that supports MCP
 
-1. Turn on **MCP server** in `Preferences › AI Assistant`. The line under it reads "Listening on 127.0.0.1:7317".
+1. Turn on **MCP server** in `Preferences › AI agent`. The line under it reads "Listening on 127.0.0.1:7317".
 2. Click **Show Instructions** and paste the message into your assistant.
 
 ![The Connect an Assistant dialog, with a message to paste into your assistant](../../landing/src/lib/assets/showcase/app/mcp-modal.png)

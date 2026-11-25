@@ -5,11 +5,12 @@ import type { ContextMenuItem } from '$lib/menus/contextMenu.svelte';
 import { m } from '$lib/paraglide/messages';
 import { REFINE_ACTIONS } from './refineActions';
 import { openRefineCard } from './refineCardState.svelte';
-import { agentName, refiner, type RefineAgent, type SelectionRefiner } from './selectionRefiner';
-import { refineAgentsOffered } from './refineAgents.svelte';
+import { refiner, type SelectionRefiner } from './selectionRefiner';
+import { agentName, agentOffered } from './agent/aiAgent.svelte';
+import type { AiAgent } from './agent/aiAgents';
 import { openPreferencesAt } from '$lib/stores/dialogStore';
 
-function actionItems(r: SelectionRefiner, agent: RefineAgent): ContextMenuItem[] {
+function actionItems(r: SelectionRefiner, agent: AiAgent): ContextMenuItem[] {
 	return REFINE_ACTIONS.map((action) => ({ label: action.label(), icon: action.icon, onclick: () => void r.refine(action, agent) }));
 }
 
@@ -25,19 +26,22 @@ export function domSelectionRect(): DOMRect | null {
 export function refineMenuItems(hasSelection: boolean, selectionRect: () => DOMRect | null): ContextMenuItem[] {
 	const r = refiner.current;
 	if (r?.needsAgent) return [{ label: m.ai_refine_setup(), icon: Sparkles, onclick: () => openPreferencesAt('ai') }];
-	if (!r?.available) return [];
+	const agent = agentOffered();
+	if (!r?.available || !agent) return [];
 	// measured while the menu is built, because clicking an item takes the selection off the page
 	const at = selectionRect();
-	return refineAgentsOffered().map((agent) => ({
-		label: m.ai_refine_menu({ agent: agentName(agent) }),
-		icon: Sparkles,
-		disabled: !hasSelection || r.busy,
-		submenu: [
-			...actionItems(r, agent),
-			{ separator: true },
-			// the card's instruction box, otherwise reachable only from the selection toolbar, which
-			// the reader can turn off for good
-			{ label: m.ai_refine_custom(), icon: Pencil, onclick: () => at && openRefineCard(at, agent) }
-		]
-	}));
+	return [
+		{
+			label: m.ai_refine_menu({ agent: agentName(agent) }),
+			icon: Sparkles,
+			disabled: !hasSelection || r.busy,
+			submenu: [
+				...actionItems(r, agent),
+				{ separator: true },
+				// the card's instruction box, otherwise reachable only from the selection toolbar, which
+				// the reader can turn off for good
+				{ label: m.ai_refine_custom(), icon: Pencil, onclick: () => at && openRefineCard(at) }
+			]
+		}
+	];
 }

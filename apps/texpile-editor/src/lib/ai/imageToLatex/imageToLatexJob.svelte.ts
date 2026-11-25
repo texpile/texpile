@@ -1,9 +1,8 @@
 // One picture being turned into source: the part picked, the request and its one retry, the preview, and the insert
 import { m } from '$lib/paraglide/messages';
-import { aiServiceBridge } from '$lib/ai/service/aiServiceBridge';
-import { agentName } from '$lib/ai/selectionRefiner';
-import { refineAgentsOffered } from '$lib/ai/refineAgents.svelte';
-import { imageAnswerSource, imageRequest, imageRetryRequest, imageSystem } from './imagePrompt';
+import { agentName, agentOffered, modelOf } from '$lib/ai/agent/aiAgent.svelte';
+import { imageToLatexBridge } from './imageToLatexBridge';
+import { handedOn, imageAnswerSource, imageFastRequest, imageRequest, imageRetryRequest, imageSystem } from './imagePrompt';
 import { pictureBitmap, pictureForService, wantsRegion, type PictureRegion } from './pictureBytes';
 import { answerPreview, type AnswerPreview } from './answerPreview';
 import type { ImageToLatexRequest, ImageToLatexTarget } from './imageToLatexRequest';
@@ -19,7 +18,8 @@ export class ImageToLatexJob {
 	source = $state('');
 	preview = $state<AnswerPreview | null>(null);
 	error = $state<string | null>(null);
-	readonly agent = agentName(refineAgentsOffered()[0] ?? 'service');
+	private readonly chosen = agentOffered();
+	readonly agent = this.chosen ? agentName(this.chosen) : '';
 
 	private bitmap: ImageBitmap | null = null;
 	private running: string | null = null;
@@ -52,7 +52,7 @@ export class ImageToLatexJob {
 	}
 
 	async convert(): Promise<void> {
-		const bridge = aiServiceBridge();
+		const bridge = imageToLatexBridge();
 		if (!bridge || !this.bitmap) return;
 		this.stop();
 		const id = crypto.randomUUID();
@@ -62,18 +62,25 @@ export class ImageToLatexJob {
 		this.preview = null;
 		const { dialect } = this.target;
 		const image = await pictureForService(this.bitmap, this.region);
-		function ask(request: string) {
-			return bridge!.imageToLatex({ id, system: imageSystem(dialect), request, ...image });
+		function ask(request: string, strong: boolean) {
+			return bridge!.imageToLatex({ id, system: imageSystem(dialect), request, ...image, strong });
 		}
-		const first = await ask(imageRequest(dialect));
+		// the fast model reads an equation and hands a drawing on to the strong one, where the two differ
+		const agent = this.chosen;
+		const twoModels = !!agent && dialect !== 'markdown' && modelOf(agent, 'convertFast') !== modelOf(agent, 'convertStrong');
+		let first = await ask(twoModels ? imageFastRequest(dialect) : imageRequest(dialect), false);
 		if (this.running !== id) return;
+		if (first.ok && twoModels && handedOn(first.text)) {
+			first = await ask(imageRequest(dialect), true);
+			if (this.running !== id) return;
+		}
 		if (!first.ok) return this.fail(first);
 		this.source = imageAnswerSource(first.text);
 		let preview = await answerPreview(this.source, dialect, await this.target.place());
 		if (this.running !== id) return;
 		if (preview.kind === 'drawing-error' && preview.fixable) {
 			this.phase = 'fixing';
-			const second = await ask(imageRetryRequest(dialect, this.source, preview.error));
+			const second = await ask(imageRetryRequest(dialect, this.source, preview.error), twoModels);
 			if (this.running !== id) return;
 			if (second.ok) {
 				this.source = imageAnswerSource(second.text);
@@ -94,7 +101,7 @@ export class ImageToLatexJob {
 	}
 
 	private stop(): void {
-		if (this.running) aiServiceBridge()?.cancel(this.running);
+		if (this.running) imageToLatexBridge()?.cancel(this.running);
 		this.running = null;
 	}
 

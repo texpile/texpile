@@ -26,7 +26,7 @@ vi.mock('electron', () => ({
 		on: (channel: string, fn: Handler) => h.handlers.set(channel, fn)
 	}
 }));
-vi.mock('../../../../../../electron/src/appSettings', () => ({ readSettings: () => ({ agentPanel: 'opencode', agentPanelCommand: '' }) }));
+vi.mock('../../../../../../electron/src/appSettings', () => ({ readSettings: () => ({ agent: 'opencode', agentCommand: '' }) }));
 vi.mock('../../../../../../electron/src/appIdentity', () => ({ agentsDir: () => '/agents' }));
 vi.mock('../../../../../../electron/src/shell/findProgram', () => ({ findProgram: (name: string) => `/bin/${name}` }));
 vi.mock('../../../../../../electron/src/shell/shellEnv', () => ({ shellEnvReady: () => h.shellEnv }));

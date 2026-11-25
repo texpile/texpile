@@ -27,7 +27,7 @@ These requests follow your system's proxy settings.
 
 ## AI features
 
-Agents run on your computer, and what they send online depends on the agent. A [custom service](../ai-assistant/README.md#custom-service) gets the same requests straight from Texpile, with the key you saved there.
+Agents run on your computer, and what they send online depends on the agent.
 
 | Feature           | What the agent sees                                                                                                                                                                                                    |
 | ----------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -37,4 +37,4 @@ Agents run on your computer, and what they send online depends on the agent. A [
 | Agent tab         | Your messages, attached files, selections and images, and anything the agent reads or runs in the folder. It can run commands and edit files there, within its own permission prompts.                                 |
 | MCP server        | Off by default. When on, it listens on this computer only (127.0.0.1). A connected assistant can read your open files, cursor position, unsaved changes, errors and comments, and its provider receives what it reads. |
 
-To use none of this, leave the MCP server off, set **AI service** to **None**, and untick every agent under **Agent tab** in `Preferences › AI Assistant`.
+To use none of this, turn off **Use AI features** in `Preferences › AI agent`.

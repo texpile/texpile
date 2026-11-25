@@ -50,6 +50,8 @@ export type SessionOptions = {
 	args: string[];
 	env: Record<string, string>;
 	root: string;
+	/** the model a new chat starts on; '' leaves the agent's own */
+	model: string;
 	version: string;
 	/** Texpile's own tools, for an agent that can reach an MCP server over HTTP */
 	mcp: { url: string; token: string } | null;
@@ -57,6 +59,21 @@ export type SessionOptions = {
 };
 
 const MOST_STDERR = 64 * 1024;
+
+export function modelOption(options: acp.SessionConfigOption[]): (acp.SessionConfigOption & { type: 'select' }) | undefined {
+	return options.find(
+		(o): o is acp.SessionConfigOption & { type: 'select' } => o.type === 'select' && (o.category === 'model' || o.id === 'model')
+	);
+}
+
+/** the values a select offers, its groups flattened */
+export function selectValues(option: acp.SessionConfigOption & { type: 'select' }): acp.SessionConfigSelectOption[] {
+	return option.options.flatMap((o) => ('group' in o ? o.options : [o]));
+}
+
+function offers(option: acp.SessionConfigOption & { type: 'select' }, value: string): boolean {
+	return selectValues(option).some((o) => o.value === value);
+}
 
 function authRequired(e: unknown): boolean {
 	return (e as { code?: unknown })?.code === acp.RequestError.authRequired().code;
@@ -121,7 +138,7 @@ export class AcpSession {
 				type: 'state',
 				state: 'ready',
 				title: init.agentInfo?.title ?? init.agentInfo?.name,
-				configOptions: session.configOptions ?? [],
+				configOptions: await this.startingModel(session.configOptions ?? []),
 				chat: session.sessionId,
 				history: this.history,
 				takesSelection: !!init.agentCapabilities?.promptCapabilities?.embeddedContext,
@@ -241,6 +258,23 @@ export class AcpSession {
 			this.o.emit({ type: 'update', update: { sessionUpdate: 'config_option_update', configOptions: r.configOptions } });
 		} catch (e) {
 			console.error('acp: could not change', configId, message(e));
+		}
+	}
+
+	/** the model picked in Preferences, where the agent offers it */
+	private async startingModel(options: acp.SessionConfigOption[]): Promise<acp.SessionConfigOption[]> {
+		const option = modelOption(options);
+		if (!option || !this.o.model || option.currentValue === this.o.model || !offers(option, this.o.model)) return options;
+		try {
+			const r = await this.connection!.agent.request(acp.methods.agent.session.setConfigOption, {
+				sessionId: this.sessionId!,
+				configId: option.id,
+				value: this.o.model
+			});
+			return r.configOptions;
+		} catch (e) {
+			console.error('acp: could not start on', this.o.model, message(e));
+			return options;
 		}
 	}
 

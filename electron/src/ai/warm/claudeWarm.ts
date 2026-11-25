@@ -1,6 +1,6 @@
 // Claude Code kept running between requests, a turn at a time over stream JSON. It reads its rules once, at start;
 // /clear after each turn starts the next request without the last one
-import type { AgentPrompt, AgentResult } from '../runAgent';
+import type { AgentPrompt, AgentResult } from '../agentPrompt';
 import { startHeldProcess, watchStop, type HeldProcess, type WarmAgent } from './heldProcess';
 import { onJsonLines, writeJsonLine, type JsonMessage } from './jsonLines';
 

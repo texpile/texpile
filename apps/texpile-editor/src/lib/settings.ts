@@ -13,6 +13,7 @@ import { setLocale as setParaglideLocale } from '$lib/paraglide/runtime';
 import { migrateSettingsObject } from '$lib/migration/settings';
 import type { EnglishVariant } from '$lib/editor/spellcheck/config/grammarRules';
 import type { SpellLanguage } from '$lib/editor/spellcheck/languages/spellLanguages';
+import type { AiAgent, ModelTask } from '$lib/ai/agent/aiAgents';
 
 export type AppSettings = {
 	/** settings.json's own shape version; absent means pre-restructure and triggers migration */
@@ -98,29 +99,18 @@ export type AppSettings = {
 	openFolders: string[];
 	/** MCP port override (0 = channel default); a hand-edit escape hatch for port clashes. */
 	mcpPort: number;
-	/** Preferences › AI Assistant's switch: Refine and the Agent tab gone, the MCP server stopped, whatever is picked below it */
+	/** Preferences › AI agent's "Use AI features" switched off: every AI feature hidden, no agent started, the MCP server stopped */
 	aiOff: boolean;
-	/** the AI service Refine, proofread and Convert to LaTeX use, alone in the list: an agent or 'service', the custom
-	 *  service; null = none chosen yet, empty = None. Main reads it, see electron/src/ai */
-	refineAgents: ('claude' | 'codex' | 'agy' | 'custom' | 'service')[] | null;
-	/** Harper's findings on the paragraphs on screen checked and added to by a model. Main reads it, see electron/src/ipc/proofreadIpc.ts */
+	/** the one agent every AI feature uses; '' until one is picked. Main reads it, see electron/src/ai */
+	agent: AiAgent | '';
+	/** the custom agent's command line; it speaks ACP on its input and output */
+	agentCommand: string;
+	/** each agent's model per task, one of the ids it lists; missing or '' = its own default */
+	agentModels: Record<string, Partial<Record<ModelTask, string>>>;
+	/** Harper's findings on the paragraphs on screen checked and added to by the agent. Main reads it, see electron/src/ipc/proofreadIpc.ts */
 	proofreadAi: boolean;
-	/** the custom service's base URL, any that speaks OpenAI's chat completions, such as http://localhost:11434/v1 */
-	aiServiceUrl: string;
-	aiServiceModel: string;
 	/** names, abbreviations and field terms the model recognizes go into the dictionary */
 	proofreadAddTerms: boolean;
-	/** the command line for Refine's custom agent; the prompt goes on its stdin */
-	aiAgentCommand: string;
-	/** each preset agent's --model for Refine, one of the ids it lists; missing or '' = its own default */
-	aiAgentModels: Record<string, string>;
-	/** the agent the dock's Agent tab talks to over ACP, of those it offers; '' until one is picked. Main reads it, see
-	 *  electron/src/ai/acp */
-	agentPanel: '' | 'codex' | 'claude' | 'opencode' | 'copilot' | 'gemini' | 'custom';
-	/** the agents the Agent tab's menu offers; null = the ones installed, [] = the tab turned off */
-	agentPanelAgents: ('codex' | 'claude' | 'opencode' | 'copilot' | 'gemini' | 'custom')[] | null;
-	/** the command line when agentPanel is 'custom'; it speaks ACP on its input and output */
-	agentPanelCommand: string;
 	/** folders searched before PATH; per machine, so never in a project's config */
 	toolDirs: string[];
 	/** look for co-authors' new versions every few minutes while the window is in front (VS Code's
@@ -178,16 +168,12 @@ const DEFAULTS: AppSettings = {
 	openFolders: [],
 	mcpPort: 0,
 	aiOff: false,
-	refineAgents: null,
+	agent: '',
+	agentCommand: '',
+	// Claude Code's models by alias, which follow its newest of each; as main has them in electron/src/ai/agentChoice.ts
+	agentModels: { claude: { proofread: 'haiku', refine: 'sonnet', convertFast: 'haiku', convertStrong: 'opus' } },
 	proofreadAi: false,
-	aiServiceUrl: '',
-	aiServiceModel: '',
 	proofreadAddTerms: false,
-	aiAgentCommand: '',
-	aiAgentModels: {},
-	agentPanel: '',
-	agentPanelAgents: null,
-	agentPanelCommand: '',
 	toolDirs: [],
 	checkForNewVersions: true,
 	localHistory: true

@@ -87,8 +87,8 @@ describe('the open file resolves against its buffer', () => {
 
 describe('the author a tool writes under', () => {
 	it("is the Agent tab's name for its own agent, whatever name the agent gives, and the caller's own otherwise", () => {
-		expect(authorOf({ ownAgent: true, by: 'Claude Opus' })).toBe('Claude');
-		expect(authorOf({ ownAgent: true })).toBe('Claude');
+		expect(authorOf({ ownAgent: true, by: 'Claude Opus' })).toBe('Claude Code');
+		expect(authorOf({ ownAgent: true })).toBe('Claude Code');
 		expect(authorOf({ by: 'Cursor' })).toBe('Cursor');
 		expect(authorOf({})).toBe('AI assistant');
 	});

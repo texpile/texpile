@@ -1,13 +1,32 @@
-// The agent picked in Preferences for Refine, as settings.json holds it, and its model
+// The agent picked in Preferences › AI agent, as settings.json holds it, and the model it runs each task with
 
-/** the agent Refine may run, as the renderer's refineAgents.svelte.ts reads it: the one picked, none before that */
-export function refineAgentsAllowed(s: Record<string, unknown>): string[] {
-	if (s.aiOff === true) return [];
-	return Array.isArray(s.refineAgents) ? s.refineAgents.filter((a): a is string => typeof a === 'string').slice(0, 1) : [];
+export type AiAgent = 'claude' | 'codex' | 'opencode' | 'gemini' | 'copilot' | 'custom';
+export type PresetAgent = Exclude<AiAgent, 'custom'>;
+
+export const PRESET_AGENTS: PresetAgent[] = ['claude', 'codex', 'opencode', 'gemini', 'copilot'];
+
+/** what an agent is asked to do; Convert to LaTeX asks the fast model of an equation and the strong one of a drawing */
+export type AiTask = 'proofread' | 'refine' | 'convertFast' | 'convertStrong';
+/** chat is the Agent tab's starting model */
+export type ModelTask = AiTask | 'chat';
+
+/** Claude Code's models by alias, which follow its newest of each */
+export const DEFAULT_AGENT_MODELS: Record<string, Record<string, string>> = {
+	claude: { proofread: 'haiku', refine: 'sonnet', convertFast: 'haiku', convertStrong: 'opus' }
+};
+
+export function isAiAgent(v: unknown): v is AiAgent {
+	return v === 'custom' || PRESET_AGENTS.includes(v as PresetAgent);
 }
 
-/** a preset's model; '' is its own default */
-export function agentModelOf(s: Record<string, unknown>, agent: string): string {
-	const own = s.aiAgentModels && typeof s.aiAgentModels === 'object' ? (s.aiAgentModels as Record<string, unknown>)[agent] : '';
+/** null with none picked or with AI turned off */
+export function chosenAgent(s: Record<string, unknown>): AiAgent | null {
+	return s.aiOff !== true && isAiAgent(s.agent) ? s.agent : null;
+}
+
+/** '' is the agent's own default */
+export function agentModelOf(s: Record<string, unknown>, agent: AiAgent, task: ModelTask): string {
+	const all = s.agentModels && typeof s.agentModels === 'object' ? (s.agentModels as Record<string, unknown>) : {};
+	const own = all[agent] && typeof all[agent] === 'object' ? (all[agent] as Record<string, unknown>)[task] : '';
 	return typeof own === 'string' ? own : '';
 }

@@ -1,11 +1,11 @@
-// Convert to LaTeX on a picture and Paste as LaTeX, for both right-click menus. Both are left out while the AI service
-// picked cannot read a picture
+// Convert to LaTeX on a picture and Paste as LaTeX, for both right-click menus. Both are left out while no agent is
+// picked
 import { ClipboardPaste, ScanText } from '@lucide/svelte';
 import type { ContextMenuItem } from '$lib/menus/contextMenu.svelte';
 import { toaster } from '$lib/modals/toaster-svelte';
 import { m } from '$lib/paraglide/messages';
-import { imageReaderOffered } from '$lib/ai/refineAgents.svelte';
-import { aiServiceBridge } from '$lib/ai/service/aiServiceBridge';
+import { agentOffered } from '$lib/ai/agent/aiAgent.svelte';
+import { imageToLatexBridge } from './imageToLatexBridge';
 import type { EditorView } from 'prosemirror-view';
 import type { EditorView as CMView } from '@codemirror/view';
 import type { ImageDialect } from './imagePrompt';
@@ -14,7 +14,7 @@ import { sourceImageTarget, visualImageTarget } from './imageTargets';
 import { imageDialectOf, imageSrcAt } from './sourceImageAt';
 
 function imageReaderAvailable(): boolean {
-	return imageReaderOffered() && !!aiServiceBridge();
+	return agentOffered() !== null && !!imageToLatexBridge();
 }
 
 async function clipboardPicture(): Promise<Blob | null> {

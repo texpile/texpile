@@ -4,12 +4,13 @@ import * as fs from 'node:fs';
 import * as path from 'node:path';
 import { killTree } from '../../shell/killTree';
 import { lastLine, makeRunFolder, removeRunFolder, startAgentProcess } from '../agentProcess';
-import type { AgentPrompt, AgentResult } from '../runAgent';
+import type { AgentPrompt, AgentResult } from '../agentPrompt';
 
 export type WarmAgent = {
 	/** false once it has ended or is ending */
 	readonly alive: boolean;
-	ask(prompt: AgentPrompt, signal: AbortSignal): Promise<AgentResult>;
+	/** a model the process was not started with goes with the request, where the agent takes one there */
+	ask(prompt: AgentPrompt, signal: AbortSignal, model: string): Promise<AgentResult>;
 	close(): void;
 };
 
@@ -25,20 +26,27 @@ export type HeldProcess = {
 
 const TIMEOUT_MS = 180_000;
 
+/** `kept` is a folder of Texpile's own to run in, left in place at exit, in place of a new empty one */
+export type HeldPlace = { kept?: string; env?: Record<string, string> };
+
 export function startHeldProcess(
 	program: string,
 	args: string[],
 	files: Record<string, string>,
-	onExit: (error: string) => void
+	onExit: (error: string) => void,
+	place: HeldPlace = {}
 ): HeldProcess {
 	const name = path.basename(program).replace(/\.(exe|cmd|bat)$/i, '');
-	const dir = makeRunFolder();
+	const dir = place.kept ?? makeRunFolder();
+	function removeDir(): void {
+		if (!place.kept) removeRunFolder(dir);
+	}
 	let child: ChildProcess;
 	try {
 		for (const [file, text] of Object.entries(files)) fs.writeFileSync(path.join(dir, file), text, 'utf8');
-		child = startAgentProcess(program, args, dir);
+		child = startAgentProcess(program, args, dir, place.env);
 	} catch (e) {
-		removeRunFolder(dir);
+		removeDir();
 		throw e;
 	}
 	let stderr = '';
@@ -49,7 +57,7 @@ export function startHeldProcess(
 	function exited(error: string): void {
 		if (exitError !== null) return;
 		exitError = error;
-		removeRunFolder(dir);
+		removeDir();
 		onExit(error);
 	}
 	child.on('error', (e) => exited(e.message));

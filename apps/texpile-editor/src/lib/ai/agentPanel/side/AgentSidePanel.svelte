@@ -5,7 +5,7 @@
 	import { tip } from '$lib/components/tooltip.svelte';
 	import { m } from '$lib/paraglide/messages';
 	import AgentPanel from '../ui/AgentPanel.svelte';
-	import AgentPicker from '../ui/strip/AgentPicker.svelte';
+	import AgentStripControls from '../ui/strip/AgentStripControls.svelte';
 	import DockTabCount from '$lib/terminal/DockTabCount.svelte';
 	import { agentSession } from '../agentSession.svelte';
 	import { agentSide, sideWidthIn, type SideRoom } from './agentSide.svelte';
@@ -43,7 +43,7 @@
 			{/if}
 		</span>
 		<div class="flex shrink-0 items-center gap-0.5">
-			<AgentPicker />
+			<AgentStripControls />
 			<button
 				class="btn-icon btn-icon-xs hover:preset-tonal"
 				use:tip={m.agent_side_to_bottom()}

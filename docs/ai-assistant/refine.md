@@ -8,7 +8,7 @@ order: 3
 
 Rewrite a selection with an AI agent. The result arrives as a [suggestion](../comments/suggesting.md) under the agent's name, and your text changes when you accept it.
 
-> [!REQUIRES] an [AI service](README.md#set-up-an-agent): an agent installed outside Texpile, or a custom service
+> [!REQUIRES] an [AI agent](README.md#set-up-an-agent) installed outside Texpile
 
 Select text, then right-click › **Refine with {agent}** and pick an action. With **Toolbar on selection** on in `Preferences › Editor`, the selection toolbar also has a Refine button.
 

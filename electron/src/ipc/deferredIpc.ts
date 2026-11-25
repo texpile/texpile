@@ -59,7 +59,7 @@ const steps: Array<[DeferredStep, () => Promise<void>]> = [
 		'ai',
 		async () => {
 			(await import('./proofreadIpc.js')).registerProofreadIpc();
-			(await import('./aiServiceIpc.js')).registerAiServiceIpc();
+			(await import('./imageToLatexIpc.js')).registerImageToLatexIpc();
 		}
 	],
 	[
