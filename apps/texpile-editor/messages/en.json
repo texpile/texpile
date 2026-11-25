@@ -1180,6 +1180,7 @@
 	"problems_glossary_undefined": "No glossary entry {name} in the document",
 	"problems_term_unused": "{name} is never used",
 	"problems_term_two_ways": "{used} is also written {other}",
+	"problems_show_more": "Show {count} more",
 	"problems_proofread_document": "Proofread document with AI",
 	"problems_proofreading_one": "Proofreading {count} paragraph with AI",
 	"problems_proofreading_other": "Proofreading {count} paragraphs with AI",

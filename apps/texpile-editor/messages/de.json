@@ -1180,6 +1180,7 @@
 	"problems_glossary_undefined": "Kein Glossareintrag {name} im Dokument",
 	"problems_term_unused": "{name} wird nie verwendet",
 	"problems_term_two_ways": "{used} wird auch {other} geschrieben",
+	"problems_show_more": "{count} weitere anzeigen",
 	"problems_proofread_document": "Dokument mit KI Korrektur lesen",
 	"problems_proofreading_one": "KI liest {count} Absatz Korrektur",
 	"problems_proofreading_other": "KI liest {count} Absätze Korrektur",
