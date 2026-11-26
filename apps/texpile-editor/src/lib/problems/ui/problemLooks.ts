@@ -11,6 +11,6 @@ export const PROBLEM_LOOKS: Record<ProblemFilter, ProblemLook> = {
 	spelling: { icon: SpellCheck, ink: 'text-[var(--proof-correctness)]', name: m.problems_filter_spelling },
 	grammar: { icon: PenLine, ink: 'text-[var(--proof-correctness)]', name: m.problems_filter_grammar },
 	style: { icon: Paintbrush, ink: 'text-[var(--proof-clarity)]', name: m.problems_filter_style },
-	reference: { icon: Link2, ink: 'text-[var(--proof-engagement)]', name: m.problems_filter_reference },
+	reference: { icon: Link2, ink: 'text-[var(--ref-fg)]', name: m.problems_filter_reference },
 	box: { icon: Box, ink: 'text-faint', name: m.problems_filter_box }
 };
