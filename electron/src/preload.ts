@@ -550,10 +550,12 @@ contextBridge.exposeInMainWorld('texpileAgent', {
 	/** the models an agent offers, asked of the agent */
 	models: (agent: string) => invokeReady('agent:models', agent),
 	/** run the agent on a prompt, `system` holding the task's rules; resolves { ok, text } or { ok: false, error } */
-	run: (id: string, prompt: string, system: string) => invokeReady('agent:run', { id, prompt, system }),
+	run: (id: string, prompt: string, system: string, task?: 'refine' | 'math') => invokeReady('agent:run', { id, prompt, system, task }),
 	/** a short request to the agent picked, the way the tasks reach it */
 	test: () => invokeReady('agent:test'),
-	cancel: (id: string) => ipcRenderer.send('agent:cancel', id)
+	cancel: (id: string) => ipcRenderer.send('agent:cancel', id),
+	/** starts the math search's process before its first phrase */
+	warmMath: (system: string) => ipcRenderer.send('agent:warm', system)
 });
 
 // proofreading with the agent; main picks it

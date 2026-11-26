@@ -6,7 +6,8 @@ export type PresetAgent = Exclude<AiAgent, 'custom'>;
 export const PRESET_AGENTS: PresetAgent[] = ['claude', 'codex', 'opencode', 'gemini', 'copilot'];
 
 /** what an agent is asked to do */
-export type AiTask = 'proofread' | 'refine' | 'convert';
+/** math: a phrase from the math search turned into math */
+export type AiTask = 'proofread' | 'refine' | 'convert' | 'math';
 /** chat is the Agent tab's starting model */
 export type ModelTask = AiTask | 'chat';
 

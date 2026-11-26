@@ -25,7 +25,7 @@ const IDLE_MS = 15 * 60_000;
 // a process of Proofread document's own goes soon after the run
 const EXTRA_LANE_IDLE_MS = 60_000;
 // proofreading is a rewrite, which thinking makes slower and no better
-const EFFORT: Partial<Record<AgentTask, string>> = { proofread: 'low' };
+const EFFORT: Partial<Record<AgentTask, string>> = { proofread: 'low', math: 'low' };
 
 const held = new Map<string, Held>();
 let quitHooked = false;
@@ -123,7 +123,8 @@ export async function askAgent(
 	lane = 0
 ): Promise<AgentResult> {
 	await shellEnvReady();
-	const model = agentModelOf(s, agent, task === 'test' ? 'proofread' : task);
+	// the math search takes the Proofread model: both want a fast answer
+	const model = agentModelOf(s, agent, task === 'test' || task === 'math' ? 'proofread' : task);
 	const starter = await starterOf(task, agent, s, prompt.system, model, lane);
 	if (typeof starter === 'string') return { ok: false, error: starter };
 	let warm: WarmAgent;
@@ -149,6 +150,19 @@ export async function askAgent(
 	else idleFrom(starter.slot);
 	const signIn = answer.ok ? null : signInError(agent, answer.error);
 	return signIn ? { ok: false, error: signIn } : answer;
+}
+
+/** starts the task's process ahead of its first request, as the math search opens */
+export async function warmAgent(task: AiTask, agent: AiAgent, s: Record<string, unknown>, system: string): Promise<void> {
+	await shellEnvReady();
+	const starter = await starterOf(task, agent, s, system, agentModelOf(s, agent, task === 'math' ? 'proofread' : task), 0);
+	if (typeof starter === 'string') return;
+	try {
+		hold(starter.slot, starter.key, starter.start);
+		idleFrom(starter.slot);
+	} catch {
+		// the request that follows says what went wrong
+	}
 }
 
 /** asked of the agent itself, in a process of its own that ends with the answer */

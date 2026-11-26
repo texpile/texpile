@@ -4,9 +4,9 @@ import { ipcMain } from 'electron';
 import { readSettings } from '../appSettings';
 import { shellEnvReady } from '../shell/shellEnv';
 import { findProgram } from '../shell/findProgram';
-import { isAiAgent, PRESET_AGENTS } from '../ai/agentChoice';
+import { chosenAgent, isAiAgent, PRESET_AGENTS } from '../ai/agentChoice';
 import { presetProgram } from '../ai/acp/acpAgents';
-import { listModels } from '../ai/warm/warmAgents';
+import { listModels, warmAgent } from '../ai/warm/warmAgents';
 import { askAi } from '../ai/askAi';
 import { removeServiceKey } from '../ai/agentSettingsUpgrade';
 
@@ -25,7 +25,7 @@ export function registerAgentIpc(): void {
 		isAiAgent(agent) ? listModels(agent, readSettings()) : { ok: false, error: 'bad request' }
 	);
 
-	ipcMain.handle('agent:run', async (e, req: { id?: unknown; prompt?: unknown; system?: unknown }) => {
+	ipcMain.handle('agent:run', async (e, req: { id?: unknown; prompt?: unknown; system?: unknown; task?: unknown }) => {
 		if (typeof req?.id !== 'string' || typeof req.prompt !== 'string') return { ok: false, error: 'bad request' };
 		const system = typeof req.system === 'string' ? req.system : '';
 		const abort = new AbortController();
@@ -36,7 +36,7 @@ export function registerAgentIpc(): void {
 		}
 		e.sender.once('destroyed', stop);
 		try {
-			return await askAi('refine', readSettings(), { system, request: req.prompt }, abort.signal);
+			return await askAi(req.task === 'math' ? 'math' : 'refine', readSettings(), { system, request: req.prompt }, abort.signal);
 		} finally {
 			running.delete(req.id);
 			e.sender.removeListener('destroyed', stop);
@@ -46,6 +46,12 @@ export function registerAgentIpc(): void {
 	ipcMain.handle('agent:test', () =>
 		askAi('test', readSettings(), { system: 'Reply with the single word OK.', request: 'OK?' }, AbortSignal.timeout(TEST_TIMEOUT_MS))
 	);
+
+	ipcMain.on('agent:warm', (_e, system: unknown) => {
+		const s = readSettings();
+		const agent = chosenAgent(s);
+		if (agent && typeof system === 'string') void warmAgent('math', agent, s, system);
+	});
 
 	ipcMain.on('agent:cancel', (_e, id: unknown) => {
 		if (typeof id === 'string') running.get(id)?.abort();
