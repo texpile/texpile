@@ -6,9 +6,14 @@ import type { ConfigChoice, ConfigOption } from '../../agentPanel.types';
 // a mode, a model or a thinking level reads as itself; any other setting, such as an on/off one, needs its name too
 const READS_AS_ITSELF = new Set(['mode', 'model', 'thought_level']);
 
+/** a mode, a model or a thinking level gets a button of its own; the rest share one menu */
+export function hasOwnButton(option: ConfigOption): boolean {
+	return !!option.category && READS_AS_ITSELF.has(option.category);
+}
+
 export function configOptionButton(option: ConfigOption): string {
 	const value = option.choices.find((c) => c.value === option.currentValue)?.name ?? option.currentValue;
-	return option.category && READS_AS_ITSELF.has(option.category) ? value : `${option.name}: ${value}`;
+	return hasOwnButton(option) ? value : `${option.name}: ${value}`;
 }
 
 /** agents list models newest first, so the first of each family (Opus, Sonnet, ...) is its latest; the rest, and only
@@ -33,4 +38,24 @@ export function configOptionMenu(option: ConfigOption): DropdownGroup[] {
 	}
 	const { shown, older } = newestOfEachFamily(option);
 	return [{ label: option.name, options: shown.map(item), more: { label: m.agent_panel_more_models(), options: older.map(item) } }];
+}
+
+const PICK_SEPARATOR = '\n';
+
+/** the settings without a button of their own, one group each, under the options button */
+export function sharedOptionsMenu(options: ConfigOption[]): DropdownGroup[] {
+	return options.map((option) => ({
+		label: option.name,
+		options: option.choices.map((c) => ({
+			value: option.id + PICK_SEPARATOR + c.value,
+			label: c.name,
+			note: c.description,
+			checked: c.value === option.currentValue
+		}))
+	}));
+}
+
+export function readSharedPick(value: string): { id: string; value: string } {
+	const at = value.indexOf(PICK_SEPARATOR);
+	return { id: value.slice(0, at), value: value.slice(at + PICK_SEPARATOR.length) };
 }

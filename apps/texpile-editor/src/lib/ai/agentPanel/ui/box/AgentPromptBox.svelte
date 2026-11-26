@@ -6,7 +6,8 @@
 	import MenuDropdown from '$lib/menus/MenuDropdown.svelte';
 	import AgentFilePill from '../AgentFilePill.svelte';
 	import AgentImagePill from '../AgentImagePill.svelte';
-	import { configOptionButton, configOptionMenu } from './configOptionMenu';
+	import { configOptionButton, configOptionMenu, hasOwnButton } from './configOptionMenu';
+	import AgentSharedOptions from './AgentSharedOptions.svelte';
 	import { SlashMenu } from './slashMenu.svelte';
 	import AgentCommandMenu from './AgentCommandMenu.svelte';
 	import AgentAddMenu from './AgentAddMenu.svelte';
@@ -67,6 +68,7 @@
 	});
 
 	const empty = $derived(!text.trim() && !images.list.length);
+	const shared = $derived(props.config.filter((o) => !hasOwnButton(o)));
 
 	function send(): void {
 		if (empty) return;
@@ -170,7 +172,7 @@
 					onImages={(files) => images.add(files)}
 					onAttachFile={() => (detached = null)}
 				/>
-				{#each props.config as option (option.id)}
+				{#each props.config.filter(hasOwnButton) as option (option.id)}
 					<MenuDropdown groups={configOptionMenu(option)} placement="bottom-start" onSelect={(v) => props.onConfig(option.id, v)}>
 						{#snippet trigger(attrs)}
 							<button
@@ -185,6 +187,7 @@
 						{/snippet}
 					</MenuDropdown>
 				{/each}
+				{#if shared.length}<AgentSharedOptions options={shared} onConfig={props.onConfig} />{/if}
 			</div>
 			<div class="flex h-6 shrink-0 items-center gap-1">
 				{#if props.usage}

@@ -2491,6 +2491,7 @@
 	"agent_panel_chats": "对话",
 	"agent_panel_chat_untitled": "未命名对话",
 	"agent_panel_more_models": "更多模型",
+	"agent_panel_more_options": "更多选项",
 	"agent_panel_only_host": "只有主持人可以使用代理标签页",
 	"agent_panel_only_host_note": "代理在主持人的电脑上运行。",
 	"agent_panel_only_desktop": "代理标签页仅在 Texpile 桌面版中可用",
