@@ -22,14 +22,14 @@
 	.image-resize-frame {
 		position: absolute;
 		inset: 0;
-		box-shadow: 0 0 1px 1px var(--image-frame);
+		outline: 1px solid var(--color-primary-500);
 		pointer-events: none;
 	}
 	.image-resize-handle {
 		position: absolute;
-		width: calc(var(--spacing) * 2.5);
-		height: calc(var(--spacing) * 2.5);
-		background-color: darkgreen;
+		width: 8px;
+		height: 8px;
+		background-color: var(--color-primary-500);
 		border: solid 1px var(--color-surface-50);
 		box-sizing: border-box;
 		pointer-events: all;
@@ -52,46 +52,46 @@
 	}
 	.topLeft {
 		cursor: nw-resize;
-		left: -5px;
-		top: -5px;
+		left: -4px;
+		top: -4px;
 	}
 	.top {
 		cursor: n-resize;
 		left: 50%;
-		margin-left: -5px;
-		top: -5px;
+		margin-left: -4px;
+		top: -4px;
 	}
 	.topRight {
 		cursor: ne-resize;
-		right: -5px;
-		top: -5px;
+		right: -4px;
+		top: -4px;
 	}
 	.right {
 		cursor: e-resize;
-		right: -5px;
+		right: -4px;
 		top: 50%;
-		margin-top: -5px;
+		margin-top: -4px;
 	}
 	.bottomRight {
 		cursor: se-resize;
-		right: -5px;
-		bottom: -5px;
+		right: -4px;
+		bottom: -4px;
 	}
 	.bottom {
 		cursor: s-resize;
 		left: 50%;
-		margin-left: -5px;
-		bottom: -5px;
+		margin-left: -4px;
+		bottom: -4px;
 	}
 	.bottomLeft {
 		cursor: sw-resize;
-		left: -5px;
-		bottom: -5px;
+		left: -4px;
+		bottom: -4px;
 	}
 	.left {
 		cursor: w-resize;
-		left: -5px;
+		left: -4px;
 		top: 50%;
-		margin-top: -5px;
+		margin-top: -4px;
 	}
 </style>

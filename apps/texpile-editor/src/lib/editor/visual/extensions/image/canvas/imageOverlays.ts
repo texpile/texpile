@@ -1,4 +1,4 @@
-// a figure's HTML on the canvas: the resize frame while it is pointed at, the cropper in its place, and Crop for the
+// a figure's HTML on the canvas: the resize frame while it is selected, the cropper in its place, and Crop for the
 // bar over the selected image
 import type { Node as PMNode } from 'prosemirror-model';
 import { Crop } from '@lucide/svelte';
@@ -75,7 +75,7 @@ export function imageOverlays(parts: ImageOverlayParts): (ui: FaceUiState) => re
 				props: { onpress: (direction: ResizeDirection, event: MouseEvent) => pressHandle(parts, direction, event) },
 				anchor: { part: 'picture' },
 				placement: 'inFlow',
-				when: resizing ? 'always' : 'anchorHovered'
+				when: resizing ? 'always' : 'selected'
 			}
 		: null;
 	return (ui) => (ui.readOnly || !frame ? [] : [frame]);

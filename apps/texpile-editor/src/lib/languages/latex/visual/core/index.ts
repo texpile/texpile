@@ -84,7 +84,6 @@ export { projectIntelStore, type ProjectIntel } from '$lib/stores/projectIntel';
 
 export { pictureKey } from '$lib/draw/host/drawingCache';
 export { OPEN_FIGURE, type OpenFigureDetail } from '$lib/draw/host/card/figureEvents';
-export { figureSummary } from '$lib/draw/host/card/figureSummary';
 export { figureCardFace } from '$lib/draw/host/card/figureCardFace';
 export { figurePlaceholderFace } from '$lib/draw/host/card/figurePlaceholderFace';
 export { tikzLanguage } from '$lib/draw/tikz/tikzLanguage';
