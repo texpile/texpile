@@ -155,19 +155,23 @@ html {
 	--find-match-active-bg: light-dark(rgba(255, 128, 0, 0.6), rgba(255, 128, 0, 0.4));
 
 	/* spell and grammar underlines (suggestion.css), one hue per proofread category */
-	--proof-correctness: var(--success-ink);
+	/* lighter and softer than --error-ink: a spelling mark never reads as more alarming than a compile error */
+	--proof-spelling: light-dark(
+		oklch(from var(--color-error-500) 0.6 calc(c * 0.6) h),
+		oklch(from var(--color-error-500) 0.9 calc(c * 0.45) h)
+	);
+	--proof-grammar: var(--success-ink);
 	/* a violet beside the theme's blue, which references use */
 	--proof-clarity: light-dark(
 		oklch(from var(--color-primary-500) 0.5 c calc(h + 45)),
 		oklch(from var(--color-primary-500) 0.85 calc(c * 0.6) calc(h + 45))
 	);
-	--proof-default: var(--proof-correctness);
-	--proof-spelling: var(--proof-correctness);
-	--proof-typo: var(--proof-correctness);
-	--proof-capitalization: var(--proof-correctness);
-	--proof-wordchoice: var(--proof-correctness);
+	--proof-default: var(--proof-grammar);
+	--proof-typo: var(--proof-spelling);
+	--proof-capitalization: var(--proof-grammar);
+	--proof-wordchoice: var(--proof-grammar);
 	--proof-style: var(--proof-clarity);
-	--proof-repetition: var(--proof-correctness);
+	--proof-repetition: var(--proof-grammar);
 
 	/* review comments: the thread tint. The selection a composer is open for wears the editor's own
 	   selection color (app.css), so it has no token of its own */
