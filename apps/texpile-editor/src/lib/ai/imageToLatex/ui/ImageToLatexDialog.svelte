@@ -8,6 +8,7 @@
 	import { imageToLatexRequest, type ImageToLatexRequest } from '../imageToLatexRequest';
 	import PictureRegionPicker from './PictureRegionPicker.svelte';
 	import AnswerPreviewView from './AnswerPreviewView.svelte';
+	import CodeMirrorLatex from '$lib/components/CodeMirrorLatex.svelte';
 
 	const props: { request: ImageToLatexRequest } = $props();
 	const job = untrack(() => new ImageToLatexJob(props.request.target, props.request.picture));
@@ -49,8 +50,9 @@
 		<p class="text-error-ink text-sm leading-relaxed [overflow-wrap:anywhere]">{job.error}</p>
 	{:else if job.phase === 'done' && job.preview}
 		<AnswerPreviewView preview={job.preview} />
-		<pre
-			class="bg-surface-100-900 rounded-base max-h-48 shrink-0 overflow-auto p-3 font-mono text-xs leading-relaxed whitespace-pre-wrap">{job.source}</pre>
+		<div class="rounded-container border-surface-200-800 max-h-48 shrink-0 overflow-auto border text-xs">
+			<CodeMirrorLatex bind:value={job.source} language={job.target.dialect} />
+		</div>
 	{/if}
 
 	<div class="flex justify-end gap-2 pt-1">
