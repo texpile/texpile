@@ -31,9 +31,17 @@ const sources = new Set<ReviewSource>();
 const sending = new Set<string>();
 const failedAt = new Map<string, number>();
 let timer: ReturnType<typeof setTimeout> | null = null;
+// a big file lints block after block for minutes, and each lint asks again
+const MOST_WAIT_MS = 10_000;
+let waitingSince = 0;
 const busyLanes = new Set<number>();
 // an answer with no ids is asked once more before it counts as a failure
 const askedAgain = new Set<string>();
+// a batch that failed goes again a paragraph at a time, so one paragraph the model refuses fails alone
+const sendAlone = new Set<string>();
+// a failure or two is the paragraph's, which the model can refuse; three in a row are the agent's, and stop and say why
+const MOST_FAILURES_IN_ROW = 3;
+let failuresInRow = 0;
 let pausedUntil = 0;
 let listening = false;
 
@@ -65,8 +73,10 @@ export function registerReviewSource(source: ReviewSource): () => void {
 /** an edit or a lint: the paragraphs on screen go out once things are quiet for `ms` */
 export function reviewSoon(ms = AFTER_EDIT_MS): void {
 	if (!proofreadOn()) return;
+	const now = Date.now();
 	if (timer) clearTimeout(timer);
-	timer = setTimeout(sendVisible, ms);
+	else waitingSince = now;
+	timer = setTimeout(sendVisible, Math.max(0, Math.min(ms, waitingSince + MOST_WAIT_MS - now)));
 }
 
 function wanted(target: ReviewTarget, key: string, now: number): boolean {
@@ -97,10 +107,11 @@ function wordsOf(target: ReviewTarget): number {
 function nextBatch(pending: Pending[], most: number): Pending[] {
 	const language = pending[0].target.language;
 	const batch: Pending[] = [];
+	if (sendAlone.has(pending[0].key)) return pending.splice(0, 1);
 	let words = 0;
 	for (let i = 0; i < pending.length;) {
 		const p = pending[i];
-		if (p.target.language !== language) {
+		if (p.target.language !== language || sendAlone.has(p.key)) {
 			i++;
 			continue;
 		}
@@ -176,25 +187,32 @@ async function send(batch: Pending[], lane: number): Promise<void> {
 			for (const p of batch) askedAgain.add(p.key);
 			return;
 		}
+		if (!rewrites && batch.length > 1) {
+			for (const p of batch) sendAlone.add(p.key);
+			return;
+		}
 		if (!rewrites) {
 			const now = Date.now();
 			for (const p of batch) failedAt.set(p.key, now);
+			sendAlone.delete(batch[0].key);
+			if (++failuresInRow < MOST_FAILURES_IN_ROW) return;
 			pausedUntil = now + AFTER_FAILURE_MS;
 			const error = answer.ok ? 'The answer did not keep the sentence ids.' : answer.error;
 			noteProofreadResult(error);
-			// an asked run stops at its first failure and says why
 			if (asked.length) {
 				reviewsAskedError.current = error;
 				stopAskedReviews();
 			}
 			return;
 		}
+		failuresInRow = 0;
 		noteProofreadResult(null);
 		const landed = new Map<ReviewSource, Set<string>>();
 		const reviewed = batch.map((p, id) => {
 			const sentences = request.sentences.filter((s) => s.target === id);
 			const review = reviewFromRewrite(p.target, p.target.reading(), sentences, rewrites);
 			askedAgain.delete(p.key);
+			sendAlone.delete(p.key);
 			keepReview(p.key, review);
 			if (!landed.has(p.source)) landed.set(p.source, new Set());
 			landed.get(p.source)!.add(p.target.linted);

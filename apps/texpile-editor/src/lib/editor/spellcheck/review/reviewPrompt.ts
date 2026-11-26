@@ -37,8 +37,9 @@ export type SentenceAsked = { target: number; from: number; to: number; id: stri
 
 export type RewriteRequest = { text: string; sentences: SentenceAsked[] };
 
-function idMaker(): () => string {
-	const used = new Set<string>();
+/** `taken` are ids the text already holds, which would read as one of ours */
+function idMaker(taken: Iterable<string>): () => string {
+	const used = new Set(taken);
 	return () => {
 		for (;;) {
 			let id = '';
@@ -62,10 +63,11 @@ export function sentencesOf(text: string, language: SpellLanguage): { from: numb
 }
 
 export function rewriteRequest(targets: readonly ReviewTarget[]): RewriteRequest {
-	const nextId = idMaker();
+	const texts = targets.map((t) => t.reading().text);
+	const nextId = idMaker(texts.flatMap((text) => [...text.matchAll(/\[([a-z]{3})\]/g)].map((mark) => mark[1])));
 	const sentences: SentenceAsked[] = [];
 	const paragraphs = targets.map((t, target) => {
-		const text = t.reading().text;
+		const text = texts[target];
 		return sentencesOf(text, t.language)
 			.map((s) => {
 				const id = nextId();

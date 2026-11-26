@@ -117,6 +117,7 @@ const REWRITES: [string, string, string, [string, string, string][]][] = [
 			['一至', '一致', 'word']
 		]
 	],
+	['en', 'By a long sequence of a-priori estimates.', 'By a long sequence of a priori estimates.', [['a-', 'a ', 'punctuation']]],
 	[
 		'ja',
 		'本論文では、作用素$x$が有界であるを証明する。',
