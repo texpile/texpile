@@ -82,6 +82,8 @@ export function figureCardFace(parts: FigureCardParts): ChipFace {
 		return true;
 	};
 	const frame = dom.appendChild(faceElement('div', 'figure-card-frame'));
+	// the block bar's Edit figure shows on hover, as an image's Crop does
+	frame.anchor = 'picture';
 	setLook(frame, drawn ? { position: 'relative', maxWidth: '100%' } : { position: 'relative', width: '100%', maxWidth: '28rem' });
 	if (drawn) {
 		// on white in dark mode: a picture's black ink is made for paper
