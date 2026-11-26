@@ -92,6 +92,7 @@ Release notes for Texpile Desktop. Add notes under `## [Unreleased]` as you work
 - fix: empty LaTeX box when clicking a title, author or date set in the preamble (by @louisqli)
 - fix: selected image outline hidden under the image after it (by @louisqli)
 - fix: outline staying on an image after selecting another one (by @louisqli)
+- fix: drag selection disappearing when the pointer goes below the last figure (by @louisqli)
 
 ## [2.0.1] - 2026-11-15
 

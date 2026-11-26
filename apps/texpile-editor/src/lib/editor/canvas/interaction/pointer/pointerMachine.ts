@@ -21,7 +21,7 @@ import {
 } from './clickRules';
 import { contextClickPlan, markContextSelection } from './contextClick';
 import { runFaceHandlers, viewsStopEvent } from './faceHandlers';
-import { beforeCellStart, dragHead } from './dragHeads';
+import { beforeCellStart, dragHead, textHeadToward } from './dragHeads';
 
 export type { ClickKind } from './clickCounter';
 export { ClickCounter } from './clickCounter';
@@ -323,7 +323,9 @@ export class PointerMachine {
 		const { view } = this;
 		const { doc } = view.state;
 		const $anchor = doc.resolve(anchor);
-		const $head = drag && head.pos > anchor ? beforeCellStart($anchor, doc.resolve(head.pos)) : doc.resolve(head.pos);
+		let $head = doc.resolve(head.pos);
+		if (drag) $head = textHeadToward(view, $anchor, $head);
+		if (drag && head.pos > anchor) $head = beforeCellStart($anchor, $head);
 		const selection = view.someProp('createSelectionBetween', (f) => f(view, $anchor, $head)) ?? TextSelection.between($anchor, $head);
 		if (view.state.selection.eq(selection)) return;
 		const tr = caretTr(view, selection, head);
