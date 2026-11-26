@@ -2,10 +2,11 @@
 	import { m } from '$lib/paraglide/messages';
 	import { tip } from '$lib/components/tooltip.svelte';
 	import { openPreferencesAt } from '$lib/stores/dialogStore';
-	import { proofreadOn } from '$lib/editor/spellcheck/review/reviewStore';
+	import { proofreadHinted, proofreadOn } from '$lib/editor/spellcheck/review/reviewStore';
 	import { reviewsAsked, reviewsAskedError, reviewsAskedTotal, stopAskedReviews } from '$lib/editor/spellcheck/review/reviewQueue';
 	import { fileProofreadOffered, projectProofreadOffered } from '../aiProofread/proofreadDocument';
 	import ProofreadMenu from './ProofreadMenu.svelte';
+	import ProofreadHintButton from './ProofreadHintButton.svelte';
 
 	const left = $derived(reviewsAsked.current);
 	const total = $derived(reviewsAskedTotal.current);
@@ -27,4 +28,7 @@
 		{/if}
 		<ProofreadMenu />
 	{/if}
+{/if}
+{#if proofreadHinted()}
+	<ProofreadHintButton />
 {/if}
