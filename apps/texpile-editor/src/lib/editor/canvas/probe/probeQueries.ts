@@ -191,6 +191,7 @@ export function createProbeView(host: ProbeHost): ProbeView {
 				};
 		const recorder = new DrawListRecorder(host.measure, { x: 0, y: block.top });
 		host.painter.paintBlock(recorder.context, block, frame);
+		host.painter.paintOutlines?.(recorder.context, block, frame);
 		return recorder.ops;
 	}
 

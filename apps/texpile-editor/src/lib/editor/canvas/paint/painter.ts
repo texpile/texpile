@@ -176,6 +176,12 @@ export function createCanvasPainter(model: DocumentModel, repaintCarets: () => v
 			replayDisplayList(ctx, list.over, token, px, within);
 			if (frame.composition) paintCompositionUnderlines(ctx, onBlock, frame.composition, { measure: host.measure, run: runNow }, px);
 			fillRects(ctx, shade.over, selection, px);
+		},
+		paintOutlines(ctx, block: PlacedBlock, frame) {
+			const { node } = model.block(block.index);
+			const list = listOf(block.layout, node, placementOf(block.layout, node));
+			const px = devicePixelsOf(ctx);
+			const within = { from: frame.viewport.y - block.top, to: frame.viewport.y + frame.viewport.height - block.top };
 			replayDisplayList(ctx, list.outlines, token, px, within);
 			const calls = frame.focus === 'editor' ? formulaRectsIn(model, block, 'outlineRects') : [];
 			if (calls.length) strokeInside(ctx, calls, canvasFill(styles.token(MACRO_OUTLINE_TOKEN)), px);
