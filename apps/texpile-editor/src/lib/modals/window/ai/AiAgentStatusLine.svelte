@@ -1,6 +1,5 @@
 <script lang="ts">
 	// Under Agent: whether the agent picked can run, and Test agent to make sure it answers
-	import { settings } from '$lib/settings';
 	import { agentName, agentOffered, chosenAgent } from '$lib/ai/agent/aiAgent.svelte';
 	import { agentLabel } from '$lib/ai/agent/aiAgents';
 	import { agentTest } from './agentTest.svelte';
@@ -33,7 +32,5 @@
 		{m.prefs_ai_status_command()}
 	{:else if chosen}
 		<span class="text-warning-ink">{m.prefs_ai_agent_elsewhere({ agent: agentLabel(chosen) })}</span>
-	{:else if !settings.current.aiOff}
-		{m.prefs_ai_status_none()}
 	{/if}
 </p>
