@@ -20,7 +20,7 @@
 		</button>
 	{:else}
 		{#if error}
-			<span class="cap-center text-error-ink max-w-[36rem] truncate" use:tip={error}>{error}</span>
+			<span class="cap-center text-warning-ink max-w-[36rem] truncate" use:tip={error}>{error}</span>
 			<button class="btn btn-sm preset-tonal h-6 px-2" onclick={() => openPreferencesAt('ai')}>
 				<span class="cap-center">{m.problems_proofread_open_preferences()}</span>
 			</button>

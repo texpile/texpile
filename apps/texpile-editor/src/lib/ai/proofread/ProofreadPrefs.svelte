@@ -29,7 +29,7 @@
 			/>
 			{#if proofreadStatus.lastError}
 				<div class="border-surface-200-800 border-b py-3">
-					<p class="text-error-ink text-xs leading-relaxed [overflow-wrap:anywhere]">
+					<p class="text-warning-ink text-xs leading-relaxed [overflow-wrap:anywhere]">
 						{m.prefs_proofread_failed({ error: proofreadStatus.lastError })}
 					</p>
 				</div>
