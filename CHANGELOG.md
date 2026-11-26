@@ -5,6 +5,7 @@ Release notes for Texpile Desktop. Add notes under `## [Unreleased]` as you work
 
 ## [Unreleased]
 
+- fix: AI answers through Claude Code taking 2 seconds longer than needed (by @louisqli)
 - feat: Problems tab and Preferences point to AI proofreading until an agent is picked (by @louisqli)
 - feat: Proofread with AI and Add terms to the dictionary on by default (by @louisqli)
 - fix: Proofread this file ending with no error when the agent failed (by @louisqli)
