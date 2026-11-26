@@ -21,19 +21,23 @@ function underDailyLimit(): boolean {
 	return ++sentToday <= DAILY_LIMIT;
 }
 
-async function proofread(prompt: ProofreadPrompt): Promise<ProofreadAnswer> {
+// Proofread document runs up to this many at once
+const LANES = 3;
+
+async function proofread(prompt: ProofreadPrompt, lane: number): Promise<ProofreadAnswer> {
 	const s = readSettings();
 	if (s.aiOff === true || s.proofreadAi !== true) return { ok: false, error: 'Proofread with AI is off.' };
 	if (!underDailyLimit()) return { ok: false, error: `The daily limit of ${DAILY_LIMIT} requests is reached.` };
 	const signal = AbortSignal.timeout(TIMEOUT_MS);
-	const result = await askAi('proofread', s, prompt, signal);
+	const result = await askAi('proofread', s, prompt, signal, lane);
 	if (result.ok) return result;
 	return { ok: false, error: signal.aborted ? `The AI agent did not answer within ${TIMEOUT_MS / 1000} seconds.` : result.error };
 }
 
 export function registerProofreadIpc(): void {
-	ipcMain.handle('proofread:review', (_e, req: { system?: unknown; request?: unknown }) => {
+	ipcMain.handle('proofread:review', (_e, req: { system?: unknown; request?: unknown; lane?: unknown }) => {
 		if (typeof req?.system !== 'string' || typeof req.request !== 'string') return { ok: false, error: 'bad request' };
-		return proofread({ system: req.system, request: req.request });
+		const lane = typeof req.lane === 'number' && Number.isInteger(req.lane) ? Math.min(Math.max(req.lane, 0), LANES - 1) : 0;
+		return proofread({ system: req.system, request: req.request }, lane);
 	});
 }

@@ -28,7 +28,7 @@ export function reviewKey(target: Pick<ReviewTarget, 'language' | 'linted' | 'ma
 }
 
 function reviewContext(language: ReviewTarget['language']): string {
-	return `${PROMPT_VERSION}|${language === 'en' ? englishVariant() : language}|${settings.current.uiLocale}`;
+	return `${PROMPT_VERSION}|${language === 'en' ? englishVariant() : language}`;
 }
 
 function remember<V>(map: Map<string, V>, key: string, value: V, most = MOST_KEPT): void {

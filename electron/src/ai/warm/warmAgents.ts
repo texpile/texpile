@@ -22,6 +22,10 @@ export type AgentTask = AiTask | 'test';
 type Held = { key: string; agent: WarmAgent; idle?: NodeJS.Timeout };
 
 const IDLE_MS = 15 * 60_000;
+// a process of Proofread document's own goes soon after the run
+const EXTRA_LANE_IDLE_MS = 60_000;
+// proofreading is a rewrite, which thinking makes slower and no better
+const EFFORT: Partial<Record<AgentTask, string>> = { proofread: 'low' };
 
 const held = new Map<string, Held>();
 let quitHooked = false;
@@ -56,7 +60,7 @@ function idleFrom(slot: string): void {
 	const h = held.get(slot);
 	if (!h) return;
 	clearTimeout(h.idle);
-	h.idle = setTimeout(() => release(slot), IDLE_MS);
+	h.idle = setTimeout(() => release(slot), /#\d+$/.test(slot) ? EXTRA_LANE_IDLE_MS : IDLE_MS);
 }
 
 /** what errors call the agent */
@@ -76,7 +80,8 @@ async function starterOf(
 	agent: AiAgent,
 	s: Record<string, unknown>,
 	system: string,
-	model: string
+	model: string,
+	lane: number
 ): Promise<Starter | string> {
 	const version = app.getVersion();
 	if (agent === 'claude' || agent === 'codex') {
@@ -84,10 +89,11 @@ async function starterOf(
 		if (!program) return `${agent} was not found on PATH`;
 		if (agent === 'codex')
 			return { slot: 'codex', key: program, start: (onExit) => new CodexWarm(program, CODEX_WARM_ARGS, version, onExit) };
+		// Claude Code answers a turn at a time, so a request beside another needs a process of its own
 		return {
-			slot: `claude:${task}`,
+			slot: `claude:${task}${lane ? `#${lane}` : ''}`,
 			key: [program, model, system].join('\0'),
-			start: (onExit) => new ClaudeWarm(program, claudeWarmArgs(model), system, onExit)
+			start: (onExit) => new ClaudeWarm(program, claudeWarmArgs(model, EFFORT[task] ?? ''), system, onExit)
 		};
 	}
 	const launch = agentLaunch(agent, s.agentCommand, { findProgram, adapterDir: agentsDir(), execPath: process.execPath });
@@ -113,11 +119,12 @@ export async function askAgent(
 	agent: AiAgent,
 	s: Record<string, unknown>,
 	prompt: AgentPrompt,
-	signal: AbortSignal
+	signal: AbortSignal,
+	lane = 0
 ): Promise<AgentResult> {
 	await shellEnvReady();
 	const model = agentModelOf(s, agent, task === 'test' ? 'proofread' : task);
-	const starter = await starterOf(task, agent, s, prompt.system, model);
+	const starter = await starterOf(task, agent, s, prompt.system, model, lane);
 	if (typeof starter === 'string') return { ok: false, error: starter };
 	let warm: WarmAgent;
 	try {
@@ -127,7 +134,8 @@ export async function askAgent(
 	}
 	idleFrom(starter.slot);
 	let settled = false;
-	const asking = warm.ask(prompt, signal, model).finally(() => (settled = true));
+	const effort = EFFORT[task];
+	const asking = warm.ask(effort ? { ...prompt, effort } : prompt, signal, model).finally(() => (settled = true));
 	// an agent that never answers its start or a queued request is stopped here too, and its process goes
 	const guard = watchStop(signal, NAMES[agent], () => undefined);
 	const answer = await Promise.race([asking, guard.stopped]);

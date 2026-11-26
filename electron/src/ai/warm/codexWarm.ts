@@ -96,6 +96,7 @@ export class CodexWarm implements WarmAgent {
 		const stop = watchStop(signal, 'codex', this.proc.lastWords);
 		const turnStarted = await this.request('turn/start', {
 			threadId,
+			...(prompt.effort ? { effort: prompt.effort } : {}),
 			input: [
 				{ type: 'text', text: prompt.request, text_elements: [] },
 				...(prompt.images ?? []).map((i) => ({ type: 'image', url: `data:${i.mediaType};base64,${i.base64}` }))

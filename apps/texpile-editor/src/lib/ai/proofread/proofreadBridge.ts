@@ -1,6 +1,7 @@
 // Proofreading in main (electron/src/ipc/proofreadIpc.ts): the service is main's, a window only asks
 type ProofreadBridge = {
-	review(system: string, request: string): Promise<{ ok: true; text: string } | { ok: false; error: string }>;
+	/** `lane` is which of the requests running at once this is */
+	review(system: string, request: string, lane: number): Promise<{ ok: true; text: string } | { ok: false; error: string }>;
 };
 
 export function proofreadBridge(): ProofreadBridge | undefined {
