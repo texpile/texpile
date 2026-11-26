@@ -18,7 +18,10 @@ export function tinymistFailureText(failure: { reason: InstallFailure; detail: s
 		case 'checksum':
 			return m.tinymist_install_failed_checksum();
 		case 'disk':
+		case 'in-use':
 			return m.tinymist_install_failed_disk({ detail: failure.detail });
+		case 'space':
+			return m.tinymist_install_failed_space();
 		case 'extract':
 			return m.tinymist_install_failed_extract({ detail: failure.detail });
 		case 'broken':
