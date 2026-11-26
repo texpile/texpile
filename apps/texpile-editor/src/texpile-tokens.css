@@ -155,14 +155,12 @@ html {
 	--find-match-active-bg: light-dark(rgba(255, 128, 0, 0.6), rgba(255, 128, 0, 0.4));
 
 	/* spell and grammar underlines (suggestion.css), one hue per proofread category */
-	/* lighter and softer than --error-ink: a spelling mark never reads as more alarming than a compile error */
-	--proof-correctness: light-dark(
-		oklch(from var(--color-error-500) 0.6 calc(c * 0.6) h),
-		oklch(from var(--color-error-500) 0.9 calc(c * 0.45) h)
+	--proof-correctness: var(--success-ink);
+	/* a violet beside the theme's blue, which references use */
+	--proof-clarity: light-dark(
+		oklch(from var(--color-primary-500) 0.5 c calc(h + 45)),
+		oklch(from var(--color-primary-500) 0.85 calc(c * 0.6) calc(h + 45))
 	);
-	--proof-clarity: var(--primary-ink);
-	--proof-engagement: var(--success-ink);
-	--proof-delivery: var(--secondary-ink);
 	--proof-default: var(--proof-correctness);
 	--proof-spelling: var(--proof-correctness);
 	--proof-typo: var(--proof-correctness);
