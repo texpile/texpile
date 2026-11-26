@@ -105,12 +105,13 @@ test("dragging a figure's handle writes its width in tenths of the text width, a
 		await settled(page);
 		return inCanvas(page, ({ probe }, at) => probe.query('.imagePluginImg').find((el) => el.pos === at)!.rect, pos);
 	});
-	await page.mouse.move(shown.left + shown.width / 2, shown.top + shown.height / 2);
+	await page.mouse.click(shown.left + shown.width / 2, shown.top + shown.height / 2);
+	await settled(page);
 	const handle = await page.locator('.image-resize-handle.right').boundingBox();
 	if (!handle) throw new Error('the resize handle is not on screen');
 	await page.mouse.move(handle.x + handle.width / 2, handle.y + handle.height / 2);
 	await page.mouse.down();
-	await page.mouse.move(handle.x - shown.width * 0.15, handle.y + handle.height / 2, { steps: 8 });
+	await page.mouse.move(handle.x - shown.width * 0.2, handle.y + handle.height / 2, { steps: 8 });
 	await page.mouse.up();
 	await disk.expectFile('crop.tex', (t) => /includegraphics\[width=0\.5\\textwidth\]/.test(t), 'the narrower width on disk');
 	await visual.editor.click({ position: { x: 5, y: 5 } });

@@ -212,7 +212,6 @@ html {
 	/* the source editor's math preview: its control buttons on hover */
 	--math-preview-btn-hover: color-mix(in srgb, var(--color-surface-500) 18%, transparent);
 	/* the image resize frame */
-	--image-frame: light-dark(var(--color-surface-950), var(--color-surface-50));
 	/* the terminal: dark in both modes; xterm reads these through themeColour() */
 	--terminal-bg: light-dark(var(--color-surface-50), var(--color-surface-950));
 	--terminal-fg: light-dark(var(--color-surface-950), var(--color-surface-50));
