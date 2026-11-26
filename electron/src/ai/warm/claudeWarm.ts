@@ -23,10 +23,18 @@ export class ClaudeWarm implements WarmAgent {
 	private queue: Promise<unknown> = Promise.resolve();
 
 	constructor(program: string, args: string[], system: string, onExit: () => void) {
-		this.proc = startHeldProcess(program, args, { 'system.txt': system }, (error) => {
-			this.endTurn(error);
-			onExit();
-		});
+		// its telemetry and update checks add about 2 s to every turn (2.1.332: 2.9 s a short request, 0.9 s without)
+		const quiet = { env: { CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC: '1' } };
+		this.proc = startHeldProcess(
+			program,
+			args,
+			{ 'system.txt': system },
+			(error) => {
+				this.endTurn(error);
+				onExit();
+			},
+			quiet
+		);
 		onJsonLines(this.proc.child.stdout, (msg) => {
 			if (msg.type === 'result') this.endTurn(msg);
 		});
