@@ -57,7 +57,7 @@ export function paintInlineDecorations(
 	}
 }
 
-/** an inline box's bottom border under its content area: dots a border wide, a border apart, or one rule */
+/** an inline box's bottom border under its content area: dots a border wide about a border apart, one at each end as Chromium spaces them, or one rule */
 function paintBottomBorder(
 	ctx: CanvasRenderingContext2D,
 	border: NonNullable<InlineDecorationPaint['style']['bottomBorder']>,
@@ -75,8 +75,10 @@ function paintBottomBorder(
 			ctx.fillRect(rule.x, rule.y, rule.width, rule.height);
 			continue;
 		}
-		for (let x = start; x + width <= end + 0.01; x += width * 2) {
-			const dot = snapRect({ x: left + x, y, width, height: width }, px);
+		const dots = Math.max(1, Math.floor((end - start + width) / (width * 2)));
+		const step = dots > 1 ? (end - start - width) / (dots - 1) : 0;
+		for (let i = 0; i < dots; i++) {
+			const dot = snapRect({ x: left + start + i * step, y, width, height: width }, px);
 			ctx.fillRect(dot.x, dot.y, dot.width, dot.height);
 		}
 	}
