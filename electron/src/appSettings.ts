@@ -56,8 +56,8 @@ const DEFAULT_SETTINGS = {
 	// each agent's model per task (ai/agentChoice.ts ModelTask), from the list it gives; '' or missing = its own default
 	agentModels: DEFAULT_AGENT_MODELS,
 	// Harper's findings checked and added to by the agent: the paragraphs on screen
-	proofreadAi: false,
-	proofreadAddTerms: false, // names and field terms the model recognizes go into the dictionary
+	proofreadAi: true,
+	proofreadAddTerms: true, // names and field terms the model recognizes go into the dictionary
 	openFolders: [] as string[], // folders open across windows; maintained here for session restore
 	toolDirs: [] as string[], // searched before PATH by every program Texpile starts; see shell/toolDirs.ts
 	checkForNewVersions: true, // fetch co-authors' versions every few minutes while focused (renderer scmAutoCheck)

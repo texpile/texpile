@@ -5,6 +5,7 @@ Release notes for Texpile Desktop. Add notes under `## [Unreleased]` as you work
 
 ## [Unreleased]
 
+- feat: Proofread with AI and Add terms to the dictionary on by default (by @louisqli)
 - fix: Proofread this file ending with no error when the agent failed (by @louisqli)
 - fix: Proofread this file sending paragraphs on screen twice (by @louisqli)
 - feat: Preferences points to OpenCode for local models and API keys (by @louisqli)
