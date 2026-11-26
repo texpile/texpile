@@ -5,6 +5,7 @@ import * as path from 'node:path';
 import { downloadArchive, type FetchArchive } from '../install/archiveDownload';
 import { extractArchive } from '../install/archiveExtract';
 import { InstallError, type InstallFailure } from '../install/installError';
+import { programNamesFrom } from '../install/programsInFolder';
 import { texliveBin } from './texliveDir';
 import type { TexLiveAsset } from './texliveRelease';
 
@@ -12,6 +13,9 @@ import type { TexLiveAsset } from './texliveRelease';
 const STAGING_PREFIX = '.texlive-staging-';
 // tens of thousands of files, each one opened by the virus scanner on Windows
 const EXTRACT_TIMEOUT_MS = 30 * 60_000;
+// an engine Texpile just ended lets go of its files a moment later, and the virus scanner holds each file it reads
+const MOVE_RETRY_MS = [100, 200, 400, 800, 1600, 3200];
+const IN_USE_CODES = new Set(['EPERM', 'EBUSY', 'EACCES']);
 
 export type TexLiveInstallStep = { phase: 'download' | 'verify' | 'extract'; received: number; total: number };
 
@@ -81,13 +85,13 @@ async function fetchAndUnpack(deps: TexLiveInstallDeps, asset: TexLiveAsset, sta
 	return tree;
 }
 
-// the old tree steps aside into `staging` rather than being deleted: Windows lets a folder whose programs run be renamed
+// the old tree steps aside into `staging` rather than being deleted, so a failed move can put it back
 async function replaceDir(source: string, target: string, staging: string): Promise<void> {
 	const aside = path.join(staging, `previous-${path.basename(target)}`);
 	const hadOne = fs.existsSync(target);
-	if (hadOne) await fs.promises.rename(target, aside);
+	if (hadOne) await moveTree(target, aside);
 	try {
-		await fs.promises.rename(source, target);
+		await moveTree(source, target);
 	} catch (err) {
 		if (hadOne) await fs.promises.rename(aside, target).catch(() => undefined);
 		throw err;
@@ -103,12 +107,26 @@ export async function removeTexLive(root: string, swap: SwapTree): Promise<{ ok:
 		await sweepStaging(parent);
 		staging = await fs.promises.mkdtemp(path.join(parent, STAGING_PREFIX));
 		const aside = path.join(staging, path.basename(root));
-		await swap(() => fs.promises.rename(root, aside));
+		await swap(() => moveTree(root, aside));
 		return { ok: true };
 	} catch (err) {
 		return failed(err, 'disk');
 	} finally {
 		if (staging) await removeQuietly(staging);
+	}
+}
+
+// Windows refuses to move a folder while any file in it is open
+async function moveTree(from: string, to: string): Promise<void> {
+	for (let attempt = 0; ; attempt++) {
+		try {
+			return await fs.promises.rename(from, to);
+		} catch (err) {
+			const code = (err as NodeJS.ErrnoException).code;
+			if (process.platform !== 'win32' || !code || !IN_USE_CODES.has(code)) throw err;
+			if (attempt === MOVE_RETRY_MS.length) throw new InstallError('in-use', (await programNamesFrom(from)).join(', '), { cause: err });
+			await new Promise((resolve) => setTimeout(resolve, MOVE_RETRY_MS[attempt]));
+		}
 	}
 }
 

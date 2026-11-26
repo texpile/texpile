@@ -20,6 +20,10 @@ export function texLiveFailureText(failure: { reason: InstallFailure; detail: st
 			return m.texlive_install_failed_checksum();
 		case 'disk':
 			return m.texlive_install_failed_disk({ detail: failure.detail });
+		case 'space':
+			return m.texlive_install_failed_space();
+		case 'in-use':
+			return failure.detail ? m.texlive_install_failed_in_use({ programs: failure.detail }) : m.texlive_install_failed_in_use_unknown();
 		case 'extract':
 			return m.texlive_install_failed_extract({ detail: failure.detail });
 		case 'broken':
