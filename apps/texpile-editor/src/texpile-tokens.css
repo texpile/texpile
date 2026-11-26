@@ -155,13 +155,21 @@ html {
 	--find-match-active-bg: light-dark(rgba(255, 128, 0, 0.6), rgba(255, 128, 0, 0.4));
 
 	/* spell and grammar underlines (suggestion.css), one hue per proofread category */
-	--proof-default: var(--tertiary-ink);
-	--proof-spelling: var(--error-ink);
-	--proof-typo: var(--error-ink);
-	--proof-capitalization: var(--warning-ink);
-	--proof-wordchoice: var(--primary-ink);
-	--proof-style: var(--secondary-ink);
-	--proof-repetition: var(--warning-ink);
+	/* lighter and softer than --error-ink: a spelling mark never reads as more alarming than a compile error */
+	--proof-correctness: light-dark(
+		oklch(from var(--color-error-500) 0.6 calc(c * 0.6) h),
+		oklch(from var(--color-error-500) 0.9 calc(c * 0.45) h)
+	);
+	--proof-clarity: var(--primary-ink);
+	--proof-engagement: var(--success-ink);
+	--proof-delivery: var(--secondary-ink);
+	--proof-default: var(--proof-correctness);
+	--proof-spelling: var(--proof-correctness);
+	--proof-typo: var(--proof-correctness);
+	--proof-capitalization: var(--proof-correctness);
+	--proof-wordchoice: var(--proof-correctness);
+	--proof-style: var(--proof-clarity);
+	--proof-repetition: var(--proof-correctness);
 
 	/* review comments: the thread tint. The selection a composer is open for wears the editor's own
 	   selection color (app.css), so it has no token of its own */

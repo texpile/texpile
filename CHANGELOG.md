@@ -5,6 +5,7 @@ Release notes for Texpile Desktop. Add notes under `## [Unreleased]` as you work
 
 ## [Unreleased]
 
+- fix: spelling underline dark red and hard to read in dark mode (by @louisqli)
 - feat: Problems tab with This file and Project sections, filters, Fix and Ignore (by @louisqli)
 - feat: spelling and grammar of the open file in the Problems tab (by @louisqli)
 - feat: Fix with agent on a problem (by @louisqli)
