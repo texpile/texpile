@@ -208,7 +208,9 @@ async function send(sent: Pending[], lane: number): Promise<void> {
 			const now = Date.now();
 			for (const p of batch) failedAt.set(p.key, now);
 			sendAlone.delete(batch[0].key);
-			if (++failuresInRow < MOST_FAILURES_IN_ROW) return;
+			// the asked run's last paragraphs failed: say why, or it ends with nothing found and no reason
+			const lastAsked = batch.some((p) => p.source === ASKED_SOURCE) && asked.every((p) => failedAt.has(p.key));
+			if (++failuresInRow < MOST_FAILURES_IN_ROW && !lastAsked) return;
 			pausedUntil = now + AFTER_FAILURE_MS;
 			const error = answer.ok ? 'The answer did not keep the sentence ids.' : answer.error;
 			noteProofreadResult(error);
