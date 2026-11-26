@@ -60,7 +60,7 @@
 	/>
 	{#if shownRegion}
 		<div
-			class="border-primary-500 bg-primary-500/10 pointer-events-none absolute border-2"
+			class="border-primary-ink bg-primary-tint pointer-events-none absolute border"
 			style:left="{shownRegion.x * k}px"
 			style:top="{shownRegion.y * k}px"
 			style:width="{shownRegion.w * k}px"

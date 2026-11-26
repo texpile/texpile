@@ -420,6 +420,7 @@
 	"ai_image_paste_typst": "粘贴为 Typst",
 	"ai_image_region_hint": "在图片上拖动，只转换其中一部分。",
 	"ai_image_convert_all": "全部转换",
+	"ai_image_convert_again": "重新转换",
 	"ai_image_convert_region": "转换所选区域",
 	"ai_image_running": "{agent} 正在读取图片",
 	"ai_image_fixing": "{agent} 正在修正绘图中的错误",
