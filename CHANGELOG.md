@@ -91,6 +91,7 @@ Release notes for Texpile Desktop. Add notes under `## [Unreleased]` as you work
 - fix: block handle left beside the old spot after the text glides back from a comment (by @louisqli)
 - fix: empty LaTeX box when clicking a title, author or date set in the preamble (by @louisqli)
 - fix: selected image outline hidden under the image after it (by @louisqli)
+- fix: outline staying on an image after selecting another one (by @louisqli)
 
 ## [2.0.1] - 2026-11-15
 
