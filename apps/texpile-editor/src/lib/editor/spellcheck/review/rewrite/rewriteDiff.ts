@@ -10,6 +10,8 @@ type Token = { text: string; from: number; word: boolean; formula: boolean };
 const MOST_CHANGED_WORDS = 0.3;
 // changes this many words apart or closer are one change
 const JOIN_WITHIN_WORDS = 1;
+// a longer comparison would hold the window up; such a sentence keeps Harper's findings
+const MOST_COMPARED = 1_000_000;
 
 function tokensOf(text: string, segmenter: Intl.Segmenter): Token[] {
 	const out: Token[] = [];
@@ -36,18 +38,28 @@ function keyOf(t: Token): string {
 
 type Run = { a: number; aTo: number; b: number; bTo: number };
 
-/** the runs where the two token lists differ, from a longest common subsequence */
-function differingRuns(was: Token[], now: Token[]): Run[] {
-	const n = was.length;
-	const m = now.length;
+/** the runs where the two token lists differ, from a longest common subsequence; null past MOST_COMPARED */
+function differingRuns(was: Token[], now: Token[]): Run[] | null {
 	const ka = was.map(keyOf);
 	const kb = now.map(keyOf);
-	const L = Array.from({ length: n + 1 }, () => new Int32Array(m + 1));
-	for (let i = n - 1; i >= 0; i--)
-		for (let j = m - 1; j >= 0; j--) L[i][j] = ka[i] === kb[j] ? L[i + 1][j + 1] + 1 : Math.max(L[i + 1][j], L[i][j + 1]);
+	let first = 0;
+	while (first < ka.length && first < kb.length && ka[first] === kb[first]) first++;
+	let n = ka.length;
+	let m = kb.length;
+	while (n > first && m > first && ka[n - 1] === kb[m - 1]) {
+		n--;
+		m--;
+	}
+	if ((n - first) * (m - first) > MOST_COMPARED) return null;
+	const L = Array.from({ length: n - first + 1 }, () => new Int32Array(m - first + 1));
+	for (let i = n - 1; i >= first; i--)
+		for (let j = m - 1; j >= first; j--) {
+			const [x, y] = [i - first, j - first];
+			L[x][y] = ka[i] === kb[j] ? L[x + 1][y + 1] + 1 : Math.max(L[x + 1][y], L[x][y + 1]);
+		}
 	const runs: Run[] = [];
-	let i = 0;
-	let j = 0;
+	let i = first;
+	let j = first;
 	let open: Run | null = null;
 	function close() {
 		if (open) runs.push(open);
@@ -61,7 +73,7 @@ function differingRuns(was: Token[], now: Token[]): Run[] {
 			continue;
 		}
 		open ??= { a: i, aTo: i, b: j, bTo: j };
-		if (j < m && (i === n || L[i][j + 1] >= L[i + 1][j])) open.bTo = ++j;
+		if (j < m && (i === n || L[i - first][j + 1 - first] >= L[i + 1 - first][j - first])) open.bTo = ++j;
 		else open.aTo = ++i;
 	}
 	close();
@@ -108,12 +120,12 @@ function joinNear(runs: Run[], was: Token[]): Run[] {
 	return out;
 }
 
-/** a change to punctuation or spacing alone takes the word beside it, so there is a word to underline */
+/** a change to punctuation or spacing alone takes the nearest word beside it, so there is a word to underline */
 function withWord(run: Run, was: Token[]): Run | null {
-	const part = was.slice(run.a, run.aTo);
-	if (part.some((t) => t.word)) return run;
-	if (run.a > 0 && was[run.a - 1].word) return { ...run, a: run.a - 1, b: run.b - 1 };
-	if (run.aTo < was.length && was[run.aTo].word) return { ...run, aTo: run.aTo + 1, bTo: run.bTo + 1 };
+	if (was.slice(run.a, run.aTo).some((t) => t.word)) return run;
+	for (let a = run.a - 1; a >= 0 && !was[a].formula; a--) if (was[a].word || !blank(was[a])) return { ...run, a, b: run.b - (run.a - a) };
+	for (let to = run.aTo; to < was.length && !was[to].formula; to++)
+		if (was[to].word || !blank(was[to])) return { ...run, aTo: to + 1, bTo: run.bTo + (to + 1 - run.aTo) };
 	return null;
 }
 
@@ -141,7 +153,9 @@ export function sentenceChanges(source: string, rewritten: string, language: str
 	const now = tokensOf(rewritten.trim(), segmenter);
 	// a formula the model dropped or made up leaves nothing to compare by
 	if (formulas(was) !== formulas(now)) return [];
-	const runs = joinNear(joinMoves(differingRuns(was, now), was, now), was)
+	const differing = differingRuns(was, now);
+	if (!differing) return [];
+	const runs = joinNear(joinMoves(differing, was, now), was)
 		.map((r) => withWord(r, was))
 		.filter((r): r is Run => r !== null);
 	if (!runs.length) return [];
@@ -154,12 +168,15 @@ export function sentenceChanges(source: string, rewritten: string, language: str
 	const out: RewriteChange[] = [];
 	for (const r of runs) {
 		if (was.slice(r.a, r.aTo).some((t) => t.formula) || now.slice(r.b, r.bTo).some((t) => t.formula)) continue;
-		const span = trimmedSpan(was, r.a, r.aTo);
-		if (!span) continue;
-		const replacement = textOf(now.slice(r.b, r.bTo)).trim();
-		// the spaces around a dropped word go with it
-		const to = !replacement && source[span.to] === ' ' ? span.to + 1 : span.to;
-		if (source.slice(span.from, to) !== replacement) out.push({ from: span.from, to, replacement, whole: false });
+		let { a, aTo, b, bTo } = r;
+		// spaces both sides keep stay out of the change; one side's own space is part of it
+		while (a < aTo && b < bTo && blank(was[a]) && blank(now[b])) [a, b] = [a + 1, b + 1];
+		while (aTo > a && bTo > b && blank(was[aTo - 1]) && blank(now[bTo - 1])) [aTo, bTo] = [aTo - 1, bTo - 1];
+		if (a === aTo) continue;
+		const from = was[a].from;
+		const to = was[aTo - 1].from + was[aTo - 1].text.length;
+		const replacement = textOf(now.slice(b, bTo)).replace(/\s+/g, ' ');
+		if (source.slice(from, to) !== replacement) out.push({ from, to, replacement, whole: false });
 	}
 	return out;
 }

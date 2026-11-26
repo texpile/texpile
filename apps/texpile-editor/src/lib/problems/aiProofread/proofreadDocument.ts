@@ -22,9 +22,9 @@ async function targetsIn(path: string): Promise<ReviewTarget[]> {
 	if (!(await lintParagraphs(paras, spelling, markup, () => false))) return [];
 	return paras.flatMap((p) => {
 		const matches = paragraphLints(spelling, markup, p.text);
-		return matches
-			? [{ language: spelling, linted: p.text, matches, reading: () => sourceReading(text, p.from, p.text, prose.spans) }]
-			: [];
+		if (!matches) return [];
+		let read: ReturnType<typeof sourceReading> | null = null;
+		return [{ language: spelling, linted: p.text, matches, reading: () => (read ??= sourceReading(text, p.from, p.text, prose.spans)) }];
 	});
 }
 
