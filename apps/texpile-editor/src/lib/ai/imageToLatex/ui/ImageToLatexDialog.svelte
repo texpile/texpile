@@ -14,6 +14,9 @@
 	const job = untrack(() => new ImageToLatexJob(props.request.target, props.request.picture));
 
 	const title = $derived(job.target.dialect === 'typst' ? m.ai_image_convert_typst() : m.ai_image_convert_latex());
+	const convertLabel = $derived(
+		job.region ? m.ai_image_convert_region() : job.phase === 'picking' ? m.ai_image_convert_all() : m.ai_image_convert_again()
+	);
 	const canConvert = $derived(job.phase === 'picking' || job.phase === 'done' || job.phase === 'failed');
 
 	function close(): void {
@@ -58,7 +61,7 @@
 	<div class="flex justify-end gap-2 pt-1">
 		{#if canConvert}
 			<button class="btn preset-tonal mr-auto" onclick={() => void job.convert()}>
-				{job.region ? m.ai_image_convert_region() : m.ai_image_convert_all()}
+				{convertLabel}
 			</button>
 		{/if}
 		<button class="btn preset-tonal" onclick={close}>{m.ai_image_cancel()}</button>

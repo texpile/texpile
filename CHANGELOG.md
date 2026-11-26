@@ -5,6 +5,7 @@ Release notes for Texpile Desktop. Add notes under `## [Unreleased]` as you work
 
 ## [Unreleased]
 
+- feat: Convert Again in Convert to LaTeX once a result is shown (by @louisqli)
 - fix: dotted spelling and grammar underline stopping short of the highlight (by @louisqli)
 - feat: Convert to LaTeX shows the result highlighted and editable before Insert (by @louisqli)
 - feat: the Proofread model in Preferences links to Spelling & Grammar (by @louisqli)
