@@ -3,8 +3,7 @@
 /* catch-all for any proofread type (lowest specificity) */
 [class^='proofread-'],
 [class*=' proofread-'] {
-	background-color: color-mix(in srgb, var(--proof-default) 8%, transparent);
-	border-bottom: 2px dotted var(--proof-default);
+	border-bottom: 2px solid var(--proof-default);
 	cursor: pointer;
 }
 
@@ -14,8 +13,7 @@
 }
 
 .proofread-spelling {
-	background-color: color-mix(in srgb, var(--proof-spelling) 8%, transparent);
-	border-bottom: 2px dotted var(--proof-spelling);
+	border-bottom: 2px solid var(--proof-spelling);
 	cursor: pointer;
 }
 
@@ -24,8 +22,7 @@
 }
 
 .proofread-typo {
-	background-color: color-mix(in srgb, var(--proof-spelling) 8%, transparent);
-	border-bottom: 2px dotted var(--proof-typo);
+	border-bottom: 2px solid var(--proof-typo);
 	cursor: pointer;
 }
 
@@ -34,8 +31,7 @@
 }
 
 .proofread-capitalization {
-	background-color: color-mix(in srgb, var(--proof-capitalization) 8%, transparent);
-	border-bottom: 2px dotted var(--proof-capitalization);
+	border-bottom: 2px solid var(--proof-capitalization);
 	cursor: pointer;
 }
 
@@ -44,8 +40,7 @@
 }
 
 .proofread-wordchoice {
-	background-color: color-mix(in srgb, var(--proof-wordchoice) 8%, transparent);
-	border-bottom: 2px dotted var(--proof-wordchoice);
+	border-bottom: 2px solid var(--proof-wordchoice);
 	cursor: pointer;
 }
 
@@ -54,8 +49,7 @@
 }
 
 .proofread-style {
-	background-color: color-mix(in srgb, var(--proof-style) 8%, transparent);
-	border-bottom: 2px dotted var(--proof-style);
+	border-bottom: 2px solid var(--proof-style);
 	cursor: pointer;
 }
 
@@ -64,8 +58,7 @@
 }
 
 .proofread-repetition {
-	background-color: color-mix(in srgb, var(--proof-repetition) 8%, transparent);
-	border-bottom: 2px dotted var(--proof-repetition);
+	border-bottom: 2px solid var(--proof-repetition);
 	cursor: pointer;
 }
 

@@ -1,12 +1,11 @@
-// prosemirror-proofread's marks on the canvas: a light tint and a dotted rule under the words, in the color of their kind
+// prosemirror-proofread's marks on the canvas: a solid rule under the words, in the color of their kind
 import type { DecorationLook } from '$lib/editor/canvas';
 import { registerDecorationLook, registerDecorationLookPrefix } from '$lib/editor/canvas';
 
 function proofLook(token: string, tint = token): DecorationLook {
 	return {
 		look: {
-			backgroundColor: `color-mix(in srgb, var(${tint}) 8%, transparent)`,
-			borderBottom: `2px dotted var(${token})`,
+			borderBottom: `2px solid var(${token})`,
 			cursor: 'pointer'
 		},
 		hover: { backgroundColor: `color-mix(in srgb, var(${tint}) 12%, transparent)` }
