@@ -19,7 +19,7 @@
 		onValueChange?: (value: string) => void;
 		readonly?: boolean;
 		class?: string;
-		language?: 'latex' | 'json' | 'markdown' | 'bibtex';
+		language?: 'latex' | 'typst' | 'json' | 'markdown' | 'bibtex';
 	};
 
 	let {
@@ -45,6 +45,9 @@
 				// hand-written BibTeX StreamLanguage (same one source-mode CM uses for .bib files);
 				// neither @codemirror/language-data nor legacy-modes ships a BibTeX mode
 				languageExtension = [languageCompartment.of(bibtex())];
+			} else if (language === 'typst') {
+				const { typstLanguage } = await import('$lib/languages/typst/source/typstLanguage');
+				languageExtension = [languageCompartment.of(typstLanguage())];
 			} else if (language === 'json') {
 				const jsonLanguage = languages.find((lang) => lang.name.toLowerCase().includes('json'));
 				if (jsonLanguage) {
