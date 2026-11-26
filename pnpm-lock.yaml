@@ -121,8 +121,8 @@ importers:
         specifier: ^6.43.15
         version: 6.43.15
       '@inlang/paraglide-js':
-        specifier: 2.29.3
-        version: 2.29.3(eslint@10.15.0(jiti@2.7.0))(typescript@6.0.3)(vite@8.3.8(@types/node@24.13.3)(esbuild@0.28.2)(jiti@2.7.0)(less@4.9.1))
+        specifier: 3.2.1
+        version: 3.2.1(eslint@10.15.0(jiti@2.7.0))(typescript@6.0.3)(vite@8.3.8(@types/node@24.13.3)(esbuild@0.28.2)(jiti@2.7.0)(less@4.9.1))
       '@lucide/svelte':
         specifier: ^1.59.0
         version: 1.73.0(svelte@5.57.3(@typescript-eslint/types@8.72.2))
@@ -347,8 +347,8 @@ importers:
         specifier: ^5.3.0
         version: 5.3.0
       '@inlang/paraglide-js':
-        specifier: 2.29.3
-        version: 2.29.3(eslint@10.15.0(jiti@2.7.0))(typescript@6.0.3)(vite@8.3.8(@types/node@24.13.3)(esbuild@0.28.2)(jiti@2.7.0)(less@4.9.1))
+        specifier: 3.2.1
+        version: 3.2.1(eslint@10.15.0(jiti@2.7.0))(typescript@6.0.3)(vite@8.3.8(@types/node@24.13.3)(esbuild@0.28.2)(jiti@2.7.0)(less@4.9.1))
       '@lucide/svelte':
         specifier: ^1.59.0
         version: 1.73.0(svelte@5.57.3(@typescript-eslint/types@8.72.2))
@@ -553,8 +553,8 @@ packages:
     resolution: {integrity: sha512-EgmJ7oEaGQECTn3H3wmnQpEy4hKY66VvM7VQndwPIQob3p877BgbyOUE3EX0LgXQCciF2H8KMdR+RznqjMNOLw==}
     engines: {node: ^22.22.2 || ^24.15.0 || >=26.0.0}
 
-  '@babel/runtime@7.29.14':
-    resolution: {integrity: sha512-Y5tqevQaUAZhhj82BpYMNC1ssvLQTVAfwKdm8iy8qwmhvC2/CpcAu8OC+QEtjM7pMk7knx83u1Qj8gzkicyelw==}
+  '@babel/runtime@7.29.15':
+    resolution: {integrity: sha512-304gsbbGVmQc+cNGHzwHBlqepYdWLKj3VXCQBGt/EGcV7PUPfKI7kAUNW1FZEOCwlQiLvQjg1JEaAlRQ616h+Q==}
     engines: {node: '>=6.9.0'}
 
   '@bramus/specificity@2.4.3':
@@ -1145,17 +1145,14 @@ packages:
     resolution: {integrity: sha512-bV0Tgo9K4hfPCek+aMAn81RppFKv2ySDQeMoSZuvTASywNTnVJCArCZE2FWqpvIatKu7VMRLWlR1EazvVhDyhQ==}
     engines: {node: '>=18.18'}
 
-  '@inlang/paraglide-js@2.29.3':
-    resolution: {integrity: sha512-aI9gT7zGTpr/l8tZM7OXHrgGruZ6jcu2iIqIw8QXKOGOY4akF3u1cIK6EBsttBm+DHI0FGiwCl8xVUjz7kDZHg==}
+  '@inlang/paraglide-js@3.2.1':
+    resolution: {integrity: sha512-TxTaxvjEMjDoPlH2iIuTz8gPHPyJUuYl9IgubyyF25qBhPHJtZq019bzoYcgWKyyj4MVuLLiVZK6jOunkVrEfQ==}
     hasBin: true
     peerDependencies:
       eslint: ^9.0.0 || ^10.0.0
-      typescript: '>=5.6'
       vite: '>=5.0.0'
     peerDependenciesMeta:
       eslint:
-        optional: true
-      typescript:
         optional: true
       vite:
         optional: true
@@ -1163,8 +1160,8 @@ packages:
   '@inlang/recommend-sherlock@0.2.1':
     resolution: {integrity: sha512-ckv8HvHy/iTqaVAEKrr+gnl+p3XFNwe5D2+6w6wJk2ORV2XkcRkKOJ/XsTUJbPSiyi4PI+p+T3bqbmNx/rDUlg==}
 
-  '@inlang/sdk@4.1.0':
-    resolution: {integrity: sha512-pPlaxyemcFMBcwBx31zbSNWwKORSLc2yv93v0uGCh4QgNh/kBRuLlBxbubmME6UJFsj+5nbao2WDZjz3Fzs+FA==}
+  '@inlang/sdk@4.2.0':
+    resolution: {integrity: sha512-Cmaqvn34wsxiF27318Zw2rg+017HHNJWV5MH8rfyVKVANZNpzlztxzRbFienE/gASMLD8oluYHHolIb/p6Egrw==}
     engines: {node: '>=20.0.0'}
 
   '@internationalized/date@3.12.4':
@@ -3347,8 +3344,8 @@ packages:
   known-css-properties@0.37.0:
     resolution: {integrity: sha512-JCDrsP4Z1Sb9JwG0aJ8Eo2r7k4Ou5MwmThS/6lcIe1ICyb7UBJKGRIUUdqc2ASdE/42lgz6zFUnzAIhtXnBVrQ==}
 
-  kysely@0.28.18:
-    resolution: {integrity: sha512-lf6nEHwPlaWbUDw5rycPSkEVGVC7sF7hzY7kH0OryleqK8Ym0zZ+RjI8o+RpHHlxpbKVC1d+UoQSW8GFxGQf4Q==}
+  kysely@0.28.20:
+    resolution: {integrity: sha512-D7rXCs0Psxq2hqjg15PGzk/k2bsWY1ohT9o/Xzl8SzgWExT6GiHCz4Z0NP1z5uOE3WBG7gJ46kYdgLYCOlaLoA==}
     engines: {node: '>=20.0.0'}
 
   lazy-val@1.0.5:
@@ -4930,7 +4927,7 @@ snapshots:
       is-potential-custom-element-name: 1.0.1
       lru-cache: 11.5.3
 
-  '@babel/runtime@7.29.14': {}
+  '@babel/runtime@7.29.15': {}
 
   '@bramus/specificity@2.4.3':
     dependencies:
@@ -5639,32 +5636,33 @@ snapshots:
 
   '@humanwhocodes/retry@0.4.3': {}
 
-  '@inlang/paraglide-js@2.29.3(eslint@10.15.0(jiti@2.7.0))(typescript@6.0.3)(vite@8.3.8(@types/node@24.13.3)(esbuild@0.28.2)(jiti@2.7.0)(less@4.9.1))':
+  '@inlang/paraglide-js@3.2.1(eslint@10.15.0(jiti@2.7.0))(typescript@6.0.3)(vite@8.3.8(@types/node@24.13.3)(esbuild@0.28.2)(jiti@2.7.0)(less@4.9.1))':
     dependencies:
       '@inlang/recommend-sherlock': 0.2.1
-      '@inlang/sdk': 4.1.0
+      '@inlang/sdk': 4.2.0
       commander: 11.1.0
       consola: 3.4.0
       jiti: 2.7.0
       json5: 2.2.3
-      jsonc-parser: 3.3.1
+      magic-string: 0.30.21
       unplugin: 2.3.11
       urlpattern-polyfill: 10.1.0
       valibot: 1.5.0(typescript@6.0.3)
     optionalDependencies:
       eslint: 10.15.0(jiti@2.7.0)
-      typescript: 6.0.3
       vite: 8.3.8(@types/node@24.13.3)(esbuild@0.28.2)(jiti@2.7.0)(less@4.9.1)
+    transitivePeerDependencies:
+      - typescript
 
   '@inlang/recommend-sherlock@0.2.1':
     dependencies:
       comment-json: 4.6.2
 
-  '@inlang/sdk@4.1.0':
+  '@inlang/sdk@4.2.0':
     dependencies:
       '@lix-js/sdk': 0.20.1
       '@sinclair/typebox': 0.31.30
-      kysely: 0.28.18
+      kysely: 0.28.20
       uuid: 14.0.3
 
   '@internationalized/date@3.12.4':
@@ -8184,7 +8182,7 @@ snapshots:
 
   json-schema-to-ts@3.1.1:
     dependencies:
-      '@babel/runtime': 7.29.14
+      '@babel/runtime': 7.29.15
       ts-algebra: 2.0.0
 
   json-schema-traverse@0.4.1: {}
@@ -8222,7 +8220,7 @@ snapshots:
 
   known-css-properties@0.37.0: {}
 
-  kysely@0.28.18: {}
+  kysely@0.28.20: {}
 
   lazy-val@1.0.5: {}
 
