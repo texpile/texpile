@@ -1,11 +1,4 @@
-import {
-	figureCardFace as cardFace,
-	figureSummary,
-	OPEN_FIGURE,
-	pictureKey,
-	tikzLanguage,
-	type ChipFace
-} from '$lib/languages/latex/visual/core';
+import { figureCardFace as cardFace, OPEN_FIGURE, pictureKey, type ChipFace } from '$lib/languages/latex/visual/core';
 import { m } from '$lib/paraglide/messages';
 
 export function figureCardFace(picture: string): ChipFace {
@@ -15,7 +8,6 @@ export function figureCardFace(picture: string): ChipFace {
 		// the card is found by its text; the index counts the cards of the body, which this one has no place among
 		index: () => -1,
 		title: m.figure_card_tikz(),
-		summary: figureSummary(tikzLanguage, picture),
 		fromPdf: true,
 		open: () => window.dispatchEvent(new CustomEvent(OPEN_FIGURE, { detail: { index: -1, source: picture } }))
 	});
