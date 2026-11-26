@@ -17,7 +17,6 @@ export type FigureCardParts = {
 	picture: string;
 	index(): number;
 	title: string;
-	summary: string;
 	/** a figure the compiled PDF can draw (TikZ; CeTZ has no SyncTeX) */
 	fromPdf: boolean;
 	open(): void;
@@ -82,6 +81,8 @@ export function figureCardFace(parts: FigureCardParts): ChipFace {
 		return true;
 	};
 	const frame = dom.appendChild(faceElement('div', 'figure-card-frame'));
+	// the block bar's Edit figure shows on hover, as an image's Crop does
+	frame.anchor = 'picture';
 	setLook(frame, drawn ? { position: 'relative', maxWidth: '100%' } : { position: 'relative', width: '100%', maxWidth: '28rem' });
 	if (drawn) {
 		// on white in dark mode: a picture's black ink is made for paper
@@ -97,6 +98,6 @@ export function figureCardFace(parts: FigureCardParts): ChipFace {
 		image.setAttribute('data-source', cropSizes.has(key) ? 'pdf' : 'drawing');
 		image.replaced = pictureContent(picture, key);
 		setLook(image, { maxWidth: '100%', height: 'auto' });
-	} else frame.appendChild(figurePlaceholderFace(parts.title, parts.summary));
+	} else frame.appendChild(figurePlaceholderFace(parts.title, m.figure_card_open()));
 	return { dom, line: true, reads: [{ kind: 'bitmap', source: key }], actions: () => cardActions(parts) };
 }

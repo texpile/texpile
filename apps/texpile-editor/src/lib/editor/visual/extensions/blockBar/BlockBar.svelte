@@ -2,6 +2,7 @@
 	import { Settings } from '@lucide/svelte';
 	import type { BlockBarModel } from './blockBarPlugin.svelte';
 	import { m } from '$lib/paraglide/messages';
+	import { tip } from '$lib/components/tooltip.svelte';
 
 	type BlockBarProps = { bar: BlockBarModel };
 
@@ -21,9 +22,15 @@
 		</button>
 	{/each}
 	{#if props.bar.settings}
-		<button type="button" class="btn btn-sm px-2" onmousedown={keepFocus} onclick={() => props.bar.openSettings()}>
+		<button
+			type="button"
+			class="btn-icon btn-icon-sm"
+			aria-label={m.tbar_settings()}
+			use:tip={m.tbar_settings()}
+			onmousedown={keepFocus}
+			onclick={() => props.bar.openSettings()}
+		>
 			<Settings class="size-4" />
-			<span class="cap-center">{m.tbar_settings()}</span>
 		</button>
 	{/if}
 </div>

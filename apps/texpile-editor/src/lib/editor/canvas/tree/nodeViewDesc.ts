@@ -99,6 +99,10 @@ export class NodeViewDesc {
 		return this.destroyed;
 	}
 
+	get isSelected(): boolean {
+		return this.selected;
+	}
+
 	/** from the parent's content start; 0 for a top-level block */
 	get offset(): number {
 		return this.placement.offset;

@@ -43,6 +43,9 @@ Release notes for Texpile Desktop. Add notes under `## [Unreleased]` as you work
 - fix: spelling and grammar box covering the word it is about near the bottom of the window (by @louisqli)
 - fix: other AI suggestions in a paragraph gone after accepting one (by @louisqli)
 - fix: Refine with Claude Code or Codex slow to answer (by @louisqli)
+- fix: an undrawn TikZ or CeTZ figure says Double-click to open the figure editor instead of counting its shapes (by @louisqli)
+- fix: Edit figure on a TikZ or CeTZ figure shows on hover, as Crop does on an image (by @louisqli)
+- fix: image resize handles show when the image is clicked, in the app's blue (by @louisqli)
 - feat: vastly improved visual editor performance, there are no longer file limits (by @louisqli)
 - fix: Edit > Select All doing nothing in the visual editor (by @louisqli)
 - fix: Ctrl+Backspace not deleting on macOS in the visual editor (by @louisqli)
@@ -55,7 +58,8 @@ Release notes for Texpile Desktop. Add notes under `## [Unreleased]` as you work
 - fix: LaTeX command typed after \ in a formula drawn in the text color (by @louisqli)
 - feat: Backspace at the start of a numbered heading takes its number off first (by @louisqli)
 - fix: two scrollbars in the insert menu beside a block (by @louisqli)
-- feat: Delete block moves from the gutter into a menu that clicking the drag handle opens (by @louisqli)
+- feat: clicking the block handle selects the block (by @louisqli)
+- feat: Select block button removed from the toolbar (by @louisqli)
 - fix: figure picture not tinted when a selection runs into its caption (by @louisqli)
 - fix: table guides showing on half of one cell under the pointer (by @louisqli)
 - fix: scrolling stopping while the pointer is on the block handle (by @louisqli)
@@ -126,6 +130,10 @@ Release notes for Texpile Desktop. Add notes under `## [Unreleased]` as you work
 - fix: visual editor rows shifting when coming back to a file (by @louisqli)
 - fix: error when pressing Enter or undo while LaTeX suggestions load in a raw LaTeX block (by @louisqli)
 - fix: block handle left beside the old spot after the text glides back from a comment (by @louisqli)
+- fix: empty LaTeX box when clicking a title, author or date set in the preamble (by @louisqli)
+- fix: selected image outline hidden under the image after it (by @louisqli)
+- fix: outline staying on an image after selecting another one (by @louisqli)
+- fix: drag selection disappearing when the pointer goes below the last figure (by @louisqli)
 
 ## [2.0.1] - 2026-11-15
 

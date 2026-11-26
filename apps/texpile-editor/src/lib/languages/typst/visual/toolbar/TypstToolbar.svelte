@@ -6,8 +6,8 @@
 	// hold, nothing more. Math goes through MathLive (the math nodes hold LaTeX, the serializer
 	// round-trips it to typst); a focused mathfield swaps in the shared MathToolbar.
 	import { tip } from '$lib/components/tooltip.svelte';
-	import { Bold, Italic, Underline, Code, List, ListOrdered, Link as LinkIcon, Quote, Minus, BoxSelect } from '@lucide/svelte';
-	import { selectParentNode, toggleMark } from 'prosemirror-commands';
+	import { Bold, Italic, Underline, Code, List, ListOrdered, Link as LinkIcon, Quote, Minus } from '@lucide/svelte';
+	import { toggleMark } from 'prosemirror-commands';
 	import { createWrapInListCommand } from 'prosemirror-flat-list';
 	import type { EditorState, Transaction } from 'prosemirror-state';
 	import { typSchema } from '../schema';
@@ -154,9 +154,6 @@
 				{#snippet tb_hr()}
 					{@render iconButton(m.mdtoolbar_hr(), false, insertHorizontalRule, Minus)}
 				{/snippet}
-				{#snippet tb_selectblock()}
-					{@render iconButton(m.toolbar_select_block_aria(), false, selectParentNode, BoxSelect)}
-				{/snippet}
 
 				<ToolbarOverflow
 					gapClass="gap-3 2xl:gap-4"
@@ -177,8 +174,7 @@
 						{ id: 'math', render: tb_math },
 						{ id: 'table', render: tb_table },
 						{ id: 'codeBlock', render: tb_codeBlock },
-						{ id: 'hr', render: tb_hr },
-						{ id: 'selectblock', render: tb_selectblock }
+						{ id: 'hr', render: tb_hr }
 					]}
 				/>
 			{/if}

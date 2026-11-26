@@ -29,6 +29,7 @@ import { inputRules, textblockTypeInputRule, wrappingInputRule, InputRule, undoI
 import { selectFigureBackward, selectFigureForward } from '$lib/editor/visual/figureDeleteGuard';
 import { liftFromStyleEnvironment } from '$lib/editor/visual/liftFromStyleEnvironment';
 import { deleteEmptyBlockBackward, deleteEmptyBlockForward } from '$lib/editor/visual/emptyBlockDelete';
+import { deleteSelectedBlock } from '$lib/editor/visual/selectedBlockDelete';
 import { visualFindPlugin } from '$lib/editor/visual/find/visualFindPlugin';
 import { parseCarryPlugin } from '$lib/editor/visual/parseCarry';
 import { toggleHeading, toggleBlockQuote, insertHardBreak } from '$lib/editor/visual/helperCommands';
@@ -139,6 +140,7 @@ export function markdownEditorPlugins(setup: MarkdownEditorSetup): Plugin[] {
 		listAttrInheritance,
 		history(),
 		// before the list keymap, whose Backspace and Delete act at a block edge: they would join the block after an empty one into it, and a block into a figure
+		keymap({ Backspace: deleteSelectedBlock, Delete: deleteSelectedBlock }),
 		keymap({ Backspace: liftFromStyleEnvironment }),
 		keymap({ Backspace: deleteEmptyBlockBackward, Delete: deleteEmptyBlockForward }),
 		keymap({ Backspace: selectFigureBackward, Delete: selectFigureForward }),

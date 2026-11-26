@@ -184,6 +184,7 @@ export class BlockElements {
 			unit = null;
 		}
 		if (!unit) unit = NodeViewDesc.create(entry.node, outer, inner, placement, build);
+		this.adoptSelected(entry, unit, selectedPos);
 		if (reads.length) entry.noteCounterReads(reads);
 		entry.hold(unit);
 		unit.dom.parentNode = this.host.dom;
@@ -287,6 +288,15 @@ export class BlockElements {
 		if (desc === this.selected) return;
 		this.selected?.deselectNode(this.host.selectedNode);
 		desc?.selectNode(this.host.selectedNode);
+		this.selected = desc;
+	}
+
+	/** a rebuild selects the node at selectedPos as it builds it; markSelection deselects that one, not the destroyed one */
+	private adoptSelected(entry: IndexedBlock, unit: NodeViewDesc, selectedPos: number | null): void {
+		if (selectedPos === null || selectedPos < entry.pos || selectedPos >= entry.pos + entry.node.nodeSize) return;
+		const desc = descAt(unit, selectedPos - entry.pos);
+		if (!desc?.isSelected || desc === this.selected) return;
+		this.selected?.deselectNode(this.host.selectedNode);
 		this.selected = desc;
 	}
 

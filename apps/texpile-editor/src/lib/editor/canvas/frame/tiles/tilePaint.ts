@@ -136,20 +136,26 @@ export class TilePaint {
 		} catch (thrown) {
 			this.parts.groundFailed(thrown);
 		}
-		for (const block of plan.blocks) {
-			if (!rows.some((row) => reaches(block, rect.y + row.top / scale, rect.y + row.bottom / scale))) continue;
-			ctx.save();
-			ctx.setTransform(scale, 0, 0, scale, -rect.x * scale, (block.top - rect.y) * scale);
-			try {
-				painter.paintBlock(ctx, block, banded);
-			} catch (thrown) {
-				this.parts.paintFailed(block, thrown);
-			} finally {
-				ctx.restore();
-			}
-		}
+		const reached = plan.blocks.filter((block) =>
+			rows.some((row) => reaches(block, rect.y + row.top / scale, rect.y + row.bottom / scale))
+		);
+		for (const block of reached) this.paintInBlock(ctx, block, rect, scale, () => painter.paintBlock(ctx, block, banded));
+		if (painter.paintOutlines)
+			for (const block of reached) this.paintInBlock(ctx, block, rect, scale, () => painter.paintOutlines!(ctx, block, banded));
 		ctx.restore();
 		this.paintedPx += width * rows.reduce((sum, row) => sum + row.bottom - row.top, 0);
+	}
+
+	private paintInBlock(ctx: CanvasRenderingContext2D, block: PlacedBlock, rect: DocRect, scale: number, paint: () => void): void {
+		ctx.save();
+		ctx.setTransform(scale, 0, 0, scale, -rect.x * scale, (block.top - rect.y) * scale);
+		try {
+			paint();
+		} catch (thrown) {
+			this.parts.paintFailed(block, thrown);
+		} finally {
+			ctx.restore();
+		}
 	}
 
 	private scheduleAhead(): void {

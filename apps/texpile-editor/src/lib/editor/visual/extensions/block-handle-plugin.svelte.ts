@@ -1,5 +1,4 @@
 // notion-style block handle: floating insert and drag gutters beside the hovered block
-import { caretAfterDelete } from './blockHandle/caretAfterDelete';
 import { Plugin, NodeSelection, type EditorState } from 'prosemirror-state';
 import { mount, unmount } from 'svelte';
 import type { EditorView } from 'prosemirror-view';
@@ -60,7 +59,6 @@ class BlockHandleView {
 		right: number;
 		stacked: boolean;
 		popoverOpen: boolean;
-		menuOpen: boolean;
 		settings: string | null;
 	}>({
 		visible: false,
@@ -69,7 +67,6 @@ class BlockHandleView {
 		right: 0,
 		stacked: false,
 		popoverOpen: false,
-		menuOpen: false,
 		settings: null
 	});
 	private hoveredPos: number | null = null;
@@ -104,7 +101,7 @@ class BlockHandleView {
 				state: this.state,
 				onInsert: (item: BlockInsertItem) => this.runInsert(item),
 				onDragStart: this.onDragStart,
-				onDelete: this.runDelete,
+				onSelect: this.selectBlock,
 				onSettings: this.openSettings,
 				focusEditor: () => returnFocusToText(view),
 				items: () => items().filter((item): item is BlockInsertItem => item.shape === 'block')
@@ -125,7 +122,7 @@ class BlockHandleView {
 	}
 
 	private get menuShown(): boolean {
-		return this.state.popoverOpen || this.state.menuOpen;
+		return this.state.popoverOpen;
 	}
 
 	private onMouseMove = (event: MouseEvent) => {
@@ -281,23 +278,11 @@ class BlockHandleView {
 		this.scheduleHide();
 	}
 
-	private runDelete = () => {
+	private selectBlock = () => {
 		if (this.hoveredPos == null) return;
 		const { view } = this;
-		const node = view.state.doc.nodeAt(this.hoveredPos);
-		if (!node) return;
-		// tr.delete respects the schema: removing the last required child (e.g. last table row)
-		// no-ops instead of corrupting the doc
-		const { from, to } = view.state.selection;
-		const end = this.hoveredPos + node.nodeSize;
-		const tr = view.state.tr.delete(this.hoveredPos, end);
-		// a caret inside the block would map to the start of the next one; Word leaves it at the end of the one before
-		if (tr.docChanged && to > this.hoveredPos && from < end) tr.setSelection(caretAfterDelete(tr.doc, this.hoveredPos));
-		view.dispatch(tr);
+		view.dispatch(view.state.tr.setSelection(NodeSelection.create(view.state.doc, this.hoveredPos)));
 		view.focus();
-		this.state.visible = false;
-		this.hoveredPos = null;
-		this.hoveredNode = null;
 	};
 
 	private openSettings = (gear: HTMLElement) => {

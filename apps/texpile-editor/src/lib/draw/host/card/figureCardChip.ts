@@ -6,7 +6,6 @@ import { pictureKey } from '../drawingCache';
 import { pictureIndex, pictureOf } from './figureBlocks';
 import { figureCardFace } from './figureCardFace';
 import { OPEN_FIGURE, type OpenFigureDetail } from './figureEvents';
-import { figureSummary } from './figureSummary';
 
 /** fromPdf: the compiled PDF can draw the picture (TikZ; CeTZ has no SyncTeX) */
 export function figureCardChipView(language: FigureLanguage, title: () => string, fromPdf: boolean): CanvasNodeViewConstructor {
@@ -21,7 +20,6 @@ export function figureCardChipView(language: FigureLanguage, title: () => string
 			picture,
 			index,
 			title: title(),
-			summary: figureSummary(language, node.textContent),
 			fromPdf,
 			open() {
 				const detail: OpenFigureDetail = { index: index(), source: picture };
