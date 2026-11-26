@@ -9,6 +9,7 @@
 	import { mathSearch, type MathSearchResult } from './mathSearch.svelte';
 	import { drawMath } from './mathPreview';
 	import MathSearchQuery from './query/MathSearchQuery.svelte';
+	import MathWordsRow from './MathWordsRow.svelte';
 
 	let panel = $state<HTMLDivElement>();
 	let list = $state<HTMLUListElement>();
@@ -28,6 +29,7 @@
 	}
 
 	function keyOf(result: MathSearchResult): string {
+		if (result.kind === 'words') return `${result.section} words`;
 		return `${result.section} ${result.kind === 'structure' ? `${result.structure.label} ${result.structure.latex}` : result.entry.key}`;
 	}
 
@@ -80,25 +82,29 @@
 						onpointermove={() => (mathSearch.active = i)}
 						onclick={() => mathSearch.pick(i)}
 					>
-						<span class="flex h-8 w-12 shrink-0 items-center justify-center overflow-hidden text-xs">
-							{#if result.kind === 'structure'}
-								<span use:drawMath={{ source: result.structure.display, syntax: result.structure.format ?? 'latex' }}></span>
-							{:else if result.entry.glyph}
-								<SymbolGlyph glyph={result.entry.glyph} size={18} />
-							{:else}
-								<span use:drawMath={{ source: result.entry.command.preview, syntax: mathSearch.syntax }}></span>
-							{/if}
-						</span>
-						<span class="flex min-w-0 flex-1 flex-col">
-							{#if result.kind === 'structure'}
-								<span class="truncate">{result.structure.label}</span>
-							{:else}
-								<span class="truncate font-mono text-xs">{result.entry.command.name}</span>
-								{#if result.entry.note}
-									<span class="text-muted truncate text-xs">{result.entry.note}</span>
+						{#if result.kind === 'words'}
+							<MathWordsRow query={result.query} answer={result.answer} syntax={mathSearch.syntax} />
+						{:else}
+							<span class="flex h-8 w-12 shrink-0 items-center justify-center overflow-hidden text-xs">
+								{#if result.kind === 'structure'}
+									<span use:drawMath={{ source: result.structure.display, syntax: result.structure.format ?? 'latex' }}></span>
+								{:else if result.entry.glyph}
+									<SymbolGlyph glyph={result.entry.glyph} size={18} />
+								{:else}
+									<span use:drawMath={{ source: result.entry.command.preview, syntax: mathSearch.syntax }}></span>
 								{/if}
-							{/if}
-						</span>
+							</span>
+							<span class="flex min-w-0 flex-1 flex-col">
+								{#if result.kind === 'structure'}
+									<span class="truncate">{result.structure.label}</span>
+								{:else}
+									<span class="truncate font-mono text-xs">{result.entry.command.name}</span>
+									{#if result.entry.note}
+										<span class="text-muted truncate text-xs">{result.entry.note}</span>
+									{/if}
+								{/if}
+							</span>
+						{/if}
 					</li>
 				{:else}
 					<li class="text-muted px-2.5 py-2">{m.palette_empty()}</li>

@@ -8,9 +8,10 @@ export type AgentModel = { id: string; name: string; description: string };
 export type AgentModelList = { ok: true; models: AgentModel[] } | { ok: false; error: string };
 
 type AgentBridge = {
-	run(id: string, prompt: string, system: string): Promise<AgentAnswer>;
+	run(id: string, prompt: string, system: string, task?: 'refine' | 'math'): Promise<AgentAnswer>;
 	test(): Promise<AgentAnswer>;
 	cancel(id: string): void;
+	warmMath(system: string): void;
 	detect(): Promise<Record<PresetAgent, boolean>>;
 	models(agent: AiAgent): Promise<AgentModelList>;
 };
