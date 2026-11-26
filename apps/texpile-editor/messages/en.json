@@ -107,6 +107,8 @@
 	"ai_agent_custom_plan": "Any command that speaks ACP",
 	"prefs_ai_status_ready": "{agent} is ready.",
 	"prefs_ai_status_none": "Pick an agent to use the AI features.",
+	"prefs_ai_other_models": "Local models and API keys run through OpenCode.",
+	"prefs_ai_other_models_link": "Learn how",
 	"prefs_ai_status_command": "Type the command that starts the agent.",
 	"prefs_ai_test": "Test agent",
 	"prefs_ai_testing": "Waiting for {agent} to answer",
