@@ -12,7 +12,12 @@ import type { PaletteActions } from '$lib/workspace/commandPalette.svelte';
 import type { EditorView as CMView } from '@codemirror/view';
 import { m } from '$lib/paraglide/messages';
 import { proofreadOn } from '$lib/editor/spellcheck/review/reviewStore';
-import { documentProofreadOffered, proofreadDocument } from '$lib/problems/aiProofread/proofreadDocument';
+import {
+	fileProofreadOffered,
+	projectProofreadOffered,
+	proofreadOpenFile,
+	proofreadProject
+} from '$lib/problems/aiProofread/proofreadDocument';
 
 function foldsByKind(): boolean {
 	return !!sourceCmView.current && hasFoldKinds(sourceCmView.current.state);
@@ -44,11 +49,19 @@ export function editorCommands(a: PaletteActions): CommandImpl[] {
 	}
 	return [
 		{
-			id: 'editor.proofreadDocument',
-			enabled: () => proofreadOn() && documentProofreadOffered(),
+			id: 'editor.proofreadFile',
+			enabled: () => proofreadOn() && fileProofreadOffered(),
 			run: () => {
 				a.showProblems();
-				void proofreadDocument();
+				void proofreadOpenFile();
+			}
+		},
+		{
+			id: 'editor.proofreadProject',
+			enabled: () => proofreadOn() && projectProofreadOffered(),
+			run: () => {
+				a.showProblems();
+				void proofreadProject();
 			}
 		},
 		{

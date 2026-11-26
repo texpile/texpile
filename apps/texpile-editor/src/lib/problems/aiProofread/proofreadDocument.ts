@@ -1,4 +1,3 @@
-// Proofread document with AI: every paragraph of the main document, or of the open file with no main file set
 import { indexedText } from '$lib/files/index/indexedTexts';
 import { mainFile } from '$lib/workspace/workspaceStore';
 import { sourceProseInWorker } from '$lib/editor/spellcheck/source/sourceProseClient';
@@ -28,16 +27,26 @@ async function targetsIn(path: string): Promise<ReviewTarget[]> {
 	});
 }
 
-/** the number of paragraphs that go to the model */
-export async function proofreadDocument(): Promise<number> {
-	const doc = mainFile.current ? mainDocument.current : null;
-	const open = problemsOpenFile.current;
-	const paths = doc ? doc.files : open ? [open] : [];
+async function proofreadPaths(paths: string[]): Promise<number> {
 	const targets: ReviewTarget[] = [];
 	for (const path of paths) targets.push(...(await targetsIn(path)));
 	return reviewParagraphs(targets);
 }
 
-export function documentProofreadOffered(): boolean {
-	return !!(mainFile.current ? mainDocument.current : problemsOpenFile.current);
+export function proofreadOpenFile(): Promise<number> {
+	const open = problemsOpenFile.current;
+	return proofreadPaths(open ? [open] : []);
+}
+
+/** every file of the main document */
+export function proofreadProject(): Promise<number> {
+	return proofreadPaths(projectProofreadOffered() ? mainDocument.current!.files : []);
+}
+
+export function fileProofreadOffered(): boolean {
+	return !!problemsOpenFile.current;
+}
+
+export function projectProofreadOffered(): boolean {
+	return !!mainFile.current && !!mainDocument.current;
 }
