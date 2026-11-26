@@ -34,6 +34,12 @@
 		{#snippet below()}
 			<AiAgentStatusLine />
 			{#if settings.current.agent === 'custom'}<AiAgentCommandField />{/if}
+			<p class="text-muted mt-1 text-xs leading-relaxed">
+				{m.prefs_ai_other_models()}
+				<a class="anchor" href="https://texpile.com/docs/ai-assistant/other-models" target="_blank" rel="noopener noreferrer"
+					>{m.prefs_ai_other_models_link()}</a
+				>
+			</p>
 		{/snippet}
 		<AiAgentPicker />
 	</PrefsRow>

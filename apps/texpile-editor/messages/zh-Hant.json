@@ -107,6 +107,8 @@
 	"ai_agent_custom_plan": "任何使用 ACP 的指令",
 	"prefs_ai_status_ready": "{agent} 已就緒。",
 	"prefs_ai_status_none": "選擇一個代理以使用 AI 功能。",
+	"prefs_ai_other_models": "本機模型和 API 金鑰透過 OpenCode 使用。",
+	"prefs_ai_other_models_link": "了解方法",
 	"prefs_ai_status_command": "輸入啟動代理的指令。",
 	"prefs_ai_test": "測試代理",
 	"prefs_ai_testing": "正在等待 {agent} 回答",
