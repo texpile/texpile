@@ -2491,6 +2491,7 @@
 	"agent_panel_chats": "Chats",
 	"agent_panel_chat_untitled": "Untitled chat",
 	"agent_panel_more_models": "More models",
+	"agent_panel_more_options": "More options",
 	"agent_panel_only_host": "Only the host can use the Agent tab",
 	"agent_panel_only_host_note": "The agent runs on the host's computer.",
 	"agent_panel_only_desktop": "The Agent tab is only available in Texpile Desktop",
