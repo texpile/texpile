@@ -5,9 +5,10 @@ import { proofreadBridge } from '$lib/ai/proofread/proofreadBridge';
 import { noteProofreadResult } from '$lib/ai/proofread/proofreadStatus.svelte';
 import { markLintsStale } from '../linter';
 import { addRecognizedTerms } from './reviewTerms';
-import { parseReview, reviewRequest, reviewSystem } from './reviewPrompt';
+import { parseRewrite, rewriteRequest, reviewSystem } from './reviewPrompt';
+import { reviewFromRewrite } from './rewrite/rewriteReview';
 import { drawnCurrent, keepReview, proofreadOn, reviewKey, reviewOf } from './reviewStore';
-import type { ParagraphReview, ReviewTarget } from './reviewTypes';
+import type { ReviewTarget } from './reviewTypes';
 
 /** an editor's paragraphs on screen, and a way to draw some again once their review is in */
 export type ReviewSource = { visible(): ReviewTarget[]; redraw(linted: ReadonlySet<string>): void };
@@ -17,8 +18,11 @@ const AFTER_EDIT_MS = 4000;
 const AFTER_SCROLL_MS = 1500;
 const AFTER_FAILURE_MS = 30_000;
 const RETRY_AFTER_MS = 120_000;
-const BATCH_PARAGRAPHS = 6;
-const BATCH_CHARS = 4000;
+// past about 400 words a request is no faster overall and each answer takes longer
+const ASKED_WORDS = 400;
+const ON_SCREEN_WORDS = 200;
+// Proofread document runs this many requests at once, each to its own process where an agent needs one
+const ASKED_LANES = 3;
 const FEWEST_WORDS = 4;
 
 type Pending = { target: ReviewTarget; key: string; source: ReviewSource };
@@ -27,7 +31,9 @@ const sources = new Set<ReviewSource>();
 const sending = new Set<string>();
 const failedAt = new Map<string, number>();
 let timer: ReturnType<typeof setTimeout> | null = null;
-let inFlight = 0;
+const busyLanes = new Set<number>();
+// an answer with no ids is asked once more before it counts as a failure
+const askedAgain = new Set<string>();
 let pausedUntil = 0;
 let listening = false;
 
@@ -83,19 +89,23 @@ function pendingOnScreen(): Pending[] {
 	return [...out.values()];
 }
 
-/** paragraphs of one language, since the rules name it */
-function nextBatch(pending: Pending[]): Pending[] {
+function wordsOf(target: ReviewTarget): number {
+	return target.linted.split(/\s+/).filter(Boolean).length;
+}
+
+/** whole paragraphs of one language, since the rules name it */
+function nextBatch(pending: Pending[], most: number): Pending[] {
 	const language = pending[0].target.language;
 	const batch: Pending[] = [];
-	let chars = 0;
-	for (let i = 0; i < pending.length && batch.length < BATCH_PARAGRAPHS;) {
+	let words = 0;
+	for (let i = 0; i < pending.length;) {
 		const p = pending[i];
 		if (p.target.language !== language) {
 			i++;
 			continue;
 		}
-		if (batch.length && chars + p.target.linted.length > BATCH_CHARS) break;
-		chars += p.target.linted.length;
+		if (batch.length && words + wordsOf(p.target) > most) break;
+		words += wordsOf(p.target);
 		batch.push(...pending.splice(i, 1));
 	}
 	return batch;
@@ -141,29 +151,36 @@ function sendVisible(): void {
 		timer = setTimeout(sendVisible, pausedUntil - Date.now());
 		return;
 	}
-	// the agent is one program, run a request at a time
 	const onScreen = pendingOnScreen();
 	const pending = [...onScreen, ...pendingAsked(Date.now(), new Set(onScreen.map((p) => p.key)))];
-	if (inFlight === 0 && pending.length) void send(nextBatch(pending));
+	const lanes = asked.length ? ASKED_LANES : 1;
+	for (let lane = 0; lane < lanes && pending.length; lane++) {
+		if (busyLanes.has(lane)) continue;
+		const most = pending[0].source === ASKED_SOURCE ? ASKED_WORDS : ON_SCREEN_WORDS;
+		void send(nextBatch(pending, most), lane);
+	}
 }
 
-const NO_CHANGE: ParagraphReview = { verdicts: new Map(), own: [] };
-
-async function send(batch: Pending[]): Promise<void> {
+async function send(batch: Pending[], lane: number): Promise<void> {
 	const bridge = proofreadBridge();
 	if (!bridge) return;
-	inFlight++;
+	busyLanes.add(lane);
 	for (const p of batch) sending.add(p.key);
 	try {
+		const request = rewriteRequest(batch.map((p) => p.target));
 		const answer = await bridge
-			.review(reviewSystem(batch[0].target.language), reviewRequest(batch.map((p) => p.target)))
+			.review(reviewSystem(batch[0].target.language), request.text, lane)
 			.catch((e: unknown) => ({ ok: false as const, error: e instanceof Error ? e.message : String(e) }));
-		const parsed = answer.ok ? parseReview(answer.text) : null;
-		if (!parsed) {
+		const rewrites = answer.ok ? parseRewrite(answer.text, request) : null;
+		if (!rewrites && answer.ok && batch.some((p) => !askedAgain.has(p.key))) {
+			for (const p of batch) askedAgain.add(p.key);
+			return;
+		}
+		if (!rewrites) {
 			const now = Date.now();
 			for (const p of batch) failedAt.set(p.key, now);
 			pausedUntil = now + AFTER_FAILURE_MS;
-			const error = answer.ok ? 'The answer was not the JSON asked for.' : answer.error;
+			const error = answer.ok ? 'The answer did not keep the sentence ids.' : answer.error;
 			noteProofreadResult(error);
 			// an asked run stops at its first failure and says why
 			if (asked.length) {
@@ -174,15 +191,19 @@ async function send(batch: Pending[]): Promise<void> {
 		}
 		noteProofreadResult(null);
 		const landed = new Map<ReviewSource, Set<string>>();
-		batch.forEach((p, id) => {
-			keepReview(p.key, parsed.get(id) ?? NO_CHANGE);
+		const reviewed = batch.map((p, id) => {
+			const sentences = request.sentences.filter((s) => s.target === id);
+			const review = reviewFromRewrite(p.target, p.target.reading(), sentences, rewrites);
+			askedAgain.delete(p.key);
+			keepReview(p.key, review);
 			if (!landed.has(p.source)) landed.set(p.source, new Set());
 			landed.get(p.source)!.add(p.target.linted);
+			return { target: p.target, review };
 		});
 		for (const [source, linted] of landed) if (sources.has(source)) source.redraw(linted);
-		void addRecognizedTerms(batch.map((p, id) => ({ target: p.target, review: parsed.get(id) ?? NO_CHANGE })));
+		void addRecognizedTerms(reviewed);
 	} finally {
-		inFlight--;
+		busyLanes.delete(lane);
 		for (const p of batch) sending.delete(p.key);
 		pendingAsked(Date.now(), new Set());
 		reviewSoon(0);

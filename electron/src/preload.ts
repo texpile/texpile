@@ -558,7 +558,7 @@ contextBridge.exposeInMainWorld('texpileAgent', {
 
 // proofreading with the agent; main picks it
 contextBridge.exposeInMainWorld('texpileProofread', {
-	review: (system: string, request: string) => invokeReady('proofread:review', { system, request })
+	review: (system: string, request: string, lane: number) => invokeReady('proofread:review', { system, request, lane })
 });
 
 // a picture turned into LaTeX or Typst by the agent picked in Preferences

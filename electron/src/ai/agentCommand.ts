@@ -27,9 +27,10 @@ const CODEX_QUIET = [
 ];
 
 /** Claude Code kept running between requests: its rules in system.txt, a turn at a time in stream JSON */
-export function claudeWarmArgs(model: string): string[] {
+export function claudeWarmArgs(model: string, effort: string): string[] {
 	return [
 		...(model ? [`--model=${model}`] : []),
+		...(effort ? ['--effort', effort] : []),
 		'-p',
 		'--input-format',
 		'stream-json',

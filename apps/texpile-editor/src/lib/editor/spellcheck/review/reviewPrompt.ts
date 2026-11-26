@@ -1,15 +1,19 @@
-// What a proofread sends the model and how its answer is read back
+// What a proofread sends the model and how its answer is read back: each sentence behind an id, rewritten
 import { settings } from '$lib/settings';
 import { browser } from '$lib/runtime';
 import { systemVariant } from '../config/grammarRules';
 import type { SpellLanguage } from '../languages/spellLanguages';
-import { readableSpellText } from '../blockSpellText';
-import type { HarperVerdict, OwnFinding, ParagraphReview, ReviewTarget } from './reviewTypes';
+import type { ReviewTarget } from './reviewTypes';
 
 /** raised when the prompt changes, so reviews made under the old one are asked again */
-export const PROMPT_VERSION = 3;
+export const PROMPT_VERSION = 4;
 
 const VARIANT_NAMES = { american: 'American', british: 'British', australian: 'Australian', canadian: 'Canadian', indian: 'Indian' };
+
+// consonants only, so an id never reads as a word
+const ID_LETTERS = 'bcdfghjklmnpqrstvwxz';
+// a rewrite this much longer than its sentence carries a note of the model's
+const MOST_GROWTH = 2;
 
 export function englishVariant(): keyof typeof VARIANT_NAMES {
 	return settings.current.englishVariant || systemVariant(browser ? navigator.languages : []);
@@ -25,78 +29,71 @@ function languageName(tag: string): string {
 
 export function reviewSystem(language: SpellLanguage): string {
 	const written = language === 'en' ? `${VARIANT_NAMES[englishVariant()]} English` : languageName(language);
-	const reasons = languageName(settings.current.uiLocale || 'en');
-	return `You proofread paragraphs of a paper or technical document written in ${written}. Formulas, references and commands are shown as $x$. Leave them alone and never quote one.
-
-Each paragraph comes with the findings of a rule-based spelling and grammar checker. It often flags field vocabulary, names, abbreviations and the words around a formula. Give each finding a verdict:
-- "drop" when it is not a mistake in this context.
-- "term" when it is a spelling finding on a correctly written name, abbreviation or term of the field.
-- "replace" when the mistake is real and a better replacement exists. Put it in "replacement".
-- "keep" otherwise, with an empty "replacement".
-
-Then add at most three findings of your own per paragraph, for mistakes the checker missed:
-- "grammar": a real grammar, agreement, article, tense or punctuation mistake.
-- "wording": a wrong or clearly clumsy word choice, a redundant phrase or an unclear sentence.
-"quote" is the shortest span of the paragraph that "replacement" replaces, copied character for character and long enough to occur once. "reason" is one short sentence in ${reasons}. Leave house style alone: long sentences, the Oxford comma, technical terms and the author's voice. Spelling and grammar follow ${written}. When unsure, add nothing.
-
-Answer with JSON alone, in this shape:
-{"paragraphs":[{"id":0,"findings":[{"id":0,"verdict":"keep","replacement":""}],"own":[{"quote":"","replacement":"","kind":"wording","reason":""}]}]}
-Give every paragraph by its id, and every finding by its id.`;
+	return `Rewrite the following ${written} text with spelling and grammar fixed and keep it as close as the tone of the original text. Each sentence starts with an id such as [zsc]. Keep every id and every $x$ as written. Answer with the text only. Do not think.`;
 }
 
-export function reviewRequest(targets: readonly ReviewTarget[]): string {
-	return JSON.stringify({
-		paragraphs: targets.map((t, id) => ({
-			id,
-			text: t.reading().text,
-			findings: t.matches.map((m, fid) => ({
-				id: fid,
-				text: readableSpellText(t.linted.slice(m.offset, m.offset + m.length)),
-				message: m.message,
-				suggestions: (m.replacements ?? []).slice(0, 3)
-			}))
-		}))
+/** a sentence of a paragraph's reading, [from, to) */
+export type SentenceAsked = { target: number; from: number; to: number; id: string };
+
+export type RewriteRequest = { text: string; sentences: SentenceAsked[] };
+
+function idMaker(): () => string {
+	const used = new Set<string>();
+	return () => {
+		for (;;) {
+			let id = '';
+			for (let i = 0; i < 3; i++) id += ID_LETTERS[Math.floor(Math.random() * ID_LETTERS.length)];
+			if (!used.has(id)) {
+				used.add(id);
+				return id;
+			}
+		}
+	};
+}
+
+export function sentencesOf(text: string, language: SpellLanguage): { from: number; to: number }[] {
+	const out: { from: number; to: number }[] = [];
+	for (const s of new Intl.Segmenter(language, { granularity: 'sentence' }).segment(text)) {
+		const lead = s.segment.length - s.segment.trimStart().length;
+		const body = s.segment.trim();
+		if (body) out.push({ from: s.index + lead, to: s.index + lead + body.length });
+	}
+	return out;
+}
+
+export function rewriteRequest(targets: readonly ReviewTarget[]): RewriteRequest {
+	const nextId = idMaker();
+	const sentences: SentenceAsked[] = [];
+	const paragraphs = targets.map((t, target) => {
+		const text = t.reading().text;
+		return sentencesOf(text, t.language)
+			.map((s) => {
+				const id = nextId();
+				sentences.push({ target, ...s, id });
+				return `[${id}] ${text.slice(s.from, s.to)}`;
+			})
+			.join(' ');
 	});
+	return { text: paragraphs.join('\n\n'), sentences };
 }
 
-function isRecord(v: unknown): v is Record<string, unknown> {
-	return typeof v === 'object' && v !== null;
-}
-
-function verdictOf(v: unknown): [number, HarperVerdict] | null {
-	if (!isRecord(v) || typeof v.id !== 'number') return null;
-	if (v.verdict !== 'keep' && v.verdict !== 'drop' && v.verdict !== 'replace' && v.verdict !== 'term') return null;
-	const replacement = typeof v.replacement === 'string' ? v.replacement : '';
-	return [v.id, v.verdict === 'replace' && !replacement ? { verdict: 'keep', replacement } : { verdict: v.verdict, replacement }];
-}
-
-function ownOf(v: unknown): OwnFinding | null {
-	if (!isRecord(v) || typeof v.quote !== 'string' || typeof v.replacement !== 'string' || !v.quote.trim()) return null;
-	const kind = v.kind === 'grammar' ? 'grammar' : 'wording';
-	return { quote: v.quote, replacement: v.replacement, kind, reason: typeof v.reason === 'string' ? v.reason : '' };
-}
-
-/** by paragraph id; an agent may wrap its JSON in a code fence or a sentence */
-export function parseReview(answer: string): Map<number, ParagraphReview> | null {
-	const from = answer.indexOf('{');
-	const to = answer.lastIndexOf('}');
-	if (from < 0 || to < from) return null;
-	let parsed: unknown;
-	try {
-		parsed = JSON.parse(answer.slice(from, to + 1));
-	} catch {
-		return null;
-	}
-	if (!isRecord(parsed) || !Array.isArray(parsed.paragraphs)) return null;
-	const out = new Map<number, ParagraphReview>();
-	for (const p of parsed.paragraphs) {
-		if (!isRecord(p) || typeof p.id !== 'number') continue;
-		const verdicts = new Map((Array.isArray(p.findings) ? p.findings : []).map(verdictOf).filter((v) => v !== null));
-		const own = (Array.isArray(p.own) ? p.own : [])
-			.map(ownOf)
-			.filter((o) => o !== null)
-			.slice(0, 3);
-		out.set(p.id, { verdicts, own });
-	}
+/** each id's rewritten sentence; null when no id came back, which is an answer in some other form */
+export function parseRewrite(answer: string, request: RewriteRequest): Map<string, string> | null {
+	const asked = new Map(request.sentences.map((s) => [s.id, s]));
+	const plain = answer.replace(/\*\*(\[[a-z]{3}\])\*\*/g, '$1');
+	const marks = [...plain.matchAll(/\[([a-z]{3})\]/g)].filter((mark) => asked.has(mark[1]));
+	if (!marks.length) return null;
+	const out = new Map<string, string>();
+	marks.forEach((mark, i) => {
+		const end = marks[i + 1]?.index ?? plain.length;
+		// a blank line ends a paragraph, and anything after the last one is the model talking
+		const text = plain
+			.slice(mark.index + mark[0].length, end)
+			.split(/\n\s*\n/)[0]
+			.replace(/\s+/g, ' ')
+			.trim();
+		const s = asked.get(mark[1])!;
+		if (!out.has(mark[1]) && text.length <= (s.to - s.from) * MOST_GROWTH + 40) out.set(mark[1], text);
+	});
 	return out;
 }

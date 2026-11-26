@@ -1,4 +1,4 @@
-// Spelling findings the model recognized as names or field terms, into the dictionary when the writer allows it
+// Spelling findings the model kept in two paragraphs and never changed, into the dictionary when the writer allows it
 import { settings } from '$lib/settings';
 import { toaster } from '$lib/modals/toaster-svelte';
 import { m } from '$lib/paraglide/messages';
@@ -14,15 +14,35 @@ const ONE_WORD = /^[\p{L}\p{N}][\p{L}\p{N}'’-]*$/u;
 
 type Reviewed = { target: ReviewTarget; review: ParagraphReview };
 
-/** a batch is one language */
-export function recognizedTerms(reviewed: readonly Reviewed[]): string[] {
+const KEPT_IN = 2;
+const MOST_TRACKED = 5000;
+
+/** by language and word: the paragraphs that kept it, or null once the model changed it */
+export type TermTally = Map<string, Set<string> | null>;
+
+const tally: TermTally = new Map();
+
+/** the words that just qualified; a batch is one language */
+export function recognizedTerms(reviewed: readonly Reviewed[], seen: TermTally = tally): string[] {
 	const words = new Set<string>();
 	for (const { target, review } of reviewed)
 		target.matches.forEach((match, id) => {
-			if (match.rule !== SPELLING_RULE || review.verdicts.get(id)?.verdict !== 'term') return;
+			const said = review.verdicts.get(id)?.verdict;
+			if (match.rule !== SPELLING_RULE || !said) return;
 			const word = readableSpellText(target.linted.slice(match.offset, match.offset + match.length));
-			if (ONE_WORD.test(word)) words.add(word);
+			if (!ONE_WORD.test(word)) return;
+			const key = `${target.language}|${word}`;
+			const kept = seen.get(key);
+			if (said === 'drop') return void seen.set(key, null);
+			if (kept === null) return;
+			const paragraphs = kept ?? new Set<string>();
+			const before = paragraphs.size;
+			paragraphs.add(target.linted);
+			seen.delete(key);
+			seen.set(key, paragraphs);
+			if (before < KEPT_IN && paragraphs.size >= KEPT_IN) words.add(word);
 		});
+	while (seen.size > MOST_TRACKED) seen.delete(seen.keys().next().value!);
 	return [...words];
 }
 
