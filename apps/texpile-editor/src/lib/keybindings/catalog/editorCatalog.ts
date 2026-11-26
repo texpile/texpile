@@ -26,10 +26,16 @@ const keymapNames = { default: () => m.prefs_keybindings_default(), vim: () => '
 
 export const EDITOR_COMMANDS: CommandInfo[] = [
 	{
-		id: 'editor.proofreadDocument',
-		title: () => m.problems_proofread_document(),
+		id: 'editor.proofreadFile',
+		title: () => m.problems_proofread_file_with_ai(),
 		category,
-		palette: { keywords: 'ai proofread grammar spelling wording check document problems', icon: SpellCheck }
+		palette: { keywords: 'ai proofread grammar spelling wording check file document problems', icon: SpellCheck }
+	},
+	{
+		id: 'editor.proofreadProject',
+		title: () => m.problems_proofread_project_with_ai(),
+		category,
+		palette: { keywords: 'ai proofread grammar spelling wording check project main document problems', icon: SpellCheck }
 	},
 	{
 		id: 'editor.zoteroCitation',

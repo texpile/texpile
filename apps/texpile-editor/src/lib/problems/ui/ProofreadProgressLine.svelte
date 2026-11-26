@@ -12,7 +12,7 @@
 			class="bg-primary-500 h-full transition-[width]"
 			style:width="{((total - left) / total) * 100}%"
 			role="progressbar"
-			aria-label={m.problems_proofread_document()}
+			aria-label={m.problems_proofread_with_ai()}
 			aria-valuemin={0}
 			aria-valuemax={total}
 			aria-valuenow={total - left}
