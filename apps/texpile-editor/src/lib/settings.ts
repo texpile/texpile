@@ -172,8 +172,8 @@ const DEFAULTS: AppSettings = {
 	agentCommand: '',
 	// Claude Code's models by alias, which follow its newest of each; as main has them in electron/src/ai/agentChoice.ts
 	agentModels: { claude: { proofread: 'haiku', refine: 'sonnet', convert: 'opus' } },
-	proofreadAi: false,
-	proofreadAddTerms: false,
+	proofreadAi: true,
+	proofreadAddTerms: true,
 	toolDirs: [],
 	checkForNewVersions: true,
 	localHistory: true

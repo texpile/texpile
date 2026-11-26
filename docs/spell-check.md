@@ -37,6 +37,6 @@ Each language has its own dictionary: Add to Dictionary on a German word adds it
 
 Proofread with AI checks the spell check's findings with an AI model. It drops false alarms such as a field term, puts a better fix first, and adds grammar and wording problems the spell check misses. Its own findings carry an **AI** badge in the suggestion box. It works in every language above.
 
-Turn it on in Preferences › Spelling & Grammar › Proofread with AI. It uses the agent and the Proofread model picked in Preferences › AI agent. See [Set up an agent](ai-assistant/README.md#set-up-an-agent).
+It starts once you pick an agent in Preferences › AI agent, and uses the Proofread model picked there. Turn it off in Preferences › Spelling & Grammar › Proofread with AI. See [Set up an agent](ai-assistant/README.md#set-up-an-agent).
 
-A few seconds after you stop typing, the paragraphs on screen go to the service with equations left out. Wording suggestions can be turned off. Add terms to the dictionary lets the model add names, abbreviations and field terms to your dictionary, and a message lists each word it added with an Undo button.
+A few seconds after you stop typing, the paragraphs on screen go to the service with equations left out. Wording suggestions can be turned off. Add terms to the dictionary, on by default, lets the model add names, abbreviations and field terms to your dictionary, and a message lists each word it added with an Undo button.
