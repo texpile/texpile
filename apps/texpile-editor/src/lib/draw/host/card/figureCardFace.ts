@@ -17,7 +17,6 @@ export type FigureCardParts = {
 	picture: string;
 	index(): number;
 	title: string;
-	summary: string;
 	/** a figure the compiled PDF can draw (TikZ; CeTZ has no SyncTeX) */
 	fromPdf: boolean;
 	open(): void;
@@ -99,6 +98,6 @@ export function figureCardFace(parts: FigureCardParts): ChipFace {
 		image.setAttribute('data-source', cropSizes.has(key) ? 'pdf' : 'drawing');
 		image.replaced = pictureContent(picture, key);
 		setLook(image, { maxWidth: '100%', height: 'auto' });
-	} else frame.appendChild(figurePlaceholderFace(parts.title, parts.summary));
+	} else frame.appendChild(figurePlaceholderFace(parts.title, m.figure_card_open()));
 	return { dom, line: true, reads: [{ kind: 'bitmap', source: key }], actions: () => cardActions(parts) };
 }

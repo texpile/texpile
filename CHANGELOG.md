@@ -5,6 +5,7 @@ Release notes for Texpile Desktop. Add notes under `## [Unreleased]` as you work
 
 ## [Unreleased]
 
+- fix: an undrawn TikZ or CeTZ figure says Double-click to open the figure editor instead of counting its shapes (by @louisqli)
 - fix: Edit figure on a TikZ or CeTZ figure shows on hover, as Crop does on an image (by @louisqli)
 - fix: image resize handles show when the image is clicked, in the app's blue (by @louisqli)
 - feat: vastly improved visual editor performance, there are no longer file limits (by @louisqli)
