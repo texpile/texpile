@@ -5,6 +5,7 @@ Release notes for Texpile Desktop. Add notes under `## [Unreleased]` as you work
 
 ## [Unreleased]
 
+- fix: Proofread this file sending paragraphs on screen twice (by @louisqli)
 - feat: Preferences points to OpenCode for local models and API keys (by @louisqli)
 - fix: spelling underline dark red and hard to read in dark mode (by @louisqli)
 - feat: Problems tab with This file and Project sections, filters, Fix and Ignore (by @louisqli)

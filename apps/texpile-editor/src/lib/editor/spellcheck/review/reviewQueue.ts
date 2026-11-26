@@ -25,7 +25,8 @@ const ON_SCREEN_WORDS = 200;
 const ASKED_LANES = 3;
 const FEWEST_WORDS = 4;
 
-type Pending = { target: ReviewTarget; key: string; source: ReviewSource };
+/** twins: the same paragraph from another editor or the file, sent once and answered for each */
+type Pending = { target: ReviewTarget; key: string; source: ReviewSource; twins?: Pending[] };
 
 const sources = new Set<ReviewSource>();
 const sending = new Set<string>();
@@ -163,7 +164,7 @@ function sendVisible(): void {
 		return;
 	}
 	const onScreen = pendingOnScreen();
-	const pending = [...onScreen, ...pendingAsked(Date.now(), new Set(onScreen.map((p) => p.key)))];
+	const pending = joinTwins([...onScreen, ...pendingAsked(Date.now(), new Set(onScreen.map((p) => p.key)))]);
 	const lanes = asked.length ? ASKED_LANES : 1;
 	for (let lane = 0; lane < lanes && pending.length; lane++) {
 		if (busyLanes.has(lane)) continue;
@@ -172,13 +173,25 @@ function sendVisible(): void {
 	}
 }
 
-async function send(batch: Pending[], lane: number): Promise<void> {
+function joinTwins(pending: Pending[]): Pending[] {
+	const first = new Map<string, Pending>();
+	return pending.filter((p) => {
+		const text = `${p.target.language}\0${p.target.linted.trim()}`;
+		const same = first.get(text);
+		if (same) same.twins!.push(p);
+		else first.set(text, Object.assign(p, { twins: [] }));
+		return !same;
+	});
+}
+
+async function send(sent: Pending[], lane: number): Promise<void> {
 	const bridge = proofreadBridge();
 	if (!bridge) return;
+	const batch = sent.flatMap((p) => [p, ...(p.twins ?? [])]);
 	busyLanes.add(lane);
 	for (const p of batch) sending.add(p.key);
 	try {
-		const request = rewriteRequest(batch.map((p) => p.target));
+		const request = rewriteRequest(sent.map((p) => p.target));
 		const answer = await bridge
 			.review(reviewSystem(batch[0].target.language), request.text, lane)
 			.catch((e: unknown) => ({ ok: false as const, error: e instanceof Error ? e.message : String(e) }));
@@ -187,7 +200,7 @@ async function send(batch: Pending[], lane: number): Promise<void> {
 			for (const p of batch) askedAgain.add(p.key);
 			return;
 		}
-		if (!rewrites && batch.length > 1) {
+		if (!rewrites && sent.length > 1) {
 			for (const p of batch) sendAlone.add(p.key);
 			return;
 		}
@@ -208,15 +221,17 @@ async function send(batch: Pending[], lane: number): Promise<void> {
 		failuresInRow = 0;
 		noteProofreadResult(null);
 		const landed = new Map<ReviewSource, Set<string>>();
-		const reviewed = batch.map((p, id) => {
+		const reviewed = sent.flatMap((first, id) => {
 			const sentences = request.sentences.filter((s) => s.target === id);
-			const review = reviewFromRewrite(p.target, p.target.reading(), sentences, rewrites);
-			askedAgain.delete(p.key);
-			sendAlone.delete(p.key);
-			keepReview(p.key, review);
-			if (!landed.has(p.source)) landed.set(p.source, new Set());
-			landed.get(p.source)!.add(p.target.linted);
-			return { target: p.target, review };
+			return [first, ...(first.twins ?? [])].map((p) => {
+				const review = reviewFromRewrite(p.target, p.target.reading(), sentences, rewrites);
+				askedAgain.delete(p.key);
+				sendAlone.delete(p.key);
+				keepReview(p.key, review);
+				if (!landed.has(p.source)) landed.set(p.source, new Set());
+				landed.get(p.source)!.add(p.target.linted);
+				return { target: p.target, review };
+			});
 		});
 		for (const [source, linted] of landed) if (sources.has(source)) source.redraw(linted);
 		void addRecognizedTerms(reviewed);
