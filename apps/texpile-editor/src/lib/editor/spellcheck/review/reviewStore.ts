@@ -21,6 +21,11 @@ export function proofreadOn(): boolean {
 	return settings.current.proofreadAi && agentOffered() !== null && !!proofreadBridge();
 }
 
+/** on, with AI features on, waiting only for an agent */
+export function proofreadHinted(): boolean {
+	return settings.current.proofreadAi && !settings.current.aiOff && agentOffered() === null && !!proofreadBridge();
+}
+
 /** a review stands for this text, these findings, this English and this prompt */
 export function reviewKey(target: Pick<ReviewTarget, 'language' | 'linted' | 'matches'>): string {
 	const found = target.matches.map((m) => `${m.rule}:${m.offset}:${m.length}`).join(',');
