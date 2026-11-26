@@ -62,6 +62,15 @@ function blocksSpanning(map: SourceMap, from: number, to: number): Span | null {
 	return { from: Math.min((a ?? b)!.pmFrom, (b ?? a)!.pmFrom), to: Math.max((a ?? b)!.pmTo, (b ?? a)!.pmTo) };
 }
 
+// a node that draws itself and opens inside the change is new, so the change ends past it
+function openedEnd(doc: PMNode, afterDoc: PMNode, change: Span, landed: number): number | null {
+	if (change.to === change.from) return null;
+	const opened = selfRenderedAround(afterDoc, change.to);
+	if (!opened || opened.from < change.from || opened.to === change.to) return null;
+	const own = landed > 0 ? doc.nodeAt(landed - 1) : null;
+	return own && isSelfRendered(own) ? landed - 1 + own.nodeSize : null;
+}
+
 type Placement = { ranges: PmSuggestionRange[]; partial: boolean } | null;
 
 export function placeChange(
@@ -83,7 +92,7 @@ export function placeChange(
 	if (!a || !b) return null;
 	const size = doc.content.size;
 	const edgeA = a.block ? a.pos : atNodeEdge(doc, Math.min(a.pos, size), point ? -1 : 1);
-	const edgeB = b.block ? b.pos : atNodeEdge(doc, Math.min(b.pos, size), -1);
+	const edgeB = b.block ? b.pos : (openedEnd(doc, after.doc, B, b.pos) ?? atNodeEdge(doc, Math.min(b.pos, size), -1));
 	const from = Math.min(edgeA, edgeB, size);
 	const to = Math.min(Math.max(edgeA, edgeB), size);
 	if (a.block || b.block) {
