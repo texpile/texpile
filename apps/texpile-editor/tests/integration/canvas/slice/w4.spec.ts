@@ -234,6 +234,25 @@ function recordedColors(scheme: 'light' | 'dark'): Record<string, number[][]> {
 	return out;
 }
 
+/** a proofread kind's tint and rule, from its token on the page; the palette changed after the DOM recording */
+async function proofColors(page: import('@playwright/test').Page, kind: string): Promise<number[][]> {
+	const token = kind === 'grammar' ? '--proof-default' : `--proof-${kind}`;
+	const [r, g, b] = await page.evaluate((token) => {
+		const probe = document.createElement('div');
+		probe.style.color = `var(${token})`;
+		document.body.append(probe);
+		const ctx = document.createElement('canvas').getContext('2d')!;
+		ctx.fillStyle = getComputedStyle(probe).color;
+		probe.remove();
+		ctx.fillRect(0, 0, 1, 1);
+		return [...ctx.getImageData(0, 0, 1, 1).data];
+	}, token);
+	return [
+		[r, g, b, 0.08],
+		[r, g, b, 1]
+	];
+}
+
 const parsedColor = (text: string) => /rgba?\(([^)]+)\)/.exec(text)?.[1].split(',').map(Number) ?? [];
 const sameColor = (drawn: number[], want: number[]) =>
 	drawn.length >= 3 && drawn.slice(0, 3).every((v, i) => Math.abs(v - want[i]) <= 2) && Math.abs((drawn[3] ?? 1) - want[3]) <= 0.02;
@@ -244,6 +263,8 @@ test('the marks draw in the colors the DOM editor computed for them', async () =
 	const visual = new VisualEditor(texpile().page, texpile().root);
 	await visual.open('slice.tex');
 	await settled(visual.page);
+	for (const id of Object.keys(RECORDED_MARKS))
+		if (id.startsWith('proof-')) expected[id] = await proofColors(visual.page, id.slice('proof-'.length));
 	const missing: string[] = [];
 	for (const id of Object.keys(RECORDED_MARKS)) {
 		const drawn = await inCanvas(
