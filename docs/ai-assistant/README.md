@@ -23,6 +23,8 @@ Install the agent and sign in outside Texpile, then pick it from the **Agent** m
 | Gemini      | Run `gemini`            | Google account                                     |
 | Copilot     | Run `copilot`           | GitHub Copilot plan                                |
 
+A local model or your own API key runs through OpenCode. See [Other models and API keys](other-models.md).
+
 **Custom command** runs any command that speaks the Agent Client Protocol, such as `goose acp`. Type the command in the box under the menu.
 
 The agent keeps running while you write and closes after 15 minutes idle. For Refine, Proofread with AI and Convert to LaTeX its tools are turned off, and it answers from the text Texpile sends.
