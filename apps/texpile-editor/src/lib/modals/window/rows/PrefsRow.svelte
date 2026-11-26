@@ -16,6 +16,8 @@
 		/** none leaves out the row's rule and padding, for a part of a larger block */
 		frame?: 'row' | 'none';
 		children: Snippet<[PrefsRowDef]>;
+		/** a link at the end of the note */
+		noteEnd?: Snippet;
 		below?: Snippet;
 	};
 	const props: Props = $props();
@@ -43,6 +45,7 @@
 				{#if note}<p class="text-muted mt-1 text-xs leading-relaxed">
 						{note}
 						{#if props.docs}<a class="anchor" href={props.docs} target="_blank" rel="noopener noreferrer">{m.prefs_how_to_set_up()}</a>{/if}
+						{@render props.noteEnd?.()}
 					</p>{/if}
 				{@render props.below?.()}
 			</div>

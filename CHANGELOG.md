@@ -5,6 +5,7 @@ Release notes for Texpile Desktop. Add notes under `## [Unreleased]` as you work
 
 ## [Unreleased]
 
+- feat: the Proofread model in Preferences links to Spelling & Grammar (by @louisqli)
 - feat: From your words in the math search turns a phrase into math with AI (by @louisqli)
 - fix: AI answers through Claude Code taking 2 seconds longer than needed (by @louisqli)
 - feat: Problems tab and Preferences point to AI proofreading until an agent is picked (by @louisqli)

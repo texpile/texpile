@@ -6,6 +6,7 @@
 	import type { AiAgent } from '$lib/ai/agent/aiAgents';
 	import PrefsRow from '../rows/PrefsRow.svelte';
 	import AgentModelSelect from './AgentModelSelect.svelte';
+	import { openPreferencesAt } from '$lib/stores/dialogStore';
 	import { m } from '$lib/paraglide/messages';
 
 	type Props = { agent: AiAgent };
@@ -23,6 +24,9 @@
 		{@const models = result.models}
 		<p class="text-muted pb-1 text-xs">{m.prefs_ai_models_note()}</p>
 		<PrefsRow id="ai-model-proofread">
+			{#snippet noteEnd()}
+				<button type="button" class="anchor" onclick={() => openPreferencesAt('proofing')}>{m.prefs_ai_open_proofing()}</button>
+			{/snippet}
 			{#snippet children(def)}<AgentModelSelect agent={props.agent} task="proofread" {models} label={def.label()} />{/snippet}
 		</PrefsRow>
 		<PrefsRow id="ai-model-refine">

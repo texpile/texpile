@@ -118,6 +118,7 @@
 	"prefs_ai_models_note": "Agent-Standard ist das Modell, das der Agent selbst wählt.",
 	"prefs_ai_model_proofread": "Korrigieren",
 	"prefs_ai_model_proofread_note": "Ein schnelles Modell hält es zügig.",
+	"prefs_ai_open_proofing": "Rechtschreibung & Grammatik öffnen",
 	"prefs_ai_model_refine": "Überarbeiten",
 	"prefs_ai_model_refine_note": "Schreibt den markierten Text um.",
 	"prefs_ai_model_convert": "Bilder umwandeln",

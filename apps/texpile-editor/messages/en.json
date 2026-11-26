@@ -118,6 +118,7 @@
 	"prefs_ai_models_note": "Agent default is the model the agent picks itself.",
 	"prefs_ai_model_proofread": "Proofread",
 	"prefs_ai_model_proofread_note": "A fast model keeps it quick.",
+	"prefs_ai_open_proofing": "Open Spelling & Grammar",
 	"prefs_ai_model_refine": "Refine",
 	"prefs_ai_model_refine_note": "Rewrites the text you select.",
 	"prefs_ai_model_convert": "Convert pictures",
