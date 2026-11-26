@@ -5,6 +5,7 @@ Release notes for Texpile Desktop. Add notes under `## [Unreleased]` as you work
 
 ## [Unreleased]
 
+- fix: image resize handles show when the image is clicked, in the app's blue (by @louisqli)
 - feat: vastly improved visual editor performance, there are no longer file limits (by @louisqli)
 - fix: Edit > Select All doing nothing in the visual editor (by @louisqli)
 - fix: Ctrl+Backspace not deleting on macOS in the visual editor (by @louisqli)
