@@ -118,6 +118,7 @@
 	"prefs_ai_models_note": "「代理預設」是代理自己選擇的模型。",
 	"prefs_ai_model_proofread": "校對",
 	"prefs_ai_model_proofread_note": "快速模型讓它保持迅速。",
+	"prefs_ai_open_proofing": "開啟「拼字與文法」",
 	"prefs_ai_model_refine": "潤飾",
 	"prefs_ai_model_refine_note": "改寫你選取的文字。",
 	"prefs_ai_model_convert": "轉換圖片",
