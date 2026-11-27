@@ -29,6 +29,14 @@ class TitleBarMock {
 	get f() {
 		return this.design === 'f';
 	}
+	/** G: the counts and the agent flank the search field; H: G plus the session after the menus */
+	get g() {
+		return this.design === 'g' || this.design === 'h';
+	}
+	flanks = $state(false);
+	get h() {
+		return this.design === 'h';
+	}
 	get d() {
 		return this.design === 'd';
 	}

@@ -96,7 +96,7 @@
      On macOS the component mounts and draws no triggers; the system menu bar has them. -->
 <TitleBar>
 	{#snippet status()}
-		{#if !titleBarMock.c}
+		{#if !titleBarMock.c && !titleBarMock.h}
 			{#if guest}
 				<GuestPresence />
 			{:else}
@@ -112,6 +112,11 @@
 		<LayoutControls panes={layout} {termDock} project={!fileMode.current} splittable={previewSplittable} />
 	{/snippet}
 	{#snippet menus()}
+		{#if titleBarMock.h}
+			<div class="app-no-drag order-last ml-2 flex items-center self-center">
+				{#if guest}<GuestPresence />{:else}<SessionPresence onShareSession={menu.shareable ? actions.openShare : undefined} />{/if}
+			</div>
+		{/if}
 		<WorkspaceMenuBar
 			disabled={menu.disabled}
 			fileKind={menu.fileKind}

@@ -72,7 +72,7 @@
 		/** in the title bar: icons at the bar's height, no boxes round the counters */
 		compact?: boolean;
 		/** MOCKUP: which of the controls this place shows */
-		part?: 'all' | 'pdf' | 'rest' | 'strip' | 'compile';
+		part?: 'all' | 'pdf' | 'rest' | 'strip' | 'compile' | 'counts' | 'agent';
 	};
 	let {
 		loadedPath,
@@ -127,6 +127,9 @@
 	const errs = $derived(problemsView.counts.error);
 	const warns = $derived(problemsView.counts.warning + problemsView.counts.reference);
 	const rest = $derived(part === 'all' || part === 'strip' || part === 'rest');
+	const flanked = $derived(compact && titleBarMock.g && titleBarMock.flanks && part === 'all');
+	const countsHere = $derived((rest && !flanked) || part === 'counts');
+	const agentHere = $derived((rest && !flanked) || part === 'agent');
 	const compilePart = $derived(part === 'all' || part === 'strip' || part === 'compile');
 	const pdfPart = $derived(part === 'all' || part === 'strip' || part === 'pdf');
 	const pdfIconOnly = $derived(titleBarLayout.pdfIconOnly || titleBarMock.a);
@@ -276,7 +279,7 @@
 					{#if commentCount > 0}<span class="ml-1 flex items-center gap-1"><MessageSquare class="size-3.5" />{commentCount}</span>{/if}
 				</button>
 			{/if}
-		{:else if rest}<ProblemsIndicator class={quiet} onclick={onShowProblems} />{/if}
+		{:else if countsHere}<ProblemsIndicator class={quiet} onclick={onShowProblems} />{/if}
 		{#if onSyncToCursor && rest}
 			<!-- only while the preview is popped out: its window has no divider chip, and the jump reads the caret in this window -->
 			<button
@@ -292,14 +295,14 @@
 				<span class="flex h-[1lh] items-center"><ArrowRight class="size-3.5" /></span>
 			</button>
 		{/if}
-		{#if commentCount > 0 && rest && !mergeCounts}
+		{#if commentCount > 0 && countsHere && !mergeCounts}
 			<!-- unresolved review threads, project-wide; hidden at zero, like Problems after a clean compile -->
 			<button class="{quiet} gap-1" onclick={onShowComments} use:tip={m.wsview_show_comments_title()}>
 				<MessageSquare class="size-3.5" />
 				{commentCount}
 			</button>
 		{/if}
-		{#if onShowAgent && rest && !(compact && titleBarMock.f)}
+		{#if onShowAgent && agentHere && !(compact && titleBarMock.f)}
 			<OpenAgentButton class={quiet} onOpen={onShowAgent} />
 		{/if}
 		{#if onToggleSuggest && rest}

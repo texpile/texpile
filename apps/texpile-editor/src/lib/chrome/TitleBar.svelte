@@ -26,6 +26,7 @@
 	import iconUrl from '$branding/Logo-icon.svg';
 	import { m } from '$lib/paraglide/messages';
 	import { titleBarMock } from './titleBarMock.svelte';
+	import { documentControls } from '$lib/preview/documentControls.svelte';
 	import OpenAgentButton from '$lib/ai/agentPanel/ui/OpenAgentButton.svelte';
 
 	let {
@@ -65,16 +66,24 @@
 	 * re-render and drop every menu in one flush. The frame's wait gives each step a fresh measurement; a step taken at
 	 * once is a ResizeObserver loop.
 	 */
+	let countsW = $state(0);
+	let agentW = $state(0);
+	// mockup: a fixed width stands in for a give-way step measured like the others
+	const flanks = $derived(titleBarMock.g && winWidth >= 1000 && !!documentControls.current && !documentControls.previewBars);
 	$effect(() => {
-		const [w, l, r] = [winWidth, leftW, rightW];
+		titleBarMock.flanks = !!flanks;
+	});
+	const flankW = $derived(flanks ? Math.max(countsW, agentW) + 8 : 0);
+	$effect(() => {
+		const [w, l, r] = [winWidth, leftW + flankW, rightW + flankW];
 		void titleBarLayout.pdfIconOnly; // a step that changes no width still needs the next one
 		const frame = requestAnimationFrame(() => titleBarLayout.fit(w, l, r, measureTitleBarLabels(barEl)));
 		return () => cancelAnimationFrame(frame);
 	});
 
 	// on the window's center while both sides leave it room, else in the middle of the room between them; 0 drops it
-	const centeredW = $derived(centeredWidth(winWidth, leftW, rightW));
-	const centerW = $derived(centeredW || betweenWidth(winWidth, leftW, rightW));
+	const centeredW = $derived(centeredWidth(winWidth, leftW + flankW, rightW + flankW));
+	const centerW = $derived(centeredW || betweenWidth(winWidth, leftW + flankW, rightW + flankW));
 	const between = $derived(palettable && !centeredW);
 
 	// Mirror the document title rather than take it as a prop: it is already computed (in
@@ -174,8 +183,8 @@
 		<!-- Out of flow, so a click-through layer over the drag region underneath -->
 		<div
 			class="pointer-events-none absolute inset-0 flex items-center justify-center"
-			style:padding-left={between ? `${leftW}px` : null}
-			style:padding-right={between ? `${rightW}px` : null}
+			style:padding-left={between ? `${leftW + flankW}px` : null}
+			style:padding-right={between ? `${rightW + flankW}px` : null}
 		>
 			{#if palettable && centerW > 0}
 				<!--
@@ -187,22 +196,31 @@
 					mode and darker in dark mode, so it reads as recessed either way and the border becomes
 					an edge rather than the whole design. hover lifts it a step instead of tinting it.
 				-->
-				<button
-					class="app-no-drag border-surface-300-700 bg-surface-50-950 hover:bg-surface-200-800 text-muted rounded-base pointer-events-auto flex h-[22px] items-center gap-2 border px-2.5 text-xs"
-					style="width: {centerW}px"
-					onclick={() => commandPalette.show()}
-					use:tip={m.palette_open()}
-				>
-					<Search class="size-3.5 shrink-0 opacity-60" />
-					<!-- centred, not left-aligned: the field is sized to the window rather than to the
+				<div class="relative flex items-center">
+					{#if flanks}
+						<div class="app-no-drag pointer-events-auto absolute right-full mr-2 flex items-center" bind:clientWidth={countsW}>
+							{@render documentControls.current?.(true, 'counts')}
+						</div>
+						<div class="app-no-drag pointer-events-auto absolute left-full ml-2 flex items-center" bind:clientWidth={agentW}>
+							{@render documentControls.current?.(true, 'agent')}
+						</div>
+					{/if}
+					<button
+						class="app-no-drag border-surface-300-700 bg-surface-50-950 hover:bg-surface-200-800 text-muted rounded-base pointer-events-auto flex h-[22px] items-center gap-2 border px-2.5 text-xs"
+						style="width: {centerW}px"
+						onclick={() => commandPalette.show()}
+						use:tip={m.palette_open()}
+					>
+						<Search class="size-3.5 shrink-0 opacity-60" />
+						<!-- centred, not left-aligned: the field is sized to the window rather than to the
 					     filename, so a left-aligned title dumps all the slack on the right and looks
 					     lopsided. Centring splits it either side and the control reads as deliberate. -->
-					<span class="min-w-0 flex-1 truncate text-center">{fieldTitle}</span>
-					<!-- the badge costs ~45px of a box that may only be 200 wide, and a filename truncated to
+						<span class="min-w-0 flex-1 truncate text-center">{fieldTitle}</span>
+						<!-- the badge costs ~45px of a box that may only be 200 wide, and a filename truncated to
 					     nothing to make room for a hint about a shortcut is the wrong trade. Below this the
 					     shortcut lives in Help and the tooltip; the field itself is still clickable. -->
-					{#if centerW >= BADGE_FROM}
-						<!--
+						{#if centerW >= BADGE_FROM}
+							<!--
 							No key cap here, unlike the shortcut sheet: a box inside this box never sat right. The
 							field leaves a couple of pixels above and below a cap against ten to the right edge,
 							tight one way and loose the other, and plain text has no second box to be uneven
@@ -212,9 +230,10 @@
 							is what made the command symbol look mangled rather than merely small. Kbd draws it
 							in the UI font, the one the OS uses in its own menus.
 						-->
-						<Kbd keys="Mod+K" class="shrink-0" />
-					{/if}
-				</button>
+							<Kbd keys="Mod+K" class="shrink-0" />
+						{/if}
+					</button>
+				</div>
 				{#if titleBarMock.f && titleBarMock.openAgent}
 					<span class="app-no-drag pointer-events-auto ml-1 flex items-center"
 						><OpenAgentButton class="title-bar-button" onOpen={titleBarMock.openAgent} /></span
