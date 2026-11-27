@@ -5,6 +5,7 @@ Release notes for Texpile Desktop. Add notes under `## [Unreleased]` as you work
 
 ## [Unreleased]
 
+- fix: Remove the word suggestion doing nothing in the visual editor (by @louisqli)
 - fix: proofread mark for an added comma or a removed word covering the space before it (by @louisqli)
 - fix: two links to Spelling & Grammar on the AI agent page (by @louisqli)
 - fix: Proofread this file asking the AI again about paragraphs the editor already proofread (by @louisqli)
