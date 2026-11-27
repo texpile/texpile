@@ -35,7 +35,7 @@
 	}: {
 		/** the in-app menu bar, rendered inline. Omitted on macOS, where the menus are native. */
 		menus?: Snippet;
-		/** the shared session's faces, after the menus */
+		/** the shared session's faces, left of the command center */
 		session?: Snippet;
 		/** trailing controls, before the window buttons */
 		status?: Snippet;
@@ -58,6 +58,10 @@
 	let winWidth = $state(1280);
 	let leftW = $state(0); // app icon + menus, AS CURRENTLY RENDERED
 	let rightW = $state(0); // window controls
+	let sessionW = $state(0);
+	const SESSION_GAP = 8;
+	// the session stands just left of the field, so it counts with the left side
+	const leftFull = $derived(leftW + (sessionW ? sessionW + SESSION_GAP : 0));
 
 	/**
 	 * One fit step per MEASUREMENT, which is what makes the degradation progressive.
@@ -67,15 +71,15 @@
 	 * once is a ResizeObserver loop.
 	 */
 	$effect(() => {
-		const [w, l, r] = [winWidth, leftW, rightW];
+		const [w, l, r] = [winWidth, leftFull, rightW];
 		void titleBarLayout.pdfIconOnly; // a step that changes no width still needs the next one
 		const frame = requestAnimationFrame(() => titleBarLayout.fit(w, l, r, measureTitleBarLabels(barEl)));
 		return () => cancelAnimationFrame(frame);
 	});
 
 	// on the window's center while both sides leave it room, else in the middle of the room between them; 0 drops it
-	const centeredW = $derived(centeredWidth(winWidth, leftW, rightW));
-	const centerW = $derived(centeredW || betweenWidth(winWidth, leftW, rightW));
+	const centeredW = $derived(centeredWidth(winWidth, leftFull, rightW));
+	const centerW = $derived(centeredW || betweenWidth(winWidth, leftFull, rightW));
 	const between = $derived(palettable && !centeredW);
 
 	// Mirror the document title rather than take it as a prop: it is already computed (in
@@ -132,9 +136,6 @@
 			{#if menus}
 				{@render menus()}
 			{/if}
-			{#if session}
-				{@render session()}
-			{/if}
 		</div>
 
 		<!-- the draggable stretch; also where a double-click maximises, as on a native bar -->
@@ -177,10 +178,10 @@
 		<!-- Out of flow, so a click-through layer over the drag region underneath -->
 		<div
 			class="pointer-events-none absolute inset-0 flex items-center justify-center"
-			style:padding-left={between ? `${leftW}px` : null}
+			style:padding-left={between ? `${leftFull}px` : null}
 			style:padding-right={between ? `${rightW}px` : null}
 		>
-			{#if palettable && centerW > 0}
+			{#if palettable}
 				<!--
 					h-[22px] in a 32px row, so there is 5px of air above and below rather than the 3px a 26px
 					box left - at that height the border sat almost on the bar's own edges and the control
@@ -190,22 +191,29 @@
 					mode and darker in dark mode, so it reads as recessed either way and the border becomes
 					an edge rather than the whole design. hover lifts it a step instead of tinting it.
 				-->
-				<button
-					class="app-no-drag border-surface-300-700 bg-surface-50-950 hover:bg-surface-200-800 text-muted rounded-base pointer-events-auto flex h-[22px] items-center gap-2 border px-2.5 text-xs"
-					style="width: {centerW}px"
-					onclick={() => commandPalette.show()}
-					use:tip={m.palette_open()}
-				>
-					<Search class="size-3.5 shrink-0 opacity-60" />
-					<!-- centred, not left-aligned: the field is sized to the window rather than to the
+				<div class="relative flex items-center">
+					{#if session}
+						<div class="pointer-events-auto absolute right-full mr-2 flex items-center" bind:clientWidth={sessionW}>
+							{@render session()}
+						</div>
+					{/if}
+					{#if centerW > 0}
+						<button
+							class="app-no-drag border-surface-300-700 bg-surface-50-950 hover:bg-surface-200-800 text-muted rounded-base pointer-events-auto flex h-[22px] items-center gap-2 border px-2.5 text-xs"
+							style="width: {centerW}px"
+							onclick={() => commandPalette.show()}
+							use:tip={m.palette_open()}
+						>
+							<Search class="size-3.5 shrink-0 opacity-60" />
+							<!-- centred, not left-aligned: the field is sized to the window rather than to the
 					     filename, so a left-aligned title dumps all the slack on the right and looks
 					     lopsided. Centring splits it either side and the control reads as deliberate. -->
-					<span class="min-w-0 flex-1 truncate text-center">{fieldTitle}</span>
-					<!-- the badge costs ~45px of a box that may only be 200 wide, and a filename truncated to
+							<span class="min-w-0 flex-1 truncate text-center">{fieldTitle}</span>
+							<!-- the badge costs ~45px of a box that may only be 200 wide, and a filename truncated to
 					     nothing to make room for a hint about a shortcut is the wrong trade. Below this the
 					     shortcut lives in Help and the tooltip; the field itself is still clickable. -->
-					{#if centerW >= BADGE_FROM}
-						<!--
+							{#if centerW >= BADGE_FROM}
+								<!--
 							No key cap here, unlike the shortcut sheet: a box inside this box never sat right. The
 							field leaves a couple of pixels above and below a cap against ten to the right edge,
 							tight one way and loose the other, and plain text has no second box to be uneven
@@ -215,10 +223,12 @@
 							is what made the command symbol look mangled rather than merely small. Kbd draws it
 							in the UI font, the one the OS uses in its own menus.
 						-->
-						<Kbd keys="Mod+K" class="shrink-0" />
+								<Kbd keys="Mod+K" class="shrink-0" />
+							{/if}
+						</button>
 					{/if}
-				</button>
-			{:else if !palettable}
+				</div>
+			{:else}
 				<span class="text-muted max-w-[50%] truncate text-xs">{title}</span>
 			{/if}
 		</div>

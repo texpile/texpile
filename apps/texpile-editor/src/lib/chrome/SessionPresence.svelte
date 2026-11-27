@@ -1,12 +1,11 @@
 <script lang="ts">
-	// the host's session in the title bar, after the menus: the guests' faces and how many. Click opens the share dialog
+	// the host's session in the title bar, left of the command center: the guests' faces and how many. Click opens the share dialog
 	import { tip } from '$lib/components/tooltip.svelte';
 	import { collabHost } from '$lib/collab/hostStore.svelte';
 	import SessionFaces from '$lib/collab/presence/SessionFaces.svelte';
 	import { m } from '$lib/paraglide/messages';
 	import { untrack } from 'svelte';
 	import { titleBarLayout } from './titleBarLayout.svelte';
-	import TitleBarDivider from './TitleBarDivider.svelte';
 
 	let { onShareSession }: { onShareSession?: () => void } = $props();
 
@@ -22,7 +21,6 @@
 </script>
 
 {#if collabHost.active}
-	<TitleBarDivider />
 	<button
 		class="app-no-drag title-bar-button shrink-0 gap-1.5 self-center"
 		onclick={() => onShareSession?.()}
