@@ -1,7 +1,7 @@
 import { askedWidth, menuBudget, SIDE_GAP } from './commandCenterWidth';
 
 // What gives way in the title bar so the command center keeps the window's center: first the Show PDF label, then the
-// menus, one at a time. TitleBar measures and drives; the menu bar and the buttons read the result.
+// session's label, then the menus, one at a time. TitleBar measures and drives; the menu bar and the buttons read the result.
 //
 // A module singleton for the same reason the palette registry is one: one window, one title bar, and
 // the alternative is threading a prop through a snippet that WorkspaceChrome owns.
@@ -9,13 +9,15 @@ import { askedWidth, menuBudget, SIDE_GAP } from './commandCenterWidth';
 class TitleBarLayout {
 	/** how many top-level menus the menu bar has; it reports this on mount */
 	totalMenus = $state(0);
-	/** how many render inline. The remainder go behind the overflow button; 0 means all of them do. */
-	visibleMenus = $state(0);
+	/** a session is on and its presence has a label to give up before the menus do */
+	sessionLabelled = $state(false);
 	/** Show PDF draws its icon alone */
 	pdfIconOnly = $state(false);
+	/** the menus, then the session's label, that render inline; the rest give way */
+	private shown = $state(0);
 
 	/**
-	 * Width of the whole left block last observed at each visible count.
+	 * Width of the whole left block last observed at each shown count.
 	 *
 	 * This is what makes growing back safe. Shrinking is easy - the block is too wide, drop one - but
 	 * growing needs to know how wide the block WOULD be with one more menu, which cannot be measured
@@ -28,11 +30,35 @@ class TitleBarLayout {
 	 */
 	private widthAt: number[] = [];
 
+	/** how many menus render inline. The remainder go behind the overflow button; 0 means all of them do. */
+	get visibleMenus(): number {
+		return Math.min(this.shown, this.totalMenus);
+	}
+
+	/** the session's presence shows its label beside the faces */
+	get sessionLabel(): boolean {
+		return this.shown > this.totalMenus;
+	}
+
+	private get units(): number {
+		return this.totalMenus + (this.sessionLabelled ? 1 : 0);
+	}
+
 	/** the menu bar declaring its size; start with everything showing and let fit() reduce */
 	setTotal(n: number): void {
 		if (this.totalMenus === n) return;
 		this.totalMenus = n;
-		this.visibleMenus = n;
+		this.restart();
+	}
+
+	setSessionLabelled(on: boolean): void {
+		if (this.sessionLabelled === on) return;
+		this.sessionLabelled = on;
+		this.restart();
+	}
+
+	private restart(): void {
+		this.shown = this.units;
 		this.widthAt = [];
 	}
 
@@ -51,18 +77,18 @@ class TitleBarLayout {
 			return;
 		}
 		const budget = menuBudget(winW, rightW);
-		if (budget <= 0 || this.totalMenus === 0) return;
-		this.widthAt[this.visibleMenus] = leftW;
+		if (budget <= 0 || this.units === 0) return;
+		this.widthAt[this.shown] = leftW;
 
 		if (leftW > budget) {
-			if (this.visibleMenus > 0) this.visibleMenus--;
+			if (this.shown > 0) this.shown--;
 			return;
 		}
 		// room to spare: put one back, but only if we have actually seen it fit at that width. Without
 		// the recorded width this would grow blindly, overflow, shrink, and oscillate for ever.
-		if (this.visibleMenus < this.totalMenus) {
-			const wider = this.widthAt[this.visibleMenus + 1];
-			if (wider !== undefined && wider <= budget) this.visibleMenus++;
+		if (this.shown < this.units) {
+			const wider = this.widthAt[this.shown + 1];
+			if (wider !== undefined && wider <= budget) this.shown++;
 		}
 	}
 }
