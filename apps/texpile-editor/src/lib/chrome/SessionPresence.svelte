@@ -28,6 +28,6 @@
 		use:tip={m.menubar_share_session()}
 	>
 		<SessionFaces peers={collabHost.peers} />
-		<span class:hidden={titleBarMock.a} class="cap-center whitespace-nowrap">{summary}</span>
+		<span class:hidden={titleBarMock.trim} class="cap-center whitespace-nowrap">{summary}</span>
 	</button>
 {/if}

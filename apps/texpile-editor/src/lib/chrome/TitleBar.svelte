@@ -25,6 +25,8 @@
 	import { betweenWidth, centeredWidth } from './commandCenterWidth';
 	import iconUrl from '$branding/Logo-icon.svg';
 	import { m } from '$lib/paraglide/messages';
+	import { titleBarMock } from './titleBarMock.svelte';
+	import OpenAgentButton from '$lib/ai/agentPanel/ui/OpenAgentButton.svelte';
 
 	let {
 		menus,
@@ -213,6 +215,11 @@
 						<Kbd keys="Mod+K" class="shrink-0" />
 					{/if}
 				</button>
+				{#if titleBarMock.f && titleBarMock.openAgent}
+					<span class="app-no-drag pointer-events-auto ml-1 flex items-center"
+						><OpenAgentButton class="title-bar-button" onOpen={titleBarMock.openAgent} /></span
+					>
+				{/if}
 			{:else if !palettable}
 				<span class="text-muted max-w-[50%] truncate text-xs">{title}</span>
 			{/if}

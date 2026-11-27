@@ -15,6 +15,8 @@
 	import EditModePicker from './EditModePicker.svelte';
 	import { titleBarLayout } from '$lib/chrome/titleBarLayout.svelte';
 	import { titleBarMock } from '$lib/chrome/titleBarMock.svelte';
+	import { problemsView } from '$lib/problems/problemsStore.svelte';
+	import { CircleAlert, TriangleAlert } from '@lucide/svelte';
 	import OpenAgentButton from '$lib/ai/agentPanel/ui/OpenAgentButton.svelte';
 	import { ArrowRight, Square, Play, ChevronDown, ShieldQuestion, MessageSquare, FolderOpen, PanelRight } from '@lucide/svelte';
 
@@ -117,7 +119,13 @@
 	);
 	const solid = $derived(compact ? 'h-[22px] px-1.5' : '');
 	// with the preview closed, Compile's one job is showing the PDF, so the title bar names that instead
-	const showPdf = $derived((compact || part === 'strip') && !pdfPaneOpen && !fileMode.current);
+	const showPdf = $derived((compact || part === 'strip') && !pdfPaneOpen && !fileMode.current && !(compact && titleBarMock.d));
+	const mergeCounts = $derived(compact && (titleBarMock.e || titleBarMock.f));
+	$effect(() => {
+		if (compact) titleBarMock.openAgent = onShowAgent ?? null;
+	});
+	const errs = $derived(problemsView.counts.error);
+	const warns = $derived(problemsView.counts.warning + problemsView.counts.reference);
 	const rest = $derived(part === 'all' || part === 'strip' || part === 'rest');
 	const compilePart = $derived(part === 'all' || part === 'strip' || part === 'compile');
 	const pdfPart = $derived(part === 'all' || part === 'strip' || part === 'pdf');
@@ -256,7 +264,19 @@
 				</button>
 			{/if}
 		{/if}
-		{#if rest}<ProblemsIndicator class={quiet} onclick={onShowProblems} />{/if}
+		{#if rest && mergeCounts}
+			{#if errs > 0 || warns > 0 || commentCount > 0}
+				<button
+					class="{quiet} gap-1"
+					onclick={errs > 0 || warns > 0 ? onShowProblems : onShowComments}
+					use:tip={m.wsview_show_problems_title()}
+				>
+					{#if errs > 0}<span class="text-error-ink flex items-center gap-1"><CircleAlert class="size-3.5" />{errs}</span>{/if}
+					{#if warns > 0}<span class="text-warning-ink flex items-center gap-1"><TriangleAlert class="size-3.5" />{warns}</span>{/if}
+					{#if commentCount > 0}<span class="ml-1 flex items-center gap-1"><MessageSquare class="size-3.5" />{commentCount}</span>{/if}
+				</button>
+			{/if}
+		{:else if rest}<ProblemsIndicator class={quiet} onclick={onShowProblems} />{/if}
 		{#if onSyncToCursor && rest}
 			<!-- only while the preview is popped out: its window has no divider chip, and the jump reads the caret in this window -->
 			<button
@@ -272,18 +292,18 @@
 				<span class="flex h-[1lh] items-center"><ArrowRight class="size-3.5" /></span>
 			</button>
 		{/if}
-		{#if commentCount > 0 && rest}
+		{#if commentCount > 0 && rest && !mergeCounts}
 			<!-- unresolved review threads, project-wide; hidden at zero, like Problems after a clean compile -->
 			<button class="{quiet} gap-1" onclick={onShowComments} use:tip={m.wsview_show_comments_title()}>
 				<MessageSquare class="size-3.5" />
 				{commentCount}
 			</button>
 		{/if}
-		{#if onShowAgent && rest}
+		{#if onShowAgent && rest && !(compact && titleBarMock.f)}
 			<OpenAgentButton class={quiet} onOpen={onShowAgent} />
 		{/if}
 		{#if onToggleSuggest && rest}
-			<EditModePicker {suggesting} onChange={onToggleSuggest} {compact} bare={titleBarMock.a} />
+			<EditModePicker {suggesting} onChange={onToggleSuggest} {compact} bare={titleBarMock.trim} />
 		{/if}
 		{#if showPdf && pdfPart}
 			<!-- unboxed like Layout beside it: a border made it the heaviest thing in the title bar -->

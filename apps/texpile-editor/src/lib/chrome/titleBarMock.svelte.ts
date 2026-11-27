@@ -24,6 +24,21 @@ class TitleBarMock {
 	get c() {
 		return this.design === 'c';
 	}
+	/** F: the agent button beside the search field */
+	openAgent = $state<(() => void) | null>(null);
+	get f() {
+		return this.design === 'f';
+	}
+	get d() {
+		return this.design === 'd';
+	}
+	get e() {
+		return this.design === 'e';
+	}
+	/** faces without the guest count, edit mode without its arrow */
+	get trim() {
+		return this.a || this.d || this.e || this.f;
+	}
 }
 
 export const titleBarMock = new TitleBarMock();
