@@ -12,7 +12,6 @@ import { returnFocusToText } from './popoverFocus/returnFocus';
 import { handleUnitAt } from './blockHandle/handleUnit';
 import { FLOATING_BAR_BOTTOM } from '$lib/editor/floatingBar';
 import { positionOf } from './blockHandle/nodePosition';
-import { blockSettingsAt } from './blockHandle/blockSettings';
 import { dividerDragging, onDividerGrab } from '$lib/resizing/edgeDrag';
 import { handleLineMiddle } from './blockHandle/handleLine';
 import { handleTop, pointerStaysWithBlock } from './blockHandle/handleReach';
@@ -22,7 +21,6 @@ type ItemsOf = () => readonly InsertItem[];
 
 // each gutter: two 22px buttons, the 2px between them and 2px to the text
 const GUTTER_OFFSET_LEFT = 48;
-const GUTTER_OFFSET_RIGHT = 2;
 // one button wide plus the gap to the text: the stacked gutter, while comments crowd the pane (the scroller's
 // data-gutter-stacked, which the comment rail decides)
 const GUTTER_OFFSET_LEFT_STACKED = 30;
@@ -30,9 +28,9 @@ const GUTTER_OFFSET_LEFT_STACKED = 30;
 const HANDLE_W = 22;
 const HANDLE_GAP = 2;
 
-// the buttons from the first one's top to the last one's foot: one row, or a column with the gear in it
-function handleHeight(stacked: boolean, settings: boolean): number {
-	const buttons = stacked ? (settings ? 3 : 2) : 1;
+// the buttons from the first one's top to the last one's foot: one row, or a column
+function handleHeight(stacked: boolean): number {
+	const buttons = stacked ? 2 : 1;
 	return buttons * HANDLE_W + (buttons - 1) * HANDLE_GAP;
 }
 
@@ -56,18 +54,14 @@ class BlockHandleView {
 		visible: boolean;
 		top: number;
 		left: number;
-		right: number;
 		stacked: boolean;
 		popoverOpen: boolean;
-		settings: string | null;
 	}>({
 		visible: false,
 		top: 0,
 		left: 0,
-		right: 0,
 		stacked: false,
-		popoverOpen: false,
-		settings: null
+		popoverOpen: false
 	});
 	private hoveredPos: number | null = null;
 	private hoveredNode: PMNode | null = null;
@@ -102,7 +96,6 @@ class BlockHandleView {
 				onInsert: (item: BlockInsertItem) => this.runInsert(item),
 				onDragStart: this.onDragStart,
 				onSelect: this.selectBlock,
-				onSettings: this.openSettings,
 				focusEditor: () => returnFocusToText(view),
 				items: () => items().filter((item): item is BlockInsertItem => item.shape === 'block')
 			}
@@ -140,7 +133,7 @@ class BlockHandleView {
 		const sheet = this.view.canvas.sheetClientRect();
 		if (sheet.left !== this.placedAt?.sheetLeft || block.top !== this.placedAt.blockTop) return false;
 		const { top } = this.state;
-		const buttons = { top, bottom: top + handleHeight(this.state.stacked, this.state.settings !== null) };
+		const buttons = { top, bottom: top + handleHeight(this.state.stacked) };
 		return pointerStaysWithBlock({ x, y }, sheet, block, buttons);
 	}
 
@@ -199,8 +192,7 @@ class BlockHandleView {
 		this.hoveredNode = this.view.state.doc.nodeAt(blockPos);
 
 		const stacked = this.view.dom.closest('[data-gutter-stacked]') !== null;
-		const settings = (this.view.editable && blockSettingsAt(this.view, blockPos)?.label()) || null;
-		const height = handleHeight(stacked, settings !== null);
+		const height = handleHeight(stacked);
 		const top = dropsForLabel(this.hoveredNode)
 			? rect.top + NOINDENT_LABEL_DROP
 			: handleTop(handleLineMiddle(this.view, blockPos, rect), rect, height, HANDLE_W);
@@ -227,8 +219,6 @@ class BlockHandleView {
 		this.state.top = held;
 		this.state.stacked = stacked;
 		this.state.left = pinned;
-		this.state.right = containerRect.right + GUTTER_OFFSET_RIGHT;
-		this.state.settings = settings;
 	}
 
 	private cancelHide = () => {
@@ -283,10 +273,6 @@ class BlockHandleView {
 		const { view } = this;
 		view.dispatch(view.state.tr.setSelection(NodeSelection.create(view.state.doc, this.hoveredPos)));
 		view.focus();
-	};
-
-	private openSettings = (gear: HTMLElement) => {
-		if (this.hoveredPos != null) blockSettingsAt(this.view, this.hoveredPos)?.open(gear);
 	};
 
 	private onDragEnd = () => setHandleDragActive(this.view, false);

@@ -2,7 +2,7 @@
 	import { tip } from '$lib/components/tooltip.svelte';
 	import { inEditorPane } from '$lib/editor/visual/editorPanePositioning';
 	import { Popover, Portal } from '@skeletonlabs/skeleton-svelte';
-	import { Plus, Settings } from '@lucide/svelte';
+	import { Plus } from '@lucide/svelte';
 	import BlockHandleGrip from './blockHandle/BlockHandleGrip.svelte';
 	import BlockInsertMenu from '$lib/editor/visual/insert/BlockInsertMenu.svelte';
 	import type { BlockInsertItem } from '$lib/editor/visual/insert/insertItem';
@@ -12,19 +12,15 @@
 		visible: boolean;
 		top: number;
 		left: number;
-		right: number;
 		/** comments crowd the pane: one column on the left and no right gutter */
 		stacked: boolean;
 		popoverOpen: boolean;
-		/** the hint of the gear, for a block that has settings */
-		settings: string | null;
 	};
 	let {
 		state,
 		onInsert,
 		onDragStart,
 		onSelect,
-		onSettings,
 		focusEditor,
 		items
 	}: {
@@ -32,7 +28,6 @@
 		onInsert: (item: BlockInsertItem) => void;
 		onDragStart: (event: DragEvent) => void;
 		onSelect: () => void;
-		onSettings: (gear: HTMLElement) => void;
 		focusEditor: () => void;
 		items: () => readonly BlockInsertItem[];
 	} = $props();
@@ -72,31 +67,4 @@
 	</Popover>
 
 	<BlockHandleGrip {onSelect} {onDragStart} />
-	{#if state.stacked}{@render settingsButton()}{/if}
 </div>
-
-<!-- right gutter: the block's settings by the text. Same visibility rules as the left; with the gutters stacked it is in the left one -->
-{#if !state.stacked}
-	<div
-		class="block-handle-gutter fixed z-10 flex w-[46px] items-center justify-end gap-0.5"
-		style="visibility: {state.visible ? 'visible' : 'hidden'}; pointer-events: {state.visible
-			? 'auto'
-			: 'none'}; top: {state.top}px; left: {state.right}px;"
-	>
-		{@render settingsButton()}
-	</div>
-{/if}
-
-{#snippet settingsButton()}
-	{#if state.settings}
-		<button
-			type="button"
-			class="block-handle-btn block-handle-settings"
-			aria-label={state.settings}
-			use:tip={state.settings}
-			onclick={(e) => onSettings(e.currentTarget)}
-		>
-			<Settings class="size-4" />
-		</button>
-	{/if}
-{/snippet}
