@@ -146,10 +146,22 @@ function proofreadOf(state: EditorState): Plugin | undefined {
 export function proofreadPlugin(language: () => SpellLanguage | null): Plugin {
 	// the library hands the box only the word's bottom, and it needs the top to open above the word
 	let word = new DOMRect();
+	let clicked: { view: EditorView; from: number; to: number } | null = null;
 	const libraryPlugin = createProofreadPlugin(
 		500,
 		(block: string) => lintTextAfterComposition(block, language()),
-		(options) => createHarperSuggestionBox({ ...options, position: { x: word.left, y: word.bottom, top: word.top } }),
+		(options) =>
+			createHarperSuggestionBox({
+				...options,
+				// the library makes a text node of the replacement, and an empty one throws
+				onReplace: (value) => {
+					if (value || !clicked) return options.onReplace(value);
+					const { view, from, to } = clicked;
+					const tr = view.state.tr.delete(from, to);
+					view.dispatch(tr.setSelection(TextSelection.create(tr.doc, from)));
+				},
+				position: { x: word.left, y: word.bottom, top: word.top }
+			}),
 		spellcheckenabled,
 		blockSpellText,
 		true // useCustomCSS: enables the proofread-* class naming
@@ -193,6 +205,8 @@ export function proofreadPlugin(language: () => SpellLanguage | null): Plugin {
 			handleClick(view, pos, event) {
 				if (onOldWords(view, event)) return false;
 				word = (event.target as Element).getBoundingClientRect();
+				const mark = proofreadOf(view.state)?.getState(view.state)?.decor.find(pos, pos)[0];
+				clicked = mark ? { view, from: mark.from, to: mark.to } : null;
 				return !!libraryPlugin.spec.props?.handleClick?.call(this, view, pos, event);
 			}
 		}
