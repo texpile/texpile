@@ -5,6 +5,7 @@ Release notes for Texpile Desktop. Add notes under `## [Unreleased]` as you work
 
 ## [Unreleased]
 
+- fix: Proofread this file asking the AI again about paragraphs the editor already proofread (by @louisqli)
 - fix: a suggested new picture drawn without its caption (by @louisqli)
 - fix: Agent tab settings wrapping onto several rows in a narrow panel (by @louisqli)
 - feat: Convert Again in Convert to LaTeX once a result is shown (by @louisqli)
