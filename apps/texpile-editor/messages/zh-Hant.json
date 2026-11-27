@@ -125,8 +125,6 @@
 	"prefs_ai_model_convert_note": "強模型畫圖表最好。",
 	"prefs_ai_model_chat": "代理分頁",
 	"prefs_ai_model_chat_note": "新聊天的起始模型。",
-	"prefs_ai_use_proofread_note": "在「拼字與文法」中設定。",
-	"prefs_ai_use_open": "開啟",
 	"agent_panel_change_agent": "在偏好設定中選擇代理",
 	"prefs_ai_model_default": "代理預設",
 	"prefs_ai_model_loading": "正在向 {agent} 詢問可用模型",

@@ -125,8 +125,6 @@
 	"prefs_ai_model_convert_note": "A strong model draws diagrams best.",
 	"prefs_ai_model_chat": "Agent tab",
 	"prefs_ai_model_chat_note": "The starting model for new chats.",
-	"prefs_ai_use_proofread_note": "Set up in Spelling & Grammar.",
-	"prefs_ai_use_open": "Open",
 	"agent_panel_change_agent": "Pick the agent in Preferences",
 	"prefs_ai_model_default": "Agent default",
 	"prefs_ai_model_loading": "Asking {agent} which models it offers",

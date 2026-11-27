@@ -3,7 +3,6 @@
 	import { settings } from '$lib/settings';
 	import { agentOffered, lookUpAgents } from '$lib/ai/agent/aiAgent.svelte';
 	import { setAiOff } from '$lib/ai/aiSwitch';
-	import { openPreferencesAt } from '$lib/stores/dialogStore';
 	import PrefsHeading from '../rows/PrefsHeading.svelte';
 	import PrefsRow from '../rows/PrefsRow.svelte';
 	import PrefsSwitchRow from '../rows/PrefsSwitchRow.svelte';
@@ -49,8 +48,5 @@
 		<AgentModelRows {agent} />
 	{/if}
 
-	<PrefsRow id="ai-use-proofread">
-		<button class="btn btn-sm preset-tonal" onclick={() => openPreferencesAt('proofing')}>{m.prefs_ai_use_open()}</button>
-	</PrefsRow>
 	<McpServerRows />
 </div>
