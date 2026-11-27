@@ -28,13 +28,16 @@
 
 	let {
 		menus,
+		session,
 		status,
 		/** hide the icon when the caller already shows branding (the start screen) */
 		showIcon = true
 	}: {
 		/** the in-app menu bar, rendered inline. Omitted on macOS, where the menus are native. */
 		menus?: Snippet;
-		/** trailing status, before the window buttons. Session presence today. */
+		/** the shared session's faces, after the menus */
+		session?: Snippet;
+		/** trailing controls, before the window buttons */
 		status?: Snippet;
 		showIcon?: boolean;
 	} = $props();
@@ -129,13 +132,15 @@
 			{#if menus}
 				{@render menus()}
 			{/if}
+			{#if session}
+				{@render session()}
+			{/if}
 		</div>
 
 		<!-- the draggable stretch; also where a double-click maximises, as on a native bar -->
 		<div class="app-drag min-w-0 flex-1"></div>
 
-		<!-- measured with the window buttons, so the command center clears this side too: a session
-		     opening mid-edit shrinks the field rather than sliding under the avatars. -->
+		<!-- measured with the window buttons, so the command center clears this side too -->
 		<div class="flex shrink-0 items-stretch" bind:clientWidth={rightW}>
 			{#if status}
 				{@render status()}
