@@ -4,7 +4,7 @@ export const CM_THEME = EditorView.theme({
 	'&': { height: '100%', fontSize: '0.875rem' },
 	// scroll-inset-r: the splitter's grab zone overhangs the scrollbar's edge
 	'.cm-scroller': {
-		fontFamily: 'ui-monospace, SFMono-Regular, Menlo, Consolas, monospace',
+		fontFamily: 'ui-monospace, SFMono-Regular, Menlo, Consolas, Monaco, Geneva, monospace',
 		lineHeight: '1.6',
 		scrollbarGutter: 'stable',
 		borderRight: '3px solid transparent'
