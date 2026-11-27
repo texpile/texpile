@@ -10,7 +10,6 @@
 	import { m } from '$lib/paraglide/messages';
 	import { untrack } from 'svelte';
 	import { titleBarLayout } from '$lib/chrome/titleBarLayout.svelte';
-	import TitleBarDivider from '$lib/chrome/TitleBarDivider.svelte';
 
 	const online = $derived(collabGuest.status === 'online' && collabGuest.hostOnline);
 	// only said when something is off (reconnecting, host gone); a healthy session needs nothing beside "Collaborating"
@@ -29,7 +28,6 @@
 	}
 </script>
 
-<TitleBarDivider />
 <Menu onSelect={(d) => d.value === 'leave' && leave()}>
 	<Menu.Trigger class="app-no-drag title-bar-button shrink-0 gap-1.5 self-center">
 		<SessionFaces peers={collabGuest.peers} />
