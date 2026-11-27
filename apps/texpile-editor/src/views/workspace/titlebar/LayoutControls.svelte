@@ -4,6 +4,7 @@
 	import type { PaneLayout } from '$lib/workspace/paneLayout.svelte';
 	import type { TerminalDockState } from '$lib/workspace/terminalDockState.svelte';
 	import LayoutMenu from './LayoutMenu.svelte';
+	import TitleBarDivider from '$lib/chrome/TitleBarDivider.svelte';
 
 	type Props = {
 		panes: PaneLayout;
@@ -25,5 +26,5 @@
 	</div>
 {/if}
 {#if divided}
-	<div class="border-surface-300-700 mx-2 h-4 w-px shrink-0 self-center border-l"></div>
+	<TitleBarDivider />
 {/if}
