@@ -2,7 +2,7 @@
 // the same harper worker + dictionary the visual editor uses, underline with the same
 // proofread-* styles, and open the shared SuggestionBox on click.
 import { Decoration, EditorView, ViewPlugin, type DecorationSet, type ViewUpdate } from '@codemirror/view';
-import { Facet, RangeSetBuilder, type EditorState } from '@codemirror/state';
+import { Facet, type EditorState, type Range } from '@codemirror/state';
 import { syntaxTree } from '@codemirror/language';
 import type { Tree } from '@lezer/common';
 import { onLintRulesChanged } from '$lib/editor/spellcheck/linter';
@@ -14,6 +14,7 @@ import { projectIgnored } from '$lib/workspace/projectConfigSync.svelte';
 import { docText } from '$lib/editor/source/docText';
 import { jumpRevealEffect } from '$lib/editor/source/cmJumpReveal';
 import { overlapsMask, type TexMask } from './texMask';
+import { blankEdges } from './markEdges';
 import { sourceProse, splitParagraphs, type Paragraph, type SpellMarkup } from './source/sourceProse';
 import { lintParagraphs, paragraphLints } from './source/paragraphLints';
 import { clearOfOldWords, liveSuggestionRanges } from '$lib/editor/source/cmSuggestions';
@@ -226,7 +227,7 @@ class SpellPlugin {
 		if (!(await lintParagraphs(paras, spelling, markup, isStale))) return;
 
 		// rebuild decorations from the full cache: absolute offset = paragraph start + relative
-		const builder = new RangeSetBuilder<Decoration>();
+		const marks: Range<Decoration>[] = [];
 		const hidden = this.view.state.facet(ignoredFinding);
 		this.drawn = { src, paras, spans, language: spelling, markup };
 		for (const p of paras) {
@@ -252,7 +253,8 @@ class SpellPlugin {
 				};
 				if (this.ignored.has(`${problem.type}:${problem.text}`)) continue;
 				if (hidden({ rule: m.rule, kind: problem.type, words: problem.text, line: this.view.state.doc.lineAt(from).text })) continue;
-				builder.add(from, to, Decoration.mark({ class: `proofread-${cssType(problem.type)}`, problem }));
+				const { lead, trail } = blankEdges(problem.text);
+				marks.push(Decoration.mark({ class: `proofread-${cssType(problem.type)}`, problem, lead, trail }).range(from + lead, to - trail));
 			}
 		}
 		// a composition that STARTED while the worker linted: hold the rebuilt set (the cache is
@@ -261,7 +263,7 @@ class SpellPlugin {
 			this.schedule(DEBOUNCE_MS);
 			return;
 		}
-		this.decorations = builder.finish();
+		this.decorations = Decoration.set(marks, true);
 		this.shown = clearOfOldWords(this.decorations, this.view.state);
 		this.view.dispatch({});
 		if (fresh) reviewSoon();
@@ -278,13 +280,13 @@ const spellPlugin = ViewPlugin.fromClass(SpellPlugin, {
 			if (pos == null) return false;
 			const hits: Problem[] = [];
 			plugin.decorations.between(pos, pos, (from, to, deco) => {
-				const p = (deco.spec as { problem?: Problem }).problem;
+				const { problem: p, lead = 0, trail = 0 } = deco.spec as { problem?: Problem; lead?: number; trail?: number };
 				// The caret landing exactly at the END of a flagged word is someone clicking past the
 				// last letter to put the cursor there, not asking about the word. between() counts a
 				// merely touching range as a hit, so without this "Hello World|" pops the box every time.
 				if (pos === to) return;
 				// positions may have drifted since the lint: read them off the live decoration
-				if (p) hits.push({ ...p, from, to, text: view.state.sliceDoc(from, to) });
+				if (p) hits.push({ ...p, from: from - lead, to: to + trail, text: view.state.sliceDoc(from - lead, to + trail) });
 			});
 			if (!hits.length) return false;
 			// under the start of the word, matching the visual editor. Anchoring to the click point put
