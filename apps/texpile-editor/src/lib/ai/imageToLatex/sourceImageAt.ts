@@ -14,6 +14,17 @@ export function imageSrcAt(line: string, column: number, dialect: ImageDialect):
 	return null;
 }
 
+/** the end of the include of `src` nearest `near` */
+export function imageIncludeEnd(text: string, src: string, near: number, dialect: ImageDialect): number | null {
+	let found: number | null = null;
+	for (const hit of text.matchAll(INCLUDES[dialect])) {
+		if (hit[1].trim() !== src) continue;
+		const end = hit.index! + hit[0].length;
+		if (found === null || Math.abs(end - near) < Math.abs(found - near)) found = end;
+	}
+	return found;
+}
+
 export function imageDialectOf(path: string): ImageDialect {
 	if (/\.typ$/i.test(path)) return 'typst';
 	if (/\.(md|markdown)$/i.test(path)) return 'markdown';

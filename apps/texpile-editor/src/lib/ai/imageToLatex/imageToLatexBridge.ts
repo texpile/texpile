@@ -1,7 +1,7 @@
 // A picture sent to the agent picked in Preferences (electron/src/ipc/imageToLatexIpc.ts)
 export type ImageAnswer = { ok: true; text: string } | { ok: false; error: string; cancelled?: true };
 
-type ImageToLatexBridge = {
+export type ImageToLatexBridge = {
 	imageToLatex(req: { id: string; system: string; request: string; mediaType: string; base64: string }): Promise<ImageAnswer>;
 	cancel(id: string): void;
 };

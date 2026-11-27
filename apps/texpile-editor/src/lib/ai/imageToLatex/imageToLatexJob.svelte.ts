@@ -1,7 +1,7 @@
 // One picture being turned into source: the part picked, the request and its one retry, the preview, and the insert
 import { m } from '$lib/paraglide/messages';
 import { agentName, agentOffered } from '$lib/ai/agent/aiAgent.svelte';
-import { imageToLatexBridge } from './imageToLatexBridge';
+import { imageToLatexBridge, type ImageToLatexBridge } from './imageToLatexBridge';
 import { imageAnswerSource, imageRequest, imageRetryRequest, imageSystem } from './imagePrompt';
 import { pictureBitmap, pictureForService, wantsRegion, type PictureRegion } from './pictureBytes';
 import { answerPreview, type AnswerPreview } from './answerPreview';
@@ -24,6 +24,7 @@ export class ImageToLatexJob {
 	private bitmap: ImageBitmap | null = null;
 	private running: string | null = null;
 	private ownUrl = false;
+	private closed = false;
 
 	constructor(
 		readonly target: ImageToLatexTarget,
@@ -40,6 +41,7 @@ export class ImageToLatexJob {
 			this.error = m.ai_image_unreadable();
 			return;
 		}
+		if (this.closed) return void this.bitmap.close();
 		this.url = URL.createObjectURL(this.picture.blob);
 		this.ownUrl = true;
 		this.size = { w: this.bitmap.width, h: this.bitmap.height };
@@ -53,17 +55,26 @@ export class ImageToLatexJob {
 
 	async convert(): Promise<void> {
 		const bridge = imageToLatexBridge();
-		if (!bridge || !this.bitmap) return;
+		if (!bridge || !this.bitmap || this.closed) return;
 		this.stop();
 		const id = crypto.randomUUID();
 		this.running = id;
 		this.phase = 'reading';
 		this.error = null;
 		this.preview = null;
+		try {
+			await this.read(bridge, id);
+		} catch (error) {
+			if (this.running === id) this.fail({ error: error instanceof Error ? error.message : String(error) });
+		}
+	}
+
+	private async read(bridge: ImageToLatexBridge, id: string): Promise<void> {
 		const { dialect } = this.target;
-		const image = await pictureForService(this.bitmap, this.region);
+		const image = await pictureForService(this.bitmap!, this.region);
+		if (this.running !== id) return;
 		function ask(request: string) {
-			return bridge!.imageToLatex({ id, system: imageSystem(dialect), request, ...image });
+			return bridge.imageToLatex({ id, system: imageSystem(dialect), request, ...image });
 		}
 		const first = await ask(imageRequest(dialect));
 		if (this.running !== id) return;
@@ -104,6 +115,7 @@ export class ImageToLatexJob {
 	}
 
 	close(): void {
+		this.closed = true;
 		this.stop();
 		this.bitmap?.close();
 		if (this.ownUrl && this.url) URL.revokeObjectURL(this.url);

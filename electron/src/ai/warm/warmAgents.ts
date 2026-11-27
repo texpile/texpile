@@ -19,11 +19,13 @@ import { signInError } from '../agentSignIn';
 /** test is Preferences' Test agent, released once it answers */
 export type AgentTask = AiTask | 'test';
 
-type Held = { key: string; agent: WarmAgent; idle?: NodeJS.Timeout };
+type Held = { key: string; agent: WarmAgent; idle?: NodeJS.Timeout; asking: number };
 
 const IDLE_MS = 15 * 60_000;
 // a process of Proofread document's own goes soon after the run
 const EXTRA_LANE_IDLE_MS = 60_000;
+// a process the tasks share gets this long to take a stop itself before it goes
+const STOP_GRACE_MS = 5_000;
 // proofreading is a rewrite, which thinking makes slower and no better
 const EFFORT: Partial<Record<AgentTask, string>> = { proofread: 'low', math: 'low' };
 
@@ -46,7 +48,7 @@ function hold(slot: string, key: string, start: (onExit: () => void) => WarmAgen
 		quitHooked = true;
 		app.once('will-quit', () => [...held.keys()].forEach(release));
 	}
-	const entry = { key } as Held;
+	const entry = { key, asking: 0 } as Held;
 	entry.agent = start(() => {
 		if (held.get(slot) !== entry) return;
 		held.delete(slot);
@@ -58,7 +60,7 @@ function hold(slot: string, key: string, start: (onExit: () => void) => WarmAgen
 
 function idleFrom(slot: string): void {
 	const h = held.get(slot);
-	if (!h) return;
+	if (!h || h.asking) return;
 	clearTimeout(h.idle);
 	h.idle = setTimeout(() => release(slot), /#\d+$/.test(slot) ? EXTRA_LANE_IDLE_MS : IDLE_MS);
 }
@@ -73,7 +75,8 @@ const NAMES: Record<AiAgent, string> = {
 	custom: 'The agent'
 };
 
-type Starter = { slot: string; key: string; start(onExit: () => void): WarmAgent };
+/** shared: one process serves every task and request, so a stop goes to the request */
+type Starter = { slot: string; key: string; shared?: true; start(onExit: () => void): WarmAgent };
 
 async function starterOf(
 	task: AgentTask,
@@ -88,7 +91,7 @@ async function starterOf(
 		const program = findProgram(agent);
 		if (!program) return `${agent} was not found on PATH`;
 		if (agent === 'codex')
-			return { slot: 'codex', key: program, start: (onExit) => new CodexWarm(program, CODEX_WARM_ARGS, version, onExit) };
+			return { slot: 'codex', key: program, shared: true, start: (onExit) => new CodexWarm(program, CODEX_WARM_ARGS, version, onExit) };
 		// Claude Code answers a turn at a time, so a request beside another needs a process of its own
 		return {
 			slot: `claude:${task}${lane ? `#${lane}` : ''}`,
@@ -104,6 +107,7 @@ async function starterOf(
 		return {
 			slot: agent,
 			key,
+			shared: true,
 			start: (onExit) => new AcpWarm(launch.program, launch.args, { name, rulesKnown: false, place: { env: launch.env }, version }, onExit)
 		};
 	const place = await openCodePlace(task, system);
@@ -133,16 +137,30 @@ export async function askAgent(
 	} catch (e) {
 		return { ok: false, error: e instanceof Error ? e.message : String(e) };
 	}
-	idleFrom(starter.slot);
+	const entry = held.get(starter.slot);
+	if (entry) {
+		entry.asking++;
+		clearTimeout(entry.idle);
+	}
 	let settled = false;
 	const effort = EFFORT[task];
-	const asking = warm.ask(effort ? { ...prompt, effort } : prompt, signal, model).finally(() => (settled = true));
+	const asking = warm.ask(effort ? { ...prompt, effort } : prompt, signal, model).finally(() => {
+		settled = true;
+		if (entry) entry.asking--;
+	});
 	// an agent that never answers its start or a queued request is stopped here too, and its process goes
 	const guard = watchStop(signal, NAMES[agent], () => undefined);
 	const answer = await Promise.race([asking, guard.stopped]);
 	guard.end();
 	if (!settled) {
-		release(starter.slot);
+		function releaseUnsettled(slot: string): void {
+			if (held.get(slot) !== entry) return;
+			if (settled) idleFrom(slot);
+			else release(slot);
+		}
+		if (starter.shared)
+			void Promise.race([asking, new Promise((wait) => setTimeout(wait, STOP_GRACE_MS))]).then(() => releaseUnsettled(starter.slot));
+		else releaseUnsettled(starter.slot);
 		return answer;
 	}
 	// a process of the test's own goes; one the tasks share stays warm for them

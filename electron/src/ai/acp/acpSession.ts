@@ -123,7 +123,6 @@ export class AcpSession {
 			})
 			.connect(stream);
 		const late = setTimeout(() => {
-			if (this.sessionId) return;
 			this.failed(lastLine(this.stderr) ?? `did not start within ${START_MS / 1000} seconds`);
 			if (child.pid) killTree(child.pid);
 		}, START_MS);
@@ -140,11 +139,13 @@ export class AcpSession {
 			this.history = !!init.agentCapabilities?.loadSession && !!init.agentCapabilities.sessionCapabilities?.list;
 			const session = await this.connection.agent.request(acp.methods.agent.session.new, { cwd: this.o.root, mcpServers: this.mcpServers });
 			this.sessionId = session.sessionId;
+			const configOptions = await this.startingModel(session.configOptions ?? []);
+			if (this.closing) return;
 			this.o.emit({
 				type: 'state',
 				state: 'ready',
 				title: init.agentInfo?.title ?? init.agentInfo?.name,
-				configOptions: await this.startingModel(session.configOptions ?? []),
+				configOptions,
 				chat: session.sessionId,
 				history: this.history,
 				takesSelection: !!init.agentCapabilities?.promptCapabilities?.embeddedContext,

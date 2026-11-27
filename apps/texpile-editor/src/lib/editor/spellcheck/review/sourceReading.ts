@@ -12,7 +12,7 @@ export function sourceReading(source: string, from: number, masked: string, span
 	const origin: number[] = [];
 	function put(chars: string, at: number): void {
 		for (const ch of chars) {
-			if (/\s/.test(ch) && (text === '' || /\s$/.test(text))) continue;
+			if (/\s/.test(ch) && (text === '' || /\s/.test(text[text.length - 1]))) continue;
 			text += /\s/.test(ch) ? ' ' : ch;
 			origin.push(at);
 		}
