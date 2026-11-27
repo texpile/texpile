@@ -8,6 +8,9 @@
 
 	import { m } from '$lib/paraglide/messages';
 	import { renameGroupLabel } from './figureGroupLabel';
+	// eslint-disable-next-line no-restricted-imports -- mockup
+	import ImageSettingsPanel from '$lib/editor/visual/extensions/image/ImageSettingsPanel.svelte';
+	import { picturesOf } from './figureGroupPictures';
 
 	type Props = { node: PMNode; view: EditorView; getPos: () => number | undefined };
 
@@ -25,6 +28,8 @@
 		typed = String(props.node.attrs.label ?? '');
 		open = true;
 	}
+
+	const pictures = $derived(open ? picturesOf(props.node, props.getPos) : []);
 
 	function commit(): void {
 		typed = renameGroupLabel(props.view, props.getPos, props.node, typed);
@@ -52,7 +57,7 @@
 	</Popover.Trigger>
 	<Portal>
 		<Popover.Positioner class="z-floating-ui">
-			<Popover.Content class="card bg-surface-50-950 border-surface-300-700 min-w-[250px] border p-3 shadow-lg">
+			<Popover.Content class="card bg-surface-50-950 border-surface-300-700 max-h-[70vh] w-[280px] overflow-y-auto border p-3 shadow-lg">
 				<label class="label">
 					<span>
 						{m.imageoverlay_latex_label()}
@@ -67,6 +72,22 @@
 						placeholder={m.imageoverlay_label_placeholder()}
 					/>
 				</label>
+				{#each pictures as picture, index (picture.pos)}
+					<div class="border-surface-200-800 mt-3 border-t pt-3">
+						<div class="mb-2 flex items-baseline gap-2">
+							<span class="text-sm font-semibold">{m.figuregroup_image_heading({ n: index + 1 })}</span>
+							<span class="text-muted truncate text-xs">{picture.caption}</span>
+						</div>
+						<ImageSettingsPanel
+							node={picture.node}
+							view={props.view}
+							getPos={() => picture.pos}
+							dialect="latex"
+							measure={() => ({ columnWidth: 600, natural: null })}
+							grouped
+						/>
+					</div>
+				{/each}
 			</Popover.Content>
 		</Popover.Positioner>
 	</Portal>

@@ -21,9 +21,11 @@
 		dialect: Dialect;
 		/** the px the column gives the image, and the picture's own size once it is loaded */
 		measure: () => ImageMeasure;
+		/** one picture of a side-by-side figure: its letter numbers it */
+		grouped?: boolean;
 	};
 
-	let { node, view, getPos, dialect, measure }: Props = $props();
+	let { node, view, getPos, dialect, measure, grouped = false }: Props = $props();
 	// markdown has no width or figure-numbering syntax to write back, so those controls hide
 	const latexControls = $derived(dialect === 'latex');
 
@@ -215,7 +217,7 @@
 		</button>
 	</div>
 
-	{#if latexControls}
+	{#if latexControls && !grouped}
 		<div class="settings-row flex items-center justify-between">
 			<div class="flex items-center gap-2">
 				<span class="text-sm">{m.imageoverlay_numbered_label()}</span>
@@ -265,7 +267,7 @@
 	     LaTeX and typst only; gated on the dialect as well as on numbering, so an image carrying
 	     numbered=true (pasted from a tex doc) still can't offer it in markdown. A typst image
 	     offers it numbered or not: labeling a bare #image makes it a figure -->
-	{#if (latexControls && numberedInput) || dialect === 'typst'}
+	{#if !grouped && ((latexControls && numberedInput) || dialect === 'typst')}
 		<button
 			type="button"
 			class="text-muted hover:text-surface-900-100 my-3 flex w-full items-center gap-2 text-sm transition-colors"
