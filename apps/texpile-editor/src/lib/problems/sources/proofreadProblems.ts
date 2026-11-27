@@ -49,7 +49,7 @@ export async function proofreadProblems(path: string, text: string, isStale: () 
 		const matches = paragraphLints(spelling, markup, p.text);
 		if (!matches) continue;
 		const target = { language: spelling, linted: p.text, matches, reading: () => sourceReading(text, p.from, p.text, prose.spans) };
-		for (const match of reviewedMatches(target)) {
+		for (const match of reviewedMatches(target, false)) {
 			const from = p.from + match.offset;
 			const to = from + match.length;
 			if (to <= from || to > text.length || overlapsMask(prose.spans, from, to)) continue;

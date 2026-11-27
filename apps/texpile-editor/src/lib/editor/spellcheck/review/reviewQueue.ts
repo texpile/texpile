@@ -80,9 +80,17 @@ export function reviewSoon(ms = AFTER_EDIT_MS): void {
 	timer = setTimeout(sendVisible, Math.max(0, Math.min(ms, waitingSince + MOST_WAIT_MS - now)));
 }
 
+const readingWords = new WeakMap<ReviewTarget, number>();
+
+function wordsRead(target: ReviewTarget): number {
+	let words = readingWords.get(target);
+	if (words === undefined) readingWords.set(target, (words = target.reading().text.split(/\s+/).filter(Boolean).length));
+	return words;
+}
+
 function wanted(target: ReviewTarget, key: string, now: number): boolean {
 	if (reviewOf(key) || sending.has(key) || now - (failedAt.get(key) ?? -Infinity) < RETRY_AFTER_MS) return false;
-	return target.matches.length > 0 || target.reading().text.split(/\s+/).filter(Boolean).length >= FEWEST_WORDS;
+	return target.matches.length > 0 || wordsRead(target) >= FEWEST_WORDS;
 }
 
 function pendingOnScreen(): Pending[] {

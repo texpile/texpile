@@ -5,6 +5,16 @@ Release notes for Texpile Desktop. Add notes under `## [Unreleased]` as you work
 
 ## [Unreleased]
 
+- fix: Convert to LaTeX in Source putting the drawing inside the figure (by @louisqli)
+- fix: Convert to LaTeX inserting in the wrong place when the file changed while it worked (by @louisqli)
+- fix: Convert to LaTeX still asking the agent after Cancel (by @louisqli)
+- fix: Agent side panel staying wider than the window after a resize (by @louisqli)
+- fix: stopping one Codex or ACP request stopping every other request to that agent (by @louisqli)
+- fix: Proofread document failing on a request longer than a minute (by @louisqli)
+- fix: Agent tab stuck on starting when the agent never picks its model (by @louisqli)
+- fix: Source editor keeping marks the AI review dropped (by @louisqli)
+- fix: Project problems showing findings the AI review dropped (by @louisqli)
+- fix: Project problems leaving out a file whose check failed once (by @louisqli)
 - fix: Remove the word suggestion doing nothing in the visual editor (by @louisqli)
 - fix: proofread mark for an added comma or a removed word covering the space before it (by @louisqli)
 - fix: two links to Spelling & Grammar on the AI agent page (by @louisqli)

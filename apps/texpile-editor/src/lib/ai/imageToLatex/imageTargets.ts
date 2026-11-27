@@ -1,5 +1,7 @@
 // Where a converted picture goes in either editor: below the picture it came from, or at the caret for a paste. The
 // package a drawing or aligned equation needs goes in with it, as Insert adds it
+import type { SyntaxNode } from '@lezer/common';
+import type { Node as PMNode } from 'prosemirror-model';
 import { TextSelection } from 'prosemirror-state';
 import type { EditorView } from 'prosemirror-view';
 import type { EditorView as CMView } from '@codemirror/view';
@@ -10,7 +12,10 @@ import { CETZ_IMPORT, importsCetz } from '$lib/draw/cetz/source/pictures';
 import { withLibrary } from '$lib/draw/tikz/source/options/libraries';
 import { activeCm } from '$lib/chrome/menuBarCommands';
 import { editPreambleHere } from '$lib/stores/editorStore';
+import { latexTreeOf } from '$lib/languages/latex/syntax/latexTrees';
+import { environmentName } from '$lib/languages/latex/syntax/treeMode';
 import type { ImageDialect } from './imagePrompt';
+import { imageIncludeEnd } from './sourceImageAt';
 import type { ImageToLatexTarget, PreviewPlace } from './imageToLatexRequest';
 
 const LIBRARY_LINE = /^[ \t]*\\usetikzlibrary\s*\{([^}]*)\}[ \t]*\n?/gm;
@@ -61,8 +66,43 @@ function pasteSource(view: EditorView, source: string): void {
 	view.pasteText(source, new ClipboardEvent('paste', { clipboardData: clipboard }));
 }
 
-/** `after` is the end of the block holding the picture; null pastes at the caret */
-export function visualImageTarget(view: EditorView, dialect: ImageDialect, after: number | null): ImageToLatexTarget {
+export type VisualPicture = { src: string; at: number };
+export type SourcePicture = { src: string; line: number };
+
+/** the end of the top-level block holding the picture, found again by its src since the doc can change meanwhile */
+function belowImage(doc: PMNode, picture: VisualPicture): number | null {
+	let found = -1;
+	doc.descendants((node, pos) => {
+		if (node.type.name !== 'image' || String(node.attrs.src) !== picture.src) return;
+		if (found < 0 || Math.abs(pos - picture.at) < Math.abs(found - picture.at)) found = pos;
+	});
+	if (found < 0) return null;
+	const $at = doc.resolve(found);
+	return $at.depth ? $at.after(1) : found + (doc.nodeAt(found)?.nodeSize ?? 0);
+}
+
+const FLOATS = /^(?:figure|table|wrapfigure|wraptable|sidewaysfigure|sidewaystable|SCfigure|SCtable)\*?$/;
+
+/** a picture in a float goes below the float, as the visual editor puts it below the block */
+function belowFloat(text: string, pos: number): number {
+	let end = pos;
+	for (let node: SyntaxNode | null = latexTreeOf(text).resolveInner(pos, -1); node; node = node.parent) {
+		const begin = node.firstChild;
+		if (node.name === 'Environment' && begin && FLOATS.test(environmentName(text, begin))) end = node.to;
+	}
+	return end;
+}
+
+function belowInclude(view: CMView, dialect: ImageDialect, picture: SourcePicture): number {
+	const doc = view.state.doc;
+	const text = doc.toString();
+	const near = doc.line(Math.min(picture.line, doc.lines)).to;
+	const end = imageIncludeEnd(text, picture.src, near, dialect) ?? near;
+	return doc.lineAt(dialect === 'latex' ? belowFloat(text, end) : end).to;
+}
+
+/** null pastes at the caret */
+export function visualImageTarget(view: EditorView, dialect: ImageDialect, picture: VisualPicture | null): ImageToLatexTarget {
 	const path = activeFilePath.current;
 	return {
 		dialect,
@@ -70,8 +110,8 @@ export function visualImageTarget(view: EditorView, dialect: ImageDialect, after
 		insert(answer) {
 			if (!view.dom.isConnected) return;
 			const { source, libraries } = withoutLibraryLines(dialect, answer);
-			if (after !== null) {
-				const at = Math.min(after, view.state.doc.content.size);
+			const at = picture && belowImage(view.state.doc, picture);
+			if (at !== null) {
 				const tr = view.state.tr.insert(at, view.state.schema.nodes.paragraph.create());
 				view.dispatch(tr.setSelection(TextSelection.create(tr.doc, at + 1)));
 			}
@@ -82,19 +122,19 @@ export function visualImageTarget(view: EditorView, dialect: ImageDialect, after
 	};
 }
 
-/** `line` is the line the picture's command ends on; null replaces the selection */
-export function sourceImageTarget(view: CMView, dialect: ImageDialect, line: number | null): ImageToLatexTarget {
+/** null replaces the selection */
+export function sourceImageTarget(view: CMView, dialect: ImageDialect, picture: SourcePicture | null): ImageToLatexTarget {
 	const path = activeFilePath.current;
 	return {
 		dialect,
-		place: () => placeIn(path, () => (line === null ? view.state.selection.main.head : view.state.doc.line(line).to)),
+		place: () => placeIn(path, () => (picture ? belowInclude(view, dialect, picture) : view.state.selection.main.head)),
 		insert(answer) {
 			if (!view.dom.isConnected) return;
-			const { source: picture, libraries } = withoutLibraryLines(dialect, answer);
-			const source = withoutOwnImport(dialect, picture, view.state.doc.toString());
-			if (line === null) view.dispatch({ ...view.state.replaceSelection(source), userEvent: 'input.paste', scrollIntoView: true });
+			const { source: drawing, libraries } = withoutLibraryLines(dialect, answer);
+			const source = withoutOwnImport(dialect, drawing, view.state.doc.toString());
+			if (!picture) view.dispatch({ ...view.state.replaceSelection(source), userEvent: 'input.paste', scrollIntoView: true });
 			else {
-				const at = view.state.doc.line(Math.min(line, view.state.doc.lines)).to;
+				const at = belowInclude(view, dialect, picture);
 				view.dispatch({ changes: { from: at, insert: `\n\n${source}` }, userEvent: 'input.paste', scrollIntoView: true });
 			}
 			needPackages(dialect, source, libraries);

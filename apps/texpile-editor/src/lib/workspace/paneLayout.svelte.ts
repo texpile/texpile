@@ -52,6 +52,8 @@ export class PaneLayout {
 	 * persisted: a restored session must not open a second window before the user asked for one.
 	 */
 	pdfPopout = $state(false);
+	/** bumped on resize so the side panel's room follows the window */
+	private shownWidth = $state(typeof window !== 'undefined' ? window.innerWidth : 1280);
 	/** a panel docked in the editor column beside the document (Version History), whose width the editor's room holds too */
 	editorAside = $state(0);
 	/** the Agent side panel at the window's right edge, 0 while shut */
@@ -172,6 +174,7 @@ export class PaneLayout {
 	}
 
 	private windowWidth(): number {
+		void this.shownWidth;
 		return typeof window !== 'undefined' ? window.innerWidth : 1280;
 	}
 
@@ -247,6 +250,7 @@ export class PaneLayout {
 
 	/** the window resized: the preview keeps its saved share of the window, clamped so the editor keeps its room */
 	reclampPdf = () => {
+		if (typeof window !== 'undefined') this.shownWidth = window.innerWidth;
 		this.makeRoomForAside();
 		this.pdfPaneWidth = this.clampPdf(pdfWidthOf(layoutStore.current, this.windowWidth()));
 	};

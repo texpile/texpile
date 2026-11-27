@@ -89,12 +89,10 @@ export function visualImageItems(at: { pos: number; inside: number } | null, vie
 	const image = imageUnder(view, at);
 	const items: ContextMenuItem[] = [];
 	if (image) {
-		const $at = view.state.doc.resolve(image.at);
-		const after = $at.depth ? $at.after(1) : image.at + (view.state.doc.nodeAt(image.at)?.nodeSize ?? 0);
 		items.push(
 			...convertImageItem(
 				() => shownUrl(image.src),
-				() => visualImageTarget(view, dialect, after)
+				() => visualImageTarget(view, dialect, image)
 			)
 		);
 	}
@@ -120,7 +118,7 @@ export function sourceImageItems(view: CMView, pos: number | null, path: string)
 			items.push(
 				...convertImageItem(
 					() => shownUrl(src),
-					() => sourceImageTarget(view, dialect, line.number)
+					() => sourceImageTarget(view, dialect, { src, line: line.number })
 				)
 			);
 	}

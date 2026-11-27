@@ -54,6 +54,7 @@ export class ProjectChecks {
 	}
 
 	private checkSpellingAgain(): void {
+		this.gen++;
 		this.proofread.clear();
 		this.soon();
 	}
@@ -146,7 +147,8 @@ export class ProjectChecks {
 			if (this.proofread.get(path)?.text === text) continue;
 			const found = await proofreadProblems(path, text, stale);
 			if (stale()) return;
-			this.proofread.set(path, { text, problems: found ?? [] });
+			if (!found) continue;
+			this.proofread.set(path, { text, problems: found });
 			publish();
 			await nextTask();
 		}

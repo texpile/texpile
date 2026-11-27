@@ -75,12 +75,12 @@ export function drawnCurrent(target: ReviewTarget): boolean {
 	return !reviews.has(key) || drawnWith.get(target.linted) === key;
 }
 
-/** Harper's findings, reviewed when a review is in; until then as Harper gave them */
-export function reviewedMatches(target: ReviewTarget): LintMatch[] {
+/** Harper's findings, reviewed when a review is in; until then as Harper gave them. `drawn` false for a reader that draws no marks */
+export function reviewedMatches(target: ReviewTarget, drawn = true): LintMatch[] {
 	if (!proofreadOn()) return target.matches;
 	const key = reviewKey(target);
 	const review = reviews.get(key);
-	remember(drawnWith, target.linted, review ? key : null);
+	if (drawn) remember(drawnWith, target.linted, review ? key : null);
 	const shown = review ?? carriedTo(target);
 	if (!shown) return target.matches;
 	const { linted, matches } = target;
