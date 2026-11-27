@@ -28,7 +28,7 @@
 			aria-label={m.tbar_settings()}
 			use:tip={m.tbar_settings()}
 			onmousedown={keepFocus}
-			onclick={(event) => props.bar.openSettings(event.currentTarget)}
+			onclick={() => props.bar.openSettings()}
 		>
 			<Settings class="size-4" />
 		</button>
