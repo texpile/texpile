@@ -305,7 +305,6 @@ const STATIC_ROWS = [
 		note: () => m.prefs_ai_model_chat_note(),
 		shown: aiModelsShown
 	},
-	{ id: 'ai-use-proofread', tab: 'ai', label: () => m.prefs_proofread_ai(), note: () => m.prefs_ai_use_proofread_note() },
 	{ id: 'mcp', tab: 'ai', label: () => m.prefs_mcp(), note: () => m.prefs_mcp_note() }
 ] as const satisfies readonly PrefsRowDef[];
 

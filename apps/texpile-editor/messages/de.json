@@ -125,8 +125,6 @@
 	"prefs_ai_model_convert_note": "Ein starkes Modell zeichnet Diagramme am besten.",
 	"prefs_ai_model_chat": "Agent-Tab",
 	"prefs_ai_model_chat_note": "Das Startmodell für neue Chats.",
-	"prefs_ai_use_proofread_note": "Einrichten unter Rechtschreibung & Grammatik.",
-	"prefs_ai_use_open": "Öffnen",
 	"agent_panel_change_agent": "Den Agenten in den Einstellungen wählen",
 	"prefs_ai_model_default": "Standard des Agenten",
 	"prefs_ai_model_loading": "{agent} wird nach seinen Modellen gefragt",
