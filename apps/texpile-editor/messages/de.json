@@ -94,6 +94,8 @@
 	"prefs_ai_intro": "Texpile nutzt einen KI-Agenten, den du schon installiert hast und bei dem du angemeldet bist. Texpile speichert keine API-Schlüssel.",
 	"prefs_ai_on": "KI-Funktionen nutzen",
 	"prefs_ai_on_note": "Aus blendet alle KI-Funktionen aus und startet keinen Agenten.",
+	"prefs_ai_math_words": "Aus deinen Worten in der Mathesuche",
+	"prefs_ai_math_words_note": "Eine Wortgruppe in der Mathesuche geht an den KI-Agenten, der sie als Formel schreibt.",
 	"prefs_group_ai_models": "Modelle",
 	"ai_agent_claude": "Claude Code",
 	"ai_agent_codex": "Codex",

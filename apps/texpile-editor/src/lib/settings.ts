@@ -111,6 +111,8 @@ export type AppSettings = {
 	proofreadAi: boolean;
 	/** names, abbreviations and field terms the model recognizes go into the dictionary */
 	proofreadAddTerms: boolean;
+	/** From your words in the math search: a phrase typed there goes to the agent */
+	mathFromWords: boolean;
 	/** folders searched before PATH; per machine, so never in a project's config */
 	toolDirs: string[];
 	/** look for co-authors' new versions every few minutes while the window is in front (VS Code's
@@ -174,6 +176,7 @@ const DEFAULTS: AppSettings = {
 	agentModels: { claude: { proofread: 'haiku', refine: 'sonnet', convert: 'opus' } },
 	proofreadAi: true,
 	proofreadAddTerms: true,
+	mathFromWords: true,
 	toolDirs: [],
 	checkForNewVersions: true,
 	localHistory: true

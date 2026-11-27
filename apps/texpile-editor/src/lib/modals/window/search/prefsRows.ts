@@ -180,20 +180,26 @@ const STATIC_ROWS = [
 	{ id: 'keybindings', tab: 'keybindings', label: () => m.menubar_keyboard_shortcuts() },
 
 	{ id: 'spellcheck', tab: 'proofing', label: () => m.prefs_spellcheck() },
-	{ id: 'ai-proofread', tab: 'proofing', label: () => m.prefs_proofread_ai(), note: () => m.prefs_proofread_ai_note() },
+	{
+		id: 'ai-proofread',
+		tab: 'proofing',
+		label: () => m.prefs_proofread_ai(),
+		note: () => m.prefs_proofread_ai_note(),
+		shown: () => !settings.current.aiOff
+	},
 	{
 		id: 'ai-proofread-wording',
 		tab: 'proofing',
 		label: () => m.prefs_proofread_wording(),
 		note: () => m.prefs_proofread_wording_note(),
-		shown: () => settings.current.proofreadAi
+		shown: () => settings.current.proofreadAi && !settings.current.aiOff
 	},
 	{
 		id: 'ai-proofread-terms',
 		tab: 'proofing',
 		label: () => m.prefs_proofread_terms(),
 		note: () => m.prefs_proofread_terms_note(),
-		shown: () => settings.current.proofreadAi
+		shown: () => settings.current.proofreadAi && !settings.current.aiOff
 	},
 	{
 		id: 'folder-language',
@@ -273,6 +279,7 @@ const STATIC_ROWS = [
 
 	{ id: 'ai-on', tab: 'ai', label: () => m.prefs_ai_on(), note: () => m.prefs_ai_on_note() },
 	{ id: 'ai-agent', tab: 'ai', label: () => m.prefs_ai_agent() },
+	{ id: 'ai-math-words', tab: 'ai', label: () => m.prefs_ai_math_words(), note: () => m.prefs_ai_math_words_note() },
 	{
 		id: 'ai-model-proofread',
 		tab: 'ai',

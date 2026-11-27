@@ -1,6 +1,7 @@
 // From your words: a phrase typed in the math search, turned into math by the agent picked in Preferences
 import { agentBridge } from '$lib/ai/agent/agentBridge';
 import { agentOffered } from '$lib/ai/agent/aiAgent.svelte';
+import { settings } from '$lib/settings';
 import type { MathSyntax } from '../mathFieldFactory';
 
 export type WordsAnswer = { state: 'asking' } | { state: 'done'; math: string } | { state: 'failed'; error: string };
@@ -21,7 +22,7 @@ export function isPhrase(query: string): boolean {
 }
 
 export function wordsOffered(): boolean {
-	return agentOffered() !== null && !!agentBridge();
+	return settings.current.mathFromWords && agentOffered() !== null && !!agentBridge();
 }
 
 /** the agent's answer without the wrapping a model adds anyway */

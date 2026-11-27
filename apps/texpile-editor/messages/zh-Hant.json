@@ -94,6 +94,8 @@
 	"prefs_ai_intro": "Texpile 使用你已安裝並登入的 AI 代理。Texpile 不儲存任何 API 金鑰。",
 	"prefs_ai_on": "使用 AI 功能",
 	"prefs_ai_on_note": "關閉後隱藏所有 AI 功能，也不啟動任何代理。",
+	"prefs_ai_math_words": "數學搜尋中的根據你的描述",
+	"prefs_ai_math_words_note": "在數學搜尋中輸入的短語會傳給 AI 代理，由它寫成公式。",
 	"prefs_group_ai_models": "模型",
 	"ai_agent_claude": "Claude Code",
 	"ai_agent_codex": "Codex",

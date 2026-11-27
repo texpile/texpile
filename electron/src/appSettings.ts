@@ -58,6 +58,7 @@ const DEFAULT_SETTINGS = {
 	// Harper's findings checked and added to by the agent: the paragraphs on screen
 	proofreadAi: true,
 	proofreadAddTerms: true, // names and field terms the model recognizes go into the dictionary
+	mathFromWords: true, // a phrase typed in the math search goes to the agent
 	openFolders: [] as string[], // folders open across windows; maintained here for session restore
 	toolDirs: [] as string[], // searched before PATH by every program Texpile starts; see shell/toolDirs.ts
 	checkForNewVersions: true, // fetch co-authors' versions every few minutes while focused (renderer scmAutoCheck)
