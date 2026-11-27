@@ -13,6 +13,7 @@ import { reviewedMatches } from './review/reviewStore';
 import { registerReviewSource, reviewSoon } from './review/reviewQueue';
 import { noteFindings, pmReviewSource, pmTarget } from './review/pmReviewSource';
 import { heldProofreadRanges, typedWordKey } from './proofreadHold';
+import { marksOverWords, squiggleAttrs } from './markEdges';
 import { registerProofreadLooks } from './proofreadLooks';
 import './suggestion.css';
 import { editorConfigStore, editorViewStore } from '$lib/stores/editorStore';
@@ -180,7 +181,8 @@ export function proofreadPlugin(language: () => SpellLanguage | null): Plugin {
 		props: {
 			...libraryPlugin.spec.props,
 			decorations(state) {
-				const marks = libraryPlugin.spec.props?.decorations?.call(this, state) as DecorationSet | null | undefined;
+				const found = libraryPlugin.spec.props?.decorations?.call(this, state) as DecorationSet | null | undefined;
+				const marks = found && marksOverWords(state.doc, found);
 				const word = typedWordKey.getState(state) ?? null;
 				if (!marks || !word) return marks ?? null;
 				const held = heldProofreadRanges(marks.find(word.from, word.to), word);
@@ -207,9 +209,7 @@ export function chipSquigglesIn(doc: PMNode, squiggles: readonly Decoration[]): 
 	const size = doc.content.size;
 	for (const squiggle of squiggles) {
 		if (squiggle.to > size) continue;
-		// the class prosemirror-proofread gives the squiggle itself
-		const kind: string = squiggle.spec.errors[0].type;
-		const attrs = { class: `proofread-${kind.toLowerCase().replace(/[^a-z0-9]+/g, '-')}` };
+		const attrs = squiggleAttrs(squiggle);
 		doc.nodesBetween(squiggle.from, squiggle.to, (node, pos) => {
 			if (pos >= squiggle.from && pos + node.nodeSize <= squiggle.to && chipLetters(node))
 				chips.push(Decoration.node(pos, pos + node.nodeSize, attrs));

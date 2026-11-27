@@ -54,6 +54,7 @@ export async function proofreadProblems(path: string, text: string, isStale: () 
 			const to = from + match.length;
 			if (to <= from || to > text.length || overlapsMask(prose.spans, from, to)) continue;
 			const words = text.slice(from, to);
+			const shown = words.trim() || words;
 			const filter = filterOf(match.rule, match.type.typeName);
 			const line = lineAt(lines, from);
 			const replacement = match.replacements?.[0];
@@ -62,7 +63,7 @@ export async function proofreadProblems(path: string, text: string, isStale: () 
 				file: path,
 				line,
 				message: match.message,
-				words,
+				words: shown,
 				fix:
 					replacement === undefined
 						? undefined
@@ -71,7 +72,7 @@ export async function proofreadProblems(path: string, text: string, isStale: () 
 								from,
 								words,
 								replacement,
-								replacement === '' ? m.problems_fix_remove({ words }) : m.problems_fix_change({ text: replacement })
+								replacement === '' ? m.problems_fix_remove({ words: shown }) : m.problems_fix_change({ text: replacement })
 							),
 				ignoreKey: proofreadIgnoreKey(path, match.rule, match.type.typeName, words, lineText(lines, line))
 			});
