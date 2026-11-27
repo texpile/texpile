@@ -2,7 +2,8 @@
 	--text-scaling: 1.067;
 	--typo-base--color-light: var(--color-surface-950);
 	--typo-base--color-dark: var(--color-surface-50);
-	--typo-base--font-family: system-ui;
+	/* Geneva holds the letters system-ui lacks (ꜣ ꜥ, combining marks); Chromium's own macOS fallback misses them */
+	--typo-base--font-family: system-ui, Geneva;
 	--typo-base--font-size: inherit;
 	--typo-base--line-height: inherit;
 	--typo-base--font-weight: normal;

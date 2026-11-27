@@ -5,6 +5,7 @@ Release notes for Texpile Desktop. Add notes under `## [Unreleased]` as you work
 
 ## [Unreleased]
 
+- fix: letters such as ꜣ ꜥ ı͗ showing as boxes on macOS (by @louisqli)
 - fix: Convert to LaTeX in Source putting the drawing inside the figure (by @louisqli)
 - fix: Convert to LaTeX inserting in the wrong place when the file changed while it worked (by @louisqli)
 - fix: Convert to LaTeX still asking the agent after Cancel (by @louisqli)
