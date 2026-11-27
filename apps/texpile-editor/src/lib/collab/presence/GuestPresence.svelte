@@ -9,6 +9,7 @@
 	import { menuContentClass, menuItemClass } from '$lib/menus/menuStyles';
 	import SessionFaces from './SessionFaces.svelte';
 	import { m } from '$lib/paraglide/messages';
+	import { titleBarMock } from '$lib/chrome/titleBarMock.svelte';
 
 	const online = $derived(collabGuest.status === 'online' && collabGuest.hostOnline);
 	// only said when something is off (reconnecting, host gone); a healthy session needs nothing beside "Collaborating"
@@ -25,7 +26,7 @@
 <Menu onSelect={(d) => d.value === 'leave' && leave()}>
 	<Menu.Trigger class="app-no-drag title-bar-button mr-2 shrink-0 gap-1.5 self-center">
 		<SessionFaces peers={collabGuest.peers} />
-		<span class="cap-center whitespace-nowrap" class:text-warning-ink={!online}>{label}</span>
+		<span class:hidden={titleBarMock.a && online} class="cap-center whitespace-nowrap" class:text-warning-ink={!online}>{label}</span>
 	</Menu.Trigger>
 	<Portal>
 		<Menu.Positioner>

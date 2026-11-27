@@ -7,6 +7,7 @@
 	import PDFViewer from './PDFViewer.svelte';
 	import PreviewHeader from './PreviewHeader.svelte';
 	import { documentControls } from './documentControls.svelte';
+	import { titleBarMock } from '$lib/chrome/titleBarMock.svelte';
 	import { untrack } from 'svelte';
 	import type DraftView from '$lib/draft/DraftView.svelte';
 	import type { DraftController } from '$lib/draft/draftController.svelte';
@@ -127,7 +128,7 @@
 	/** what the bar calls this pane; live mode is a different thing from a compiled PDF */
 	const previewLabel = $derived(!guest && latexLiveMode() ? m.wsview_live_preview_label() : m.wsview_pdf_preview_label());
 	/** docked, every body's bar starts with the project's controls and stands where a tab strip would */
-	const controls = $derived(docked ? (documentControls.current ?? undefined) : undefined);
+	const controls = $derived(docked && documentControls.current ? (titleBarMock.c ? compileOnly : documentControls.current) : undefined);
 	const strip = $derived(docked);
 	$effect(() => {
 		if (!docked) return;
@@ -155,6 +156,8 @@
 		};
 	});
 </script>
+
+{#snippet compileOnly()}{@render documentControls.current?.(false, 'compile')}{/snippet}
 
 <div class="relative flex h-full w-full flex-col">
 	{#if !ownsItsBar}

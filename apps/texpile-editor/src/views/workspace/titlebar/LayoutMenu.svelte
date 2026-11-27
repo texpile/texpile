@@ -22,6 +22,7 @@
 	import type { PaneLayout } from '$lib/workspace/paneLayout.svelte';
 	import type { TerminalDockState } from '$lib/workspace/terminalDockState.svelte';
 	import PanelMenuItem from './PanelMenuItem.svelte';
+	import { titleBarMock } from '$lib/chrome/titleBarMock.svelte';
 	import ZoomMenuRow from './ZoomMenuRow.svelte';
 	import { m } from '$lib/paraglide/messages';
 
@@ -81,7 +82,7 @@
 		use:tip={open ? undefined : m.groups_layout()}
 	>
 		<LayoutDashboard class="size-3.5" />
-		<ChevronDown class="size-3 opacity-60" />
+		{#if !titleBarMock.a}<ChevronDown class="size-3 opacity-60" />{/if}
 	</button>
 	{#if open}
 		<!-- click-away layer -->

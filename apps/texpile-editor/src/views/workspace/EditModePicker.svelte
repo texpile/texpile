@@ -6,7 +6,7 @@
 	import { m } from '$lib/paraglide/messages';
 
 	// `compact`: the title bar's, unboxed at the bar's height
-	const props: { suggesting: boolean; onChange: (v: boolean) => void; compact?: boolean } = $props();
+	const props: { suggesting: boolean; onChange: (v: boolean) => void; compact?: boolean; bare?: boolean } = $props();
 	const quiet = $derived(props.compact ? 'hover:preset-tonal' : 'preset-outlined-surface-200-800 bg-surface-50-950 hover:preset-tonal');
 
 	const groups = $derived([
@@ -45,7 +45,7 @@
 			use:tip={props.suggesting ? m.suggest_mode_on() : m.suggest_mode_off()}
 		>
 			{#if props.suggesting}<SquarePen class="size-3.5" />{:else}<Pencil class="size-3.5" />{/if}
-			<ChevronDown class="size-3" />
+			{#if !props.bare}<ChevronDown class="size-3" />{/if}
 		</button>
 	{/snippet}
 </MenuDropdown>

@@ -11,6 +11,7 @@
 	import { collabHost } from '$lib/collab/hostStore.svelte';
 	import SessionFaces from '$lib/collab/presence/SessionFaces.svelte';
 	import { m } from '$lib/paraglide/messages';
+	import { titleBarMock } from '$lib/chrome/titleBarMock.svelte';
 
 	let { onShareSession }: { onShareSession?: () => void } = $props();
 
@@ -27,6 +28,6 @@
 		use:tip={m.menubar_share_session()}
 	>
 		<SessionFaces peers={collabHost.peers} />
-		<span class="cap-center whitespace-nowrap">{summary}</span>
+		<span class:hidden={titleBarMock.a} class="cap-center whitespace-nowrap">{summary}</span>
 	</button>
 {/if}

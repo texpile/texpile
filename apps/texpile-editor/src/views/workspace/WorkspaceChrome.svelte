@@ -11,6 +11,7 @@
 	import SessionPresence from '$lib/chrome/SessionPresence.svelte';
 	import LayoutControls from './titlebar/LayoutControls.svelte';
 	import { documentControls } from '$lib/preview/documentControls.svelte';
+	import { titleBarMock } from '$lib/chrome/titleBarMock.svelte';
 	import WorkspaceSidebar from './WorkspaceSidebar.svelte';
 	import SnippetPatternsBar from './SnippetPatternsBar.svelte';
 	import { workspaceRoot } from '$lib/workspace/workspaceStore';
@@ -95,14 +96,18 @@
      On macOS the component mounts and draws no triggers; the system menu bar has them. -->
 <TitleBar>
 	{#snippet status()}
-		{#if guest}
-			<GuestPresence />
-		{:else}
-			<SessionPresence onShareSession={menu.shareable ? actions.openShare : undefined} />
+		{#if !titleBarMock.c}
+			{#if guest}
+				<GuestPresence />
+			{:else}
+				<SessionPresence onShareSession={menu.shareable ? actions.openShare : undefined} />
+			{/if}
 		{/if}
-		{#if documentControls.current && !documentControls.previewBars}
+		{#if documentControls.current && !documentControls.previewBars && !titleBarMock.b}
 			<!-- no preview bar to carry them: one place for the project's controls, however the editors are split -->
-			<div class="app-no-drag mr-2 flex items-center self-center">{@render documentControls.current(true)}</div>
+			<div class="app-no-drag mr-2 flex items-center self-center">
+				{@render documentControls.current(true, titleBarMock.c ? 'pdf' : 'all')}
+			</div>
 		{/if}
 		<LayoutControls panes={layout} {termDock} project={!fileMode.current} splittable={previewSplittable} />
 	{/snippet}
@@ -232,3 +237,16 @@
 
 	{@render children()}
 </div>
+
+{#if titleBarMock.c}
+	<!-- MOCKUP C: a status bar along the window's bottom -->
+	<div class="border-surface-200-800 bg-surface-100-900 flex h-7 shrink-0 items-center border-t px-2 text-xs">
+		{#if guest}
+			<GuestPresence />
+		{:else}
+			<SessionPresence onShareSession={menu.shareable ? actions.openShare : undefined} />
+		{/if}
+		<div class="flex-1"></div>
+		{#if documentControls.current}{@render documentControls.current(true, 'rest')}{/if}
+	</div>
+{/if}

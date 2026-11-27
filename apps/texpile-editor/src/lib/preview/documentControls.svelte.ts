@@ -3,7 +3,10 @@
 import type { Snippet } from 'svelte';
 
 // `compact`: drawn in the title bar
-export const documentControls = $state<{ current: Snippet<[compact?: boolean]> | null; previewBars: number }>({
+export const documentControls = $state<{
+	current: Snippet<[compact?: boolean, part?: 'all' | 'pdf' | 'rest' | 'strip' | 'compile']> | null;
+	previewBars: number;
+}>({
 	current: null,
 	previewBars: 0
 });

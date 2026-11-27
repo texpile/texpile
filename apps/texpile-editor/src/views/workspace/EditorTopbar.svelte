@@ -14,6 +14,7 @@
 	import { m } from '$lib/paraglide/messages';
 	import EditModePicker from './EditModePicker.svelte';
 	import { titleBarLayout } from '$lib/chrome/titleBarLayout.svelte';
+	import { titleBarMock } from '$lib/chrome/titleBarMock.svelte';
 	import OpenAgentButton from '$lib/ai/agentPanel/ui/OpenAgentButton.svelte';
 	import { ArrowRight, Square, Play, ChevronDown, ShieldQuestion, MessageSquare, FolderOpen, PanelRight } from '@lucide/svelte';
 
@@ -68,6 +69,8 @@
 		syncTargetsPreview?: boolean;
 		/** in the title bar: icons at the bar's height, no boxes round the counters */
 		compact?: boolean;
+		/** MOCKUP: which of the controls this place shows */
+		part?: 'all' | 'pdf' | 'rest' | 'strip' | 'compile';
 	};
 	let {
 		loadedPath,
@@ -104,7 +107,8 @@
 		onTogglePdf,
 		onSyncToCursor = null,
 		syncTargetsPreview = false,
-		compact = false
+		compact = false,
+		part = 'all'
 	}: Props = $props();
 	const quiet = $derived(
 		compact
@@ -113,7 +117,11 @@
 	);
 	const solid = $derived(compact ? 'h-[22px] px-1.5' : '');
 	// with the preview closed, Compile's one job is showing the PDF, so the title bar names that instead
-	const showPdf = $derived(compact && !pdfPaneOpen && !fileMode.current);
+	const showPdf = $derived((compact || part === 'strip') && !pdfPaneOpen && !fileMode.current);
+	const rest = $derived(part === 'all' || part === 'strip' || part === 'rest');
+	const compilePart = $derived(part === 'all' || part === 'strip' || part === 'compile');
+	const pdfPart = $derived(part === 'all' || part === 'strip' || part === 'pdf');
+	const pdfIconOnly = $derived(titleBarLayout.pdfIconOnly || titleBarMock.a);
 
 	// fixed to the chevron: hung inside the PDF bar, the bar clipped it out of sight
 	const compileMenu = new AnchoredMenu('start');
@@ -183,7 +191,7 @@
 <div class="flex items-center gap-2 @max-[20rem]:gap-0.5">
 	<div class="flex items-center gap-2 @max-[20rem]:gap-0.5">
 		<!-- Compile first: the end of the bar nearest the editor -->
-		{#if fileMode.current}
+		{#if !compilePart}{:else if fileMode.current}
 			<!-- spelled out, and unboxed like Show PDF -->
 			<button
 				class={compact ? 'title-bar-button gap-1' : `btn btn-xs ${COMPILE_TONE.primary}`}
@@ -219,7 +227,7 @@
 				/>
 			</div>
 		{/if}
-		{#if guest && !showPdf}
+		{#if guest && !showPdf && compilePart}
 			<!-- guest: ask the host to compile (its toolchain), in the same spot and style as the
 			     host's Compile so the bar reads the same on both sides. Hidden while the host
 			     streams a live Typst preview: the stream already follows every keystroke, so a
@@ -248,8 +256,8 @@
 				</button>
 			{/if}
 		{/if}
-		<ProblemsIndicator class={quiet} onclick={onShowProblems} />
-		{#if onSyncToCursor}
+		{#if rest}<ProblemsIndicator class={quiet} onclick={onShowProblems} />{/if}
+		{#if onSyncToCursor && rest}
 			<!-- only while the preview is popped out: its window has no divider chip, and the jump reads the caret in this window -->
 			<button
 				class={quiet}
@@ -264,30 +272,30 @@
 				<span class="flex h-[1lh] items-center"><ArrowRight class="size-3.5" /></span>
 			</button>
 		{/if}
-		{#if commentCount > 0}
+		{#if commentCount > 0 && rest}
 			<!-- unresolved review threads, project-wide; hidden at zero, like Problems after a clean compile -->
 			<button class="{quiet} gap-1" onclick={onShowComments} use:tip={m.wsview_show_comments_title()}>
 				<MessageSquare class="size-3.5" />
 				{commentCount}
 			</button>
 		{/if}
-		{#if onShowAgent}
+		{#if onShowAgent && rest}
 			<OpenAgentButton class={quiet} onOpen={onShowAgent} />
 		{/if}
-		{#if onToggleSuggest}
-			<EditModePicker {suggesting} onChange={onToggleSuggest} {compact} />
+		{#if onToggleSuggest && rest}
+			<EditModePicker {suggesting} onChange={onToggleSuggest} {compact} bare={titleBarMock.a} />
 		{/if}
-		{#if showPdf}
+		{#if showPdf && pdfPart}
 			<!-- unboxed like Layout beside it: a border made it the heaviest thing in the title bar -->
 			<button
-				class="title-bar-button gap-1"
+				class={part === 'strip' ? `${quiet} gap-1` : 'title-bar-button gap-1'}
 				onclick={onTogglePdf}
 				aria-label={m.wsview_show_pdf()}
-				use:tip={titleBarLayout.pdfIconOnly ? m.wsview_show_pdf() : undefined}
+				use:tip={pdfIconOnly ? m.wsview_show_pdf() : undefined}
 			>
 				<PanelRight class="size-3.5" />
 				<!-- in the layout while hidden, so the title bar can measure what the label costs -->
-				<span class={titleBarLayout.pdfIconOnly ? 'invisible absolute' : 'cap-center'} data-title-bar-label>{m.wsview_show_pdf()}</span>
+				<span class={pdfIconOnly ? 'invisible absolute' : 'cap-center'} data-title-bar-label>{m.wsview_show_pdf()}</span>
 			</button>
 		{/if}
 	</div>

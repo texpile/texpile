@@ -3,6 +3,8 @@
 	import TabBar from '../TabBar.svelte';
 	import EditorStripControls from './EditorStripControls.svelte';
 	import type { ComponentProps } from 'svelte';
+	import { titleBarMock, isTopRightGroup } from '$lib/chrome/titleBarMock.svelte';
+	import { documentControls } from '$lib/preview/documentControls.svelte';
 
 	type Props = {
 		strip: ComponentProps<typeof TabBar> | null;
@@ -16,6 +18,9 @@
 	<div class="bg-surface-100-900 border-surface-200-800 @container/strip flex h-9 shrink-0 border-b pr-2">
 		<div class="min-w-[150px] flex-1"><TabBar {...props.strip} /></div>
 		{#if props.controls}<EditorStripControls {...props.controls} />{/if}
+		{#if titleBarMock.b && documentControls.current && !documentControls.previewBars && isTopRightGroup(props.controls?.groupId)}
+			<div class="ml-2 flex items-center" data-strip-controls>{@render documentControls.current(false, 'strip')}</div>
+		{/if}
 	</div>
 {:else if props.controls}
 	<!-- an editor in a window of its own has no tabs: its controls still need a place -->

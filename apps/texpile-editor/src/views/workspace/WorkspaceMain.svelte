@@ -142,7 +142,7 @@
 	});
 </script>
 
-{#snippet documentControls(compact = false)}
+{#snippet documentControls(compact = false, part: 'all' | 'pdf' | 'rest' | 'strip' | 'compile' = 'all')}
 	{#if fileMode.current && hasViewToggle(livePane.loadedPath, livePane.kind, guest)}
 		<!-- a lone file has no tab strip, so its editor's own controls come up here rather than keep a bar of their own -->
 		<div class="mr-2 flex items-center">
@@ -195,6 +195,7 @@
 		onSyncToCursor={layout.pdfPopout && !mainUnset ? syncToCursor : null}
 		syncTargetsPreview={guest ? guestTypstOffered : typstPreviewWanted}
 		{compact}
+		{part}
 	/>
 {/snippet}
 
