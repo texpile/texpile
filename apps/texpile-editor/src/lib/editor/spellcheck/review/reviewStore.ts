@@ -26,10 +26,20 @@ export function proofreadHinted(): boolean {
 	return settings.current.proofreadAi && !settings.current.aiOff && agentOffered() === null && !!proofreadBridge();
 }
 
-/** a review stands for this text, these findings, this English and this prompt */
-export function reviewKey(target: Pick<ReviewTarget, 'language' | 'linted' | 'matches'>): string {
-	const found = target.matches.map((m) => `${m.rule}:${m.offset}:${m.length}`).join(',');
-	return `${reviewContext(target.language)}|${found}|${target.linted}`;
+// by the text checked, so a paragraph is read once
+const keysOfLinted = new Map<string, string>();
+
+/** a review stands for the text the model reads, these findings, this English and this prompt; the same in every
+ *  editor, so a paragraph reviewed in the visual editor is reviewed in Source and Problems too */
+export function reviewKey(target: ReviewTarget): string {
+	const context = reviewContext(target.language);
+	const checked = `${context}|${target.matches.map((m) => `${m.rule}:${m.offset}:${m.length}`).join(',')}|${target.linted}`;
+	const known = keysOfLinted.get(checked);
+	if (known) return known;
+	const found = target.matches.map((m) => `${m.rule}:${target.linted.slice(m.offset, m.offset + m.length).replace(/\s+/g, ' ')}`).join(',');
+	const key = `${context}|${found}|${target.reading().text}`;
+	remember(keysOfLinted, checked, key);
+	return key;
 }
 
 function reviewContext(language: ReviewTarget['language']): string {
