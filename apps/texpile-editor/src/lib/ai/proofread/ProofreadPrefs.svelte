@@ -14,7 +14,7 @@
 	const wording = $derived(ruleIsOn(AI_RULES.wording, settings.current.grammarRules ?? {}));
 </script>
 
-<div class:opacity-50={settings.current.aiOff} inert={settings.current.aiOff}>
+{#if !settings.current.aiOff}
 	<PrefsSwitchRow id="ai-proofread" checked={on} onChange={(v) => updateSettings({ proofreadAi: v })} />
 
 	{#if on && !agentOffered()}
@@ -44,4 +44,4 @@
 			{/if}
 		</div>
 	{/if}
-</div>
+{/if}

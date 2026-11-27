@@ -1,6 +1,6 @@
 <script lang="ts">
 	// Preferences › AI agent: AI on or off, the one agent every AI feature uses, and its models
-	import { settings } from '$lib/settings';
+	import { settings, updateSettings } from '$lib/settings';
 	import { agentOffered, lookUpAgents } from '$lib/ai/agent/aiAgent.svelte';
 	import { setAiOff } from '$lib/ai/aiSwitch';
 	import PrefsHeading from '../rows/PrefsHeading.svelte';
@@ -42,6 +42,7 @@
 		{/snippet}
 		<AiAgentPicker />
 	</PrefsRow>
+	<PrefsSwitchRow id="ai-math-words" checked={settings.current.mathFromWords} onChange={(v) => updateSettings({ mathFromWords: v })} />
 
 	{#if agent}
 		<PrefsHeading section="aiModels" />

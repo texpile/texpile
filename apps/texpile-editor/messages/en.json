@@ -94,6 +94,8 @@
 	"prefs_ai_intro": "Texpile uses an AI agent you already have installed and signed in to. Texpile stores no API keys.",
 	"prefs_ai_on": "Use AI features",
 	"prefs_ai_on_note": "Off hides every AI feature and starts no agent.",
+	"prefs_ai_math_words": "From your words in the math search",
+	"prefs_ai_math_words_note": "A phrase typed in the math search goes to the AI agent, which writes it as math.",
 	"prefs_group_ai_models": "Models",
 	"ai_agent_claude": "Claude Code",
 	"ai_agent_codex": "Codex",
