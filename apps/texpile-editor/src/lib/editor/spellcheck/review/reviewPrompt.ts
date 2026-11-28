@@ -6,7 +6,7 @@ import type { SpellLanguage } from '../languages/spellLanguages';
 import type { ReviewTarget } from './reviewTypes';
 
 /** raised when the prompt changes, so reviews made under the old one are asked again */
-export const PROMPT_VERSION = 4;
+export const PROMPT_VERSION = 5;
 
 const VARIANT_NAMES = { american: 'American', british: 'British', australian: 'Australian', canadian: 'Canadian', indian: 'Indian' };
 
@@ -29,7 +29,7 @@ function languageName(tag: string): string {
 
 export function reviewSystem(language: SpellLanguage): string {
 	const written = language === 'en' ? `${VARIANT_NAMES[englishVariant()]} English` : languageName(language);
-	return `Rewrite the following ${written} text with spelling and grammar fixed and keep it as close as the tone of the original text. Each sentence starts with an id such as [zsc]. Keep every id and every $x$ as written. Answer with the text only. Do not think.`;
+	return `Rewrite the following ${written} text with spelling and grammar fixed and keep it as close to the tone of the original text. Each sentence starts with an id such as [zsc]. Keep every id and every $x$ as written. Answer with the text only. Do not think.`;
 }
 
 /** a sentence of a paragraph's reading, [from, to) */
