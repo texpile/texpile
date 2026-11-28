@@ -748,6 +748,7 @@
 	"groups_layout_sidebar": "Barra lateral",
 	"groups_layout_bottom_panel": "Panel inferior",
 	"wsview_show_pdf": "Mostrar PDF",
+	"wsview_pdf_label": "PDF",
 	"groups_drop_file": "Suelta un archivo aquí",
 	"groups_resize_aria": "Cambiar el tamaño de los editores",
 	"tabs_menu_copy_path": "Copiar ruta",

@@ -1175,6 +1175,7 @@
 	"groups_layout_sidebar": "Barra lateral",
 	"groups_layout_bottom_panel": "Painel inferior",
 	"wsview_show_pdf": "Mostrar PDF",
+	"wsview_pdf_label": "PDF",
 	"groups_drop_file": "Solte um arquivo aqui",
 	"groups_resize_aria": "Redimensionar editores",
 	"tabs_menu_close_others": "Fechar Outros",

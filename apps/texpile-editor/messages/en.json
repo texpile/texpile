@@ -1291,6 +1291,7 @@
 	"groups_layout_sidebar": "Sidebar",
 	"groups_layout_bottom_panel": "Bottom Panel",
 	"wsview_show_pdf": "Show PDF",
+	"wsview_pdf_label": "PDF",
 	"groups_drop_file": "Drop a file here",
 	"groups_resize_aria": "Resize editors",
 	"tabs_menu_close_others": "Close Others",

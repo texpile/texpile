@@ -1291,6 +1291,7 @@
 	"groups_layout_sidebar": "侧边栏",
 	"groups_layout_bottom_panel": "底部面板",
 	"wsview_show_pdf": "显示 PDF",
+	"wsview_pdf_label": "PDF",
 	"groups_drop_file": "将文件拖放到此处",
 	"groups_resize_aria": "调整编辑器大小",
 	"tabs_menu_close_others": "关闭其他",

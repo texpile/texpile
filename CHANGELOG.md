@@ -14,7 +14,7 @@ Release notes for Texpile Desktop. Add notes under `## [Unreleased]` as you work
 - feat: Agent tab in a side panel (by @louisqli)
 - feat: improved Spanish and Brazilian Portuguese translations (by @nicolobos77, @rodrigo-alessantos)
 - fix: TeX Live install and removal on Windows (by @louisqli)
-- fix: collaboration faces moved beside the menus to balance the title bar (by @louisqli)
+- fix: title bar visual balance (by @louisqli)
 - fix: various visual editor bugfixes (by @louisqli)
 - fix: various smaller bugfixes (by @louisqli)
 

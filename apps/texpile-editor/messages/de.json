@@ -1291,6 +1291,7 @@
 	"groups_layout_sidebar": "Seitenleiste",
 	"groups_layout_bottom_panel": "Unterer Bereich",
 	"wsview_show_pdf": "PDF anzeigen",
+	"wsview_pdf_label": "PDF",
 	"groups_drop_file": "Datei hier ablegen",
 	"groups_resize_aria": "Größe der Editoren ändern",
 	"tabs_menu_close_others": "Andere schließen",

@@ -180,8 +180,8 @@
 	});
 </script>
 
-<div class="flex items-center gap-2 @max-[20rem]:gap-0.5">
-	<div class="flex items-center gap-2 @max-[20rem]:gap-0.5">
+<div class="flex items-center {compact ? 'gap-0.5' : 'gap-2 @max-[20rem]:gap-0.5'}">
+	<div class="flex items-center {compact ? 'gap-0.5' : 'gap-2 @max-[20rem]:gap-0.5'}">
 		<!-- Compile first: the end of the bar nearest the editor -->
 		{#if fileMode.current}
 			<!-- spelled out, and unboxed like Show PDF -->
@@ -279,15 +279,10 @@
 		{/if}
 		{#if showPdf}
 			<!-- unboxed like Layout beside it: a border made it the heaviest thing in the title bar -->
-			<button
-				class="title-bar-button gap-1"
-				onclick={onTogglePdf}
-				aria-label={m.wsview_show_pdf()}
-				use:tip={titleBarLayout.pdfIconOnly ? m.wsview_show_pdf() : undefined}
-			>
+			<button class="title-bar-button gap-1" onclick={onTogglePdf} aria-label={m.wsview_show_pdf()} use:tip={m.wsview_show_pdf()}>
 				<PanelRight class="size-3.5" />
 				<!-- in the layout while hidden, so the title bar can measure what the label costs -->
-				<span class={titleBarLayout.pdfIconOnly ? 'invisible absolute' : 'cap-center'} data-title-bar-label>{m.wsview_show_pdf()}</span>
+				<span class={titleBarLayout.pdfIconOnly ? 'invisible absolute' : 'cap-center'} data-title-bar-label>{m.wsview_pdf_label()}</span>
 			</button>
 		{/if}
 	</div>
