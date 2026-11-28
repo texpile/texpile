@@ -24,7 +24,7 @@
 				<span class="cap-center">{m.problems_status_clean()}{pages(log.status.pages)}</span>
 			</span>
 		{:else}
-			<span class="cap-center text-muted">
+			<span class="cap-center">
 				{log.errors.length === 1 ? m.problems_error_count_one({ count: 1 }) : m.problems_error_count_other({ count: log.errors.length })}, {log
 					.warnings.length === 1
 					? m.problems_warning_count_one({ count: 1 })

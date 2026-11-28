@@ -191,12 +191,12 @@
 					an edge rather than the whole design. hover lifts it a step instead of tinting it.
 				-->
 				<button
-					class="app-no-drag border-surface-300-700 bg-surface-50-950 hover:bg-surface-200-800 text-muted rounded-base pointer-events-auto flex h-[22px] items-center gap-2 border px-2.5 text-xs"
+					class="app-no-drag border-surface-300-700 bg-surface-50-950 hover:bg-surface-200-800 rounded-base pointer-events-auto flex h-[22px] items-center gap-2 border px-2.5 text-xs"
 					style="width: {centerW}px"
 					onclick={() => commandPalette.show()}
 					use:tip={m.palette_open()}
 				>
-					<Search class="size-3.5 shrink-0 opacity-60" />
+					<Search class="size-3.5 shrink-0" />
 					<!-- centred, not left-aligned: the field is sized to the window rather than to the
 					     filename, so a left-aligned title dumps all the slack on the right and looks
 					     lopsided. Centring splits it either side and the control reads as deliberate. -->
@@ -215,7 +215,7 @@
 							is what made the command symbol look mangled rather than merely small. Kbd draws it
 							in the UI font, the one the OS uses in its own menus.
 						-->
-						<Kbd keys="Mod+K" class="shrink-0" />
+						<Kbd keys="Mod+K" class="text-muted shrink-0" />
 					{/if}
 				</button>
 			{:else if !palettable}

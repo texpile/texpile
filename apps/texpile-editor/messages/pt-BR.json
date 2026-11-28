@@ -2877,7 +2877,6 @@
 	"figure_delete_refused": "Não excluído: {reason}.",
 	"figure_close": "Fechar",
 	"image_uses_tip": "Onde esta imagem é usada",
-	"image_uses_none": "Nenhum documento inclui esta imagem.",
 	"image_uses_line": "{file} - linha {line}",
 	"image_edit": "Editar imagem",
 	"image_edit_formats": "A edição funciona com imagens PNG, JPEG e WebP.",

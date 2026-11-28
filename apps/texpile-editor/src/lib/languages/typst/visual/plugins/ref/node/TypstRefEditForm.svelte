@@ -63,11 +63,7 @@
 			hint={m.citation_page_numbers_hint()}
 		/>
 
-		<button
-			type="button"
-			class="text-muted hover:text-surface-900-100 mb-3 flex w-full items-center gap-2 text-sm transition-colors"
-			onclick={() => (showAdvanced = !showAdvanced)}
-		>
+		<button type="button" class="mb-3 flex w-full items-center gap-2 text-sm" onclick={() => (showAdvanced = !showAdvanced)}>
 			<ChevronDown class="h-4 w-4 transition-transform {showAdvanced ? 'rotate-180' : ''}" />
 			<span class="cap-center">{m.citation_advanced_options()}</span>
 		</button>

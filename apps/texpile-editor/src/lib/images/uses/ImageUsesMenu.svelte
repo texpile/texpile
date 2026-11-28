@@ -21,12 +21,11 @@
 <button
 	bind:this={menu.button}
 	class="wide"
-	disabled={!props.uses.length}
 	onclick={menu.toggle}
 	aria-haspopup="menu"
 	aria-expanded={menu.open}
 	aria-label={m.image_uses_tip()}
-	use:tip={props.uses.length ? m.image_uses_tip() : m.image_uses_none()}
+	use:tip={m.image_uses_tip()}
 >
 	<FileText size={16} />
 	<span class="cap-center tabular-nums">{props.uses.length}</span>

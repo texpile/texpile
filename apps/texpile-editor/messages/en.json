@@ -3004,7 +3004,6 @@
 	"figure_delete_refused": "Not deleted: {reason}.",
 	"figure_close": "Close",
 	"image_uses_tip": "Where this image is used",
-	"image_uses_none": "No document includes this image.",
 	"image_uses_line": "{file} - line {line}",
 	"image_edit": "Edit image",
 	"image_edit_formats": "Editing works on PNG, JPEG and WebP images.",

@@ -3004,7 +3004,6 @@
 	"figure_delete_refused": "未删除：{reason}。",
 	"figure_close": "关闭",
 	"image_uses_tip": "此图片的使用位置",
-	"image_uses_none": "没有文档包含此图片。",
 	"image_uses_line": "{file} - 第 {line} 行",
 	"image_edit": "编辑图片",
 	"image_edit_formats": "可编辑 PNG、JPEG 和 WebP 图片。",

@@ -88,7 +88,7 @@
 	groups={[
 		{ id: 'size', foldsFirst: true, render: size },
 		{ id: 'zoom', render: zoom },
-		{ id: 'uses', render: usedIn },
+		...(props.uses.length ? [{ id: 'uses', render: usedIn }] : []),
 		...(props.session ? [{ id: 'tools', render: tools }] : []),
 		...(props.session?.cropping ? [{ id: 'finish', pinned: true, alignEnd: true, render: finish }] : []),
 		{ id: 'edit', pinned: true, alignEnd: !props.session?.cropping, render: edit },

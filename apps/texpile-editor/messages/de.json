@@ -3004,7 +3004,6 @@
 	"figure_delete_refused": "Nicht gelöscht: {reason}.",
 	"figure_close": "Schließen",
 	"image_uses_tip": "Wo dieses Bild verwendet wird",
-	"image_uses_none": "Kein Dokument bindet dieses Bild ein.",
 	"image_uses_line": "{file} - Zeile {line}",
 	"image_edit": "Bild bearbeiten",
 	"image_edit_formats": "Bearbeiten ist bei PNG-, JPEG- und WebP-Bildern möglich.",

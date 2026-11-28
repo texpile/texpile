@@ -83,7 +83,7 @@
 		<!-- item gaps and divider padding use the same step per breakpoint, so the border sits centered in its gap -->
 		<div class="flex min-h-7 min-w-0 flex-1 items-center gap-2 sm:gap-3 2xl:gap-4">
 			{#if isReadOnly.current}
-				<div class="text-muted flex items-center gap-1.5">
+				<div class="flex items-center gap-1.5">
 					<Eye class="size-4" />
 					<span class="text-sm font-medium">{m.toolbar_read_only()}</span>
 				</div>
