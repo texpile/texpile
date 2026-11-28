@@ -61,7 +61,9 @@
 		<div
 			bind:this={panel}
 			class="{menuPanelClass} fixed z-[1400] flex w-80 flex-col"
-			style="left: {place.left}px; max-height: min(24rem, {place.maxHeight}px); {place.top !== undefined ? `top: ${place.top}px` : `bottom: ${place.bottom}px`}"
+			style="left: {place.left}px; max-height: min(24rem, {place.maxHeight}px); {place.top !== undefined
+				? `top: ${place.top}px`
+				: `bottom: ${place.bottom}px`}"
 			onpointerdown={(e) => e.preventDefault()}
 			role="presentation"
 		>
