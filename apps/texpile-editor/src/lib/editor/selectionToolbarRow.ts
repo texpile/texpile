@@ -4,8 +4,9 @@
 import { updateSettings } from '$lib/settings';
 import { m } from '$lib/paraglide/messages';
 import { tip } from '$lib/components/tooltip.svelte';
-import { agentName, refiner } from '$lib/ai/selectionRefiner';
-import { refineAgentsOffered } from '$lib/ai/refineAgents.svelte';
+import { refiner } from '$lib/ai/selectionRefiner';
+import { agentName } from '$lib/ai/agent/aiAgent.svelte';
+import { agentOffered } from '$lib/ai/agent/aiAgent.svelte';
 import { openRefineCard } from '$lib/ai/refineCardState.svelte';
 import { openPreferencesAt } from '$lib/stores/dialogStore';
 
@@ -77,8 +78,8 @@ export function selectionToolbarRow(
 			refine.hidden = !parts.comment || (!r?.available && !r?.needsAgent);
 			refine.disabled = !!r?.busy;
 			// named for its agent; without one, for the way to pick it
-			const offered = refineAgentsOffered();
-			const title = offered.length === 1 ? m.ai_refine_menu({ agent: agentName(offered[0]) }) : m.ai_refine_setup();
+			const offered = agentOffered();
+			const title = offered ? m.ai_refine_menu({ agent: agentName(offered) }) : m.ai_refine_setup();
 			refine.setAttribute('aria-label', title);
 			hints.get(refine)?.update(title);
 		}

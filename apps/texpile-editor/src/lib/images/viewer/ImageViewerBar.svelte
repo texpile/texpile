@@ -29,7 +29,7 @@
 	{#if props.session}
 		<ImageSizeInputs session={props.session} />
 	{:else}
-		<span class="text-muted px-1 text-xs tabular-nums">{props.size}</span>
+		<span class="px-1 text-xs tabular-nums">{props.size}</span>
 	{/if}
 {/snippet}
 
@@ -88,7 +88,7 @@
 	groups={[
 		{ id: 'size', foldsFirst: true, render: size },
 		{ id: 'zoom', render: zoom },
-		{ id: 'uses', render: usedIn },
+		...(props.uses.length ? [{ id: 'uses', render: usedIn }] : []),
 		...(props.session ? [{ id: 'tools', render: tools }] : []),
 		...(props.session?.cropping ? [{ id: 'finish', pinned: true, alignEnd: true, render: finish }] : []),
 		{ id: 'edit', pinned: true, alignEnd: !props.session?.cropping, render: edit },

@@ -31,7 +31,7 @@ Find the message you see. [LaTeX](latex.md), [Typst](typst.md), [Git](git.md) an
 | A comment shows **Check placement**     | The sentence appears more than once. Check which copy the comment is on.                              |
 | Pasted text loses its formatting        | Turn on Preferences › Editor › Smart paste.                                                           |
 | The editor is justified, the PDF is not | Preferences › Editor › Justify text changes only the editor.                                          |
-| No spelling underlines                  | Turn on Preferences › Spelling › Check spelling and grammar.                                          |
+| No spelling underlines                  | Turn on Preferences › Spelling & Grammar › Check spelling and grammar.                                |
 
 ## Citations
 
@@ -45,7 +45,7 @@ Find the message you see. [LaTeX](latex.md), [Typst](typst.md), [Git](git.md) an
 | You see                           | Fix                                                                                           |
 | --------------------------------- | --------------------------------------------------------------------------------------------- |
 | An agent shows **Not found**      | Install it, or add its folder in Preferences › Programs & Compiler › Other folders.           |
-| No Agent tab                      | Tick an agent in Preferences › AI Assistant › Agent tab.                                      |
+| No Agent tab                      | Pick an agent in Preferences › AI agent.                                                      |
 | "Not running: …" under MCP server | Another program uses the port. See [Change the port](../ai-assistant/mcp.md#change-the-port). |
 | "The text from … was not used"    | The agent's result broke a rule. The note under it says which.                                |
 

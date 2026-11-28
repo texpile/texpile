@@ -6,8 +6,9 @@ import { readSettings } from '../../appSettings';
 import { agentsDir } from '../../appIdentity';
 import { findProgram } from '../../shell/findProgram';
 import { shellEnvReady } from '../../shell/shellEnv';
+import { agentModelOf, chosenAgent, type AiAgent } from '../agentChoice';
 import { folderOf } from '../../windows/windowRegistry';
-import { agentLaunch, PANEL_PRESETS, presetProgram, type PanelAgent } from './acpAgents';
+import { agentLaunch } from './acpAgents';
 import { AcpSession, type AcpEvent } from './acpSession';
 import type { PrivateMcp } from '../../mcp/server';
 
@@ -48,7 +49,7 @@ function closeFor(wcId: number): void {
 
 /** `agent` is the one started, which a later choice in another window's Preferences does not change. `closed`: a close
  *  or another start came while this one waited, and the window has moved on from it */
-type StartResult = { ok: true; agent: PanelAgent } | { ok: false; reason: 'no-folder' | 'unset' | 'missing' | 'closed'; program?: string };
+type StartResult = { ok: true; agent: AiAgent } | { ok: false; reason: 'no-folder' | 'unset' | 'missing' | 'closed'; program?: string };
 
 async function start(wc: WebContents): Promise<StartResult> {
 	closeFor(wc.id);
@@ -58,8 +59,9 @@ async function start(wc: WebContents): Promise<StartResult> {
 	await shellEnvReady();
 	if (generations.get(wc.id) !== generation) return { ok: false, reason: 'closed' };
 	const s = readSettings();
-	if (s.aiOff === true) return { ok: false, reason: 'unset' };
-	const launch = agentLaunch(s.agentPanel, s.agentPanelCommand, { findProgram, adapterDir: agentsDir(), execPath: process.execPath });
+	const agent = chosenAgent(s);
+	if (!agent) return { ok: false, reason: 'unset' };
+	const launch = agentLaunch(agent, s.agentCommand, { findProgram, adapterDir: agentsDir(), execPath: process.execPath });
 	if (!launch.ok)
 		return launch.reason === 'missing' ? { ok: false, reason: 'missing', program: launch.program } : { ok: false, reason: 'unset' };
 	const mcp = await agentMcp();
@@ -67,6 +69,7 @@ async function start(wc: WebContents): Promise<StartResult> {
 	const session = new AcpSession({
 		...launch,
 		root,
+		model: agentModelOf(s, agent, 'chat'),
 		version: app.getVersion(),
 		mcp: mcp && { url: mcp.url, token: mcp.grant(wc.id) },
 		emit: (e) => send(wc, e)
@@ -81,7 +84,7 @@ async function start(wc: WebContents): Promise<StartResult> {
 		});
 	}
 	void session.start();
-	return { ok: true, agent: s.agentPanel as PanelAgent };
+	return { ok: true, agent };
 }
 
 function isContent(blocks: unknown): blocks is ContentBlock[] {
@@ -89,10 +92,6 @@ function isContent(blocks: unknown): blocks is ContentBlock[] {
 }
 
 export function registerAcpIpc(): void {
-	ipcMain.handle('acp:detect', async () => {
-		await shellEnvReady();
-		return Object.fromEntries(PANEL_PRESETS.map((a) => [a, findProgram(presetProgram(a)) !== null]));
-	});
 	ipcMain.handle('acp:start', (e) => start(e.sender));
 	ipcMain.handle('acp:prompt', (e, blocks: unknown) => {
 		const session = sessions.get(e.sender.id);

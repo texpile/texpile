@@ -72,6 +72,7 @@ function session(name: string, wantsSignIn: boolean, root: string, events: AcpEv
 		args: [fakeAgent(name, wantsSignIn)],
 		env: {},
 		root,
+		model: '',
 		version: '0.0.0',
 		mcp: null,
 		emit: (e) => {

@@ -11,6 +11,13 @@ import type { CommandImpl } from '$lib/keybindings/commands/commandRegistry';
 import type { PaletteActions } from '$lib/workspace/commandPalette.svelte';
 import type { EditorView as CMView } from '@codemirror/view';
 import { m } from '$lib/paraglide/messages';
+import { proofreadOn } from '$lib/editor/spellcheck/review/reviewStore';
+import {
+	fileProofreadOffered,
+	projectProofreadOffered,
+	proofreadOpenFile,
+	proofreadProject
+} from '$lib/problems/aiProofread/proofreadDocument';
 
 function foldsByKind(): boolean {
 	return !!sourceCmView.current && hasFoldKinds(sourceCmView.current.state);
@@ -41,6 +48,22 @@ export function editorCommands(a: PaletteActions): CommandImpl[] {
 		return sourceCmView.current && a.renameSymbol ? renameTargetOf(sourceCmView.current) : null;
 	}
 	return [
+		{
+			id: 'editor.proofreadFile',
+			enabled: () => proofreadOn() && fileProofreadOffered(),
+			run: () => {
+				a.showProblems();
+				void proofreadOpenFile();
+			}
+		},
+		{
+			id: 'editor.proofreadProject',
+			enabled: () => proofreadOn() && projectProofreadOffered(),
+			run: () => {
+				a.showProblems();
+				void proofreadProject();
+			}
+		},
 		{
 			id: 'editor.zoteroCitation',
 			enabled: () => !!a.insertZoteroCitation && !!a.canZoteroCite?.(),

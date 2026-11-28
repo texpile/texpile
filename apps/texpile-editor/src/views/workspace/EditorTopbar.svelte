@@ -6,7 +6,7 @@
 	import { openWorkspaceForFile } from '$lib/workspace/openWorkspace';
 	import { fileMode } from '$lib/workspace/fileMode.svelte';
 	import { latexLiveMode } from '$lib/workspace/projectConfigSync.svelte';
-	import { compileLog } from '$lib/stores/compileLogStore';
+	import ProblemsIndicator from '$lib/problems/ui/ProblemsIndicator.svelte';
 	import CompileButton, { COMPILE_TONE } from '$lib/preview/CompileButton.svelte';
 	import CompileOptionsMenu from './CompileOptionsMenu.svelte';
 	import { AnchoredMenu } from '$lib/pdf-view/anchoredMenu.svelte';
@@ -15,18 +15,7 @@
 	import EditModePicker from './EditModePicker.svelte';
 	import { titleBarLayout } from '$lib/chrome/titleBarLayout.svelte';
 	import OpenAgentButton from '$lib/ai/agentPanel/ui/OpenAgentButton.svelte';
-	import {
-		ArrowRight,
-		Square,
-		Play,
-		ChevronDown,
-		CircleAlert,
-		TriangleAlert,
-		ShieldQuestion,
-		MessageSquare,
-		FolderOpen,
-		PanelRight
-	} from '@lucide/svelte';
+	import { ArrowRight, Square, Play, ChevronDown, ShieldQuestion, MessageSquare, FolderOpen, PanelRight } from '@lucide/svelte';
 
 	type Props = {
 		loadedPath: string | null;
@@ -191,8 +180,8 @@
 	});
 </script>
 
-<div class="flex items-center gap-2 @max-[20rem]:gap-0.5">
-	<div class="flex items-center gap-2 @max-[20rem]:gap-0.5">
+<div class="flex items-center {compact ? 'gap-0.5' : 'gap-2 @max-[20rem]:gap-0.5'}">
+	<div class="flex items-center {compact ? 'gap-0.5' : 'gap-2 @max-[20rem]:gap-0.5'}">
 		<!-- Compile first: the end of the bar nearest the editor -->
 		{#if fileMode.current}
 			<!-- spelled out, and unboxed like Show PDF -->
@@ -259,20 +248,7 @@
 				</button>
 			{/if}
 		{/if}
-		{#if compileLog.current && (compileLog.current.errors.length > 0 || compileLog.current.warnings.length > 0)}
-			<button
-				class="{quiet} gap-1 {compileLog.current.errors.length > 0 ? 'text-error-ink' : 'text-warning-ink'}"
-				onclick={onShowProblems}
-				use:tip={m.wsview_show_problems_title()}
-			>
-				{#if compileLog.current.errors.length > 0}
-					<CircleAlert class="size-3.5" /> {compileLog.current.errors.length}
-				{/if}
-				{#if compileLog.current.warnings.length > 0}
-					<TriangleAlert class="size-3.5" /> {compileLog.current.warnings.length}
-				{/if}
-			</button>
-		{/if}
+		<ProblemsIndicator class={quiet} onclick={onShowProblems} />
 		{#if onSyncToCursor}
 			<!-- only while the preview is popped out: its window has no divider chip, and the jump reads the caret in this window -->
 			<button
@@ -303,15 +279,10 @@
 		{/if}
 		{#if showPdf}
 			<!-- unboxed like Layout beside it: a border made it the heaviest thing in the title bar -->
-			<button
-				class="title-bar-button gap-1"
-				onclick={onTogglePdf}
-				aria-label={m.wsview_show_pdf()}
-				use:tip={titleBarLayout.pdfIconOnly ? m.wsview_show_pdf() : undefined}
-			>
+			<button class="title-bar-button gap-1" onclick={onTogglePdf} aria-label={m.wsview_show_pdf()} use:tip={m.wsview_show_pdf()}>
 				<PanelRight class="size-3.5" />
 				<!-- in the layout while hidden, so the title bar can measure what the label costs -->
-				<span class={titleBarLayout.pdfIconOnly ? 'invisible absolute' : 'cap-center'} data-title-bar-label>{m.wsview_show_pdf()}</span>
+				<span class={titleBarLayout.pdfIconOnly ? 'invisible absolute' : 'cap-center'} data-title-bar-label>{m.wsview_pdf_label()}</span>
 			</button>
 		{/if}
 	</div>

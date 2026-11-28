@@ -282,7 +282,7 @@
 						</div>
 					{:else}
 						<div class="text-muted @container mt-6 mb-2 flex flex-col items-center gap-1 px-3 text-center text-sm">
-							<GitCommitHorizontal class="size-6 opacity-60" />
+							<GitCommitHorizontal class="text-muted size-6" />
 							<span class="@max-[11rem]:text-xs">{m.vcs_no_changes()}</span>
 						</div>
 						<!-- VS Code's action button: with nothing to save, what is left to do is send and receive

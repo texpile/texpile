@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { maskTex, overlapsMask } from '$lib/editor/spellcheck/texMask';
+import { ownMathTreeOf } from '$lib/editor/spellcheck/source/ownMathTree';
 
 // The LaTeX masker feeding harper in source mode: markup becomes spaces (offsets preserved),
 // prose (including content-command arguments) stays. Mirrors upstream harper-tex's Masker.
@@ -75,4 +76,9 @@ describe('maskTex', () => {
 		const s = lints.map((l) => l.span()).find((sp) => !overlapsMask(spans, sp.start, sp.end))!;
 		expect(s.start).toBe(src.indexOf('misteak'));
 	}, 30000);
+
+	it('masks a \\def body and the math a defined macro opens', () => {
+		const src = '\\def\\u{{\\bf u}}\n\\def\\beaa{\\begin{eqnarray*}}\n\\def\\eeaa{\\end{eqnarray*}}\nProse\n\\beaa\nr &=& f u\n\\eeaa\nend';
+		expect(maskTex(src, ownMathTreeOf(src)).text.split(/\s+/).filter(Boolean)).toEqual(['Prose', 'end']);
+	});
 });

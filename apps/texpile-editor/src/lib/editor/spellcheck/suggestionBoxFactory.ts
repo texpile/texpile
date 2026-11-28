@@ -12,6 +12,7 @@ import { isDictionaryLanguage, type SpellLanguage } from './languages/spellLangu
 type Position = {
 	x: number;
 	y: number;
+	top?: number;
 };
 
 type OnReplaceCallback = (value: string) => void;
@@ -59,7 +60,9 @@ function normalizeProblem(p: ProofreadProblem & { rule?: string; language?: Spel
 	};
 }
 
-export function createHarperSuggestionBox(options: Parameters<CreateSuggestionBox>[0]): { destroy: () => void } {
+export function createHarperSuggestionBox(options: Omit<Parameters<CreateSuggestionBox>[0], 'position'> & { position: Position }): {
+	destroy: () => void;
+} {
 	if (currentCleanup) {
 		currentCleanup();
 		currentCleanup = null;

@@ -61,6 +61,9 @@ export const projectSpelling = box<SpellLanguage | null>(null);
 /** the folder's LaTeX checks turned on or off over the app's, by check id */
 export const projectChecks = box<Record<string, boolean>>({});
 
+/** the Problems rows this folder ignores */
+export const projectIgnored = box<string[]>([]);
+
 /** the folder's live mode where it applies: to a main file that compiles with LaTeX */
 export function latexLiveMode(): boolean {
 	return compileConfig.current.latex.liveMode && effectiveCompileFormat(mainFile.current) === 'latex';
@@ -76,6 +79,7 @@ export class ProjectConfigSync {
 		compileConfig.current = defaults();
 		projectSpelling.current = null;
 		projectChecks.current = {};
+		projectIgnored.current = [];
 	}
 
 	/**
@@ -106,6 +110,7 @@ export class ProjectConfigSync {
 		if ((cfg.spelling?.language ?? null) !== projectSpelling.current) projectSpelling.current = cfg.spelling?.language ?? null;
 		// unchanged choices keep their object: a new one on every save re-ran the checks
 		if (JSON.stringify(cfg.checks ?? {}) !== JSON.stringify(projectChecks.current)) projectChecks.current = cfg.checks ?? {};
+		if (JSON.stringify(cfg.ignore ?? []) !== JSON.stringify(projectIgnored.current)) projectIgnored.current = cfg.ignore ?? [];
 		// a project WITH a config must have an ignore that lets it reach git; this also upgrades
 		// the stale seeded allowlist 0.17 shipped (it kept config.json out of git status) without
 		// waiting for the next settings change to write one
@@ -235,6 +240,13 @@ export class ProjectConfigSync {
 		void this.save(root);
 	}
 
+	/** a guest keeps what it ignores for the session */
+	setIgnored(root: string | null, keys: string[]): void {
+		projectIgnored.current = keys;
+		if (root === GUEST_ROOT) return;
+		void this.save(root);
+	}
+
 	/**
 	 * Write the adopted state back out.
 	 *
@@ -266,6 +278,7 @@ export class ProjectConfigSync {
 		}
 		if (projectSpelling.current) cfg.spelling = { language: projectSpelling.current };
 		if (Object.keys(projectChecks.current).length) cfg.checks = projectChecks.current;
+		if (projectIgnored.current.length) cfg.ignore = projectIgnored.current;
 		await writeProjectConfig(root, cfg);
 	}
 }

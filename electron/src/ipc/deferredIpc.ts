@@ -56,6 +56,13 @@ const steps: Array<[DeferredStep, () => Promise<void>]> = [
 	['doi', async () => (await import('./doiIpc.js')).registerDoiIpc()],
 	['agent', async () => (await import('./agentIpc.js')).registerAgentIpc()],
 	[
+		'ai',
+		async () => {
+			(await import('./proofreadIpc.js')).registerProofreadIpc();
+			(await import('./imageToLatexIpc.js')).registerImageToLatexIpc();
+		}
+	],
+	[
 		'acp',
 		async () => {
 			acpIpc = await import('../ai/acp/acpIpc.js');

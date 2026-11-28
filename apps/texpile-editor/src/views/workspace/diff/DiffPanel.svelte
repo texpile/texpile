@@ -243,7 +243,7 @@
 		height: 100%;
 	}
 	.diff-panel :global(.cm-scroller) {
-		font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+		font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, Monaco, Geneva, monospace;
 		line-height: 1.6;
 	}
 	.diff-panel :global(.cm-content) {
@@ -313,7 +313,7 @@
 		z-index: 201;
 		box-sizing: border-box;
 		padding: 5px 5px 5px 10px;
-		font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+		font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, Monaco, Geneva, monospace;
 		font-size: 0.875rem;
 		line-height: 1.6;
 		white-space: nowrap;

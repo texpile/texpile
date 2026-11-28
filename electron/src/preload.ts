@@ -543,22 +543,35 @@ contextBridge.exposeInMainWorld('texpileTemplates', {
 	universeUnpack: (name: string, version: string, dir: string) => invokeFs('templates:universeUnpack', { name, version, dir })
 });
 
-// the reader's own command-line agents (Preferences > AI); main picks the command, a run carries the prompt and which of
-// the agents ticked there to run
+// the reader's own agent (Preferences > AI agent); main picks the program, a run carries only the prompt
 contextBridge.exposeInMainWorld('texpileAgent', {
 	/** which preset agents are on PATH */
 	detect: () => invokeReady('agent:detect') as Promise<Record<string, boolean>>,
-	/** the models a preset agent offers, asked of the agent */
-	models: (agent: 'claude' | 'codex' | 'agy') => invokeReady('agent:models', agent),
-	/** run an agent on a prompt, `system` holding the task's rules; resolves { ok, text } or { ok: false, error } */
-	run: (id: string, prompt: string, system: string, agent: string) => invokeReady('agent:run', { id, prompt, system, agent }),
-	cancel: (id: string) => ipcRenderer.send('agent:cancel', id)
+	/** the models an agent offers, asked of the agent */
+	models: (agent: string) => invokeReady('agent:models', agent),
+	/** run the agent on a prompt, `system` holding the task's rules; resolves { ok, text } or { ok: false, error } */
+	run: (id: string, prompt: string, system: string, task?: 'refine' | 'math') => invokeReady('agent:run', { id, prompt, system, task }),
+	/** a short request to the agent picked, the way the tasks reach it */
+	test: () => invokeReady('agent:test'),
+	cancel: (id: string) => ipcRenderer.send('agent:cancel', id),
+	/** starts the math search's process before its first phrase */
+	warmMath: (system: string) => ipcRenderer.send('agent:warm', system)
+});
+
+// proofreading with the agent; main picks it
+contextBridge.exposeInMainWorld('texpileProofread', {
+	review: (system: string, request: string, lane: number) => invokeReady('proofread:review', { system, request, lane })
+});
+
+// a picture turned into LaTeX or Typst by the agent picked in Preferences
+contextBridge.exposeInMainWorld('texpileAi', {
+	imageToLatex: (req: { id: string; system: string; request: string; mediaType: string; base64: string }) =>
+		invokeReady('ai:imageToLatex', req),
+	cancel: (id: string) => ipcRenderer.send('ai:cancel', id)
 });
 
 // the agent panel's conversation over ACP; main picks the program and the folder, a window only talks
 contextBridge.exposeInMainWorld('texpileAcp', {
-	/** which preset agents are on PATH */
-	detect: () => invokeReady('acp:detect') as Promise<Record<string, boolean>>,
 	/** start the chosen agent in this window's folder, replacing any conversation it had */
 	start: () => invokeReady('acp:start'),
 	/** one turn; resolves when the agent is done, with the files it changed */

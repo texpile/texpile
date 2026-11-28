@@ -12,6 +12,7 @@ import { MARKDOWN_LIST_MARKER, TYPST_LIST_MARKER, wrapIndent } from './extension
 import { sourceMathSearch } from './extensions/math-search/sourceMathSearch';
 import { bracketMatching, codeFolding, indentOnInput, foldGutter, LanguageDescription } from '@codemirror/language';
 import { cmSyntaxHighlight } from '$lib/editor/source/cmHighlight';
+import { cmNoteMarks } from '$lib/editor/source/extensions/note-marks/cmNoteMarks';
 import { languages as cmlangdata } from '@codemirror/language-data';
 import { searchKeymap } from '@codemirror/search';
 import { closeSearchPanelAnimated, texpileSearch, toggleSearchPanel } from '$lib/editor/source/extensions/search-panel/searchPanel.svelte';
@@ -25,7 +26,9 @@ import { createProjectFile, typstQuickFix } from '$lib/languages/typst/intellise
 import { typstColorSwatches } from '$lib/languages/typst/intellisense/actions/colorSwatches';
 import { guestSession } from '$lib/collab/guestSession';
 import { mdPathCompletion } from '$lib/languages/markdown/pathCompletion';
-import { cmSpellcheck } from '$lib/editor/spellcheck/cmSpellcheck';
+import { cmSpellcheck, type IgnoredFinding } from '$lib/editor/spellcheck/cmSpellcheck';
+import { isIgnored } from '$lib/problems/ignoredProblems';
+import { proofreadIgnoreKey } from '$lib/problems/sources/proofreadProblems';
 import type { SpellLanguage } from '$lib/editor/spellcheck/languages/spellLanguages';
 import { lintGutter, linter } from '@codemirror/lint';
 import { diagnosticHover } from './diagnostics/diagnosticHover';
@@ -88,6 +91,10 @@ export function sourceLineWrap(fileFor: string): Extension {
 	let wrap = lineWraps.get(marker);
 	if (!wrap) lineWraps.set(marker, (wrap = [EditorView.lineWrapping, wrapIndent(marker)]));
 	return wrap;
+}
+
+function ignoredIn(fileFor: string): IgnoredFinding | undefined {
+	return fileFor ? (f) => isIgnored(proofreadIgnoreKey(fileFor, f.rule, f.kind, f.words, f.line)) : undefined;
 }
 
 function pasteDialectOf(fileFor: string): PasteDialect | null {
@@ -162,7 +169,8 @@ export function buildSourceExtensions(deps: SourceSetupDeps): Extension[] {
 					...(!fileFor || /\.tex$/i.test(fileFor) ? [starterGhost(), sourceSnippets('latex', snippetOptions)] : []),
 					...(fileFor && /\.(tex|tikz)$/i.test(fileFor) ? [sourceFigureMarks(fileFor)] : []),
 					sourceMathSearch(),
-					cmSpellcheck(deps.spellLanguage)
+					cmSpellcheck(deps.spellLanguage, undefined, ignoredIn(fileFor)),
+					cmNoteMarks()
 				]
 			: /\.(md|markdown)$/i.test(fileFor)
 				? // md chords; $-math, spellcheck and project file paths are dialect-free
@@ -174,7 +182,8 @@ export function buildSourceExtensions(deps: SourceSetupDeps): Extension[] {
 						sourceSnippets('markdown', snippetOptions),
 						mathPreview({ markdown: true }),
 						sourceMathSearch(),
-						cmSpellcheck(deps.spellLanguage, 'markdown'),
+						cmSpellcheck(deps.spellLanguage, 'markdown', ignoredIn(fileFor)),
+						cmNoteMarks(),
 						foldGutter({ markerDOM: foldMarkerDom }),
 						foldMarkerTheme
 					]
@@ -197,7 +206,8 @@ export function buildSourceExtensions(deps: SourceSetupDeps): Extension[] {
 								typstQuickFix({ onCreateFile: guestSession.active ? undefined : createProjectFile }),
 								typstColorSwatches(),
 								sourceFigureMarks(fileFor),
-								cmSpellcheck(deps.spellLanguage, 'typst'),
+								cmSpellcheck(deps.spellLanguage, 'typst', ignoredIn(fileFor)),
+								cmNoteMarks(),
 								foldGutter({ markerDOM: foldMarkerDom }),
 								foldMarkerTheme
 							]

@@ -112,14 +112,14 @@ export function memoryVault(): SignInVault {
 
 /** the keychain-backed vault, or null where there is no keychain to seal with: on Linux without
  *  one, Electron falls back to a fixed key, which would be the password in plain text by another name */
-export function keychainVault(): SignInVault | null {
+export function keychainVault(fileName = 'git-sign-ins.json'): SignInVault | null {
 	try {
 		if (!safeStorage.isEncryptionAvailable()) return null;
 		if (process.platform === 'linux' && safeStorage.getSelectedStorageBackend() === 'basic_text') return null;
 	} catch {
 		return null;
 	}
-	const file = join(app.getPath('userData'), 'git-sign-ins.json');
+	const file = join(app.getPath('userData'), fileName);
 	return {
 		encrypt: (plain) => safeStorage.encryptString(plain).toString('base64'),
 		decrypt: (sealed) => {

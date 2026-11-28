@@ -10,6 +10,7 @@ import * as fs from 'node:fs';
 import * as path from 'node:path';
 import { setToolDirs } from './shell/toolDirs';
 import { upgradeAgentSettings } from './ai/agentSettingsUpgrade';
+import { DEFAULT_AGENT_MODELS } from './ai/agentChoice';
 
 const DEFAULT_SETTINGS = {
 	v: 1,
@@ -47,18 +48,17 @@ const DEFAULT_SETTINGS = {
 	// 0 = use the channel default (mcp.PORT_DEFAULT / PORT_DEFAULT_DEV). Fixed rather than
 	// ephemeral so a client config keeps working across restarts; overridable for a port clash.
 	mcpPort: 0,
-	// the reader's own command-line agent that Refine may run: 'claude', 'codex', 'agy' or 'custom'; null = none chosen
-	// yet. Kept here and not in a folder's .texpile/config.json, which travels with the folder: a downloaded
-	// project must never pick the program that runs, and no MCP tool writes this file. A run names one of these
-	aiOff: false, // Preferences › AI Assistant's switch: no agent runs while it is on, whatever is ticked
-	refineAgents: null as string[] | null,
-	aiAgentCommand: '', // the command line for the 'custom' agent; the prompt goes on its stdin
-	aiAgentModels: {} as Record<string, string>, // each preset's --model, from the list it gives (agentModels.ts); '' = its own default
-	// the agent the panel in the dock talks to over ACP ('' = not chosen yet, a preset, or 'custom'). Here
-	// for the same reason as refineAgents: a project's own config must never pick the program that runs
-	agentPanel: '',
-	agentPanelAgents: null as string[] | null, // the agents the panel's menu offers; null = the installed ones, [] = off
-	agentPanelCommand: '', // the command line when agentPanel is 'custom'; it speaks ACP on stdin and stdout
+	aiOff: false, // Preferences › AI agent's "Use AI features" switched off: no agent runs and no AI feature shows
+	// the one agent every AI feature uses: a preset or 'custom'; '' = none picked yet. Here, not in a project's config,
+	// so a project can never pick the program that runs
+	agent: '',
+	agentCommand: '', // the 'custom' agent's command line; it speaks ACP on stdin and stdout
+	// each agent's model per task (ai/agentChoice.ts ModelTask), from the list it gives; '' or missing = its own default
+	agentModels: DEFAULT_AGENT_MODELS,
+	// Harper's findings checked and added to by the agent: the paragraphs on screen
+	proofreadAi: true,
+	proofreadAddTerms: true, // names and field terms the model recognizes go into the dictionary
+	mathFromWords: true, // a phrase typed in the math search goes to the agent
 	openFolders: [] as string[], // folders open across windows; maintained here for session restore
 	toolDirs: [] as string[], // searched before PATH by every program Texpile starts; see shell/toolDirs.ts
 	checkForNewVersions: true, // fetch co-authors' versions every few minutes while focused (renderer scmAutoCheck)

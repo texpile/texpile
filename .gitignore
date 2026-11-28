@@ -39,3 +39,6 @@ roundtrip-diff/
 **/test-results/
 apps/texpile-editor/tests/integration/report/
 apps/texpile-editor/tests/integration/results/
+
+# node writes its compile cache here when the temp folder is the repo
+node-compile-cache/

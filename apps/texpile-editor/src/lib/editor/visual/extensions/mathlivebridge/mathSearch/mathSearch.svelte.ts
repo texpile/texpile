@@ -12,13 +12,16 @@ import { mathStructures, searchStructures, type MathStructure } from './mathStru
 import { snippetStructures } from '$lib/editor/snippets/visual/mathliveSnippets';
 import { loadMathEntries, searchMathEntries, type MathEntries, type MathEntry } from './mathEntries';
 import { EMPTY_QUERY, replaceSelection, selectedText, type QueryBox } from './query/queryBox';
+import { isPhrase, mathFromWords, wordsOffered, type WordsAnswer } from './mathFromWords.svelte';
 
 export type MathSearchResult = { section: string } & (
-	{ kind: 'structure'; structure: MathStructure } | { kind: 'entry'; entry: MathEntry }
+	| { kind: 'structure'; structure: MathStructure }
+	| { kind: 'entry'; entry: MathEntry }
+	| { kind: 'words'; query: string; answer: WordsAnswer | null }
 );
 
 /** where the panel sits: under the caret, or above it when there is no room below */
-export type MathSearchPlace = { left: number; top?: number; bottom?: number };
+export type MathSearchPlace = { left: number; top?: number; bottom?: number; maxHeight: number };
 
 const PANEL_WIDTH = 320;
 const PANEL_ROOM = 400;
@@ -46,7 +49,12 @@ class MathSearchState {
 	readonly results = $derived.by((): MathSearchResult[] => {
 		const query = this.query.trim();
 		const snippets = snippetStructures(this.syntax, this.display);
+		const words: MathSearchResult[] =
+			isPhrase(query) && wordsOffered()
+				? [{ kind: 'words', query, answer: mathFromWords.answerFor(this.syntax, query), section: m.mathsearch_from_words() }]
+				: [];
 		const found = [
+			...words,
 			...searchStructures(snippets, query).map((structure): MathSearchResult => ({
 				kind: 'structure',
 				structure,
@@ -107,6 +115,7 @@ class MathSearchState {
 		this.box = EMPTY_QUERY;
 		this.active = 0;
 		this.place = place;
+		mathFromWords.warm(syntax);
 		this.loaded = this.ready.get(syntax) ?? null;
 		if (!this.loaded)
 			void loadMathEntries(syntax).then((loaded) => {
@@ -116,6 +125,7 @@ class MathSearchState {
 	}
 
 	close = (): void => {
+		mathFromWords.stop();
 		this.field?.removeEventListener('blur', this.close);
 		this.field?.removeEventListener('selection-change', this.close);
 		this.source?.contentDOM.removeEventListener('blur', this.close);
@@ -131,6 +141,7 @@ class MathSearchState {
 		this.box = next;
 		if (!changed) return;
 		this.active = 0;
+		mathFromWords.askSoon(this.syntax, next.text);
 	}
 
 	type(text: string): void {
@@ -159,9 +170,16 @@ class MathSearchState {
 
 	pick(index = this.active): void {
 		const result = this.results[index];
+		if (result?.kind === 'words' && result.answer?.state !== 'done') return void this.pickWhenAnswered(result.query);
 		const { field, source, syntax, loaded } = this;
 		this.close();
 		if (!result) return;
+		if (result.kind === 'words') {
+			if (result.answer?.state !== 'done') return;
+			if (source) insertIntoSource(source, result.answer.math);
+			else insertSymbol(result.answer.math, syntax);
+			return;
+		}
 		if (source) return pickInSource(source, result, loaded);
 		if (!field) return;
 		if (result.kind === 'structure') {
@@ -176,9 +194,15 @@ class MathSearchState {
 		if (!symbol || !loaded) return;
 		loaded.set.remember(symbol.id);
 	}
+
+	/** Enter on a phrase still being answered: it goes in once the answer comes, if the search is still on it */
+	private async pickWhenAnswered(query: string): Promise<void> {
+		const answer = await mathFromWords.ask(this.syntax, query);
+		if (answer.state === 'done' && this.showing && this.query.trim() === query) this.pick(0);
+	}
 }
 
-function pickInSource(view: CMView, result: MathSearchResult, loaded: MathEntries | null): void {
+function pickInSource(view: CMView, result: Exclude<MathSearchResult, { kind: 'words' }>, loaded: MathEntries | null): void {
 	if (result.kind === 'structure') {
 		const { from, to } = view.state.selection.main;
 		const { source } = result.structure;
@@ -202,11 +226,12 @@ export function onScreen(top: number, bottom: number): boolean {
 	return bottom > 0 && top < window.innerHeight;
 }
 
-/** under the line from `top` to `bottom`, or above it when there is no room below */
+/** under the line from `top` to `bottom`, or above it when there is more room there */
 export function placeAt(caretLeft: number, top: number, bottom: number): MathSearchPlace {
 	const left = Math.max(8, Math.min(caretLeft - 16, window.innerWidth - PANEL_WIDTH - 8));
-	if (window.innerHeight - bottom >= PANEL_ROOM || top < PANEL_ROOM) return { left, top: bottom + 4 };
-	return { left, bottom: window.innerHeight - top + 4 };
+	const below = window.innerHeight - bottom - 12;
+	if (below >= PANEL_ROOM || below >= top - 12) return { left, top: bottom + 4, maxHeight: below };
+	return { left, bottom: window.innerHeight - top + 4, maxHeight: top - 12 };
 }
 
 export const mathSearch = new MathSearchState();

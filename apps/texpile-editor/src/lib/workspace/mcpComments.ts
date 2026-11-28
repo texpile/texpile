@@ -16,7 +16,7 @@ import type { CommentThread } from '$lib/comments/log';
 import { resolveExactly } from '$lib/comments/anchorSearch';
 import { isOpenSuggestion, isSuggestion } from '$lib/comments/suggest';
 import { agentSession, shownAgent } from '$lib/ai/agentPanel/agentSession.svelte';
-import { runningAgentName } from '$lib/ai/agentPanel/agentNames';
+import { runningAgentName } from '$lib/ai/agent/aiAgents';
 
 export type McpCommentDeps = {
 	comments: CommentsController;

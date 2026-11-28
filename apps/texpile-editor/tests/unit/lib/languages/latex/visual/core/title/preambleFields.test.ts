@@ -26,17 +26,21 @@ describe('the title block in a preamble', () => {
 		expect(preamble.slice(fields[2].bodyFrom, fields[2].bodyTo)).toBe('Engines,\n  London');
 	});
 
-	it('replaces the text of one field and leaves every other byte as written', async () => {
+	it('replaces the command of one field and leaves every other byte as written', async () => {
 		const table = packageTableOf(await parsedPackages(preamble));
 		const span = spanOf(preamble, preambleFields(preamble, table)[2]);
-		expect(replacePreambleSpan(preamble, span, 'Analytical Engines')).toBe(preamble.replace('Engines,\n  London', 'Analytical Engines'));
+		expect(replacePreambleSpan(preamble, span, '\\affiliation{Analytical Engines}')).toBe(
+			preamble.replace('\\affiliation{Engines,\n  London}', '\\affiliation{Analytical Engines}')
+		);
 	});
 
 	// typed into the panel one key at a time, `\And` ends in `\` for a moment, which reads as escaping the closing brace
 	it('keeps the bytes after a field while its text ends in a backslash', async () => {
 		const table = packageTableOf(await parsedPackages(preamble));
 		const span = spanOf(preamble, preambleFields(preamble, table)[2]);
-		const halfTyped = replacePreambleSpan(preamble, span, 'Engines \\');
-		expect(replacePreambleSpan(halfTyped, span, 'Engines \\And')).toBe(preamble.replace('Engines,\n  London', 'Engines \\And'));
+		const halfTyped = replacePreambleSpan(preamble, span, '\\affiliation{Engines \\}');
+		expect(replacePreambleSpan(halfTyped, span, '\\affiliation{Engines \\And}')).toBe(
+			preamble.replace('Engines,\n  London', 'Engines \\And')
+		);
 	});
 });

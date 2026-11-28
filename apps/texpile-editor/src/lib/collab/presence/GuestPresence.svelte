@@ -1,6 +1,5 @@
 <script lang="ts">
-	// A guest's session state, in the title bar's trailing slot next to the window buttons - the same
-	// place, shape and weight as the host's SessionPresence, so the two roles read the same way round.
+	// a guest's session in the title bar, where the host's SessionPresence stands.
 	// Leave is rare, so it waits in this menu rather than standing in the bar as a button of its own.
 	import { LogOut } from '@lucide/svelte';
 	import { Menu, Portal } from '@skeletonlabs/skeleton-svelte';
@@ -9,6 +8,10 @@
 	import { menuContentClass, menuItemClass } from '$lib/menus/menuStyles';
 	import SessionFaces from './SessionFaces.svelte';
 	import { m } from '$lib/paraglide/messages';
+	import { untrack } from 'svelte';
+	import { isMac } from '$lib/platform';
+	import { titleBarLayout } from '$lib/chrome/titleBarLayout.svelte';
+	import TitleBarDivider from '$lib/chrome/TitleBarDivider.svelte';
 
 	const online = $derived(collabGuest.status === 'online' && collabGuest.hostOnline);
 	// only said when something is off (reconnecting, host gone); a healthy session needs nothing beside "Collaborating"
@@ -16,16 +19,26 @@
 		online ? m.session_collaborating() : !collabGuest.hostOnline ? m.session_host_gone() : m.session_status_reconnecting()
 	);
 
+	$effect(() => {
+		untrack(() => titleBarLayout.setSessionLabelled(true));
+		return () => untrack(() => titleBarLayout.setSessionLabelled(false));
+	});
+
 	function leave() {
 		collabGuest.leave();
 		navigate('/');
 	}
 </script>
 
+<!-- on macOS the traffic lights end the group before it -->
+{#if !isMac}<TitleBarDivider />{/if}
 <Menu onSelect={(d) => d.value === 'leave' && leave()}>
-	<Menu.Trigger class="app-no-drag title-bar-button mr-2 shrink-0 gap-1.5 self-center">
+	<Menu.Trigger class="app-no-drag title-bar-button shrink-0 gap-1.5 self-center">
 		<SessionFaces peers={collabGuest.peers} />
-		<span class="cap-center whitespace-nowrap" class:text-warning-ink={!online}>{label}</span>
+		<!-- a problem with the connection is said at any width -->
+		{#if titleBarLayout.sessionLabel || !online}
+			<span class="cap-center whitespace-nowrap" class:text-warning-ink={!online}>{label}</span>
+		{/if}
 	</Menu.Trigger>
 	<Portal>
 		<Menu.Positioner>

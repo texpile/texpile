@@ -996,8 +996,6 @@ html.pm-drop-refused .pm-drop-cursor {
 	--color-success-ink: var(--success-ink);
 	--color-warning-ink: var(--warning-ink);
 	--color-error-ink: var(--error-ink);
-	--color-blue: var(--brand-blue);
-	--color-gray-1100: var(--brand-gray);
 	--color-ref-fg: var(--ref-fg);
 	--color-ref-bg: var(--ref-bg);
 	--color-ref-broken-fg: var(--ref-broken-fg);
@@ -1216,9 +1214,10 @@ html.pm-drop-refused .pm-drop-cursor {
 	}
 }
 
-/* a popover taller than the room its positioner found scrolls inside itself */
+/* a popover larger than the room its positioner found stays inside it and scrolls */
 [data-scope='popover'][data-part='content'] {
 	max-height: var(--available-height);
+	max-width: var(--available-width);
 	overflow-y: auto;
 }
 
@@ -1818,7 +1817,9 @@ math-field[data-macro-selected] {
 		.preset-tonal-tertiary,
 		.preset-tonal-success,
 		.preset-tonal-warning,
-		.preset-tonal-error
+		.preset-tonal-error,
+		.hover\:preset-tonal,
+		.hover\:preset-tonal-surface
 	):not(:disabled):hover {
 	filter: none;
 }

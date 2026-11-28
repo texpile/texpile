@@ -25,12 +25,20 @@
 	{#if props.option.icon}
 		{@const Icon = props.option.icon}
 		<Icon class="size-4 shrink-0 {props.option.checked ? 'text-primary-ink' : 'text-muted'}" />
+	{:else if props.option.iconPath}
+		<svg
+			class="size-4 shrink-0 {props.option.checked ? 'text-primary-ink' : 'text-muted'}"
+			viewBox="0 0 24 24"
+			fill="currentColor"
+			aria-hidden="true"><path d={props.option.iconPath} /></svg
+		>
 	{:else if props.marked}
 		<span class="text-muted w-10 shrink-0 font-mono text-xs">{props.option.marker ?? ''}</span>
 	{/if}
-	<span class="min-w-0 flex-1">
-		<Menu.ItemText class="block">{props.option.label}</Menu.ItemText>
-		{#if props.option.note}<span class="text-muted block text-xs leading-relaxed">{props.option.note}</span>{/if}
+	<!-- an agent's own text can run to a paragraph -->
+	<span class="max-w-80 min-w-0 flex-1">
+		<Menu.ItemText class="block truncate">{props.option.label}</Menu.ItemText>
+		{#if props.option.note}<span class="text-muted line-clamp-2 text-xs leading-relaxed">{props.option.note}</span>{/if}
 	</span>
 	{#if props.option.keys}<span class="text-muted text-xs">{props.option.keys}</span>{/if}
 	<Check class="size-4 shrink-0 {props.option.checked ? '' : 'invisible'}" />

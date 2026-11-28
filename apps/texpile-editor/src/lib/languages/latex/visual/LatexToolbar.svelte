@@ -7,8 +7,8 @@
 	// block. Each bar renders only what its schema can hold, but an item present in two bars
 	// must sit in the same place and behave the same way in both.
 	import { tip } from '$lib/components/tooltip.svelte';
-	import { Bold, Underline, Italic, Code, List, ListOrdered, Link as LinkIcon, Quote, Minus, BoxSelect, Eye } from '@lucide/svelte';
-	import { selectParentNode, toggleMark } from 'prosemirror-commands';
+	import { Bold, Underline, Italic, Code, List, ListOrdered, Link as LinkIcon, Quote, Minus, Eye } from '@lucide/svelte';
+	import { toggleMark } from 'prosemirror-commands';
 	import { wrapInListItems } from './listItemIndent';
 	import type { EditorState, Transaction } from 'prosemirror-state';
 	import ToolbarTable from '$lib/editor/visual/toolbar/ToolbarTable.svelte';
@@ -83,7 +83,7 @@
 		<!-- item gaps and divider padding use the same step per breakpoint, so the border sits centered in its gap -->
 		<div class="flex min-h-7 min-w-0 flex-1 items-center gap-2 sm:gap-3 2xl:gap-4">
 			{#if isReadOnly.current}
-				<div class="text-muted flex items-center gap-1.5">
+				<div class="flex items-center gap-1.5">
 					<Eye class="size-4" />
 					<span class="text-sm font-medium">{m.toolbar_read_only()}</span>
 				</div>
@@ -167,9 +167,6 @@
 					{#snippet tb_hr()}
 						{@render iconButton(m.mdtoolbar_hr(), false, insertHorizontalRule, Minus)}
 					{/snippet}
-					{#snippet tb_selectblock()}
-						{@render iconButton(m.toolbar_select_block_aria(), false, selectParentNode, BoxSelect)}
-					{/snippet}
 
 					<ToolbarOverflow
 						gapClass="gap-3 2xl:gap-4"
@@ -190,8 +187,7 @@
 							{ id: 'math', render: tb_math },
 							{ id: 'table', render: tb_table },
 							{ id: 'codeBlock', render: tb_codeBlock },
-							{ id: 'hr', render: tb_hr },
-							{ id: 'selectblock', render: tb_selectblock }
+							{ id: 'hr', render: tb_hr }
 						]}
 					/>
 				{/if}

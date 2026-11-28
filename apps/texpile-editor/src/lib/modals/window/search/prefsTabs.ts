@@ -25,14 +25,14 @@ export const PREFS_TABS: TabDef[] = [
 	{ id: 'typst', label: () => m.prefs_group_typst() },
 	{ id: 'snippets', label: () => m.prefs_group_snippets() },
 	{ id: 'keybindings', label: () => m.menubar_keyboard_shortcuts() },
-	// named as the Spelling menu, which leads here
+	// the Spelling menu leads here
 	{ id: 'proofing', label: () => m.prefs_group_proofing(), sections: ['spellFolder', 'spellAll'] },
 	{ id: 'vcs', label: () => m.prefs_group_history(), desktopOnly: true, sections: ['git', 'localHistory'] },
 	{ id: 'collaboration', label: () => m.prefs_group_collaboration() },
 	{ id: 'toolchain', label: () => m.prefs_group_toolchain(), desktopOnly: true },
 	{ id: 'integrations', label: () => m.prefs_group_integrations(), desktopOnly: true },
 	{ id: 'startup', label: () => m.prefs_group_startup(), desktopOnly: true },
-	{ id: 'ai', label: () => m.prefs_group_ai(), desktopOnly: true }
+	{ id: 'ai', label: () => m.prefs_group_ai(), desktopOnly: true, sections: ['aiModels'] }
 ];
 
 /** the browser guest has no toolchain, Zotero, MCP server, folder to reopen or versions of its own */

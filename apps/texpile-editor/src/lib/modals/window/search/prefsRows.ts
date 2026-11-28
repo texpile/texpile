@@ -8,6 +8,7 @@ import { canKeepLocalHistory } from '$lib/workspace/localHistory/localHistory.sv
 import { openSpelling } from '$lib/editor/spellcheck/languages/folderLanguageMenu';
 import { LATEX_CHECK_IDS, type LatexCheckId } from '$lib/languages/latex/intellisense/checks/checkSwitches';
 import { checkName, checkNote } from '$lib/languages/latex/intellisense/checks/checkTexts';
+import { agentOffered } from '$lib/ai/agent/aiAgent.svelte';
 import type { PrefsTab } from './prefsTabs';
 
 const SECTIONS = {
@@ -20,7 +21,8 @@ const SECTIONS = {
 	spellFolder: () => m.prefs_spell_this_folder(),
 	spellAll: () => m.prefs_spell_all_folders(),
 	git: () => m.prefs_group_git(),
-	localHistory: () => m.prefs_group_local_history()
+	localHistory: () => m.prefs_group_local_history(),
+	aiModels: () => m.prefs_group_ai_models()
 } satisfies Record<string, () => string>;
 
 export type PrefsSectionId = keyof typeof SECTIONS;
@@ -46,6 +48,11 @@ export type PrefsRowDef = {
 
 function hasFolder(): boolean {
 	return !!workspaceRoot.current;
+}
+
+/** the models are the agent's own, so they show once one is picked that can run */
+function aiModelsShown(): boolean {
+	return agentOffered() !== null;
 }
 
 function grammarShown(): boolean {
@@ -174,6 +181,27 @@ const STATIC_ROWS = [
 
 	{ id: 'spellcheck', tab: 'proofing', label: () => m.prefs_spellcheck() },
 	{
+		id: 'ai-proofread',
+		tab: 'proofing',
+		label: () => m.prefs_proofread_ai(),
+		note: () => m.prefs_proofread_ai_note(),
+		shown: () => !settings.current.aiOff
+	},
+	{
+		id: 'ai-proofread-wording',
+		tab: 'proofing',
+		label: () => m.prefs_proofread_wording(),
+		note: () => m.prefs_proofread_wording_note(),
+		shown: () => settings.current.proofreadAi && !settings.current.aiOff
+	},
+	{
+		id: 'ai-proofread-terms',
+		tab: 'proofing',
+		label: () => m.prefs_proofread_terms(),
+		note: () => m.prefs_proofread_terms_note(),
+		shown: () => settings.current.proofreadAi && !settings.current.aiOff
+	},
+	{
 		id: 'folder-language',
 		tab: 'proofing',
 		section: 'spellFolder',
@@ -249,10 +277,42 @@ const STATIC_ROWS = [
 	{ id: 'reopen-last-folder', tab: 'startup', label: () => m.prefs_reopen_last_folder() },
 	{ id: 'check-updates', tab: 'startup', label: () => m.prefs_check_updates() },
 
-	{ id: 'ai-off', tab: 'ai', label: () => m.prefs_ai_off(), note: () => m.prefs_ai_off_note() },
-	{ id: 'mcp', tab: 'ai', label: () => m.prefs_mcp(), note: () => m.prefs_mcp_note() },
-	{ id: 'ai-agent', tab: 'ai', label: () => m.prefs_ai_agent(), note: () => m.prefs_ai_agent_note() },
-	{ id: 'agent-panel', tab: 'ai', label: () => m.prefs_agent_panel(), note: () => m.prefs_agent_panel_note() }
+	{ id: 'ai-on', tab: 'ai', label: () => m.prefs_ai_on(), note: () => m.prefs_ai_on_note() },
+	{ id: 'ai-agent', tab: 'ai', label: () => m.prefs_ai_agent() },
+	{ id: 'ai-math-words', tab: 'ai', label: () => m.prefs_ai_math_words(), note: () => m.prefs_ai_math_words_note() },
+	{
+		id: 'ai-model-proofread',
+		tab: 'ai',
+		section: 'aiModels',
+		label: () => m.prefs_ai_model_proofread(),
+		note: () => m.prefs_ai_model_proofread_note(),
+		shown: aiModelsShown
+	},
+	{
+		id: 'ai-model-refine',
+		tab: 'ai',
+		section: 'aiModels',
+		label: () => m.prefs_ai_model_refine(),
+		note: () => m.prefs_ai_model_refine_note(),
+		shown: aiModelsShown
+	},
+	{
+		id: 'ai-model-convert',
+		tab: 'ai',
+		section: 'aiModels',
+		label: () => m.prefs_ai_model_convert(),
+		note: () => m.prefs_ai_model_convert_note(),
+		shown: aiModelsShown
+	},
+	{
+		id: 'ai-model-chat',
+		tab: 'ai',
+		section: 'aiModels',
+		label: () => m.prefs_ai_model_chat(),
+		note: () => m.prefs_ai_model_chat_note(),
+		shown: aiModelsShown
+	},
+	{ id: 'mcp', tab: 'ai', label: () => m.prefs_mcp(), note: () => m.prefs_mcp_note() }
 ] as const satisfies readonly PrefsRowDef[];
 
 export type PrefsRowId = (typeof STATIC_ROWS)[number]['id'] | `latex-check-${LatexCheckId}` | `folder-check-${LatexCheckId}`;

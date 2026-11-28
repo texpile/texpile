@@ -31,6 +31,7 @@ function actions(host: boolean): PaletteActions {
 		toggleSidebar: () => {},
 		sidebarOpen: () => true,
 		toggleBottomPanel: () => {},
+		showProblems: () => {},
 		bottomPanelOpen: () => false,
 		agentTabOffered: () => true,
 		agentTabOpen: () => false,

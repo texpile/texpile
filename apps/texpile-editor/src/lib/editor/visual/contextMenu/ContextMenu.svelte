@@ -13,6 +13,7 @@
 	import { showContextMenu, type ContextMenuItem } from '$lib/menus/contextMenu.svelte';
 	import { m } from '$lib/paraglide/messages';
 	import { refineMenuItems } from '$lib/ai/refineMenu';
+	import { visualImageItems } from '$lib/ai/imageToLatex/imageToLatexMenu';
 	import type { ShowInOutput } from './showInOutput';
 	import { selectionBox } from './selectionBox';
 	import { menuPoint } from './menuPoint';
@@ -140,6 +141,8 @@
 		const items: ContextMenuItem[] = menuItems.map(entry);
 		const copyAs = formulaCopyAsItem(editorViewStore.current!);
 		if (copyAs) items.splice(2, 0, copyAs);
+		const image = visualImageItems(pos, editorViewStore.current!, dialect);
+		if (image.length) items.push({ separator: true }, ...image);
 		const refine = refineMenuItems(hasTextSelection, () => selectionBox(editorViewStore.current!));
 		if (refine.length) items.push({ separator: true }, ...refine);
 		if (onAddComment) {

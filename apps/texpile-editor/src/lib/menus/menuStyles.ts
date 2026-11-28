@@ -3,7 +3,7 @@
 export const menuPanelClass = 'card bg-surface-50-950 border-surface-200-800 border p-1 text-sm shadow-xl';
 // no taller than the room the positioner found, and scrolling past that, so no item is ever out of reach; above every
 // modal (ConfirmHost's z-1500 is the top one) because a dropdown opens inside one
-export const menuContentClass = `${menuPanelClass} z-[1600] flex max-h-[var(--available-height,100vh)] min-w-48 flex-col gap-0 overflow-y-auto`;
+export const menuContentClass = `${menuPanelClass} z-[1600] flex max-h-[var(--available-height,100vh)] max-w-[var(--available-width,100vw)] min-w-48 flex-col gap-0 overflow-y-auto`;
 // data-highlighted is set by the pointer and the arrow keys alike
 export const menuItemClass =
 	'flex w-full cursor-pointer items-center gap-3 rounded-base px-2.5 py-1 text-left text-sm hover:preset-tonal data-[highlighted]:preset-tonal data-[disabled]:opacity-40 disabled:pointer-events-none disabled:opacity-40';

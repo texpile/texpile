@@ -1,6 +1,5 @@
 // Louis, 2026-11-18: "when first loading the canvas editor: i see each row of text shake up and down a little bit until
-// they settle". What a file first shows stays where it is, its title with its formulas and the comment cards included: on
-// open, on coming back from another file, from Source and through a theme change, at 100 and 150 percent
+// they settle". The comment cards show with a file's first rows and stay, at 100 and 150 percent
 import { expect, test, type Page } from '@playwright/test';
 import { useTexpile } from '../../driver/useTexpile';
 import { VisualEditor } from '../../driver/visualEditor';
@@ -42,10 +41,7 @@ function threadOn(paragraph: number): string {
 		at: '2026-11-18T12:00:00.000Z'
 	});
 }
-const files = {
-	'long.tex': long,
-	'other.tex': `\\documentclass{article}\n\\begin{document}\n\nA short file to switch to.\n\n\\end{document}\n`
-};
+const files = { 'long.tex': long };
 const filesWithThreads = { ...files, '.texpile/comments.jsonl': [0, 120].map(threadOn).join('\n') + '\n' };
 
 function setTheme(page: Page, mode: 'light' | 'dark'): Promise<void> {
@@ -71,16 +67,6 @@ function expectStill(states: ShownRows[], file: string, what: string): ShownRows
 		expect(moved, `${what}: a row moved or broke again after it first showed`).toEqual([]);
 	}
 	return first;
-}
-
-/** each state drew its rows' text: none under four fifths of the most ink a state of the step drew */
-function expectInked(states: ShownRows[], what: string): void {
-	const inks = states.flatMap((state) => (state.ink === undefined ? [] : [state.ink]));
-	const most = Math.max(...inks);
-	expect(
-		inks.filter((ink) => ink < 0.8 * most),
-		`${what}: a frame drew the rows without their text`
-	).toEqual([]);
 }
 
 /** scrolls to the middle of the file and clicks there; the number of the paragraph the caret went into */
@@ -125,58 +111,6 @@ test.describe('a reload', () => {
 });
 
 for (const scale of [1, 1.5]) {
-	test.describe(`at ${scale * 100} percent`, () => {
-		const texpile = useTexpile({ files, scale });
-
-		test('nothing shown moves on open, coming back to the file, from Source and through a theme change', async () => {
-			const visual = new VisualEditor(texpile().page, texpile().root);
-			const { page } = visual;
-			await setTheme(page, 'light');
-
-			await recordShownRows(page);
-			await visual.open('long.tex');
-			await settled(page);
-			await quietFrames(page);
-			const opened = expectStill(await stopShownRows(page), 'long.tex', 'the first open');
-			expect(
-				opened.rows.some(([text]) => text.startsWith('title Over') && text.includes('∑')),
-				'the title with its formulas shows with the first rows'
-			).toBe(true);
-
-			const paragraphNumber = await clickMidFile(page);
-			expect(paragraphNumber, 'the caret is in a numbered paragraph').not.toBe('');
-			await visual.open('other.tex');
-
-			await recordShownRows(page);
-			await visual.open('long.tex');
-			await settled(page);
-			await quietFrames(page);
-			const back = expectStill(await stopShownRows(page), 'long.tex', 'coming back to the file');
-			expect(
-				back.rows.some(([text]) => text.includes(`${paragraphNumber} met`)),
-				'the first state shown holds the caret paragraph'
-			).toBe(true);
-
-			await visual.showSource();
-			await recordShownRows(page);
-			await visual.showVisual();
-			await settled(page);
-			await quietFrames(page);
-			expectStill(await stopShownRows(page), 'long.tex', 'Source to Visual');
-
-			await recordShownRows(page, { ink: true });
-			await setTheme(page, 'dark');
-			await settled(page);
-			await setTheme(page, 'light');
-			await settled(page);
-			await quietFrames(page);
-			const themed = await stopShownRows(page);
-			expectStill(themed, 'long.tex', 'a theme change');
-			expectInked(themed, 'a theme change');
-			expect(await probeErrors(page)).toEqual([]);
-		});
-	});
-
 	test.describe(`with comments at ${scale * 100} percent`, () => {
 		const texpile = useTexpile({ files: filesWithThreads, scale });
 

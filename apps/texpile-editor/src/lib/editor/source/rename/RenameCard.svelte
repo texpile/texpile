@@ -48,7 +48,7 @@
 >
 	<div class="flex items-center gap-2">
 		<IconTextCursorInput size={14} class="text-primary-ink" />
-		<span class="cap-center text-xs font-semibold opacity-75">{props.title}</span>
+		<span class="cap-center text-muted text-xs font-semibold">{props.title}</span>
 	</div>
 	<input
 		type="text"

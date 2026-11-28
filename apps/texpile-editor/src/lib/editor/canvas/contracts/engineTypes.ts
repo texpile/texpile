@@ -162,6 +162,8 @@ export type CanvasPainter = {
 	ground(ctx: CanvasRenderingContext2D, frame: PaintFrame): void;
 	/** one block in painting order, ctx mapping the block's own space: origin at its top, x from the column origin */
 	paintBlock(ctx: CanvasRenderingContext2D, block: PlacedBlock, frame: PaintFrame): void;
+	/** the block's outlines and frames, after every block of the band: they reach past the box over its neighbors */
+	paintOutlines?(ctx: CanvasRenderingContext2D, block: PlacedBlock, frame: PaintFrame): void;
 	/** the caret layer on the canvas the target makes for the carets' bounds; blinks come back through repaintCarets */
 	paintCarets(frame: PaintFrame, target: CaretCanvasTarget): void;
 	/** what the last paintCarets drew */

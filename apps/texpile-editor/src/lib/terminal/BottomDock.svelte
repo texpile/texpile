@@ -3,20 +3,21 @@
 	// terminal state (VS Code-style: one shown, the rest kept mounted so their shells persist).
 	// The parent owns only the dock's height/visibility (they drive its grid layout).
 	import { tip } from '$lib/components/tooltip.svelte';
-	import ProblemsPanel from '$lib/workspace/ProblemsPanel.svelte';
+	import ProblemsPanel from '$lib/problems/ui/ProblemsPanel.svelte';
+	import { problemsView } from '$lib/problems/problemsStore.svelte';
 	import CommentsPanel from '$lib/comments/CommentsPanel.svelte';
 	import type { CommentMessage, CommentThread } from '$lib/comments/log';
-	import { compileLog } from '$lib/stores/compileLogStore';
 	import { m } from '$lib/paraglide/messages';
 	import { TerminalShells } from './terminalShells.svelte';
 	import type { DockView } from './dockView';
 	import DockTabCount from './DockTabCount.svelte';
 	import AgentPanel from '$lib/ai/agentPanel/ui/AgentPanel.svelte';
-	import AgentPicker from '$lib/ai/agentPanel/ui/strip/AgentPicker.svelte';
+	import AgentStripControls from '$lib/ai/agentPanel/ui/strip/AgentStripControls.svelte';
 	import { agentSession } from '$lib/ai/agentPanel/agentSession.svelte';
 	import { agentUnavailable } from '$lib/ai/agentPanel/agentAvailability';
-	import { panelTabOff } from '$lib/ai/agentPanel/agentOffer.svelte';
-	import { SquareTerminal, ChevronDown, Check, Trash2, Plus, X, FoldHorizontal, UnfoldHorizontal } from '@lucide/svelte';
+	import { aiTurnedOff } from '$lib/ai/agent/aiAgent.svelte';
+	import { agentInSide, agentSide } from '$lib/ai/agentPanel/side/agentSide.svelte';
+	import { SquareTerminal, ChevronDown, Check, Trash2, Plus, X, FoldHorizontal, UnfoldHorizontal, PanelRight } from '@lucide/svelte';
 
 	let {
 		cwd,
@@ -70,16 +71,21 @@
 
 	const openComments = $derived(comments.filter((c) => !c.resolved).length);
 	// there until turned off; where the agent cannot run (a guest, the browser, a lone file) the tab says why
-	const agentOn = $derived(!panelTabOff());
+	const agentOn = $derived(!aiTurnedOff() && !agentInSide());
 	const agentBlocked = $derived(agentUnavailable());
 	// once opened it stays up behind the other tabs, so a message half written is still there on the way back
 	let agentOpened = $state(false);
-	// turned off from Preferences in any window: the tab goes (the workspace stops the agent behind it)
+	// turned off from Preferences in any window, or moved to the side panel: the tab goes
 	$effect(() => {
 		if (!agentOn && view === 'agent') view = terminalEnabled ? 'terminal' : 'problems';
 		if (!agentOn) agentOpened = false;
 		else if (view === 'agent') agentOpened = true;
 	});
+
+	function showAgent(): void {
+		if (agentInSide()) agentSide.setOpen(true);
+		else view = 'agent';
+	}
 
 	// shells (roster, compile shell, run/reset plumbing) live in terminalShells.svelte.ts
 	const shells = new TerminalShells(() => onClose());
@@ -168,10 +174,10 @@
 			onclick={() => (view = 'problems')}
 		>
 			{m.wsview_problems_label()}
-			{#if compileLog.current && compileLog.current.errors.length > 0}
-				<DockTabCount count={compileLog.current.errors.length} tone="error" />
-			{:else if compileLog.current && compileLog.current.warnings.length > 0}
-				<DockTabCount count={compileLog.current.warnings.length} tone="warning" />
+			{#if problemsView.counts.error > 0}
+				<DockTabCount count={problemsView.counts.error} tone="error" />
+			{:else if problemsView.counts.warning > 0}
+				<DockTabCount count={problemsView.counts.warning} tone="warning" />
 			{/if}
 		</button>
 		<!-- always present, not only once a thread exists: a tab that appears when there is something
@@ -275,7 +281,20 @@
 			</button>
 		{/if}
 		{#if view === 'agent'}
-			<AgentPicker disabled={!!agentBlocked} />
+			<AgentStripControls disabled={!!agentBlocked} />
+			{#if !agentBlocked}
+				<button
+					class="btn-icon btn-icon-xs hover:preset-tonal"
+					use:tip={m.agent_side_to_side()}
+					aria-label={m.agent_side_to_side()}
+					onclick={() => {
+						agentSide.moveTo('side');
+						onClose();
+					}}
+				>
+					<PanelRight class="size-3.5" />
+				</button>
+			{/if}
 		{/if}
 		{#if pdfPaneOpen}
 			<button
@@ -301,7 +320,7 @@
 <div class="relative min-h-0 flex-1">
 	{#if view === 'problems'}
 		<div class="bg-surface-50-950 absolute inset-0 z-10 overflow-hidden">
-			<ProblemsPanel root={cwd} onJump={onProblemJump} />
+			<ProblemsPanel root={cwd} onJump={onProblemJump} onShowAgent={showAgent} />
 		</div>
 	{:else if view === 'comments'}
 		<div class="bg-surface-50-950 absolute inset-0 z-10 overflow-hidden">

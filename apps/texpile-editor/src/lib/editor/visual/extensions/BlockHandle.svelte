@@ -3,7 +3,7 @@
 	import { inEditorPane } from '$lib/editor/visual/editorPanePositioning';
 	import { Popover, Portal } from '@skeletonlabs/skeleton-svelte';
 	import { Plus, Settings } from '@lucide/svelte';
-	import BlockHandleMenu from './blockHandle/BlockHandleMenu.svelte';
+	import BlockHandleGrip from './blockHandle/BlockHandleGrip.svelte';
 	import BlockInsertMenu from '$lib/editor/visual/insert/BlockInsertMenu.svelte';
 	import type { BlockInsertItem } from '$lib/editor/visual/insert/insertItem';
 	import { m } from '$lib/paraglide/messages';
@@ -16,7 +16,6 @@
 		/** comments crowd the pane: one column on the left and no right gutter */
 		stacked: boolean;
 		popoverOpen: boolean;
-		menuOpen: boolean;
 		/** the hint of the gear, for a block that has settings */
 		settings: string | null;
 	};
@@ -24,7 +23,7 @@
 		state,
 		onInsert,
 		onDragStart,
-		onDelete,
+		onSelect,
 		onSettings,
 		focusEditor,
 		items
@@ -32,7 +31,7 @@
 		state: State;
 		onInsert: (item: BlockInsertItem) => void;
 		onDragStart: (event: DragEvent) => void;
-		onDelete: () => void;
+		onSelect: () => void;
 		onSettings: (gear: HTMLElement) => void;
 		focusEditor: () => void;
 		items: () => readonly BlockInsertItem[];
@@ -72,14 +71,7 @@
 		</Portal>
 	</Popover>
 
-	<BlockHandleMenu
-		onOpenChange={(open) => {
-			state.menuOpen = open;
-			if (!open) focusEditor();
-		}}
-		{onDragStart}
-		{onDelete}
-	/>
+	<BlockHandleGrip {onSelect} {onDragStart} />
 	{#if state.stacked}{@render settingsButton()}{/if}
 </div>
 

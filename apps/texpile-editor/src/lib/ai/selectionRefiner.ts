@@ -10,38 +10,9 @@ import type { SourceEdit } from '$lib/workspace/suggestions/suggestionsControlle
 import { agentEditProblem, knownCiteKeys } from './agentEditGuard';
 import { contextAround, refinedText, refinePrompt } from './refinePrompt';
 import type { RefineAction } from './refineActions';
-import { refineAgentsOffered, refineTurnedOff } from './refineAgents.svelte';
-
-type AgentBridge = {
-	run(
-		id: string,
-		prompt: string,
-		system: string,
-		agent: RefineAgent
-	): Promise<{ ok: true; text: string } | { ok: false; error: string; cancelled?: true }>;
-	cancel(id: string): void;
-	detect(): Promise<Record<PresetAgent, boolean>>;
-	models(agent: PresetAgent): Promise<AgentModelList>;
-};
-
-/** the agents with a preset command line, which can list their models */
-export type PresetAgent = 'claude' | 'codex' | 'agy';
-export const PRESET_AGENTS: PresetAgent[] = ['claude', 'codex', 'agy'];
-
-export function isPresetAgent(v: string): v is PresetAgent {
-	return PRESET_AGENTS.includes(v as PresetAgent);
-}
-
-/** a preset, or the reader's own command line */
-export type RefineAgent = PresetAgent | 'custom';
-
-/** id '' is the agent's own default */
-export type AgentModel = { id: string; name: string; description: string };
-export type AgentModelList = { ok: true; models: AgentModel[] } | { ok: false; error: string };
-
-export function agentBridge(): AgentBridge | undefined {
-	return (globalThis as { texpileAgent?: AgentBridge }).texpileAgent;
-}
+import { agentName, agentOffered } from './agent/aiAgent.svelte';
+import { agentBridge } from './agent/agentBridge';
+import type { AiAgent } from './agent/aiAgents';
 
 export type RefinerDeps = {
 	/** the selection as a span of the open file's text, or null when it cannot be mapped to one */
@@ -54,45 +25,25 @@ export type RefinerDeps = {
 	reveal(id: string): void;
 };
 
-/** the agent's name as the suggestion's author */
-export function agentName(agent: RefineAgent): string {
-	if (agent === 'claude') return 'Claude';
-	if (agent === 'codex') return 'Codex';
-	if (agent === 'agy') return 'Antigravity';
-	const { aiAgentCommand } = settings.current;
-	// the program a custom command runs, without its folder or extension
-	const program =
-		aiAgentCommand
-			.trim()
-			.replace(/^["']/, '')
-			.split(/["'\s]/)[0] ?? '';
-	return (
-		program
-			.split(/[\\/]/)
-			.pop()
-			?.replace(/\.(exe|cmd|bat)$/i, '') || 'AI agent'
-	);
-}
-
 export class SelectionRefiner {
 	private running: string | null = null;
 
 	constructor(private deps: RefinerDeps) {}
 
 	get available(): boolean {
-		return refineAgentsOffered().length > 0 && !!agentBridge() && this.deps.canSuggest();
+		return agentOffered() !== null && !!agentBridge() && this.deps.canSuggest();
 	}
 
 	/** Refine could run here but has no agent that can: none picked yet, or the picked one gone. Its entries open Preferences */
 	get needsAgent(): boolean {
-		return refineAgentsOffered().length === 0 && !refineTurnedOff() && !!agentBridge() && this.deps.canSuggest();
+		return agentOffered() === null && !settings.current.aiOff && !!agentBridge() && this.deps.canSuggest();
 	}
 
 	get busy(): boolean {
 		return this.running !== null;
 	}
 
-	async refine(action: RefineAction, by: RefineAgent): Promise<void> {
+	async refine(action: RefineAction, by: AiAgent): Promise<void> {
 		const bridge = agentBridge();
 		if (!bridge || this.running) return;
 		const agent = agentName(by);
@@ -121,7 +72,7 @@ export class SelectionRefiner {
 			action: { label: m.ai_refine_cancel(), onClick: () => bridge.cancel(id) }
 		});
 		try {
-			const answer = await bridge.run(id, request, system, by);
+			const answer = await bridge.run(id, request, system);
 			toaster.dismiss(toast);
 			if (!answer.ok) {
 				if (!answer.cancelled) toaster.error({ title: m.ai_refine_failed({ agent }), description: answer.error });

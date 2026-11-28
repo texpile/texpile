@@ -66,7 +66,7 @@
 								type="button"
 								class="rounded-base h-6 w-6"
 								class:bg-surface-200-800={!(cell.row <= rows && cell.col <= cols)}
-								class:bg-blue={cell.row <= rows && cell.col <= cols}
+								class:bg-primary-500={cell.row <= rows && cell.col <= cols}
 								tabindex="-1"
 								onmouseenter={() => {
 									rows = cell.row;

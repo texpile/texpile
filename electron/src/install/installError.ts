@@ -9,14 +9,18 @@ export type InstallFailure =
 	/** the archive is not the one the release published */
 	| 'checksum'
 	| 'extract'
-	/** no space, no permission, a read-only folder */
+	/** no permission, a read-only folder */
 	| 'disk'
+	| 'space'
+	/** Windows refused the move because a program holds a file in the folder open; detail names the programs */
+	| 'in-use'
 	/** unpacked, but the program does not run here */
 	| 'broken'
 	| 'cancelled';
 
-// the error codes a full or locked disk, or a folder the user may not write, surface as
-const DISK_CODES = new Set(['ENOSPC', 'EDQUOT', 'EACCES', 'EPERM', 'EROFS', 'EBUSY']);
+// the error codes a locked disk, or a folder the user may not write, surface as
+const DISK_CODES = new Set(['EACCES', 'EPERM', 'EROFS', 'EBUSY']);
+const SPACE_CODES = new Set(['ENOSPC', 'EDQUOT']);
 
 /** thrown between the install's steps, and turned into a result where the install returns */
 export class InstallError extends Error {
@@ -33,6 +37,7 @@ export class InstallError extends Error {
 		if (err instanceof InstallError) return err;
 		const code = (err as NodeJS.ErrnoException | null)?.code;
 		const message = err instanceof Error ? err.message : String(err);
-		return new InstallError(code && DISK_CODES.has(code) ? 'disk' : fallback, message, { cause: err });
+		const reason = code && SPACE_CODES.has(code) ? 'space' : code && DISK_CODES.has(code) ? 'disk' : fallback;
+		return new InstallError(reason, message, { cause: err });
 	}
 }

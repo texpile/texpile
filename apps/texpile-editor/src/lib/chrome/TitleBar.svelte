@@ -28,13 +28,16 @@
 
 	let {
 		menus,
+		session,
 		status,
 		/** hide the icon when the caller already shows branding (the start screen) */
 		showIcon = true
 	}: {
 		/** the in-app menu bar, rendered inline. Omitted on macOS, where the menus are native. */
 		menus?: Snippet;
-		/** trailing status, before the window buttons. Session presence today. */
+		/** the shared session's faces, after the menus */
+		session?: Snippet;
+		/** trailing controls, before the window buttons */
 		status?: Snippet;
 		showIcon?: boolean;
 	} = $props();
@@ -129,13 +132,15 @@
 			{#if menus}
 				{@render menus()}
 			{/if}
+			{#if session}
+				{@render session()}
+			{/if}
 		</div>
 
 		<!-- the draggable stretch; also where a double-click maximises, as on a native bar -->
 		<div class="app-drag min-w-0 flex-1"></div>
 
-		<!-- measured with the window buttons, so the command center clears this side too: a session
-		     opening mid-edit shrinks the field rather than sliding under the avatars. -->
+		<!-- measured with the window buttons, so the command center clears this side too -->
 		<div class="flex shrink-0 items-stretch" bind:clientWidth={rightW}>
 			{#if status}
 				{@render status()}
@@ -186,12 +191,12 @@
 					an edge rather than the whole design. hover lifts it a step instead of tinting it.
 				-->
 				<button
-					class="app-no-drag border-surface-300-700 bg-surface-50-950 hover:bg-surface-200-800 text-muted rounded-base pointer-events-auto flex h-[22px] items-center gap-2 border px-2.5 text-xs"
+					class="app-no-drag border-surface-300-700 bg-surface-50-950 hover:bg-surface-200-800 rounded-base pointer-events-auto flex h-[22px] items-center gap-2 border px-2.5 text-xs"
 					style="width: {centerW}px"
 					onclick={() => commandPalette.show()}
 					use:tip={m.palette_open()}
 				>
-					<Search class="size-3.5 shrink-0 opacity-60" />
+					<Search class="size-3.5 shrink-0" />
 					<!-- centred, not left-aligned: the field is sized to the window rather than to the
 					     filename, so a left-aligned title dumps all the slack on the right and looks
 					     lopsided. Centring splits it either side and the control reads as deliberate. -->
@@ -210,7 +215,7 @@
 							is what made the command symbol look mangled rather than merely small. Kbd draws it
 							in the UI font, the one the OS uses in its own menus.
 						-->
-						<Kbd keys="Mod+K" class="shrink-0" />
+						<Kbd keys="Mod+K" class="text-muted shrink-0" />
 					{/if}
 				</button>
 			{:else if !palettable}

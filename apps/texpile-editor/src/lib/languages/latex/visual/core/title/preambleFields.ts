@@ -37,7 +37,12 @@ export function preambleFields(preamble: string, table: PackageTable): PreambleF
 export type PreambleSpan = { before: number; after: number };
 
 export function spanOf(preamble: string, field: PreambleField): PreambleSpan {
-	return { before: field.bodyFrom, after: preamble.length - field.bodyTo };
+	return { before: field.from, after: preamble.length - field.to };
+}
+
+/** at the end of the argument's words, inside the command */
+export function argumentEndOf(preamble: string, field: PreambleField): number {
+	return field.bodyFrom + preamble.slice(field.bodyFrom, field.bodyTo).trimEnd().length - field.from;
 }
 
 export function replacePreambleSpan(preamble: string, span: PreambleSpan, text: string): string {

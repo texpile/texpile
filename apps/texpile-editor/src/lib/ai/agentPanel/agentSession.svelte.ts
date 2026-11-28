@@ -5,12 +5,13 @@ import { acpBridge, type AcpBridge } from './acpBridge';
 import { applyUpdate, availableCommands, configOptions, contextUsage, itemId, toolTitle } from './agentItems';
 import { keepBefore } from './changes/agentBefore';
 import { agentHost } from './agentHost.svelte';
-import { settings, updateSettingsSettled } from '$lib/settings';
+import { settings } from '$lib/settings';
 import { workspaceRoot } from '$lib/workspace/workspaceStore';
 import { agentUnavailable } from './agentAvailability';
 import { attachedBlocks } from './attach/attached';
 import { imageBlocks } from './attach/pastedImages';
-import { panelTabOff } from './agentOffer.svelte';
+import { aiTurnedOff } from '$lib/ai/agent/aiAgent.svelte';
+import type { AiAgent } from '$lib/ai/agent/aiAgents';
 import type {
 	AcpEvent,
 	AgentCommand,
@@ -20,7 +21,6 @@ import type {
 	ChatItem,
 	ConfigOption,
 	ContextUsage,
-	PanelAgent,
 	PastedImage,
 	PermissionAsk,
 	QueuedMessage
@@ -35,7 +35,7 @@ export class AgentSession {
 	/** what the agent calls itself, which names a custom agent better than Custom agent does */
 	name = $state('');
 	/** the agent main started, which a choice made since in another window does not change */
-	agent = $state<PanelAgent | null>(null);
+	agent = $state<AiAgent | null>(null);
 	items = $state<ChatItem[]>([]);
 	asks = $state<PermissionAsk[]>([]);
 	config = $state<ConfigOption[]>([]);
@@ -224,13 +224,12 @@ export async function openAgentSession(root: string): Promise<void> {
 	await agentSession.start(root);
 }
 
-/** a conversation that has to go: the tab turned off, its agent unticked, the agent unable to run here, or its folder
- *  no longer open */
+/** a conversation that has to go: AI turned off, another agent picked in Preferences, the agent unable to run here, or
+ *  its folder no longer open */
 export function agentSessionStale(): boolean {
 	const root = agentSession.root;
-	const ticked = settings.current.agentPanelAgents;
-	const unticked = !!ticked && !!agentSession.agent && !ticked.includes(agentSession.agent);
-	return !!root && (panelTabOff() || unticked || agentUnavailable() !== null || root !== workspaceRoot.current);
+	const replaced = !!agentSession.agent && agentSession.agent !== settings.current.agent;
+	return !!root && (aiTurnedOff() || replaced || agentUnavailable() !== null || root !== workspaceRoot.current);
 }
 
 /** for the workspace view: the conversation ends once stale, and with the view, which Close Folder takes down
@@ -243,13 +242,12 @@ export function closeAgentSessionWithWorkspace(): void {
 }
 
 /** the agent the tab names: the one running, else the one chosen */
-export function shownAgent(): PanelAgent | '' {
-	return agentSession.agent ?? settings.current.agentPanel ?? '';
+export function shownAgent(): AiAgent | '' {
+	return agentSession.agent ?? settings.current.agent;
 }
 
-/** another agent, or a fresh conversation with the same one */
-export async function restartAgentSession(agent?: PanelAgent): Promise<void> {
+/** a fresh conversation */
+export async function restartAgentSession(): Promise<void> {
 	const root = agentSession.root;
-	if (agent && agent !== settings.current.agentPanel) await updateSettingsSettled({ agentPanel: agent });
 	if (root) await agentSession.start(root);
 }

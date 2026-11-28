@@ -412,8 +412,9 @@
 	.source-editor :global(.cm-searchMatch-selected) {
 		background-color: var(--find-match-active-bg);
 	}
+	/* Monaco and Geneva hold the letters Menlo lacks (ꜣ ꜥ, combining marks); Chromium's own macOS fallback misses them */
 	.source-editor :global(.cm-scroller) {
-		font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+		font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, Monaco, Geneva, monospace;
 		line-height: 1.6;
 	}
 	.source-editor :global(.cm-content) {

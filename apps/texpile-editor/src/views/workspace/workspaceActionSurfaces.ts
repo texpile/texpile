@@ -12,7 +12,8 @@ import { forgetSignIns } from '$lib/workspace/forgetSignIns';
 import { focusScmMessage } from '$lib/workspace/scm/actions/scmHandlers.svelte';
 import { focusEditor } from '$lib/workspace/editorCommands';
 import { askForAgentBoxCaret } from '$lib/ai/agentPanel/ui/box/agentBoxCaret.svelte';
-import { panelTabOff } from '$lib/ai/agentPanel/agentOffer.svelte';
+import { agentInSide, agentSide } from '$lib/ai/agentPanel/side/agentSide.svelte';
+import { aiTurnedOff } from '$lib/ai/agent/aiAgent.svelte';
 import { agentUnavailable } from '$lib/ai/agentPanel/agentAvailability';
 import { capsOf, fileMode } from '$lib/workspace/fileMode.svelte';
 import { tabs, tabKey, type Tab } from '$lib/workspace/tabs.svelte';
@@ -125,9 +126,14 @@ function toggleDockPanel(d: ActionSurfaceDeps, view: 'problems' | 'comments' | '
 
 /** opens the Agent tab with the caret in its message box; a second call hides the panel and returns the caret to the document */
 function toggleAgentTab(d: ActionSurfaceDeps): void {
-	toggleDockPanel(d, 'agent');
-	if (d.termDock().visible) askForAgentBoxCaret();
+	if (agentInSide()) agentSide.toggle();
+	else toggleDockPanel(d, 'agent');
+	if (agentTabOpen(d)) askForAgentBoxCaret();
 	else focusEditor(d.wsdoc.modes.mode === 'source');
+}
+
+function agentTabOpen(d: ActionSurfaceDeps): boolean {
+	return agentInSide() ? agentSide.open : d.termDock().visible && d.getDockView() === 'agent';
 }
 
 export function makeMainActions(d: ActionSurfaceDeps) {
@@ -191,6 +197,18 @@ export function makeMainActions(d: ActionSurfaceDeps) {
 		showProblems: () => toggleDockPanel(d, 'problems'),
 		showComments: () => toggleDockPanel(d, 'comments'),
 		showAgent: () => toggleAgentTab(d),
+		agentToBottom: () => {
+			agentSide.moveTo('bottom');
+			toggleDockPanel(d, 'agent');
+			askForAgentBoxCaret();
+		},
+		// the side panel's agent asks for a terminal (a sign in): the Bottom Panel opens on one
+		agentOpenTerminal: () => {
+			const dock = d.termDock();
+			dock.show();
+			d.setDockView('terminal');
+			setTimeout(() => dock.dock?.ensureTerminal(), 40);
+		},
 		insertZoteroCitation: () => d.integrations.insertZoteroCitation(),
 		citeByDoi: () => d.integrations.citeByDoi(),
 		countWords: () => countDocumentWords(d.wsdoc.doc),
@@ -354,9 +372,13 @@ export function makePaletteActions(d: ActionSurfaceDeps) {
 		toggleSidebar: () => d.layout().toggleSidebar(),
 		sidebarOpen: () => d.layout().sidebarOpen,
 		toggleBottomPanel: () => d.termDock().togglePanel(),
+		showProblems: () => {
+			d.termDock().show();
+			d.setDockView('problems');
+		},
 		bottomPanelOpen: () => d.termDock().visible,
-		agentTabOffered: () => !panelTabOff() && !agentUnavailable() && d.termDock().available,
-		agentTabOpen: () => d.termDock().visible && d.getDockView() === 'agent',
+		agentTabOffered: () => !aiTurnedOff() && !agentUnavailable() && d.termDock().available,
+		agentTabOpen: () => agentTabOpen(d),
 		// after the palette has closed and given the focus back
 		toggleAgentTab: () => void setTimeout(() => toggleAgentTab(d)),
 		toggleTerminal: () => d.termDock().toggle(),

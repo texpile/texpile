@@ -155,13 +155,23 @@ html {
 	--find-match-active-bg: light-dark(rgba(255, 128, 0, 0.6), rgba(255, 128, 0, 0.4));
 
 	/* spell and grammar underlines (suggestion.css), one hue per proofread category */
-	--proof-default: var(--tertiary-ink);
-	--proof-spelling: var(--error-ink);
-	--proof-typo: var(--error-ink);
-	--proof-capitalization: var(--warning-ink);
-	--proof-wordchoice: var(--primary-ink);
-	--proof-style: var(--secondary-ink);
-	--proof-repetition: var(--warning-ink);
+	/* lighter and softer than --error-ink: a spelling mark never reads as more alarming than a compile error */
+	--proof-spelling: light-dark(
+		oklch(from var(--color-error-500) 0.6 calc(c * 0.6) h),
+		oklch(from var(--color-error-500) 0.9 calc(c * 0.45) h)
+	);
+	--proof-grammar: var(--success-ink);
+	/* a violet beside the theme's blue, which references use */
+	--proof-clarity: light-dark(
+		oklch(from var(--color-primary-500) 0.5 c calc(h + 45)),
+		oklch(from var(--color-primary-500) 0.85 calc(c * 0.6) calc(h + 45))
+	);
+	--proof-default: var(--proof-grammar);
+	--proof-typo: var(--proof-spelling);
+	--proof-capitalization: var(--proof-grammar);
+	--proof-wordchoice: var(--proof-grammar);
+	--proof-style: var(--proof-clarity);
+	--proof-repetition: var(--proof-grammar);
 
 	/* review comments: the thread tint. The selection a composer is open for wears the editor's own
 	   selection color (app.css), so it has no token of its own */
@@ -212,13 +222,9 @@ html {
 	/* the source editor's math preview: its control buttons on hover */
 	--math-preview-btn-hover: color-mix(in srgb, var(--color-surface-500) 18%, transparent);
 	/* the image resize frame */
-	--image-frame: light-dark(var(--color-surface-950), var(--color-surface-50));
 	/* the terminal: dark in both modes; xterm reads these through themeColour() */
 	--terminal-bg: light-dark(var(--color-surface-50), var(--color-surface-950));
 	--terminal-fg: light-dark(var(--color-surface-950), var(--color-surface-50));
-	/* the brand blue and the one legacy grey still referenced (@theme aliases in app.css) */
-	--brand-blue: var(--color-primary-500);
-	--brand-gray: var(--color-surface-200);
 
 	/* the PDF pane's chrome */
 	--pdf-viewer-bg: light-dark(var(--color-surface-100), var(--color-surface-950));

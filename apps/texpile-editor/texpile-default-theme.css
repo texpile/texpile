@@ -2,7 +2,8 @@
 	--text-scaling: 1.067;
 	--typo-base--color-light: var(--color-surface-950);
 	--typo-base--color-dark: var(--color-surface-50);
-	--typo-base--font-family: system-ui;
+	/* Geneva holds the letters system-ui lacks (ꜣ ꜥ, combining marks); Chromium's own macOS fallback misses them */
+	--typo-base--font-family: system-ui, Geneva;
 	--typo-base--font-size: inherit;
 	--typo-base--line-height: inherit;
 	--typo-base--font-weight: normal;
@@ -270,15 +271,6 @@
 	/* find-in-document matches, both editors */
 	--find-match-bg: light-dark(rgba(255, 255, 0, 0.4), rgba(255, 255, 0, 0.25));
 	--find-match-active-bg: light-dark(rgba(255, 128, 0, 0.6), rgba(255, 128, 0, 0.4));
-
-	/* spell and grammar underlines (suggestion.css), one hue per proofread category */
-	--proof-default: #14b8a6;
-	--proof-spelling: #ff0000;
-	--proof-typo: #ff0000;
-	--proof-capitalization: #ff8c00;
-	--proof-wordchoice: #0064ff;
-	--proof-style: #9333ea;
-	--proof-repetition: #eab308;
 
 	/* review comments: the thread tint, and the selection a composer is open for */
 	--comment-tint: rgb(234, 179, 8);

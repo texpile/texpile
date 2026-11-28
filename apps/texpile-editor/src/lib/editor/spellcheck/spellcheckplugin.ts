@@ -9,7 +9,11 @@ import type { SpellLanguage } from '$lib/editor/spellcheck/languages/spellLangua
 import { blockSpellText, chipLetters, harperReading } from '$lib/editor/spellcheck/blockSpellText';
 import { createHarperSuggestionBox } from '$lib/editor/spellcheck/suggestionBoxFactory';
 import { nextProblem } from './problemNav';
+import { reviewedMatches } from './review/reviewStore';
+import { registerReviewSource, reviewSoon } from './review/reviewQueue';
+import { noteFindings, pmReviewSource, pmTarget } from './review/pmReviewSource';
 import { heldProofreadRanges, typedWordKey } from './proofreadHold';
+import { marksOverWords, squiggleAttrs } from './markEdges';
 import { registerProofreadLooks } from './proofreadLooks';
 import './suggestion.css';
 import { editorConfigStore, editorViewStore } from '$lib/stores/editorStore';
@@ -120,7 +124,15 @@ async function lintTextAfterComposition(block: string, language: SpellLanguage |
 	const text = reading?.text ?? block;
 	const res = text.trim() ? await proofreadIn(language, text) : { matches: [] };
 	for (let i = 0; i < 100 && editorViewStore.current?.composing; i++) await sleep(150);
-	return reading ? { ...res, matches: res.matches.map((match) => ({ ...match, ...reading.blockSpan(match.offset, match.length) })) } : res;
+	let matches = res.matches;
+	if (language && !res.failed && text.trim()) {
+		noteFindings(language, text, matches);
+		matches = reviewedMatches(pmTarget(language, text, matches));
+		reviewSoon();
+	}
+	return reading
+		? { ...res, matches: matches.map((match) => ({ ...match, ...reading.blockSpan(match.offset, match.length) })) }
+		: { ...res, matches };
 }
 
 const proofreadPlugins = new WeakSet<Plugin>();
@@ -132,10 +144,24 @@ function proofreadOf(state: EditorState): Plugin | undefined {
 
 /** one per editor: the library debounces per instance, and each editor's file has its own language */
 export function proofreadPlugin(language: () => SpellLanguage | null): Plugin {
+	// the library hands the box only the word's bottom, and it needs the top to open above the word
+	let word = new DOMRect();
+	let clicked: { view: EditorView; from: number; to: number } | null = null;
 	const libraryPlugin = createProofreadPlugin(
 		500,
 		(block: string) => lintTextAfterComposition(block, language()),
-		createHarperSuggestionBox,
+		(options) =>
+			createHarperSuggestionBox({
+				...options,
+				// the library makes a text node of the replacement, and an empty one throws
+				onReplace: (value) => {
+					if (value || !clicked) return options.onReplace(value);
+					const { view, from, to } = clicked;
+					const tr = view.state.tr.delete(from, to);
+					view.dispatch(tr.setSelection(TextSelection.create(tr.doc, from)));
+				},
+				position: { x: word.left, y: word.bottom, top: word.top }
+			}),
 		spellcheckenabled,
 		blockSpellText,
 		true // useCustomCSS: enables the proofread-* class naming
@@ -147,6 +173,7 @@ export function proofreadPlugin(language: () => SpellLanguage | null): Plugin {
 			const inner = libraryPlugin.spec.view?.(view);
 			// another English, another set of rules or another language: what was found is out of date
 			const stopRules = onLintRulesChanged(() => invalidateProofreadCache(view));
+			const stopReview = registerReviewSource(pmReviewSource(view, plugin, language));
 			let checkedIn = language();
 			const stopLanguage = observe(language, (now) => {
 				if (now === checkedIn) return;
@@ -158,6 +185,7 @@ export function proofreadPlugin(language: () => SpellLanguage | null): Plugin {
 				destroy() {
 					stopRules();
 					stopLanguage();
+					stopReview();
 					inner?.destroy?.();
 				}
 			};
@@ -165,7 +193,8 @@ export function proofreadPlugin(language: () => SpellLanguage | null): Plugin {
 		props: {
 			...libraryPlugin.spec.props,
 			decorations(state) {
-				const marks = libraryPlugin.spec.props?.decorations?.call(this, state) as DecorationSet | null | undefined;
+				const found = libraryPlugin.spec.props?.decorations?.call(this, state) as DecorationSet | null | undefined;
+				const marks = found && marksOverWords(state.doc, found);
 				const word = typedWordKey.getState(state) ?? null;
 				if (!marks || !word) return marks ?? null;
 				const held = heldProofreadRanges(marks.find(word.from, word.to), word);
@@ -174,7 +203,11 @@ export function proofreadPlugin(language: () => SpellLanguage | null): Plugin {
 			// the library searches the whole page for its own suggestion box on every key; the box here is Texpile's
 			handleKeyDown: undefined,
 			handleClick(view, pos, event) {
-				return !onOldWords(view, event) && !!libraryPlugin.spec.props?.handleClick?.call(this, view, pos, event);
+				if (onOldWords(view, event)) return false;
+				word = (event.target as Element).getBoundingClientRect();
+				const mark = proofreadOf(view.state)?.getState(view.state)?.decor.find(pos, pos)[0];
+				clicked = mark ? { view, from: mark.from, to: mark.to } : null;
+				return !!libraryPlugin.spec.props?.handleClick?.call(this, view, pos, event);
 			}
 		}
 	});
@@ -190,9 +223,7 @@ export function chipSquigglesIn(doc: PMNode, squiggles: readonly Decoration[]): 
 	const size = doc.content.size;
 	for (const squiggle of squiggles) {
 		if (squiggle.to > size) continue;
-		// the class prosemirror-proofread gives the squiggle itself
-		const kind: string = squiggle.spec.errors[0].type;
-		const attrs = { class: `proofread-${kind.toLowerCase().replace(/[^a-z0-9]+/g, '-')}` };
+		const attrs = squiggleAttrs(squiggle);
 		doc.nodesBetween(squiggle.from, squiggle.to, (node, pos) => {
 			if (pos >= squiggle.from && pos + node.nodeSize <= squiggle.to && chipLetters(node))
 				chips.push(Decoration.node(pos, pos + node.nodeSize, attrs));

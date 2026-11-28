@@ -36,7 +36,7 @@
 							<ItemIcon class="size-4 shrink-0" />
 							<span class="cap-center"><Menu.ItemText>{tool.name()}</Menu.ItemText></span>
 						</span>
-						<span class="opacity-50">{tool.key}</span>
+						<span class="text-muted">{tool.key}</span>
 					</Menu.Item>
 				{/each}
 			</Menu.Content>

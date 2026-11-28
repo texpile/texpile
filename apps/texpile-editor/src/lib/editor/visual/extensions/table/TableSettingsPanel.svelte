@@ -152,7 +152,7 @@
 
 	<button
 		type="button"
-		class="text-muted hover:text-surface-900-100 my-3 flex w-full items-center gap-2 text-sm transition-colors"
+		class="btn btn-sm hover:preset-tonal my-3 w-full justify-start gap-2"
 		onclick={() => (showAdvanced = !showAdvanced)}
 	>
 		<ChevronDown class="h-4 w-4 transition-transform {showAdvanced ? 'rotate-180' : ''}" />

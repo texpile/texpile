@@ -64,7 +64,7 @@
 	/>
 	{#if gitId}
 		<PrefsRow id="git-identity">
-			<div class="text-muted min-w-0 text-right text-sm">
+			<div class="text-muted min-w-0 text-sm">
 				<div class="max-w-64 truncate">{gitId.name ?? m.prefs_collab_git_none()}</div>
 				<div class="max-w-64 truncate text-xs" use:tip={gitId.email ?? ''}>{gitId.email ?? m.prefs_collab_git_none()}</div>
 			</div>

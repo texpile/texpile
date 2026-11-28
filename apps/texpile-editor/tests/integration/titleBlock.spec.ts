@@ -20,11 +20,10 @@ test('a drawn author block opens its LaTeX in the chip panel, and an edit there 
 	await block.click();
 	const source = page.locator('.drawn-chip-panel .cm-content');
 	await expect(source).toBeFocused();
-	await expect(source).toContainText('Ada Lovelace');
+	await expect(source).toContainText('\\author{%');
 	await expect(block).toBeVisible();
-	await page.keyboard.press('ControlOrMeta+End');
 	// Enter keeps the indent of the line above
-	await page.keyboard.type('  \\And\nGrace Hopper\n');
+	await page.keyboard.type('\n\\And\nGrace Hopper');
 	await expect(block).toContainText('Grace Hopper');
 	await expect
 		.poll(() => new Disk(root).read('authors.tex'), { timeout: 10_000 })

@@ -16,7 +16,11 @@
 		/** none leaves out the row's rule and padding, for a part of a larger block */
 		frame?: 'row' | 'none';
 		children: Snippet<[PrefsRowDef]>;
+		/** a link at the end of the note */
+		noteEnd?: Snippet;
 		below?: Snippet;
+		/** under the whole row, across the control's column too */
+		after?: Snippet;
 	};
 	const props: Props = $props();
 	const def = $derived(rowDef(props.id));
@@ -27,26 +31,31 @@
 <div
 	class="transition-colors duration-500 {props.frame === 'none'
 		? ''
-		: 'border-surface-200-800 border-b py-4 last:border-b-0'} {props.layout === 'block'
-		? ''
-		: 'flex items-start justify-between gap-6'} {prefsFocus.row === props.id ? 'bg-primary-tint rounded-base -mx-2 px-2' : ''}"
+		: 'border-surface-200-800 border-b py-4 last:border-b-0'} {prefsFocus.row === props.id
+		? 'bg-primary-tint rounded-base -mx-2 px-2'
+		: ''}"
 	data-pref-row={props.id}
 	use:unavailableTip={props.why}
 >
 	{#if props.layout === 'block'}
 		{@render props.children(def)}
 	{:else}
-		<div class="flex min-w-0 items-center gap-2">
-			{#if Icon}<Icon class="text-muted size-4 shrink-0" />{/if}
-			<div class="min-w-0">
-				<div class="text-sm font-medium {props.why ? 'text-faint' : ''}">{def.label()}</div>
-				{#if note}<p class="text-muted mt-1 text-xs leading-relaxed">
-						{note}
-						{#if props.docs}<a class="anchor" href={props.docs} target="_blank" rel="noopener noreferrer">{m.prefs_how_to_set_up()}</a>{/if}
-					</p>{/if}
-				{@render props.below?.()}
+		<div class="flex flex-wrap items-start justify-between gap-x-6 gap-y-3">
+			<div class="flex min-w-0 flex-1 basis-48 items-center gap-2">
+				{#if Icon}<Icon class="text-muted size-4 shrink-0" />{/if}
+				<div class="min-w-0">
+					<div class="text-sm font-medium {props.why ? 'text-faint' : ''}">{def.label()}</div>
+					{#if note}<p class="text-muted mt-1 text-xs leading-relaxed">
+							{note}
+							{#if props.docs}<a class="anchor" href={props.docs} target="_blank" rel="noopener noreferrer">{m.prefs_how_to_set_up()}</a
+								>{/if}
+							{@render props.noteEnd?.()}
+						</p>{/if}
+					{@render props.below?.()}
+				</div>
 			</div>
+			<span class="flex max-w-full shrink-0" data-tip-anchor>{@render props.children(def)}</span>
 		</div>
-		<span class="flex shrink-0" data-tip-anchor>{@render props.children(def)}</span>
+		{@render props.after?.()}
 	{/if}
 </div>

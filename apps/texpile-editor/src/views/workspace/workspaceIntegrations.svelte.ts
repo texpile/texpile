@@ -47,6 +47,7 @@ import { pdfStore } from '$lib/stores/pdfStore';
 import { filePathStore, sourceCmView } from '$lib/stores/editorStore';
 import { references } from '$lib/workspace/citations';
 import { bindRefChecks } from './writing/workspaceRefChecks.svelte';
+import { bindProblems } from './writing/workspaceProblems.svelte';
 import { bindTypstPrintedNumbers } from '$lib/languages/typst/numbers/printedNumbersOfCompile.svelte';
 import { tabs, type CompareRef } from '$lib/workspace/tabs.svelte';
 import {
@@ -305,6 +306,7 @@ export class WorkspaceIntegrations {
 		});
 		$effect(() => this.registries.publish(this.allReferences));
 		bindRefChecks(doc, () => d.cc().command);
+		bindProblems(doc, (file) => d.files().applyMainFile(file));
 		bindTypstPrintedNumbers(() => d.compiler().runsFinished, d.guest);
 		$effect(() => {
 			const tree = fileTree.current;

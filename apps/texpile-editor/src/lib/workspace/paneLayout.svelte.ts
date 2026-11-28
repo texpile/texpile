@@ -9,7 +9,16 @@ import { browser } from '$lib/runtime';
 import { layout as layoutStore, updateLayout } from '$lib/storage/layout';
 import { startDrag, nudgeOnKey, clampTo, SNAP_SLACK } from '$lib/workspace/paneResize';
 // the launch skeleton lays the same panes out from these, so they live where both can reach them
-import { SIDEBAR_MIN, SIDEBAR_MAX, PDF_MIN, HISTORY_EDITOR_MIN, pdfMaxWidth, pdfWidthOf } from '$lib/workspace/paneGeometry';
+import {
+	SIDEBAR_MIN,
+	SIDEBAR_MAX,
+	PDF_MIN,
+	PDF_ROOM,
+	EDITOR_RESERVE,
+	HISTORY_EDITOR_MIN,
+	pdfMaxWidth,
+	pdfWidthOf
+} from '$lib/workspace/paneGeometry';
 
 const TOC_MIN = 0.1;
 const TOC_MAX = 0.9;
@@ -43,8 +52,12 @@ export class PaneLayout {
 	 * persisted: a restored session must not open a second window before the user asked for one.
 	 */
 	pdfPopout = $state(false);
+	/** bumped on resize so the side panel's room follows the window */
+	private shownWidth = $state(typeof window !== 'undefined' ? window.innerWidth : 1280);
 	/** a panel docked in the editor column beside the document (Version History), whose width the editor's room holds too */
 	editorAside = $state(0);
+	/** the Agent side panel at the window's right edge, 0 while shut */
+	sidePanel = 0;
 	/** the preview was shut to make room for that panel, not by the reader, and comes back when there is room again */
 	private pdfMadeRoom = false;
 	/** the preview opened or shut on its own rather than at a click, so it slides rather than jumping */
@@ -157,16 +170,28 @@ export class PaneLayout {
 	// PDF preview pane
 
 	private pdfMaxWidth(): number {
-		return pdfMaxWidth((this.sidebarOpen ? this.sidebarWidth : 0) + this.editorAside, this.windowWidth());
+		return pdfMaxWidth((this.sidebarOpen ? this.sidebarWidth : 0) + this.editorAside + this.sidePanel, this.windowWidth());
 	}
 
 	private windowWidth(): number {
+		void this.shownWidth;
 		return typeof window !== 'undefined' ? window.innerWidth : 1280;
 	}
 
 	/** the panel beside the document came or went: `width` 0 when it went */
 	setEditorAside = (width: number) => {
 		this.editorAside = width;
+		this.reclampPdf();
+	};
+
+	/** the Agent side panel's most: the window less the sidebar, the editor's least room and the preview's */
+	sidePanelRoom = () => {
+		const preview = this.pdfPaneOpen && !this.pdfPopout ? PDF_ROOM : 0;
+		return this.windowWidth() - (this.sidebarOpen ? this.sidebarWidth : 0) - this.editorAside - preview - EDITOR_RESERVE;
+	};
+
+	setSidePanel = (width: number) => {
+		this.sidePanel = width;
 		this.reclampPdf();
 	};
 
@@ -225,6 +250,7 @@ export class PaneLayout {
 
 	/** the window resized: the preview keeps its saved share of the window, clamped so the editor keeps its room */
 	reclampPdf = () => {
+		if (typeof window !== 'undefined') this.shownWidth = window.innerWidth;
 		this.makeRoomForAside();
 		this.pdfPaneWidth = this.clampPdf(pdfWidthOf(layoutStore.current, this.windowWidth()));
 	};

@@ -34,7 +34,7 @@
 						>{label.slice(match.matched[1])}{:else}{label}{/if}</span
 				>
 				{#if match.option.detail}
-					<span class="ml-3 max-w-[24em] min-w-0 shrink truncate font-sans opacity-60">{match.option.detail}</span>
+					<span class="text-muted ml-3 max-w-[24em] min-w-0 shrink truncate font-sans">{match.option.detail}</span>
 				{/if}
 			</button>
 		{/each}

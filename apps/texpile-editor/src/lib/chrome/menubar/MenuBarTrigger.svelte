@@ -29,7 +29,7 @@
 				<Menu.ItemText>{label}</Menu.ItemText>
 				<span class="flex items-center gap-1.5">
 					{#if dot}<span class="bg-primary-500 inline-block size-1.5 rounded-full"></span>{/if}
-					<ChevronRight class="size-4 opacity-60" />
+					<ChevronRight class="text-muted size-4" />
 				</span>
 			</div>
 		{/snippet}

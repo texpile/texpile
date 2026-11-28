@@ -94,12 +94,14 @@
      worked, so the in-app bar and the native one drop the same items from one decision.
      On macOS the component mounts and draws no triggers; the system menu bar has them. -->
 <TitleBar>
-	{#snippet status()}
+	{#snippet session()}
 		{#if guest}
 			<GuestPresence />
 		{:else}
 			<SessionPresence onShareSession={menu.shareable ? actions.openShare : undefined} />
 		{/if}
+	{/snippet}
+	{#snippet status()}
 		{#if documentControls.current && !documentControls.previewBars}
 			<!-- no preview bar to carry them: one place for the project's controls, however the editors are split -->
 			<div class="app-no-drag mr-2 flex items-center self-center">{@render documentControls.current(true)}</div>

@@ -6,6 +6,7 @@ import {
 	BookPlus,
 	Braces,
 	ClipboardPaste,
+	SpellCheck,
 	Keyboard,
 	Omega,
 	TextCursorInput,
@@ -24,6 +25,18 @@ const conflict = 'merge conflict combine both versions marked place';
 const keymapNames = { default: () => m.prefs_keybindings_default(), vim: () => 'Vim', emacs: () => 'Emacs' };
 
 export const EDITOR_COMMANDS: CommandInfo[] = [
+	{
+		id: 'editor.proofreadFile',
+		title: () => m.problems_proofread_file_with_ai(),
+		category,
+		palette: { keywords: 'ai proofread grammar spelling wording check file document problems', icon: SpellCheck }
+	},
+	{
+		id: 'editor.proofreadProject',
+		title: () => m.problems_proofread_project_with_ai(),
+		category,
+		palette: { keywords: 'ai proofread grammar spelling wording check project main document problems', icon: SpellCheck }
+	},
 	{
 		id: 'editor.zoteroCitation',
 		title: () => m.zotero_insert_citation(),

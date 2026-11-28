@@ -47,7 +47,6 @@ export const COLOR_TOKENS = [
 	'--git-deleted',
 	'--git-modified',
 	'--glass-line',
-	'--image-frame',
 	'--math-empty-tint',
 	'--math-error-tint',
 	'--math-key-down',

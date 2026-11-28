@@ -49,6 +49,10 @@ export type LayoutState = {
 	previewVisible: boolean;
 	/** the floating format bar shows every control on two rows rather than one row and a chevron */
 	formatBarExpanded: boolean;
+	/** the Agent panel: a tab of the Bottom Panel, or a column at the window's right edge */
+	agentPlace: 'bottom' | 'side';
+	agentSideOpen: boolean;
+	agentSideWidth: number;
 };
 
 const KEY = 'texpile:layout';
@@ -75,7 +79,10 @@ const DEFAULTS: LayoutState = {
 	editorZoom: 1,
 	pageView: false,
 	previewVisible: true,
-	formatBarExpanded: false
+	formatBarExpanded: false,
+	agentPlace: 'bottom',
+	agentSideOpen: false,
+	agentSideWidth: 400
 };
 
 function read(): LayoutState {

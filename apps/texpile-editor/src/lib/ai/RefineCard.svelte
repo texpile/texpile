@@ -7,8 +7,8 @@
 	import { showContextMenu } from '$lib/menus/contextMenu.svelte';
 	import { m } from '$lib/paraglide/messages';
 	import { REFINE_ACTIONS, customRefineAction, type RefineAction } from './refineActions';
-	import { agentName, refiner } from './selectionRefiner';
-	import { refineAgentsOffered } from './refineAgents.svelte';
+	import { refiner } from './selectionRefiner';
+	import { agentName, agentOffered } from './agent/aiAgent.svelte';
 	import { closeRefineCard, refineCard } from './refineCardState.svelte';
 	import { editorViewStore } from '$lib/stores/editorStore';
 	import { setPmCommentPending } from '$lib/editor/visual/extensions/pmComments';
@@ -25,7 +25,7 @@
 	let placed = $state.raw<{ x: number; y: number; for: object } | null>(null);
 
 	// Refine runs one agent, the one Preferences picks
-	const agent = $derived(refineAgentsOffered()[0]);
+	const agent = $derived(agentOffered());
 
 	$effect(() => {
 		const open = refineCard.current;
@@ -33,7 +33,7 @@
 		const { offsetWidth: w, offsetHeight: h } = card;
 		const { anchor } = open;
 		// above the toolbar, so the selected text stays in view; below it where there is no room above
-		const y = anchor.top - h - 6 >= EDGE ? anchor.top - h - 6 : anchor.bottom + 6;
+		const y = anchor.top - h - 6 >= EDGE ? anchor.top - h - 6 : Math.max(EDGE, Math.min(anchor.bottom + 6, window.innerHeight - h - EDGE));
 		placed = { x: Math.max(EDGE, Math.min(anchor.left, window.innerWidth - w - EDGE)), y, for: open };
 		// the toolbar button kept focus in the editor, where typing would overwrite the selected text
 		input?.focus();

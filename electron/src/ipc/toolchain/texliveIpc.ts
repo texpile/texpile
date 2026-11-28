@@ -10,6 +10,7 @@ import { stopDrawing } from '../../draw/drawDaemon';
 import { shellEnvReady } from '../../shell/shellEnv';
 import { setPathFallback } from '../../shell/toolDirs';
 import { firstInformativeLine } from '../../toolchain';
+import { stopProgramsStartedFrom } from '../../install/programsInFolder';
 import { managedTexLiveAsset, managedTexLiveBin, managedTexLiveRoot, texInUseIsManaged } from '../../texlive/managedTexLive';
 import { installTexLive, removeTexLive, type TexLiveInstallResult, type TexLiveInstallStep } from '../../texlive/texliveInstall';
 import { installPackageFor, isPackageFile, type PackageInstall } from '../../texlive/texlivePackages';
@@ -71,9 +72,11 @@ async function status(): Promise<ManagedTexLiveStatus> {
 
 // Windows holds a running program's folder open, and live mode and figures keep their engines warm
 async function swapTree<T>(change: () => Promise<T>): Promise<T> {
-	if (fs.existsSync(managedTexLiveRoot())) {
+	const root = managedTexLiveRoot();
+	if (fs.existsSync(root)) {
 		stopTeleports();
 		stopDrawing();
+		await stopProgramsStartedFrom(root);
 	}
 	const result = await change();
 	setPathFallback(managedTexLiveBin());

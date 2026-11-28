@@ -1,5 +1,5 @@
 // the packages a document's files load, in the order TeX reads them: a file's uses at the point it is brought in
-import { packageUseSitesIn } from '$lib/languages/latex/intellisense/packages/packageUses';
+import { packageUseSitesIn, type PackageUse } from '$lib/languages/latex/intellisense/packages/packageUses';
 import type { DocumentPackageUse } from '$lib/languages/latex/intellisense/checks/latexChecks';
 import { groupDepthsAt } from '$lib/languages/latex/intellisense/packages/groupDepth';
 import { codeOnly } from '$lib/languages/latex/texCode';
@@ -72,4 +72,15 @@ export function usesInReadingOrder(files: readonly FileReading[]): DocumentPacka
 /** the names of what the files' packages and classes may load */
 export function conditionalUseNames(files: readonly FileReading[]): string[] {
 	return [...new Set(files.flatMap((f) => f.conditional))];
+}
+
+/** each use once, without where it stands */
+export function plainUses(uses: readonly DocumentPackageUse[]): PackageUse[] {
+	const seen = new Set<string>();
+	return uses
+		.map(({ path: _path, at: _at, ...use }) => use)
+		.filter((use) => {
+			const key = JSON.stringify(use);
+			return !seen.has(key) && !!seen.add(key);
+		});
 }

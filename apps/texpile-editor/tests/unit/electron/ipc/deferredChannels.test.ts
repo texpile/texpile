@@ -39,8 +39,8 @@ it("lists every channel a deferred step registers under that step's own name", (
 });
 
 // a server a client was set up against listens from launch; the rest of what no window asks for stays unloaded
-it('holds the agent protocol and the terminal for their first call, and MCP unless it is switched on', () => {
+it('holds the agent protocol, proofreading and the terminal for their first call, and MCP unless it is switched on', () => {
 	const steps = Object.keys(DEFERRED_STEP_CHANNELS) as DeferredStep[];
-	expect(steps.filter((s) => waitsForFirstCall(s, false))).toEqual(['acp', 'terminal', 'mcp']);
-	expect(steps.filter((s) => waitsForFirstCall(s, true))).toEqual(['acp', 'terminal']);
+	expect(steps.filter((s) => waitsForFirstCall(s, false))).toEqual(['ai', 'acp', 'terminal', 'mcp']);
+	expect(steps.filter((s) => waitsForFirstCall(s, true))).toEqual(['ai', 'acp', 'terminal']);
 });
