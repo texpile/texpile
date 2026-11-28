@@ -5,6 +5,7 @@ const FORMULA_OR_REFERENCE = /\$|\\[([]|\\begin\s*\{|\\(?:eq|c|C|auto|page|name)
 // a list's or a table's own markup; what is either side of it is never one sentence
 const LAYOUT_ENV = /\\(?:begin|end)\s*\{(?:itemize|enumerate|description|tabular\*?|tabularx|longtable|center|quote|quotation)\}/g;
 const BREAK = /\\item\b|&|\\\\|\\par\b|\\newline\b/;
+const EVERY_BREAK = new RegExp(BREAK.source, 'g');
 
 /** `masked` is the paragraph Harper read, starting at `from` in `source`; `spans` the masked ranges of the whole source */
 export function sourceReading(source: string, from: number, masked: string, spans: readonly [number, number][]): ReviewReading {
@@ -42,7 +43,7 @@ export function sourceReading(source: string, from: number, masked: string, span
 		if (/^[~\s]/.test(markup)) put(' ', i - from);
 		const layout = markup.replace(LAYOUT_ENV, '');
 		if (layout !== markup || BREAK.test(markup)) breakLine(i - from);
-		if (FORMULA_OR_REFERENCE.test(layout.replace(BREAK, ''))) put('$x$', i - from);
+		if (FORMULA_OR_REFERENCE.test(layout.replace(EVERY_BREAK, ''))) put('$x$', i - from);
 		i = Math.min(b, end);
 	}
 	for (; i < end; i++) put(masked[i - from], i - from);
