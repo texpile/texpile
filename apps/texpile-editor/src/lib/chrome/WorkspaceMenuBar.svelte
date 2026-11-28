@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { balanceMock } from './balanceMock.svelte';
 	import { tip } from '$lib/components/tooltip.svelte';
 	import { onMount, untrack } from 'svelte';
 	import { Menu, Portal } from '@skeletonlabs/skeleton-svelte';
@@ -247,7 +248,7 @@
 	<!-- svelte-ignore a11y_no_noninteractive_element_interactions -->
 	<!-- no left padding: the app icon before it already provides the gap, and doubling up pushed File
 	     away from the mark. The triggers carry their own px-2.5 for their hover targets. -->
-	<nav class="app-no-drag flex items-center gap-0.5 pr-1" data-keep-caret onmousedown={(e) => e.preventDefault()}>
+	<nav class="app-no-drag flex items-center {balanceMock.roomy ? 'gap-2' : 'gap-0.5'} pr-1" data-keep-caret onmousedown={(e) => e.preventDefault()}>
 		{@render topMenus(false)}
 		{#if overflowing}
 			<!-- the leftovers, as submenus. A hamburger when it holds everything, an ellipsis when it

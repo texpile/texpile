@@ -181,8 +181,8 @@
 	});
 </script>
 
-<div class="flex items-center gap-2 @max-[20rem]:gap-0.5">
-	<div class="flex items-center gap-2 @max-[20rem]:gap-0.5">
+<div class="flex items-center {compact && balanceMock.tight ? 'gap-0.5' : 'gap-2'} @max-[20rem]:gap-0.5">
+	<div class="flex items-center {compact && balanceMock.tight ? 'gap-0.5' : 'gap-2'} @max-[20rem]:gap-0.5">
 		<!-- Compile first: the end of the bar nearest the editor -->
 		{#if fileMode.current}
 			<!-- spelled out, and unboxed like Show PDF -->
@@ -269,7 +269,7 @@
 			<!-- unresolved review threads, project-wide; hidden at zero, like Problems after a clean compile -->
 			<button class="{quiet} gap-1" onclick={onShowComments} use:tip={m.wsview_show_comments_title()}>
 				<MessageSquare class="size-3.5" />
-				{#if !balanceMock.quiet}{commentCount}{/if}
+				{commentCount}
 			</button>
 		{/if}
 		{#if onShowAgent}

@@ -3,7 +3,6 @@
 	import { tip } from '$lib/components/tooltip.svelte';
 	import { m } from '$lib/paraglide/messages';
 	import { problemsView } from '../problemsStore.svelte';
-	import { balanceMock } from '$lib/chrome/balanceMock.svelte';
 
 	type Props = { class: string; onclick: () => void };
 	const props: Props = $props();
@@ -20,7 +19,7 @@
 			<CircleAlert class="size-3.5" /> {errors}
 		{/if}
 		{#if warnings > 0}
-			<TriangleAlert class="size-3.5" /> {#if !balanceMock.quiet}{warnings}{/if}
+			<TriangleAlert class="size-3.5" /> {warnings}
 		{/if}
 	</button>
 {/if}
