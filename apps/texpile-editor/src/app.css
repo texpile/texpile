@@ -1216,9 +1216,10 @@ html.pm-drop-refused .pm-drop-cursor {
 	}
 }
 
-/* a popover taller than the room its positioner found scrolls inside itself */
+/* a popover larger than the room its positioner found stays inside it and scrolls */
 [data-scope='popover'][data-part='content'] {
 	max-height: var(--available-height);
+	max-width: var(--available-width);
 	overflow-y: auto;
 }
 

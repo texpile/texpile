@@ -32,7 +32,7 @@
 		const { offsetWidth: w, offsetHeight: h } = card;
 		placed = {
 			x: Math.min(menu.x, win.innerWidth - w - EDGE),
-			y: menu.above ? Math.max(EDGE, menu.y - h) : Math.min(menu.y, win.innerHeight - h - EDGE),
+			y: menu.above ? Math.max(EDGE, menu.y - h) : Math.max(EDGE, Math.min(menu.y, win.innerHeight - h - EDGE)),
 			for: menu
 		};
 	});
@@ -147,7 +147,7 @@
 		bind:this={card}
 		role="menu"
 		aria-label={m.tbar_close_menu_aria()}
-		class="{menuPanelClass} z-context-menu fixed min-w-48 overflow-hidden"
+		class="{menuPanelClass} z-context-menu fixed max-h-[calc(100vh-1rem)] min-w-48 overflow-y-auto"
 		style="left: {placed?.x ?? menu.x}px; top: {placed?.y ?? menu.y}px; opacity: {placed?.for === menu ? 1 : 0}"
 	>
 		{@render entries(menu.items, true)}
@@ -156,7 +156,7 @@
 		<div
 			bind:this={subCard}
 			role="menu"
-			class="{menuPanelClass} z-context-menu fixed min-w-44 overflow-hidden"
+			class="{menuPanelClass} z-context-menu fixed max-h-[calc(100vh-1rem)] min-w-44 overflow-y-auto"
 			style="left: {subPlaced?.x ?? sub.from.right}px; top: {subPlaced?.y ?? sub.from.top}px; opacity: {subPlaced?.for === sub ? 1 : 0}"
 		>
 			{@render entries(sub.items, false)}

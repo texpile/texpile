@@ -33,7 +33,7 @@ function fakeField(mode: string, after = ''): HeadlessMathfield {
 	field.addEventListener(
 		'keydown',
 		(event) => {
-			if (mathSearchKey(event, headless, false, () => ({ left: 0, top: 0 }))) event.preventDefault();
+			if (mathSearchKey(event, headless, false, () => ({ left: 0, top: 0, maxHeight: 400 }))) event.preventDefault();
 		},
 		{ capture: true }
 	);

@@ -21,7 +21,7 @@ export type MathSearchResult = { section: string } & (
 );
 
 /** where the panel sits: under the caret, or above it when there is no room below */
-export type MathSearchPlace = { left: number; top?: number; bottom?: number };
+export type MathSearchPlace = { left: number; top?: number; bottom?: number; maxHeight: number };
 
 const PANEL_WIDTH = 320;
 const PANEL_ROOM = 400;
@@ -226,11 +226,12 @@ export function onScreen(top: number, bottom: number): boolean {
 	return bottom > 0 && top < window.innerHeight;
 }
 
-/** under the line from `top` to `bottom`, or above it when there is no room below */
+/** under the line from `top` to `bottom`, or above it when there is more room there */
 export function placeAt(caretLeft: number, top: number, bottom: number): MathSearchPlace {
 	const left = Math.max(8, Math.min(caretLeft - 16, window.innerWidth - PANEL_WIDTH - 8));
-	if (window.innerHeight - bottom >= PANEL_ROOM || top < PANEL_ROOM) return { left, top: bottom + 4 };
-	return { left, bottom: window.innerHeight - top + 4 };
+	const below = window.innerHeight - bottom - 12;
+	if (below >= PANEL_ROOM || below >= top - 12) return { left, top: bottom + 4, maxHeight: below };
+	return { left, bottom: window.innerHeight - top + 4, maxHeight: top - 12 };
 }
 
 export const mathSearch = new MathSearchState();

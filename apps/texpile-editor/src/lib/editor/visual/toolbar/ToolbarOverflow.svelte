@@ -200,8 +200,8 @@
 				     nothing at all. fixed escapes the clip. -->
 					<div
 						bind:this={menuEl}
-						class="bg-surface-50-950 border-surface-300-700 card fixed z-50 flex max-w-[min(22rem,calc(100vw-1rem))] flex-wrap items-center gap-3 gap-y-2 border p-2 shadow-lg"
-						style="top: {menuPos.top}px; right: {menuPos.right}px"
+						class="bg-surface-50-950 border-surface-300-700 card fixed z-50 flex max-w-[min(22rem,calc(100vw-1rem))] flex-wrap items-center gap-3 gap-y-2 overflow-y-auto border p-2 shadow-lg"
+						style="top: {menuPos.top}px; right: {menuPos.right}px; max-height: calc(100vh - {menuPos.top + 8}px)"
 						role="group"
 					>
 						{#each hidden as item (item.id)}

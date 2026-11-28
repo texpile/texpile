@@ -33,7 +33,7 @@
 		const { offsetWidth: w, offsetHeight: h } = card;
 		const { anchor } = open;
 		// above the toolbar, so the selected text stays in view; below it where there is no room above
-		const y = anchor.top - h - 6 >= EDGE ? anchor.top - h - 6 : anchor.bottom + 6;
+		const y = anchor.top - h - 6 >= EDGE ? anchor.top - h - 6 : Math.max(EDGE, Math.min(anchor.bottom + 6, window.innerHeight - h - EDGE));
 		placed = { x: Math.max(EDGE, Math.min(anchor.left, window.innerWidth - w - EDGE)), y, for: open };
 		// the toolbar button kept focus in the editor, where typing would overwrite the selected text
 		input?.focus();
