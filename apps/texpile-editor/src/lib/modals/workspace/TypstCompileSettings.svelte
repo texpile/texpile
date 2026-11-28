@@ -38,7 +38,7 @@
 		     what Compile runs while Preview is on -->
 		<div class="border-surface-300-700 text-muted rounded-base mt-3 border border-dashed px-3 py-2 text-xs">
 			{m.wsview_compile_disabled_preview()}
-			<code class="bg-surface-200-800 rounded-base ml-1 px-1 opacity-70">tinymist (built-in)</code>
+			<code class="bg-surface-200-800 rounded-base text-muted ml-1 px-1">tinymist (built-in)</code>
 		</div>
 	{/if}
 </div>

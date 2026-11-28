@@ -90,7 +90,7 @@
 								type="button"
 								class="rounded-base h-6 w-6"
 								class:bg-surface-200-800={!cell.highlighted}
-								class:bg-blue={cell.highlighted}
+								class:bg-primary-500={cell.highlighted}
 								onmouseenter={() => handleMouseOver(cell.row, cell.col)}
 								onfocus={() => handleMouseOver(cell.row, cell.col)}
 								onclick={insertTable}

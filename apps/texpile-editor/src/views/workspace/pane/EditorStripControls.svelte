@@ -103,7 +103,7 @@
 							{shown === 'source' ? m.wsview_source_label() : m.wsview_visual_label()}
 						</span>
 					</span>
-					<ChevronDown class="size-3 opacity-60" />
+					<ChevronDown class="text-muted size-3" />
 				</button>
 			{/snippet}
 		</MenuDropdown>

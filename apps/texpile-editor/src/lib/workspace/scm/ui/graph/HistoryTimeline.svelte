@@ -120,7 +120,7 @@
 	<!-- an empty timeline used to mean both "nothing saved yet" and "the read failed", and the
 	     reassuring reading won: a log that never once succeeded looked like a fresh project -->
 	<div class="text-muted mt-6 flex flex-col items-center gap-1 px-3 text-center text-sm">
-		<TriangleAlert class="size-6 opacity-60" />
+		<TriangleAlert class="text-muted size-6" />
 		{m.vcs_history_error()}
 		<span class="text-muted text-xs break-words">{error}</span>
 	</div>
@@ -132,7 +132,7 @@
 	</div>
 {:else if history.length === 0}
 	<div class="text-muted mt-6 flex flex-col items-center gap-1 text-center text-sm">
-		<GitCommitHorizontal class="size-6 opacity-60" />
+		<GitCommitHorizontal class="text-muted size-6" />
 		{m.vcs_no_history()}
 	</div>
 {:else}

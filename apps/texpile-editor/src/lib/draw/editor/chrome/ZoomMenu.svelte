@@ -24,14 +24,14 @@
 		aria-label={m.figure_zoom()}
 	>
 		<span class="min-w-9 text-center">{percent}%</span>
-		<ChevronUp class="size-3 shrink-0 opacity-60" />
+		<ChevronUp class="text-muted size-3 shrink-0" />
 	</Menu.Trigger>
 	<Portal>
 		<Menu.Positioner>
 			<Menu.Content class={menuContentClass}>
 				<Menu.Item value="fit" class={menuBarItemClass}>
 					<Menu.ItemText>{m.figure_zoom_fit()}</Menu.ItemText>
-					<span class="opacity-50">{shortcutText('1', { mod: false, shift: true })}</span>
+					<span class="text-muted">{shortcutText('1', { mod: false, shift: true })}</span>
 				</Menu.Item>
 				<Menu.Separator class={separatorClass} />
 				{#each PRESETS as p (p)}

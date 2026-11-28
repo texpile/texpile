@@ -25,7 +25,7 @@
 
 <!-- preventDefault keeps focus on the editor, whose CARET is what the jump reads -->
 <button
-	class="bg-surface-700-300 hover:bg-primary-500 absolute z-30 flex size-6 cursor-pointer items-center justify-center rounded-full text-white opacity-80 shadow-md transition hover:opacity-100 focus-visible:opacity-100 dark:text-black {extra}"
+	class="preset-filled-surface-700-300 hover:preset-filled-primary-500 absolute z-30 flex size-6 cursor-pointer items-center justify-center rounded-full opacity-80 shadow-md transition hover:opacity-100 focus-visible:opacity-100 {extra}"
 	class:pointer-events-none={hidden}
 	style:opacity={hidden ? 0 : undefined}
 	{style}

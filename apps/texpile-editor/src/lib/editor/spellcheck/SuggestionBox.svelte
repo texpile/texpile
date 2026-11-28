@@ -242,7 +242,7 @@
 			{:else}
 				<IconHelpCircle size={14} class="text-primary-ink" />
 			{/if}
-			<span class="cap-center text-xs font-semibold capitalize opacity-75">
+			<span class="cap-center text-muted text-xs font-semibold capitalize">
 				{sanitizedType()}
 			</span>
 			{#if byModel}
@@ -283,7 +283,7 @@
 
 			{#if error.replacements.length > 1}
 				<div class="space-y-1">
-					<p class="text-[10px] font-semibold tracking-wider uppercase opacity-60">
+					<p class="text-muted text-[10px] font-semibold tracking-wider uppercase">
 						{m.harper_additional_suggestions_heading()}
 					</p>
 					<div class="space-y-1">

@@ -56,7 +56,7 @@
 				{#if canNewFile}
 					<Menu onSelect={(d) => newFileSelect(d.value)}>
 						<Menu.TriggerItem value="new" class={menuBarItemClass}>
-							<Menu.ItemText>{m.menubar_new_file_menu()}</Menu.ItemText><ChevronRight class="size-4 opacity-60" />
+							<Menu.ItemText>{m.menubar_new_file_menu()}</Menu.ItemText><ChevronRight class="text-muted size-4" />
 						</Menu.TriggerItem>
 						<Portal>
 							<Menu.Positioner>
@@ -86,7 +86,7 @@
 				{#if canOpenFolder}
 					<Menu onSelect={(d) => openFolderSelect(d.value)}>
 						<Menu.TriggerItem value="openfolder" class={menuBarItemClass}>
-							<Menu.ItemText>{m.menubar_open_folder_menu()}</Menu.ItemText><ChevronRight class="size-4 opacity-60" />
+							<Menu.ItemText>{m.menubar_open_folder_menu()}</Menu.ItemText><ChevronRight class="text-muted size-4" />
 						</Menu.TriggerItem>
 						<Portal>
 							<Menu.Positioner>

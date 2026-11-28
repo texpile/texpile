@@ -62,7 +62,7 @@
 								{item.displayText}
 							</div>
 							{#if item.subtitle}
-								<div class="mt-0.5 truncate text-xs opacity-60">
+								<div class="text-muted mt-0.5 truncate text-xs">
 									{item.subtitle}
 								</div>
 							{/if}

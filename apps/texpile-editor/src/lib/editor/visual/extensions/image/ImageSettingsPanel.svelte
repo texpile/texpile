@@ -266,7 +266,11 @@
 	     numbered=true (pasted from a tex doc) still can't offer it in markdown. A typst image
 	     offers it numbered or not: labeling a bare #image makes it a figure -->
 	{#if (latexControls && numberedInput) || dialect === 'typst'}
-		<button type="button" class="my-3 flex w-full items-center gap-2 text-sm" onclick={() => (showAdvanced = !showAdvanced)}>
+		<button
+			type="button"
+			class="btn btn-sm hover:preset-tonal my-3 w-full justify-start gap-2"
+			onclick={() => (showAdvanced = !showAdvanced)}
+		>
 			<ChevronDown class="h-4 w-4 transition-transform {showAdvanced ? 'rotate-180' : ''}" />
 			<span>{m.imageoverlay_advanced_options()}</span>
 		</button>

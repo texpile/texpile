@@ -8,5 +8,5 @@
 
 <Menu.Item value={props.value} class={menuBarItemClass} disabled={props.disabled}>
 	<Menu.ItemText>{props.label}</Menu.ItemText>
-	{#if props.shortcut}<span class="opacity-50">{props.shortcut}</span>{/if}
+	{#if props.shortcut}<span class="text-muted">{props.shortcut}</span>{/if}
 </Menu.Item>

@@ -74,7 +74,7 @@
 			onmousedown={preventFocusLoss}
 		>
 			<Omega class="h-4.5 w-4.5" />
-			<ChevronDown class="h-3 w-3 opacity-50" />
+			<ChevronDown class="text-muted h-3 w-3" />
 		</button>
 	</Popover.Trigger>
 

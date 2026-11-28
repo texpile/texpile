@@ -21,7 +21,7 @@
 		{:else}
 			<IconInfo size={14} class="text-primary-ink shrink-0" />
 		{/if}
-		<span class="cap-center text-xs font-semibold opacity-75">{heading}</span>
+		<span class="cap-center text-muted text-xs font-semibold">{heading}</span>
 		{#if turnOff}
 			<DiagnosticCardMenu {turnOff} />
 		{/if}

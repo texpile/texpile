@@ -82,7 +82,7 @@
 		<p class="text-warning-ink mt-1 text-xs">{m.wsview_live_mode_battery_note()}</p>
 		<div class="border-surface-300-700 text-muted rounded-base mt-3 border border-dashed px-3 py-2 text-xs">
 			{m.wsview_compile_disabled_live()}
-			<code class="bg-surface-200-800 rounded-base ml-1 px-1 opacity-70">lualatex (built-in)</code>
+			<code class="bg-surface-200-800 rounded-base text-muted ml-1 px-1">lualatex (built-in)</code>
 		</div>
 	{/if}
 </div>

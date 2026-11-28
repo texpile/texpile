@@ -95,7 +95,7 @@
 			{@const Arrow = ARROWS[key as keyof typeof ARROWS]}
 			{#if Arrow}<Arrow class="size-3" aria-hidden="true" /><span class="sr-only">{key}</span>{:else}<span class:cap-center={cap}
 					>{key}</span
-				>{/if}{#if !isMac && i < parts.length - 1}<span class="mx-px opacity-60" class:cap-center={cap}>+</span>{/if}
+				>{/if}{#if !isMac && i < parts.length - 1}<span class="text-muted mx-px" class:cap-center={cap}>+</span>{/if}
 		{/each}
 	{/if}
 </kbd>

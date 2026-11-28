@@ -81,7 +81,7 @@
 		use:tip={open ? undefined : m.groups_layout()}
 	>
 		<LayoutDashboard class="size-3.5" />
-		<ChevronDown class="size-3 opacity-60" />
+		<ChevronDown class="text-muted size-3" />
 	</button>
 	{#if open}
 		<!-- click-away layer -->

@@ -89,7 +89,7 @@
 
 {#if open}
 	<div
-		class="app-scrim fixed inset-0 {z} flex items-center justify-center bg-black/40 p-4"
+		class="app-scrim fixed inset-0 {z} bg-surface-950/40 flex items-center justify-center p-4"
 		role="presentation"
 		onmousedown={(e) => e.target === e.currentTarget && dismissable && close()}
 	>

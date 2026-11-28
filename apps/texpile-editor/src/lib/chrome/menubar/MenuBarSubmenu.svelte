@@ -18,7 +18,7 @@
 
 <Menu onSelect={(d) => props.select(d.value)}>
 	<Menu.TriggerItem value={props.value} class={menuBarItemClass} disabled={props.disabled}>
-		<Menu.ItemText>{props.label}</Menu.ItemText><ChevronRight class="size-4 opacity-60" />
+		<Menu.ItemText>{props.label}</Menu.ItemText><ChevronRight class="text-muted size-4" />
 	</Menu.TriggerItem>
 	<Portal>
 		<Menu.Positioner>
