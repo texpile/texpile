@@ -168,5 +168,5 @@
 		</Portal>
 	</Popover>
 {:else}
-	<span class="text-muted text-xs whitespace-nowrap tabular-nums select-none">{@render summary()}</span>
+	<span class="text-xs whitespace-nowrap tabular-nums select-none">{@render summary()}</span>
 {/if}

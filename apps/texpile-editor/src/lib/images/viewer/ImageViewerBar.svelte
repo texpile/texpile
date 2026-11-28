@@ -29,7 +29,7 @@
 	{#if props.session}
 		<ImageSizeInputs session={props.session} />
 	{:else}
-		<span class="text-muted px-1 text-xs tabular-nums">{props.size}</span>
+		<span class="px-1 text-xs tabular-nums">{props.size}</span>
 	{/if}
 {/snippet}
 

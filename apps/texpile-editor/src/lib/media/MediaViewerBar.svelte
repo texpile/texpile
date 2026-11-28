@@ -13,7 +13,7 @@
 </script>
 
 {#snippet facts()}
-	<span class="text-muted px-1 text-xs tabular-nums">{props.facts}</span>
+	<span class="px-1 text-xs tabular-nums">{props.facts}</span>
 {/snippet}
 
 {#snippet zoom()}

@@ -34,7 +34,7 @@
 </script>
 
 <!-- the rule is an inset shadow, as under the source comparison's bar (diff/DiffPane.svelte) -->
-<div class="bg-surface-50-900 text-muted line-under flex min-h-10 shrink-0 items-center gap-2 px-3 text-xs">
+<div class="bg-surface-50-900 line-under flex min-h-10 shrink-0 items-center gap-2 px-3 text-xs">
 	<GitCompare class="size-3.5 shrink-0" />
 	<span class="cap-center shrink-0 font-medium whitespace-nowrap">{m.wsview_diff_since()}</span>
 	{#if props.compare}<span class="cap-center text-muted min-w-0 truncate" use:tip={props.compare.hash}>- {props.compare.subject}</span>{/if}
