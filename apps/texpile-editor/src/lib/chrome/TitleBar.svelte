@@ -25,6 +25,15 @@
 	import { betweenWidth, centeredWidth } from './commandCenterWidth';
 	import iconUrl from '$branding/Logo-icon.svg';
 	import { m } from '$lib/paraglide/messages';
+	import BackForwardButtons from './BackForwardButtons.svelte';
+
+	const readMock = () => (typeof localStorage === 'undefined' ? '' : (localStorage.getItem('backForwardMock') ?? 'a'));
+	let navMock = $state(readMock());
+	onMount(() => {
+		const on = () => (navMock = readMock());
+		window.addEventListener('back-forward-mock', on);
+		return () => window.removeEventListener('back-forward-mock', on);
+	});
 
 	let {
 		menus,
@@ -67,15 +76,16 @@
 	 * once is a ResizeObserver loop.
 	 */
 	$effect(() => {
-		const [w, l, r] = [winWidth, leftW, rightW];
+		const [w, l, r] = [winWidth, leftW + navW, rightW];
 		void titleBarLayout.pdfIconOnly; // a step that changes no width still needs the next one
 		const frame = requestAnimationFrame(() => titleBarLayout.fit(w, l, r, measureTitleBarLabels(barEl)));
 		return () => cancelAnimationFrame(frame);
 	});
 
 	// on the window's center while both sides leave it room, else in the middle of the room between them; 0 drops it
-	const centeredW = $derived(centeredWidth(winWidth, leftW, rightW));
-	const centerW = $derived(centeredW || betweenWidth(winWidth, leftW, rightW));
+	const navW = $derived(navMock === 'a' && palettable ? 56 : 0);
+	const centeredW = $derived(centeredWidth(winWidth, leftW + navW, rightW));
+	const centerW = $derived(centeredW || betweenWidth(winWidth, leftW + navW, rightW));
 	const between = $derived(palettable && !centeredW);
 
 	// Mirror the document title rather than take it as a prop: it is already computed (in
@@ -132,6 +142,9 @@
 			{#if menus}
 				{@render menus()}
 			{/if}
+			{#if navMock === 'b' && palettable}
+				<div class="ml-1 flex items-stretch"><BackForwardButtons /></div>
+			{/if}
 			{#if session}
 				{@render session()}
 			{/if}
@@ -177,10 +190,14 @@
 		<!-- Out of flow, so a click-through layer over the drag region underneath -->
 		<div
 			class="pointer-events-none absolute inset-0 flex items-center justify-center"
-			style:padding-left={between ? `${leftW}px` : null}
+			style:padding-left={between ? `${leftW + navW}px` : null}
 			style:padding-right={between ? `${rightW}px` : null}
 		>
 			{#if palettable && centerW > 0}
+				<div class="relative flex items-center">
+				{#if navMock === 'a'}
+					<div class="absolute right-full mr-1.5 flex"><BackForwardButtons /></div>
+				{/if}
 				<!--
 					h-[22px] in a 32px row, so there is 5px of air above and below rather than the 3px a 26px
 					box left - at that height the border sat almost on the bar's own edges and the control
@@ -218,6 +235,7 @@
 						<Kbd keys="Mod+K" class="shrink-0" />
 					{/if}
 				</button>
+				</div>
 			{:else if !palettable}
 				<span class="text-muted max-w-[50%] truncate text-xs">{title}</span>
 			{/if}
