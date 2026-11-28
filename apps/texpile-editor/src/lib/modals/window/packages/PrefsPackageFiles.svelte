@@ -23,8 +23,8 @@
 
 <PrefsRow id="package-files" layout="block">
 	{#snippet children(def)}
-		<div class="flex items-start justify-between gap-6">
-			<div class="min-w-0">
+		<div class="flex flex-wrap items-start justify-between gap-x-6 gap-y-3">
+			<div class="min-w-0 flex-1 basis-48">
 				<div class="text-sm font-medium">{def.label()}</div>
 				<p class="text-muted mt-1 text-xs leading-relaxed">
 					{def.note?.()}
