@@ -8,6 +8,9 @@ class BalanceMock {
 	get tight() {
 		return this.mode.includes('s');
 	}
+	get pdf() {
+		return this.mode.includes('p');
+	}
 	get roomy() {
 		return this.mode.includes('l');
 	}

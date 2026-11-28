@@ -288,7 +288,7 @@
 			>
 				<PanelRight class="size-3.5" />
 				<!-- in the layout while hidden, so the title bar can measure what the label costs -->
-				<span class={titleBarLayout.pdfIconOnly ? 'invisible absolute' : 'cap-center'} data-title-bar-label>{m.wsview_show_pdf()}</span>
+				<span class={titleBarLayout.pdfIconOnly ? 'invisible absolute' : 'cap-center'} data-title-bar-label>{balanceMock.pdf ? 'PDF' : m.wsview_show_pdf()}</span>
 			</button>
 		{/if}
 	</div>
