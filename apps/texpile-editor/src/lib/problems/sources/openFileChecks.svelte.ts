@@ -3,6 +3,7 @@ import { box } from '$lib/runes/box.svelte';
 import { trailingDebounce } from '$lib/trailingDebounce';
 import { onLintRulesChanged } from '$lib/editor/spellcheck/linter';
 import { onReviewKept } from '$lib/editor/spellcheck/review/reviewStore';
+import { ReviewRefresh } from '../reviewRefresh';
 import type { Problem } from '../problemTypes';
 
 export type OpenFile = { path: string; text: string };
@@ -12,9 +13,10 @@ export const openFileChecks = box<{ path: string; text: string; problems: Proble
 
 export class OpenFileChecks {
 	private gen = 0;
-	private soon = trailingDebounce<void>(700, () => void this.run());
+	private reviews = new ReviewRefresh(700, () => this.run());
+	private soon = trailingDebounce<void>(700, () => void this.reviews.run());
 	private stopRules = onLintRulesChanged(() => this.soon());
-	private stopReviews = onReviewKept(() => this.soon());
+	private stopReviews = onReviewKept(this.reviews.landed);
 
 	constructor(
 		private open: () => OpenFile | null,
@@ -40,6 +42,7 @@ export class OpenFileChecks {
 	destroy(): void {
 		this.gen++;
 		this.soon.cancel();
+		this.reviews.cancel();
 		this.stopRules();
 		this.stopReviews();
 		openFileChecks.current = null;

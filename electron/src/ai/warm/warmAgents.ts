@@ -1,5 +1,6 @@
 // The agent kept running for proofread, Refine and Convert to LaTeX. Claude Code and OpenCode read their rules once, so
 // each task holds its own process; Codex and the other ACP agents take them per request, so one serves every task
+import { createHash } from 'node:crypto';
 import { app } from 'electron';
 import { findProgram } from '../../shell/findProgram';
 import { shellEnvReady } from '../../shell/shellEnv';
@@ -92,9 +93,11 @@ async function starterOf(
 		if (!program) return `${agent} was not found on PATH`;
 		if (agent === 'codex')
 			return { slot: 'codex', key: program, shared: true, start: (onExit) => new CodexWarm(program, CODEX_WARM_ARGS, version, onExit) };
-		// Claude Code answers a turn at a time, so a request beside another needs a process of its own
+		// Claude Code answers a turn at a time, so a request beside another needs a process of its own, and so do other
+		// rules, such as another language's proofread, which would otherwise end the process the first is using
+		const rules = createHash('sha1').update(system).digest('hex').slice(0, 8);
 		return {
-			slot: `claude:${task}${lane ? `#${lane}` : ''}`,
+			slot: `claude:${task}:${rules}${lane ? `#${lane}` : ''}`,
 			key: [program, model, system].join('\0'),
 			start: (onExit) => new ClaudeWarm(program, claudeWarmArgs(model, EFFORT[task] ?? ''), system, onExit)
 		};
@@ -164,7 +167,7 @@ export async function askAgent(
 		return answer;
 	}
 	// a process of the test's own goes; one the tasks share stays warm for them
-	if (starter.slot.endsWith(':test')) release(starter.slot);
+	if (task === 'test' && !starter.shared) release(starter.slot);
 	else idleFrom(starter.slot);
 	const signIn = answer.ok ? null : signInError(agent, answer.error);
 	return signIn ? { ok: false, error: signIn } : answer;

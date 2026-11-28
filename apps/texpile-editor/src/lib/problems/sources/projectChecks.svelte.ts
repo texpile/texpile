@@ -14,6 +14,7 @@ import { noteProblems } from './noteProblems';
 import { bibEntriesIn } from '../checks/bibEntries';
 import { documentReferences, type DocumentBibs, type DocumentFile } from '../checks/documentReferences';
 import { referenceProblems } from './referenceProblems';
+import { ReviewRefresh } from '../reviewRefresh';
 import { proofreadProblems } from './proofreadProblems';
 import { documentTermProblems } from './termProblems';
 import type { MainDocument } from './mainDocument.svelte';
@@ -41,11 +42,17 @@ function nextTask(): Promise<void> {
 
 export class ProjectChecks {
 	private gen = 0;
-	private soon = trailingDebounce<void>(1200, () => void this.run());
+	private reviews = new ReviewRefresh(3000, () => this.run());
+	private soon = trailingDebounce<void>(1200, () => void this.reviews.run());
 	private stopRules = onLintRulesChanged(() => this.checkSpellingAgain());
-	private stopReviews = onReviewKept(() => this.checkSpellingAgain());
+	// bumped as reviews land: a file's rows from before then are shown until it is read again
+	private reviewed = 0;
+	private stopReviews = onReviewKept(() => {
+		this.reviewed++;
+		this.reviews.landed();
+	});
 	private readings = new Map<string, { text: string; own: CommandReadings | null; refs: FileReferences; notes: Problem[] }>();
-	private proofread = new Map<string, { text: string; problems: Problem[] }>();
+	private proofread = new Map<string, { text: string; reviewed: number; problems: Problem[] }>();
 
 	constructor(private deps: ProjectCheckDeps) {}
 
@@ -142,13 +149,19 @@ export class ProjectChecks {
 		if (!spellcheck) this.proofread.clear();
 		publish();
 		if (!spellcheck) return;
-		for (const path of others) {
+		// stalest first, so runs cut short by edits still reach every file
+		const age = (path: string) => {
+			const was = this.proofread.get(path);
+			return was && was.text === texts.get(path) ? was.reviewed : -1;
+		};
+		for (const path of [...others].sort((a, b) => age(a) - age(b))) {
 			const text = texts.get(path)!;
-			if (this.proofread.get(path)?.text === text) continue;
+			if (age(path) === this.reviewed) continue;
+			const reviewed = this.reviewed;
 			const found = await proofreadProblems(path, text, stale);
 			if (stale()) return;
 			if (!found) continue;
-			this.proofread.set(path, { text, problems: found });
+			this.proofread.set(path, { text, reviewed, problems: found });
 			publish();
 			await nextTask();
 		}
@@ -157,6 +170,7 @@ export class ProjectChecks {
 	destroy(): void {
 		this.gen++;
 		this.soon.cancel();
+		this.reviews.cancel();
 		this.stopRules();
 		this.stopReviews();
 		projectProblems.current = null;
