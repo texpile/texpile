@@ -7,6 +7,7 @@
 	import { fileMode } from '$lib/workspace/fileMode.svelte';
 	import { latexLiveMode } from '$lib/workspace/projectConfigSync.svelte';
 	import ProblemsIndicator from '$lib/problems/ui/ProblemsIndicator.svelte';
+	import { balanceMock } from '$lib/chrome/balanceMock.svelte';
 	import CompileButton, { COMPILE_TONE } from '$lib/preview/CompileButton.svelte';
 	import CompileOptionsMenu from './CompileOptionsMenu.svelte';
 	import { AnchoredMenu } from '$lib/pdf-view/anchoredMenu.svelte';
@@ -268,7 +269,7 @@
 			<!-- unresolved review threads, project-wide; hidden at zero, like Problems after a clean compile -->
 			<button class="{quiet} gap-1" onclick={onShowComments} use:tip={m.wsview_show_comments_title()}>
 				<MessageSquare class="size-3.5" />
-				{commentCount}
+				{#if !balanceMock.quiet}{commentCount}{/if}
 			</button>
 		{/if}
 		{#if onShowAgent}

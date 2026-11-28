@@ -25,6 +25,8 @@
 	import { betweenWidth, centeredWidth } from './commandCenterWidth';
 	import iconUrl from '$branding/Logo-icon.svg';
 	import { m } from '$lib/paraglide/messages';
+	import { balanceMock } from './balanceMock.svelte';
+	import FolderSwitcher from './FolderSwitcher.svelte';
 
 	let {
 		menus,
@@ -88,7 +90,7 @@
 
 	let title = $state('Texpile');
 	// the app's name is the icon beside it
-	const fieldTitle = $derived(title.replace(/ - Texpile$/, ''));
+	const fieldTitle = $derived(balanceMock.folder ? title.replace(/ - .*$/, '') : title.replace(/ - Texpile$/, ''));
 	onMount(() => {
 		const el = document.querySelector('title');
 		if (!el) return;
@@ -131,6 +133,9 @@
 			     system bar stayed on its no-state fallback of the app menu plus Edit. -->
 			{#if menus}
 				{@render menus()}
+			{/if}
+			{#if balanceMock.folder && palettable}
+				<FolderSwitcher />
 			{/if}
 			{#if session}
 				{@render session()}
